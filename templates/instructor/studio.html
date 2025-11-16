@@ -3,148 +3,135 @@
 
 {% block content %}
 <!-- Dashboard Grid -->
-
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
     {% include "courses/course_set.html" %}
-
+ <br>
     <!-- Status dan Pesan -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title text-dark text-decoration-none">Current Status</h5>
-            <p class="card-text text-dark text-decoration-none">
-                <strong>Status:</strong>
-                {% if course.status_course == 'curation' %}
-                    <span class="badge bg-primary">{{ course.status_course.get_status_display }}</span>
-                {% elif course.status_course == 'draft' %}
-                    <span class="badge bg-warning">{{ course.status_course.get_status_display }}</span>
-                {% elif course.status_course == 'published' %}
-                    <span class="badge bg-success">{{ course.status_course.get_status_display }}</span>
-                {% elif course.status_course == 'rejected' %}
-                    <span class="badge bg-danger">{{ course.status_course.get_status_display }}</span>
-                {% else %}
-                    <span class="badge bg-secondary">{{ course.status_course.get_status_display }}</span>
-                {% endif %}
-            </p>
-            <p class="text-dark text-decoration-none"><strong >Latest Message:</strong> {{ course.status_course.manual_message|default:"No message" }}</p>
-        </div>
+    <div class="mb-6 bg-white shadow-lg rounded-lg p-6">
+        <h5 class="text-2xl font-semibold text-gray-800 mb-4">Current Status</h5>
+        <p class="text-gray-700 mb-2">
+            <strong>Status:</strong>
+            {% if course.status_course == 'curation' %}
+                <span class="bg-blue-600 text-white px-3 py-1 rounded-full">{{ course.status_course.get_status_display }}</span>
+            {% elif course.status_course == 'draft' %}
+                <span class="bg-yellow-500 text-white px-3 py-1 rounded-full">{{ course.status_course.get_status_display }}</span>
+            {% elif course.status_course == 'published' %}
+                <span class="bg-green-500 text-white px-3 py-1 rounded-full">{{ course.status_course.get_status_display }}</span>
+            {% elif course.status_course == 'rejected' %}
+                <span class="bg-red-600 text-white px-3 py-1 rounded-full">{{ course.status_course.get_status_display }}</span>
+            {% else %}
+                <span class="bg-gray-600 text-white px-3 py-1 rounded-full">{{ course.status_course.get_status_display }}</span>
+            {% endif %}
+        </p>
+        <p class="text-gray-700"><strong>Latest Message:</strong> {{ course.status_course.manual_message|default:"No message" }}</p>
     </div>
 
     <!-- Informasi Author -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title text-dark text-decoration-none">Information Partner</h5>
-            <ul class="list-group">
-                <li class="list-group-item"><strong>Full Name:</strong> {{ author_full_name }}</li>
-                <li class="list-group-item"><strong>Email:</strong> {{ author_email }}</li>
-                <li class="list-group-item"><strong>University:</strong> {{ author_university }}</li>
-                <li class="list-group-item"><strong>Gender:</strong> {{ author_gender|title }}</li>
-            </ul>
-        </div>
+    <div class="mb-6 bg-white shadow-lg rounded-lg p-6">
+        <h5 class="text-2xl font-semibold text-gray-800 mb-4">Information Partner</h5>
+        <ul class="space-y-3 text-gray-700">
+            <li><strong>Full Name:</strong> {{ author_full_name }}</li>
+            <li><strong>Email:</strong> {{ author_email }}</li>
+            <li><strong>University:</strong> {{ author_university }}</li>
+            <li><strong>Gender:</strong> {{ author_gender|title }}</li>
+        </ul>
     </div>
 
     <!-- Detail Kursus -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title text-dark text-decoration-none">Course Details</h5>
-            <ul class="list-group">
-                <li class="list-group-item"><strong>Partner:</strong> {{ course.org_partner.name }}</li>
-                <li class="list-group-item"><strong>Instructor:</strong> {{ course.instructor.user.username|default:"Not assigned" }}</li>
-                <li class="list-group-item"><strong>Category:</strong> {{ course.category.name }}</li>
-                <li class="list-group-item"><strong>Level:</strong> {{ course.level|title }}</li>
-                <li class="list-group-item"><strong>Language:</strong> {{ course.get_language_display }}</li>
-                <li class="list-group-item"><strong>Start Date:</strong> {{ course.start_date|default:"N/A" }}</li>
-                <li class="list-group-item"><strong>End Date:</strong> {{ course.end_date|default:"N/A" }}</li>
-            </ul>
-        </div>
+    <div class="mb-6 bg-white shadow-lg rounded-lg p-6">
+        <h5 class="text-2xl font-semibold text-gray-800 mb-4">Course Details</h5>
+        <ul class="space-y-3 text-gray-700">
+            <li><strong>Partner:</strong> {{ course.org_partner.name }}</li>
+            <li><strong>Instructor:</strong> {{ course.instructor.user.username|default:"Not assigned" }}</li>
+            <li><strong>Category:</strong> {{ course.category.name }}</li>
+            <li><strong>Level:</strong> {{ course.level|title }}</li>
+            <li><strong>Language:</strong> {{ course.get_language_display }}</li>
+            <li><strong>Start Date:</strong> {{ course.start_date|default:"N/A" }}</li>
+            <li><strong>End Date:</strong> {{ course.end_date|default:"N/A" }}</li>
+        </ul>
     </div>
 
     <!-- Riwayat Status -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title text-dark text-decoration-none">Status History</h5>
-            {% if status_history %}
-            <table class="table table-bordered">
-                <thead>
-                    <tr class="text-dark text-decoration-none">
-                        <th>Status</th>
-                        <th>Action</th>
-                        <th>Message</th>
-                        <th>Changed By</th>
-                        <th>Changed At</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for entry in status_history %}
-                        <tr
-                        {% if entry.status == 'draft' and entry.changed_by.is_partner %}
-                            class="table-danger"
-                        {% elif entry.status == 'published' %}
-                            class="table-success"
-                        {% elif entry.status == 'curation' and entry.changed_by.is_superuser %}
-                            class="table-danger"
-                        {% endif %}
-                        >
-                        <td>{{ entry.get_status_display }}</td>
-                        <td>
-                            {% if entry.status == 'curation' and entry.changed_by.is_instructor %}
-                            <span class="badge bg-primary">Submitted by Instructor</span>
-                            {% elif entry.status == 'curation' and entry.changed_by.is_partner %}
-                            <span class="badge bg-info">Accepted by Partner</span>
-                            {% elif entry.status == 'draft' and entry.changed_by.is_partner %}
-                            <span class="badge bg-danger">Rejected by Partner</span>
-                            {% elif entry.status == 'published' and entry.changed_by.is_superuser %}
-                            <span class="badge bg-success">Published by Admin</span>
-                            {% elif entry.status == 'curation' and entry.changed_by.is_superuser %}
-                            <span class="badge bg-danger">Rejected by Admin</span>
-                            {% else %}
-                            <span class="badge bg-secondary">Updated</span>
-                            {% endif %}
-                        </td>
-                        <td>{{ entry.manual_message|default:"No message" }}</td>
-                        <td>{{ entry.changed_by.username }}</td>
-                        <td>{{ entry.changed_at|date:"Y-m-d H:i:s" }}</td>
+    <div class="mb-6 bg-white shadow-lg rounded-lg p-6">
+        <h5 class="text-2xl font-semibold text-gray-800 mb-4">Status History</h5>
+        {% if status_history %}
+            <div class="overflow-x-auto">
+                <table class="min-w-full table-auto text-sm text-gray-800">
+                    <thead>
+                        <tr class="bg-gray-100 text-left">
+                            <th class="px-4 py-2">Status</th>
+                            <th class="px-4 py-2">Action</th>
+                            <th class="px-4 py-2">Message</th>
+                            <th class="px-4 py-2">Changed By</th>
+                            <th class="px-4 py-2">Changed At</th>
                         </tr>
-                    {% endfor %}
+                    </thead>
+                    <tbody>
+                        {% for entry in status_history %}
+                            <tr class="{% if entry.status == 'draft' and entry.changed_by.is_partner %}bg-red-100{% elif entry.status == 'published' %}bg-green-100{% elif entry.status == 'curation' and entry.changed_by.is_superuser %}bg-red-100{% endif %}">
+                                <td class="px-4 py-2">{{ entry.get_status_display }}</td>
+                                <td class="px-4 py-2">
+                                    {% if entry.status == 'curation' and entry.changed_by.is_instructor %}
+                                        <span class="bg-blue-600 text-white px-3 py-1 rounded-full">Submitted by Instructor</span>
+                                    {% elif entry.status == 'curation' and entry.changed_by.is_partner %}
+                                        <span class="bg-teal-500 text-white px-3 py-1 rounded-full">Accepted by Partner</span>
+                                    {% elif entry.status == 'draft' and entry.changed_by.is_partner %}
+                                        <span class="bg-red-600 text-white px-3 py-1 rounded-full">Rejected by Partner</span>
+                                    {% elif entry.status == 'published' and entry.changed_by.is_superuser %}
+                                        <span class="bg-green-600 text-white px-3 py-1 rounded-full">Published by Admin</span>
+                                    {% elif entry.status == 'curation' and entry.changed_by.is_superuser %}
+                                        <span class="bg-red-600 text-white px-3 py-1 rounded-full">Rejected by Admin</span>
+                                    {% else %}
+                                        <span class="bg-gray-500 text-white px-3 py-1 rounded-full">Updated</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-4 py-2">{{ entry.manual_message|default:"No message" }}</td>
+                                <td class="px-4 py-2">{{ entry.changed_by.username }}</td>
+                                <td class="px-4 py-2">{{ entry.changed_at|date:"Y-m-d H:i:s" }}</td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
-
-            </table>
-            {% else %}
-            <p>No status history available.</p>
-            {% endif %}
-        </div>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-gray-600">No status history available.</p>
+        {% endif %}
     </div>
 
     <!-- Aksi Berdasarkan Peran -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title text-dark text-decoration-none">Actions</h5>
-            <form method="post">
-                {% csrf_token %}
-                <div class="form-group mb-3 text-dark text-decoration-none">
-                    <label for="message">Message:</label>
-                    <textarea name="message" id="message" class="form-control" rows="5"></textarea>
+    <div class="mb-6 bg-white shadow-lg rounded-lg p-6">
+        <h5 class="text-2xl font-semibold text-gray-800 mb-4">Actions</h5>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="message" class="block text-lg text-gray-800">Message:</label>
+                <textarea name="message" id="message" class="w-full p-3 border rounded-lg mt-2" rows="4"></textarea>
+            </div>
+
+            <!-- Aksi untuk Instructor -->
+            {% if is_instructor and course.status_course.status == 'draft' %}
+                <button type="submit" name="action" value="submit_curation" class="w-full sm:w-auto bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">Submit for Curation</button>
+            {% endif %}
+
+            <!-- Aksi untuk Partner -->
+            {% if is_partner and course.status_course.status == 'curation' %}
+                <div class="flex gap-4 mt-4">
+                    <button type="submit" name="action" value="partner_accept" class="w-full sm:w-auto bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">Accept and Submit to Superuser</button>
+                    <button type="submit" name="action" value="partner_reject" class="w-full sm:w-auto bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition">Reject and Return to Instructor</button>
                 </div>
+            {% endif %}
 
-                <!-- Aksi untuk Instructor -->
-                {% if is_instructor and course.status_course.status == 'draft' %}
-                <button type="submit" name="action" value="submit_curation" class="btn btn-primary">Submit for Curation</button>
-                {% endif %}
-
-                <!-- Aksi untuk Partner -->
-                {% if is_partner and course.status_course.status == 'curation' %}
-                <button type="submit" name="action" value="partner_accept" class="btn btn-success">Accept and Submit to Superuser</button>
-                <button type="submit" name="action" value="partner_reject" class="btn btn-danger">Reject and Return to Instructor</button>
-                {% endif %}
-
-                <!-- Aksi untuk Superuser -->
-                {% if is_superuser and course.status_course.status == 'curation' %}
-                <button type="submit" name="action" value="superuser_publish" class="btn btn-success">Publish to Catalog</button>
-                <button type="submit" name="action" value="superuser_reject" class="btn btn-danger">Reject and Return to Partner</button>
-                {% endif %}
-            </form>
-        </div>
+            <!-- Aksi untuk Superuser -->
+            {% if is_superuser and course.status_course.status == 'curation' %}
+                <div class="flex gap-4 mt-4">
+                    <button type="submit" name="action" value="superuser_publish" class="w-full sm:w-auto bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">Publish to Catalog</button>
+                    <button type="submit" name="action" value="superuser_reject" class="w-full sm:w-auto bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition">Reject and Return to Partner</button>
+                </div>
+            {% endif %}
+        </form>
     </div>
 
     <!-- Tombol Kembali -->
-    <a href="#" class="btn btn-secondary mt-3">Back to Catalog</a>
-
+    <a href="#" class="bg-gray-600 text-white px-6 py-3 rounded-lg mt-4 inline-block hover:bg-gray-700 transition">Back to Catalog</a>
+</section>
 {% endblock %}

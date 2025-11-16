@@ -2,92 +2,115 @@
 {% load static %}
 
 {% block content %}
-<div class="py-5">
-  <h2 class="mb-4 fw-bold text-primary">Partner Analytics Dashboard</h2>
 
-  <!-- Filter and Download -->
-  <form method="get" class="row g-3 mb-4">
-    <div class="col-md-4">
-      <input type="text" name="univ" class="form-control" placeholder="Search Universitas" value="{{ request.GET.univ }}">
-    </div>
-    <div class="col-md-2 d-grid">
-      <button type="submit" class="btn btn-primary">Filter</button>
-    </div>
-    <div class="col-md-2 d-grid">
-      <a href="?download=csv" class="btn btn-success">
-        <i class="bi bi-download"></i> Download CSV
-      </a>
-    </div>
-  </form>
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">Partner Analytics Dashboard</h3>
+        
+      </div>
+    <!-- Title -->
+    
 
-  <div class="row g-4">
-    {# Chart Blocks in Loop with Bootstrap Collapse #}
-    {% for chart in chart_list %}
-    <div class="col-md-6">
-      <div class="card shadow-sm">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <h5 class="mb-0">{{ chart.title }}</h5>
-          <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ chart.id }}">
-            Toggle
-          </button>
+    <!-- Filter & Download -->
+    <form method="get" class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+        <div class="sm:col-span-2 lg:col-span-1">
+            <input 
+                type="text" 
+                name="univ" 
+                placeholder="Search Universitas" 
+                value="{{ request.GET.univ }}"
+                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition">
         </div>
-        <div id="collapse{{ chart.id }}" class="collapse show">
-          <div class="card-body">
-            <div class="ratio ratio-16x9">
-              <canvas id="{{ chart.id }}"></canvas>
+        <div>
+            <button type="submit" 
+                    class="w-full px-5 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-sm flex items-center justify-center gap-2">
+                Filter
+            </button>
+        </div>
+        <div>
+            <a href="?download=csv" 
+               class="w-full px-5 py-2.5 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition shadow-sm flex items-center justify-center gap-2">
+                Download CSV
+            </a>
+        </div>
+    </form>
+
+    <!-- Charts Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Chart Loop with Alpine.js Collapse -->
+        {% for chart in chart_list %}
+        <div x-data="{ open: true }" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <!-- Header -->
+            <div class="flex justify-between items-center p-4 border-b border-gray-200 bg-gray-50">
+                <h5 class="text-lg font-semibold text-gray-800">{{ chart.title }}</h5>
+                <button 
+                    @click="open = !open"
+                    class="text-sm px-3 py-1.5 border border-gray-300 rounded-lg hover:bg-gray-100 transition flex items-center gap-1">
+                    <span x-show="open">Hide</span>
+                    <span x-show="!open">Show</span>
+                </button>
             </div>
-          </div>
+
+            <!-- Collapsible Body -->
+            <div x-show="open" x-collapse class="p-4">
+                <div class="relative w-full h-64">
+                    <canvas id="{{ chart.id }}"></canvas>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
 
-    <!-- Balance Summary -->
-    <div class="col-md-6">
-      <div class="card text-bg-light shadow-sm">
-        <div class="card-body">
-          <h6 class="card-title">Balance Summary</h6>
-          <p>Average: <strong>Rp{{ balance_avg|default_if_none:0 }}</strong></p>
-          <p>Min: <strong>Rp{{ balance_min|default_if_none:0 }}</strong></p>
-          <p>Max: <strong>Rp{{ balance_max|default_if_none:0 }}</strong></p>
-
+        <!-- Balance Summary Card -->
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-sm border border-gray-200 p-6">
+            <h6 class="text-lg font-semibold text-gray-800 mb-4">Balance Summary</h6>
+            <div class="space-y-2 text-sm">
+                <p>Average: <strong class="text-blue-700">Rp{{ balance_avg|default_if_none:0 }}</strong></p>
+                <p>Min: <strong class="text-red-600">Rp{{ balance_min|default_if_none:0 }}</strong></p>
+                <p>Max: <strong class="text-green-600">Rp{{ balance_max|default_if_none:0 }}</strong></p>
+            </div>
         </div>
-      </div>
     </div>
-
-  </div>
 </div>
 
 <!-- Chart.js -->
 <script src="{% static 'js/chart.umd.min.js' %}"></script>
-<script>
-  const chartConfigs = {
-    growthChart: {type: 'line', data: {{ growth_data|safe }}},
-    univChart: {type: 'bar', data: {{ univ_data|safe }}},
-    revenueChart: {type: 'bar', data: {{ revenue_data|safe }}},
-    monthlyRevenueChart: {type: 'line', data: {{ monthly_revenue_data|safe }}},
-    completionChart: {type: 'bar', data: {{ completion_data|safe }}},
-    taxChart: {type: 'bar', data: {{ tax_data|safe }}},
-    iceiChart: {type: 'bar', data: {{ icei_data|safe }}},
-    socialChart: {type: 'bar', data: {{ social_data|safe }}},
-    authorChart: {type: 'bar', data: {{ author_data|safe }}},
-    courseCountChart: {type: 'bar', data: {{ course_count_data|safe }}},
-  };
 
-  for (const [id, config] of Object.entries(chartConfigs)) {
-    const ctx = document.getElementById(id);
-    if (ctx) {
-      new Chart(ctx, {
-        type: config.type,
-        data: config.data,
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: true } },
-          layout: { padding: 10 }
+<!-- Alpine.js for Collapse (CDN, ringan) -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<!-- Chart Initialization -->
+<script>
+document.addEventListener('alpine:init', () => {
+    const chartConfigs = {
+        growthChart: { type: 'line', data: {{ growth_data|safe }} },
+        univChart: { type: 'bar', data: {{ univ_data|safe }} },
+        revenueChart: { type: 'bar', data: {{ revenue_data|safe }} },
+        monthlyRevenueChart: { type: 'line', data: {{ monthly_revenue_data|safe }} },
+        completionChart: { type: 'bar', data: {{ completion_data|safe }} },
+        taxChart: { type: 'bar', data: {{ tax_data|safe }} },
+        iceiChart: { type: 'bar', data: {{ icei_data|safe }} },
+        socialChart: { type: 'bar', data: {{ social_data|safe }} },
+        authorChart: { type: 'bar', data: {{ author_data|safe }} },
+        courseCountChart: { type: 'bar', data: {{ course_count_data|safe }} },
+    };
+
+    for (const [id, config] of Object.entries(chartConfigs)) {
+        const ctx = document.getElementById(id);
+        if (ctx) {
+            new Chart(ctx, {
+                type: config.type,
+                data: config.data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: true } },
+                    layout: { padding: 10 }
+                }
+            });
         }
-      });
     }
-  }
+});
 </script>
+</section>
 {% endblock %}

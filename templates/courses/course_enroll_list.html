@@ -3,145 +3,166 @@
 
 {% block content %}
 
-    <!-- Judul Kursus -->
-    <h1 class="display-6 fw-bold text-center text-primary mb-4">
-        {{ course.course_name }}
-    </h1>
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ course.course_name }}</h3>
+        
+      </div>
+
+   
 
     <!-- Formulir Pencarian -->
-    <form method="GET" class="mb-3">
-        <div class="input-group shadow-sm">
-            <input type="text" name="search" class="form-control" placeholder="Cari berdasarkan nama..."
-                   value="{{ search_query }}" aria-label="Search by Name">
-            <button class="btn btn-primary" type="submit">
-                <i class="bi bi-search me-1"></i> Cari
+    <form method="GET" class="mb-4">
+        <div class="flex flex-col sm:flex-row gap-2 shadow-sm">
+            <input 
+                type="text" 
+                name="search" 
+                placeholder="Cari berdasarkan nama..." 
+                value="{{ search_query }}" 
+                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+            <button type="submit" 
+                    class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-1">
+                Search
             </button>
         </div>
     </form>
 
     <!-- Tombol Ekspor & Navigasi -->
-    <div class="d-flex justify-content-between flex-wrap mb-3">
-        <a href="?download=csv{% if search_query %}&search={{ search_query }}{% endif %}" class="btn btn-success shadow-sm mb-2">
-            <i class="bi bi-download me-1"></i> Unduh CSV
+    <div class="flex flex-col sm:flex-row justify-between gap-3 mb-4">
+        <a href="?download=csv{% if search_query %}&search={{ search_query }}{% endif %}" 
+           class="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition shadow-sm flex items-center justify-center gap-1">
+            Download CSV
         </a>
-        <a href="{% url 'learner:score_summary_detail' course_id=course.id %}" class="btn btn-outline-primary shadow-sm mb-2">
-            <i class="bi bi-table me-1"></i> View Score Summary Detail
+        <a href="{% url 'learner:score_summary_detail' course_id=course.id %}" 
+           class="px-4 py-2 bg-white border-2 border-blue-600 text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition shadow-sm flex items-center justify-center gap-1">
+            View Score Summary Detail
         </a>
     </div>
 
     <!-- Tabel Pendaftaran -->
-    <div class="card border-0 shadow-sm">
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover align-middle mb-0">
-                    <thead class="table-dark text-center">
-                        <tr class="small">
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Gender</th>
-                            <th>Birth</th>
-                            <th>Address</th>
-                            <th>Country</th>
-                            <th>Phone</th>
-                            <th>Education</th>
-                            <th>University</th>
-                            <th>Score</th>
-                            <th>Status</th>
-                            <th>Progress</th>
-                            <th>Percentage</th>
-                            <th>Material</th>
-                            <th> Completed</th>
-                            <th>Last Login</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for detail in enrollments %}
-                        <tr>
-                            <td>{{ detail.first_name }} {{ detail.last_name }}</td>
-                            <td>{{ detail.email|default:"-" }}</td>
-                            <td>{{ detail.gender|default:"-" }}</td>
-                            <td>{{ detail.birth|date:"d M, Y"|default:"-" }}</td>
-                            <td>{{ detail.address|truncatechars:20|default:"-" }}</td>
-                            <td>{{ detail.country|default:"-" }}</td>
-                            <td>{{ detail.phone|default:"-" }}</td>
-                            <td>{{ detail.education|default:"-" }}</td>
-                            <td>{{ detail.university|default:"-" }}</td>
-                            <td>{{ detail.total_score }} / {{ detail.total_max_score }}</td>
-                            <td>
-                                <span class="badge {% if detail.status == 'Pass' %}bg-success{% else %}bg-danger{% endif %}">
-                                    {{ detail.status }}
-                                </span>
-                            </td>
-                            <td>{{ detail.progress_percentage }}%</td>
-                            <td>{{ detail.overall_percentage|floatformat:2 }}%</td>
-                            <td>{{ detail.last_accessed_material|date:"Y-m-d H:i:s"|default:"-" }}</td>
-                            <td>{{ detail.last_completed_assessment|date:"Y-m-d H:i:s"|default:"-" }}</td>
-                            <td>{{ detail.user.last_login|date:"Y-m-d H:i:s"|default:"-" }}</td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="16" class="text-center text-muted py-4">
-                                <i class="bi bi-info-circle me-2"></i> Tidak ada peserta yang terdaftar.
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-gray-800 text-white text-center">
+                    <tr class="text-xs">
+                        <th class="py-3 px-2">Name</th>
+                        <th class="py-3 px-2">Email</th>
+                        <th class="py-3 px-2">Gender</th>
+                        <th class="py-3 px-2">Birth</th>
+                        <th class="py-3 px-2">Address</th>
+                        <th class="py-3 px-2">Country</th>
+                        <th class="py-3 px-2">Phone</th>
+                        <th class="py-3 px-2">Education</th>
+                        <th class="py-3 px-2">University</th>
+                        <th class="py-3 px-2">Score</th>
+                        <th class="py-3 px-2">Status</th>
+                        <th class="py-3 px-2">Progress</th>
+                        <th class="py-3 px-2">Percentage</th>
+                        <th class="py-3 px-2">Material</th>
+                        <th class="py-3 px-2">Completed</th>
+                        <th class="py-3 px-2">Last Login</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detail in enrollments %}
+                    <tr class="border-b hover:bg-gray-50 transition">
+                        <td class="py-2 px-2 font-medium">{{ detail.first_name }} {{ detail.last_name }}</td>
+                        <td class="py-2 px-2">{{ detail.email|default:"-" }}</td>
+                        <td class="py-2 px-2">{{ detail.gender|default:"-" }}</td>
+                        <td class="py-2 px-2">{{ detail.birth|date:"d M, Y"|default:"-" }}</td>
+                        <td class="py-2 px-2">{{ detail.address|truncatechars:20|default:"-" }}</td>
+                        <td class="py-2 px-2">{{ detail.country|default:"-" }}</td>
+                        <td class="py-2 px-2">{{ detail.phone|default:"-" }}</td>
+                        <td class="py-2 px-2">{{ detail.education|default:"-" }}</td>
+                        <td class="py-2 px-2">{{ detail.university|default:"-" }}</td>
+                        <td class="py-2 px-2 font-medium">{{ detail.total_score }} / {{ detail.total_max_score }}</td>
+                        <td class="py-2 px-2">
+                            <span class="inline-block px-2 py-1 rounded-full text-xs font-medium
+                                {% if detail.status == 'Pass' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                                {{ detail.status }}
+                            </span>
+                        </td>
+                        <td class="py-2 px-2">{{ detail.progress_percentage }}%</td>
+                        <td class="py-2 px-2">{{ detail.overall_percentage|floatformat:2 }}%</td>
+                        <td class="py-2 px-2 text-xs">{{ detail.last_accessed_material|date:"Y-m-d H:i:s"|default:"-" }}</td>
+                        <td class="py-2 px-2 text-xs">{{ detail.last_completed_assessment|date:"Y-m-d H:i:s"|default:"-" }}</td>
+                        <td class="py-2 px-2 text-xs">{{ detail.user.last_login|date:"Y-m-d H:i:s"|default:"-" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="16" class="text-center py-6 text-gray-500">
+                            No registered participants.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 
     <!-- Navigasi Halaman -->
     {% if enrollments.has_other_pages %}
-    <nav aria-label="Page navigation" class="mt-4">
-        <ul class="pagination justify-content-center flex-wrap">
+    <nav class="mt-6" aria-label="Page navigation">
+        <ul class="flex justify-center flex-wrap gap-1">
             <!-- First & Previous -->
             {% if enrollments.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}" aria-label="First">
-                        <i class="bi bi-chevron-double-left"></i>
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ enrollments.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" aria-label="Previous">
-                        <i class="bi bi-chevron-left"></i>
-                    </a>
-                </li>
+            <li>
+                <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}" 
+                   class="w-9 h-9 rounded-full border border-gray-300 hover:bg-gray-100 flex items-center justify-center transition">
+                    First
+                </a>
+            </li>
+            <li>
+                <a href="?page={{ enrollments.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" 
+                   class="w-9 h-9 rounded-full border border-gray-300 hover:bg-gray-100 flex items-center justify-center transition">
+                    Previous
+                </a>
+            </li>
             {% else %}
-                <li class="page-item disabled"><span class="page-link"><i class="bi bi-chevron-double-left"></i></span></li>
-                <li class="page-item disabled"><span class="page-link"><i class="bi bi-chevron-left"></i></span></li>
+            <li><span class="w-9 h-9 rounded-full border border-gray-200 text-gray-400 flex items-center justify-center">First</span></li>
+            <li><span class="w-9 h-9 rounded-full border border-gray-200 text-gray-400 flex items-center justify-center">Previous</span></li>
             {% endif %}
 
             <!-- Page Numbers -->
             {% for num in enrollments.paginator.page_range %}
-                {% if num >= enrollments.number|add:'-2' and num <= enrollments.number|add:'2' %}
-                    <li class="page-item {% if enrollments.number == num %}active{% endif %}">
-                        <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}">{{ num }}</a>
-                    </li>
-                {% endif %}
+            {% if num >= enrollments.number|add:'-2' and num <= enrollments.number|add:'2' %}
+            <li>
+                <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}" 
+                   class="w-9 h-9 rounded-full flex items-center justify-center transition
+                   {% if enrollments.number == num %}bg-blue-600 text-white font-bold{% else %}border border-gray-300 hover:bg-gray-100{% endif %}">
+                    {{ num }}
+                </a>
+            </li>
+            {% endif %}
             {% endfor %}
 
             <!-- Next & Last -->
             {% if enrollments.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ enrollments.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" aria-label="Next">
-                        <i class="bi bi-chevron-right"></i>
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ enrollments.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}" aria-label="Last">
-                        <i class="bi bi-chevron-double-right"></i>
-                    </a>
-                </li>
+            <li>
+                <a href="?page={{ enrollments.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" 
+                   class="w-9 h-9 rounded-full border border-gray-300 hover:bg-gray-100 flex items-center justify-center transition">
+                    Next
+                </a>
+            </li>
+            <li>
+                <a href="?page={{ enrollments.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}" 
+                   class="w-9 h-9 rounded-full border border-gray-300 hover:bg-gray-100 flex items-center justify-center transition">
+                    Last
+                </a>
+            </li>
             {% else %}
-                <li class="page-item disabled"><span class="page-link"><i class="bi bi-chevron-right"></i></span></li>
-                <li class="page-item disabled"><span class="page-link"><i class="bi bi-chevron-double-right"></i></span></li>
+            <li><span class="w-9 h-9 rounded-full border border-gray-200 text-gray-400 flex items-center justify-center">Next</span></li>
+            <li><span class="w-9 h-9 rounded-full border border-gray-200 text-gray-400 flex items-center justify-center">Last</span></li>
             {% endif %}
         </ul>
-        <div class="text-center mt-2">
-            <small class="text-muted">Halaman {{ enrollments.number }} dari {{ enrollments.paginator.num_pages }}</small>
+        <div class="text-center mt-3">
+            <small class="text-gray-600">
+                Halaman {{ enrollments.number }} dari {{ enrollments.paginator.num_pages }}
+            </small>
         </div>
     </nav>
     {% endif %}
+
+</section>
 
 {% endblock %}

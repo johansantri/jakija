@@ -235,45 +235,96 @@ class UserProfileForm(forms.ModelForm):
             'tiktok', 'youtube', 'facebook', 'instagram', 'linkedin', 'twitter'
         ]
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'required': True}),
-            'phone': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
-            'gender': forms.Select(attrs={'class': 'form-select', 'required': True}),
-            'birth': forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'required': True}),
-            'country': forms.Select(attrs={'class': 'form-select'}),
-            'photo': forms.FileInput(attrs={'class': 'form-control'}),
-            'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
-            'hobby': forms.TextInput(attrs={'class': 'form-control'}),
-            'education': forms.Select(attrs={'class': 'form-select'}),
-            'university': forms.Select(attrs={'class': 'form-select'}),
-            'tiktok': forms.URLInput(attrs={'class': 'form-control'}),
-            'youtube': forms.URLInput(attrs={'class': 'form-control'}),
-            'facebook': forms.URLInput(attrs={'class': 'form-control'}),
-            'instagram': forms.URLInput(attrs={'class': 'form-control'}),
-            'linkedin': forms.URLInput(attrs={'class': 'form-control'}),
-            'twitter': forms.URLInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'required': True
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'required': True
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'required': True
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'required': True
+            }),
+            'gender': forms.Select(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'required': True
+            }),
+            'birth': forms.DateInput(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'type': 'date',
+                'required': True
+            }),
+            'country': forms.Select(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition'
+            }),
+            'photo': forms.FileInput(attrs={
+                'class': 'flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'accept': 'image/*'
+            }),
+            'address': forms.Textarea(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'rows': 4
+            }),
+            'hobby': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition'
+            }),
+            'education': forms.Select(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition'
+            }),
+            'university': forms.Select(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition'
+            }),
+            'tiktok': forms.URLInput(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'placeholder': 'https://tiktok.com/...'
+            }),
+            'youtube': forms.URLInput(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'placeholder': 'https://youtube.com/...'
+            }),
+            'facebook': forms.URLInput(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'placeholder': 'https://facebook.com/...'
+            }),
+            'instagram': forms.URLInput(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'placeholder': 'https://instagram.com/...'
+            }),
+            'linkedin': forms.URLInput(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'placeholder': 'https://linkedin.com/in/...'
+            }),
+            'twitter': forms.URLInput(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'placeholder': 'https://twitter.com/...'
+            }),
         }
         labels = {
-                'first_name': 'First Name',
-                'last_name': 'Last Name',
-                'email': 'Email',
-                'phone': 'Phone Number',
-                'gender': 'Gender',
-                'birth': 'Date of Birth',
-                'country': 'Country',
-                'photo': 'Profile Photo',
-                'address': 'Address',
-                'hobby': 'Hobby',
-                'education': 'Education',
-                'university': 'University',
-                'tiktok': 'TikTok',
-                'youtube': 'YouTube',
-                'facebook': 'Facebook',
-                'instagram': 'Instagram',
-                'linkedin': 'LinkedIn',
-                'twitter': 'Twitter',
-            }
+            'first_name': 'First Name',
+            'last_name': 'Last Name',
+            'email': 'Email',
+            'phone': 'Phone Number',
+            'gender': 'Gender',
+            'birth': 'Date of Birth',
+            'country': 'Country',
+            'photo': 'Profile Photo',
+            'address': 'Address',
+            'hobby': 'Hobby',
+            'education': 'Education',
+            'university': 'University',
+            'tiktok': 'TikTok',
+            'youtube': 'YouTube',
+            'facebook': 'Facebook',
+            'instagram': 'Instagram',
+            'linkedin': 'LinkedIn',
+            'twitter': 'Twitter',
+        }
 
 
     def clean_email(self):

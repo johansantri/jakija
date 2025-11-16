@@ -1,27 +1,40 @@
 {% extends 'home/tes.html' %}
 {% block content %}
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+<!-- Update Partner Form -->
 
-<div class="support-wrap">
-  <div class="tile">
-    <h3 class="tile-title">Update Partner</h3>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 md:p-8">
+        
+        <!-- Title -->
+        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            <i class="fas fa-edit text-red-400"></i>
+            Update Partner
+        </h3>
 
-    <div class="tile-body">
-      <form method="POST" action="" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
+        <!-- Form -->
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
 
-        &nbsp;
-        <div class="tile-footer">
-          <button class="btn btn-primary" type="submit">
-            <i class="bi bi-check-circle-fill me-2"></i>Update Now
-          </button>
-          <a class="btn btn-secondary" href="{% url 'courses:partner_view' %}">
-            <i class="bi bi-x-circle-fill me-2"></i>Cancel
-          </a>
-        </div>
-      </form>
+            <!-- Django Form (as_p, as_table, or manual) -->
+            <div class="space-y-5">
+                {{ form.as_p }}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t border-gray-200">
+                <button type="submit" 
+                        class="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition text-sm">
+                    <i class="fas fa-check-circle"></i>
+                    Update Now
+                </button>
+                <a href="{% url 'courses:partner_view' %}" 
+                   class="flex items-center justify-center gap-2 px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    <i class="fas fa-times-circle"></i>
+                    Cancel
+                </a>
+            </div>
+        </form>
     </div>
-  </div>
-</div>
+</section>
 
 {% endblock %}

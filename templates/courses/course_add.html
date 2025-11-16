@@ -1,52 +1,100 @@
 {% extends 'home/tes.html' %}
+{% load static %}
+
 {% block content %}
-
-      <div class="tile">
-        <h3 class="tile-title">Create new course</h3>
-       
-
-        <div class="tile-body">
-          <form  method="POST" action="" >
-            {% csrf_token %}
-          
-            
-            {{ form.as_p }}
-              
-             
-           
-          
-          
-           
-
-         
-       
-          
-            <div class="tile-footer">
-              &nbsp;
-              <br>
-              <button class="btn btn-primary"  type="submit"><i class="bi bi-check-circle-fill me-2"></i>create now</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="{% url 'courses:course_view'%}"><i class="bi bi-x-circle-fill me-2"></i>Cancel</a>
-            </div>
-          </form>
-        </div>
-       
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">Create New Course</h3>
+        
       </div>
-{% endblock %}
- {% block scripts %}
-<script>
-  function slugify(text) {
-    return text
-      .toString() // Cast to string
-      .toLowerCase() // Convert the string to lowercase letters
-      .normalize('NFD') // The normalize() method returns the Unicode Normalization Form of a given string.
-      .trim() // Remove whitespace from both sides of a string
-      .replace(/\s+/g, '-') // Replace spaces with -
-      .replace(/[^\w\-]+/g, '') // Remove all non-word chars
-      .replace(/\-\-+/g, '-'); // Replace multiple - with single -
-  }
-  
-  function listingslug(text) {
-    document.getElementById("id_slug").value = slugify(text);
-  }
-</script>
+    <!-- Title -->
+<!-- Create Course Form -->
 
+    <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 md:p-8">
+
+        
+
+        <!-- Form -->
+        <form method="POST" action="" class="space-y-6" id="course-form">
+            {% csrf_token %}
+
+            <!-- Django Form (as_p) – Otomatis styled -->
+            <div class="django-form space-y-5">
+                {{ form.as_p }}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t border-gray-200">
+                <button type="submit" 
+                        class="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    Create Now
+                </button>
+                <a href="{% url 'courses:course_view' %}" 
+                   class="flex items-center justify-center gap-2 px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+
+
+<!-- Global Styling untuk {{ form.as_p }} -->
+<style>
+    .django-form input[type="text"],
+    .django-form input[type="email"],
+    .django-form input[type="url"],
+    .django-form input[type="file"],
+    .django-form textarea,
+    .django-form select {
+        @apply w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition text-sm;
+    }
+
+    .django-form input[type="file"] {
+        @apply file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100;
+    }
+
+    .django-form label {
+        @apply block text-sm font-medium text-gray-700 mb-1;
+    }
+
+    .django-form .errorlist {
+        @apply text-red-500 text-xs mt-1 list-none p-0;
+    }
+</style>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+function slugify(text) {
+    return text
+        .toString()
+        .toLowerCase()
+        .normalize('NFD')
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-]+/g, '')
+        .replace(/\-\-+/g, '-');
+}
+
+function listingslug(text) {
+    const slugField = document.getElementById("id_slug");
+    if (slugField) {
+        slugField.value = slugify(text);
+    }
+}
+
+// Auto-slug dari field title (asumsi id="id_title")
+document.addEventListener('DOMContentLoaded', function () {
+    const titleField = document.getElementById("id_title");
+    if (titleField) {
+        titleField.addEventListener('input', function () {
+            listingslug(this.value);
+        });
+        // Set awal
+        listingslug(titleField.value);
+    }
+});
+</script>
+</section>
 {% endblock %}

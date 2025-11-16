@@ -1,140 +1,202 @@
 {% extends 'home/tes.html' %}
 {% load static %}
 {% load humanize %}
+
 {% block content %}
-<!-- Dashboard Grid -->
-<div class="row justify-content-center">
-    <div class="container mt-5">
-        <h2 class="mb-3">{{ course.course_name }}</h2>
-        <p class="mb-2">Current Status: <strong>{{ course.status_course.get_status_display }}</strong></p>
-        <p class="mb-4">Latest Message: {{ course.status_course.manual_message|default:"No message" }}</p>
 
-        <!-- Price and Payment Model Info -->
-        <div class="row mb-4">
-            <!-- Course Price Info -->
-            <div class="col-md-6">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0">Course Price Information</h5>
-                    </div>
-                    <div class="card-body">
-                        <dl class="row mb-0">
-                            <dt class="col-sm-4">Price Type Description:</dt>
-                            <dd class="col-sm-8">{{ price_info.price_type_description }}</dd>
-                            <dt class="col-sm-4">Partner Price:</dt>
-                            <dd class="col-sm-8">{{ price_info.partner_price|intcomma }}</dd>
-                            <dt class="col-sm-4">Discount (%):</dt>
-                            <dd class="col-sm-8">{{ price_info.discount_percent|floatformat:2 }}</dd>
-                            <dt class="col-sm-4">Catalog Price </dt>
-                            <dd class="col-sm-8">{{ price_info.portal_price|floatformat:2 }}</dd>
-                        </dl>
-                    </div>
-                </div>
+ <section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ course.course_name }}</h3>
+        
+      </div>
+
+    <!-- Header -->
+    <div class="mb-8">
+        
+        <p class="text-lg text-gray-700">
+            Current Status: <strong>{{ course.status_course.get_status_display }}</strong>
+        </p>
+        <p class="text-gray-600 mt-1">
+            Latest Message: {{ course.status_course.manual_message|default:"No message" }}
+        </p>
+    </div>
+
+    <!-- Price and Payment Model Info -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+        <!-- Course Price Info -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+            <div class="bg-red-600 text-white p-4 rounded-t-xl">
+                <h5 class="text-lg font-bold">Course Price Information</h5>
             </div>
-            <!-- Payment Model Info -->
-            <div class="col-md-6">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-info text-white">
-                        <h5 class="mb-0">Payment Model</h5>
-                    </div>
-                    <div class="card-body">
-                       <form method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="update_payment_model">
-                            <label for="payment_model" class="form-label">Select Payment Model:</label>
-                            <div class="input-group">
-                                <select name="payment_model" id="payment_model" class="form-select" required>
-                                    {% for payment_model in payment_model_choices %}
-                                        <option value="{{ payment_model.id }}" {% if payment_model == current_payment_model %}selected{% endif %}>
-                                            {{ payment_model.name }}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to update the payment model?')">Update</button>
-                            </div>
-                        </form>
-
-                    </div>
+            <div class="p-5 space-y-3">
+                <div class="flex justify-between">
+                    <span class="font-medium text-gray-700">Price Type Description:</span>
+                    <span class="text-gray-900">{{ price_info.price_type_description }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium text-gray-700">Partner Price:</span>
+                    <span class="text-gray-900">{{ price_info.partner_price|intcomma }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium text-gray-700">Discount (%):</span>
+                    <span class="text-gray-900">{{ price_info.discount_percent|floatformat:2 }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium text-gray-700">Catalog Price:</span>
+                    <span class="text-gray-900">{{ price_info.portal_price|floatformat:2 }}</span>
                 </div>
             </div>
         </div>
 
-        <!-- Status History -->
-        <h4 class="mb-3">Status History</h4>
+        <!-- Payment Model Info -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+            <div class="bg-cyan-600 text-white p-4 rounded-t-xl">
+                <h5 class="text-lg font-bold">Payment Model</h5>
+            </div>
+            <div class="p-5">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_payment_model">
+                    <label for="payment_model" class="block text-sm font-medium text-gray-700 mb-2">
+                        Select Payment Model:
+                    </label>
+                    <div class="flex gap-2">
+                        <select name="payment_model" id="payment_model" 
+                                class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+                                required>
+                            {% for payment_model in payment_model_choices %}
+                            <option value="{{ payment_model.id }}" 
+                                    {% if payment_model == current_payment_model %}selected{% endif %}>
+                                {{ payment_model.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" 
+                                class="px-4 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-sm"
+                                onclick="return confirm('Are you sure you want to update the payment model?')">
+                            Update
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Status History -->
+    <div class="mb-8">
+        <h4 class="text-xl font-bold text-gray-900 mb-4">Status History</h4>
         {% if history %}
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead class="table-light">
-                    <tr>
-                        <th>Status</th>
-                        <th>Action</th>
-                        <th>Message</th>
-                        <th>Changed By</th>
-                        <th>Changed At</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for entry in history %}
-                    <tr {% if entry.status == 'draft' and entry.changed_by.is_partner %}class="table-danger"{% elif entry.status == 'curation' and entry.changed_by.is_superuser %}class="table-danger"{% elif entry.status == 'published' and entry.changed_by.is_superuser %}class="table-success"{% elif entry.status == 'archived' %}class="table-secondary"{% endif %}>
-                        <td>{{ entry.get_status_display }}</td>
-                        <td>
-                            {% if entry.status == 'curation' and entry.changed_by.is_instructor %}
-                                Submitted for Curation
-                            {% elif entry.status == 'curation' and entry.changed_by.is_partner %}
-                                Accepted by Partner
-                            {% elif entry.status == 'draft' and entry.changed_by.is_partner %}
-                                Rejected by Partner
-                            {% elif entry.status == 'published' and entry.changed_by.is_superuser %}
-                                Published by Superuser
-                            {% elif entry.status == 'curation' and entry.changed_by.is_superuser %}
-                                Rejected by Superuser
-                            {% elif entry.status == 'archived' and entry.changed_by.is_superuser %}
-                                Archived by Superuser
-                            {% elif entry.status == 'archived' %}
-                                Archived Automatically
-                            {% elif entry.status == 'draft' and entry.changed_by.is_superuser %}
-                                Rejected to Draft by Superuser
-                            {% else %}
-                                Updated
-                            {% endif %}
-                        </td>
-                        <td>{{ entry.manual_message|default:"No message" }}</td>
-                        <td>{{ entry.changed_by.username }}</td>
-                        <td>{{ entry.changed_at|date:"Y-m-d H:i:s" }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% else %}
-        <p class="text-muted">No status history available.</p>
-        {% endif %}
-
-        <!-- Manage Course -->
-        <h4 class="mb-3 mt-4">Manage Course</h4>
-        <form method="post" class="mb-4">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="message" class="form-label">Message:</label>
-                <textarea name="message" id="message" class="form-control" rows="5" placeholder="Enter reason or message..."></textarea>
+            <div class="overflow-x-auto rounded-lg border border-gray-200">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-100 text-gray-700">
+                        <tr>
+                            <th class="py-3 px-4 text-left font-medium">Status</th>
+                            <th class="py-3 px-4 text-left font-medium">Action</th>
+                            <th class="py-3 px-4 text-left font-medium">Message</th>
+                            <th class="py-3 px-4 text-left font-medium">Changed By</th>
+                            <th class="py-3 px-4 text-left font-medium">Changed At</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        {% for entry in history %}
+                        <tr class="
+                            {% if entry.status == 'draft' and entry.changed_by.is_partner %}bg-red-50
+                            {% elif entry.status == 'curation' and entry.changed_by.is_superuser %}bg-red-50
+                            {% elif entry.status == 'published' and entry.changed_by.is_superuser %}bg-green-50
+                            {% elif entry.status == 'archived' %}bg-gray-100{% endif %}
+                            hover:bg-gray-50 transition">
+                            <td class="py-3 px-4 font-medium">{{ entry.get_status_display }}</td>
+                            <td class="py-3 px-4">
+                                {% if entry.status == 'curation' and entry.changed_by.is_instructor %}
+                                    Submitted for Curation
+                                {% elif entry.status == 'curation' and entry.changed_by.is_partner %}
+                                    Accepted by Partner
+                                {% elif entry.status == 'draft' and entry.changed_by.is_partner %}
+                                    Rejected by Partner
+                                {% elif entry.status == 'published' and entry.changed_by.is_superuser %}
+                                    Published by Superuser
+                                {% elif entry.status == 'curation' and entry.changed_by.is_superuser %}
+                                    Rejected by Superuser
+                                {% elif entry.status == 'archived' and entry.changed_by.is_superuser %}
+                                    Archived by Superuser
+                                {% elif entry.status == 'archived' %}
+                                    Archived Automatically
+                                {% elif entry.status == 'draft' and entry.changed_by.is_superuser %}
+                                    Rejected to Draft by Superuser
+                                {% else %}
+                                    Updated
+                                {% endif %}
+                            </td>
+                            <td class="py-3 px-4 text-gray-700">{{ entry.manual_message|default:"No message" }}</td>
+                            <td class="py-3 px-4">{{ entry.changed_by.username }}</td>
+                            <td class="py-3 px-4 text-xs text-gray-600">{{ entry.changed_at|date:"Y-m-d H:i:s" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-            <div class="d-flex flex-wrap gap-2">
+        {% else %}
+            <p class="text-gray-500 italic">No status history available.</p>
+        {% endif %}
+    </div>
+
+    <!-- Manage Course -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <h4 class="text-xl font-bold text-gray-900 mb-5">Manage Course</h4>
+        <form method="post" class="space-y-5">
+            {% csrf_token %}
+            <div>
+                <label for="message" class="block text-sm font-medium text-gray-700 mb-2">
+                    Message:
+                </label>
+                <textarea name="message" id="message" 
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                          rows="5" placeholder="Enter reason or message..."></textarea>
+            </div>
+
+            <div class="flex flex-wrap gap-3">
                 <!-- Tombol untuk status 'curation' -->
                 {% if course.status_course.status == 'curation' %}
-                <button type="submit" name="action" value="superuser_publish" class="btn btn-success" onclick="return confirm('Are you sure you want to publish this course to the catalog?')">Publish to Catalog</button>
-                <button type="submit" name="action" value="superuser_reject" class="btn btn-danger" onclick="return confirm('Are you sure you want to reject this course and return it to Partner?')">Reject and Return to Partner</button>
+                <button type="submit" name="action" value="superuser_publish" 
+                        class="px-5 py-2.5 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition shadow-sm"
+                        onclick="return confirm('Are you sure you want to publish this course to the catalog?')">
+                    Publish to Catalog
+                </button>
+                <button type="submit" name="action" value="superuser_reject" 
+                        class="px-5 py-2.5 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition shadow-sm"
+                        onclick="return confirm('Are you sure you want to reject this course and return it to Partner?')">
+                    Reject and Return to Partner
+                </button>
                 {% endif %}
+
                 <!-- Tombol untuk mengarsipkan -->
                 {% if course.status_course.status != 'archived' %}
-                <button type="submit" name="action" value="superuser_archive" class="btn btn-warning" onclick="return confirm('Are you sure you want to archive this course?')">Archive Course</button>
+                <button type="submit" name="action" value="superuser_archive" 
+                        class="px-5 py-2.5 bg-green-600 text-white font-medium rounded-lg hover:bg-amber-700 transition shadow-sm"
+                        onclick="return confirm('Are you sure you want to archive this course?')">
+                    Archive Course
+                </button>
                 {% endif %}
+
                 <!-- Tombol untuk menolak ke 'draft' -->
                 {% if course.status_course.status != 'draft' %}
-                <button type="submit" name="action" value="superuser_reject_to_draft" class="btn btn-danger" onclick="return confirm('Are you sure you want to reject this course to Draft?')">Reject to Draft</button>
+                <button type="submit" name="action" value="superuser_reject_to_draft" 
+                        class="px-5 py-2.5 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition shadow-sm"
+                        onclick="return confirm('Are you sure you want to reject this course to Draft?')">
+                    Reject to Draft
+                </button>
                 {% endif %}
-                <a href="{% url 'courses:studio' id=course.id %}" class="btn btn-secondary">Cancel</a>
+
+                <a href="{% url 'courses:studio' id=course.id %}" 
+                   class="px-5 py-2.5 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 transition shadow-sm">
+                    Cancel
+                </a>
             </div>
         </form>
     </div>
-</div>
+
+</select>
+
 {% endblock %}

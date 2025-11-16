@@ -4,1163 +4,372 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token }}">
-    <title>LMSKu </title>
+    {% csrf_token %}
+  <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Dashboard Admin - Comfort Mode</title>
+
+    <!-- CSS Utama -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
     
-    <!-- CSS Libraries -->
-    <link rel="icon" href="{% static 'assets/img/icon/badge.svg' %}" sizes="32x32" type="image/svg+xml">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.16.1/sweetalert2.css" integrity="sha512-fjO3Vy3QodX9c6G9AUmr6WuIaEPdGRxBjD7gjatG5gGylzYyrEq3U0q+smkG6CwIY0L8XALRFHh4KPHig0Q1ug==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-   
-        <!-- Scripts -->
-  <!-- 1. jQuery harus paling pertama -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-     {{ form.media|safe }}
-    <!-- media --> 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"
-    integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <!-- 3. Plugin lain bebas urutan -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
-    integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.6/Sortable.min.js"
-    integrity="sha512-csIng5zcB+XpulRUa+ev1zKo7zRNGpEaVfNB9On1no9KYTEY/rLGAEEpvgdw6nim1WdTuihZY1eqZ31K7/fZjw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.16.1/sweetalert2.min.js"
-    integrity="sha512-LGHBR+kJ5jZSIzhhdfytPoEHzgaYuTRifq9g5l6ja6/k9NAOsAi5dQh4zQF6JIRB8cAYxTRedERUF+97/KuivQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/2.0.4/htmx.min.js"
-    integrity="sha512-2kIcAizYXhIn8TzUvqzEDZNuDZ+aW7yE/+f1HJHXFjQcGNfv1kqzJSTBRBSlOgp6B/KZsz1K0a3ZTqP9dnxioQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://unpkg.com/htmx.org@2.0.4/dist/ext/json-enc.js"></script>
-    <!-- Custom CSS -->
-    <style>
-        :root {
-            --sidebar-width: 280px;
-            --sidebar-bg: #fefefe;
-            --sidebar-text: #000203;
-            --primary-color: #3b82f6;
-            --secondary-color: #f97316;
-            --transition: all 0.3s ease;
-            --bg-light: #f8fafc;
-            --bg-dark: #0f172a;
-            --text-light: #1e293b;
-            --text-dark: #e2e8f0;
-            --card-bg-light: #ffffff;
-            --card-bg-dark: #1e293b;
-            --table-bg-light: #f8f9fa;
-            --table-bg-dark: #334155;
-            --table-text-light: #1e293b;
-            --table-text-dark: #e2e8f0;
-            --input-bg-light: #ffffff;
-            --input-bg-dark: #2d3748;
-            --input-text-light: #1e293b;
-            --input-text-dark: #e2e8f0;
-            --input-border-light: #ced4da;
-            --input-border-dark: #4b5563;
-            --modal-bg-light: #ffffff;
-            --modal-bg-dark: #1e293b;
-            --list-group-bg-light: #ffffff;
-            --list-group-bg-dark: #1e293b;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-light);
-            color: var(--text-light);
-            transition: var(--transition);
-            overflow-x: hidden;
-            margin: 0;
-        }
-
-        body.dark-mode {
-            background: var(--bg-dark);
-            color: var(--text-dark);
-            --sidebar-bg: #1e293b;
-            --sidebar-text: #e2e8f0;
-
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: var(--sidebar-bg);
-            color: var(--sidebar-text);
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 1030;
-            transition: var(--transition);
-            overflow-y: auto;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-            height: 100vh;
-        }
-
-        .sidebar-header {
-            padding: 1rem;
-            background: linear-gradient(180deg, #fc0000, #ffffff);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .sidebar-content {
-            padding: 1.5rem;
-        }
-
-        .user-profile img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border: 2px solid var(--primary-color);
-            transition: var(--transition);
-        }
-
-        .user-profile img:hover {
-            transform: scale(1.05);
-        }
-
-        .nav-link {
-            color: var(--sidebar-text);
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            transition: var(--transition);
-        }
-
-        .nav-link:hover, .nav-link.active {
-            background: rgba(254, 0, 0, 0.1);
-            color: var(--primary-color);
-        }
-
-        .dropdown-menu {
-            background: #fae3e3;
-            border: none;
-            border-radius: 10px;
-            margin-left: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .dropdown-item {
-            color: var(--sidebar-text);
-            padding: 0.5rem 1.5rem;
-            transition: var(--transition);
-        }
-
-        .dropdown-item:hover {
-            background: rgba(59, 130, 246, 0.2);
-            color: var(--primary-color);
-        }
-
-        .sidebar-footer {
-            padding: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-        }
-
-        .footer-link {
-            color: var(--sidebar-text);
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            transition: var(--transition);
-        }
-
-        .footer-link:hover {
-            background: rgba(253, 0, 0, 0.1);
-            color: var(--primary-color);
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            padding: 2rem;
-            transition: var(--transition);
-            background: var(--bg-light);
-        }
-
-        .dark-mode .main-content {
-            background: var(--bg-dark);
-        }
-
-        /* Cards */
-        .card, .field-card {
-            background: var(--card-bg-light);
-            transition: var(--transition);
-        }
-
-        .dark-mode .card, .dark-mode .field-card {
-            background: var(--card-bg-dark);
-            border-color: #334155;
-        }
-
-        /* Text Colors */
-        .text-dark {
-            color: var(--text-light) !important;
-        }
-
-        .dark-mode .text-dark {
-            color: var(--text-dark) !important;
-        }
-
-        .text-muted {
-            color: #6c757d !important;
-        }
-
-        .dark-mode .text-muted {
-            color: #94a3b8 !important;
-        }
-
-        /* Tables */
-        .table {
-            background: var(--table-bg-light);
-            color: var(--table-text-light);
-            transition: var(--transition);
-        }
-
-        .dark-mode .table {
-            background: var(--table-bg-dark);
-            color: var(--table-text-dark);
-        }
-
-        .table thead th {
-            background: var(--table-bg-light);
-            color: var(--table-text-light);
-        }
-
-        .dark-mode .table thead th {
-            background: #2d3748;
-            color: var(--table-text-dark);
-        }
-
-        .table td {
-            background: var(--table-bg-light);
-            color: var(--table-text-light);
-        }
-
-        .dark-mode .table td {
-            background: var(--table-bg-dark);
-            color: var(--table-text-dark);
-        }
-
-        .table-hover tbody tr:hover {
-            background: rgba(0, 0, 0, 0.05);
-        }
-
-        .dark-mode .table-hover tbody tr:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Form Elements */
-        .form-control, .form-select {
-            background: var(--input-bg-light);
-            color: var(--input-text-light);
-            border-color: var(--input-border-light);
-            transition: var(--transition);
-        }
-
-        .dark-mode .form-control, .dark-mode .form-select {
-            background: var(--input-bg-dark);
-            color: var(--input-text-dark);
-            border-color: var(--input-border-dark);
-        }
-
-        .form-control::placeholder {
-            color: #6c757d;
-        }
-
-        .dark-mode .form-control::placeholder {
-            color: #94a3b8;
-        }
-
-        /* Buttons */
-        .btn-primary {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .dark-mode .btn-primary {
-            background: #2563eb;
-            border-color: #2563eb;
-        }
-
-        .btn-success {
-            background: #22c55e;
-            border-color: #22c55e;
-        }
-
-        .dark-mode .btn-success {
-            background: #16a34a;
-            border-color: #16a34a;
-        }
-
-        .btn-outline-info, .btn-outline-primary, .btn-outline-warning {
-            transition: var(--transition);
-        }
-
-        .dark-mode .btn-outline-info {
-            color: #67e8f9;
-            border-color: #67e8f9;
-        }
-
-        .dark-mode .btn-outline-primary {
-            color: #93c5fd;
-            border-color: #93c5fd;
-        }
-
-        .dark-mode .btn-outline-warning {
-            color: #fdba74;
-            border-color: #fdba74;
-        }
-
-        /* Badges */
-        .badge.bg-primary {
-            background: var(--primary-color) !important;
-        }
-
-        .dark-mode .badge.bg-primary {
-            background: #2563eb !important;
-        }
-
-        .badge.bg-success {
-            background: #22c55e !important;
-        }
-
-        .dark-mode .badge.bg-success {
-            background: #16a34a !important;
-        }
-
-        .badge.bg-warning {
-            background: #f97316 !important;
-        }
-
-        .dark-mode .badge.bg-warning {
-            background: #ea580c !important;
-        }
-
-        .badge.bg-danger {
-            background: #ef4444 !important;
-        }
-
-        .dark-mode .badge.bg-danger {
-            background: #dc2626 !important;
-        }
-
-        /* Pagination */
-        .page-link {
-            background: var(--card-bg-light);
-            color: var(--text-light);
-            border-color: var(--input-border-light);
-        }
-
-        .dark-mode .page-link {
-            background: var(--card-bg-dark);
-            color: var(--text-dark);
-            border-color: var(--input-border-dark);
-        }
-
-        .page-item.active .page-link {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .dark-mode .page-item.active .page-link {
-            background: #2563eb;
-            border-color: #2563eb;
-        }
-
-        /* Modals */
-        .modal-content {
-            background: var(--modal-bg-light);
-            color: var(--text-light);
-            transition: var(--transition);
-        }
-
-        .dark-mode .modal-content {
-            background: var(--modal-bg-dark);
-            color: var(--text-dark);
-            border-color: #334155;
-        }
-
-        /* List Group */
-        .list-group-item {
-            background: var(--list-group-bg-light);
-            color: var(--text-light);
-            border-color: var(--input-border-light);
-            transition: var(--transition);
-        }
-
-        .dark-mode .list-group-item {
-            background: var(--list-group-bg-dark);
-            color: var(--text-dark);
-            border-color: var(--input-border-dark);
-        }
-
-        /* Container Fluid */
-        .container-fluid {
-            background: var(--bg-light);
-            transition: var(--transition);
-        }
-
-        .dark-mode .container-fluid {
-            background: var(--bg-dark);
-        }
-
-        /* Mobile Styles */
-        @media (max-width: 991.98px) {
-            .sidebar {
-                width: 280px;
-                transform: translateX(-100%);
-                z-index: 1040;
-            }
-
-            .sidebar.show {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-
-            .navbar-toggler {
-                position: fixed;
-                top: 0.75rem;
-                left: 0.75rem;
-                z-index: 1050;
-                background: var(--primary-color);
-                color: white;
-                border: none;
-                padding: 0.5rem 0.75rem;
-                border-radius: 8px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-                font-size: 1.25rem;
-            }
-
-            .navbar-toggler i.bi-x-lg {
-                display: none;
-            }
-
-            .navbar-toggler.show i.bi-list {
-                display: none;
-            }
-
-            .navbar-toggler.show i.bi-x-lg {
-                display: inline;
-            }
-        }
-
-        /* Animations */
-        .transition-all {
-            transition: var(--transition);
-        }
-
-        .hover-scale:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
-        }
-
-        /* Progress Section */
-        .progress-section .progress {
-            height: 10px;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .progress-bar {
-            background: var(--primary-color);
-            transition: width 0.5s ease-in-out;
-        }
-
-        /* Alerts */
-        .alert-container {
-            max-width: 100%;
-        }
-
-        .alert {
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            background: var(--card-bg-light);
-        }
-
-        .dark-mode .alert {
-            background: var(--card-bg-dark);
-            color: var(--text-dark);
-        }
-
-        /* Course Content */
-        .course-content .nav-link {
-            font-size: 0.9rem;
-        }
-
-        .course-content .badge {
-            font-size: 0.75rem;
-            padding: 0.35em 0.65em;
-        }
-
-        /* Confetti Container */
-        .js-container__confetti-item {
-            position: absolute;
-            z-index: 10;
-        }
-
-        .js-container__confetti-item--animation-slow {
-            animation: confetti-slow 4s ease-in-out forwards;
-        }
-
-        .js-container__confetti-item--animation-medium {
-            animation: confetti-medium 3s ease-in-out forwards;
-        }
-
-        .js-container__confetti-item--animation-fast {
-            animation: confetti-fast 2s ease-in-out forwards;
-        }
-
-        @keyframes confetti-slow {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-        }
-
-        @keyframes confetti-medium {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(1080deg); opacity: 0; }
-        }
-
-        @keyframes confetti-fast {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(1440deg); opacity: 0; }
-        }
-
-
-        @media (max-width: 991.98px) { /* untuk ukuran mobile sampai tablet (Bootstrap lg breakpoint) */
-            .fixed-mobile {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                z-index: 1030; /* supaya di atas elemen lain */
-                background-color: white; /* agar background tetap solid */
-                padding: 0.5rem 1rem; /* sesuaikan padding */
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* optional biar terlihat jelas */
-            }
-            }
-
-
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Sortable.js -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <!-- JANGAN MUAT SELECT2 MANUAL! Biarkan form.media handle semuanya -->
+    <!-- Hanya form.media yang akan load Select2 CSS + JS + DAL -->
 </head>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
 
-<body class="{% if request.session.dark_mode %}dark-mode{% endif %}">
-    <!-- Sidebar -->
-    <nav class="sidebar collapse" id="sidebarMenu" aria-label="Main navigation">
-        <!-- Sidebar Header -->
-      <div class="sidebar-header d-flex justify-content-between align-items-center p-3 bg-primary">
-        <span class="text-white fs-4 fw-bold">LMSKu</span>
-
-        <button class="btn btn-outline-light d-lg-none d-flex align-items-center gap-1" 
-                type="button" 
-                data-bs-toggle="collapse" 
-                data-bs-target="#sidebarMenu" 
-                aria-controls="sidebarMenu" 
-                aria-expanded="false" 
-                aria-label="Toggle sidebar"
-                onclick="this.querySelector('i').classList.toggle('bi-list'); this.querySelector('i').classList.toggle('bi-x-lg');">
-            <i class="bi bi-list fs-4"></i>
-            <span class="fw-semibold"></span>
-        </button>
-        </div>
-    
-
-        <!-- Sidebar Content -->
-        <div class="sidebar-content">
-            {% if user.is_authenticated %}
-                <!-- User Profile -->
-                <div class="user-profile mb-4">
-                    <div class="d-flex align-items-center">
-                        <a href="{% url 'authentication:edit-photo' request.user.id %}" aria-label="Edit profile photo" class="transition-all hover-scale">
-                            {% if request.user.photo %}
-                                <img src="{{ request.user.photo.url }}" alt="User Avatar" class="rounded-circle me-3">
-                            {% else %}
-                                <img src="{% static 'assets/img/user/user1.jpg' %}" alt="User Image" class="rounded-circle me-3">
-                            {% endif %}
-                        </a>
-                        <div>
-                            <p class="mb-0 text-black fw-bold">
-                                <a href="{% url 'authentication:profile' request.user.username %}" class="text-black text-decoration-none transition-all hover-scale">{{ request.user.first_name }} {{ request.user.last_name }}</a>
-                            </p>
-                            <small class="text-muted">{{ request.user.hobby|default:"No hobby set" }}</small>
-                            <span class="badge bg-danger text-white mt-2 d-inline-block">
-                                {% if request.user.is_superuser %}
-                                    Superuser
-                                {% elif request.user.is_partner %}
-                                    Partner
-                                {% elif request.user.is_instructor %}
-                                    Instructor
-                                {% elif request.user.is_member %}
-                                    Member
-                                {% elif request.user.is_subscription %}
-                                    Subscription
-                                {% elif request.user.is_audit %}
-                                    Audit
-                                {% elif request.user.is_learner %}
-                                    <a href="{% url 'courses:instructor_add' %}" class="text-white text-decoration-none">Become an Instructor</a>
-                                {% else %}
-                                    <a href="{% url 'courses:instructor_add' %}" class="text-white text-decoration-none">Become an Instructor</a>
-                                {% endif %}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <ul class="nav flex-column gap-1">
-                    {% if user.is_partner %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'dasbord' %}active{% endif %}" href="{% url 'authentication:dasbord' %}" aria-current="page">
-                                <i class="bi bi-speedometer me-2"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'course_view' %}active{% endif %}" href="{% url 'courses:course_view' %}">
-                                <i class="bi bi-laptop me-2"></i> Course
-                            </a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'comments-dashboard' %}active{% endif %}" href="{% url 'authentication:comments-dashboard' %}">
-                                <i class="bi bi-book me-2"></i> Comments
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'instructor_view' %}active{% endif %}" href="{% url 'courses:instructor_view' %}">
-                                <i class="bi bi-person-lines-fill me-2"></i> Instructor
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'all-user' %}active{% endif %}" href="{% url 'authentication:all-user' %}">
-                                <i class="bi bi-person-workspace me-2"></i> Learner
-                            </a>
-                        </li>
-                       
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'partner_view' %}active{% endif %}" href="{% url 'courses:partner_view' %}">
-                                <i class="bi bi-gear me-2"></i> Setting
-                            </a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'partner_analytics' %}active{% endif %}" href="{% url 'partner:partner_analytics' %}">
-                                <i class="bi bi-graph-up-arrow me-2"></i> Analytics
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'partner_commission' %}active{% endif %}" href="{% url 'payments:partner_commission' %}">
-                                <i class="bi bi-credit-card me-2"></i> Transaction Reports
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'dashbord' %}active{% endif %}" 
-                            href="{% url 'authentication:dashbord' %}">
-                            <i class="bi bi-journal-bookmark-fill me-2"></i>My Courses
-                        </a>
-                        </li>
-                    {% elif user.is_subscription %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'licens_dashboard' %}active{% endif %}" href="{% url 'licensing:licens_dashboard' %}" aria-current="page">
-                                <i class="bi bi-speedometer me-2"></i> Subscriptions
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'licens_analytics' %}active{% endif %}" href="{% url 'licensing:licens_analytics' %}">
-                                <i class="bi bi-people me-2"></i> Analytics
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'licens_learners' %}active{% endif %}" href="{% url 'licensing:licens_learners' %}">
-                                <i class="bi bi-person-workspace me-2"></i> Learner
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'course_participants_dashboard' %}active{% endif %}" href="{% url 'licensing:course_participants_dashboard' %}">
-                                <i class="bi bi-journal-bookmark me-2"></i> Courses
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'dashbord' %}active{% endif %}" 
-                            href="{% url 'authentication:dashbord' %}">
-                            <i class="bi bi-journal-bookmark-fill me-2"></i>My Courses
-                        </a>
-                        </li>
-                    {% elif user.is_instructor %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'dasbord' %}active{% endif %}" href="{% url 'authentication:dasbord' %}" aria-current="page">
-                                <i class="bi bi-speedometer me-2"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name in 'course_view,instructor_learning_report' %}active{% endif %}" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-book me-2"></i> Course
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url 'courses:course_view' %}">My Course</a></li>
-                                <li><a class="dropdown-item" href="{% url 'instructor:instructor_learning_report' %}">Report Course</a></li>
-                            </ul>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'comments-dashboard' %}active{% endif %}" href="{% url 'authentication:comments-dashboard' %}">
-                                <i class="bi bi-book me-2"></i> Comments
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'dashbord' %}active{% endif %}" 
-                            href="{% url 'authentication:dashbord' %}">
-                            <i class="bi bi-journal-bookmark-fill me-2"></i>My Courses
-                        </a>
-                        </li>
-                    {% elif user.is_superuser %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'dasbord' %}active{% endif %}" href="{% url 'authentication:dasbord' %}" aria-current="page">
-                                <i class="bi bi-speedometer me-2"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'partner_view' %}active{% endif %}" href="{% url 'courses:partner_view' %}">
-                                <i class="bi bi-people me-2"></i> Partner
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'instructor_view' %}active{% endif %}" href="{% url 'courses:instructor_view' %}">
-                                <i class="bi bi-person-lines-fill me-2"></i> Instructor
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'all-user' %}active{% endif %}" href="{% url 'authentication:all-user' %}">
-                                <i class="bi bi-person-workspace me-2"></i> Learner
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'course_view' %}active{% endif %}" href="{% url 'courses:course_view' %}">
-                                <i class="bi bi-book me-2"></i> Course
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'comments-dashboard' %}active{% endif %}" href="{% url 'authentication:comments-dashboard' %}">
-                                <i class="bi bi-book me-2"></i> Comments
-                            </a>
-                        </li>
-                       
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'partner_course_ratings' %}active{% endif %}" href="{% url 'partner:partner_course_ratings' %}">
-                                <i class="bi bi-tags me-2"></i> Ratings
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'microcredential-list' %}active{% endif %}" href="{% url 'courses:microcredential-list' %}">
-                                <i class="bi bi-award me-2"></i> Micro
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'subscription_management' %}active{% endif %}" href="{% url 'licensing:subscription_management' %}">
-                                <i class="bi bi-star me-2"></i> Subscriptions
-                            </a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'partner_analytics' %}active{% endif %}" href="{% url 'partner:partner_analytics' %}">
-                                <i class="bi bi-graph-up-arrow me-2"></i> Analytics
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'partner_commission' %}active{% endif %}" href="{% url 'payments:partner_commission' %}">
-                                <i class="bi bi-receipt me-2"></i> Transaction Report
-                            </a>
-                        </li>
-                       <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'dashbord' %}active{% endif %}" 
-                            href="{% url 'authentication:dashbord' %}">
-                            <i class="bi bi-journal-bookmark-fill me-2"></i>My Courses
-                        </a>
-                        </li>
-
-                    {% elif user.is_curation %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'dasbord' %}active{% endif %}" href="{% url 'authentication:dasbord' %}" aria-current="page">
-                                <i class="bi bi-speedometer me-2"></i> Dashboard
-                            </a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'course_view' %}active{% endif %}" href="{% url 'courses:course_view' %}">
-                                <i class="bi bi-book me-2"></i> Course
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                                <a class="nav-link {% if request.resolver_match.url_name == 'partner_course_ratings' %}active{% endif %}" href="{% url 'partner:partner_course_ratings' %}">
-                                    <i class="bi bi-tags me-2"></i> Ratings
-                                </a>
-                            </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'partner_course_comments' %}active{% endif %}" href="{% url 'partner:partner_course_comments' %}">
-                                <i class="bi bi-person-lines-fill me-2"></i> Comments
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'microcredential-list' %}active{% endif %}" href="{% url 'courses:microcredential-list' %}">
-                                <i class="bi bi-award me-2"></i> Micro
-                            </a>
-                        </li>
-                        
-                            <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'partner_analytics' %}active{% endif %}" href="{% url 'partner:partner_analytics' %}">
-                                <i class="bi bi-graph-up-arrow me-2"></i> Analytics
-                            </a>
-                        </li>
-                    
-                        <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'dashbord' %}active{% endif %}" 
-                            href="{% url 'authentication:dashbord' %}">
-                            <i class="bi bi-journal-bookmark-fill me-2"></i>My Courses
-                        </a>
-                        </li>
-
-                    {% elif user.is_finance %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'dasbord' %}active{% endif %}" href="{% url 'payments:dashboard' %}" aria-current="page">
-                            <i class="bi bi-speedometer me-2"></i> Dashboard
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'partner_view' %}active{% endif %}" href="{% url 'courses:partner_view' %}" aria-current="page">
-                            <i class="bi bi-people me-2"></i> Partner
-                        </a>
-                    </li>
-                    
-                   
-
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'invoice_receipt' %}active{% endif %}" href="{% url 'payments:invoice_receipt' %}">
-                            <i class="bi bi-receipt me-2"></i> Invoice & Receipt
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'partner_commission' %}active{% endif %}" href="{% url 'payments:partner_commission' %}">
-                            <i class="bi bi-people-fill me-2"></i> Partner Commission
-                        </a>
-                    </li>
-
-                   
-
-
-
-                    
-                    
-                        <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'partner_analytics' %}active{% endif %}" href="{% url 'partner:partner_analytics' %}">
-                            <i class="bi bi-graph-up-arrow me-2"></i> Analytics
-                        </a>
-                    </li>
-                   
-                    <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'dashbord' %}active{% endif %}" 
-                        href="{% url 'authentication:dashbord' %}">
-                        <i class="bi bi-journal-bookmark-fill me-2"></i>My Courses
-                    </a>
-                    </li>
-
-                    {% else %}
-                        <!-- Learner Menu -->
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'dashbord' %}active{% endif %}" href="{% url 'authentication:dashbord' %}">
-                                <i class="bi bi-speedometer me-2"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name in 'mycourse,microcredential' %}active{% endif %}" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person me-2"></i> {{ request.user.username|capfirst }}
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url 'authentication:mycourse' %}">My Course</a></li>
-                                <li><a class="dropdown-item" href="{% url 'authentication:microcredential' %}" target="_blank">Micro Credential</a></li>
-                            </ul>
-                        </li>
-                    {% endif %}
-                </ul>
-
-               
-            {% endif %}
+    <!-- Navbar -->
+    <header class="fixed w-full top-0 bg-gray-50 shadow-md z-50 flex items-center justify-between px-6 py-4 border-b border-red-100">
+        <div class="flex items-center space-x-3">
+            <label for="sidebar-toggle" class="cursor-pointer md:hidden text-red-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/>
+                </svg>
+            </label>
+            <h1 class="text-2xl font-bold text-red-400">Admin<span class="text-gray-800">Panel</span></h1>
         </div>
 
-        <!-- Sidebar Footer -->
-        <footer class="sidebar-footer">
-            <ul class="nav flex-column gap-2">
-                <li class="nav-item">
-                    <a href="{% url 'authentication:home' %}" class="nav-link footer-link d-flex align-items-center transition-all hover-scale">
-                        <i class="bi bi-house-fill me-2"></i> Home
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'courses:create_and_list_sos_posts' %}" class="nav-link footer-link d-flex align-items-center transition-all hover-scale">
-                        <i class="bi bi-chat-dots-fill me-2"></i> Social
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{% url 'payments:transaction_history' %}" class="nav-link footer-link d-flex align-items-center transition-all hover-scale">
-                         <i class="bi bi-cash-stack"></i> &nbsp; My Transaction
-                    </a>
-                </li>
-                {% if request.user.is_superuser or request.user.is_staff or request.user.is_partner or request.user.is_instructor %}
-                    <li class="nav-item">
-                        <a href="{% url 'blog:blog-list-admin' %}" class="nav-link footer-link d-flex align-items-center transition-all hover-scale">
-                            <i class="bi bi-pencil-fill me-2"></i> Blog
-                        </a>
-                    </li>
-                {% endif %}
-                <li class="nav-item">
-                    <a href="#" class="nav-link footer-link d-flex align-items-center transition-all hover-scale dark-mode-toggle">
-                        <i class="bi bi-moon me-2"></i> Dark Mode
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'authentication:logout' %}" class="nav-link footer-link d-flex align-items-center bg-danger text-white rounded-pill transition-all hover-scale">
-                        <i class="bi bi-box-arrow-right me-2"></i> Logout
-                    </a>
-                </li>
-            </ul>
-            
-            <div class="text-center mt-3">
-                <p class="mb-0 text-danger small">© 2025 Johan Santri. All rights reserved.</p>
-            </div>
-        </footer>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="main-content">
-       <div class="d-flex align-items-center fixed-mobile">
-        <span class="text-black fs-4 fw-bold">LMSKu</span>
-        &nbsp;&nbsp;&nbsp;
-
-         <!-- Inline Messages (no box, with color tags) -->
-            {% if messages %}
-            
-            <div class="d-flex flex-column gap-1 small">
-            
+        <!-- Messages -->
+        {% if messages %}
+        <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-full max-w-md z-50 pointer-events-none">
+            <div class="space-y-3 pointer-events-auto">
                 {% for message in messages %}
-                <div class="alert alert-dismissible fade show d-flex align-items-center gap-2 p-1" role="alert" style="background: transparent; line-height: 1.2;">
-                    <span class="fw-normal
-                    {% if message.tags == 'success' %}text-success
-                    {% elif message.tags == 'error' or message.tags == 'danger' %}text-danger
-                    {% elif message.tags == 'warning' %}text-warning
-                    {% elif message.tags == 'info' %}text-info
-                    {% else %}text-muted{% endif %}" style="line-height: 1.2; font-size: 0.875rem;">
+                <div class="p-4 rounded-lg text-sm font-medium shadow-md
+                    {% if message.tags == 'success' %}bg-green-100 text-green-800 border border-green-200
+                    {% elif message.tags == 'error' %}bg-red-100 text-red-800 border border-red-200
+                    {% elif message.tags == 'warning' %}bg-yellow-100 text-yellow-800 border border-yellow-200
+                    {% elif message.tags == 'info' %}bg-blue-100 text-blue-800 border border-blue-200
+                    {% else %}bg-gray-100 text-gray-800 border border-gray-200{% endif %}">
                     {{ message }}
-                    </span>
-                    <button type="button" class="btn-close btn-sm ms-auto" data-bs-dismiss="alert" aria-label="Close" style="float:none; position:static; padding: 0.2rem;"></button>
                 </div>
                 {% endfor %}
             </div>
-            {% endif %}
-        
-        <button 
-            class="btn btn-outline-danger btn-sm d-lg-none d-flex align-items-center gap-1 ms-auto shadow-sm"
-            type="button" 
-            data-bs-toggle="collapse" 
-            data-bs-target="#sidebarMenu" 
-            aria-controls="sidebarMenu" 
-            aria-expanded="false" 
-            aria-label="Toggle sidebar"
-            onclick="this.querySelector('i').classList.toggle('bi-list'); this.querySelector('i').classList.toggle('bi-x-lg');">
-            
-            <i class="bi bi-list fs-6"></i>
-        </button>
-
         </div>
-        <br>
+        {% endif %}
+    </header>
 
+    <!-- Sidebar Toggle -->
+    <input type="checkbox" id="sidebar-toggle" class="hidden peer"/>
 
+    <!-- Sidebar -->
+    <aside class="fixed top-0 left-0 h-full w-64 bg-gray-50 border-r border-gray-200 flex flex-col
+                    transform -translate-x-full peer-checked:translate-x-0 md:translate-x-0
+                    transition-all duration-300 ease-in-out z-40 shadow-lg md:shadow-none">
+        
+        <!-- Sidebar Header -->
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <h2 class="text-xl font-bold text-red-400">LMS<span class="text-gray-800">Admin</span></h2>
+            <label for="sidebar-toggle" class="md:hidden cursor-pointer text-gray-500 hover:text-red-400 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </label>
+        </div>
+
+        {% if user.is_authenticated %}
+        <!-- Profil Singkat -->
+        <div class="flex items-center px-6 py-4 space-x-4 border-b border-gray-100">
+            <img src="{% if user.photo %}{{ user.photo.url }}{% else %}{% static 'images/default-avatar.webp' %}{% endif %}"
+                 alt="Avatar" class="w-12 h-12 rounded-full object-cover"/>
+            <div class="flex flex-col">
+                <a href="{% url 'authentication:profile' request.user.username %}" 
+   class="font-semibold text-gray-800 hover:text-blue-600 transition-colors duration-200">
+    {{ user.get_full_name|default:user.username }}
+</a>
+
+                <span class="text-green-600 text-sm flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    {% if user.is_superuser %}Superuser
+                    {% elif user.is_partner %}Partner
+                    {% elif user.is_instructor %}Instructor
+                    {% elif user.is_member %}Member
+                    {% elif user.is_subscription %}Subscription
+                    {% elif user.is_audit %}Audit
+                    {% else %}
+                    <a href="{% url 'courses:instructor_add' %}" class="text-gray-600 hover:underline">Jadi Instructor</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Navigation -->
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            {% if user.is_superuser %}
+                <a href="{% url 'authentication:dasbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'dasbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-home w-5"></i><span>Dashboard Utama</span>
+                </a>
+                <a href="{% url 'courses:partner_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'partner_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-users w-5"></i><span>Partner View</span>
+                </a>
+                <a href="{% url 'courses:instructor_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'instructor_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-chalkboard-teacher w-5"></i><span>Instructor View</span>
+                </a>
+                <a href="{% url 'authentication:all-user' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'all-user' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-user-friends w-5"></i><span>All Users</span>
+                </a>
+                <a href="{% url 'courses:course_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'course_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-book w-5"></i><span>Course View</span>
+                </a>
+                <a href="{% url 'authentication:comments-dashboard' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'comments-dashboard' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-comments w-5"></i><span>Comments Dashboard</span>
+                </a>
+                <a href="{% url 'partner:partner_course_ratings' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'partner_course_ratings' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-star w-5"></i><span>Course Ratings</span>
+                </a>
+                <a href="{% url 'courses:microcredential-list' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'microcredential-list' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-certificate w-5"></i><span>Microcredentials</span>
+                </a>
+                <a href="{% url 'licensing:subscription_management' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'subscription_management' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-credit-card w-5"></i><span>Subscription Management</span>
+                </a>
+                <a href="{% url 'partner:partner_analytics' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'partner_analytics' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-chart-line w-5"></i><span>Partner Analytics</span>
+                </a>
+                <a href="{% url 'payments:partner_commission' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'partner_commission' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-money-bill-wave w-5"></i><span>Partner Commission</span>
+                </a>
+                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-tachometer-alt w-5"></i><span>Dashboard Secondary</span>
+                </a>
+
+            {% elif user.is_curation %}
+                <!-- Sama seperti superuser, tapi lebih sedikit -->
+                <a href="{% url 'authentication:dasbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'dasbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-home w-5"></i><span>Dashboard Utama</span>
+                </a>
+                <a href="{% url 'courses:course_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'course_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-book w-5"></i><span>Course View</span>
+                </a>
+                <a href="{% url 'partner:partner_course_ratings' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'partner_course_ratings' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-star w-5"></i><span>Course Ratings</span>
+                </a>
+                <a href="{% url 'partner:partner_course_comments' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'partner_course_comments' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-comments w-5"></i><span>Course Comments</span>
+                </a>
+                <a href="{% url 'courses:microcredential-list' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'microcredential-list' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-certificate w-5"></i><span>Microcredentials</span>
+                </a>
+                <a href="{% url 'partner:partner_analytics' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'partner_analytics' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-chart-line w-5"></i><span>Partner Analytics</span>
+                </a>
+                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-tachometer-alt w-5"></i><span>Dashboard Secondary</span>
+                </a>
+
+            {% elif user.is_finance %}
+                <a href="{% url 'payments:dashboard' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'dashboard' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-wallet w-5"></i><span>Payments Dashboard</span>
+                </a>
+                <a href="{% url 'courses:partner_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'partner_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-book-open w-5"></i><span>Partner Courses</span>
+                </a>
+                <a href="{% url 'payments:invoice_receipt' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'invoice_receipt' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-file-invoice-dollar w-5"></i><span>Invoice & Receipt</span>
+                </a>
+                <a href="{% url 'payments:partner_commission' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'partner_commission' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-chart-pie w-5"></i><span>Partner Commission</span>
+                </a>
+                <a href="{% url 'partner:partner_analytics' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'partner_analytics' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-chart-line w-5"></i><span>Partner Analytics</span>
+                </a>
+                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-home w-5"></i><span>Dashboard Secondary</span>
+                </a>
+
+            {% elif user.is_partner %}
+                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-home w-5"></i><span>Dashboard</span>
+                </a>
+                <a href="{% url 'courses:course_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'course_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-book w-5"></i><span>Kursus</span>
+                </a>
+                <a href="{% url 'authentication:comments-dashboard' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'comments-dashboard' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-comments w-5"></i><span>Comments</span>
+                </a>
+                <a href="{% url 'courses:instructor_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'instructor_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-chalkboard-teacher w-5"></i><span>Instructor</span>
+                </a>
+                <a href="{% url 'authentication:all-user' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'all-user' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-users w-5"></i><span>All Users</span>
+                </a>
+                <a href="{% url 'courses:partner_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'partner_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-chart-bar w-5"></i><span>Partner View</span>
+                </a>
+                <a href="{% url 'partner:partner_analytics' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'partner_analytics' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-chart-line w-5"></i><span>Analytics</span>
+                </a>
+                <a href="{% url 'payments:partner_commission' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'partner_commission' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-coins w-5"></i><span>Commission</span>
+                </a>
+
+            {% elif user.is_subscription %}
+                <a href="{% url 'licensing:licens_dashboard' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'licens_dashboard' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-home w-5"></i><span>Dashboard</span>
+                </a>
+                <a href="{% url 'licensing:licens_analytics' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'licens_analytics' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-chart-line w-5"></i><span>Analytics</span>
+                </a>
+                <a href="{% url 'licensing:licens_learners' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'licens_learners' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-users w-5"></i><span>Learners</span>
+                </a>
+                <a href="{% url 'licensing:course_participants_dashboard' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'course_participants_dashboard' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-clipboard-list w-5"></i><span>Participants</span>
+                </a>
+                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-tachometer-alt w-5"></i><span>Main Dashboard</span>
+                </a>
+
+            {% elif user.is_instructor %}
+                <a href="{% url 'authentication:dasbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'dasbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-chalkboard w-5"></i><span>My Courses</span>
+                </a>
+                <a href="{% url 'courses:course_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'course_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-book w-5"></i><span>Kursus</span>
+                </a>
+                <a href="{% url 'instructor:instructor_learning_report' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'instructor_learning_report' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-chart-bar w-5"></i><span>Learning Report</span>
+                </a>
+                <a href="{% url 'authentication:comments-dashboard' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'comments-dashboard' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-comments w-5"></i><span>Komentar</span>
+                </a>
+                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span>
+                </a>
+
+            {% elif user.is_learner %}
+                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-home w-5"></i><span>Dashboard</span>
+                </a>
+                <a href="{% url 'authentication:mycourse' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'mycourse' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-book-open w-5"></i><span>Kursus Saya</span>
+                </a>
+                <a href="{% url 'authentication:microcredential' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'microcredential' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-graduation-cap w-5"></i><span>Microcredential</span>
+                </a>
+                <a href="{% url 'courses:create_and_list_sos_posts' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'create_and_list_sos_posts' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-book w-5"></i><span>SOS Posts</span>
+                </a>
+                <a href="{% url 'payments:transaction_history' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'transaction_history' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-history w-5"></i><span>Transaction History</span>
+                </a>
+                <a href="{% url 'blog:blog-list-admin' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'blog-list-admin' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                    <i class="fas fa-blog w-5"></i><span>Blog Admin</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-400 transition">
+                    <i class="fas fa-comment-dots w-5"></i><span>Forum Diskusi</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-400 transition">
+                    <i class="fas fa-cog w-5"></i><span>Profil & Pengaturan</span>
+                </a>
+
+            {% else %}
+                <a href="#" class="flex items-center space-x-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-400 transition">
+                    <i class="fas fa-home w-5"></i><span>Dashboard</span>
+                </a>
+            {% endif %}
+        </nav>
+
+        <!-- Logout -->
+        <div class="border-t border-gray-200 px-4 py-4">
+            <form action="{% url 'authentication:logout' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="flex items-center space-x-3 px-4 py-2 w-full bg-red-100 text-red-400 rounded-lg hover:bg-red-200 transition font-medium">
+                    <span>Keluar</span>
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 pt-20 md:ml-64 p-6 transition-all duration-300">
         {% block content %}
+        <!-- Konten halaman anak di sini -->
         {% endblock %}
-    </div>
+    </main>
 
+    <!-- JS - HANYA DI SINI -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+<!-- Alpine.js -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    {% block scripts %}
-    
-    {% endblock %}
+    <!-- Biarkan form.media handle Select2 + DAL -->
+    {{ form.media }}
+
+    <!-- Inisialisasi DAL (opsional, biasanya otomatis) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof yourlabs !== 'undefined') {
+                yourlabs.Widget.prototype.initialize();
+            }
+        });
+    </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        // Sidebar toggle
-        const sidebarTogglers = document.querySelectorAll('.navbar-toggler');
-        const sidebar = document.querySelector('#sidebarMenu');
-
-        if (!sidebar) {
-            console.error('Sidebar (#sidebarMenu) not found in DOM');
-            return;
+    document.body.addEventListener('htmx:configRequest', function(evt) {
+        const token = document.querySelector('meta[name="csrf-token"]')?.content;
+        if (token) {
+            evt.detail.headers['X-CSRFToken'] = token;
         }
-
-        // Debugging: Log jumlah toggler yang ditemukan
-        console.log(`Found ${sidebarTogglers.length} navbar-toggler elements`);
-
-        // Inisialisasi sidebar berdasarkan ukuran layar
-        if (window.innerWidth < 992) {
-            sidebar.classList.remove('show');
-            sidebarTogglers.forEach(toggler => toggler.classList.remove('show'));
-        } else {
-            sidebar.classList.add('show');
-        }
-
-        // Tambahkan event listener untuk setiap toggler
-        sidebarTogglers.forEach((toggler, index) => {
-            console.log(`Adding event listener to toggler ${index}`);
-            toggler.addEventListener('click', function() {
-                // Toggle kelas 'show' untuk sidebar dan toggler
-                this.classList.toggle('show');
-                sidebar.classList.toggle('show');
-
-                // Toggle ikon antara bi-list dan bi-x-lg
-                const icon = this.querySelector('i');
-                if (icon) {
-                    icon.classList.toggle('bi-list');
-                    icon.classList.toggle('bi-x-lg');
-                } else {
-                    console.warn(`Icon not found in toggler ${index}`);
-                }
-            });
-        });
-
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', function(event) {
-            if (window.innerWidth < 992 && sidebar.classList.contains('show')) {
-                const isClickInsideSidebar = sidebar.contains(event.target);
-                const isClickInsideToggler = Array.from(sidebarTogglers).some(toggler => toggler.contains(event.target));
-                if (!isClickInsideSidebar && !isClickInsideToggler) {
-                    sidebar.classList.remove('show');
-                    sidebarTogglers.forEach(toggler => toggler.classList.remove('show'));
-                    sidebarTogglers.forEach(toggler => {
-                        const icon = toggler.querySelector('i');
-                        if (icon) {
-                            icon.classList.add('bi-list');
-                            icon.classList.remove('bi-x-lg');
-                        }
-                    });
-                }
-            }
-        });
-
-        // Dark mode toggle
-        const darkModeToggles = document.querySelectorAll('.dark-mode-toggle');
-        const body = document.body;
-        const isDarkMode = localStorage.getItem('darkMode') === 'true';
-
-        if (isDarkMode) {
-            body.classList.add('dark-mode');
-            darkModeToggles.forEach(toggle => {
-                const icon = toggle.querySelector('i');
-                if (icon) {
-                    icon.classList.replace('bi-moon', 'bi-sun');
-                    toggle.innerHTML = '<i class="bi bi-sun me-2"></i> Light Mode';
-                }
-            });
-        }
-
-        darkModeToggles.forEach(toggle => {
-            toggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                body.classList.toggle('dark-mode');
-                const isDark = body.classList.contains('dark-mode');
-                localStorage.setItem('darkMode', isDark);
-                darkModeToggles.forEach(t => {
-                    const icon = t.querySelector('i');
-                    if (icon) {
-                        icon.classList.replace(isDark ? 'bi-moon' : 'bi-sun', isDark ? 'bi-sun' : 'bi-moon');
-                        t.innerHTML = isDark
-                            ? '<i class="bi bi-sun me-2"></i> Light Mode'
-                            : '<i class="bi bi-moon me-2"></i> Dark Mode';
-                    }
-                });
-            });
-        });
-
-        // Confetti effect
-        {% if status == 'Pass' %}
-        const status = "{{ status }}";
-        if (status === 'Pass') {
-            const Confettiful = function(el) {
-                this.el = el;
-                this.containerEl = null;
-                this.confettiFrequency = 10;
-                this.confettiColors = ['#3b82f6', '#f97316', '#22c55e', '#ec4899', '#facc15'];
-                this.confettiAnimations = ['slow', 'medium', 'fast'];
-                this._setupElements();
-                this._renderConfetti();
-            };
-
-            Confettiful.prototype._setupElements = function() {
-                const containerEl = document.createElement('div');
-                containerEl.classList.add('js-container__confetti');
-                this.el.appendChild(containerEl);
-                this.containerEl = containerEl;
-            };
-
-            Confettiful.prototype._renderConfetti = function() {
-                this.confettiInterval = setInterval(() => {
-                    const confettiEl = document.createElement('div');
-                    const confettiSize = (Math.floor(Math.random() * 8) + 5) + 'px';
-                    const confettiBackground = this.confettiColors[Math.floor(Math.random() * this.confettiColors.length)];
-                    const confettiLeft = (Math.floor(Math.random() * this.el.offsetWidth)) + 'px';
-                    const confettiAnimation = this.confettiAnimations[Math.floor(Math.random() * this.confettiAnimations.length)];
-                    confettiEl.classList.add('js-container__confetti-item', 'js-container__confetti-item--animation-' + confettiAnimation);
-                    confettiEl.style.left = confettiLeft;
-                    confettiEl.style.width = confettiSize;
-                    confettiEl.style.height = confettiSize;
-                    confettiEl.style.backgroundColor = confettiBackground;
-                    this.containerEl.appendChild(confettiEl);
-                    setTimeout(() => {
-                        confettiEl.remove();
-                    }, 4000);
-                }, 50);
-
-                setTimeout(() => {
-                    clearInterval(this.confettiInterval);
-                }, 5000);
-            };
-
-            const jsContainer = document.querySelector('.js-container');
-            if (jsContainer) {
-                window.confettiful = new Confettiful(jsContainer);
-            } else {
-                console.warn('Confetti container (.js-container) not found');
-            }
-        }
-        {% endif %}
-        });
+    });
     </script>
-        <!-- script CSRF berikutnya -->
-        <script>
-        document.body.addEventListener('htmx:configRequest', function(evt) {
-            const token = document.querySelector('meta[name="csrf-token"]')?.content;
-            if (token) {
-                evt.detail.headers['X-CSRFToken'] = token;
-            }
-        });
-    </script>
- <!-- add partner -->
-   
+
 </body>
 </html>

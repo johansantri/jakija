@@ -3,149 +3,138 @@
 {% load static %}
 
 {% block title %}Partners{% endblock %}
-{% block meta %}
-  <meta name="description" content="Manage and view our partners who collaborate with LMSKu to enhance learning experiences.">
-  <meta name="keywords" content="partners, LMSKu, education, management">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Partners - LMSKu">
-  <meta property="og:description" content="Manage and view our partners who collaborate with LMSKu to enhance learning experiences.">
-  <meta property="og:url" content="{{ request.build_absolute_uri }}">
-  <meta property="og:image" content="{% static 'assets/img/partner-og.jpg' %}">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Partners - LMSKu">
-  <meta name="twitter:description" content="Manage and view our partners who collaborate with LMSKu to enhance learning experiences.">
-  <meta name="twitter:image" content="{% static 'assets/img/partner-og.jpg' %}">
-{% endblock %}
 {% block content %}
 
-<h1 class="display-5 fw-bold text-danger mb-4">Partners</h1>
-<hr>
+<section class="container mx-auto p-6">
+   
 
-{% if request.user.is_superuser or request.user.is_staff %}
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <div>
-        <a href="{% url 'courses:partner_create_view' %}" class="btn btn-outline-success">Add Partner</a>
-        <button class="btn btn-outline-secondary">Export</button>
+    {% if request.user.is_superuser or request.user.is_staff %}
+    <div class="flex justify-between items-center mb-4">
+        <div class="flex gap-2">
+           <a href="{% url 'courses:partner_create_view' %}" class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-red-600 hover:text-white transition">
+                Add Partner
+            </a>
+            <button class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-red-600 hover:text-white transition">
+                Export
+            </button>
+            <a href="{% url 'partner:partner_analytics_admin' %}" class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-red-600 hover:text-white transition">
+                <i class="bi bi-bar-chart-line"></i> Analytics
+            </a>
+
+        </div>
+        <form class="flex gap-2" method="GET" action="">
+            <input 
+                class="form-input px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                type="search" 
+                name="q" 
+                value="{{ request.GET.q }}" 
+                placeholder="Search Partner" 
+                aria-label="Search">
+            <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition" type="submit">
+                Search
+            </button>
+        </form>
     </div>
-    <form class="d-flex" method="GET" action="">
-        <input 
-            class="form-control" 
-            type="search" 
-            name="q" 
-            value="{{ request.GET.q }}" 
-            placeholder="Search Partner" 
-            aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-</div>
 
-<a href="{% url 'partner:partner_analytics_admin' %}" class="btn btn-outline-info mb-3">
-    <i class="bi bi-bar-chart-line"></i> Analytics
-</a>
-{% endif %}
+    
+    {% endif %}
 
-<div class="table-responsive">
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>PKP</th>
-                
-                <th>Verified</th>
-                <th>Type</th>
-                <th>Saldo</th>
-                <th>Courses</th>
-                <th>Learners</th>
-                <th>Instructors</th>
-                <th>Rating</th>
-                <th>Join </th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for partner in page %}
-            <tr>
-                <td><a href="{% url 'courses:partner_detail' partner.id %}">{{ partner.name }}</a></td>
-                <td>{{ partner.user.email }}</td>
-                <td>{{ partner.phone }}</td>
-                <td>
-                    {% if partner.is_pkp %}
-                        <span class="badge bg-success">PKP</span>
-                    {% else %}
-                        <span class="badge bg-secondary">Non-PKP</span>
-                    {% endif %}
-                </td>
-               
-                <td>
-                    {% if partner.is_verified %}
-                        <span class="badge bg-success">Verified</span>
-                    {% else %}
-                        <span class="badge bg-warning text-dark">Unverified</span>
-                    {% endif %}
-                </td>
-                <td>{{ partner.get_business_type_display }}</td>
-                <td>Rp {{ partner.balance_computed|floatformat:0|intcomma }}</td>
-
-                <td>{{ partner.total_courses }}</td>
-                <td>{{ partner.total_learners }}</td>
-                <td>{{ partner.total_instructors }}</td>
-                <td>{{ partner.average_rating|default:"0.0" }}</td>
-                <td>{{ partner.created_ad|date:"d M Y" }}</td>
-                <td>
-                    {% if request.user.is_superuser or request.user.is_staff %}
-                        <a href="{% url 'courses:update_partner' partner.id %}" 
-                        class="btn btn-sm btn-warning" 
-                        title="Edit Partner">
-                        <i class="bi bi-pencil-square"></i>
+    <div class="overflow-x-auto">
+        <table class="min-w-full text-left text-sm table-auto">
+            <thead class="bg-gray-50 text-gray-600 border-b">
+                <tr>
+                    <th class="py-2 px-4 font-medium">Name</th>
+                    <th class="py-2 px-4 font-medium">Email</th>
+                    <th class="py-2 px-4 font-medium">Phone</th>
+                    <th class="py-2 px-4 font-medium">PKP</th>
+                    <th class="py-2 px-4 font-medium">Verified</th>
+                    <th class="py-2 px-4 font-medium">Type</th>
+                    <th class="py-2 px-4 font-medium">Saldo</th>
+                    <th class="py-2 px-4 font-medium">Courses</th>
+                    <th class="py-2 px-4 font-medium">Learners</th>
+                    <th class="py-2 px-4 font-medium">Instructors</th>
+                    <th class="py-2 px-4 font-medium">Rating</th>
+                    <th class="py-2 px-4 font-medium">Join</th>
+                    <th class="py-2 px-4 font-medium">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for partner in page %}
+                <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="py-2 px-4">
+                        <a href="{% url 'courses:partner_detail' partner.id %}" class="text-blue-600 hover:underline">
+                            {{ partner.name }}
                         </a>
-
-                        <a href="{% url 'partner:verify_partner_detail' partner.id %}" 
-                        class="btn btn-sm btn-danger" 
-                        title="Review Partner">
-                        <i class="bi bi-search"></i>
+                    </td>
+                    <td class="py-2 px-4">{{ partner.user.email }}</td>
+                    <td class="py-2 px-4">{{ partner.phone }}</td>
+                    <td class="py-2 px-4">
+                        {% if partner.is_pkp %}
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">PKP</span>
+                        {% else %}
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs">Non-PKP</span>
+                        {% endif %}
+                    </td>
+                    <td class="py-2 px-4">
+                        {% if partner.is_verified %}
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">Verified</span>
+                        {% else %}
+                            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">Unverified</span>
+                        {% endif %}
+                    </td>
+                    <td class="py-2 px-4">{{ partner.get_business_type_display }}</td>
+                    <td class="py-2 px-4">Rp {{ partner.balance_computed|floatformat:0|intcomma }}</td>
+                    <td class="py-2 px-4">{{ partner.total_courses }}</td>
+                    <td class="py-2 px-4">{{ partner.total_learners }}</td>
+                    <td class="py-2 px-4">{{ partner.total_instructors }}</td>
+                    <td class="py-2 px-4">{{ partner.average_rating|default:"0.0" }}</td>
+                    <td class="py-2 px-4">{{ partner.created_ad|date:"d M Y" }}</td>
+                    <td class="py-2 px-4">
+                        {% if request.user.is_superuser or request.user.is_staff %}
+                        <a href="{% url 'courses:update_partner' partner.id %}" class="bg-yellow-300 text-yellow-700 px-2 py-1 rounded-lg hover:bg-yellow-400 transition">
+                            <i class="bi bi-pencil-square"></i> Edit
                         </a>
+                        <a href="{% url 'partner:verify_partner_detail' partner.id %}" class="bg-red-400 text-white px-2 py-1 rounded-lg hover:bg-red-500 transition">
+                            <i class="bi bi-search"></i> Review
+                        </a>
+                        {% elif request.user.is_authenticated and request.user.is_partner %}
+                        <a href="{% url 'partner:partner_update' partner.id partner.name.slug  %}" class="bg-yellow-300 text-yellow-700 px-2 py-1 rounded-lg hover:bg-yellow-400 transition">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-                    {% elif request.user.is_authenticated and request.user.is_partner %}
-                        <a href="{% url 'partner:partner_update' partner.id partner.name.slug  %}" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i></a>
-                    {% endif %}
-                </td>
-            </tr>
+    <p class="mt-4 text-gray-700">Total: {{ count }} | Page {{ page.number }} of {{ page.paginator.num_pages }}</p>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="inline-flex items-center space-x-2 justify-center">
+            {% if page.has_previous %}
+            <li>
+                <a class="page-link bg-white border px-3 py-1 rounded-md hover:bg-gray-100" href="?page={{ page.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Previous</a>
+            </li>
+            {% endif %}
+
+            {% for num in page.paginator.page_range %}
+            <li>
+                <a class="page-link bg-white border px-3 py-1 rounded-md {% if page.number == num %}bg-gray-200{% endif %}" href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ num }}</a>
+            </li>
             {% endfor %}
-        </tbody>
-    </table>
-</div>
 
-<p>Total: {{ count }} | Page {{ page.number }} of {{ page.paginator.num_pages }}</p>
+            {% if page.has_next %}
+            <li>
+                <a class="page-link bg-white border px-3 py-1 rounded-md hover:bg-gray-100" href="?page={{ page.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
 
-<!-- Pagination -->
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-        {% if page.has_previous %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ page.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Previous</a>
-        </li>
-        {% endif %}
-
-        {% for num in page.paginator.page_range %}
-        <li class="page-item {% if page.number == num %}active{% endif %}">
-            <a class="page-link" href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ num }}</a>
-        </li>
-        {% endfor %}
-
-        {% if page.has_next %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ page.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next</a>
-        </li>
-        {% endif %}
-    </ul>
-</nav>
+</section>
 
 {% endblock %}

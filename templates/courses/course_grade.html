@@ -1,192 +1,134 @@
 {% extends 'home/tes.html' %}
 {% block content %}
 
+{% include "courses/course_set.html"%}
 
+<div class="max-w-2xl mx-auto mt-8 bg-white/70 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-gray-200">
 
-       
-        {% include "courses/course_set.html"%}
-        <hr>  
-        <style>
-            body {
-                margin: 40px;
-            }
-        
-            .wrapper {
-                background-color: #fff;
-                color: #444;
-                display: flex;
-            }
-        
-            .box {
-                color: #fff;
-                border-radius: 5px;
-                padding: 20px;
-                font-size: 150%;
-                box-sizing: border-box;
-                flex: 1 1 auto;
-            }
-        
-            #box-fail {
-                background-color: #e74c3c; /* Red for Fail */
-            }
-        
-            #box-pass {
-                background-color: #2ecc71; /* Green for Pass */
-            }
-        
-            .handler {
-                width: 20px;
-                padding: 0;
-                cursor: ew-resize;
-                flex: 0 0 auto;
-            }
-        
-            .handler::before {
-                content: '';
-                display: block;
-                width: 4px;
-                height: 100%;
-                background: black;
-                margin: 0 auto;
-            }
-        </style>
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+        <span class="w-2 h-6 bg-indigo-500 rounded"></span>
+        Overall Grade Range
+    </h2>
 
-        
-            <h6>Overall Grade Ranges<h6>
-            <div class="wrapper">
-                <div class="box" id="box-fail" style="width: {{ fail_width }}%;">Fail 
-                    <span id="fail-range">0-{{ fail_range_max }}</span>
-                </div>
-                <div class="handler"></div>
-                <div class="box" id="box-pass" style="width: {{ pass_width }}%;">Pass 
-                    <span id="pass-range">{{ pass_range_min }}-100</span>
-                </div>
-            </div>
-            
-            
-           
-       
+    <!-- FAIL -->
+    <div class="mb-5">
+        <label class="block mb-1 text-gray-700 font-semibold">Fail Range (0 – X)</label>
+        <input id="failInput" 
+               type="number" 
+               min="0" 
+               max="99"
+               class="border border-gray-300 p-2 w-full rounded-lg focus:ring-2 focus:ring-red-400"
+               value="{{ fail_range_max }}">
+    </div>
 
-<hr>
-            <table class="table">
-            <thead>
+    <!-- SLIDER WRAPPER -->
+    <div class="relative pt-6 pb-8">
+        <input 
+            id="gradeSlider"
+            type="range" 
+            min="0" 
+            max="99" 
+            value="{{ fail_range_max }}"
+            class="
+                w-full h-3 rounded-lg appearance-none cursor-pointer
+                bg-gradient-to-r from-red-400 via-yellow-400 to-green-500
+            ">
+        
+        <!-- VALUE LABEL ABOVE -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 -top-2 px-3 py-1 bg-gray-800 text-white text-xs rounded shadow">
+            <span id="labelFail">{{ fail_range_max }}</span>
+        </div>
+    </div>
+
+    <!-- PASS -->
+    <div class="mt-5">
+        <label class="block mb-1 text-gray-700 font-semibold">Pass Range (X+1 – 100)</label>
+        <input id="passInput" 
+               type="number" 
+               min="1" 
+               max="100"
+               class="border border-gray-300 p-2 w-full rounded-lg focus:ring-2 focus:ring-green-400"
+               value="{{ pass_range_min }}">
+    </div>
+
+</div>
+
+<!-- TABLE SECTION -->
+<div class="max-w-3xl mx-auto mt-12 bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+
+    <h3 class="text-xl font-bold mb-4">Assessment List</h3>
+
+    <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+        <thead class="bg-gray-100 text-gray-800">
             <tr>
-
-            <th scope="col">name</th>
-            <th scope="col">weight</th>
-
-            <th scope="col">duration</th>
-
+                <th class="px-4 py-2 border">Name</th>
+                <th class="px-4 py-2 border">Weight</th>
+                <th class="px-4 py-2 border">Duration</th>
             </tr>
-            </thead>
-            <tbody>
+        </thead>
 
+        <tbody>
             {% if assessments %}
-            {% for assessment in assessments %}
-            <tr>
+                {% for assessment in assessments %}
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-4 py-2 border">{{ assessment.name }}</td>
+                    <td class="px-4 py-2 border">{{ assessment.weight }}%</td>
+                    <td class="px-4 py-2 border">{{ assessment.duration_in_minutes }} minutes</td>
+                </tr>
+                {% endfor %}
 
+                <tr class="bg-gray-100 font-semibold">
+                    <td class="px-4 py-2 border text-right">Total Weight</td>
+                    <td class="px-4 py-2 border" colspan="2">{{ total_weight }}%</td>
+                </tr>
 
-            <td>{{ assessment.name }}</td>
-            <td>{{ assessment.weight }}%</td>
-
-            <td>{{ assessment.duration_in_minutes }} minutes</td>
-
-
-            </tr>
-            
-            {% endfor %}
-            <tr>
-      <th scope="row">Total Weight</th>
-      <td scope="col" colspan="2">{{ total_weight }}%</td>
-     
-    </tr>
-
-            
             {% else %}
-            <p>No assessments available for this course.</p>
+            <tr>
+                <td colspan="3" class="text-center py-4 text-gray-500">
+                    No assessments available for this course.
+                </td>
+            </tr>
             {% endif %}
-            </tbody>
-            </table>
-            <a href="{% if sections and sections.0.id %}{% url 'courses:create-assessment' course.id sections.0.id %}{% else %}#{% endif %}" class="btn btn-info btn-sm">
-                add weight assessment
-            </a>
-            
+        </tbody>
+    </table>
 
-{% endblock %}
- {% block scripts %}
- 
-  <script>
-    const handler = document.querySelector('.handler');
-    const wrapper = handler.closest('.wrapper');
-    const boxFail = wrapper.querySelector('#box-fail');
-    const boxPass = wrapper.querySelector('#box-pass');
-    const failRange = document.querySelector('#fail-range');
-    const passRange = document.querySelector('#pass-range');
-    
-    let isHandlerDragging = false;
-    
-    document.addEventListener('mousedown', function (e) {
-        if (e.target === handler) {
-            isHandlerDragging = true;
-        }
-    });
-    
-    document.addEventListener('mousemove', function (e) {
-        if (!isHandlerDragging) return;
-    
-        const containerOffsetLeft = wrapper.offsetLeft;
-        const pointerRelativeXpos = e.clientX - containerOffsetLeft;
-        const wrapperWidth = wrapper.offsetWidth;
-    
-        const boxFailMinWidth = 50; // Minimum width for Fail
-        const boxFailWidth = Math.max(boxFailMinWidth, pointerRelativeXpos);
-        const boxPassWidth = wrapperWidth - boxFailWidth - handler.offsetWidth;
-    
-        // Update box widths
-        boxFail.style.width = `${boxFailWidth}px`;
-        boxPass.style.width = `${boxPassWidth}px`;
-    
-        // Calculate grade ranges based on widths
-        const totalRange = 100; // Assuming grades are between 0 and 100
-        const failMax = Math.floor((boxFailWidth / wrapperWidth) * totalRange);
-        const passMin = failMax + 1;
-    
-        // Update the displayed range values
-        failRange.textContent = `0-${failMax}`;
-        passRange.textContent = `${passMin}-100`;
-    });
-    
-    document.addEventListener('mouseup', function () {
-        if (!isHandlerDragging) return;
-    
-        isHandlerDragging = false;
-    
-        // Get percentages for AJAX submission
-        const wrapperWidth = wrapper.offsetWidth;
-        const failWidthPercentage = ((boxFail.offsetWidth / wrapperWidth) * 100).toFixed(2);
-        const passWidthPercentage = ((boxPass.offsetWidth / wrapperWidth) * 100).toFixed(2);
-    
-        // Send updated values to the backend
+    <a href="{% if sections and sections.0.id %}{% url 'courses:create-assessment' course.id sections.0.id %}{% else %}#{% endif %}" 
+       class="mt-4 inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg shadow">
+        + Add Assessment
+    </a>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const slider = document.getElementById("gradeSlider");
+    const failInput = document.getElementById("failInput");
+    const passInput = document.getElementById("passInput");
+    const failLabel = document.getElementById("labelFail");
+
+    const sync = (value) => {
+        const v = Math.min(Math.max(value, 0), 99);
+
+        slider.value = v;
+        failInput.value = v;
+        passInput.value = Number(v) + 1;
+        failLabel.textContent = v;
+
+        // Update Django (AJAX)
         fetch("{% url 'courses:update_grade_range' course.id %}", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
                 "X-CSRFToken": "{{ csrf_token }}",
             },
-            body: `fail_width=${failWidthPercentage}&pass_width=${passWidthPercentage}`,
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    console.log(data.message);
-                } else {
-                    console.error("Failed to update grade ranges:", data.message);
-                }
-            })
-            .catch((error) => console.error("Error:", error));
-    });
-    
-    </script>
+            body: `fail_width=${v}&pass_width=${100 - v}`
+        });
+    };
 
+    slider.oninput = (e) => sync(e.target.value);
+    failInput.oninput = (e) => sync(e.target.value);
+});
+</script>
 
 {% endblock %}

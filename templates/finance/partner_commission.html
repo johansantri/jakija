@@ -1,24 +1,24 @@
 {% extends 'home/tes.html' %}
 {% load humanize %}
-
 {% block content %}
-<h2 class="mb-4">Payment Transaction Report</h2>
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+<h2 class="mb-4 text-xl font-bold">Payment Transaction Report</h2>
 
 <!-- Filter Form -->
-<form method="get" class="row g-3 mb-4">
-  <div class="col-md-3">
-    <label class="form-label">Start Date:</label>
-    <input type="date" class="form-control" name="start_date" value="{{ request.GET.start_date }}">
+<form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
+  <div class="md:col-span-1">
+    <label class="block text-sm font-medium text-gray-700 mb-1">Start Date:</label>
+    <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" name="start_date" value="{{ request.GET.start_date }}">
   </div>
-  <div class="col-md-3">
-    <label class="form-label">End Date:</label>
-    <input type="date" class="form-control" name="end_date" value="{{ request.GET.end_date }}">
+  <div class="md:col-span-1">
+    <label class="block text-sm font-medium text-gray-700 mb-1">End Date:</label>
+    <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" name="end_date" value="{{ request.GET.end_date }}">
   </div>
 
   {% if request.user.is_superuser or request.user.is_finance %}
-    <div class="col-md-3">
-      <label class="form-label">Partner Organization:</label>
-      <select class="form-control" name="partner_id">
+    <div class="md:col-span-1">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Partner Organization:</label>
+      <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" name="partner_id">
         <option value="">All</option>
         {% for partner in partners %}
           <option value="{{ partner.id }}" {% if request.GET.partner_id == partner.id|stringformat:"s" %}selected{% endif %}>
@@ -27,185 +27,178 @@
         {% endfor %}
       </select>
     </div>
-  {% endif %}
-
-  <div class="col-md-3">
-    <label class="form-label">Search Transaction ID:</label>
-    <input type="text" class="form-control" name="search" value="{{ search_query }}" placeholder="e.g. 12345">
+  {% endif %}  <div class="md:col-span-1">
+    <label class="block text-sm font-medium text-gray-700 mb-1">Search Transaction ID:</label>
+    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" name="search" value="{{ search_query }}" placeholder="e.g. 12345">
   </div>
 
-  <div class="col-md-12">
-    <button type="submit" class="btn btn-primary">Apply Filter</button>
+  <div class="md:col-span-4">
+    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md transition-colors duration-150">Apply Filter</button>
   </div>
 </form>
 
 <!-- Summary -->
-<div class="card-group">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
 
   <!-- Gross Revenue -->
-  <div class="card text-center">
-    <div class="card-body">
-      <h5 class="card-title text-muted">Gross Revenue</h5>
-      <p class="card-text fs-4 fw-bold">{{ total_paid|floatformat:2|intcomma }}</p>
+  <div class="bg-white border border-gray-200 rounded-md text-center">
+    <div class="p-4">
+      <h5 class="text-sm font-medium text-gray-500 mb-2">Gross Revenue</h5>
+      <p class="text-2xl font-bold text-gray-900">{{ total_paid|floatformat:2|intcomma }}</p>
     </div>
   </div>
 
   <!-- Net Revenue (ICE Partner) -->
-  <div class="card text-center">
-    <div class="card-body">
-      <h5 class="card-title text-muted">Net Revenue</h5>
-      <p class="card-text fs-4 fw-bold text-success">{{ net_income_partner|floatformat:2|intcomma }}</p>
+  <div class="bg-white border border-gray-200 rounded-md text-center">
+    <div class="p-4">
+      <h5 class="text-sm font-medium text-gray-500 mb-2">Net Revenue</h5>
+      <p class="text-2xl font-bold text-green-600">{{ net_income_partner|floatformat:2|intcomma }}</p>
     </div>
   </div>
 
 {% if user.is_superuser or user.is_finance %}
   <!-- ICE Admin Revenue -->
-  <div class="card text-center">
-    <div class="card-body">
-      <h5 class="card-title text-muted">LMSKu Revenue</h5>
-      <p class="card-text fs-4 fw-bold text-primary">{{ net_income_admin|floatformat:2|intcomma }}</p>
+  <div class="bg-white border border-gray-200 rounded-md text-center">
+    <div class="p-4">
+      <h5 class="text-sm font-medium text-gray-500 mb-2">LMSKu Revenue</h5>
+      <p class="text-2xl font-bold text-blue-600">{{ net_income_admin|floatformat:2|intcomma }}</p>
     </div>
   </div>
-  {% endif %}
-
-</div>
-
-
-
-
-
-
-
-
+  {% endif %}</div>
 
 <!-- Payment Model Summary Table -->
- <div class="table-responsive">
-<table class="table table-bordered table-striped">
-  <thead>
+ <div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200 bg-white border border-gray-300">
+  <thead class="bg-gray-50">
     <tr>
-      <th>Payment Model</th>
-      <th>Status</th>
-      <th>Total Amount</th>
-      <th>Transaction Count</th>
+      <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment Model</th>
+      <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+      <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Amount</th>
+      <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction Count</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="bg-white divide-y divide-gray-200">
     {% for item in summary %}
-      <tr>
-        <td>{{ item.payment_model }}</td>
-        <td>{{ item.status|capfirst }}</td>
-        <td>{{ item.total_amount|floatformat:0|intcomma }}</td>
-        <td>{{ item.count }}</td>
+      <tr class="hover:bg-gray-50 transition-colors duration-150">
+        <td class="px-4 py-3 text-sm text-gray-900">{{ item.payment_model }}</td>
+        <td class="px-4 py-3 text-sm text-gray-900">{{ item.status|capfirst }}</td>
+        <td class="px-4 py-3 text-sm text-gray-900">{{ item.total_amount|floatformat:0|intcomma }}</td>
+        <td class="px-4 py-3 text-sm text-gray-900">{{ item.count }}</td>
       </tr>
     {% empty %}
-      <tr><td colspan="4">No data available.</td></tr>
+      <tr>
+        <td colspan="4" class="px-4 py-3 text-center text-gray-500">No data available.</td>
+      </tr>
     {% endfor %}
   </tbody>
 </table>
 </div>
 <!-- Transaction Table -->
-<h4 class="mt-5">Recent Transactions</h4>
-<div class="table-responsive">
-  <table class="table table-hover table-sm align-middle">
-    <thead class="table-light">
+<h4 class="mt-5 text-lg font-semibold">Recent Transactions</h4>
+<div class="overflow-x-auto">
+  <table class="min-w-full divide-y divide-gray-200 bg-white">
+    <thead class="bg-gray-50">
       <tr>
-        <th>ID</th>
-        <th>User</th>
-        <th>Course</th>
-        <th>Partner</th>
-        <th>Model</th>
-        <th>Status</th>
-        <th>Amount</th>
-        <th>Date</th>
+        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Partner</th>
+        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
+        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="bg-white divide-y divide-gray-200">
       {% for p in page_obj %}
-        <tr>
-          <td>
-             <a href="{% url 'payments:payment_detail' p.id %}" class="btn btn-sm btn-outline-primary">
-                <i class="bi bi-receipt"></i> {{ p.transaction_id|default:p.linked_transaction.transaction_id|default:"-" }}
+        <tr class="hover:bg-gray-50 transition-colors duration-150">
+          <td class="px-4 py-2">
+             <a href="{% url 'payments:payment_detail' p.id %}" class="inline-flex items-center px-2 py-1 text-xs font-medium border border-blue-500 text-blue-500 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md transition-colors duration-150">
+                <i class="bi bi-receipt mr-1"></i> {{ p.transaction_id|default:p.linked_transaction.transaction_id|default:"-" }}
             </a>
                         
-              </td>
-          <td>
-            <a href="{% url 'payments:cek_transaction_detail' pk=p.linked_transaction.id %}" class="btn btn-sm btn-outline-warning">
-              <i class="bi bi-person"></i>{{ p.user.username }}
-            </a>
           </td>
-          <td>{{ p.course.course_name }}</td>
-          <td>{{ p.course.org_partner.name }}</td>
-          <td>{{ p.get_payment_model_display }}</td>
-          <td>
-            <span class="badge 
-              {% if p.status == 'completed' %} bg-success
-              {% elif p.status == 'pending' %} bg-warning text-dark
-              {% else %} bg-danger {% endif %}">
-              {{ p.status|capfirst }}
-            </span>
-          </td>
-          <td> {{ p.amount|floatformat:0|intcomma }}</td>
-          <td>{{ p.created_at|date:"Y-m-d H:i" }}</td>
-        </tr>
-      {% empty %}
-        <tr>
-          <td colspan="8" class="text-center text-muted">No transactions found.</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      <td class="px-4 py-2">
+        <a href="{% url 'payments:cek_transaction_detail' pk=p.linked_transaction.id %}" class="inline-flex items-center px-2 py-1 text-xs font-medium border border-yellow-500 text-yellow-500 bg-white hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 rounded-md transition-colors duration-150">
+          <i class="bi bi-person mr-1"></i>{{ p.user.username }}
+        </a>
+      </td>
+      <td class="px-4 py-2 text-sm text-gray-900">{{ p.course.course_name }}</td>
+      <td class="px-4 py-2 text-sm text-gray-900">{{ p.course.org_partner.name }}</td>
+      <td class="px-4 py-2 text-sm text-gray-900">{{ p.get_payment_model_display }}</td>
+      <td class="px-4 py-2">
+        <span class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full 
+          {% if p.status == 'completed' %}bg-green-100 text-green-800
+          {% elif p.status == 'pending' %}bg-yellow-100 text-yellow-800
+          {% else %} bg-red-100 text-red-800 {% endif %}">
+          {{ p.status|capfirst }}
+        </span>
+      </td>
+      <td class="px-4 py-2 text-sm text-gray-900"> {{ p.amount|floatformat:0|intcomma }}</td>
+      <td class="px-4 py-2 text-sm text-gray-900">{{ p.created_at|date:"Y-m-d H:i" }}</td>
+    </tr>
+  {% empty %}
+    <tr>
+      <td colspan="8" class="px-4 py-3 text-center text-gray-500">No transactions found.</td>
+    </tr>
+  {% endfor %}
+</tbody>  </table>
 </div>
-
-
 <!-- Pagination -->
-{% if page_obj.has_other_pages %}
-<nav aria-label="Pagination">
-  <ul class="pagination justify-content-center">
+{% if page_obj.has_other_pages %}<nav aria-label="Pagination" class="mt-4">
+  <ul class="flex justify-center space-x-0.5">
     {% if page_obj.has_previous %}
-      <li class="page-item">
-        <a class="page-link" href="?page=1&{{ querystring }}">« First</a>
+      <li>
+        <a class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
+           href="?page=1&{{ querystring }}">« First</a>
       </li>
-      <li class="page-item">
-        <a class="page-link" href="?page={{ page_obj.previous_page_number }}&{{ querystring }}">‹ Prev</a>
+      <li>
+        <a class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
+           href="?page={{ page_obj.previous_page_number }}&{{ querystring }}">‹ Prev</a>
       </li>
     {% endif %}
 
-    <li class="page-item active">
-      <span class="page-link">{{ page_obj.number }}</span>
-    </li>
+<li>
+  <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-md"> {{ page_obj.number }} </span>
+</li>
 
-    {% if page_obj.has_next %}
-      <li class="page-item">
-        <a class="page-link" href="?page={{ page_obj.next_page_number }}&{{ querystring }}">Next ›</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&{{ querystring }}">Last »</a>
-      </li>
-    {% endif %}
-  </ul>
+{% if page_obj.has_next %}
+  <li>
+    <a class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
+       href="?page={{ page_obj.next_page_number }}&{{ querystring }}">Next ›</a>
+  </li>
+  <li>
+    <a class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
+       href="?page={{ page_obj.paginator.num_pages }}&{{ querystring }}">Last »</a>
+  </li>
+{% endif %}  </ul>
 </nav>
 {% endif %}
 
 <!-- Superuser Course Summary -->
 {% if partner_courses %}
-  <h4 class="mt-5">Total Payment per Course </h4>
-  <table class="table table-bordered table-sm">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Partner</th>
-        <th>Total Payment</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for c in partner_courses %}
+  <h4 class="mt-5 text-lg font-semibold">Total Payment per Course </h4>
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200 bg-white border border-gray-300">
+      <thead class="bg-gray-50">
         <tr>
-          <td> <a href="{% url 'payments:report_per_course_detail' c.id %}">{{ c.course_name }} </a></td>
-          <td>{{ c.org_partner__name__name }}</td>
-          <td>Rp {{ c.total_amount|floatformat:0|intcomma }}</td>
+          <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+          <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Partner</th>
+          <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Payment</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        {% for c in partner_courses %}
+          <tr class="hover:bg-gray-50 transition-colors duration-150">
+            <td class="px-4 py-2 text-sm text-gray-900"> <a href="{% url 'payments:report_per_course_detail' c.id %}" class="text-blue-600 hover:text-blue-800 font-medium">{{ c.course_name }} </a></td>
+            <td class="px-4 py-2 text-sm text-gray-900">{{ c.org_partner__name__name }}</td>
+            <td class="px-4 py-2 text-sm text-gray-900">Rp {{ c.total_amount|floatformat:0|intcomma }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endif %}
+</section>
 {% endblock %}
+

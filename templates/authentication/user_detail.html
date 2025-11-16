@@ -3,299 +3,244 @@
 
 {% block content %}
 
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+    <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 md:p-8">
+
+        <!-- Title -->
+        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            <i class="fas fa-building text-yellow-500"></i>
+            Personal Information 
+        </h3>
+
     <!-- User Profile Card -->
-    <div class="card shadow-lg border-0 profile-card animate__animated animate__fadeIn">
-        <div class="card-header bg-gradient-primary text-white text-center position-relative overflow-hidden">
-            <h4 class="mb-0">{{ user.get_full_name }}</h4>
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+        
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 text-center">
+            <h4 class="text-2xl font-bold">{{ user.get_full_name }}</h4>
         </div>
-        {% if user.photo %}
-            <div class="text-center mb-4">
-                <img src="{{ user.photo.url }}" class="rounded-circle img-thumbnail img-fluid mx-auto d-block" alt="User Photo" style="width: 150px; height: 150px; object-fit: cover;">
 
-            </div>
-        {% else %}
-            <div class="text-center mb-4">
-                <img src="{% static 'images/default-avatar.png' %}" class="rounded-circle img-thumbnail" alt="Default Photo" style="width: 150px; height: 150px; object-fit: cover;">
-            </div>
-        {% endif %}
+        <!-- Profile Photo -->
+        <div class="flex justify-center -mt-12">
+            {% if user.photo %}
+                <img src="{{ user.photo.url }}" alt="User Photo" 
+                     class="w-28 h-28 rounded-full border-4 border-white shadow-lg object-cover">
+            {% else %}
+                <img src="{% static 'images/default-avatar.png' %}" alt="Default Photo" 
+                     class="w-28 h-28 rounded-full border-4 border-white shadow-lg object-cover">
+            {% endif %}
+        </div>
 
-        <div class="card-body p-3 p-md-4">
-            <h5 class="fw-semibold mb-3 text-primary">Informasi Pribadi</h5>
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Mobile View -->
-                    <ul class="list-group mobile-list d-md-none">
-                        <li class="list-group-item"><strong><i class="fas fa-user me-2"></i>Username:</strong> {{ user.username }}</li>
-                        <li class="list-group-item"><strong><i class="fas fa-envelope me-2"></i>Email:</strong> {{ user.email }}</li>
-                        <li class="list-group-item"><strong><i class="fas fa-signature me-2"></i>First Name:</strong> {{ user.first_name }}</li>
-                        <li class="list-group-item"><strong><i class="fas fa-signature me-2"></i>Last Name:</strong> {{ user.last_name }}</li>
-                        <li class="list-group-item"><strong><i class="fas fa-venus-mars me-2"></i>Gender:</strong> {{ user.get_gender_display }}</li>
-                        <li class="list-group-item"><strong><i class="fas fa-birthday-cake me-2"></i>Date of Birth:</strong> {{ user.birth|date:"M d, ****" }}</li>
-                        <li class="list-group-item"><strong><i class="fas fa-map-marker-alt me-2"></i>Address:</strong> {{ user.address }}</li>
-                        <li class="list-group-item"><strong><i class="fas fa-globe me-2"></i>Country:</strong> {{ user.country }}</li>
-                        <li class="list-group-item"><strong><i class="fas fa-phone me-2"></i>Phone:</strong> ********{{ user.phone|slice:"-4:" }}</li>
-                        <li class="list-group-item"><strong><i class="fas fa-graduation-cap me-2"></i>Education:</strong> {{ user.get_education_display }}</li>
-                        <li class="list-group-item"><strong><i class="fas fa-university me-2"></i>University:</strong> {{ user.university }}</li>
-                    </ul>
+        <!-- Personal Info -->
+        <div class="p-6 pt-16">
+           
+
+            <!-- Mobile List -->
+            <div class="space-y-3 md:hidden">
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="font-medium text-gray-600 flex items-center gap-2">
+                        Username
+                    </span>
+                    <span class="text-gray-800">{{ user.username }}</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="font-medium text-gray-600 flex items-center gap-2">
+                        Email
+                    </span>
+                    <span class="text-gray-800">{{ user.email }}</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="font-medium text-gray-600 flex items-center gap-2">
+                        First Name
+                    </span>
+                    <span class="text-gray-800">{{ user.first_name }}</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="font-medium text-gray-600 flex items-center gap-2">
+                        Last Name
+                    </span>
+                    <span class="text-gray-800">{{ user.last_name }}</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="font-medium text-gray-600 flex items-center gap-2">
+                        Gender
+                    </span>
+                    <span class="text-gray-800">{{ user.get_gender_display }}</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="font-medium text-gray-600 flex items-center gap-2">
+                        Date of Birth
+                    </span>
+                    <span class="text-gray-800">{{ user.birth|date:"M d, ****" }}</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="font-medium text-gray-600 flex items-center gap-2">
+                        Address
+                    </span>
+                    <span class="text-gray-800">{{ user.address|default:"-" }}</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="font-medium text-gray-600 flex items-center gap-2">
+                        Country
+                    </span>
+                    <span class="text-gray-800">{{ user.country }}</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="font-medium text-gray-600 flex items-center gap-2">
+                        Phone
+                    </span>
+                    <span class="text-gray-800">********{{ user.phone|slice:"-4:" }}</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="font-medium text-gray-600 flex items-center gap-2">
+                        Education
+                    </span>
+                    <span class="text-gray-800">{{ user.get_education_display }}</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="font-medium text-gray-600 flex items-center gap-2">
+                        University
+                    </span>
+                    <span class="text-gray-800">{{ user.university|default:"-" }}</span>
                 </div>
             </div>
-            <!-- Desktop View -->
-            <div class="table-responsive d-none d-md-block mt-4">
-                <table class="table table-bordered table-striped">
-                    <tbody>
-                        <tr><th>Username</th><td>{{ user.username }}</td></tr>
-                        <tr><th>Email</th><td>{{ user.email }}</td></tr>
-                        <tr><th>First Name</th><td>{{ user.first_name }}</td></tr>
-                        <tr><th>Last Name</th><td>{{ user.last_name }}</td></tr>
-                        <tr><th>Gender</th><td>{{ user.get_gender_display }}</td></tr>
-                        <tr><th>Date of Birth</th><td>{{ user.birth|date:"M d, ****" }}</td></tr>
-                        <tr><th>Address</th><td>{{ user.address }}</td></tr>
-                        <tr><th>Country</th><td>{{ user.country }}</td></tr>
-                        <tr><th>Phone</th><td>********{{ user.phone|slice:"-4:" }}</td></tr>
-                        <tr><th>Education</th><td>{{ user.get_education_display }}</td></tr>
-                        <tr><th>University</th><td>{{ user.university }}</td></tr>
+
+            <!-- Desktop Table -->
+            <div class="hidden md:block overflow-x-auto">
+                <table class="w-full text-sm">
+                    <tbody class="divide-y divide-gray-200">
+                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600 w-48">Username</th><td class="py-3 px-4">{{ user.username }}</td></tr>
+                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Email</th><td class="py-3 px-4">{{ user.email }}</td></tr>
+                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">First Name</th><td class="py-3 px-4">{{ user.first_name }}</td></tr>
+                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Last Name</th><td class="py-3 px-4">{{ user.last_name }}</td></tr>
+                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Gender</th><td class="py-3 px-4">{{ user.get_gender_display }}</td></tr>
+                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Date of Birth</th><td class="py-3 px-4">{{ user.birth|date:"M d, ****" }}</td></tr>
+                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Address</th><td class="py-3 px-4">{{ user.address|default:"-" }}</td></tr>
+                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Country</th><td class="py-3 px-4">{{ user.country }}</td></tr>
+                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Phone</th><td class="py-3 px-4">********{{ user.phone|slice:"-4:" }}</td></tr>
+                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Education</th><td class="py-3 px-4">{{ user.get_education_display }}</td></tr>
+                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">University</th><td class="py-3 px-4">{{ user.university|default:"-" }}</td></tr>
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 
-    <!-- Search Form -->
-    <div class="mt-4">
-        <form method="GET" class="my-3">
-            <div class="input-group">
-                <input type="text" class="form-control" name="search" placeholder="Search Courses" value="{{ search_query }}">
-                <button class="btn btn-outline-primary" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
+    <!-- Search Courses -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+        <form method="GET" class="flex flex-col sm:flex-row gap-3">
+            <input 
+                type="text" 
+                name="search" 
+                placeholder="Search Courses" 
+                value="{{ search_query }}"
+                class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+            <button type="submit" 
+                    class="px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                Search
+            </button>
         </form>
-
     </div>
 
     <!-- Enrolled Courses -->
-    <div class="card shadow-lg border-0 mt-4 course-card animate__animated animate__fadeIn">
-        <div class="card-header bg-gradient-primary text-white">
-            <h5 class="mt-5 mb-3 border-bottom pb-2 text-primary">Enrolled Courses</h5>
-
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-5">
+            <h5 class="text-xl font-bold">Enrolled Courses</h5>
         </div>
-        <div class="card-body p-3 p-md-4">
+        <div class="p-6">
+
             <!-- Desktop Table -->
-            <div class="table-responsive d-none d-md-block">
-                <table class="table table-hover table-bordered align-middle">
-                    <thead>
+            <div class="hidden md:block overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-50 border-b border-gray-200">
                         <tr>
-                            <th>Course Title</th>
-                            <th>Threshold</th>
-                            <th>Total Score</th>
-                            <th>Status</th>
+                            <th class="py-3 px-4 text-left font-medium text-gray-700">Course Title</th>
+                            <th class="py-3 px-4 text-left font-medium text-gray-700">Threshold</th>
+                            <th class="py-3 px-4 text-left font-medium text-gray-700">Total Score</th>
+                            <th class="py-3 px-4 text-left font-medium text-gray-700">Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="divide-y divide-gray-200">
                         {% for course in course_details %}
-                            <tr>
-                                <td>{{ course.course_name }}</td>
-                                <td>{{ course.passing_threshold }}</td>
-                                <td>{{ course.total_score|floatformat:2  }} / {{ course.total_max_score }}</td>
-                                <td>
-                                    <span class="badge {% if course.status == 'Pass' %}bg-success{% else %}bg-danger{% endif %}">
-                                        {{ course.status }}
-                                    </span>
-                                </td>
-                            </tr>
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="py-3 px-4">{{ course.course_name }}</td>
+                            <td class="py-3 px-4">{{ course.passing_threshold }}</td>
+                            <td class="py-3 px-4">{{ course.total_score|floatformat:2 }} / {{ course.total_max_score }}</td>
+                            <td class="py-3 px-4">
+                                <span class="inline-flex px-3 py-1 rounded-full text-xs font-medium
+                                    {% if course.status == 'Pass' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                                    {{ course.status }}
+                                </span>
+                            </td>
+                        </tr>
                         {% empty %}
-                            <tr><td colspan="4" class="text-center text-muted">No courses found.</td></tr>
+                        <tr><td colspan="4" class="py-8 text-center text-gray-500">No courses found.</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
 
             <!-- Mobile Cards -->
-            <div class="row g-3 d-md-none">
+            <div class="grid gap-4 md:hidden">
                 {% for course in course_details %}
-                    <div class="col-12">
-                        <div class="card shadow-sm course-mobile-card animate__animated animate__fadeInUp">
-                            <div class="card-body p-3">
-                                <h6 class="fw-semibold mb-2">{{ course.course_name }}</h6>
-                                <p class="mb-1 small"><i class="fas fa-tachometer-alt me-2"></i>Score: {{ course.total_score }} / {{ course.total_max_score }}</p>
-                                <p class="mb-0 small">
-                                    <i class="fas fa-check-circle me-2"></i>Status: 
-                                    <span class="badge {% if course.status == 'Pass' %}bg-success{% else %}bg-danger{% endif %}">
-                                        {{ course.status }}
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 hover:shadow-md transition">
+                    <h6 class="font-semibold text-gray-800 mb-2">{{ course.course_name }}</h6>
+                    <p class="text-sm text-gray-600 mb-1">
+                        Score: <strong>{{ course.total_score|floatformat:2 }} / {{ course.total_max_score }}</strong>
+                    </p>
+                    <p class="text-sm">
+                        Status:
+                        <span class="inline-flex px-2 py-1 rounded-full text-xs font-medium ml-1
+                            {% if course.status == 'Pass' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                            {{ course.status }}
+                        </span>
+                    </p>
+                </div>
                 {% empty %}
-                    <div class="col-12 text-center text-muted">No courses found.</div>
+                <p class="text-center text-gray-500 py-6">No courses found.</p>
                 {% endfor %}
             </div>
 
             <!-- Pagination -->
-            <nav class="mt-4">
-                <ul class="pagination justify-content-center">
-                    {% if course_details.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ course_details.previous_page_number }}&search={{ search_query }}">
-                                <i class="fas fa-angle-left"></i>
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled"><span class="page-link"><i class="fas fa-angle-left"></i></span></li>
-                    {% endif %}
+            {% if course_details.has_other_pages %}
+            <nav class="flex justify-center mt-6 space-x-1">
+                {% if course_details.has_previous %}
+                <a href="?page={{ course_details.previous_page_number }}&search={{ search_query }}"
+                   class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 transition">
+                    Previous
+                </a>
+                {% else %}
+                <span class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 text-gray-400">Previous</span>
+                {% endif %}
 
-                    {% for num in course_details.paginator.page_range %}
-                        <li class="page-item {% if course_details.number == num %}active{% endif %}">
-                            <a class="page-link" href="?page={{ num }}&search={{ search_query }}">{{ num }}</a>
-                        </li>
-                    {% endfor %}
+                {% for num in course_details.paginator.page_range %}
+                <a href="?page={{ num }}&search={{ search_query }}"
+                   class="w-10 h-10 flex items-center justify-center rounded-full text-sm font-medium transition
+                   {% if course_details.number == num %}bg-blue-600 text-white{% else %}border border-gray-300 hover:bg-gray-100{% endif %}">
+                    {{ num }}
+                </a>
+                {% endfor %}
 
-                    {% if course_details.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ course_details.next_page_number }}&search={{ search_query }}">
-                                <i class="fas fa-angle-right"></i>
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled"><span class="page-link"><i class="fas fa-angle-right"></i></span></li>
-                    {% endif %}
-                </ul>
+                {% if course_details.has_next %}
+                <a href="?page={{ course_details.next_page_number }}&search={{ search_query }}"
+                   class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 transition">
+                    Next
+                </a>
+                {% else %}
+                <span class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 text-gray-400">Next</span>
+                {% endif %}
             </nav>
+            {% endif %}
         </div>
     </div>
 
     <!-- Back Button -->
-    <div class="mt-4 text-center">
-        <a href="{% url 'authentication:all-user' %}" class="btn btn-outline-secondary">
-            <i class="fas fa-arrow-left me-2"></i>Back to Users List
+    <div class="text-center">
+        <a href="{% url 'authentication:all-user' %}" 
+           class="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition">
+            Back to Users List
         </a>
     </div>
+</section>
 
-
-<!-- ✅ Responsive & Stylish CSS -->
-<style>
-.profile-card {
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-.bg-gradient-primary {
-    background: linear-gradient(90deg, #007bff, #0056b3);
-}
-
-.styled-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    font-size: 14px;
-}
-
-.styled-table th, .styled-table td {
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-}
-
-.styled-table th {
-    background-color: #f8f9fa;
-    font-weight: 600;
-}
-
-.styled-table tr:nth-child(even) {
-    background-color: #f9f9fa;
-}
-
-.styled-table tr:hover {
-    background-color: #f1f1f1;
-}
-
-.mobile-list {
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.mobile-list .list-group-item {
-    padding: 10px 15px;
-    border-bottom: 1px solid #eee;
-}
-
-.search-form .input-group {
-    border-radius: 25px;
-    overflow: hidden;
-}
-
-.modern-input {
-    border: 1px solid #ced4da;
-    padding: 10px 15px;
-    font-size: 14px;
-}
-
-.modern-btn {
-    padding: 10px 15px;
-    font-size: 14px;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-}
-
-.modern-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.course-mobile-card {
-    border-radius: 10px;
-    background-color: #fff;
-    transition: all 0.3s ease;
-}
-
-.course-mobile-card:hover {
-    background-color: #f8f9fa;
-    transform: scale(1.02);
-}
-
-.pagination .page-link {
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    color: #007bff;
-}
-
-.pagination .active .page-link {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-}
-
-@media (max-width: 767.98px) {
-    .profile-card .card-header h4 {
-        font-size: 18px;
-    }
-
-    .modern-input, .modern-btn {
-        font-size: 13px;
-        padding: 8px 12px;
-    }
-
-    .course-mobile-card h6 {
-        font-size: 15px;
-    }
-
-    .pagination .page-link {
-        width: 30px;
-        height: 30px;
-        font-size: 12px;
-    }
-
-    .course-mobile-card p {
-        font-size: 13px;
-    }
-}
-</style>
 {% endblock %}

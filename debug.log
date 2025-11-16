@@ -1,3 +1,2223 @@
 [INFO] 2025-11-10 13:07:46,516 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-11-10 13:07:47,334 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-11-10 13:07:47,344 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-10 13:39:12,716 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-10 13:39:13,502 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-10 13:39:13,512 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-10 13:39:27,009 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:52:01,029 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:52:44,679 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:53:03,098 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:53:05,832 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:53:06,528 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:53:06,780 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:53:06,913 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:53:07,183 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:53:07,331 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:53:07,688 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:53:08,031 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:53:08,435 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:53:08,676 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:53:09,045 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:06,820 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:09,701 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:10,451 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:10,633 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:10,870 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:11,133 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:11,262 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:11,478 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:11,634 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:11,897 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:12,011 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:12,281 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:12,418 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:12,660 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:12,945 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:54:30,754 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:56:19,051 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:56:19,532 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:56:19,777 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 13:57:02,375 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-10 14:08:59,628 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-10 14:09:00,420 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-10 14:09:00,430 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-10 14:09:03,223 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 14:09:15,145 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 14:09:15,727 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 14:09:15,913 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 14:09:16,252 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 14:09:21,365 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 14:09:26,402 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 14:09:26,967 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 14:09:27,312 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-10 14:09:43,382 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:09:49,236 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:23:04,487 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:24:08,748 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:24:09,274 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:24:09,605 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:26:12,263 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:33:41,938 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:40:39,342 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:40:40,967 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:40:42,676 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:41:18,281 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:41:20,170 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:41:25,208 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:41:29,082 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:41:33,830 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:42:04,340 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:43:19,978 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:43:35,491 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:45:41,913 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:45:49,689 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:45:58,673 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:46:01,656 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:46:38,192 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:46:39,448 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:46:43,049 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:47:46,464 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:48:23,115 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-10 14:50:34,404 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-11-10 14:50:34,411 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-11-10 06:50:34.404092+00:00
+[INFO] 2025-11-10 14:50:34,411 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0", path_info: "/logout/"}.
+[DEBUG] 2025-11-10 14:50:44,231 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-11-10 14:50:44,231 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-11-10 14:50:44,231 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-11-10 06:50:44.231364+00:00
+[INFO] 2025-11-10 14:50:44,829 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0", path_info: "/login/"}.
+[INFO] 2025-11-10 14:50:44,830 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-11-10 06:50:44.231364+00:00
+[DEBUG] 2025-11-10 14:50:44,835 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-11-10 14:50:45,090 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-11-10 14:50:46,839 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-10 14:54:07,453 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-11-10 14:54:07,455 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-11-10 06:54:07.453923+00:00
+[INFO] 2025-11-10 14:54:07,455 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0", path_info: "/logout/"}.
+[DEBUG] 2025-11-10 14:54:16,772 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-11-10 14:54:16,772 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-11-10 14:54:16,773 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-11-10 06:54:16.772748+00:00
+[INFO] 2025-11-10 14:54:17,378 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0", path_info: "/login/"}.
+[INFO] 2025-11-10 14:54:17,379 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-11-10 06:54:16.772748+00:00
+[DEBUG] 2025-11-10 14:54:17,383 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-11-10 14:54:17,639 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-11-10 14:54:19,373 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 14:58:51,486 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-10 14:58:56,486 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=None, last_access_assessment=1
+[DEBUG] 2025-11-10 14:58:56,488 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 1)]
+[DEBUG] 2025-11-10 15:01:09,754 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=None, last_access_assessment=1
+[DEBUG] 2025-11-10 15:01:09,756 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 1)]
+[DEBUG] 2025-11-10 15:01:12,495 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=None, last_access_assessment=1
+[DEBUG] 2025-11-10 15:01:12,497 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 1)]
+[DEBUG] 2025-11-10 15:01:16,572 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=None, last_access_assessment=1
+[DEBUG] 2025-11-10 15:01:16,575 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 1)]
+[DEBUG] 2025-11-10 15:01:20,551 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=None, last_access_assessment=1
+[DEBUG] 2025-11-10 15:01:20,553 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 1)]
+[WARNING] 2025-11-10 15:03:44,695 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-10 15:03:46,368 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=None, last_access_assessment=1
+[DEBUG] 2025-11-10 15:03:46,370 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 1)]
+[DEBUG] 2025-11-10 15:03:51,313 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=None, last_access_assessment=1
+[DEBUG] 2025-11-10 15:03:51,315 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 1)]
+[WARNING] 2025-11-10 15:04:08,553 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-10 15:04:09,256 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=None, last_access_assessment=1
+[DEBUG] 2025-11-10 15:04:09,258 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 1)]
+[DEBUG] 2025-11-10 15:04:10,093 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=None, last_access_assessment=1
+[DEBUG] 2025-11-10 15:04:10,094 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 1)]
+[DEBUG] 2025-11-10 15:04:14,293 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=None, last_access_assessment=1
+[DEBUG] 2025-11-10 15:04:14,296 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 1)]
+[DEBUG] 2025-11-10 15:10:08,266 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-11-10 15:10:08,269 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-11-10 07:10:08.266408+00:00
+[INFO] 2025-11-10 15:10:08,270 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0", path_info: "/logout/"}.
+[DEBUG] 2025-11-10 15:10:19,105 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-11-10 15:10:19,106 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-11-10 15:10:19,106 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-11-10 07:10:19.105888+00:00
+[INFO] 2025-11-10 15:10:19,704 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0", path_info: "/login/"}.
+[INFO] 2025-11-10 15:10:19,705 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-11-10 07:10:19.105888+00:00
+[DEBUG] 2025-11-10 15:10:19,709 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-11-10 15:10:29,180 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-11-10 15:11:29,138 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-10 15:18:30,441 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-11-10 15:18:30,443 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-11-10 07:18:30.441200+00:00
+[INFO] 2025-11-10 15:18:30,443 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0", path_info: "/logout/"}.
+[DEBUG] 2025-11-10 15:18:40,496 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-11-10 15:18:40,496 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-11-10 15:18:40,497 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-11-10 07:18:40.496429+00:00
+[INFO] 2025-11-10 15:18:41,103 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0", path_info: "/login/"}.
+[INFO] 2025-11-10 15:18:41,104 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-11-10 07:18:40.496429+00:00
+[DEBUG] 2025-11-10 15:18:41,108 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-11-10 15:18:41,366 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-11-10 15:18:43,127 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 15:20:29,004 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 15:20:30,274 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-10 15:25:45,992 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-11-10 15:25:45,996 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-11-10 07:25:45.992405+00:00
+[INFO] 2025-11-10 15:25:45,996 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0", path_info: "/logout/"}.
+[DEBUG] 2025-11-10 15:25:54,455 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-11-10 15:25:54,455 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-11-10 15:25:54,455 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-11-10 07:25:54.455114+00:00
+[INFO] 2025-11-10 15:25:55,051 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0", path_info: "/login/"}.
+[INFO] 2025-11-10 15:25:55,052 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-11-10 07:25:54.455114+00:00
+[DEBUG] 2025-11-10 15:25:55,056 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-11-10 15:25:55,310 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-11-10 15:25:56,720 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 15:26:07,478 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 15:40:17,066 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-10 15:41:57,688 [django.request] Internal Server Error: /dasbord/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/authentication/views.py", line 114, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django_ratelimit/decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "/home/x/app/mysite/authentication/views.py", line 945, in dasbord
+    return render(request, 'home/dasbord.html', context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'add_course' not found. 'add_course' is not a valid view function or pattern name.
+[ERROR] 2025-11-10 15:42:46,750 [django.request] Internal Server Error: /dasbord/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/authentication/views.py", line 114, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django_ratelimit/decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "/home/x/app/mysite/authentication/views.py", line 945, in dasbord
+    return render(request, 'home/dasbord.html', context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'add_course' not found. 'add_course' is not a valid view function or pattern name.
+[ERROR] 2025-11-10 15:42:48,402 [django.request] Internal Server Error: /dasbord/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/authentication/views.py", line 114, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django_ratelimit/decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "/home/x/app/mysite/authentication/views.py", line 945, in dasbord
+    return render(request, 'home/dasbord.html', context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'add_course' not found. 'add_course' is not a valid view function or pattern name.
+[INFO] 2025-11-10 15:43:13,878 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-10 15:43:14,684 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-10 15:43:14,694 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-11-10 15:43:17,932 [django.request] Internal Server Error: /dasbord/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/authentication/views.py", line 114, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django_ratelimit/decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "/home/x/app/mysite/authentication/views.py", line 945, in dasbord
+    return render(request, 'home/dasbord.html', context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'add_course' not found. 'add_course' is not a valid view function or pattern name.
+[ERROR] 2025-11-10 15:44:52,505 [django.request] Internal Server Error: /dasbord/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/authentication/views.py", line 114, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django_ratelimit/decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "/home/x/app/mysite/authentication/views.py", line 945, in dasbord
+    return render(request, 'home/dasbord.html', context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'add_course' not found. 'add_course' is not a valid view function or pattern name.
+[ERROR] 2025-11-10 15:45:34,769 [django.request] Internal Server Error: /dasbord/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/authentication/views.py", line 114, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django_ratelimit/decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "/home/x/app/mysite/authentication/views.py", line 945, in dasbord
+    return render(request, 'home/dasbord.html', context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'add_course' not found. 'add_course' is not a valid view function or pattern name.
+[INFO] 2025-11-10 15:45:44,232 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-10 15:45:45,028 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-10 15:45:45,038 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-10 16:19:05,274 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:19:18,565 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:19:39,884 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:19:57,999 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:20:32,727 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:20:37,931 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:20:39,551 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:20:42,230 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:23:07,426 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:23:47,642 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:25:14,457 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:27:00,056 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:28:13,653 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:29:16,809 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:30:06,758 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:30:50,164 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-10 16:33:37,085 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-11 11:05:41,966 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-11 11:05:42,758 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-11 11:05:42,768 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-11 11:11:43,768 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:11:44,711 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:17:35,931 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:19:41,292 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:22:38,140 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:23:57,106 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:27:08,252 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:30:09,310 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-11 11:31:27,143 [django.request] Internal Server Error: /all-user/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 510, in parse
+    compile_func = self.tags[command]
+KeyError: 'endif'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django_ratelimit/decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/authentication/views.py", line 801, in all_user
+    return render(request, 'authentication/all_user.html', context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 567, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 301: 'endif', expected 'endblock'. Did you forget to register or load this tag?
+[WARNING] 2025-11-11 11:33:02,267 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:33:36,560 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:33:46,584 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:34:51,700 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:36:05,977 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:36:33,856 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:36:40,799 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:36:49,670 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:37:46,457 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:37:54,077 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:38:34,655 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:39:11,456 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:40:18,167 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:45:49,408 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:47:24,300 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:47:32,771 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:49:16,180 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:49:18,616 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:49:45,867 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:53:50,893 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 11:55:49,482 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:01:19,463 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:07:31,650 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:09:49,112 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:09:55,038 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:10:00,684 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:10:13,657 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:30:05,670 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:30:08,096 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:31:05,850 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:37:46,715 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:39:23,341 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-11 12:41:16,248 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-11 12:41:17,323 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-11 12:41:17,334 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-11 12:41:20,163 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:45:55,064 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:46:10,934 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:46:59,022 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:47:36,269 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:47:55,548 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:47:59,784 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:48:07,809 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:48:43,484 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:49:14,914 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:50:58,916 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:51:15,313 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:53:00,146 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:53:49,751 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:54:04,702 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:54:05,278 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:54:52,074 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:56:38,175 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 12:59:16,232 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-11 13:00:52,936 [django.request] Internal Server Error: /partner-add/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 327, in render
+    return nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 214, in select_template
+    raise TemplateDoesNotExist(", ".join(not_found))
+django.template.exceptions.TemplateDoesNotExist: partials/_nav_superuser.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 6229, in partner_create_view
+    return render(request, 'partner/partner_add.html', {'form': form})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 109, in render
+    reraise(exc, self.backend)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 130, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: partials/_nav_superuser.html
+[WARNING] 2025-11-11 13:00:52,997 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:03:14,046 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:04:11,535 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:04:33,043 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:04:42,148 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:04:46,860 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:11:25,320 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:14:41,811 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:14:56,728 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:15:01,843 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:16:04,271 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:16:07,077 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:19:40,751 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:20:22,242 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:23:39,293 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:24:04,320 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:29:41,511 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:29:44,908 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:29:53,900 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:31:01,342 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-11 13:31:09,808 [django.utils.autoreload] /home/x/app/mysite/partner/views.py changed, reloading.
+[INFO] 2025-11-11 13:31:10,941 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-11 13:31:10,951 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-11 13:31:13,133 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:32:09,066 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-11 13:32:21,226 [django.utils.autoreload] /home/x/app/mysite/partner/views.py changed, reloading.
+[INFO] 2025-11-11 13:32:22,301 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-11 13:32:22,310 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-11 13:35:47,823 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-11 13:37:49,313 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-11 13:37:50,380 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-11 13:37:50,390 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-11 13:38:20,328 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-11 13:38:21,365 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-11 13:38:21,376 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-11 13:38:58,858 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:42:29,115 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:43:13,570 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-11 13:44:54,585 [django.request] Internal Server Error: /user/7/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 510, in parse
+    compile_func = self.tags[command]
+KeyError: 'macro'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/authentication/views.py", line 114, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django_ratelimit/decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "/home/x/app/mysite/authentication/views.py", line 647, in user_detail
+    return render(request, 'authentication/user_detail.html', context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 567, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 50: 'macro', expected 'endblock'. Did you forget to register or load this tag?
+[WARNING] 2025-11-11 13:48:28,779 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-11 13:51:09,043 [django.utils.autoreload] /home/x/app/mysite/learner/views.py changed, reloading.
+[INFO] 2025-11-11 13:51:10,087 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-11 13:51:10,097 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-11 13:51:11,832 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 13:51:57,390 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-11 13:53:10,704 [django.utils.autoreload] /home/x/app/mysite/learner/views.py changed, reloading.
+[INFO] 2025-11-11 13:53:11,790 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-11 13:53:11,800 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-11 14:01:51,029 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:08:18,033 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:10:33,150 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:10:37,170 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:17:40,041 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-11 14:20:23,568 [django.request] Internal Server Error: /edit-profile/1/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/authentication/views.py", line 114, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django_ratelimit/decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "/home/x/app/mysite/authentication/views.py", line 1346, in edit_profile
+    return render(request, 'home/edit_profile_form.html', {'form': form, 'user': profile})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 489, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'add_class'
+[ERROR] 2025-11-11 14:21:26,035 [django.request] Internal Server Error: /edit-profile/1/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1035, in find_library
+    return parser.libraries[name]
+KeyError: 'widget_tweaks'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/authentication/views.py", line 114, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django_ratelimit/decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "/home/x/app/mysite/authentication/views.py", line 1346, in edit_profile
+    return render(request, 'home/edit_profile_form.html', {'form': form, 'user': profile})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1097, in load
+    lib = find_library(parser, name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1037, in find_library
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: 'widget_tweaks' is not a registered tag library. Must be one of:
+account
+admin_list
+admin_modify
+admin_urls
+allauth
+blog_filters
+cache
+csp
+custom_filters
+django_htmx
+extra_custom_filters
+extra_filters
+form_filters
+humanize
+i18n
+import_export_tags
+l10n
+learner_tags
+log
+mathfilters
+socialaccount
+static
+tz
+[ERROR] 2025-11-11 14:21:49,231 [django.request] Internal Server Error: /edit-profile/1/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/authentication/views.py", line 114, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django_ratelimit/decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "/home/x/app/mysite/authentication/views.py", line 1346, in edit_profile
+    return render(request, 'home/edit_profile_form.html', {'form': form, 'user': profile})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 489, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'attr'
+[INFO] 2025-11-11 14:24:20,525 [django.utils.autoreload] /home/x/app/mysite/authentication/forms.py changed, reloading.
+[INFO] 2025-11-11 14:24:21,635 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-11 14:24:21,645 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2025-11-11 14:25:59,447 [PIL.Image] Importing BlpImagePlugin
+[DEBUG] 2025-11-11 14:25:59,448 [PIL.Image] Importing BmpImagePlugin
+[DEBUG] 2025-11-11 14:25:59,448 [PIL.Image] Importing BufrStubImagePlugin
+[DEBUG] 2025-11-11 14:25:59,448 [PIL.Image] Importing CurImagePlugin
+[DEBUG] 2025-11-11 14:25:59,449 [PIL.Image] Importing DcxImagePlugin
+[DEBUG] 2025-11-11 14:25:59,450 [PIL.Image] Importing DdsImagePlugin
+[DEBUG] 2025-11-11 14:25:59,454 [PIL.Image] Importing EpsImagePlugin
+[DEBUG] 2025-11-11 14:25:59,455 [PIL.Image] Importing FitsImagePlugin
+[DEBUG] 2025-11-11 14:25:59,455 [PIL.Image] Importing FliImagePlugin
+[DEBUG] 2025-11-11 14:25:59,456 [PIL.Image] Importing FpxImagePlugin
+[DEBUG] 2025-11-11 14:25:59,456 [PIL.Image] Image: failed to import FpxImagePlugin: No module named 'olefile'
+[DEBUG] 2025-11-11 14:25:59,456 [PIL.Image] Importing FtexImagePlugin
+[DEBUG] 2025-11-11 14:25:59,457 [PIL.Image] Importing GbrImagePlugin
+[DEBUG] 2025-11-11 14:25:59,457 [PIL.Image] Importing GifImagePlugin
+[DEBUG] 2025-11-11 14:25:59,458 [PIL.Image] Importing GribStubImagePlugin
+[DEBUG] 2025-11-11 14:25:59,458 [PIL.Image] Importing Hdf5StubImagePlugin
+[DEBUG] 2025-11-11 14:25:59,458 [PIL.Image] Importing IcnsImagePlugin
+[DEBUG] 2025-11-11 14:25:59,460 [PIL.Image] Importing IcoImagePlugin
+[DEBUG] 2025-11-11 14:25:59,461 [PIL.Image] Importing ImImagePlugin
+[DEBUG] 2025-11-11 14:25:59,462 [PIL.Image] Importing ImtImagePlugin
+[DEBUG] 2025-11-11 14:25:59,462 [PIL.Image] Importing IptcImagePlugin
+[DEBUG] 2025-11-11 14:25:59,463 [PIL.Image] Importing JpegImagePlugin
+[DEBUG] 2025-11-11 14:25:59,463 [PIL.Image] Importing Jpeg2KImagePlugin
+[DEBUG] 2025-11-11 14:25:59,463 [PIL.Image] Importing McIdasImagePlugin
+[DEBUG] 2025-11-11 14:25:59,464 [PIL.Image] Importing MicImagePlugin
+[DEBUG] 2025-11-11 14:25:59,465 [PIL.Image] Image: failed to import MicImagePlugin: No module named 'olefile'
+[DEBUG] 2025-11-11 14:25:59,465 [PIL.Image] Importing MpegImagePlugin
+[DEBUG] 2025-11-11 14:25:59,465 [PIL.Image] Importing MpoImagePlugin
+[DEBUG] 2025-11-11 14:25:59,467 [PIL.Image] Importing MspImagePlugin
+[DEBUG] 2025-11-11 14:25:59,467 [PIL.Image] Importing PalmImagePlugin
+[DEBUG] 2025-11-11 14:25:59,469 [PIL.Image] Importing PcdImagePlugin
+[DEBUG] 2025-11-11 14:25:59,469 [PIL.Image] Importing PcxImagePlugin
+[DEBUG] 2025-11-11 14:25:59,470 [PIL.Image] Importing PdfImagePlugin
+[DEBUG] 2025-11-11 14:25:59,476 [PIL.Image] Importing PixarImagePlugin
+[DEBUG] 2025-11-11 14:25:59,476 [PIL.Image] Importing PngImagePlugin
+[DEBUG] 2025-11-11 14:25:59,476 [PIL.Image] Importing PpmImagePlugin
+[DEBUG] 2025-11-11 14:25:59,476 [PIL.Image] Importing PsdImagePlugin
+[DEBUG] 2025-11-11 14:25:59,477 [PIL.Image] Importing QoiImagePlugin
+[DEBUG] 2025-11-11 14:25:59,478 [PIL.Image] Importing SgiImagePlugin
+[DEBUG] 2025-11-11 14:25:59,478 [PIL.Image] Importing SpiderImagePlugin
+[DEBUG] 2025-11-11 14:25:59,479 [PIL.Image] Importing SunImagePlugin
+[DEBUG] 2025-11-11 14:25:59,479 [PIL.Image] Importing TgaImagePlugin
+[DEBUG] 2025-11-11 14:25:59,480 [PIL.Image] Importing TiffImagePlugin
+[DEBUG] 2025-11-11 14:25:59,480 [PIL.Image] Importing WebPImagePlugin
+[DEBUG] 2025-11-11 14:25:59,485 [PIL.Image] Importing WmfImagePlugin
+[DEBUG] 2025-11-11 14:25:59,486 [PIL.Image] Importing XbmImagePlugin
+[DEBUG] 2025-11-11 14:25:59,487 [PIL.Image] Importing XpmImagePlugin
+[DEBUG] 2025-11-11 14:25:59,487 [PIL.Image] Importing XVThumbImagePlugin
+[WARNING] 2025-11-11 14:38:17,603 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:43:37,711 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:44:30,137 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:49:21,113 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:49:47,027 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:49:49,333 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:52:09,800 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:52:25,293 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:55:37,138 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:55:39,168 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 14:55:53,256 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:00:00,241 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:00:22,201 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:00:31,836 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:00:45,497 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:00:47,773 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:00:49,477 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:00:51,070 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:00:54,404 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:01:02,663 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:01:04,016 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:01:06,340 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:01:15,128 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:01:24,978 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:01:28,322 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:01:29,576 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:01:30,726 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:01:31,970 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:03:40,194 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:03:49,722 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:08:27,124 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:08:40,276 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:09:23,255 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:09:26,423 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:09:27,850 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:09:28,825 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:11:03,258 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:11:34,170 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:11:36,474 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:11:37,508 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:11:40,132 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:11:42,004 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:11:54,562 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:11:56,072 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:11:57,283 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:11:58,324 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:11:59,349 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:12:00,477 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:12:05,906 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:13:37,777 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:13:49,337 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:14:30,882 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:25:03,730 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:34:19,585 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:34:28,873 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:48:39,427 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:52:17,375 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:54:46,044 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:54:49,819 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-11 15:57:04,873 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-11 15:57:05,665 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-11 15:57:05,675 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-11 15:57:07,851 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:59:13,836 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 15:59:43,668 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 16:02:00,123 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 16:25:40,211 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 16:27:12,803 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 16:30:16,553 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-11 16:30:17,706 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-12 08:39:17,800 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:39:18,598 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:39:18,608 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 08:39:41,062 [django.request] Not Found: /api/sections/
+[INFO] 2025-11-12 08:40:03,234 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:40:04,307 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:40:04,316 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:40:05,566 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:40:06,509 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:40:06,519 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:40:15,071 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:40:16,032 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:40:16,042 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:40:17,266 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:40:18,180 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:40:18,190 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:40:19,433 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:40:20,346 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:40:20,356 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:40:25,691 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:40:26,690 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:40:26,699 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:40:39,509 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:40:40,508 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:40:40,518 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:40:53,452 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:40:54,459 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:40:54,469 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:41:12,548 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:41:13,323 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:41:13,332 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:42:41,018 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:42:42,055 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:42:42,065 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:43:00,788 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:43:01,773 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:43:01,783 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:43:13,218 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:43:14,208 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:43:14,218 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:43:22,502 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:43:23,487 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:43:23,496 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 08:43:31,726 [django.request] Not Found: /api/sections/
+[ERROR] 2025-11-12 08:44:05,535 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/mixins.py", line 46, in list
+    return Response(serializer.data)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/serializers.py", line 797, in data
+    ret = super().data
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/serializers.py", line 715, in to_representation
+    return [
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/serializers.py", line 716, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/serializers.py", line 525, in to_representation
+    for field in fields:
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/serializers.py", line 386, in _readable_fields
+    for field in self.fields.values():
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/serializers.py", line 374, in fields
+    for key, value in self.get_fields().items():
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/serializers.py", line 1105, in get_fields
+    field_class, field_kwargs = self.build_field(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/serializers.py", line 1251, in build_field
+    return self.build_unknown_field(field_name, model_class)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/serializers.py", line 1369, in build_unknown_field
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: Field name `type` is not valid for model `Section` in `courses.serializers.SectionSerializer`.
+[INFO] 2025-11-12 08:45:26,400 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 08:45:27,468 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:45:27,479 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-11-12 08:45:29,227 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[ERROR] 2025-11-12 08:46:47,385 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[INFO] 2025-11-12 08:47:00,140 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:47:01,168 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:47:01,178 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:47:06,765 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:47:07,817 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:47:07,827 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:47:15,575 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:47:16,624 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:47:16,634 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-11-12 08:47:17,809 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[ERROR] 2025-11-12 08:47:18,597 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[ERROR] 2025-11-12 08:47:18,793 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[ERROR] 2025-11-12 08:47:19,012 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[ERROR] 2025-11-12 08:47:19,190 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[ERROR] 2025-11-12 08:47:19,389 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[ERROR] 2025-11-12 08:47:19,623 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[ERROR] 2025-11-12 08:47:19,860 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[INFO] 2025-11-12 08:47:37,230 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-12 08:47:38,276 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:47:38,286 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-11-12 08:47:42,228 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[ERROR] 2025-11-12 08:47:42,942 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[ERROR] 2025-11-12 08:47:43,121 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[ERROR] 2025-11-12 08:47:43,288 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[INFO] 2025-11-12 08:49:07,935 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 08:49:09,017 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:49:09,027 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:49:28,404 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 08:49:29,444 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:49:29,455 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 08:49:30,739 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 08:49:31,688 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:49:31,698 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-11-12 08:49:55,343 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[ERROR] 2025-11-12 08:49:56,253 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[ERROR] 2025-11-12 08:49:56,432 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/renderers.py", line 730, in render
+    template = loader.get_template(self.template)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: rest_framework/api.html
+[INFO] 2025-11-12 08:50:46,528 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-12 08:50:47,589 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 08:50:47,600 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 08:52:02,382 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 08:52:57,980 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 08:53:08,798 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 08:53:36,760 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 08:53:38,437 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 08:53:43,102 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 08:53:44,148 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 08:53:45,104 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 08:53:46,661 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 08:54:11,175 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 11:47:17,441 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 11:52:26,775 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 11:52:29,640 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 11:55:37,225 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 11:55:49,434 [django.request] Forbidden: /sections/add/
+[WARNING] 2025-11-12 11:55:54,628 [django.request] Not Found: /subsections/add/
+[WARNING] 2025-11-12 11:56:00,379 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 11:56:04,195 [django.request] Forbidden: /sections/add/
+[WARNING] 2025-11-12 11:58:00,950 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 11:58:11,459 [django.request] Forbidden: /sections/
+[WARNING] 2025-11-12 11:58:52,413 [django.request] Forbidden: /sections/
+[INFO] 2025-11-12 12:00:14,633 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 12:00:15,743 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 12:00:15,752 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 12:00:29,880 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 12:00:30,952 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 12:00:30,962 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 12:01:35,983 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:01:37,986 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:01:40,831 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:02:15,829 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:02:17,074 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:03:22,125 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:05:19,887 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:06:18,583 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:06:34,138 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:07:01,204 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:07:02,999 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:07:27,858 [django.request] Forbidden: /sections/reorder/
+[WARNING] 2025-11-12 12:09:04,653 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:09:11,506 [django.request] Forbidden: /sections/
+[WARNING] 2025-11-12 12:10:11,413 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:10:17,078 [django.request] Forbidden: /sections/
+[WARNING] 2025-11-12 12:10:20,921 [django.request] Forbidden: /sections/reorder/
+[WARNING] 2025-11-12 12:10:26,029 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:10:31,228 [django.request] Forbidden: /sections/
+[WARNING] 2025-11-12 12:10:36,439 [django.request] Forbidden: /sections/
+[WARNING] 2025-11-12 12:10:39,319 [django.request] Forbidden: /sections/reorder/
+[INFO] 2025-11-12 12:11:11,843 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-12 12:11:12,907 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 12:11:12,917 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 12:11:33,274 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:11:40,038 [django.request] Forbidden: /sections/
+[WARNING] 2025-11-12 12:12:58,763 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:13:04,873 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:13:11,928 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:13:46,793 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:13:48,316 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:13:49,288 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:13:51,115 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:13:52,463 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:14:49,192 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:14:55,986 [django.request] Forbidden: /sections/
+[WARNING] 2025-11-12 12:15:55,091 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:16:00,832 [django.request] Forbidden: /sections/
+[WARNING] 2025-11-12 12:17:26,925 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:17:30,419 [django.request] Forbidden: /sections/
+[WARNING] 2025-11-12 12:18:51,306 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:19:04,301 [django.request] Not Found: /sections/3/
+[WARNING] 2025-11-12 12:19:09,940 [django.request] Not Found: /sections/3/
+[WARNING] 2025-11-12 12:19:13,594 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:19:19,252 [django.request] Not Found: /sections/3/
+[WARNING] 2025-11-12 12:19:31,080 [django.request] Not Found: /sections/4/
+[WARNING] 2025-11-12 12:19:35,739 [django.request] Not Found: /sections/4/
+[WARNING] 2025-11-12 12:19:38,784 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:19:43,666 [django.request] Not Found: /sections/4/
+[WARNING] 2025-11-12 12:19:48,642 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:21:19,698 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:21:25,002 [django.request] Forbidden: /sections/5/
+[WARNING] 2025-11-12 12:21:41,697 [django.request] Forbidden: /sections/5/
+[WARNING] 2025-11-12 12:21:44,979 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:21:48,677 [django.request] Forbidden: /sections/5/
+[WARNING] 2025-11-12 12:21:53,049 [django.request] Forbidden: /sections/4/
+[WARNING] 2025-11-12 12:22:11,679 [django.request] Forbidden: /sections/4/
+[WARNING] 2025-11-12 12:22:15,267 [django.request] Forbidden: /sections/5/
+[WARNING] 2025-11-12 12:23:54,162 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:23:59,628 [django.request] Forbidden: /sections/5/
+[WARNING] 2025-11-12 12:24:16,041 [django.request] Forbidden: /sections/4/
+[WARNING] 2025-11-12 12:24:20,319 [django.request] Forbidden: /sections/4/
+[WARNING] 2025-11-12 12:24:23,650 [django.request] Forbidden: /sections/4/
+[WARNING] 2025-11-12 12:26:47,510 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:26:52,366 [django.request] Forbidden: /sections/5/
+[WARNING] 2025-11-12 12:26:56,770 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:27:02,735 [django.request] Forbidden: /sections/5/
+[WARNING] 2025-11-12 12:27:17,795 [django.request] Forbidden: /sections/
+[WARNING] 2025-11-12 12:27:22,478 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:29:00,073 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:29:04,945 [django.request] Not Found: /sections/5/
+[WARNING] 2025-11-12 12:29:15,854 [django.request] Not Found: /sections/4/
+[WARNING] 2025-11-12 12:29:19,313 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:29:23,886 [django.request] Not Found: /sections/5/
+[WARNING] 2025-11-12 12:29:28,313 [django.request] Not Found: /sections/4/
+[WARNING] 2025-11-12 12:29:36,980 [django.request] Not Found: /sections/3/
+[WARNING] 2025-11-12 12:31:01,557 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:31:05,738 [django.request] Not Found: /sections/5/
+[WARNING] 2025-11-12 12:31:10,226 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-12 12:32:25,597 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 12:32:26,716 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 12:32:26,727 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 12:32:28,015 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 12:32:28,988 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 12:32:28,998 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 12:32:39,290 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:32:42,933 [django.request] Not Found: /sections/5/
+[WARNING] 2025-11-12 12:32:48,275 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:33:28,499 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:33:34,633 [django.request] Not Found: /sections/5/
+[WARNING] 2025-11-12 12:33:38,412 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 12:33:44,025 [django.request] Not Found: /sections/5/
+[WARNING] 2025-11-12 13:30:44,408 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:30:49,347 [django.request] Not Found: /sections/5/
+[WARNING] 2025-11-12 13:30:58,196 [django.request] Not Found: /sections/4/
+[WARNING] 2025-11-12 13:30:59,779 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-12 13:31:37,156 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 13:31:38,230 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 13:31:38,240 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 13:31:57,813 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 13:31:58,858 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 13:31:58,869 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 13:32:02,652 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:32:07,508 [django.request] Bad Request: /sections/5/
+[INFO] 2025-11-12 13:32:44,042 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 13:32:45,099 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 13:32:45,110 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 13:32:48,897 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:32:53,763 [django.request] Bad Request: /sections/5/
+[WARNING] 2025-11-12 13:33:02,249 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:33:06,825 [django.request] Bad Request: /sections/5/
+[INFO] 2025-11-12 13:35:57,020 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 13:35:58,097 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 13:35:58,108 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 13:36:03,176 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:36:10,935 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:36:15,876 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:36:20,719 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:36:25,414 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:36:32,644 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:36:34,068 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:36:39,002 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:36:40,565 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:36:41,564 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:36:44,634 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:37:10,890 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:37:21,257 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:37:39,339 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:37:55,837 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:37:58,143 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:37:59,267 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:38:09,034 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:38:24,188 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:38:33,514 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:38:38,861 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:39:07,078 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:39:10,178 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:39:14,132 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:39:20,615 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:41:02,293 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:41:18,259 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:41:25,619 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:42:37,979 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:42:49,988 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:42:54,932 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-12 13:44:06,768 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 13:44:07,976 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 13:44:07,986 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 13:45:10,173 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:45:19,082 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:45:36,934 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:45:55,275 [django.request] Not Found: /sections/17/
+[WARNING] 2025-11-12 13:45:58,374 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:46:05,816 [django.request] Not Found: /sections/17/
+[WARNING] 2025-11-12 13:46:07,551 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:46:16,324 [django.request] Bad Request: /sections/17/
+[WARNING] 2025-11-12 13:46:19,618 [django.request] Bad Request: /sections/16/
+[WARNING] 2025-11-12 13:46:22,457 [django.request] Bad Request: /sections/15/
+[WARNING] 2025-11-12 13:46:24,521 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:47:58,692 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:48:06,354 [django.request] Not Found: /sections/17/
+[WARNING] 2025-11-12 13:48:08,803 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:48:30,744 [django.request] Bad Request: /sections/17/
+[WARNING] 2025-11-12 13:48:33,556 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:48:54,671 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:49:01,891 [django.request] Not Found: /sections/17/
+[WARNING] 2025-11-12 13:49:10,140 [django.request] Bad Request: /sections/17/
+[INFO] 2025-11-12 13:51:01,654 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 13:51:02,830 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 13:51:02,840 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 13:51:14,852 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 13:51:16,032 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 13:51:16,042 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 13:51:47,519 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:51:52,143 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:52:03,579 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:52:08,353 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:52:15,331 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:52:21,156 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:52:28,285 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-12 13:53:07,481 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 13:53:08,596 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 13:53:08,606 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 13:53:19,594 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 13:53:20,658 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 13:53:20,668 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 13:53:34,797 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 13:53:35,827 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 13:53:35,838 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 13:53:38,646 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 13:53:44,660 [django.request] Not Found: /sections/13/
+[WARNING] 2025-11-12 13:53:51,758 [django.request] Bad Request: /sections/13/
+[WARNING] 2025-11-12 14:04:22,683 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:04:29,581 [django.request] Not Found: /sections/13/
+[WARNING] 2025-11-12 14:04:31,760 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-12 14:05:36,765 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 14:05:37,846 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:05:37,856 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 14:05:40,858 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:05:44,294 [django.request] Not Found: /sections/13/
+[WARNING] 2025-11-12 14:05:52,689 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:05:56,850 [django.request] Not Found: /sections/13/
+[WARNING] 2025-11-12 14:06:01,097 [django.request] Bad Request: /sections/13/
+[INFO] 2025-11-12 14:07:22,367 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 14:07:23,503 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:07:23,514 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 14:07:29,821 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-12 14:07:35,509 [django.request] Internal Server Error: /sections/13/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 90, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/models/query.py", line 633, in get
+    raise self.model.DoesNotExist(
+courses.models.Section.DoesNotExist: Section matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/courses/views.py", line 148, in destroy
+    section = self.get_object()  # Menggunakan get_object() dari ModelViewSet
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/generics.py", line 100, in get_object
+    obj = get_object_or_404(queryset, **filter_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/generics.py", line 19, in get_object_or_404
+    return _get_object_or_404(queryset, *filter_args, **filter_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 92, in get_object_or_404
+    raise Http404(
+django.http.response.Http404: No Section matches the given query.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 151, in destroy
+    except NotFound:
+NameError: name 'NotFound' is not defined
+[INFO] 2025-11-12 14:07:55,195 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 14:07:56,251 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:07:56,262 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 14:07:59,367 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:08:03,237 [django.request] Bad Request: /sections/13/
+[INFO] 2025-11-12 14:09:25,053 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 14:09:26,200 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:09:26,210 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 14:09:30,201 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 14:09:31,195 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:09:31,206 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 14:09:42,262 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 14:09:43,276 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:09:43,287 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 14:09:49,455 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:09:54,121 [django.request] Bad Request: /sections/13/
+[INFO] 2025-11-12 14:10:22,568 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 14:10:23,702 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:10:23,713 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 14:10:31,385 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:10:37,857 [django.request] Bad Request: /sections/13/
+[INFO] 2025-11-12 14:11:08,849 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:13:00,939 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:13:01,727 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:13:01,736 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 14:13:47,985 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 14:13:49,037 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:13:49,047 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 14:13:52,194 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:13:57,227 [django.request] Bad Request: /sections/13/
+[WARNING] 2025-11-12 14:14:02,718 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:14:06,462 [django.request] Bad Request: /sections/13/
+[INFO] 2025-11-12 14:14:44,346 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 14:14:45,420 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:14:45,431 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 14:14:49,615 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:14:55,898 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:15:11,522 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:15:18,988 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:15:25,948 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:15:31,048 [django.request] Not Found: /sections/19/
+[WARNING] 2025-11-12 14:15:37,479 [django.request] Not Found: /sections/19/
+[INFO] 2025-11-12 14:17:15,114 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 14:17:16,194 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:17:16,205 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 14:17:17,513 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 14:17:18,467 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:17:18,477 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 14:17:30,346 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:17:36,161 [django.request] Not Found: /sections/19/
+[WARNING] 2025-11-12 14:17:48,515 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:17:53,459 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:19:22,319 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:19:29,055 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:20:54,895 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:21:00,755 [django.request] Not Found: /sections/21/
+[WARNING] 2025-11-12 14:21:04,417 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:21:08,122 [django.request] Not Found: /sections/21/
+[WARNING] 2025-11-12 14:21:13,825 [django.request] Not Found: /sections/1/
+[WARNING] 2025-11-12 14:21:18,261 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:21:23,554 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-12 14:23:34,835 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 14:23:36,185 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:23:36,197 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 14:24:04,163 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 14:24:05,312 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:24:05,323 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 14:24:31,289 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 14:24:32,376 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:24:32,386 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 14:24:58,378 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 14:24:59,470 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:24:59,481 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 14:25:00,815 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 14:25:01,772 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:25:01,782 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 14:25:22,094 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:25:28,159 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:26:00,657 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:26:15,170 [django.request] Bad Request: /sections/
+[WARNING] 2025-11-12 14:26:29,058 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:26:53,180 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:27:15,851 [django.request] Not Found: /sections/26/
+[WARNING] 2025-11-12 14:27:19,262 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:27:32,013 [django.request] Bad Request: /sections/
+[WARNING] 2025-11-12 14:28:27,513 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:28:34,135 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-12 14:28:41,803 [audit.signals] Error in audit log (post_delete) for Section pk=25: Section matching query does not exist.
+[WARNING] 2025-11-12 14:28:43,526 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:29:16,869 [django.request] Not Found: /sections/1/
+[INFO] 2025-11-12 14:30:57,737 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 14:30:58,830 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:30:58,840 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 14:31:00,862 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 14:31:01,843 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:31:01,853 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 14:31:08,686 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-12 14:31:09,819 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:31:09,829 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 14:32:05,775 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:32:20,918 [django.request] Not Found: /sections/23/
+[WARNING] 2025-11-12 14:33:12,255 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:33:26,888 [django.request] Not Found: /sections/30/
+[WARNING] 2025-11-12 14:33:29,403 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:33:37,304 [django.request] Not Found: /sections/30/
+[INFO] 2025-11-12 14:34:07,271 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 14:34:08,383 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:34:08,394 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 14:34:13,498 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:34:19,123 [django.request] Not Found: /sections/30/
+[WARNING] 2025-11-12 14:34:33,762 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-12 14:35:35,980 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-12 14:35:37,116 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 14:35:37,127 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 14:35:43,992 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:35:54,726 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:36:08,407 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:40:21,111 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:40:45,367 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:40:47,946 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:43:42,478 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:45:29,727 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:45:31,318 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:45:32,333 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:45:33,591 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:47:06,661 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:47:57,583 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 14:52:46,720 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:14:05,807 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:15:56,110 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:18:46,536 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:19:25,096 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:22:21,968 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:25:32,330 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:25:51,054 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:26:20,663 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:26:21,658 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:27:35,326 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:28:29,293 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:32:01,140 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:32:36,776 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:32:52,394 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:34:05,020 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:36:16,608 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:37:23,039 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:39:33,368 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:40:52,603 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:41:02,066 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:41:17,063 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:41:22,214 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:42:54,383 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:43:02,712 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:46:26,665 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:46:35,943 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:47:24,303 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:47:35,264 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:47:36,202 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:47:45,188 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:48:47,495 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:48:55,291 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:49:23,976 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:49:27,562 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:49:32,465 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:49:35,455 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:49:36,426 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:49:56,222 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:54:11,928 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:54:14,094 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:54:59,609 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:55:01,878 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:55:03,459 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:56:04,355 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:56:11,615 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:56:15,647 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:56:22,088 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:56:23,707 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:56:25,163 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:56:26,945 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:56:28,019 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:56:30,748 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 15:56:34,728 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:00:56,526 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:08:59,537 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:14:42,629 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:16:02,521 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:16:23,061 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:16:24,087 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:18:14,042 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:18:43,704 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:19:05,123 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-12 16:20:06,410 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-12 16:20:07,460 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 16:20:07,470 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-12 16:20:10,999 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-12 16:20:12,020 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-12 16:20:12,030 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-12 16:20:14,186 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:21:14,255 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:21:39,856 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:27:15,029 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:27:16,073 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:28:32,279 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:30:07,732 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:30:41,009 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:30:53,325 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:32:22,425 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:33:43,280 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:33:44,650 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:33:50,960 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:33:52,613 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-12 16:36:33,606 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-14 08:03:11,355 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 08:03:12,158 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 08:03:12,167 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-14 08:03:16,396 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 08:03:50,171 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 08:04:02,932 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-14 08:06:47,135 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 08:06:47,937 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 08:06:47,947 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-14 08:07:14,434 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 08:07:36,953 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 08:09:59,241 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-14 08:11:12,755 [django.request] Internal Server Error: /course-grade/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4427, in course_grade
+    return render(request, 'courses/course_grade.html', {
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 228, in do_block
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: 'block' tag with name 'scripts' appears more than once
+[WARNING] 2025-11-14 08:11:12,857 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-14 08:11:49,761 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 08:11:50,530 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 08:11:50,540 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-14 08:11:57,295 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:17:31,246 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:17:47,423 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:19:21,696 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:21:01,432 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:22:28,986 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:24:09,173 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:24:34,568 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:24:35,555 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:28:54,803 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:33:39,640 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:34:05,675 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:34:42,082 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:35:01,731 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:36:27,009 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:36:34,145 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:36:35,039 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:36:46,632 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:40:02,768 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:40:13,674 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:40:16,043 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:40:26,979 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:42:58,391 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:43:27,556 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:43:34,946 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:43:36,780 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:55:46,718 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:56:52,608 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:58:13,681 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:58:47,364 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 09:58:52,557 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:00:26,806 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:00:47,405 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:01:10,247 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:02:20,379 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:02:35,490 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:02:35,916 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:02:36,352 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:04:16,602 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:06:20,352 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:06:38,623 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:06:40,018 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:08:39,550 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:09:05,927 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:20:22,079 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:20:34,864 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:20:39,467 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-14 10:21:49,261 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 10:21:50,073 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 10:21:50,084 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-14 10:21:55,078 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-14 10:22:55,592 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 10:22:56,385 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 10:22:56,395 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-14 10:23:00,277 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:24:14,431 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:25:23,648 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:25:25,149 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:26:48,510 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:28:09,037 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:30:02,392 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:31:20,745 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-14 10:32:06,339 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-14 10:32:07,412 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 10:32:07,423 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-14 10:34:54,858 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:36:03,510 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-14 10:37:56,313 [django.request] Internal Server Error: /course-grade/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 134, in render
+    compiled_parent = self.get_parent(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 131, in get_parent
+    return self.find_template(parent, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 109, in find_template
+    template, origin = context.template.engine.find_template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 163, in find_template
+    raise TemplateDoesNotExist(name, tried=tried)
+django.template.exceptions.TemplateDoesNotExist: home/tes.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4427, in course_grade
+    return render(request, 'courses/course_grade.html', {
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 109, in render
+    reraise(exc, self.backend)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 130, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: home/tes.html
+[WARNING] 2025-11-14 10:37:56,431 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 10:38:51,518 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 12:37:46,136 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 12:41:24,900 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 12:42:34,606 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 12:42:41,119 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 12:42:51,544 [django.request] Bad Request: /sections/
+[WARNING] 2025-11-14 12:43:14,855 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 12:43:15,783 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 12:43:19,012 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 12:43:20,217 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 12:43:30,571 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 13:00:29,517 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 15:07:50,370 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 15:09:14,633 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 15:10:25,614 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 15:11:51,151 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 15:11:52,458 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 15:11:57,387 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-14 15:16:44,216 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 15:16:45,005 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 15:16:45,016 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-14 15:37:08,111 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 15:37:08,903 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 15:37:08,913 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-14 15:37:11,794 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 15:48:51,065 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-14 15:54:34,409 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 15:54:35,204 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 15:54:35,214 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-14 15:54:39,946 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-14 16:02:28,313 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 16:02:29,097 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 16:02:29,107 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-14 16:02:35,211 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:02:39,672 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:02:40,312 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:02:41,306 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:02:42,203 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:02:43,101 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:02:44,567 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:02:45,061 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:02:45,781 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:02:46,536 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:02:48,053 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:04:10,370 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:04:11,229 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:07:25,124 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:07:26,606 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:07:30,053 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:08:01,502 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:08:03,008 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-14 16:12:27,174 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-14 16:15:57,155 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 16:15:57,967 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-14 16:15:57,978 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-14 16:16:58,108 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-14 16:44:14,917 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-14 16:44:47,115 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-14 16:50:29,438 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-16 09:32:28,164 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-16 09:32:28,962 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-16 09:32:28,972 [django.utils.autoreload] Watching for file changes with StatReloader

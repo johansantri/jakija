@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'blog',
     'licensing',
     'audit',#audit user
+    'rest_framework',
     #'payments',#semua pembayaran
     'django.contrib.humanize',
     'axes',#LOGIN LIMIT
@@ -111,6 +112,15 @@ MIDDLEWARE = [
     "django_htmx.middleware.HtmxMiddleware",
     'authentication.middleware.ActiveUserMiddleware', 
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
 
 ROOT_URLCONF = 'mysite.urls'
 

@@ -1,26 +1,74 @@
 {% extends 'home/tes.html' %}
 {% block content %}
 
-    <div class="col-md-12">
-      <div class="tile">
-        <h3 class="tile-title">Update partner</h3>
-        <div class="tile-body">
-          <form method="POST" action="" enctype="multipart/form-data">
-            {% csrf_token %}
-            
-            {{ form.as_p }}
-           
-          
-            <div class="tile-footer">
-              <button class="btn btn-warning"  type="submit"><i class="bi bi-check-circle-fill me-2"></i>update</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="{% url 'courses:partner_view'%}"><i class="bi bi-x-circle-fill me-2"></i>Cancel</a>
-            </div>
-          </form>
-        </div>
-       
-      </div>
-    </div>
-    
+<!-- Update Partner Form -->
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+    <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 md:p-8">
 
-   
+        <!-- Title -->
+        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            <i class="fas fa-building text-yellow-500"></i>
+            Update Partner
+        </h3>
+
+        <!-- Form -->
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Django Form (as_p) – Otomatis styled -->
+            <div class="django-form space-y-5">
+                {{ form.as_p }}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t border-gray-200">
+                <button type="submit" 
+                        class="flex items-center justify-center gap-2 px-6 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                    <i class="fas fa-check-circle"></i>
+                    Update
+                </button>
+                <a href="{% url 'courses:partner_view' %}" 
+                   class="flex items-center justify-center gap-2 px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    <i class="fas fa-times-circle"></i>
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Global Styling untuk Semua Field dari {{ form.as_p }} -->
+<style>
+    /* Semua input, textarea, select dari form Django */
+    .django-form input[type="text"],
+    .django-form input[type="email"],
+    .django-form input[type="url"],
+    .django-form input[type="file"],
+    .django-form textarea,
+    .django-form select {
+        @apply w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:border-transparent transition text-sm;
+    }
+
+    /* File input khusus */
+    .django-form input[type="file"] {
+        @apply file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-yellow-50 file:text-yellow-700 hover:file:bg-yellow-100;
+    }
+
+    /* Label */
+    .django-form label {
+        @apply block text-sm font-medium text-gray-700 mb-1;
+    }
+
+    /* Error message */
+    .django-form .errorlist {
+        @apply text-red-500 text-xs mt-1 list-none p-0;
+    }
+
+    /* Checkbox & Radio */
+    .django-form input[type="checkbox"],
+    .django-form input[type="radio"] {
+        @apply w-4 h-4 text-yellow-500 focus:ring-yellow-300 rounded;
+    }
+</style>
 
 {% endblock %}

@@ -1,124 +1,192 @@
 {% extends 'home/tes.html' %}
 {% load humanize %}
 {% load static %}
+
 {% block content %}
 
-<!-- Logo Section -->
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
-    <div class="d-flex align-items-center mb-4 mb-md-0 order-1 order-md-0">
-        {% if partner.logo %}
-            <img src="{{ partner.logo.url }}" alt="{{ partner.slug }}" class="img-fluid" width="100" height="100"/>
-        {% else %}
-            <img src="https://via.placeholder.com/100" alt="No Logo Available" class="img-fluid" width="100" height="100"/>
-        {% endif %}
-        <div class="ms-4">
-            <h1 class="h3 fw-bold">{{ partner.name }}</h1>
-            <p>Join: {{ partner.created_ad|date:"F j, Y" }}</p>
-            <p class="text-dark">{{ partner.description | safe }}</p>
-            <p class="text-dark">
-                {{ partner.address | safe }} | {{ partner.phone | safe }} | {{ partner.email | safe }} | {{ partner.user.email | safe }}
+<!-- Logo & Info Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+    <div class="flex items-start gap-6">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+            {% if partner.logo %}
+                <img src="{{ partner.logo.url }}" alt="{{ partner.slug }}" class="w-24 h-24 object-cover rounded-lg shadow-sm">
+            {% else %}
+                <img src="https://via.placeholder.com/100" alt="No Logo" class="w-24 h-24 object-cover rounded-lg shadow-sm bg-gray-200">
+            {% endif %}
+        </div>
+
+        <!-- Partner Info -->
+        <div class="flex-1">
+            <h1 class="text-2xl font-bold text-gray-800">{{ partner.name }}</h1>
+            <p class="text-sm text-gray-600 mt-1">Bergabung: {{ partner.created_ad|date:"j F Y" }}</p>
+            <p class="text-gray-700 mt-2 leading-relaxed">{{ partner.description|safe }}</p>
+            <p class="text-sm text-gray-700 mt-2 flex flex-wrap gap-x-3 gap-y-1">
+                <span class="flex items-center gap-1">
+                    <i class="fas fa-map-marker-alt text-red-400"></i>
+                    {{ partner.address|safe }}
+                </span>
+                <span class="flex items-center gap-1">
+                    <i class="fas fa-phone text-red-400"></i>
+                    {{ partner.phone|safe }}
+                </span>
+                <span class="flex items-center gap-1">
+                    <i class="fas fa-envelope text-red-400"></i>
+                    {{ partner.email|safe }}
+                </span>
+                <span class="flex items-center gap-1">
+                    <i class="fas fa-user text-red-400"></i>
+                    {{ partner.user.email|safe }}
+                </span>
             </p>
         </div>
     </div>
 </div>
 
-
-
-<!-- Stats Tabs Section -->
-<ul class="nav nav-tabs mt-4" id="statsTab" role="tablist">
-    <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="learners-tab" data-bs-toggle="tab" data-bs-target="#learners" type="button" role="tab" aria-controls="learners" aria-selected="true">
+<!-- Stats Tabs (Tailwind Tabs) -->
+<div class="border-b border-gray-200 mb-6">
+    <nav class="flex flex-wrap gap-2 md:gap-4 -mb-px text-sm font-medium" role="tablist">
+        <button 
+            class="tab-button px-4 py-2 border-b-2 border-transparent text-gray-600 hover:text-red-400 hover:border-red-400 transition active"
+            data-target="learners">
             Learners
         </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">
+        <button 
+            class="tab-button px-4 py-2 border-b-2 border-transparent text-gray-600 hover:text-red-400 hover:border-red-400 transition"
+            data-target="reviews">
             Reviews
         </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses" type="button" role="tab" aria-controls="courses" aria-selected="false">
+        <button 
+            class="tab-button px-4 py-2 border-b-2 border-transparent text-gray-600 hover:text-red-400 hover:border-red-400 transition"
+            data-target="courses">
             Courses
         </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="instructors-tab" data-bs-toggle="tab" data-bs-target="#instructors" type="button" role="tab" aria-controls="instructors" aria-selected="false">
+        <button 
+            class="tab-button px-4 py-2 border-b-2 border-transparent text-gray-600 hover:text-red-400 hover:border-red-400 transition"
+            data-target="instructors">
             Instructors
         </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="payments-tab" data-bs-toggle="tab" data-bs-target="#payments" type="button" role="tab" aria-controls="payments" aria-selected="false">
+        <button 
+            class="tab-button px-4 py-2 border-b-2 border-transparent text-gray-600 hover:text-red-400 hover:border-red-400 transition"
+            data-target="payments">
             Payments
         </button>
-    </li>
-</ul>
+    </nav>
+</div>
 
-<div class="tab-content p-4 border border-top-0" id="statsTabContent">
-
+<!-- Tab Content -->
+<div class="bg-white border border-gray-200 rounded-b-lg rounded-tr-lg p-6 shadow-sm">
     <!-- Learners Tab -->
-    <div class="tab-pane fade show active" id="learners" role="tabpanel" aria-labelledby="learners-tab">
-        <div class="text-center mb-3">
-            <p class="text-muted mb-1">Total Unique Learners</p>
-            <p class="h4 fw-bold">{{ unique_learners }}</p>
+    <div id="learners" class="tab-content active">
+        <div class="text-center mb-4">
+            <p class="text-gray-500 text-sm">Total Unique Learners</p>
+            <p class="text-3xl font-bold text-red-400">{{ unique_learners|intcomma }}</p>
         </div>
-        <hr>
-        <div class="row text-center mb-4">
-            <div class="col">
-                <h6 class="text-muted">Inbound</h6>
-                <p class="fw-bold">{{ inbound_count }}</p>
+        <hr class="my-4 border-gray-200">
+        <div class="grid grid-cols-3 gap-4 text-center">
+            <div>
+                <h6 class="text-sm text-gray-500">Inbound</h6>
+                <p class="text-xl font-bold text-gray-800">{{ inbound_count|intcomma }}</p>
             </div>
-            <div class="col">
-                <h6 class="text-muted">Outbound</h6>
-                <p class="fw-bold">{{ outbound_count }}</p>
+            <div>
+                <h6 class="text-sm text-gray-500">Outbound</h6>
+                <p class="text-xl font-bold text-gray-800">{{ outbound_count|intcomma }}</p>
             </div>
-            <div class="col">
-                <h6 class="text-muted">Internal</h6>
-                <p class="fw-bold">{{ internal_count }}</p>
+            <div>
+                <h6 class="text-sm text-gray-500">Internal</h6>
+                <p class="text-xl font-bold text-gray-800">{{ internal_count|intcomma }}</p>
             </div>
         </div>
     </div>
 
     <!-- Reviews Tab -->
-    <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-        <div class="text-center mb-3">
-            <p class="text-muted mb-1">Total Reviews</p>
-            <p class="h4 fw-bold">{{ total_reviews }} <small class="text-muted">{{ average_rating }}/5</small></p>
+    <div id="reviews" class="tab-content hidden">
+        <div class="text-center mb-4">
+            <p class="text-gray-500 text-sm">Total Reviews</p>
+            <p class="text-3xl font-bold text-red-400">
+                {{ total_reviews|intcomma }}
+                <span class="text-lg text-gray-500 ml-2">{{ average_rating }}/5</span>
+            </p>
         </div>
     </div>
 
     <!-- Courses Tab -->
-    <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
+    <div id="courses" class="tab-content hidden">
         <div class="text-center mb-4">
-            <p class="text-muted mb-1">Total Courses</p>
-            <p class="h4 fw-bold">{{ total_courses }}</p>
+            <p class="text-gray-500 text-sm">Total Courses</p>
+            <p class="text-3xl font-bold text-red-400">{{ total_courses|intcomma }}</p>
         </div>
     </div>
 
     <!-- Instructors Tab -->
-    <div class="tab-pane fade" id="instructors" role="tabpanel" aria-labelledby="instructors-tab">
+    <div id="instructors" class="tab-content hidden">
         <div class="text-center mb-4">
-            <p class="text-muted mb-1">Total Instructors</p>
-            <p class="h4 fw-bold">{{ total_instructors }}</p>
+            <p class="text-gray-500 text-sm">Total Instructors</p>
+            <p class="text-3xl font-bold text-red-400">{{ total_instructors|intcomma }}</p>
         </div>
     </div>
 
     <!-- Payments Tab -->
-    <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="payments-tab">
-        <div class="text-center mb-3">
-            <p class="text-muted mb-1">Total Payments</p>
-            <p class="h4 fw-bold">{{ total_payments }}</p>
-            <p class="text-success fw-bold">Total Partner Earnings: IDR{{ total_payment_amount|intcomma }}</p>
+    <div id="payments" class="tab-content hidden">
+        <div class="text-center mb-4">
+            <p class="text-gray-500 text-sm">Total Payments</p>
+            <p class="text-3xl font-bold text-red-400">{{ total_payments|intcomma }}</p>
+            <p class="text-xl font-bold text-green-600 mt-2">
+                Total Partner Earnings: IDR{{ total_payment_amount|intcomma }}
+            </p>
         </div>
     </div>
-
 </div>
 
 <!-- Social Links -->
-<div class="d-flex mt-3 justify-content-center gap-3">
-    <a href="#" class="text-danger"><i class="fab fa-facebook-f"></i></a>
-    <a href="#" class="text-danger"><i class="fab fa-twitter"></i></a>
-    <a href="#" class="text-danger"><i class="fab fa-linkedin-in"></i></a>
-    <a href="#" class="text-danger"><i class="fab fa-instagram"></i></a>
+<div class="flex justify-center gap-6 mt-8 text-xl">
+    <a href="#" class="text-red-400 hover:text-red-600 transition">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="#" class="text-red-400 hover:text-red-600 transition">
+        <i class="fab fa-twitter"></i>
+    </a>
+    <a href="#" class="text-red-400 hover:text-red-600 transition">
+        <i class="fab fa-linkedin-in"></i>
+    </a>
+    <a href="#" class="text-red-400 hover:text-red-600 transition">
+        <i class="fab fa-instagram"></i>
+    </a>
 </div>
+
+<!-- JavaScript untuk Tabs (Vanilla JS, No Bootstrap) -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.tab-button');
+        const contents = document.querySelectorAll('.tab-content');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const target = button.getAttribute('data-target');
+
+                // Update active button
+                buttons.forEach(btn => {
+                    btn.classList.remove('active', 'border-red-400', 'text-red-400');
+                    btn.classList.add('border-transparent', 'text-gray-600');
+                });
+                button.classList.add('active', 'border-red-400', 'text-red-400');
+                button.classList.remove('border-transparent', 'text-gray-600');
+
+                // Show target content
+                contents.forEach(content => {
+                    content.classList.add('hidden');
+                    if (content.id === target) {
+                        content.classList.remove('hidden');
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Set default active tab (Learners)
+        document.querySelector('[data-target="learners"]').classList.add('active', 'border-red-400', 'text-red-400');
+        document.getElementById('learners').classList.remove('hidden');
+    });
+</script>
 
 {% endblock %}

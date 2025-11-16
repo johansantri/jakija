@@ -1,171 +1,142 @@
 {% extends 'home/tes.html' %}
-{% load static custom_filters %}
+{% load static custom_filters %}{% block content %}<div class="w-full lg:w-10/12 mx-auto">
+  <h2 class="text-center mb-4 text-blue-600 font-bold text-2xl">
+    <i class="bi bi-bar-chart-line mr-2"></i>Partner Analytics
+  </h2>
+  <p class="text-center text-gray-500 mb-5 text-lg leading-relaxed">
+    Gain insights into course views and engagement metrics
+  </p>
 
-{% block content %}
-
-
-    <div class="col-12 col-lg-10">
-      <h2 class="text-center mb-4 text-primary fw-bold">
-        <i class="bi bi-bar-chart-line me-2"></i>Partner Analytics
-      </h2>
-      <p class="text-center text-muted mb-5 lead">
-        Gain insights into course views and engagement metrics
-      </p>
-
-      <!-- Tombol Navigasi -->
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 mb-5">
-        <div class="col">
-          <a href="{% url 'partner:heatmap' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'heatmap' %}active{% endif %}">
-            <i class="bi bi-grid-3x3 me-2"></i>User Activity Heatmap
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:login_trends' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'login_trends' %}active{% endif %}">
-            <i class="bi bi-graph-up-arrow me-2"></i>Login Trends
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:learning_duration' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'learning_duration' %}active{% endif %}">
-            <i class="bi bi-clock-history me-2"></i>Learning Duration Analytics
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:participant_geography' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'participant_geography' %}active{% endif %}">
-            <i class="bi bi-geo-alt me-2"></i>Geographic Analytics
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:device_usage' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'device_usage' %}active{% endif %}">
-            <i class="bi bi-pc-display me-2"></i>Device Usage Analytics
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:popular_courses' %}" class="btn btn-outline-success w-100 {% if request.resolver_match.url_name == 'popular_courses' %}active{% endif %}">
-            <i class="bi bi-star me-2"></i>Popular Courses
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:user_growth' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'user_growth' %}active{% endif %}">
-            <i class="bi bi-person-plus me-2"></i>New User Growth
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:course_completion_rate' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'course_completion_rate' %}active{% endif %}">
-            <i class="bi bi-check2-circle me-2"></i>Course Completion Rate
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:retention_rate' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'retention_rate' %}active{% endif %}">
-            <i class="bi bi-people me-2"></i>Retention Rate
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:top_courses_by_rating' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'top_courses_by_rating' %}active{% endif %}">
-            <i class="bi bi-star-fill me-2"></i>Top Courses by Rating
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:course_enrollment_growth' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'course_enrollment_growth' %}active{% endif %}">
-            <i class="bi bi-graph-up-arrow me-2"></i>Course Enrollment Growth
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:course_dropoff_rate' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'course_dropoff_rate' %}active{% endif %}">
-            <i class="bi bi-person-dash-fill me-2"></i>Course Drop-off Rate
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:certificate_analytics' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'certificate_analytics' %}active{% endif %}">
-            <i class="bi bi-patch-check me-2"></i>Certificate Analytics
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:active_partners' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'active_partners' %}active{% endif %}">
-            <i class="bi bi-building me-2"></i>Most Active Partners
-          </a>
-        </div>
-        <div class="col">
-          <a href="{% url 'partner:transaction_trends' %}" 
-            class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'transaction_trends' %}active{% endif %}">
-            <i class="bi bi-cash-stack me-2"></i>Transaction Trends
-          </a>
-        </div>
-
-        <div class="col">
-          <a href="{% url 'partner:top_transaction_partners' %}" 
-            class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'top_transaction_partners' %}active{% endif %}">
-            <i class="bi bi-currency-exchange me-2"></i>Top Transaction Partners
-          </a>
-        </div>
-
-        <div class="col">
-          <a href="{% url 'partner:top_courses_revenue' %}" class="btn btn-outline-primary w-100 {% if request.resolver_match.url_name == 'top_courses_revenue' %}active{% endif %}">
-            <i class="bi bi-currency-dollar me-2"></i>Top Courses Revenue
-          </a>
-        </div>
-
-
-
-      </div>
-
-      <!-- Custom CSS for active button -->
-        <style>
-          .btn.active {
-            background-color: #0d6efd !important;  /* Biru Bootstrap */
-            color: #fff !important;
-            border-color: #0d6efd !important;
-          }
-          .btn-outline-success.active {
-            background-color: #198754 !important;
-            color: #fff !important;
-            border-color: #198754 !important;
-          }
-        </style>
-
-      <!-- Stat Boxes -->
-      <div class="row mb-5">
-        <div class="col-12 col-sm-6 mb-4 mb-sm-0">
-          <div class="card text-center border-0 shadow-lg rounded-3 h-100">
-            <div class="card-body py-4">
-              <h6 class="text-muted mb-2"><i class="bi bi-eye me-1"></i>Weekly Views</h6>
-              <h3 class="fw-bold text-primary mb-0">{{ weekly_views }}</h3>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-sm-6">
-          <div class="card text-center border-0 shadow-lg rounded-3 h-100">
-            <div class="card-body py-4">
-              <h6 class="text-muted mb-2"><i class="bi bi-calendar3 me-1"></i>Monthly Views</h6>
-              <h3 class="fw-bold text-success mb-0">{{ monthly_views }}</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Grafik Views per Course -->
-      <div class="card shadow-lg border-0 rounded-3 mb-5">
-        <div class="card-body p-4">
-          <h3 class="text-center text-muted mb-3">Views per Course</h3>
-          <div class="chart-container position-relative rounded bg-light p-3">
-            <canvas id="viewChart"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <!-- Grafik Comments per Course -->
-      <div class="card shadow-lg border-0 rounded-3">
-        <div class="card-body p-4">
-          <h3 class="text-center text-muted mb-3">Comments per Course</h3>
-          <div class="chart-container position-relative rounded bg-light p-3">
-            <canvas id="commentChart"></canvas>
-          </div>
-        </div>
-      </div>
+  <!-- Tombol Navigasi -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+    <div class="w-full">
+      <a href="{% url 'partner:heatmap' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'heatmap' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-grid-3x3 mr-2 inline"></i>User Activity Heatmap
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:login_trends' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'login_trends' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-graph-up-arrow mr-2 inline"></i>Login Trends
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:learning_duration' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'learning_duration' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-clock-history mr-2 inline"></i>Learning Duration Analytics
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:participant_geography' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'participant_geography' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-geo-alt mr-2 inline"></i>Geographic Analytics
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:device_usage' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'device_usage' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-pc-display mr-2 inline"></i>Device Usage Analytics
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:popular_courses' %}" class="block w-full px-4 py-2 text-sm font-medium border border-green-500 text-green-700 bg-white rounded-md hover:bg-green-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'popular_courses' %}bg-green-500 text-white{% endif %} text-center">
+        <i class="bi bi-star mr-2 inline"></i>Popular Courses
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:user_growth' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'user_growth' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-person-plus mr-2 inline"></i>New User Growth
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:course_completion_rate' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'course_completion_rate' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-check2-circle mr-2 inline"></i>Course Completion Rate
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:retention_rate' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'retention_rate' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-people mr-2 inline"></i>Retention Rate
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:top_courses_by_rating' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'top_courses_by_rating' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-star-fill mr-2 inline"></i>Top Courses by Rating
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:course_enrollment_growth' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'course_enrollment_growth' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-graph-up-arrow mr-2 inline"></i>Course Enrollment Growth
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:course_dropoff_rate' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'course_dropoff_rate' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-person-dash-fill mr-2 inline"></i>Course Drop-off Rate
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:certificate_analytics' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'certificate_analytics' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-patch-check mr-2 inline"></i>Certificate Analytics
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:active_partners' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'active_partners' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-building mr-2 inline"></i>Most Active Partners
+      </a>
+    </div>
+    <div class="w-full">
+      <a href="{% url 'partner:transaction_trends' %}" 
+         class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'transaction_trends' %}bg-blue-500 text-white{% endif %} text-center">
+        <i class="bi bi-cash-stack mr-2 inline"></i>Transaction Trends
+      </a>
     </div>
 
+<div class="w-full">
+  <a href="{% url 'partner:top_transaction_partners' %}" 
+     class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'top_transaction_partners' %}bg-blue-500 text-white{% endif %} text-center">
+    <i class="bi bi-currency-exchange mr-2 inline"></i>Top Transaction Partners
+  </a>
+</div>
 
+<div class="w-full">
+  <a href="{% url 'partner:top_courses_revenue' %}" class="block w-full px-4 py-2 text-sm font-medium border border-blue-500 text-blue-700 bg-white rounded-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 {% if request.resolver_match.url_name == 'top_courses_revenue' %}bg-blue-500 text-white{% endif %} text-center">
+    <i class="bi bi-currency-dollar mr-2 inline"></i>Top Courses Revenue
+  </a>
+</div>  </div>
 
-<!-- Bootstrap Icons -->
+  <!-- Stat Boxes -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+    <div class="bg-white border-0 shadow-lg rounded-xl h-full text-center">
+      <div class="p-4">
+        <h6 class="text-gray-500 mb-2"><i class="bi bi-eye me-1 inline"></i>Weekly Views</h6>
+        <h3 class="font-bold text-blue-600 mb-0 text-xl">{{ weekly_views }}</h3>
+      </div>
+    </div>
+    <div class="bg-white border-0 shadow-lg rounded-xl h-full text-center">
+      <div class="p-4">
+        <h6 class="text-gray-500 mb-2"><i class="bi bi-calendar3 me-1 inline"></i>Monthly Views</h6>
+        <h3 class="font-bold text-green-600 mb-0 text-xl">{{ monthly_views }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grafik Views per Course -->
+  <div class="bg-white shadow-lg border-0 rounded-xl mb-5">
+    <div class="p-4">
+      <h3 class="text-center text-gray-500 mb-3 text-lg">Views per Course</h3>
+      <div class="relative rounded bg-gray-50 p-3 h-[250px] sm:h-[300px] lg:h-[350px] hover:-translate-y-0.5 transition-all duration-300 hover:shadow-lg">
+        <canvas id="viewChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grafik Comments per Course -->
+  <div class="bg-white shadow-lg border-0 rounded-xl">
+    <div class="p-4">
+      <h3 class="text-center text-gray-500 mb-3 text-lg">Comments per Course</h3>
+      <div class="relative rounded bg-gray-50 p-3 h-[250px] sm:h-[300px] lg:h-[350px] hover:-translate-y-0.5 transition-all duration-300 hover:shadow-lg">
+        <canvas id="commentChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap Icons (Tetap gunakan jika diperlukan, atau ganti ke Heroicons) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 <!-- Script lokal Chart.js -->
@@ -301,35 +272,5 @@
   });
 </script>
 
-<style>
-  .chart-container {
-    height: 350px;
-    transition: all 0.3s ease;
-  }
-  .chart-container:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  .btn-outline-primary {
-    transition: all 0.3s ease;
-  }
-  .btn-outline-primary:hover {
-    transform: translateY(-1px);
-  }
-  @media (max-width: 767.98px) {
-    .chart-container {
-      height: 250px;
-    }
-  }
-  @media (min-width: 768px) {
-    .chart-container {
-      height: 300px;
-    }
-  }
-  @media (min-width: 992px) {
-    .chart-container {
-      height: 350px;
-    }
-  }
-</style>
 {% endblock %}
+

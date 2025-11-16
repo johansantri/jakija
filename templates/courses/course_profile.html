@@ -1,129 +1,124 @@
 {% extends 'home/tes.html' %}
 {% block content %}
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+    {% include "courses/course_set.html" %}
+    <br> 
 
-
-
-       
-        {% include "courses/course_set.html"%}
-        <hr>  
-       
-        <div class="support-wrap">
-            <div class="tile">
-              
-             
-                {% if course.image %}
-                <img src="{{ course.image.url }}" alt="{{ course.title }}" class="img-fluid" style="border: 1px solid #ddd; border-radius:4px;padding:5px;width:150px;">               
-                
-              {% endif %}
-              <br>
-              <p><a href="{% url "courses:draft-lms" course.id %}" target="_blank" style="color:red;" >Course Summary Page (for student enrollment and access)</a></p>
-              
-            </div>
-              <br>
+   
+        <div class="tile">
+            {% if course.image %}
+                <img src="{{ course.image.url }}" alt="{{ course.title }}" class="w-36 h-auto border border-gray-300 rounded-md p-2">
+            {% endif %}
             <br>
-            
-              <div class="tile-body">
-               <form method="POST"  enctype="multipart/form-data"  >
-                  {% csrf_token %}
-               
-                  <h5 style="text-align: left;">Course Schedule</h5>
-                  <hr>
-                    <div class="row " >
-                        
-                        <div class="col-md-6">
-                        <label>start date</label>
-                        {{form.start_date}}
-                        
+            <p><a href="{% url 'courses:draft-lms' course.id %}" target="_blank" class="text-red-500">Course Summary Page (for student enrollment and access)</a></p>
+        </div>
+        <br>
+        <br>
+        
+        <div class="tile-body">
+            <form method="POST" enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
+                
+                <h5 class="text-2xl font-semibold text-gray-800">Course Schedule</h5>
+                <hr class="border-gray-300">
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label for="start_date" class="block text-gray-700">Start Date</label>
+                        <div class="flex items-center">
+                            {{ form.start_date }}
                         </div>
-                        <div class="col-md-6">   
-                        <label>end date</label>
-                        {{form.end_date}}
-                        </div>    
                     </div>
                     
-                    <div class="row " >
-                        <div class="col-md-6">
-                        <label>Enrollment start date</label>
-                        {{form.start_enrol}}
+                    <div class="space-y-2">
+                        <label for="end_date" class="block text-gray-700">End Date</label>
+                        <div class="flex items-center">
+                            {{ form.end_date }}
                         </div>
-                        <div class="col-md-6">   
-                        <label>Enrollment end date</label>
-                        {{form.end_enrol}}
-                        </div>    
                     </div>
-                    <br>
-                    <h5 style="text-align: left;">Course Details</h5>
-                    <hr>
-                    <div class="row g-3">
-                        <div class="col-md">
-                          <div class="form-floating">
-                            {{form.level}}
-                              <label for="level">course level</label>
-                          </div>
-                        </div>
-                        <div class="col-md">
-                          <div class="form-floating">
-                            {{form.language}}
-                            <label for="language">course language</label>
-                          </div>
-                        </div>
+                </div>
 
-                        <div class="col-md">
-                            <div class="form-floating">
-                               {{form.hour}}
-                                <label for="hour">Hours of Effort per Week</label>
-                            </div>
-                          </div>
-                      </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label for="start_enrol" class="block text-gray-700">Enrollment Start Date</label>
+                        <div class="flex items-center">
+                            {{ form.start_enrol }}
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label for="end_enrol" class="block text-gray-700">Enrollment End Date</label>
+                        <div class="flex items-center">
+                            {{ form.end_enrol }}
+                        </div>
+                    </div>
+                </div>
 
-                      &nbsp;
-                     
-                        
-                          <div class="form-floating">
-                          {{form.link_video}}
-                            <label for="link_video">link video address</label>
-                          </div>
-                       
-                        <br>
-                          <div class="form-control">
-                           {{form.image}}
-                         &nbsp;
-                            <label for="image">Image</label>
-                            <!-- Display current image if it exists -->
-                           
-                          </div>
-                      
-                     
-                      &nbsp;
+                <br>
+                <h5 class="text-2xl font-semibold text-gray-800">Course Details</h5>
+                <hr class="border-gray-300">
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label for="level" class="block text-gray-700">Course Level</label>
                         <div class="form-floating">
-                       {{form.sort_description}}
-                        <label for="sort_description">sort description Limit to ~150 characters</label>
+                            {{ form.level }}
                         </div>
-                        &nbsp;
-                        <div class="mb-3">
-                          <label>overview</label>
-                            {{form.description}}
-                            
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="language" class="block text-gray-700">Course Language</label>
+                        <div class="form-floating">
+                            {{ form.language }}
                         </div>
-                        
+                    </div>
 
-                 
-                 
-                  <div class="tile-footer">
-                    &nbsp;
-                    <br>
-                    <button class="btn btn-primary"  type="submit">save <i class="fa fa-save"></i></button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="{% url 'courses:studio' id=course.id %}">Cancel <i class="fa fa-close"></i></a>
-                  </div>
-                </form>
-              </div>
-             
-            </div>
-          </div>
+                    <div class="space-y-2">
+                        <label for="hour" class="block text-gray-700">Hours of Effort per Week</label>
+                        <div class="form-floating">
+                            {{ form.hour }}
+                        </div>
+                    </div>
+                </div>
 
+                <div class="space-y-2">
+                    <label for="link_video" class="block text-gray-700">Link Video Address</label>
+                    <div class="form-floating">
+                        {{ form.link_video }}
+                    </div>
+                </div>
 
- 
+                <br>
+                
+                <div class="space-y-2">
+                    <label for="image" class="block text-gray-700">Image</label>
+                    <div class="form-control">
+                        {{ form.image }}
+                    </div>
+                </div>
 
+                <br>
 
+                <div class="space-y-2">
+                    <label for="sort_description" class="block text-gray-700">Sort Description (Limit to ~150 characters)</label>
+                    <div class="form-floating">
+                        {{ form.sort_description }}
+                    </div>
+                </div>
 
+                <br>
 
+                <div class="space-y-2">
+                    <label for="description" class="block text-gray-700">Overview</label>
+                    {{ form.description }}
+                </div>
+
+                <div class="tile-footer mt-6">
+                    <button type="submit" class="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition duration-200">Save <i class="fa fa-save"></i></button>
+                    <a href="{% url 'courses:studio' id=course.id %}" class="ml-4 inline-block bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition duration-200">Cancel <i class="fa fa-close"></i></a>
+                </div>
+            </form>
+        </div>
+   
+  </section>
 {% endblock %}

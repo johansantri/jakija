@@ -1,79 +1,87 @@
 {% extends 'home/tes.html' %}
+{% load static %}
+
 {% block content %}
- 
 
 
-    <!-- Card untuk header dan konten -->
-    <div class="card shadow-sm">
-      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-        <h1 class="h3 mb-0">Score Summary for {{ course.course_name }}</h1>
-        <a href="{% url 'learner:score_summary_detail' course_id=course.id %}?download=csv" class="btn btn-outline-light btn-sm">
-          <i class="bi bi-download me-2"></i>Export to CSV
-        </a>
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ course.course_name }}</h3>
+        <a href="{% url 'learner:score_summary_detail' course_id=course.id %}?download=csv" 
+               class="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition text-sm">
+                Export to CSV
+            </a>
       </div>
-      <div class="card-body">
-        {% if user_scores %}
-          <!-- Loop untuk setiap peserta -->
-          {% for user_score in user_scores %}
-            <!-- Header untuk setiap peserta -->
-            <div class="mt-4 mb-3">
-              <h5 class="fw-bold text-primary">
-                <i class="bi bi-person-circle me-2"></i>{{ user_score.user.username }}
-              </h5>
-              <hr class="border-primary border-2">
-            </div>
-            <!-- Tabel responsif untuk asesmen peserta -->
-            <div class="table-responsive">
-              <table class="table table-striped table-hover align-middle {% cycle 'table-light' 'table-secondary' as row_colors %}">
-                <thead class="table-dark">
-                  <tr>
-                    <th scope="col">Assessment</th>
-                    <th scope="col">Score</th>
-                    <th scope="col">Max Score</th>
-                    <th scope="col">Overall %</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Grade</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for result in user_score.assessment_results %}
-                    <tr>
-                      <td>{{ result.name }}</td>
-                      <td>{{ result.score|floatformat:2 }}</td>
-                      <td>{{ result.max_score }}</td>
-                      {% if forloop.last %}
-                        <td>{{ user_score.overall_percentage }}%</td>
-                        <td>
-                          <span class="badge {% if user_score.status == 'Pass' %}bg-success{% else %}bg-danger{% endif %}">
-                            {{ user_score.status }}
-                          </span>
-                        </td>
-                        <td>{{ user_score.grade }}</td>
-                      {% else %}
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      {% endif %}
-                    </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-          {% empty %}
-            <div class="alert alert-info text-center" role="alert">
-              <i class="bi bi-info-circle me-2"></i>
-              No participants enrolled in this course.
-            </div>
-          {% endfor %}
-        {% else %}
-          <div class="alert alert-info text-center" role="alert">
-            <i class="bi bi-info-circle me-2"></i>
-            No participants enrolled in this course.
-          </div>
-        {% endif %}
-      </div>
+
+  
+
+        <!-- Body -->
+        <div class="p-4 sm:p-6">
+            {% if user_scores %}
+                <!-- Loop untuk setiap peserta -->
+                {% for user_score in user_scores %}
+                    <!-- Header untuk setiap peserta -->
+                    <div class="mt-6 mb-4">
+                        <h5 class="text-lg font-bold text-blue-700 flex items-center gap-2">
+                            {{ user_score.user.username }} | {{ user_score.user.email }}
+                        </h5>
+                        <hr class="border-blue-600 border-2 mt-2">
+                    </div>
+
+                    <!-- Tabel responsif untuk asesmen peserta -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-800 text-white">
+                                <tr>
+                                    <th class="py-3 px-4 text-left font-medium">Assessment</th>
+                                    <th class="py-3 px-4 text-left font-medium">Score</th>
+                                    <th class="py-3 px-4 text-left font-medium">Max Score</th>
+                                    <th class="py-3 px-4 text-left font-medium">Overall %</th>
+                                    <th class="py-3 px-4 text-left font-medium">Status</th>
+                                    <th class="py-3 px-4 text-left font-medium">Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for result in user_score.assessment_results %}
+                                <tr class="border-b hover:bg-gray-50 transition
+                                    {% cycle 'bg-white' 'bg-gray-50' %}">
+                                    <td class="py-3 px-4">{{ result.name }}</td>
+                                    <td class="py-3 px-4">{{ result.score|floatformat:2 }}</td>
+                                    <td class="py-3 px-4">{{ result.max_score }}</td>
+                                    {% if forloop.last %}
+                                    <td class="py-3 px-4 font-medium text-blue-700">
+                                        {{ user_score.overall_percentage }}%
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span class="inline-flex px-3 py-1 rounded-full text-xs font-bold
+                                            {% if user_score.status == 'Pass' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                                            {{ user_score.status }}
+                                        </span>
+                                    </td>
+                                    <td class="py-3 px-4 font-medium">{{ user_score.grade }}</td>
+                                    {% else %}
+                                    <td class="py-3 px-4"></td>
+                                    <td class="py-3 px-4"></td>
+                                    <td class="py-3 px-4"></td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% empty %}
+                    <div class="bg-blue-50 border border-blue-200 text-blue-700 p-4 rounded-lg text-center">
+                        No participants enrolled in this course.
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="bg-blue-50 border border-blue-200 text-blue-700 p-4 rounded-lg text-center">
+                    No participants enrolled in this course.
+                </div>
+            {% endif %}
+        </div>
     </div>
 
-
+</section>
 
 {% endblock %}

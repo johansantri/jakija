@@ -1,110 +1,120 @@
 {% extends 'home/tes.html' %}
 {% block content %}
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+<h1 class="text-3xl font-bold text-red-600 mb-4">Microcredentials List</h1>
+<hr class="border-t border-gray-300 my-4">
+<div class="flex justify-between items-center mb-4">
+    <!-- Tombol New Micro di sebelah kiri -->
+    <a href="{% url 'courses:microcredential-create' %}" 
+       class="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition text-sm">New Micro</a>
+    
+<!-- Form Pencarian di sebelah kanan -->
+<form method="get" action="{% url 'courses:microcredential-list' %}" class="flex items-center">
+    <input type="text" 
+           class="px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent mr-2" 
+           name="search" 
+           placeholder="Search Microcredentials" 
+           value="{{ search_query }}">
+    <button class="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition text-sm" 
+            type="submit">Search</button>
+</form></div>
 
-              
-                <h1>Microcredentials List</h1>
-             
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <!-- Tombol New Micro di sebelah kiri -->
-                    <a href="{% url 'courses:microcredential-create' %}" class="btn btn-success btn-sm">New Micro</a>
+{% if page_obj.object_list %}<div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200 bg-white border border-gray-300 rounded-md">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Courses</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Participants</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Average Rating</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reviews</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for mc in page_obj.object_list %}
+            <tr class="hover:bg-gray-50 transition-colors duration-150">
+                <td class="px-4 py-3 text-sm text-gray-900">
+                    {% if mc.slug %}
+                        <a href="{% url 'courses:micro_detail' mc.id mc.slug %}" class="text-blue-600 hover:text-blue-800 font-medium">
+                            {{ mc.title }}
+                        </a>
+                    {% else %}
+                        {{ mc.title }} <span class="text-gray-500">(missing slug)</span>
+                    {% endif %}
                     
-                    <!-- Form Pencarian di sebelah kanan -->
-                    <form method="get" action="{% url 'courses:microcredential-list' %}" class="d-flex">
-                        <input type="text" class="form-control me-2" name="search" placeholder="Search Microcredentials" value="{{ search_query }}">
-                        <button class="btn btn-outline-secondary" type="submit">Search</button>
-                    </form>
-                </div>
 
-                    {% if page_obj.object_list %}
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover bg-white">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Title</th>
-                            <th>Courses</th>
-                            <th>Participants</th>
-                            <th>Average Rating</th>
-                            <th>Reviews</th>
-                            <th>Status</th>
-                            <th>Duration</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for mc in page_obj.object_list %}
-                            <tr>
-                                <td>
-                                    {% if mc.slug %}
-                                        <a href="{% url 'courses:micro_detail' mc.id mc.slug %}">
-                                            {{ mc.title }}
-                                        </a>
-                                    {% else %}
-                                        {{ mc.title }} <span class="text-muted">(missing slug)</span>
-                                    {% endif %}
-                                    <br>
-                                    <small class="text-muted">{{ mc.category.name }}</small>
-                                </td>
+                    <small class="text-gray-500">{{ mc.category.name }}</small>
+                </td>
 
-                                <td>{{ mc.num_courses }}</td>
-                                <td><a href="{% url 'courses:microcredential_report' mc.id %}">{{ mc.num_enrollments }}</a></td>
-                                <td>
-                                    {% if mc.avg_rating %}
-                                        {{ mc.avg_rating|floatformat:1 }} / 5
-                                    {% else %}
-                                        <span class="text-muted">Belum ada</span>
-                                    {% endif %}
-                                </td>
-                                <td>{{ mc.num_reviews }}</td>
-                                <td>
-                                    <span class="badge {% if mc.status == 'active' %}bg-success{% elif mc.status == 'draft' %}bg-warning{% else %}bg-secondary{% endif %}">
-                                        {{ mc.status|capfirst }}
-                                    </span>
-                                </td>
-                                <td>
-                                    {% if mc.start_date and mc.end_date %}
-                                        {{ mc.start_date }} - {{ mc.end_date }}
-                                    {% else %}
-                                        <span class="text-muted">Tidak ditentukan</span>
-                                    {% endif %}
-                                </td>
-                                 <td><a href="{% url 'courses:microcredential-update' mc.pk %}" class="btn btn-warning btn-sm">Edit</a>
-                                 {% if mc.status != 'active' %}
-                                    <a href="{% url 'courses:microcredential-delete' mc.pk %}" class="btn btn-danger btn-sm">Delete</a>
-                                {% endif %}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">{{ mc.num_courses }}</td>
+            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
+                <a href="{% url 'courses:microcredential_report' mc.id %}" class="text-blue-600 hover:text-blue-800">{{ mc.num_enrollments }}</a>
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
+                {% if mc.avg_rating %}
+                    {{ mc.avg_rating|floatformat:1 }} / 5
+                {% else %}
+                    <span class="text-gray-500">Belum ada</span>
+                {% endif %}
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">{{ mc.num_reviews }}</td>
+            <td class="px-4 py-3 whitespace-nowrap">
+                <span class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full 
+                            {% if mc.status == 'active' %}bg-green-100 text-green-800{% elif mc.status == 'draft' %}bg-yellow-100 text-yellow-800{% else %}bg-gray-100 text-gray-800{% endif %}">
+                    {{ mc.status|capfirst }}
+                </span>
+            </td>
+            <td class="px-4 py-3 text-sm text-gray-900">
+                {% if mc.start_date and mc.end_date %}
+                    {{ mc.start_date }} - {{ mc.end_date }}
+                {% else %}
+                    <span class="text-gray-500">Tidak ditentukan</span>
+                {% endif %}
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium space-x-2">
+                <a href="{% url 'courses:microcredential-update' mc.pk %}" 
+                   class="inline-flex items-center px-3 py-1 text-xs font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 rounded-md transition-colors duration-150">Edit</a>
+                {% if mc.status != 'active' %}
+                    <a href="{% url 'courses:microcredential-delete' mc.pk %}" 
+                       class="inline-flex items-center px-3 py-1 text-xs font-medium text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 rounded-md transition-colors duration-150">Delete</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table></div>
 
-            <!-- Pagination -->
-            <nav class="mt-4">
-                <ul class="pagination justify-content-center">
-                    {% if page_obj.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}">&laquo;</a>
-                        </li>
-                    {% endif %}
-                    {% for num in page_obj.paginator.page_range %}
-                        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-                            <a class="page-link" href="?page={{ num }}&search={{ search_query }}">{{ num }}</a>
-                        </li>
-                    {% endfor %}
-                    {% if page_obj.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.next_page_number }}&search={{ search_query }}">&raquo;</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
-        {% else %}
-            <div class="alert alert-info text-center">
-                Tidak ada MicroCredential yang ditemukan.
-            </div>
+<!-- Pagination -->
+<nav class="mt-4">
+    <ul class="flex justify-center gap-1">
+        {% if page_obj.has_previous %}
+            <li>
+                <a class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
+                   href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}">&laquo;</a>
+            </li>
         {% endif %}
-                        
-            
-
-                       
-
+        {% for num in page_obj.paginator.page_range %}
+            <li>
+                <a class="inline-flex items-center px-3 py-1.5 text-sm font-medium {% if page_obj.number == num %}text-white bg-blue-500 border border-blue-500{% else %}text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2{% endif %} rounded-md transition-colors duration-150" 
+                   href="?page={{ num }}&search={{ search_query }}">{{ num }}</a>
+            </li>
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <li>
+                <a class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
+                   href="?page={{ page_obj.next_page_number }}&search={{ search_query }}">&raquo;</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+{% else %}
+    <div class="bg-blue-50 border border-blue-200 text-blue-800 p-4 rounded-md text-center">
+        data not found.
+    </div>
+{% endif %}
+</section>
 {% endblock %}
+

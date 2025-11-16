@@ -1,873 +1,393 @@
 {% extends 'home/tes.html' %}
 {% block content %}
-  {% include "courses/course_set.html" %}
-  <hr>
+{% load static %}
 
-  <!-- Modal Section Baru -->
-  <div class="modal fade" id="exampleModal-{{course.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content shadow-lg">
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title" id="exampleModalLabel">{{course.course_name}}</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body p-4">
-          {% csrf_token %}
-          <span id="courses" style="display:none">{{course.id}}</span>
-          <input type="text" class="form-control modern-input" autocomplete="off" id="title" name="title" value="{{course.course_name}}" aria-describedby="section">
-          <div id="error-message" class="error-message mt-2"></div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" id="createForm" class="btn btn-primary">Save</button>
-        </div>
-      </div>
+<meta name="csrf-token" content="{{ csrf_token }}">
+
+
+
+ {% include "courses/course_set.html" %}
+
+
+
+<section class="bg-white border p-4 sm:p-6 rounded-lg shadow-sm mt-6 mx-2 sm:mx-0">
+  <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
+    <h2 class="text-lg sm:text-xl font-semibold border-l-4 border-red-400 pl-2">Course Outline</h2>
+    
+    <!-- Container for buttons aligned to the right -->
+    <div class="flex ml-auto items-center gap-3">
+      <!-- Save Button -->
+      <button id="save-json" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm flex items-center gap-2">
+        <i class="fas fa-save"></i> <span class="hidden sm:inline"></span>
+      </button>
+      
+      <!-- Add Section Button -->
+      <button id="add-section" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm flex items-center gap-2">
+        <i class="fas fa-plus"></i>
+      </button>
     </div>
   </div>
 
-  <fieldset class="field-card shadow-sm rounded">
-    <div class="add-course-info p-4">
-      <div class="add-course-inner-header"></div>
-
-      <!-- Kontainer untuk Section yang dapat diseret -->
-      <div id="sortable-sections">
-        {% for i in section %}
-          {% if not i.children.all and not i.materials.all and not i.assessments.all %}
-            <!-- Section kosong -->
-            <div class="curriculum-grid mb-3" data-id="{{ i.id }}">
-              <div class="curriculum-head d-flex align-items-center bg-light p-3 rounded">
-                <i class="bi bi-grip-vertical me-2 drag-handle" style="cursor: grab;"></i>
-                <input name="titleupsection" id="titleupsection-{{i.id}}" autocomplete="off" value="{{i.title}}" type="text" class="form-control modern-input me-2" />
-                <input name="idupsection" id="idupsection-{{i.id}}" value="{{i.id}}" type="hidden" class="form-control" />
-                <input name="courses_id" id="courses_id-{{i.id}}" value="{{i.courses_id}}" type="hidden" class="form-control" />
-                <a href="javascript:void(0);" class="delete-btn-section me-2 text-danger" data-id="{{ i.id }}">
-                  <i class="bi bi-trash"></i>
-              </a>
-
-                <a href="javascript:void(0);" class="text-success" data-id="{{i.id}}" data-bs-toggle="modal" data-bs-target="#exampleModal-{{i.id}}">
-                    <i class="bi bi-plus"></i>
-                </a>
-
-              </div>
-              <div id="error-section-{{i.id}}" class="error-message mt-2"></div>
-              <div class="curriculum-info p-3">
-                <div id="accordion-one">
-                  <p class="text-muted">No subsections available</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Modal Subsection -->
-            <div class="modal fade" id="exampleModal-{{i.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content shadow-lg">
-                  <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">New Subsection</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body p-4">
-                    {% csrf_token %}
-                    <input type="text" class="form-control modern-input" autocomplete="off" id="title-{{i.id}}" name="title" placeholder="Subsection" />
-                    <input type="hidden" class="form-control" id="courses-{{i.id}}" name="courses" value="{{course.id}}" />
-                    <input type="hidden" class="form-control" id="parent-{{i.id}}" name="parent" value="{{i.id}}" />
-                    <div id="error-message-{{i.id}}" class="error-message mt-2"></div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="createSubForm-{{i.id}}" class="btn btn-primary">Save</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          {% else %}
-            <!-- Modal New Sub -->
-            <div class="modal fade" id="newModal-{{i.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content shadow-lg">
-                  <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">New Subsection</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body p-4">
-                    {% csrf_token %}
-                    <input type="text" class="form-control modern-input" autocomplete="off" id="title-{{i.id}}" name="title" placeholder="Subsection" />
-                    <input type="hidden" class="form-control" id="courses-{{i.id}}" name="courses" value="{{course.id}}" />
-                    <input type="hidden" class="form-control" id="parent-{{i.id}}" name="parent" value="{{i.id}}" />
-                    <div id="error-message-{{i.id}}" class="error-message mt-2"></div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="createSubForm-{{i.id}}" class="btn btn-primary">Save</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Section dengan Subsections -->
-            <div class="curriculum-grid mb-3" data-id="{{ i.id }}">
-              <div class="curriculum-head d-flex align-items-center bg-light p-3 rounded">
-                <i class="bi bi-grip-vertical me-2 drag-handle" style="cursor: grab;"></i>
-                <input name="titleupsection" value="{{i.title}}" id="titleupsection-{{i.id}}" type="text" class="form-control modern-input me-2" />
-                <input name="idupsection" id="idupsection-{{i.id}}" value="{{i.id}}" type="hidden" class="form-control ada" />
-                <input name="courses_id" id="courses_id-{{i.id}}" value="{{i.courses_id}}" type="hidden" class="form-control ada" />
-                <a href="javascript:void(0);" class="text-danger me-2 delete-btn-section" data-id="{{ i.id }}">
-                    <i class="bi bi-trash"></i>
-                </a>
-                <a href="javascript:void(0);" class="text-success" data-id="{{i.id}}" data-bs-toggle="modal" data-bs-target="#newModal-{{i.id}}">
-                    <i class="bi bi-plus"></i>
-                </a>
+  <!-- Sections Container -->
+  <div id="sections" class="space-y-3"></div>
+</section>
 
 
-              </div>
-              <div id="error-section-{{i.id}}" class="error-message mt-2"></div>
-              <div class="curriculum-info p-3">
-                <div id="accordion-one" class="accordion">
-                  <!-- Kontainer untuk Subsection yang dapat diseret -->
-                  <div class="sortable-subsections" data-parent-id="{{ i.id }}">
-                    {% for obj in i.children.all %}
-                      {% if not obj.children.all %}
-                        <!-- Subsection tanpa children -->
-                        <div class="faq-grid" data-id="{{ obj.id }}">
-                          <div class="faq-header d-flex align-items-center bg-white p-2 rounded shadow-sm mb-2">
-                            <i class="bi bi-grip-vertical me-2 drag-handle" style="cursor: grab;"></i>
-                            <a class="collapsed faq-collapse flex-grow-1 d-flex align-items-center" data-bs-toggle="collapse" href="#collapse-{{obj.id}}" aria-expanded="false">
-                              <i class="bi bi-list me-2"></i>
-                              <input name="titlepusection" value="{{obj.title}}" id="titlepusection-{{obj.id}}" type="text" class="form-control modern-input" />
-                              <input name="parent_id" id="parent_id-{{obj.id}}" value="{{obj.parent_id}}" type="hidden" class="form-control" />
-                              <input name="courses_id" id="courses_id-{{obj.id}}" value="{{obj.courses_id}}" type="hidden" class="form-control" />
-                            </a>
-                            <div class="faq-right d-flex">
-                             <a href="javascript:void(0);" class="text-danger delete-btn-section" data-id="{{ obj.id }}">
-                                <i class="bi bi-trash"></i>
-                            </a>
-
-                            </div>
-                          </div>
-                          <div id="collapse-{{obj.id}}" class="collapse" data-bs-parent="#accordion-one">
-                            <div class="p-3">
-                              {% for material in obj.materials.all %}
-                                <div class="border rounded p-3 mb-2 d-flex justify-content-between align-items-center bg-white shadow-sm">
-                                  <a href="{% url 'courses:edit_matrial' course.id material.id %}">{{ material.title }}</a>
-                                  <a href="javascript:void(0);" class="text-danger delete-btn-matrial" data-id="{{ material.id }}">
-                                      <i class="bi bi-trash"></i>
-                                  </a>
-
-                                </div>
-                              {% empty %}
-                                <p class="text-muted">No materials available for this section.</p>
-                              {% endfor %}
-                              {% for assesment in obj.assessments.all %}
-                                <div class="border rounded p-3 mb-2 d-flex justify-content-between align-items-center bg-white shadow-sm">
-                                  <a href="{% url 'courses:view-question' course.id obj.id assesment.id %}">{{ assesment.name | safe }}</a>
-                                  <a href="{% url 'courses:delete_assessment' course.id obj.id assesment.id %}" class="text-danger delete-btn-matrial">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-
-                                </div>
-                              {% empty %}
-                                <p class="text-muted">No assessments available for this section.</p>
-                              {% endfor %}
-                              <div class="faq-body mt-3">
-                                <div class="add-article-btns d-flex justify-content-between align-items-center">
-                                  <a href="{% url 'courses:add-matrial' course.id obj.id %}" class="btn btn-primary btn-sm"><i class="bi bi-file-earmark-plus"></i> Material</a>
-                                  <a href="{% url 'courses:create-assessment' course.id obj.id %}" class="btn btn-primary btn-sm"><i class="bi bi-list-ul"></i> Assessment</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      {% else %}
-                        <!-- Subsection dengan children -->
-                        <div class="faq-grid" data-id="{{ obj.id }}">
-                          <div class="faq-header d-flex align-items-center bg-white p-2 rounded shadow-sm mb-2">
-                            <i class="bi bi-grip-vertical me-2 drag-handle" style="cursor: grab;"></i>
-                            <a class="collapsed faq-collapse flex-grow-1 d-flex align-items-center" data-bs-toggle="collapse" href="#collapse-{{obj.id}}" aria-expanded="false">
-                              <i class="bi bi-list me-2"></i>
-                              <input name="titlepusection" value="{{obj.title}}" id="titlepusection-{{obj.id}}" type="text" class="form-control modern-input" />
-                              <input name="parent_id" id="parent_id-{{obj.id}}" value="{{obj.parent_id}}" type="hidden" class="form-control" />
-                              <input name="courses_id" id="courses_id-{{obj.id}}" value="{{obj.courses_id}}" type="hidden" class="form-control" />
-                            </a>
-                            <div class="faq-right d-flex">
-                             <a href="javascript:void(0);" class="text-success me-2" onclick="document.getElementById('titlepusection-{{obj.id}}').focus();">
-                                <i class="bi bi-plus"></i>
-                            </a>
-                            <a href="javascript:void(0);" class="text-danger delete-btn-section" data-id="{{ obj.id }}">
-                                <i class="bi bi-trash"></i>
-                            </a>
-
-                            </div>
-                          </div>
-                          <div id="collapse-{{obj.id}}" class="collapse" data-bs-parent="#accordion-one">
-                            <div class="faq-body p-3">
-                              <div class="add-article-btns d-flex justify-content-between align-items-center">
-                                <a href="javascript:void(0);" class="btn btn-primary"><i class="bi bi-file-earmark-plus"></i> Add Article</a>
-                                <a href="javascript:void(0);" class="btn btn-primary"><i class="bi bi-text-left"></i> Add Description</a>
-                              </div>
-                              {% for subobj in obj.children.all %}
-                                <a href="javascript:void(0);" class="form-control modern-input d-block mb-2">A.1.1 {{subobj.title}}</a>
-                              {% endfor %}
-                            </div>
-                          </div>
-                        </div>
-                      {% endif %}
-                    {% endfor %}
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endif %}
-        {% endfor %}
-      </div>
-
-      <div class="row widget-btn mt-4">
-        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal-{{course.id}}">+ Section</button>
-      </div>
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white w-full max-w-md p-5 sm:p-6 rounded-lg shadow-xl">
+    <h2 id="modal-title" class="text-lg font-semibold mb-3 text-gray-800">Add Item</h2>
+    <input id="modal-input" type="text" placeholder="Enter name..."
+           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-300 focus:outline-none text-sm">
+    <div class="flex justify-end mt-4 space-x-2">
+      <button id="cancel-modal" class="px-3 py-2 text-gray-500 hover:text-gray-700 text-sm flex items-center gap-1">
+        <i class="fas fa-times"></i> Cancel
+      </button>
+      <button id="save-modal" class="bg-red-400 hover:bg-red-500 text-white px-3 py-2 rounded-lg text-sm flex items-center gap-1">
+        <i class="fas fa-check"></i> Save
+      </button>
     </div>
-  </fieldset>
-
-  <!-- CSS Tambahan -->
-  <style>
-    /* General Reset */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Font Import */
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f5f7fa;
-    }
-
-    /* Fieldset Card */
-    .field-card {
-      background: #fff;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    /* Curriculum Grid */
-    .curriculum-grid, .faq-grid {
-      margin-bottom: 20px;
-      transition: all 0.3s ease;
-    }
-
-    .curriculum-head, .faq-header {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      background: #f8f9fa;
-      transition: background 0.3s ease;
-    }
-
-    .curriculum-head:hover, .faq-header:hover {
-      background: #e9ecef;
-    }
-
-    /* Drag Handle */
-    .drag-handle {
-      font-size: 20px;
-      color: #6c757d;
-      transition: color 0.3s ease;
-    }
-
-    .drag-handle:hover {
-      color: #007bff;
-    }
-
-    /* Sortable Ghost */
-    .sortable-ghost {
-      opacity: 0.4;
-      background: #e9ecef;
-      border: 2px dashed #007bff;
-      will-change: transform;
-    }
-
-    .sortable-chosen {
-      background: #fff;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      will-change: transform;
-    }
-
-    /* Input Fields */
-    .form-control.modern-input {
-      border: 1px solid #ced4da;
-      border-radius: 6px;
-      padding: 10px;
-      font-size: 14px;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .form-control.modern-input:focus {
-      border-color: #007bff;
-      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-      outline: none;
-    }
-
-    /* Buttons */
-    .btn {
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 500;
-      padding: 8px 14px;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 40px;
-    }
-
-    .btn-primary {
-      background-color: #007bff;
-      border-color: #007bff;
-    }
-
-    .btn-primary:hover {
-      background-color: #0056b3;
-      border-color: #0056b3;
-      transform: translateY(-2px);
-    }
-
-    .btn-success {
-      background-color: #28a745;
-      border-color: #28a745;
-    }
-
-    .btn-success:hover {
-      background-color: #218838;
-      border-color: #218838;
-      transform: translateY(-2px);
-    }
-
-    .btn-danger {
-      background-color: #dc3545;
-      border-color: #dc3545;
-    }
-
-    .btn-danger:hover {
-      background-color: #c82333;
-      border-color: #c82333;
-      transform: translateY(-2px);
-    }
-
-    .btn-outline-secondary {
-      border-color: #6c757d;
-      color: #6c757d;
-    }
-
-    .btn-outline-secondary:hover {
-      background-color: #6c757d;
-      color: #fff;
-      transform: translateY(-2px);
-    }
-
-    .btn-outline-success {
-      border-color: #28a745;
-      color: #28a745;
-    }
-
-    .btn-outline-success:hover {
-      background-color: #28a745;
-      color: #fff;
-      transform: translateY(-2px);
-    }
-
-    /* Modal Styling */
-    .modal-content {
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      animation: modalFadeIn 0.3s ease;
-    }
-
-    .modal-header {
-      border-bottom: none;
-      padding: 20px;
-    }
-
-    .modal-body {
-      padding: 20px;
-    }
-
-    .modal-footer {
-      border-top: none;
-      padding: 20px;
-    }
-
-    .modal-backdrop {
-      background-color: rgba(0, 0, 0, 0.6);
-    }
-
-    @keyframes modalFadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    /* Error Message */
-    .error-message {
-      color: #dc3545;
-      font-size: 12px;
-      display: none;
-    }
-
-    /* FAQ Collapse */
-    .faq-collapse {
-      text-decoration: none;
-      color: inherit;
-      width: 100%;
-      transition: color 0.3s ease;
-    }
-
-    .faq-collapse:hover {
-      color: #007bff;
-    }
-
-    .faq-right {
-      flex-shrink: 0;
-    }
-
-    /* Add Article Buttons */
-    .add-article-btns {
-      width: 100%;
-      padding: 15px 0;
-    }
-
-    .add-article-btns .btn {
-      flex: 1;
-      margin: 0 5px;
-    }
-
-    /* Accordion */
-    .accordion .collapse {
-      transition: all 0.3s ease;
-    }
-
-    /* Responsive Design - Penyesuaian untuk Mobile */
-    @media (max-width: 768px) {
-      .curriculum-grid, .faq-grid {
-        margin-left: -30px; /* Geser ke kiri */
-        margin-right: -30px; /* Sesuaikan margin kanan agar seimbang */
-      }
-
-      .curriculum-head, .faq-header {
-        flex-wrap: nowrap; /* Mencegah elemen membungkus ke baris baru */
-        align-items: center;
-        padding: 8px; /* Kurangi padding agar lebih kompak */
-      }
-
-      .form-control.modern-input {
-        width: auto; /* Sesuaikan lebar dengan konten */
-        flex-grow: 1; /* Biarkan input mengambil ruang yang tersedia */
-        margin-bottom: 0; /* Hilangkan margin bawah */
-        padding: 6px 8px; /* Lebih kecil di mobile */
-        font-size: 12px; /* Teks lebih kecil di mobile */
-      }
-
-      .btn {
-        width: auto;
-        margin-bottom: 0; /* Hilangkan margin bawah */
-        padding: 6px 10px; /* Tombol lebih kecil di mobile */
-        font-size: 12px; /* Teks tombol lebih kecil di mobile */
-        min-width: 36px; /* Tetap cukup besar untuk disentuh */
-        margin-left: 5px; /* Jarak antar tombol */
-      }
-
-      .drag-handle {
-        font-size: 18px; /* Sedikit lebih kecil di mobile */
-        margin-right: 5px; /* Jarak ke elemen berikutnya */
-      }
-
-      .faq-collapse {
-        flex-grow: 1; /* Biarkan area collapse mengambil ruang yang tersedia */
-        display: flex;
-        align-items: center;
-      }
-
-      .faq-collapse i.bi-list {
-        font-size: 18px; /* Sesuaikan ukuran ikon navigasi */
-        margin-right: 5px; /* Jarak ke input */
-      }
-
-      .faq-right {
-        display: flex;
-        align-items: center;
-        margin-left: 2px; /* Kurangi jarak container tombol */
-      }
-
-      /* Mengurangi jarak antar tombol delete dan add di mobile */
-      .curriculum-head .btn-danger,
-      .curriculum-head .btn-success,
-      .faq-header .btn-danger,
-      .faq-header .btn-success {
-        margin-left: 2px; /* Kurangi jarak antar tombol */
-        padding: 4px 8px; /* Kurangi padding tombol agar lebih kecil */
-        min-width: 32px; /* Kurangi lebar minimum tombol */
-      }
-
-      .add-article-btns {
-        flex-direction: row; /* Tombol sejajar kesamping */
-      }
-
-      .add-article-btns .btn {
-        width: auto;
-        margin: 0 5px;
-      }
-
-      .modal-content {
-        margin: 10px;
-      }
-    }
-  </style>
-{% endblock %}
-  <!-- Scripts -->
-  
-  {% block scripts %}
-  <script>
-    $(document).ready(function() {
-      // Inisialisasi Sortable untuk Sections
-      new Sortable(document.getElementById('sortable-sections'), {
-        animation: 150,
-        handle: '.drag-handle',
-        ghostClass: 'sortable-ghost',
-        chosenClass: 'sortable-chosen',
-        onEnd: function(evt) {
-          var sections = $('#sortable-sections .curriculum-grid');
-          var sectionOrder = [];
-          sections.each(function(index) {
-            var id = $(this).attr('data-id');
-            if (id) {
-              sectionOrder.push({
-                id: id,
-                order: index
-              });
-            } else {
-              console.warn('Section missing data-id at index', index);
-            }
-          });
-          console.log('Section Order:', sectionOrder);
-
-          if (sectionOrder.length > 0) {
-            var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-            $.ajax({
-              url: '/reorder-section/',
-              method: 'POST',
-              data: {
-                'csrfmiddlewaretoken': csrfToken,
-                'sections': JSON.stringify(sectionOrder)
-              },
-              success: function(response) {
-                if (response.status === 'success') {
-                  console.log('Section order updated successfully');
-                  location.reload();
-                } else {
-                  console.error('Failed to update section order:', response.message);
-                  alert('Failed to update section order: ' + response.message);
-                }
-              },
-              error: function(xhr, status, error) {
-                console.error('Section AJAX Error:', status, error);
-              }
-            });
-          } else {
-            console.warn('No valid sections to reorder');
-          }
-        }
-      });
-
-      // Inisialisasi Sortable untuk Subsections
-      $('.sortable-subsections').each(function(index) {
-        var $this = $(this);
-        var parentId = $this.attr('data-parent-id');
-        console.log('Initializing Sortable for parent', parentId, 'at index', index);
-
-        if (!parentId) {
-          console.warn('Parent ID is undefined for sortable-subsections at index', index);
-        }
-
-        new Sortable(this, {
-          animation: 150,
-          handle: '.drag-handle',
-          ghostClass: 'sortable-ghost',
-          chosenClass: 'sortable-chosen',
-          group: {
-            name: 'subsections',
-            pull: true,
-            put: true
-          },
-          onEnd: function(evt) {
-            var oldParentId = evt.from.closest('.sortable-subsections').getAttribute('data-parent-id');
-            var newParentId = evt.to.closest('.sortable-subsections').getAttribute('data-parent-id');
-            var subsections = $(evt.to).find('.faq-grid');
-            console.log('Moved from parent', oldParentId, 'to parent', newParentId);
-            console.log('Found', subsections.length, 'subsections in new parent', newParentId);
-
-            var subsectionOrder = [];
-            subsections.each(function(index) {
-              var id = $(this).attr('data-id');
-              if (id) {
-                subsectionOrder.push({
-                  id: id,
-                  order: index,
-                  parent_id: newParentId || null
-                });
-              } else {
-                console.warn('Subsection missing data-id at index', index, 'for parent', newParentId);
-              }
-            });
-            console.log('Subsection Order for parent', newParentId, ':', subsectionOrder);
-
-            if (subsectionOrder.length > 0) {
-              var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-              $.ajax({
-                url: '/reorder-section/',
-                method: 'POST',
-                data: {
-                  'csrfmiddlewaretoken': csrfToken,
-                  'subsections': JSON.stringify(subsectionOrder)
-                },
-                success: function(response) {
-                  if (response.status === 'success') {
-                    console.log('Subsection order updated successfully for parent', newParentId);
-                    location.reload();
-                  } else {
-                    console.error('Failed to update subsection order:', response.message);
-                    alert('Failed to update subsection order: ' + response.message);
-                  }
-                },
-                error: function(xhr, status, error) {
-                  console.error('Subsection AJAX Error:', status, error);
-                }
-              });
-            } else {
-              console.warn('No valid subsections to reorder for parent', newParentId);
-            }
-          }
-        });
-      });
-
-      // Script AJAX yang sudah ada
-      function submitForm() {
-        var title = $('#title').val();
-        var courses = $('#courses').text();
-        var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-
-        if (!title || !courses) {
-          $('#error-message').text('Required').show();
-          return;
-        }
-
-        $.ajax({
-          url: '{% url "courses:create_section" idcourse=course.id %}',
-          method: 'POST',
-          data: {
-            'csrfmiddlewaretoken': csrfToken,
-            'title': title,
-            'courses': courses,
-          },
-          success: function(response) {
-            if (response.status === 'success') {
-              $('#exampleModal-{{course.id}}').modal('hide');
-              $('#title').val('');
-              location.reload();
-            } else {
-              $('#error-message').text(response.message).show();
-            }
-          },
-          error: function(xhr, status, error) {
-            console.error('AJAX Error:', status, error);
-          }
-        });
-      }
-
-      $('#createForm').click(function(e) {
-        e.preventDefault();
-        submitForm();
-      });
-
-      $('#title').keypress(function(event) {
-        if (event.which === 13) {
-          event.preventDefault();
-          submitForm();
-        }
-      });
-
-      function createSub(id) {
-        var itemId = id.split('-')[1];
-        var title = $('#title-' + itemId).val();
-        var courses = $('#courses-' + itemId).val();
-        var parent = $('#parent-' + itemId).val();
-        var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-
-        if (!title) {
-          $('#error-message-' + itemId).text('Title is required').show();
-          return;
-        }
-
-        $.ajax({
-          url: '{% url "courses:create_section" idcourse=course.id %}',
-          method: 'POST',
-          data: {
-            'csrfmiddlewaretoken': csrfToken,
-            'title': title,
-            'courses': courses,
-            'parent': parent
-          },
-          success: function(response) {
-            if (response.status === 'success') {
-              $('#newModal-' + itemId).modal('hide');
-              $('#exampleModal-' + itemId).modal('hide');
-              location.reload();
-            } else {
-              $('#error-message-' + itemId).text(response.message).show();
-            }
-          },
-          error: function(xhr, status, error) {
-            console.error('AJAX Error:', status, error);
-          }
-        });
-      }
-
-      $(document).on('click', '[id^="createSubForm-"]', function() {
-        var buttonId = $(this).attr('id');
-        createSub(buttonId);
-      });
-
-      $('input[id^="title-"]').keypress(function(event) {
-        if (event.keyCode === 13) {
-          var buttonId = 'createSubForm-' + $(this).attr('id').split('-')[1];
-          createSub(buttonId);
-        }
-      });
-
-      function sendDataSub(itemId) {
-        var title = $('#titlepusection-' + itemId).val();
-        var courseId = $('#courses_id-' + itemId).val();
-        var parent = $('#parent_id-' + itemId).val();
-        var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-
-        if (!title || !courseId) {
-          $('#error-section-' + itemId).text('Required').show();
-          return;
-        }
-
-        $.ajax({
-          url: `/update-section/${itemId}/`,
-          method: 'POST',
-          data: {
-            'csrfmiddlewaretoken': csrfToken,
-            'title': title,
-            'courses': courseId,
-            'parent': parent
-          },
-          success: function(response) {
-            if (response.status === 'success') {
-              $('#error-section-' + itemId).hide();
-              console.log('Subsection updated successfully');
-            } else {
-              alert('Update failed');
-            }
-          },
-          error: function(xhr, status, error) {
-            console.error('AJAX Error:', status, error);
-          }
-        });
-      }
-
-      $('input[id^="titlepusection-"]').keypress(function(event) {
-        if (event.keyCode === 13) {
-          var itemId = $(this).attr('id').split('-')[1];
-          sendDataSub(itemId);
-        }
-      });
-
-      function sendData(itemId) {
-        var title = $('#titleupsection-' + itemId).val();
-        var course = $('#idupsection-' + itemId).val();
-        var courseId = $('#courses_id-' + itemId).val();
-        var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-
-        if (!title || !course || !courseId) {
-          $('#error-section-' + itemId).text('Required').show();
-          return;
-        }
-
-        $.ajax({
-          url: `/update-section/${itemId}/`,
-          method: 'POST',
-          data: {
-            'csrfmiddlewaretoken': csrfToken,
-            'id': course,
-            'title': title,
-            'courses': courseId
-          },
-          success: function(response) {
-            if (response.status === 'success') {
-              $('#error-section-' + itemId).hide();
-              console.log('Section updated successfully');
-            } else {
-              alert('Update failed');
-            }
-          },
-          error: function(xhr, status, error) {
-            console.error('AJAX Error:', status, error);
-          }
-        });
-      }
-
-      $('input[id^="titleupsection-"]').keypress(function(event) {
-        if (event.keyCode === 13) {
-          var itemId = $(this).attr('id').split('-')[1];
-          sendData(itemId);
-        }
-      });
-
-      $('.delete-btn-section').click(function() {
-        var itemId = $(this).data('id');
-        var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-        $.ajax({
-          url: `/delete-section/${itemId}/`,
-          method: 'POST',
-          data: {
-            'csrfmiddlewaretoken': csrfToken
-          },
-          success: function(response) {
-            if (response.status === 'success') {
-              location.reload();
-            }
-          }
-        });
-      });
-
-      $('.delete-btn-matrial').click(function() {
-        var pk = $(this).data('id');
-        var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-        $.ajax({
-          url: `/delete-matrial/${pk}`,
-          method: 'POST',
-          data: {
-            'csrfmiddlewaretoken': csrfToken
-          },
-          success: function(response) {
-            if (response.status === 'success') {
-              location.reload();
-            }
-          }
-        });
-      });
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script>
+  const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  const courseId = {{ course.id }};
+  const sectionsContainer = document.getElementById('sections');
+  const addSectionBtn = document.getElementById('add-section');
+  const modal = document.getElementById('modal');
+  const modalInput = document.getElementById('modal-input');
+  const modalTitle = document.getElementById('modal-title');
+  const saveModal = document.getElementById('save-modal');
+  const cancelModal = document.getElementById('cancel-modal');
+
+  let currentAction = null;
+  let currentTarget = null;
+
+  // ---- Modal ----
+  function openModal(action, target = null, value = '') {
+    currentAction = action;
+    currentTarget = target;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    modalInput.value = value;
+    modalInput.focus();
+    modalTitle.textContent = `Add ${action.charAt(0).toUpperCase() + action.slice(1)}`;
+  }
+
+  function closeModal() {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    modalInput.value = '';
+    currentAction = null;
+    currentTarget = null;
+  }
+
+  cancelModal.addEventListener('click', closeModal);
+
+  // ---- Editable ----
+  function toggleEditable(div, selector) {
+    const label = div.querySelector(selector);
+    const input = div.querySelector('input');
+    const editBtn = div.querySelector('.edit');
+    editBtn.addEventListener('click', () => {
+      label.classList.add('hidden');
+      input.classList.remove('hidden');
+      input.focus();
+      input.select();
     });
-  </script>
+    input.addEventListener('blur', async () => {
+      const newTitle = input.value.trim();
+      if (!newTitle || newTitle === label.textContent) {
+        label.classList.remove('hidden');
+        input.classList.add('hidden');
+        return;
+      }
+      label.textContent = newTitle;
+      label.classList.remove('hidden');
+      input.classList.add('hidden');
+      if (!div.dataset.id) return;
+      try {
+        await fetch(`/sections/${div.dataset.id}/`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+          body: JSON.stringify({ title: newTitle })
+        });
+      } catch (err) {
+        console.error('Edit failed:', err);
+      }
+    });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') input.blur();
+      if (e.key === 'Escape') {
+        input.value = label.textContent;
+        input.blur();
+      }
+    });
+  }
 
-    {% endblock %}
+  // ---- Collapse (Font Awesome) ----
+  function setupToggle(button, selector) {
+    button.addEventListener('click', () => {
+      const list = button.closest('div').parentElement.nextElementSibling;
+      if (!list || !list.matches(selector)) return;
+      const isHidden = list.classList.toggle('hidden');
+      button.innerHTML = isHidden
+        ? '<i class="fas fa-chevron-right"></i>'
+        : '<i class="fas fa-chevron-down"></i>';
+    });
+  }
+
+  // ---- Create Section (IKON + RESPONSIVE) ----
+  function createSection(title, id, children = []) {
+    const div = document.createElement('div');
+    div.className = 'border border-gray-200 rounded-lg p-3 sm:p-4 bg-white shadow-sm';
+    div.dataset.id = id;
+    div.innerHTML = `
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-2 flex-1 min-w-0">
+          <button class="toggle text-gray-500 hover:text-red-400 text-lg">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <span class="section-label font-semibold text-gray-800 truncate">${title}</span>
+          <input class="hidden border rounded px-2 py-1 text-sm w-full" value="${title}">
+          <button class="edit text-gray-400 hover:text-red-400">
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
+        <div class="flex gap-1 sm:gap-2">
+          <button class="add-sub bg-red-100 text-red-400 p-2 rounded-lg hover:bg-red-200">
+            <i class="fas fa-folder-plus"></i>
+          </button>
+          <button class="delete text-gray-400 hover:text-red-500 p-2">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      <div class="subsection-list ml-6 mt-3 space-y-3 hidden"></div>
+    `;
+    const subList = div.querySelector('.subsection-list');
+    div.querySelector('.add-sub').addEventListener('click', () => openModal('subsection', div));
+    div.querySelector('.delete').addEventListener('click', () => deleteItem(id, div));
+    setupToggle(div.querySelector('.toggle'), '.subsection-list');
+    toggleEditable(div, '.section-label');
+    children.forEach(sub => subList.appendChild(createSubsection(sub.title, sub.id, sub.children || [])));
+    makeSortable(subList);
+    return div;
+  }
+
+  // ---- Create Subsection ----
+  function createSubsection(title, id, children = []) {
+    const div = document.createElement('div');
+    div.className = 'border border-gray-100 rounded-lg p-3 bg-gray-50';
+    div.dataset.id = id;
+    div.innerHTML = `
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-2 flex-1 min-w-0">
+          <button class="toggle text-gray-500 hover:text-red-400 text-lg">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <span class="sub-label text-gray-700 font-medium truncate">${title}</span>
+          <input class="hidden border rounded px-2 py-1 text-sm w-full" value="${title}">
+          <button class="edit text-gray-400 hover:text-red-400">
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
+        <div class="flex gap-1">
+          <button class="add-unit bg-blue-100 text-blue-500 p-2 rounded-lg hover:bg-blue-200">
+            <i class="fas fa-file-circle-plus"></i>
+          </button>
+          <button class="delete text-gray-400 hover:text-red-500 p-2">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      <div class="unit-list ml-6 mt-3 space-y-3 hidden"></div>
+    `;
+    const unitList = div.querySelector('.unit-list');
+    div.querySelector('.add-unit').addEventListener('click', () => openModal('unit', div));
+    div.querySelector('.delete').addEventListener('click', () => deleteItem(id, div));
+    setupToggle(div.querySelector('.toggle'), '.unit-list');
+    toggleEditable(div, '.sub-label');
+    children.forEach(unit => unitList.appendChild(createUnit(unit.title, unit.id)));
+    makeSortable(unitList);
+    return div;
+  }
+
+  // ---- Create Unit ----
+  function createUnit(title, id) {
+    const div = document.createElement('div');
+    div.className = 'border border-gray-200 rounded-lg p-3 bg-white';
+    div.dataset.id = id;
+    div.innerHTML = `
+      <div class="flex justify-between items-center">
+        <span class="unit-label text-gray-700 truncate flex-1">${title}</span>
+        <div class="flex gap-1">
+          <button class="edit text-gray-400 hover:text-red-400">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="delete text-gray-400 hover:text-red-500">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      <input class="hidden border rounded px-2 py-1 text-sm mt-1 w-full" value="${title}">
+    `;
+    div.querySelector('.delete').addEventListener('click', () => deleteItem(id, div));
+    toggleEditable(div, '.unit-label');
+    return div;
+  }
+
+  // ---- Delete ----
+  async function deleteItem(id, div) {
+    if (!confirm('Yakin ingin menghapus item ini dan semua isinya?')) return;
+    try {
+      const res = await fetch(`/sections/${id}/`, {
+        method: 'DELETE',
+        headers: { 'X-CSRFToken': csrftoken }
+      });
+      if (res.ok) div.remove();
+      else alert('Gagal hapus.');
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  // ---- Sortable ----
+  function makeSortable(container) {
+    if (!container) return;
+    new Sortable(container, { group: 'nested', animation: 150, fallbackOnBody: true, swapThreshold: 0.65 });
+  }
+
+  // ---- ADD ITEM (TANPA RELOAD) ----
+  addSectionBtn.addEventListener('click', () => openModal('section'));
+  saveModal.addEventListener('click', async () => {
+    const title = modalInput.value.trim();
+    if (!title) return alert('Nama tidak boleh kosong!');
+
+    const parentEl = currentTarget;
+    const action = currentAction;
+    const payload = { title, courses: courseId };
+    if (action !== 'section' && parentEl) payload.parent = parentEl.dataset.id;
+
+    try {
+      const res = await fetch('/sections/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        let newItem;
+        try { newItem = await res.json(); }
+        catch { console.warn('JSON error → fallback'); closeModal(); await fetchSections(); return; }
+
+        closeModal();
+
+        let newEl = null, parentList = null;
+
+        if (action === 'section') {
+          newEl = createSection(newItem.title, newItem.id);
+          sectionsContainer.appendChild(newEl);
+          makeSortable(sectionsContainer);
+        } else if (parentEl) {
+          const listSelector = action === 'subsection' ? '.subsection-list' : '.unit-list';
+          parentList = parentEl.querySelector(listSelector);
+          if (!parentList) { await fetchSections(); return; }
+
+          newEl = action === 'subsection'
+            ? createSubsection(newItem.title, newItem.id)
+            : createUnit(newItem.title, newItem.id);
+          parentList.appendChild(newEl);
+          makeSortable(parentList);
+        }
+
+        // Auto-expand
+        if (parentList && parentList.classList.contains('hidden')) {
+          parentList.classList.remove('hidden');
+          const toggleBtn = parentEl.querySelector('.toggle');
+          if (toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+        }
+
+        // Scroll + highlight
+        if (newEl) {
+          newEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          newEl.style.backgroundColor = '#fef3c7';
+          setTimeout(() => newEl.style.backgroundColor = '', 1500);
+        }
+      } else {
+        let msg = 'Gagal tambah item.';
+        try { const e = await res.json(); msg += ' ' + JSON.stringify(e); } catch {}
+        alert(msg);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Koneksi gagal.');
+    }
+  });
+
+  // ---- Fetch Data ----
+  async function fetchSections() {
+    try {
+      const res = await fetch(`/sections/?course=${courseId}`);
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      sectionsContainer.innerHTML = '';
+      data.forEach(sec => sectionsContainer.appendChild(createSection(sec.title, sec.id, sec.children || [])));
+      makeSortable(sectionsContainer);
+    } catch (err) {
+      alert('Gagal memuat data.');
+    }
+  }
+
+  // ---- INIT ----
+  document.addEventListener('DOMContentLoaded', fetchSections);
+
+  // ---- Simpan Struktur ----
+  document.getElementById('save-json').addEventListener('click', async () => {
+    const structure = [];
+    document.querySelectorAll('#sections > div').forEach(el => structure.push(getNodeData(el)));
+    try {
+      await fetch('/sections/reorder/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+        body: JSON.stringify(structure)
+      });
+      alert('Struktur tersimpan!');
+    } catch {
+      alert('Gagal simpan.');
+    }
+  });
+
+  function getNodeData(el) {
+    const data = { id: el.dataset.id, children: [] };
+    const childContainer = el.querySelector(':scope > .subsection-list, :scope > .unit-list');
+    if (childContainer) {
+      childContainer.querySelectorAll(':scope > div').forEach(child => data.children.push(getNodeData(child)));
+    }
+    return data;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+<!-- Tailwind-like Responsive Classes (No Tailwind needed) -->
+<style>
+  @media (max-width: 640px) {
+    .flex-col { flex-direction: column; }
+    .text-lg { font-size: 1rem; }
+    .p-2 { padding: 0.5rem; }
+    .gap-1 { gap: 0.25rem; }
+    .text-sm { font-size: 0.875rem; }
+  }
+  .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .min-w-0 { min-width: 0; }
+</style>
+{% endblock %}

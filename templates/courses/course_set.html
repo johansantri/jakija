@@ -1,45 +1,48 @@
-<!-- Menu container -->
-<div class="d-flex justify-content-between align-items-center p-3 shadow-sm  rounded">
-  <!-- Judul -->
-    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-      <!-- Course Name -->
-      <a href="{% url 'courses:studio' course.id %}" class="text-dark text-decoration-none fw-bold me-3">
-        {{ course.course_name }}
-      </a>
+<section class="bg-white border p-4 sm:p-6 rounded-lg shadow-sm mt-6 mx-2 sm:mx-0">
+  <div class="flex justify-between items-center w-full sm:w-auto">
+    <!-- Title with Ellipsis Icon on Mobile -->
+    <h1 class="text-xl sm:text-2xl font-bold text-red-500 flex items-center gap-2">
+      <span>{{ course.course_name }}</span>
 
-     
-
-
-
-    </div>
-
-
-
-  <!-- Ikon Titik Tiga sebagai Dropdown -->
-  <div class="dropdown">
-    <button class="btn  border-0" type="button" id="moreMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-      &#8942; <!-- Unicode titik tiga vertikal (⋮) -->
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreMenuButton">
-      <li><a class="dropdown-item" href="{% url 'courses:studio' course.id %}">Outline</a></li>
-      <li><a class="dropdown-item" href="{% url 'instructor:studios' course.id %}">Curation</a></li>
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="{% url 'courses:self_course' username=request.user.username id=course.id slug=course.slug %}">Access</a></li>
-      <li><a class="dropdown-item" href="{% url 'courses:course_profile' course.id %}">Schedule</a></li>
-      <li><a class="dropdown-item" href="{% url 'courses:course_grade' course.id %}">Grading</a></li>
-      <li><a class="dropdown-item" href="{% url 'courses:course_team' course.id %}">Team</a></li>
-      {% if request.user.is_superuser or request.user.is_partner %}
-        <li><a class="dropdown-item" href="{% url 'courses:course_instructor' course.id %}">Instructor</a></li>
-      {% endif %}
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="{% url 'courses:add_course_price' course.id %}">Price</a></li>
-    </ul>
+      <!-- Three Dots Icon (Ellipsis) with Dropdown (placed next to the title on mobile) -->
+      <div class="relative">
+        <button id="more-options" class="text-red-500 hover:text-red-600 p-2 rounded-full focus:outline-none sm:ml-3">
+          <i class="fas fa-ellipsis-h text-lg sm:text-xl"></i>
+        </button>
+        
+        <!-- Dropdown Menu -->
+        <div id="dropdown-menu" class="absolute hidden bg-white border shadow-lg rounded-lg mt-2 w-40 sm:w-48 py-2 sm:left-0 sm:top-full sm:mt-2 sm:left-auto sm:right-0">
+          <a href="{% url 'courses:studio' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Outline</a>
+          <a href="{% url 'instructor:studios' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Curation</a>
+          <a href="{% url 'courses:course_profile' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Schedule</a>
+          <a href="{% url 'courses:course_grade' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Grading</a>
+          <a href="{% url 'courses:course_team' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Team</a>
+          {% if request.user.is_superuser or request.user.is_partner %} 
+            <a href="{% url 'courses:course_instructor' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Instructor</a>
+          {% endif %}
+          <a href="{% url 'courses:add_course_price' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Price</a>
+        </div>
+      </div>
+    </h1>
   </div>
-</div>
-<style>
-button#moreMenuButton {
-  font-size: 1.5rem;
-  line-height: 1;
-  padding: 0 0.5rem;
-}
-</style>
+</section>
+
+<!-- Optional JavaScript to handle the dropdown toggle -->
+<script>
+  // Get the button and dropdown elements
+  const moreOptionsButton = document.getElementById('more-options');
+  const dropdownMenu = document.getElementById('dropdown-menu');
+
+  // Toggle dropdown menu when the button is clicked
+  moreOptionsButton.addEventListener('click', function(event) {
+    event.stopPropagation(); // Prevent click from propagating to document (to avoid immediate closure)
+    dropdownMenu.classList.toggle('hidden');
+  });
+
+  // Close the dropdown if the user clicks outside of it
+  document.addEventListener('click', function(event) {
+    if (!moreOptionsButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+      dropdownMenu.classList.add('hidden');
+    }
+  });
+</script>

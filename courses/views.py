@@ -104,6 +104,80 @@ from django.db.models import Count, Avg, Sum, Q, Value as V
 from django.db.models.functions import Coalesce
 from django.db.models import DecimalField
 from dal import autocomplete
+from rest_framework import viewsets,status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.exceptions import NotFound
+from .serializers import SectionSerializer
+
+class SectionViewSet(viewsets.ModelViewSet):
+    queryset = Section.objects.all()
+    serializer_class = SectionSerializer
+
+    # Hanya untuk LIST: tampilkan tree (root only)
+    def get_queryset(self):
+        course_id = self.request.query_params.get('course')
+        if course_id:
+            return Section.objects.filter(
+                courses_id=course_id,
+                parent__isnull=True
+            ).select_related('courses').prefetch_related(
+                Prefetch('children', queryset=Section.objects.order_by('order'))
+            ).order_by('order')
+        return Section.objects.none()
+
+    # Untuk RETRIEVE, UPDATE, DELETE: izinkan akses semua Section (termasuk anak)
+    def get_object(self):
+        """
+        Override agar bisa akses subsection/unit via /sections/<id>/
+        """
+        pk = self.kwargs.get('pk')
+        # Cari di semua Section (tidak dibatasi parent=None)
+        obj = get_object_or_404(Section, pk=pk)
+        self.check_object_permissions(self.request, obj)
+        return obj
+
+
+
+
+
+    @action(detail=False, methods=['post'])
+    def reorder(self, request):
+        """
+        Terima JSON struktur baru dari frontend dan update parent/order.
+        """
+        data = request.data
+        self.update_order_recursive(data, None)
+        return Response({"status": "ok"})
+
+    def update_order_recursive(self, items, parent_id):
+        for index, item in enumerate(items):
+            section = get_object_or_404(Section, pk=item['id'])
+            section.parent_id = parent_id
+            section.order = index
+            section.save()
+            if 'children' in item and item['children']:
+                self.update_order_recursive(item['children'], section.id)
+
+    def destroy(self, request, pk=None):
+        try:
+            section = get_object_or_404(Section, pk=pk)
+            parent = section.parent  # Simpan parent sebelum delete
+            section.delete()  # Cascade hapus children
+            
+            # Reorder sibling di level yang sama
+            if parent:
+                siblings = parent.children.all().order_by('order')
+            else:
+                siblings = Section.objects.filter(parent__isnull=True, courses=section.courses).order_by('order')
+            
+            for index, sib in enumerate(siblings):
+                sib.order = index
+                sib.save()
+            
+            return Response({'status': 'deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 def custom_ratelimit(view_func):
@@ -4296,7 +4370,7 @@ class InstructorAutocomplete(autocomplete.Select2QuerySetView):
 
 
 #create grade
-#@login_required
+@login_required
 def course_grade(request, id):
     # Check if the user is authenticated
     if not request.user.is_authenticated:

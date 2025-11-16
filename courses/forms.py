@@ -437,18 +437,51 @@ class ProfilForm(forms.ModelForm):
         fields = ['sort_description', 'description', 'image', 'link_video', 'hour', 'language', 'level', 'start_date', 'end_date', 'start_enrol', 'end_enrol']
 
         widgets = {
-            'sort_description': forms.TextInput(attrs={'placeholder': 'Enter short description here', 'class': 'form-control'}),
-            "description": CKEditor5Widget(attrs={"class": "django_ckeditor_5"}, config_name="extends"),
-            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
-            'link_video': forms.URLInput(attrs={'placeholder': 'Enter video URL here', 'class': 'form-control'}),
-            'hour': forms.NumberInput(attrs={'class': 'form-control'}),
-            'language': forms.Select(attrs={'class': 'form-control'}),
-            'level': forms.Select(choices=[('beginner', 'Beginner'), ('intermediate', 'Intermediate'), ('advanced', 'Advanced')], attrs={'class': 'form-control'}),
-            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'start_enrol': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'end_enrol': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'sort_description': forms.TextInput(attrs={
+                'placeholder': 'Enter short description here',
+                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500'
+            }),
+            "description": CKEditor5Widget(attrs={
+                "class": "django_ckeditor_5 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            }, config_name="extends"),
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'form-file mt-1 block w-full text-gray-500 file:border file:border-gray-300 file:rounded-lg file:px-4 file:py-2 file:text-sm file:font-medium file:bg-blue-50 hover:file:bg-blue-100'
+            }),
+            'link_video': forms.URLInput(attrs={
+                'placeholder': 'Enter video URL here',
+                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500'
+            }),
+            'hour': forms.NumberInput(attrs={
+                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500'
+            }),
+            'language': forms.Select(attrs={
+                'class': 'form-select mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500'
+            }),
+            'level': forms.Select(choices=[
+                ('beginner', 'Beginner'),
+                ('intermediate', 'Intermediate'),
+                ('advanced', 'Advanced')
+            ], attrs={
+                'class': 'form-select mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500'
+            }),
+            'start_date': forms.DateInput(attrs={
+                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500',
+                'type': 'date'
+            }),
+            'end_date': forms.DateInput(attrs={
+                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500',
+                'type': 'date'
+            }),
+            'start_enrol': forms.DateInput(attrs={
+                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500',
+                'type': 'date'
+            }),
+            'end_enrol': forms.DateInput(attrs={
+                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500',
+                'type': 'date'
+            }),
         }
+
 
     def __init__(self, *args, **kwargs):
         super(ProfilForm, self).__init__(*args, **kwargs)
@@ -504,32 +537,30 @@ class CourseForm(forms.ModelForm):
         widgets = {
             "course_name": forms.TextInput(attrs={
                 "placeholder": "Full Stack Development",
-                "class": "form-control",
-                "oninput": "listingslug(value)"
+                "class": "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition",
+                "oninput": "listingslug(this.value)"
             }),
-           
             "slug": forms.HiddenInput(attrs={
-                "class": "form-control",
+                "class": "w-full px-4 py-2.5 border border-gray-300 rounded-lg",
                 "maxlength": "200"
             }),
             "course_number": forms.TextInput(attrs={
                 "placeholder": "CS201",
-                "class": "form-control"
+                "class": "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
             }),
             "course_run": forms.TextInput(attrs={
                 "placeholder": "2023",
-                "class": "form-control"
+                "class": "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
             }),
             "org_partner": forms.Select(attrs={
-                "class": "form-control js-example-basic-single",
-                "id": "id_org_partner"
+                "class": "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
             }),
             "category": forms.Select(attrs={
-                "class": "form-control js-example-basic-single"
+                "class": "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
             }),
             "level": forms.Select(attrs={
-                "class": "form-control js-example-basic-single"
-            })
+                "class": "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
+            }),
         }
     
     def __init__(self, *args, **kwargs):
@@ -540,7 +571,7 @@ class CourseForm(forms.ModelForm):
 
         # Tambahkan link ke label category
         self.fields['category'].label = mark_safe(
-            'Category (<a href="/category/add/" target="_blank">add new category</a>)'
+            'Category (<a href="/category/add/" target="_blank" class="text-blue-600 hover:underline">add new category</a>)'
         )
 
         if user:
@@ -610,7 +641,7 @@ class PartnerForm(forms.ModelForm):
         queryset=CustomUser.objects.none(),
         widget=autocomplete.ModelSelect2(
             url='courses:user-autocomplete',
-            attrs={'class': 'form-control'}
+            attrs={'class': 'w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white'}
         )
     )
 
@@ -618,7 +649,7 @@ class PartnerForm(forms.ModelForm):
         queryset=Universiti.objects.none(),
         widget=autocomplete.ModelSelect2(
             url='courses:universiti-autocomplete',
-            attrs={'class': 'form-control'}
+            attrs={'class': 'w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white'}
         )
     )
 
@@ -626,15 +657,15 @@ class PartnerForm(forms.ModelForm):
         model = Partner
         fields = ['name', 'user', 'phone', 'tax', 'iceiprice', 'logo', 'address', 'description']
         widgets = {
-            "phone": forms.TextInput(attrs={"placeholder": "Phone Number", "class": "form-control"}),
-            "address": forms.Textarea(attrs={"placeholder": "Address", "class": "form-control"}),
+            "phone": forms.TextInput(attrs={"placeholder": "Phone Number", "class": "w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}),
+            "address": forms.Textarea(attrs={"placeholder": "Address", "class": "w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y"}),
             "description": CKEditor5Widget(
-                attrs={"class": "django_ckeditor_5"},
+                attrs={"class": "w-full django_ckeditor_5"},
                 config_name="extends",
             ),
-            "tax": forms.NumberInput(attrs={"placeholder": "Tax Number", "class": "form-control"}),
-            "iceiprice": forms.NumberInput(attrs={"placeholder": "Ice Price %", "class": "form-control"}),
-            "logo": forms.ClearableFileInput(attrs={'class': 'form-control', 'accept': 'image/*'}),
+            "tax": forms.NumberInput(attrs={"placeholder": "Tax Number", "class": "w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}),
+            "iceiprice": forms.NumberInput(attrs={"placeholder": "Ice Price %", "class": "w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}),
+            "logo": forms.ClearableFileInput(attrs={'class': 'w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent', 'accept': 'image/*'}),
         }
 
     def __init__(self, *args, **kwargs):

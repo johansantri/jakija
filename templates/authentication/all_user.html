@@ -2,218 +2,309 @@
 {% load static %}
 
 {% block content %}
-<!-- Kontainer Utama -->
-<div class="container-fluid py-4">
-    <!-- Judul -->
-    <h1 class="display-5 fw-bold text-danger mb-4">Learner Area</h1>
-    <hr>
 
-    <!-- Toolbar untuk Staff atau Superuser -->
-    {% if request.user.is_staff or request.user.is_superuser %}
-    <div class="btn-group mb-3">
-        <a href="{% url 'learner:user_analytics' %}" class="btn btn-info btn-sm shadow-sm">
-            <i class="bi bi-bar-chart-line me-1"></i> Analytics
-        </a>
-    </div>
-    {% endif %}
+       
 
-    {% if request.user.is_superuser or request.user.is_partner %}
-    <!-- Toolbar dan Pencarian untuk Superuser atau Partner -->
-    <div class="card border-0 shadow-sm mb-4">
-        <div class="card-body">
-            <!-- Toolbar -->
-            <div class="d-flex flex-wrap align-items-center mb-3 gap-2">
-                {% if request.user.is_partner %}
-                <div class="btn-group mb-2">
-                    <a href="{% url 'partner:partner_enrollments' %}" class="btn btn-success btn-sm shadow-sm">
-                        <i class="bi bi-arrow-left-right me-1"></i> Enrollment Direction
-                    </a>
+        {% if request.user.is_superuser or request.user.is_partner %}
+    <section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+            <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">Filter data</h3>
+            
+        </div>
+
+        <div class="overflow-x-auto">
+        <div class="mb-4 bg-white shadow-sm rounded-lg border-0 p-4">
+        <div class="flex flex-wrap items-center mb-3 gap-2">
+            {% if request.user.is_partner %}
+            <div class="flex mb-2">
+                <a href="{% url 'partner:partner_enrollments' %}" 
+                class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-md shadow-sm transition-colors duration-150">
+                    <i class="bi bi-arrow-left-right mr-1"></i> Enrollment Direction
+                </a>
+            </div>
+            {% endif %}
+
+            <!-- Form Pencarian dan Filter -->
+            <form method="get" class="flex flex-wrap gap-2 w-full">
+                <div class="w-full md:w-1/3 lg:w-1/4">
+                    <input class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                        type="search" 
+                        value="{{ request.GET.search }}" 
+                        name="search" 
+                        placeholder="Search by email" 
+                        aria-label="Search Learner">
+                </div>
+                <div class="w-full md:w-1/3 lg:w-1/6">
+                    <select name="status" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">-- Status --</option>
+                        <option value="active" {% if request.GET.status == 'active' %}selected{% endif %}>Active</option>
+                        <option value="inactive" {% if request.GET.status == 'inactive' %}selected{% endif %}>Inactive</option>
+                    </select>
+                </div>
+                <div class="w-full md:w-1/3 lg:w-1/6">
+                    <select name="gender" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">-- Gender --</option>
+                        <option value="male" {% if request.GET.gender == 'male' %}selected{% endif %}>Male</option>
+                        <option value="female" {% if request.GET.gender == 'female' %}selected{% endif %}>Female</option>
+                    </select>
+                </div>
+                <div class="w-full md:w-1/3 lg:w-1/6">
+                    <select name="sort_courses" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">-- Sort by Courses --</option>
+                        <option value="most" {% if request.GET.sort_courses == 'most' %}selected{% endif %}>Most Enrolled</option>
+                        <option value="least" {% if request.GET.sort_courses == 'least' %}selected{% endif %}>Least Enrolled</option>
+                    </select>
+                </div>
+                {% if request.user.is_staff or request.user.is_superuser %}
+                <div class="w-full md:w-1/3 lg:w-1/6">
+                    <select name="partner" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">-- Filter by Partner --</option>
+                        {% for partner in partners %}
+                        <option value="{{ partner.id }}" {% if request.GET.partner == partner.id|stringformat:"s" %}selected{% endif %}>
+                            {{ partner.name__name }}
+                        </option>
+                        {% endfor %}
+                    </select>
                 </div>
                 {% endif %}
-
-                <!-- Form Pencarian dan Filter -->
-                <form method="get" class="d-flex flex-wrap gap-2 w-100">
-                    <div class="col-12 col-md-4 col-lg-3">
-                        <input class="form-control form-control-sm shadow-sm" type="search" value="{{ request.GET.search }}" name="search" placeholder="Search by email" aria-label="Search Learner">
-                    </div>
-                    <div class="col-12 col-md-4 col-lg-2">
-                        <select name="status" class="form-select form-select-sm shadow-sm">
-                            <option value="">-- Status --</option>
-                            <option value="active" {% if request.GET.status == 'active' %}selected{% endif %}>Active</option>
-                            <option value="inactive" {% if request.GET.status == 'inactive' %}selected{% endif %}>Inactive</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-4 col-lg-2">
-                        <select name="gender" class="form-select form-select-sm shadow-sm">
-                            <option value="">-- Gender --</option>
-                            <option value="male" {% if request.GET.gender == 'male' %}selected{% endif %}>Male</option>
-                            <option value="female" {% if request.GET.gender == 'female' %}selected{% endif %}>Female</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-4 col-lg-2">
-                        <select name="sort_courses" class="form-select form-select-sm shadow-sm">
-                            <option value="">-- Sort by Courses --</option>
-                            <option value="most" {% if request.GET.sort_courses == 'most' %}selected{% endif %}>Most Enrolled</option>
-                            <option value="least" {% if request.GET.sort_courses == 'least' %}selected{% endif %}>Least Enrolled</option>
-                        </select>
-                    </div>
-                    {% if request.user.is_staff or request.user.is_superuser %}
-                    <div class="col-12 col-md-4 col-lg-2">
-                        <select name="partner" class="form-select form-select-sm shadow-sm">
-                            <option value="">-- Filter by Partner --</option>
-                            {% for partner in partners %}
-                            <option value="{{ partner.id }}" {% if request.GET.partner == partner.id|stringformat:"s" %}selected{% endif %}>
-                                {{ partner.name__name }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    {% endif %}
-                    <div class="col-12 col-md-4 col-lg-2">
-                        <input type="date" class="form-control form-control-sm shadow-sm" name="date_from" value="{{ request.GET.date_from }}" placeholder="Dari Tanggal">
-                    </div>
-                    <div class="col-12 col-md-4 col-lg-2">
-                        <input type="date" class="form-control form-control-sm shadow-sm" name="date_to" value="{{ request.GET.date_to }}" placeholder="Sampai Tanggal">
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-primary btn-sm shadow-sm" type="submit">
-                            <i class="bi bi-funnel me-1"></i> Filter
-                        </button>
-                    </div>
-                </form>
-            </div>
+                <div class="w-full md:w-1/3 lg:w-1/6">
+                    <input type="date" 
+                        class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                        name="date_from" 
+                        value="{{ request.GET.date_from }}" 
+                        placeholder="Dari Tanggal">
+                </div>
+                <div class="w-full md:w-1/3 lg:w-1/6">
+                    <input type="date" 
+                        class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                        name="date_to" 
+                        value="{{ request.GET.date_to }}" 
+                        placeholder="Sampai Tanggal">
+                </div>
+                <div class="flex-shrink-0">
+                    
+                    <button class="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition text-sm" type="submit">Filter</button>
+                </div>
+            </form>
         </div>
+    </div>
+</section>
     </div>
 
     <!-- Tabel Pengguna -->
-    <div class="card border-0 shadow-sm">
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover table-striped align-middle table-sm mb-0">
-                    <thead class="table-dark text-center">
-                        <tr>
-                           
-                            <th scope="col">Email</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col">Organization</th>
-                            <th scope="col">Enrolled Courses</th>
-                            <th scope="col">Joined & Last Login</th>
-                            {% if request.user.is_superuser %}
-                            <th scope="col">Admin</th>
-                            <th scope="col">Staff</th>
-                            <th scope="col">Partner</th>
-                            <th scope="col">Instructor</th>
-                            <th scope="col">Subscription</th>
-                            {% endif %}
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for user in users %}
-                        <tr>
-                            
-                            <td>
-                                <a href="{% url 'authentication:user_detail' user.id %}" class="text-primary text-decoration-none">
-                                    {{ user.email|default:"-" }}
-                                </a>
-                            </td>
-                            <td>{{ user.gender|default:"-" }}</td>
-                            <td>{{ user.university__name|default:"-" }}</td>
-
-                            <td>{{ user.total_courses|default:0 }}</td>
-                            <td>
-                                {{ user.date_joined|date:"Y-m-d H:i:s" }}
-                                <span class="badge bg-success ms-2">
-                                    {{ user.last_login|date:"Y-m-d H:i:s"|default:"-" }}
-                                </span>
-                            </td>
-                            {% if request.user.is_superuser %}
-                            <td>
-                                <span class="badge {% if user.is_superuser %}bg-success{% else %}bg-danger{% endif %}">
-                                    <i class="bi {% if user.is_superuser %}bi-check-circle{% else %}bi-x-circle{% endif %}"></i>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge {% if user.is_staff %}bg-success{% else %}bg-danger{% endif %}">
-                                    <i class="bi {% if user.is_staff %}bi-check-circle{% else %}bi-x-circle{% endif %}"></i>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge {% if user.is_partner %}bg-success{% else %}bg-danger{% endif %}">
-                                    <i class="bi {% if user.is_partner %}bi-check-circle{% else %}bi-x-circle{% endif %}"></i>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge {% if user.is_instructor %}bg-success{% else %}bg-danger{% endif %}">
-                                    <i class="bi {% if user.is_instructor %}bi-check-circle{% else %}bi-x-circle{% endif %}"></i>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge {% if user.is_subscription %}bg-success{% else %}bg-danger{% endif %}">
-                                    <i class="bi {% if user.is_subscription %}bi-check-circle{% else %}bi-x-circle{% endif %}"></i>
-                                </span>
-                            </td>
-                            {% endif %}
-                            <td>
-                                <span class="badge {% if user.is_active %}bg-primary{% else %}bg-warning text-dark{% endif %}">
-                                    {{ user.is_active|yesno:"Active,Inactive" }}
-                                </span>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="{% if request.user.is_superuser %}12{% else %}7{% endif %}" class="text-center text-muted py-3">
-                                <i class="bi bi-info-circle me-2"></i> Tidak ada pengguna yang ditemukan.
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">List Users</h3>
+        {% if request.user.is_staff or request.user.is_superuser %}
+        <div class="mb-3 flex space-x-2">
+            <a href="{% url 'learner:user_analytics' %}" 
+            class="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition text-sm">
+                <i class="bi bi-bar-chart-line mr-1"></i> Analytics
+            </a>
         </div>
+        {% endif %}
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full table-auto bg-white shadow-md rounded-lg">
+            <thead class="bg-gray-800 text-white text-center">
+            <tr>
+                <th class="px-4 py-2">Email</th>
+                <th class="px-4 py-2">Gender</th>
+                <th class="px-4 py-2">Organization</th>
+                <th class="px-4 py-2">Enrolled</th>
+                <th class="px-4 py-2">Joined & Last Login</th>
+                {% if request.user.is_superuser %}
+                <th class="px-4 py-2 sm:hidden">Admin</th> <!-- Sembunyikan kolom di perangkat kecil -->
+                <th class="px-4 py-2 sm:hidden">Staff</th> <!-- Sembunyikan kolom di perangkat kecil -->
+                <th class="px-4 py-2 sm:hidden">Partner</th> <!-- Sembunyikan kolom di perangkat kecil -->
+                <th class="px-4 py-2 sm:hidden">Instructor</th> <!-- Sembunyikan kolom di perangkat kecil -->
+                <th class="px-4 py-2 sm:hidden">Subscription</th> <!-- Sembunyikan kolom di perangkat kecil -->
+                {% endif %}
+                <th class="px-4 py-2">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr class="text-center border-t">
+                <td class="px-4 py-2">
+                    <a href="{% url 'authentication:user_detail' user.id %}" class="text-blue-600 hover:text-blue-800">
+                    {{ user.email|default:"-" }}
+                    </a>
+                </td>
+                <td class="px-4 py-2">{{ user.gender|default:"-" }}</td>
+                <td class="px-4 py-2">{{ user.university__name|default:"-" }}</td>
+                <td class="px-4 py-2">{{ user.total_courses|default:0 }}</td>
+                <td class="px-4 py-2">
+                    {{ user.date_joined|date:"Y-m-d " }}
+                    <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">
+                    {{ user.last_login|date:"Y-m-d H:i:s"|default:"-" }}
+                    </span>
+                </td>
+                {% if request.user.is_superuser %}
+                <!-- Superuser -->
+                <td class="px-4 py-2">
+                    <span class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full 
+                                {% if user.is_superuser %}bg-green-100 text-green-700 border-2 border-green-700{% else %}bg-red-100 text-red-700 border-2 border-red-700{% endif %}">
+                        <!-- Ikon cek untuk superuser -->
+                        {% if user.is_superuser %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        {% endif %}
+                        <span class="ml-2">{{ user.is_superuser|yesno:"Yes,No" }}</span>
+                    </span>
+                </td>
+
+                <!-- Staff -->
+                <td class="px-4 py-2">
+                    <span class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full 
+                                {% if user.is_staff %}bg-green-100 text-green-700 border-2 border-green-700{% else %}bg-red-100 text-red-700 border-2 border-red-700{% endif %}">
+                        <!-- Ikon cek untuk staff -->
+                        {% if user.is_staff %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        {% endif %}
+                        <span class="ml-2">{{ user.is_staff|yesno:"Yes,No" }}</span>
+                    </span>
+                </td>
+
+                <!-- Partner -->
+                <td class="px-4 py-2">
+                    <span class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full 
+                                {% if user.is_partner %}bg-green-100 text-green-700 border-2 border-green-700{% else %}bg-red-100 text-red-700 border-2 border-red-700{% endif %}">
+                        <!-- Ikon cek untuk partner -->
+                        {% if user.is_partner %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        {% endif %}
+                        <span class="ml-2">{{ user.is_partner|yesno:"Yes,No" }}</span>
+                    </span>
+                </td>
+
+                <!-- Instructor -->
+                <td class="px-4 py-2">
+                    <span class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full 
+                                {% if user.is_instructor %}bg-green-100 text-green-700 border-2 border-green-700{% else %}bg-red-100 text-red-700 border-2 border-red-700{% endif %}">
+                        <!-- Ikon cek untuk instructor -->
+                        {% if user.is_instructor %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        {% endif %}
+                        <span class="ml-2">{{ user.is_instructor|yesno:"Yes,No" }}</span>
+                    </span>
+                </td>
+
+                <!-- Subscription -->
+                <td class="px-4 py-2">
+                    <span class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full 
+                                {% if user.is_subscription %}bg-green-100 text-green-700 border-2 border-green-700{% else %}bg-red-100 text-red-700 border-2 border-red-700{% endif %}">
+                        <!-- Ikon cek untuk subscription -->
+                        {% if user.is_subscription %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        {% endif %}
+                        <span class="ml-2">{{ user.is_subscription|yesno:"Yes,No" }}</span>
+                    </span>
+                </td>
+            {% endif %}
+
+                <td class="px-4 py-2">
+                    <span class="badge {% if user.is_active %}bg-blue-500{% else %}bg-yellow-400 text-black{% endif %} px-2 py-1 rounded">
+                    {{ user.is_active|yesno:"Active,Inactive" }}
+                    </span>
+                </td>
+                </tr>
+            {% empty %}
+                <tr>
+                <td colspan="{% if request.user.is_superuser %}12{% else %}7{% endif %}" class="text-center text-gray-500 py-3">
+                    <i class="bi bi-info-circle mr-2"></i> Tidak ada pengguna yang ditemukan.
+                </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 
-   <nav aria-label="Page navigation" class="mt-4">
-    <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-        <p class="mb-2 mb-md-0 text-muted">
-        Total: <strong>{{ total_user_count }}</strong> |
-        Halaman <strong>{{ users.number }}</strong> dari <strong>{{ users.paginator.num_pages }}</strong>
+    <nav aria-label="Page navigation" class="mt-4">
+    <div class="flex justify-between items-center flex-wrap mb-3">
+        <p class="mb-2 md:mb-0 text-gray-500">
+            Total: <strong class="font-semibold">{{ total_user_count }}</strong> |
+            Halaman <strong class="font-semibold">{{ users.number }}</strong> dari <strong class="font-semibold">{{ users.paginator.num_pages }}</strong>
         </p>
     </div>
 
-    <ul class="pagination justify-content-center flex-wrap">
+    <ul class="flex justify-center flex-wrap gap-1">
         <!-- Previous button -->
         {% if page_obj.has_previous %}
-        <li class="page-item">
-            <a class="page-link" href="?{% if request.GET %}{{ request.GET.urlencode|safe }}&{% endif %}page={{ page_obj.previous_page_number }}">« Previous</a>
+        <li>
+            <a class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
+               href="?{% if request.GET %}{{ request.GET.urlencode|safe }}&{% endif %}page={{ page_obj.previous_page_number }}">« Previous</a>
         </li>
         {% else %}
-        <li class="page-item disabled"><span class="page-link">« Previous</span></li>
+        <li>
+            <span class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-200 rounded-md cursor-not-allowed opacity-50">« Previous</span>
+        </li>
         {% endif %}
 
         <!-- Page numbers -->
         {% for num in page_obj.paginator.page_range %}
         {% if page_obj.number == num %}
-            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+            <li>
+                <span class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full bg-red-100 text-red-700 border-2 border-red-700"> {{ num }} </span>
+            </li>
         {% elif num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
-            <li class="page-item">
-            <a class="page-link" href="?{% if request.GET %}{{ request.GET.urlencode|safe }}&{% endif %}page={{ num }}">{{ num }}</a>
+            <li>
+                <a class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full bg-red-100 text-red-700 border-2 border-red-700" 
+                   href="?{% if request.GET %}{{ request.GET.urlencode|safe }}&{% endif %}page={{ num }}"> {{ num }} </a>
             </li>
         {% endif %}
         {% endfor %}
 
         <!-- Next button -->
         {% if page_obj.has_next %}
-        <li class="page-item">
-            <a class="page-link" href="?{% if request.GET %}{{ request.GET.urlencode|safe }}&{% endif %}page={{ page_obj.next_page_number }}">Next »</a>
+        <li>
+            <a class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
+               href="?{% if request.GET %}{{ request.GET.urlencode|safe }}&{% endif %}page={{ page_obj.next_page_number }}">Next »</a>
         </li>
         {% else %}
-        <li class="page-item disabled"><span class="page-link">Next »</span></li>
+        <li>
+            <span class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-200 rounded-md cursor-not-allowed opacity-50">Next »</span>
+        </li>
         {% endif %}
     </ul>
-    </nav>
+</nav>
+</section>
+
+  
+
+   
 
 
     {% endif %}
-</div>
+
 {% endblock %}

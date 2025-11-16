@@ -3,233 +3,204 @@
 
 {% block content %}
 
+ <section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">Complete Your Profile</h3>
+        
+      </div>
 
-        <div class="col-12 col-md-10 col-lg-12">
-            <div class="card shadow-sm border-0">
-                <div class="card-body p-4 p-md-5">
-                    <h2 class="text-center mb-3 fw-bold">Complete Your Profile</h2>
-                    <p class="text-center text-muted mb-4">Please complete your personal data to proceed to the dashboard.</p>
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 md:p-10">
 
-                    <!-- Messages -->
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% else %}alert-danger{% endif %} alert-dismissible fade show" role="alert">
-                                {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
+        <!-- Header -->
+        <div class="text-center mb-8">
+            
+            <p class="text-gray-500 mt-2">Please complete your personal data to proceed to the dashboard.</p>
+        </div>
 
-                    <!-- Form -->
-                    <form method="POST" enctype="multipart/form-data" novalidate>
-                        {% csrf_token %}
-                        <div class="row g-4">
-                            <!-- Left Column: Personal Info -->
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="{{ form.first_name.id_for_label }}" class="form-label">
-                                        {{ form.first_name.label }} <span class="text-danger">*</span>
-                                    </label>
-                                    {{ form.first_name }}
-                                    {% if form.first_name.errors %}
-                                        <div class="invalid-feedback d-block">{{ form.first_name.errors|join:", " }}</div>
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    <label for="{{ form.last_name.id_for_label }}" class="form-label">
-                                        {{ form.last_name.label }} <span class="text-danger">*</span>
-                                    </label>
-                                    {{ form.last_name }}
-                                    {% if form.last_name.errors %}
-                                        <div class="invalid-feedback d-block">{{ form.last_name.errors|join:", " }}</div>
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    <label for="{{ form.email.id_for_label }}" class="form-label">
-                                        {{ form.email.label }} <span class="text-danger">*</span>
-                                    </label>
-                                    {{ form.email }}
-                                    {% if form.email.errors %}
-                                        <div class="invalid-feedback d-block">{{ form.email.errors|join:", " }}</div>
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    <label for="{{ form.phone.id_for_label }}" class="form-label">
-                                        {{ form.phone.label }} <span class="text-danger">*</span>
-                                    </label>
-                                    {{ form.phone }}
-                                    {% if form.phone.errors %}
-                                        <div class="invalid-feedback d-block">{{ form.phone.errors|join:", " }}</div>
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    <label for="{{ form.gender.id_for_label }}" class="form-label">
-                                        {{ form.gender.label }} <span class="text-danger">*</span>
-                                    </label>
-                                    {{ form.gender }}
-                                    {% if form.gender.errors %}
-                                        <div class="invalid-feedback d-block">{{ form.gender.errors|join:", " }}</div>
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    <label for="{{ form.birth.id_for_label }}" class="form-label">
-                                        {{ form.birth.label }} <span class="text-danger">*</span>
-                                    </label>
-                                    {{ form.birth }}
-                                    {% if form.birth.errors %}
-                                        <div class="invalid-feedback d-block">{{ form.birth.errors|join:", " }}</div>
-                                    {% endif %}
-                                </div>
-                            </div>
+        <!-- Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-4 p-4 rounded-lg flex items-center justify-between
+                    {% if message.tags == 'success' %}bg-green-50 text-green-800 border border-green-200
+                    {% elif message.tags == 'warning' %}bg-yellow-50 text-yellow-800 border border-yellow-200
+                    {% else %}bg-red-50 text-red-800 border border-red-200{% endif %}">
+                    <span>{{ message }}</span>
+                    <button type="button" class="text-lg font-bold opacity-70 hover:opacity-100"
+                            onclick="this.parentElement.remove()">X</button>
+                </div>
+            {% endfor %}
+        {% endif %}
 
-                            <!-- Right Column: Address & Education -->
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="{{ form.country.id_for_label }}" class="form-label">
-                                        {{ form.country.label }}
-                                    </label>
-                                    {{ form.country }}
-                                    {% if form.country.errors %}
-                                        <div class="invalid-feedback d-block">{{ form.country.errors|join:", " }}</div>
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    <label for="{{ form.photo.id_for_label }}" class="form-label">
-                                        {{ form.photo.label }}
-                                    </label>
-                                    <div class="input-group">
-                                        {{ form.photo }}
-                                        {% if user.photo %}
-                                            <span class="input-group-text">
-                                                <img src="{{ user.photo.url }}" alt="Profile Photo" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
-                                            </span>
-                                        {% endif %}
-                                    </div>
-                                    {% if form.photo.errors %}
-                                        <div class="invalid-feedback d-block">{{ form.photo.errors|join:", " }}</div>
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    <label for="{{ form.address.id_for_label }}" class="form-label">
-                                        {{ form.address.label }}
-                                    </label>
-                                    {{ form.address }}
-                                    {% if form.address.errors %}
-                                        <div class="invalid-feedback d-block">{{ form.address.errors|join:", " }}</div>
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    <label for="{{ form.hobby.id_for_label }}" class="form-label">
-                                        {{ form.hobby.label }}
-                                    </label>
-                                    {{ form.hobby }}
-                                    {% if form.hobby.errors %}
-                                        <div class="invalid-feedback d-block">{{ form.hobby.errors|join:", " }}</div>
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    <label for="{{ form.education.id_for_label }}" class="form-label">
-                                        {{ form.education.label }}
-                                    </label>
-                                    {{ form.education }}
-                                    {% if form.education.errors %}
-                                        <div class="invalid-feedback d-block">{{ form.education.errors|join:", " }}</div>
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    <label for="{{ form.university.id_for_label }}" class="form-label">
-                                        {{ form.university.label }}
-                                    </label>
-                                    {{ form.university }}
-                                    {% if form.university.errors %}
-                                        <div class="invalid-feedback d-block">{{ form.university.errors|join:", " }}</div>
-                                    {% endif %}
-                                </div>
-                            </div>
+        <!-- Form -->
+        <form method="POST" enctype="multipart/form-data" novalidate class="space-y-8">
+            {% csrf_token %}
 
-                            <!-- Social Media Links -->
-                            <div class="col-12">
-                                <h5 class="mb-3 text-primary border-bottom pb-2">Social Media Links</h5>
-                                <div class="row g-4">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="{{ form.tiktok.id_for_label }}" class="form-label">
-                                                {{ form.tiktok.label }}
-                                            </label>
-                                            {{ form.tiktok }}
-                                            {% if form.tiktok.errors %}
-                                                <div class="invalid-feedback d-block">{{ form.tiktok.errors|join:", " }}</div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="{{ form.youtube.id_for_label }}" class="form-label">
-                                                {{ form.youtube.label }}
-                                            </label>
-                                            {{ form.youtube }}
-                                            {% if form.youtube.errors %}
-                                                <div class="invalid-feedback d-block">{{ form.youtube.errors|join:", " }}</div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="{{ form.facebook.id_for_label }}" class="form-label">
-                                                {{ form.facebook.label }}
-                                            </label>
-                                            {{ form.facebook }}
-                                            {% if form.facebook.errors %}
-                                                <div class="invalid-feedback d-block">{{ form.facebook.errors|join:", " }}</div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="{{ form.instagram.id_for_label }}" class="form-label">
-                                                {{ form.instagram.label }}
-                                            </label>
-                                            {{ form.instagram }}
-                                            {% if form.instagram.errors %}
-                                                <div class="invalid-feedback d-block">{{ form.instagram.errors|join:", " }}</div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="{{ form.linkedin.id_for_label }}" class="form-label">
-                                                {{ form.linkedin.label }}
-                                            </label>
-                                            {{ form.linkedin }}
-                                            {% if form.linkedin.errors %}
-                                                <div class="invalid-feedback d-block">{{ form.linkedin.errors|join:", " }}</div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="{{ form.twitter.id_for_label }}" class="form-label">
-                                                {{ form.twitter.label }}
-                                            </label>
-                                            {{ form.twitter }}
-                                            {% if form.twitter.errors %}
-                                                <div class="invalid-feedback d-block">{{ form.twitter.errors|join:", " }}</div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Left Column -->
+                <div class="space-y-5">
+
+                    <div>
+                        <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                            {{ form.first_name.label }} <span class="text-red-600">*</span>
+                        </label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.first_name.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.last_name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                            {{ form.last_name.label }} <span class="text-red-600">*</span>
+                        </label>
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.last_name.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                            {{ form.email.label }} <span class="text-red-600">*</span>
+                        </label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.email.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.phone.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                            {{ form.phone.label }} <span class="text-red-600">*</span>
+                        </label>
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.phone.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.gender.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                            {{ form.gender.label }} <span class="text-red-600">*</span>
+                        </label>
+                        {{ form.gender }}
+                        {% if form.gender.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.gender.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.birth.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                            {{ form.birth.label }} <span class="text-red-600">*</span>
+                        </label>
+                        {{ form.birth }}
+                        {% if form.birth.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.birth.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+                <!-- Right Column -->
+                <div class="space-y-5">
+
+                    <div>
+                        <label for="{{ form.country.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                            {{ form.country.label }}
+                        </label>
+                        {{ form.country }}
+                        {% if form.country.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.country.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.photo.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                            {{ form.photo.label }}
+                        </label>
+                        <div class="flex items-center gap-3">
+                            {{ form.photo }}
+                            {% if user.photo %}
+                                <img src="{{ user.photo.url }}" alt="Profile Photo" 
+                                     class="w-12 h-12 rounded-full object-cover border-2 border-gray-300">
+                            {% endif %}
                         </div>
+                        {% if form.photo.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.photo.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
 
-                        <!-- Buttons -->
-                        <div class="d-flex justify-content-center mt-4 gap-3">
-                            <button type="submit" class="btn btn-danger btn-lg px-5">Save</button>
-                            <a href="{% url 'authentication:dashbord' %}" class="btn btn-outline-secondary btn-lg px-5">Cancel</a>
-                        </div>
-                    </form>
+                    <div>
+                        <label for="{{ form.address.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                            {{ form.address.label }}
+                        </label>
+                        {{ form.address }}
+                        {% if form.address.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.address.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.hobby.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                            {{ form.hobby.label }}
+                        </label>
+                        {{ form.hobby }}
+                        {% if form.hobby.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.hobby.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.education.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                            {{ form.education.label }}
+                        </label>
+                        {{ form.education }}
+                        {% if form.education.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.education.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.university.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                            {{ form.university.label }}
+                        </label>
+                        {{ form.university }}
+                        {% if form.university.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.university.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
                 </div>
             </div>
-        </div>
-   
+
+            <!-- Social Media -->
+            <div class="mt-8">
+                <h5 class="text-lg font-bold text-blue-700 mb-4 pb-2 border-b-2 border-blue-700 inline-block">
+                    Social Media Links
+                </h5>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>{{ form.tiktok }} {% if form.tiktok.errors %}<p class="mt-1 text-sm text-red-600">{{ form.tiktok.errors|join:", " }}</p>{% endif %}</div>
+                    <div>{{ form.youtube }} {% if form.youtube.errors %}<p class="mt-1 text-sm text-red-600">{{ form.youtube.errors|join:", " }}</p>{% endif %}</div>
+                    <div>{{ form.facebook }} {% if form.facebook.errors %}<p class="mt-1 text-sm text-red-600">{{ form.facebook.errors|join:", " }}</p>{% endif %}</div>
+                    <div>{{ form.instagram }} {% if form.instagram.errors %}<p class="mt-1 text-sm text-red-600">{{ form.instagram.errors|join:", " }}</p>{% endif %}</div>
+                    <div>{{ form.linkedin }} {% if form.linkedin.errors %}<p class="mt-1 text-sm text-red-600">{{ form.linkedin.errors|join:", " }}</p>{% endif %}</div>
+                    <div>{{ form.twitter }} {% if form.twitter.errors %}<p class="mt-1 text-sm text-red-600">{{ form.twitter.errors|join:", " }}</p>{% endif %}</div>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+                <button type="submit" class="px-8 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition shadow-md">
+                    Save
+                </button>
+                <a href="{% url 'authentication:dashbord' %}" class="px-8 py-3 bg-white border-2 border-gray-300 text-gray-700 font-bold rounded-xl hover:bg-gray-50 transition shadow-md text-center">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+    </div>
+</section>
 
 {% endblock %}

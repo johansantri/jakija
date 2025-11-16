@@ -1,181 +1,191 @@
 {% extends 'home/tes.html' %}
-
 {% load extra_custom_filters %}
-
 {% block content %}
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+<h1 class="text-3xl font-bold text-red-600 mb-4">My Courses</h1>
+<hr class="border-t border-gray-300 my-4">
 
-      
-        
-          <h1 class="display-5 fw-bold text-danger mb-4">My Courses</h1>
-          <hr>
-          <!-- Filter Buttons -->
-           <!-- Filter and Search Bar -->
-           <div class="d-flex flex-wrap justify-content-start mb-4">
-              <a href="?filter=all" class="btn btn-outline-dark me-3 mb-2 {% if course_filter == 'all' %}active{% endif %}">All ({{ all_count }})</a>
-              <a href="?filter=draft" class="btn btn-outline-secondary me-3 mb-2 {% if course_filter == 'draft' %}active{% endif %}">Draft ({{ draft_count }})</a>
-              <a href="?filter=published" class="btn btn-outline-secondary me-3 mb-2 {% if course_filter == 'published' %}active{% endif %}">Published ({{ published_count }})</a>
-              <a href="?filter=archive" class="btn btn-outline-secondary me-3 mb-2 {% if course_filter == 'archive' %}active{% endif %}">Archived ({{ archive_count }})</a>
-              <a href="?filter=curation" class="btn btn-outline-secondary mb-2 {% if course_filter == 'curation' %}active{% endif %}">Curation ({{ curation_count }})</a>
-           </div>
-            
-        
+<!-- Filter Buttons -->
+<!-- Filter and Search Bar -->
+<div class="flex flex-wrap justify-start mb-4 gap-2">
+    <a href="?filter=all" class="px-4 py-2 text-sm font-medium border border-gray-800 text-gray-800 rounded-md hover:bg-gray-800 hover:text-white transition-colors duration-150 {% if course_filter == 'all' %}bg-gray-800 text-white{% endif %}">All ({{ all_count }})</a>
+    <a href="?filter=draft" class="px-4 py-2 text-sm font-medium border border-gray-500 text-gray-500 rounded-md hover:bg-gray-500 hover:text-white transition-colors duration-150 {% if course_filter == 'draft' %}bg-gray-500 text-white{% endif %}">Draft ({{ draft_count }})</a>
+    <a href="?filter=published" class="px-4 py-2 text-sm font-medium border border-gray-500 text-gray-500 rounded-md hover:bg-gray-500 hover:text-white transition-colors duration-150 {% if course_filter == 'published' %}bg-gray-500 text-white{% endif %}">Published ({{ published_count }})</a>
+    <a href="?filter=archive" class="px-4 py-2 text-sm font-medium border border-gray-500 text-gray-500 rounded-md hover:bg-gray-500 hover:text-white transition-colors duration-150 {% if course_filter == 'archive' %}bg-gray-500 text-white{% endif %}">Archived ({{ archive_count }})</a>
+    <a href="?filter=curation" class="px-4 py-2 text-sm font-medium border border-gray-500 text-gray-500 rounded-md hover:bg-gray-500 hover:text-white transition-colors duration-150 {% if course_filter == 'curation' %}bg-gray-500 text-white{% endif %}">Curation ({{ curation_count }})</a>
+</div>
 
-          <!-- Search Bar and New Button -->
-          <div class="mb-4 d-flex justify-content-between">
-            <!-- Search Bar -->
-            <div class="d-flex w-auto">
-              <form method="GET" action="" class="d-flex w-100">
-                <input class="form-control" type="text" name="search" placeholder="Search courses..." value="{{ request.GET.search }}">
-                <button class="btn btn-primary ms-2" type="submit">Search</button>
-              </form>
-            </div>
-        
-            <!-- New Button (Visible for superuser, partner, instructor) -->
-            <div class="d-flex align-items-center ms-2">
-              {% if user.is_superuser or user.is_partner or user.is_instructor or user.is_curation %}
-                <a href="{% url 'courses:course_create_view' %}" class="btn btn-success">New Course</a>
-              {% endif %}
-            </div>
-          </div>
+<!-- Search Bar and New Button -->
+<div class="mb-4 flex justify-between items-center">
+    <!-- Search Bar -->
+    <div class="flex w-auto">
+        <form method="GET" action="" class="flex w-full">
+            <input class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                   type="text" 
+                   name="search" 
+                   placeholder="Search courses..." 
+                   value="{{ request.GET.search }}">
+            <button class="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition text-sm" 
+                    type="submit">Search</button>
+        </form>
+    </div>
 
-           <!-- Search Results Count -->
-            <div class="mb-4">
-                <p>Found {{ search_count }} result(s) for your search.</p>
-            </div>
-  
-          <!-- Courses Table -->
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Number</th>
-                  <th>Course</th>
-                  <th>Enroll</th>
-                  <th>Instructor</th>
-                  <th>Partner</th>
-                  <th>Status</th>
-                  <th>Course Run</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for course in page_obj %}
-                  <tr>
-                  <td>
-                      <div>{{ course.course_number }}</div>
+<!-- New Button (Visible for superuser, partner, instructor) -->
+<div class="flex items-center ml-2">
+    {% if user.is_superuser or user.is_partner or user.is_instructor or user.is_curation %}
+        <a href="{% url 'courses:course_create_view' %}" 
+           class="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition text-sm">New Course</a>
+    {% endif %}
+</div></div>
 
-                      
-                    </td>
+<!-- Search Results Count -->
+<div class="mb-4">
+    <p>Found {{ search_count }} result(s) for your search.</p>
+</div>
 
+<!-- Courses Table -->
+<div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200 bg-white border border-gray-300">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Number</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Enroll</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Instructor</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Partner</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course Run</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for course in page_obj %}
+            <tr class="hover:bg-gray-50 transition-colors duration-150">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <div>{{ course.course_number }}</div>
+                </td>
 
-                 <td>
-                      <div class="d-flex align-items-center justify-content-between">
-                        <a href="{% url 'courses:studio' id=course.id %}">
-                          {{ course.course_name }}
-                        </a>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <div class="flex items-center justify-between">
+                    <a href="{% url 'courses:studio' id=course.id %}" class="text-blue-600 hover:text-blue-800 font-medium">
+                        {{ course.course_name }}
+                    </a>
 
-                        {% if course.status_course.status == 'archived' and course|is_course_cert_eligible %}
-                          <form action="{% url 'instructor:generate_instructor_certificates' %}" method="post" class="ms-2 mb-0">
+                    {% if course.status_course.status == 'archived' and course|is_course_cert_eligible %}
+                        <form action="{% url 'instructor:generate_instructor_certificates' %}" method="post" class="ml-2 mb-0">
                             {% csrf_token %}
                             <input type="hidden" name="course_id" value="{{ course.id }}">
-                            <button type="submit" class="btn btn-sm btn-primary" title="Generate Sertifikat">
-                              <i class="fas fa-certificate"></i>
+                            <button type="submit" 
+                                    class="px-2 py-1 text-xs font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md transition-colors duration-150" 
+                                    title="Generate Sertifikat">
+                                <i class="fas fa-certificate"></i>
                             </button>
-                          </form>
-                        {% endif %}
-                      </div>
-                    </td>
+                        </form>
+                    {% endif %}
+                </div>
+            </td>
 
-                    <td><a href="{% url 'courses:course_list_enroll' id=course.id %}">{{ course.enrolment_count }}</a></td>
-                    <td>{{ course.instructor_email }}</td>
-                    <td>{{ course.org_partner_name }}</td>
-                    <td>
-                      <span class="
-                          {% if course.status_course.status == 'published' %}
-                              text-success
-                          {% elif course.status_course.status == 'draft' %}
-                              text-warning
-                          {% elif course.status_course.status == 'archived' %}
-                              text-danger
-                          {% elif course.status_course.status == 'curation' %}
-                              text-info
-                          {% else %}
-                              text-primary
-                          {% endif %}
-                      ">
-                          {% if request.user.is_instructor and course.instructor.user == request.user and course.status_course.status not in 'published archived' %}
-                              <a href="{% url 'instructor:instructor_submit_curation' course_id=course.id %}">
-                                  {{ course.status_course.get_status_display }}
-                              </a>
-                          {% elif request.user.is_partner and course.org_partner.user == request.user %}
-                              <a href="{% url 'instructor:partner_review_curation' course_id=course.id %}">
-                                  {{ course.status_course.get_status_display }}
-                              </a>
-                          {% elif request.user.is_superuser or request.user.is_curation %}
-                              <a href="{% url 'instructor:superuser_publish_course' course_id=course.id %}">
-                                  {{ course.status_course.get_status_display }}
-                              </a>
-                          {% else %}
-                              {{ course.status_course.get_status_display }}
-                          {% endif %}
-                      </span>
-                    </td>
-                    <td>{{ course.course_run }}</td>
-                    <td>
-                      {% if course.status_course.status == 'archived' %}
-                          <a href="{% url 'courses:course_reruns' id=course.id %}" class="btn btn-info btn-sm">Re-Runs</a>
-                      {% else %}
-                          <span class="text-muted">Re-Runs</span>
-                      {% endif %}
-                    </td>
-                  </tr>
-                {% empty %}
-                  <tr>
-                    <td colspan="8" class="text-center">No courses found.</td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            
-          </div>
-          
-          <!-- Pagination -->
-          <div class="d-flex justify-content-between mt-3">
-            <div>
-              <p>Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} pages</p>
-            </div>
-            <div>
-              <nav aria-label="Page navigation">
-                <ul class="pagination">
-                  {% if page_obj.has_previous %}
-                    <li class="page-item">
-                      <a class="page-link" href="?page=1&search={{ request.GET.search }}" aria-label="First">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <a href="{% url 'courses:course_list_enroll' id=course.id %}" class="text-blue-600 hover:text-blue-800">{{ course.enrolment_count }}</a>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ course.instructor_email }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ course.org_partner_name }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <span class="
+                    {% if course.status_course.status == 'published' %}
+                        text-green-600
+                    {% elif course.status_course.status == 'draft' %}
+                        text-yellow-600
+                    {% elif course.status_course.status == 'archived' %}
+                        text-red-600
+                    {% elif course.status_course.status == 'curation' %}
+                        text-blue-600
+                    {% else %}
+                        text-blue-600
+                    {% endif %}
+                ">
+                    {% if request.user.is_instructor and course.instructor.user == request.user and course.status_course.status not in 'published archived' %}
+                        <a href="{% url 'instructor:instructor_submit_curation' course_id=course.id %}" class="hover:underline">
+                            {{ course.status_course.get_status_display }}
+                        </a>
+                    {% elif request.user.is_partner and course.org_partner.user == request.user %}
+                        <a href="{% url 'instructor:partner_review_curation' course_id=course.id %}" class="hover:underline">
+                            {{ course.status_course.get_status_display }}
+                        </a>
+                    {% elif request.user.is_superuser or request.user.is_curation %}
+                        <a href="{% url 'instructor:superuser_publish_course' course_id=course.id %}" class="hover:underline">
+                            {{ course.status_course.get_status_display }}
+                        </a>
+                    {% else %}
+                        {{ course.status_course.get_status_display }}
+                    {% endif %}
+                </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ course.course_run }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                {% if course.status_course.status == 'archived' %}
+                    <a href="{% url 'courses:course_reruns' id=course.id %}" 
+                       class="px-3 py-1 text-xs font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md transition-colors duration-150">Re-Runs</a>
+                {% else %}
+                    <span class="text-gray-500">Re-Runs</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8" class="px-6 py-4 text-center text-gray-500 text-sm">No courses found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table></div>
+
+<!-- Pagination -->
+<div class="flex justify-between mt-3">
+    <div>
+        <p class="text-sm text-gray-700">Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} pages</p>
+    </div>
+    <div>
+        <nav aria-label="Page navigation">
+            <ul class="flex items-center space-x-0.5">
+                {% if page_obj.has_previous %}
+                <li>
+                    <a class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
+                       href="?page=1&search={{ request.GET.search }}" 
+                       aria-label="First">
                         <span aria-hidden="true">&laquo;&laquo;</span>
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="?page={{ page_obj.previous_page_number }}&search={{ request.GET.search }}" aria-label="Previous">
+                    </a>
+                </li>
+                <li>
+                    <a class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
+                       href="?page={{ page_obj.previous_page_number }}&search={{ request.GET.search }}" 
+                       aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-                  {% endif %}
-                  <li class="page-item disabled"><span class="page-link">{{ page_obj.number }}</span></li>
-                  {% if page_obj.has_next %}
-                    <li class="page-item">
-                      <a class="page-link" href="?page={{ page_obj.next_page_number }}&search={{ request.GET.search }}" aria-label="Next">
+                    </a>
+                </li>
+                {% endif %}
+                <li>
+                    <span class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-200 rounded-md cursor-not-allowed opacity-50">{{ page_obj.number }}</span>
+                </li>
+                {% if page_obj.has_next %}
+                <li>
+                    <a class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
+                       href="?page={{ page_obj.next_page_number }}&search={{ request.GET.search }}" 
+                       aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&search={{ request.GET.search }}" aria-label="Last">
+                    </a>
+                </li>
+                <li>
+                    <a class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
+                       href="?page={{ page_obj.paginator.num_pages }}&search={{ request.GET.search }}" 
+                       aria-label="Last">
                         <span aria-hidden="true">&raquo;&raquo;</span>
-                      </a>
-                    </li>
-                  {% endif %}
-                </ul>
-              </nav>
-            </div>
-          </div>
-        
- 
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+</section>
 {% endblock %}
+
