@@ -1,31 +1,39 @@
 {% extends 'home/tes.html' %}
 {% block content %}
 
-       
-        {% include "courses/course_set.html"%}
-        <hr>  
-       
-        <div class="support-wrap">
-            <div class="tile">
-              
-             
-                 
-            
-              <div class="tile-body">
-                 <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button class="btn btn-success btn-sm" type="submit">Save</button>
-                
-                      <a class="btn btn-secondary btn-sm" href="{% url 'courses:studio' id=course.id %}">Cancel <i class="fa fa-close"></i></a>
-                  </div>
-              </form>
-              </div>
+{% include "courses/course_set.html" %}
+<hr class="my-6 border-gray-300">
 
-             
-            </div>
-          </div>
+<div class="w-full max-w-3xl mx-auto bg-white rounded-xl shadow p-6">
+    <div class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800">Edit Data</h2>
+    </div>
 
+    <form method="post" enctype="multipart/form-data" class="space-y-4">
+        {% csrf_token %}
 
- {% endblock %}
+        <!-- Render form Django -->
+        <div class="space-y-4">
+            {{ form.as_p }}
+        </div>
 
+        <div class="flex items-center gap-3 pt-4">
+            <!-- Save button -->
+            <button 
+                type="submit" 
+                class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg shadow">
+                Save
+            </button>
+
+            <!-- Cancel -->
+            <a 
+                href="{% url 'courses:studio' id=course.id %}" 
+                class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded-lg shadow inline-flex items-center gap-2">
+                Cancel
+                <i class="fa fa-close"></i>
+            </a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
