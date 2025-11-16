@@ -2,178 +2,191 @@
 
 {% block content %}
 
-    
-        <a href="{% url 'courses:instructor_view' %}" class="btn btn-sm btn-secondary">Back to List</a>
-     
-    <div class="row">
-      <!-- Left Section: Profile Info -->
-      <div class="col-md-8">
-        <h1 class="display-5 fw-bold text-danger mb-4">{{instructor.user.first_name}} {{instructor.user.last_name}}</h1>
-        <p class="lead text-muted">{{instructor.user.hobby}}</p>
+<!-- Back button -->
+<a href="{% url 'courses:instructor_view' %}"
+   class="inline-block px-4 py-2 bg-gray-700 hover:bg-gray-800 text-white text-sm rounded-lg shadow">
+   Back to List
+</a>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+
+    <!-- LEFT SECTION -->
+    <div class="md:col-span-2">
+
+        <h1 class="text-3xl font-bold text-red-600 mb-3">
+            {{ instructor.user.first_name }} {{ instructor.user.last_name }}
+        </h1>
+
+        <p class="text-gray-500">{{ instructor.user.hobby }}</p>
+
         {% if partner_slug %}
-    <a href="{% url 'courses:org_partner' partner_slug %}">
-        <span class="badge bg-primary mt-2">{{instructor.user.university}}  <i class="fa fa-check" aria-hidden="true"></i></span>
-    </a>
-{% else %}
-    <span class="badge bg-secondary mt-2">No University Available</span>
-{% endif %}
-        </span></a>
+            <a href="{% url 'courses:org_partner' partner_slug %}">
+                <span class="inline-block bg-blue-600 text-white text-xs px-3 py-1 rounded mt-3">
+                    {{ instructor.user.university }}
+                    <i class="fa fa-check"></i>
+                </span>
+            </a>
+        {% else %}
+            <span class="inline-block bg-gray-400 text-white text-xs px-3 py-1 rounded mt-3">
+                No University Available
+            </span>
+        {% endif %}
 
-        <!-- Stats Section -->
-        <div class="mt-4">
-          <div class="d-flex gap-4">
+        <!-- Stats -->
+        <div class="mt-6 flex gap-10">
             <div>
-              <p class="h5 fw-bold">Students</p>
-              <p class="h4">{{ total_students }}</p>
+                <p class="text-lg font-semibold">Students</p>
+                <p class="text-2xl font-bold">{{ total_students }}</p>
             </div>
             <div>
-              <p class="h5 fw-bold">Reviews</p>
-              <p class="h4">{{ total_reviews }}</p>
+                <p class="text-lg font-semibold">Reviews</p>
+                <p class="text-2xl font-bold">{{ total_reviews }}</p>
             </div>
-          </div>
         </div>
 
-        <!-- About Me Section -->
-        <div class="mt-5">
-          <h2 class="h3 fw-bold">About Me</h2>
-          {% if instructor %}
-          <p class="mt-3">{{instructor.bio }}.</p>
-          {% endif %}
-        <h2 class="h3 fw-bold">Experience</h2>
-        <p><strong>{{ instructor.experience_years }} years.</strong> | {{ instructor.user.university }}</p>
-            <ul>
-                {% if instructor %}
+        <!-- About Me -->
+        <div class="mt-10">
+            <h2 class="text-xl font-bold">About Me</h2>
+            <p class="mt-3 text-gray-700">{{ instructor.bio }}</p>
+
+            <h2 class="text-xl font-bold mt-6">Experience</h2>
+            <p class="mt-1"><strong>{{ instructor.experience_years }} years.</strong> | {{ instructor.user.university }}</p>
+
+            <ul class="list-disc ml-5 mt-2 text-gray-700">
                 <li>{{ instructor.expertise|safe }}</li>
-                {% endif %}
-                
             </ul>
         </div>
 
-        <!-- Courses Section with Search Bar -->
-        <div class="mt-5">
-          <h2 class="h3 fw-bold">My courses ({{ courses_count }})</h2>
+        <!-- Courses -->
+        <div class="mt-10">
+            <h2 class="text-xl font-bold">My courses ({{ courses_count }})</h2>
 
-          <!-- Search Bar -->
-          <div class="mb-4">
-            <form method="GET" action="{% url 'courses:instructor_detail' instructor.id %}">
-              <div class="row g-2">
-                <!-- Search Input -->
-                <div class="col-12 col-md-10">
-                  <input type="text" class="form-control" name="search" value="{{ search_term }}" placeholder="Search courses..." />
+            <!-- Search -->
+            <form method="GET" action="{% url 'courses:instructor_detail' instructor.id %}" class="mt-4">
+                <div class="grid grid-cols-12 gap-3">
+                    <input 
+                        type="text" 
+                        name="search"
+                        value="{{ search_term }}"
+                        placeholder="Search courses..."
+                        class="col-span-9 md:col-span-10 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    >
+
+                    <button 
+                        type="submit"
+                        class="col-span-3 md:col-span-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-3 py-2">
+                        Search
+                    </button>
                 </div>
-                <!-- Search Button -->
-                <div class="col-12 col-md-2">
-                  <button type="submit" class="btn btn-primary w-100">Search</button>
-                </div>
-              </div>
             </form>
-          </div>
-          
 
-          <div class="table-responsive mt-4">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Course Name</th>
-                        <th>Image</th>
-                        <th>End Date</th>
-                        <th>Participats</th>
-                        <th>Status</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for course in page_obj %}
+            <!-- Courses Table -->
+            <div class="mt-6 overflow-x-auto">
+                <table class="min-w-full border border-gray-300 text-left">
+                    <thead class="bg-gray-100">
                         <tr>
-                            <td><a href="{% url 'courses:course_lms_detail' course.id course.slug %}">{{ course.course_name }}</a></td>
-                            <td>
-                              <img src="{% if course.image %}{{ course.image.url }}{% else %}{{ '/path/to/default/image.jpg' }}{% endif %}" alt="{{ course.course_name }}" class="img-fluid" style="max-width: 50px;">
-
+                            <th class="px-4 py-2 border">Course Name</th>
+                            <th class="px-4 py-2 border">Image</th>
+                            <th class="px-4 py-2 border">End Date</th>
+                            <th class="px-4 py-2 border">Participants</th>
+                            <th class="px-4 py-2 border">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in page_obj %}
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2 border">
+                                <a class="text-blue-600 hover:underline"
+                                   href="{% url 'courses:course_lms_detail' course.id course.slug %}">
+                                   {{ course.course_name }}
+                                </a>
                             </td>
-                            <td>{{ course.end_date }}</td>
-                            <td>{{ course.participants_count }}</td>
-                            <td>{{ course.status_course.status|title }}</td>
-                           
+
+                            <td class="px-4 py-2 border">
+                                <img src="{% if course.image %}{{ course.image.url }}{% else %}/default.jpg{% endif %}"
+                                     class="w-12 h-12 object-cover rounded">
+                            </td>
+
+                            <td class="px-4 py-2 border">{{ course.end_date }}</td>
+                            <td class="px-4 py-2 border">{{ course.participants_count }}</td>
+                            <td class="px-4 py-2 border">{{ course.status_course.status|title }}</td>
                         </tr>
-                    {% empty %}
+
+                        {% empty %}
                         <tr>
-                            <td colspan="5" class="text-center">No courses available.</td>
+                            <td colspan="5" class="text-center py-4 text-gray-500">No courses available.</td>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-         <style>
-            .pagination .page-item {
-                margin: 0 5px;
-            }
-            
-            .pagination .page-link {
-                color: #007bff;
-                border-radius: 20px;
-            }
-            
-            .pagination .page-link:hover {
-                background-color: #f8f9fa;
-                color: #0056b3;
-            }
-            
-            .pagination .disabled .page-link {
-                color: #6c757d;
-            }
-            
-         </style>
-        <!-- Pagination controls -->
-        <div class="pagination justify-content-center mt-4">
-            <ul class="pagination">
-                {% if page_obj.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page=1{% if search_term %}&search={{ search_term }}{% endif %}">&laquo; First</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_term %}&search={{ search_term }}{% endif %}">Previous</a>
-                    </li>
-                {% endif %}
-        
-                <li class="page-item disabled">
-                    <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-                </li>
-        
-                {% if page_obj.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_term %}&search={{ search_term }}{% endif %}">Next</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if search_term %}&search={{ search_term }}{% endif %}">Last &raquo;</a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
-        
-        </div>
-      </div>
+            <!-- Pagination -->
+            <div class="flex justify-center mt-6">
+                <div class="flex items-center gap-2">
 
-      <!-- Right Section: Profile Picture and Links -->
-      <div class="col-md-4 d-flex flex-column align-items-center mt-4 mt-md-0">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1{% if search_term %}&search={{ search_term }}{% endif %}"
+                           class="px-3 py-1 border rounded hover:bg-gray-100">&laquo; First</a>
+
+                        <a href="?page={{ page_obj.previous_page_number }}{% if search_term %}&search={{ search_term }}{% endif %}"
+                           class="px-3 py-1 border rounded hover:bg-gray-100">Previous</a>
+                    {% endif %}
+
+                    <span class="px-4 py-1 bg-gray-200 rounded text-sm">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if search_term %}&search={{ search_term }}{% endif %}"
+                           class="px-3 py-1 border rounded hover:bg-gray-100">Next</a>
+
+                        <a href="?page={{ page_obj.paginator.num_pages }}{% if search_term %}&search={{ search_term }}{% endif %}"
+                           class="px-3 py-1 border rounded hover:bg-gray-100">Last &raquo;</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT SECTION -->
+    <div class="flex flex-col items-center">
+
         {% if instructor.user.photo %}
-      <img src="{{ instructor.user.photo.url }}" class="rounded-circle mb-3" alt="Instructor's profile picture" width="150" height="150">
-      {% else %}
-          <img src="https://via.placeholder.com/100" class="rounded-circle mb-3" alt="Instructor's profile picture" width="150" height="150">
-      {% endif %}
+            <img src="{{ instructor.user.photo.url }}" 
+                 class="rounded-full w-40 h-40 object-cover shadow mb-3">
+        {% else %}
+            <img src="https://via.placeholder.com/150" 
+                 class="rounded-full w-40 h-40 object-cover shadow mb-3">
+        {% endif %}
 
-        
-      <div class="d-grid gap-2">
-        <a href="mailto:{{instructor.user.email}}" class="btn btn-outline-primary" target="_blank">Email</a>
-        <a href="{{instructor.user.twitter}}" class="btn btn-outline-primary" target="_blank">X</a>
-        <a href="{{instructor.user.linkedin}}" class="btn btn-outline-primary" target="_blank">Linkedin</a>
-        <a href="{{instructor.user.youtube}}" class="btn btn-outline-primary" target="_blank">Youtube</a>
-        <a href="{{instructor.user.instagram}}" class="btn btn-outline-primary" target="_blank">Instagram</a>
+        <!-- Social Buttons -->
+        <div class="flex flex-col gap-2 w-full">
+
+            <a href="mailto:{{instructor.user.email}}" 
+               class="w-full text-center py-2 border rounded-lg hover:bg-gray-100">
+               Email
+            </a>
+
+            <a href="{{ instructor.user.twitter }}" 
+               target="_blank"
+               class="w-full text-center py-2 border rounded-lg hover:bg-gray-100">X</a>
+
+            <a href="{{ instructor.user.linkedin }}" 
+               target="_blank"
+               class="w-full text-center py-2 border rounded-lg hover:bg-gray-100">LinkedIn</a>
+
+            <a href="{{ instructor.user.youtube }}" 
+               target="_blank"
+               class="w-full text-center py-2 border rounded-lg hover:bg-gray-100">YouTube</a>
+
+            <a href="{{ instructor.user.instagram }}" 
+               target="_blank"
+               class="w-full text-center py-2 border rounded-lg hover:bg-gray-100">Instagram</a>
+        </div>
+
     </div>
-    
-      </div>
-    </div>
-    
-  
-{% endblock content %}
+
+</div>
+
+{% endblock %}

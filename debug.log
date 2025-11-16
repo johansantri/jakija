@@ -2291,3 +2291,9 @@ django.template.exceptions.TemplateSyntaxError: Invalid filter: 'add_class'
 [INFO] 2025-11-16 09:59:33,497 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
 [INFO] 2025-11-16 09:59:34,564 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-11-16 09:59:34,574 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-16 10:08:01,753 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-16 10:08:02,802 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-16 10:08:02,812 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-16 10:08:05,360 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-16 10:08:06,473 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-16 10:08:06,483 [django.utils.autoreload] Watching for file changes with StatReloader

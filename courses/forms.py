@@ -663,16 +663,57 @@ class PartnerForm(forms.ModelForm):
         model = Partner
         fields = ['name', 'user', 'phone', 'tax', 'iceiprice', 'logo', 'address', 'description']
         widgets = {
-            "phone": forms.TextInput(attrs={"placeholder": "Phone Number", "class": "w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}),
-            "address": forms.Textarea(attrs={"placeholder": "Address", "class": "w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y"}),
+            "phone": forms.TextInput(attrs={
+                "placeholder": "Phone Number",
+                "class": (
+                    "w-full px-3 py-2 text-sm border border-gray-300 rounded-md "
+                    "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                ),
+            }),
+
+            "address": forms.Textarea(attrs={
+                "placeholder": "Address",
+                "class": (
+                    "w-full px-3 py-2 text-sm border border-gray-300 rounded-md resize-y "
+                    "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                ),
+                "rows": 3,
+            }),
+
             "description": CKEditor5Widget(
                 attrs={"class": "w-full django_ckeditor_5"},
                 config_name="extends",
             ),
-            "tax": forms.NumberInput(attrs={"placeholder": "Tax Number", "class": "w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}),
-            "iceiprice": forms.NumberInput(attrs={"placeholder": "Ice Price %", "class": "w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}),
-            "logo": forms.ClearableFileInput(attrs={'class': 'w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent', 'accept': 'image/*'}),
+
+            "tax": forms.NumberInput(attrs={
+                "placeholder": "Tax Number",
+                "class": (
+                    "w-full px-3 py-2 text-sm border border-gray-300 rounded-md "
+                    "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                ),
+                "min": "0",
+            }),
+
+            "iceiprice": forms.NumberInput(attrs={
+                "placeholder": "Ice Price (%)",
+                "class": (
+                    "w-full px-3 py-2 text-sm border border-gray-300 rounded-md "
+                    "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                ),
+                "step": "0.01",
+                "min": "0",
+                "max": "100",
+            }),
+
+            "logo": forms.ClearableFileInput(attrs={
+                "class": (
+                    "w-full px-3 py-2 text-sm border border-gray-300 rounded-md "
+                    "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                ),
+                "accept": "image/*",
+            }),
         }
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
