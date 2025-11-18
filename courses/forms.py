@@ -311,63 +311,61 @@ class GradeRangeForm(forms.ModelForm):
             }),
         }
 
+# courses/forms.py
+from django import forms
+from .models import Assessment
+
 class AssessmentForm(forms.ModelForm):
     class Meta:
         model = Assessment
-        fields = ['name', 'weight', 'flag', 'duration_in_minutes']  # Menambahkan durasi
+        fields = ['name', 'weight', 'flag', 'duration_in_minutes']
+
         widgets = {
             'name': forms.TextInput(attrs={
-                'placeholder': 'Enter name of assessment here',
-                'class': 'form-control'
+                'placeholder': 'input assessment name here',
+                'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition',
             }),
             'weight': forms.NumberInput(attrs={
                 'placeholder': '0',
-                'class': 'form-control',
-                'type': 'number',
-                'min': '0',  # Optional: Add minimum value
-                'max': '100',  # Optional: Add maximum value
+                'min': '0',
+                'max': '100',
+                'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition',
             }),
             'duration_in_minutes': forms.NumberInput(attrs={
-                'placeholder': 'Enter duration in minutes',
-                'class': 'form-control',
-                'type': 'number',
-                'min': '0',  # Durasi tidak boleh negatif
+                'placeholder': 'Contoh: 60',
+                'min': '0',
+                'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition',
+            }),
+            'flag': forms.CheckboxInput(attrs={
+                'class': 'w-5 h-5 text-blue-600 rounded focus:ring-blue-500 border-gray-300',
             }),
         }
+
         labels = {
-            'flag': 'Enable editor visual',  # Custom label for the flag field
-        }
-        help_texts = {
-            'weight': 'Enter the weight of the assessment (a percentage, 0-100).',
-            'duration_in_minutes': 'Enter the duration of the assessment in minutes. (e.g., 0, 5, 10, 30, 60, 120)'
+            'name': 'Name Assessment',
+            'weight': 'Weight (%)',
+            'flag': 'Activate Rich Text Editor',
+            'duration_in_minutes': 'Duration (minutes)',
         }
 
+        help_texts = {
+            'weight': 'Weight in percent (0–100). Example: 30',
+            'duration_in_minutes': 'Duration in minutes. Leave blank if no time limit.',
+            'flag': 'Check if you want to enable rich text editor during input.',
+        }
+
+    # Validasi tetap sama
     def clean_weight(self):
         weight = self.cleaned_data.get('weight')
-        
-        if weight < 0 or weight > 100:
+        if weight is not None and (weight < 0 or weight > 100):
             raise forms.ValidationError("Weight must be between 0 and 100.")
-        
         return weight
 
     def clean_duration_in_minutes(self):
         duration = self.cleaned_data.get('duration_in_minutes')
-        
-        if duration is None:
-            raise forms.ValidationError("Duration cannot be empty.")
-        if duration < 0:
-            raise forms.ValidationError("Duration must be a non-negative number.")
-        
+        if duration is not None and duration < 0:
+            raise forms.ValidationError("Duration cannot be negative.")
         return duration
-
-    def clean(self):
-        cleaned_data = super().clean()
-        weight = cleaned_data.get('weight')
-        duration_in_minutes = cleaned_data.get('duration_in_minutes')
-        
-        # You could add additional cross-field validation here if needed
-        
-        return cleaned_data
 
 class QuestionForm(forms.ModelForm):
     text = forms.CharField(required=True)  # Default field is optional

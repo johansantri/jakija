@@ -233,6 +233,19 @@
         </div>
       </div>
       <input class="hidden border rounded px-2 py-1 text-sm mt-1 w-full" value="${title}">
+      <hr>
+      <div class="flex gap-2">
+      <!-- LINK PAKAI URL DINAMIS -->
+        <a href="/add-material/{{ course.id }}/${id}/"
+          class="bg-green-100 text-green-600 hover:bg-green-200 px-3 py-2 rounded-lg text-xs font-medium flex items-center gap-1">
+          <i class="fas fa-file-alt"></i> Material
+        </a>
+        <a href="/create-assessment/{{ course.id }}/${id}/"
+           class="bg-purple-100 text-purple-600 hover:bg-purple-200 px-3 py-2 rounded-lg text-xs font-medium flex items-center gap-1 transition-colors">
+          <i class="fas fa-clipboard-check"></i> Assessment
+        </a>
+        
+      </div>
     `;
     div.querySelector('.delete').addEventListener('click', () => deleteItem(id, div));
     toggleEditable(div, '.unit-label');

@@ -1,72 +1,89 @@
 {% extends 'home/tes.html' %}
 {% block content %}
-{% block header %}
+
+  {% block header %}
     {{ form.media }}
-{% endblock %}
+  {% endblock %}
 
+  {% include "courses/course_set.html" %}
 
-       
-        {% include "courses/course_set.html"%}
-        <hr>  
-       
-        
-            <div class="tile">
-              
-             
-                  
-            
-              <div class="tile-body">
-               <form method="POST"  enctype="multipart/form-data"  >
-                  {% csrf_token %}
-               
-                  <h5 style="text-align: left;">Course Assesment</h5>
-                  <hr>
-                    <div class="row " >
-                        
-                        <div class="col-md-12">
-                        
-                        {{form.as_p}}
-                        
-                        </div>
-                         
-                    </div>
-                    
-                   
-                   
+<section class="bg-gray-100 py-10">
 
-                 
-                 
-                  <div class="tile-footer">
-                    &nbsp;
-                    <br>
-                    <button class="btn btn-success btn-sm"  type="submit">save <i class="fa fa-save"></i></button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary btn-sm" href="{% url 'courses:studio' id=course.id %}">cancel <i class="fa fa-close"></i></a>
+    <!-- Card Utama -->
+    <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+
+      <!-- Header Biru -->
+      <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-5">
+        <h3 class="text-2xl font-bold">Course Assessment</h3>
+      </div>
+
+      <!-- Form Body -->
+      <div class="p-6 sm:p-8">
+        <form method="POST" enctype="multipart/form-data" class="space-y-8">
+          {% csrf_token %}
+
+          <!-- Form Fields -->
+          <div class="space-y-6">
+            {{ form.as_p|safe }}
+            {# Kalau mau lebih cantik, ganti as_p dengan field manual nanti #}
+          </div>
+
+          <!-- Tombol Aksi -->
+          <div class="flex flex-col sm:flex-row gap-4 pt-8 border-t border-gray-200">
+            <button type="submit"
+                    class="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-200 ease-in-out transform hover:scale-105">
+              <i class="fas fa-save"></i>
+              save
+            </button>
+
+            <a href="{% url 'courses:studio' id=course.id %}"
+               class="inline-flex items-center justify-center gap-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-200 ease-in-out transform hover:scale-105">
+              <i class="fas fa-arrow-left"></i>
+              Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Daftar Team Members (jika ada) -->
+    {% if team_members %}
+      <div class="mt-12 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+          <h4 class="text-xl font-semibold text-gray-800">Existing Team Members</h4>
+        </div>
+
+        <div class="p-6">
+          <ul class="space-y-4">
+            {% for member in team_members %}
+              <li class="flex items-center justify-between bg-gray-50 rounded-lg px-5 py-4 hover:bg-gray-100 transition duration-150">
+                <div class="flex items-center gap-4">
+                  <!-- Avatar -->
+                  <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-lg">
+                    {{ member.user.get_short_name|slice:":1"|upper|default:"U" }}
                   </div>
-                </form>
-              </div>
-              <br>
-              <h5 style="text-align: left;">Existing Team Members</h5>
+                  <!-- Info -->
+                  <div>
+                    <p class="font-medium text-gray-900">
+                      {{ member.user.get_full_name|default:"-" }}
+                    </p>
+                    <p class="text-sm text-gray-600">{{ member.user.email }}</p>
+                  </div>
+                </div>
 
-<ul>
+                <!-- Hapus -->
+                <a href="{% url 'courses:remove_team_member' member.id %}"
+                   onclick="return confirm('Yakin ingin menghapus {{ member.user.email }} dari tim?')"
+                   class="text-red-600 hover:text-red-800 hover:bg-red-50 p-3 rounded-lg transition">
+                  <i class="fas fa-trash-alt text-lg"></i>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
 
-    {% for member in team_members %}
-
-        <li> 
-
-            <a href="{% url 'courses:remove_team_member' member.id %}" class="btn btn-danger btn-sm" >{{ member.user.email }}   &nbsp; <i class="fa fa-trash"></i></a>
-
-        </li>
-        <hr>
-    {% endfor %}
-
-</ul>
-             
-            </div>
-          
-
-
- 
-
- 
-
+  </section>
 
 {% endblock %}

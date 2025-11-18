@@ -4497,7 +4497,7 @@ def update_grade_range(request, id):
 
 #creat assesment type name
 #@login_required
-@csrf_protect
+#@csrf_protect
 def create_assessment(request, idcourse, idsection):
     # Check if the user is authenticated
     if not request.user.is_authenticated:
@@ -4766,7 +4766,7 @@ def delete_question(request, idcourse, idquestion, idsection, idassessment):
 
 #create question and choice
 #@login_required
-@csrf_exempt
+#@csrf_exempt
 def create_question_view(request, idcourse, idsection, idassessment):
     # Check if the user is authenticated
     if not request.user.is_authenticated:
@@ -5441,58 +5441,41 @@ def update_section(request, pk):
 
 
 
-#add matrial course
-#@login_required
-@csrf_protect
+@login_required
 def add_matrial(request, idcourse, idsection):
-    # Check if the user is authenticated
-    if not request.user.is_authenticated:
-        return redirect("/login/?next=%s" % request.path)
-    # Determine the course based on the user's role
+    # Langsung ambil course dengan semua kondisi akses
     if request.user.is_superuser:
         course = get_object_or_404(Course, id=idcourse)
     elif request.user.is_partner:
-        # Ensure the course is associated with the partner
         course = get_object_or_404(Course, id=idcourse, org_partner__user_id=request.user.id)
     elif request.user.is_instructor:
-        # Ensure the course is associated with the instructor
-        course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id,instructor__status='Approved')
+        course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id, instructor__status='Approved')
     else:
-        messages.error(request, "You do not have permission to add materials to this course.")
-        return redirect('courses:home')  # Redirect to a safe page for unauthorized users
+        messages.error(request, "Kamu tidak punya akses ke course ini.")
+        return redirect('courses:home')
 
-    # Fetch the section (update the field name to 'courses')
+    # Ambil section (pastikan milik course ini)
     section = get_object_or_404(Section, id=idsection, courses=course)
 
     if request.method == 'POST':
-        # Handle form submission
-        form = MatrialForm(request.POST)  # Include file uploads
-
+        form = MatrialForm(request.POST, request.FILES)
         if form.is_valid():
-            # Save the material and associate it with the course and section
             material = form.save(commit=False)
             material.section = section
             material.courses = course
             material.save()
-
-            messages.success(request, "Material successfully added to the course.")
+            messages.success(request, "Material berhasil ditambahkan!")
             return redirect('courses:studio', id=course.id)
         else:
-            # Provide error feedback
-            messages.error(request, "Failed to add material. Please check the form for errors.")
-            print(form.errors)  # Debugging (optional)
-
+            messages.error(request, "Form tidak valid.")
     else:
-        # Initialize an empty form for GET requests
         form = MatrialForm()
 
-    # Render the form template
     return render(request, 'courses/course_matrial.html', {
         'form': form,
         'course': course,
         'section': section,
     })
-
 
 #edit matrial course
 #@login_required
