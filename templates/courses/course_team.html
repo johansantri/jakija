@@ -1,69 +1,125 @@
 {% extends 'home/tes.html' %}
 {% block content %}
 
+{% include "courses/course_set.html" %}
 
-       
-        {% include "courses/course_set.html"%}
-        <hr>  
-       
-        <div class="support-wrap">
-            <div class="tile">
-              
-             
-                
-            
-              <div class="tile-body">
-               <form method="POST"  enctype="multipart/form-data"  >
-                  {% csrf_token %}
-               
-                  <h5 style="text-align: left;">Course Team</h5>
-                  <hr>
-                    <div class="row " >
-                        
-                        <div class="col-md-12">
-                        
-                        {{form}}
-                        
-                        </div>
-                         
-                    </div>
-                    
-                   
-                   
+<section class="bg-white border p-4 sm:p-6 rounded-lg shadow-sm mt-6 mx-2 sm:mx-0">
 
-                 
-                 
-                  <div class="tile-footer">
-                    &nbsp;
-                    <br>
-                    <button class="btn btn-success btn-sm"  type="submit">save <i class="fa fa-save"></i></button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary btn-sm" href="{% url 'courses:studio' id=course.id %}">cancel <i class="fa fa-close"></i></a>
-                  </div>
-                </form>
-              </div>
-              <br>
-              <h5 style="text-align: left;">Existing Team Members</h5>
-
-<ul>
-
-    {% for member in team_members %}
-
-        <li> 
-
-            <a href="{% url 'courses:remove_team_member' member.id %}" class="btn btn-danger btn-sm" >{{ member.user.email }}   &nbsp; <i class="fa fa-trash"></i></a>
-
-        </li>
-        <hr>
-    {% endfor %}
-
-</ul>
-             
+    <!-- ========== Bagian Tambah Anggota ========== -->
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+        
+        <div class="bg-gradient-to-r from-red-500 to-red-600 px-8 py-6 text-white">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                    <i class="fas fa-user-plus text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold">Tambah Anggota Tim</h1>
+                    <p class="text-red-100 text-sm mt-1">Undang user yang sudah terdaftar dengan email</p>
+                </div>
             </div>
-          </div>
+        </div>
 
+        <div class="p-8">
+            <form method="POST" class="max-w-lg">
+                {% csrf_token %}
 
- 
+                <div class="space-y-5">
+                    <div>
+                        <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Email Anggota
+                        </label>
+                        {{ form.email }}
+                        <p class="mt-2 text-sm text-gray-500">
+                            Contoh: budi@gmail.com, sri@university.ac.id
+                        </p>
+                    </div>
 
+                    <!-- Error field -->
+                    {% if form.email.errors %}
+                        <div class="p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <p class="text-sm text-red-700 font-medium flex items-center gap-2">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                {{ form.email.errors|join:" " }}
+                            </p>
+                        </div>
+                    {% endif %}
 
+                    <!-- Non-field errors -->
+                    {% if form.non_field_errors %}
+                        <div class="p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <p class="text-sm text-red-700 font-medium">
+                                {{ form.non_field_errors|join:" " }}
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
 
+                <div class="flex gap-4 mt-8">
+                    <button type="submit" class="flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition shadow-md">
+                        <i class="fas fa-plus"></i>
+                        Tambah ke Tim
+                    </button>
+                    <a href="#" class="px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-xl hover:bg-gray-200 transition">
+                        Batal
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========== Daftar Anggota Tim Saat Ini ========== -->
+    <div class="mt-12">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-3">
+                <i class="fas fa-users text-red-600"></i>
+                Anggota Tim Saat Ini
+            </h2>
+            <span class="text-sm text-gray-500 bg-gray-100 px-4 py-2 rounded-full font-medium">
+                {{ team_members.count }} orang
+            </span>
+        </div>
+
+        {% if team_members %}
+            <div class="grid gap-4">
+                {% for member in team_members %}
+                    <div class="group bg-white border border-gray-200 rounded-xl p-5 hover:border-red-300 hover:shadow-md transition-all duration-200">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                                    {{ member.user.get_short_name|slice:":1"|upper }}
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-800">
+                                        {% if member.user.get_full_name %}
+                                            {{ member.user.get_full_name }}
+                                        {% else %}
+                                            {{ member.user.email }}
+                                        {% endif %}
+                                    </p>
+                                    <p class="text-sm text-gray-500">{{ member.user.email }}</p>
+                                </div>
+                            </div>
+
+                            <a href="{% url 'courses:remove_team_member' member.id %}"
+                               onclick="return confirm('Yakin ingin menghapus {{ member.user.email }} dari tim?')"
+                               class="opacity-0 group-hover:opacity-100 transition-opacity px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg text-sm font-medium flex items-center gap-2">
+                                <i class="fas fa-trash"></i>
+                                Hapus
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-16 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300">
+                <i class="fas fa-users text-6xl text-gray-300 mb-4"></i>
+                <p class="text-gray-500 font-medium">Belum ada anggota tim</p>
+                <p class="text-sm text-gray-400 mt-2">Tambahkan anggota pertama di atas</p>
+            </div>
+        {% endif %}
+    </div>
+
+</section>
 
 {% endblock %}

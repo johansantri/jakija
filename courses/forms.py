@@ -760,7 +760,8 @@ class PartnerForm(forms.ModelForm):
 
     
 
-#selfupdatepartner
+
+
 def validate_optional_url(field_name, value):
     if value:
         validator = URLValidator()
@@ -770,124 +771,53 @@ def validate_optional_url(field_name, value):
             raise forms.ValidationError(f"URL untuk {field_name} tidak valid.")
     return value
 
-
-# Styles reusable untuk input biasa
-base_input_style = (
-    'padding: 10px; '
-    'border-radius: 8px; '
-    'border: 1.5px solid #ccc; '
-    'box-shadow: 1px 1px 5px rgba(0,0,0,0.05); '
-    'transition: border-color 0.3s ease;'
-)
-base_onfocus = "this.style.borderColor='#007bff'; this.style.boxShadow='0 0 5px #007bff';"
-base_onblur = "this.style.borderColor='#ccc'; this.style.boxShadow='1px 1px 5px rgba(0,0,0,0.05)';"
-
-personal_data_widgets = {
-    'phone': forms.TextInput(attrs={
-        'placeholder': 'Phone Number',
-        'class': 'form-control',
-        'style': f'width: 300px; {base_input_style}',
-        'maxlength': '15',
-        'onfocus': base_onfocus,
-        'onblur': base_onblur,
-    }),
-    'address': forms.Textarea(attrs={
-        'placeholder': 'Address',
-        'class': 'form-control',
-        'rows': 3,
-        'style': (
-            'border-radius: 8px; padding: 10px; border: 1.5px solid #ccc; '
-            'box-shadow: 1px 1px 5px rgba(0,0,0,0.05); transition: border-color 0.3s ease; resize:none;'
-        ),
-        'onfocus': base_onfocus,
-        'onblur': base_onblur,
-    }),
-    
-}
-
-bank_info_widgets = {
-    'account_number': forms.TextInput(attrs={
-        'placeholder': 'Account Number',
-        'class': 'form-control',
-        'style': f'width: 250px; {base_input_style}',
-        'onfocus': base_onfocus,
-        'onblur': base_onblur,
-    }),
-    'account_holder_name': forms.TextInput(attrs={
-        'placeholder': 'Account Holder Name',
-        'class': 'form-control',
-        'style': f'width: 400px; {base_input_style}',
-        'onfocus': base_onfocus,
-        'onblur': base_onblur,
-    }),
-    'bank_name': forms.TextInput(attrs={
-        'placeholder': 'Bank Name',
-        'class': 'form-control',
-        'style': f'width: 300px; {base_input_style}',
-        'onfocus': base_onfocus,
-        'onblur': base_onblur,
-    }),
-    'payment_method': forms.Select(attrs={
-        'class': 'form-control',
-        'style': f'width: 300px; {base_input_style}',
-        'onfocus': base_onfocus,
-        'onblur': base_onblur,
-    }),
-    'logo': forms.ClearableFileInput(attrs={
-        'class': 'form-control-file',
-        'accept': 'image/*',
-        'style': 'margin-top: 8px;'
-    }),
-}
-
-tax_info_widgets = {
-    'is_pkp': forms.CheckboxInput(attrs={
-        'class': 'form-check-input',
-        'style': 'transform: scale(1.3); margin-left: 5px;',
-    }),
-    'npwp': forms.TextInput(attrs={
-        'placeholder': 'NPWP',
-        'class': 'form-control',
-        'style': f'width: 300px; {base_input_style}',
-        'onfocus': base_onfocus,
-        'onblur': base_onblur,
-    }),
-    'npwp_file': forms.ClearableFileInput(attrs={
-        'class': 'form-control-file',
-        'accept': 'image/*',
-        'style': 'margin-top: 8px;'
-    }),
-}
-
-social_media_widgets = {}
-for network in ['tiktok', 'youtube', 'twitter', 'facebook']:
-    social_media_widgets[network] = forms.URLInput(attrs={
-        'placeholder': f'{network.capitalize()} URL',
-        'class': 'form-control',
-        'style': base_input_style,
-        'onfocus': base_onfocus,
-        'onblur': base_onblur,
-    })
-
-# Gabungkan semua
-widgets = {}
-widgets.update(personal_data_widgets)
-widgets.update(bank_info_widgets)
-widgets.update(tax_info_widgets)
-widgets.update(social_media_widgets)
-
-
 class PartnerFormUpdate(forms.ModelForm):
-    description = forms.CharField(widget=CKEditor5Widget())
+    description = forms.CharField(
+        widget=CKEditor5Widget()  # atau CKEditor5Widget() kalau pakai django-ckeditor-5
+    )
+
+    # Tailwind Classes (bisa diubah warnanya kapan saja)
+    INPUT_CLASS = "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition outline-none"
+    FILE_CLASS = "block w-full text-sm text-gray-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-red-50 file:text-red-700 hover:file:bg-red-100"
+    CHECKBOX_CLASS = "w-5 h-5 text-red-600 rounded focus:ring-red-500 border-gray-300"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Terapkan Tailwind class ke semua field secara otomatis
+        for field_name, field in self.fields.items():
+            if field_name == 'description':
+                continue  # CKEditor sudah punya styling sendiri
+
+            if isinstance(field.widget, (forms.TextInput, forms.NumberInput, forms.EmailInput)):
+                field.widget.attrs.update({'class': self.INPUT_CLASS})
+            elif isinstance(field.widget, forms.Textarea):
+                field.widget.attrs.update({'class': self.INPUT_CLASS + " resize-none", 'rows': 4})
+            elif isinstance(field.widget, forms.FileInput):
+                field.widget.attrs.update({'class': self.FILE_CLASS})
+            elif isinstance(field.widget, forms.CheckboxInput):
+                field.widget.attrs.update({'class': self.CHECKBOX_CLASS})
+            elif isinstance(field.widget, forms.Select):
+                field.widget.attrs.update({'class': self.INPUT_CLASS})
+
+        # Placeholder biar lebih user-friendly
+        self.fields['account_number'].widget.attrs.update({'placeholder': 'Contoh: 1234567890'})
+        self.fields['phone'].widget.attrs.update({'placeholder': '+628123456789'})
+        self.fields['npwp'].widget.attrs.update({'placeholder': '12.345.678.9-012.345'})
+        self.fields['tiktok'].widget.attrs.update({'placeholder': 'https://tiktok.com/@namakamu'})
+        self.fields['youtube'].widget.attrs.update({'placeholder': 'https://youtube.com/@channelmu'})
+        self.fields['twitter'].widget.attrs.update({'placeholder': 'https://twitter.com/nama'})
+        self.fields['facebook'].widget.attrs.update({'placeholder': 'https://facebook.com/nama'})
+
     class Meta:
         model = Partner
         fields = [
-            'account_number', 'account_holder_name','bank_name','phone','is_pkp','npwp','npwp_file','payment_method','logo', 'address', 'description', 
-              
-            'tiktok', 'youtube', 'twitter', 'facebook'
+            'account_number', 'account_holder_name', 'bank_name', 'phone',
+            'is_pkp', 'npwp', 'npwp_file', 'payment_method', 'logo',
+            'address', 'description', 'tiktok', 'youtube', 'twitter', 'facebook'
         ]
 
-        widgets = widgets
+    # === SEMUA CLEAN METHOD TETAP SAMA ===
     def clean_account_number(self):
         value = self.cleaned_data.get('account_number')
         if value and not value.isdigit():
@@ -1025,43 +955,37 @@ class InstructorAddCoruseForm(forms.ModelForm):
 
 
 
+# forms.py
+
+
 class TeamMemberForm(forms.ModelForm):
+    email = forms.EmailField(
+        required=True,
+        label="Email Anggota Tim",
+        widget=forms.EmailInput(attrs={
+            'placeholder': 'contoh@email.com',
+            'autocomplete': 'email'
+        })
+    )
 
-    email = forms.EmailField(required=True)  # Add an email field
-
-
-    class Meta:
-
-        model = TeamMember
-
-        fields = ['email']  # Include only the email field
-        widgets = {
-
-            'email': forms.TextInput(attrs={
-
-                'class': 'form-control',  # Bootstrap class for styling
-
-                'placeholder': 'Enter instructor email',  # Placeholder text
-
-                'required': 'required'  # Make the field required
-
-            }),
-
-        }
+    # Tailwind class (sama persis seperti form Partner biar konsisten)
+    INPUT_CLASS = "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition outline-none"
 
     def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs['class'] = self.INPUT_CLASS
 
-        super(TeamMemberForm, self).__init__(*args, **kwargs)
-
-        self.fields['email'].queryset = CustomUser.objects.all()  # Limit user choices if needed
-
+    class Meta:
+        model = TeamMember
+        fields = ['email']
 
     def clean_email(self):
-
         email = self.cleaned_data.get('email')
-
-        if not CustomUser.objects.filter(email=email).exists():
-
-            raise forms.ValidationError("No user found with this email.")
-
+        if not CustomUser.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError("Email ini tidak terdaftar di sistem. Pastikan user sudah memiliki akun.")
+        
+        # Cek apakah sudah ada di tim (opsional, biar tidak duplicate)
+        if TeamMember.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError("User dengan email ini sudah tergabung dalam tim.")
+        
         return email
