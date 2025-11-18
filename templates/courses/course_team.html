@@ -14,8 +14,8 @@
                     <i class="fas fa-user-plus text-2xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold">Tambah Anggota Tim</h1>
-                    <p class="text-red-100 text-sm mt-1">Undang user yang sudah terdaftar dengan email</p>
+                    <h1 class="text-2xl font-bold">Add Team Member</h1>
+                    <p class="text-red-100 text-sm mt-1">Invite users who are already registered by email</p>
                 </div>
             </div>
         </div>
@@ -27,11 +27,11 @@
                 <div class="space-y-5">
                     <div>
                         <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-                            Email Anggota
+                            Team Member Email
                         </label>
                         {{ form.email }}
                         <p class="mt-2 text-sm text-gray-500">
-                            Contoh: budi@gmail.com, sri@university.ac.id
+                            Example: budi@gmail.com, sri@university.ac.id
                         </p>
                     </div>
 
@@ -58,10 +58,10 @@
                 <div class="flex gap-4 mt-8">
                     <button type="submit" class="flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition shadow-md">
                         <i class="fas fa-plus"></i>
-                        Tambah ke Tim
+                        Add to Team
                     </button>
                     <a href="#" class="px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-xl hover:bg-gray-200 transition">
-                        Batal
+                        Cancel
                     </a>
                 </div>
             </form>
@@ -73,10 +73,10 @@
         <div class="flex items-center justify-between mb-6">
             <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-3">
                 <i class="fas fa-users text-red-600"></i>
-                Anggota Tim Saat Ini
+                Current Team Members
             </h2>
             <span class="text-sm text-gray-500 bg-gray-100 px-4 py-2 rounded-full font-medium">
-                {{ team_members.count }} orang
+                {{ team_members.count }} people
             </span>
         </div>
 
@@ -105,7 +105,7 @@
                                onclick="return confirm('Yakin ingin menghapus {{ member.user.email }} dari tim?')"
                                class="opacity-0 group-hover:opacity-100 transition-opacity px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg text-sm font-medium flex items-center gap-2">
                                 <i class="fas fa-trash"></i>
-                                Hapus
+                                delete
                             </a>
                         </div>
                     </div>
@@ -114,8 +114,8 @@
         {% else %}
             <div class="text-center py-16 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300">
                 <i class="fas fa-users text-6xl text-gray-300 mb-4"></i>
-                <p class="text-gray-500 font-medium">Belum ada anggota tim</p>
-                <p class="text-sm text-gray-400 mt-2">Tambahkan anggota pertama di atas</p>
+                <h3 class="text-xl font-semibold text-gray-700">No team members yet</h3>
+                <p class="text-sm text-gray-400 mt-2">Add the first team member above</p>
             </div>
         {% endif %}
     </div>

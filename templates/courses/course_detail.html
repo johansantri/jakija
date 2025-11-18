@@ -256,8 +256,24 @@
 
   // ---- Sortable ----
   function makeSortable(container) {
-    if (!container) return;
-    new Sortable(container, { group: 'nested', animation: 150, fallbackOnBody: true, swapThreshold: 0.65 });
+    if (!container || container.sortableInstance) return;
+
+    const sortable = new Sortable(container, {
+      group: 'nested',
+      animation: 150,
+      fallbackOnBody: true,
+      swapThreshold: 0.65,
+      // Tambahan: otomatis simpan saat selesai drag
+      onEnd: function (evt) {
+        // Jangan simpan kalau cuma pindah di tempat yang sama (biar tidak spam request)
+        if (evt.oldIndex !== evt.newIndex || evt.from !== evt.to) {
+          saveCurrentStructure();
+        }
+      }
+    });
+
+    // Simpan instance biar tidak double init
+    container.sortableInstance = sortable;
   }
 
   // ---- ADD ITEM (TANPA RELOAD) ----
@@ -341,7 +357,41 @@
     }
   }
 
+  // ---- AUTO SAVE URUTAN SETIAP SELESAI DRAG ----
+  async function saveCurrentStructure() {
+    const structure = [];
+    document.querySelectorAll('#sections > div').forEach(el => {
+      structure.push(getNodeData(el));
+    });
+
+    try {
+      const res = await fetch('/sections/reorder/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify(structure)
+      });
+
+      if (res.ok) {
+        console.log('Urutan berhasil disimpan otomatis');
+        // Optional: beri feedback kecil
+        const saveBtn = document.getElementById('save-json');
+        saveBtn.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => {
+          saveBtn.innerHTML = '<i class="fas fa-save"></i>';
+        }, 1000);
+      } else {
+        alert('Gagal menyimpan urutan otomatis!');
+      }
+    } catch (err) {
+      console.error('Error auto-save:', err);
+      alert('Koneksi gagal saat menyimpan urutan!');
+    }
+  }
   // ---- INIT ----
+
   document.addEventListener('DOMContentLoaded', fetchSections);
 
   // ---- Simpan Struktur ----

@@ -3351,3 +3351,44 @@ Traceback (most recent call last):
   File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
     raise NoReverseMatch(msg)
 django.urls.exceptions.NoReverseMatch: Reverse for 'team_list' not found. 'team_list' is not a valid view function or pattern name.
+[WARNING] 2025-11-18 09:22:06,294 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 09:42:22,472 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 09:43:05,276 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-18 09:43:08,434 [audit.signals] Error in audit log (post_delete) for Section pk=44: Section matching query does not exist.
+[ERROR] 2025-11-18 09:43:08,435 [audit.signals] Error in audit log (post_delete) for Section pk=43: Section matching query does not exist.
+[ERROR] 2025-11-18 09:43:08,436 [audit.signals] Error in audit log (post_delete) for Section pk=42: Section matching query does not exist.
+[ERROR] 2025-11-18 09:43:08,436 [audit.signals] Error in audit log (post_delete) for Section pk=29: Section matching query does not exist.
+[ERROR] 2025-11-18 09:43:08,437 [audit.signals] Error in audit log (post_delete) for Section pk=28: Section matching query does not exist.
+[ERROR] 2025-11-18 09:43:10,376 [audit.signals] Error in audit log (post_delete) for Section pk=38: Section matching query does not exist.
+[ERROR] 2025-11-18 09:43:10,377 [audit.signals] Error in audit log (post_delete) for Section pk=35: Section matching query does not exist.
+[ERROR] 2025-11-18 09:43:10,377 [audit.signals] Error in audit log (post_delete) for Section pk=34: Section matching query does not exist.
+[WARNING] 2025-11-18 09:43:16,381 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 09:43:23,733 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 09:43:34,619 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 09:58:03,448 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 09:58:15,640 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 09:58:20,717 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 09:58:29,908 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 09:58:40,013 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 09:59:25,230 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 10:01:15,065 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 10:01:38,923 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 10:01:53,940 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 10:02:09,437 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 10:02:26,144 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 10:02:36,524 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 10:02:43,622 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 10:02:54,638 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-18 10:03:33,492 [audit.signals] Error in audit log (post_delete) for Section pk=48: Section matching query does not exist.
+[ERROR] 2025-11-18 10:03:33,492 [audit.signals] Error in audit log (post_delete) for Section pk=47: Section matching query does not exist.
+[ERROR] 2025-11-18 10:03:33,493 [audit.signals] Error in audit log (post_delete) for Section pk=46: Section matching query does not exist.
+[ERROR] 2025-11-18 10:03:33,494 [audit.signals] Error in audit log (post_delete) for Section pk=45: Section matching query does not exist.
+[ERROR] 2025-11-18 10:03:33,494 [audit.signals] Error in audit log (post_delete) for Section pk=23: Section matching query does not exist.
+[ERROR] 2025-11-18 10:03:33,495 [audit.signals] Error in audit log (post_delete) for Section pk=22: Section matching query does not exist.
+[ERROR] 2025-11-18 10:03:36,668 [audit.signals] Error in audit log (post_delete) for Section pk=51: Section matching query does not exist.
+[ERROR] 2025-11-18 10:03:36,669 [audit.signals] Error in audit log (post_delete) for Section pk=50: Section matching query does not exist.
+[WARNING] 2025-11-18 10:04:09,620 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-18 10:04:13,767 [audit.signals] Error in audit log (post_delete) for Section pk=54: Section matching query does not exist.
+[ERROR] 2025-11-18 10:04:13,768 [audit.signals] Error in audit log (post_delete) for Section pk=53: Section matching query does not exist.
+[WARNING] 2025-11-18 10:04:23,996 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 10:04:32,786 [django.request] Not Found: /favicon.ico
