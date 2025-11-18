@@ -3852,3 +3852,119 @@ django.urls.exceptions.NoReverseMatch: Reverse for 'add-matrial' with arguments 
 [WARNING] 2025-11-18 11:42:11,670 [django.request] Forbidden: /add-material/2/57/
 [WARNING] 2025-11-18 11:42:14,230 [learner.views] Upaya akses tidak sah oleh partner untuk add-material
 [WARNING] 2025-11-18 11:42:14,231 [django.request] Forbidden: /add-material/2/57/
+[WARNING] 2025-11-18 11:48:38,601 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-18 11:54:38,039 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-18 11:54:39,159 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 11:54:39,170 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-18 11:56:51,160 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-18 11:56:52,207 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 11:56:52,217 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-18 11:57:03,224 [learner.views] Upaya akses tidak sah oleh partner untuk add-material
+[WARNING] 2025-11-18 11:57:03,224 [django.request] Forbidden: /add-material/2/57/
+[WARNING] 2025-11-18 11:59:04,051 [django.request] Not Found: /admin/
+[WARNING] 2025-11-18 11:59:46,423 [learner.views] Upaya akses tidak sah oleh partner untuk add-material
+[WARNING] 2025-11-18 11:59:46,424 [django.request] Forbidden: /add-material/2/57/
+[WARNING] 2025-11-18 12:02:33,999 [learner.views] Upaya akses tidak sah oleh partner untuk add-material
+[WARNING] 2025-11-18 12:02:34,001 [django.request] Forbidden: /add-material/2/60/
+[WARNING] 2025-11-18 12:02:40,741 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 12:03:10,543 [learner.views] Upaya akses tidak sah oleh partner untuk material
+[WARNING] 2025-11-18 12:03:10,544 [django.request] Forbidden: /material/5/edit/
+[WARNING] 2025-11-18 12:03:23,184 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 12:04:12,133 [learner.views] Upaya akses tidak sah oleh partner untuk material
+[WARNING] 2025-11-18 12:04:12,133 [django.request] Forbidden: /material/5/edit/
+[WARNING] 2025-11-18 12:04:19,416 [learner.views] Upaya akses tidak sah oleh partner untuk material
+[WARNING] 2025-11-18 12:04:19,417 [django.request] Forbidden: /material/5/edit/
+[WARNING] 2025-11-18 12:05:37,760 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 12:05:52,326 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 12:06:20,394 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 12:06:23,281 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 12:06:23,312 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-11-18 12:07:03,083 [audit.signals] Error in audit log (post_delete) for Section pk=57: Section matching query does not exist.
+[ERROR] 2025-11-18 12:07:03,084 [audit.signals] Error in audit log (post_delete) for Section pk=56: Section matching query does not exist.
+[WARNING] 2025-11-18 12:07:08,223 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-18 12:10:44,057 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-18 12:10:45,144 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 12:10:45,154 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-18 12:10:52,338 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-18 12:10:53,372 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 12:10:53,383 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-18 12:11:08,641 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-18 12:11:09,721 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 12:11:09,731 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-18 12:11:13,721 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-18 12:11:14,706 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 12:11:14,716 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-18 12:11:47,311 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-18 12:11:48,275 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 12:11:48,285 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-18 12:12:42,619 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-18 12:12:43,661 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 12:12:43,672 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-11-18 12:12:50,728 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/mixins.py", line 19, in create
+    self.perform_create(serializer)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/mixins.py", line 24, in perform_create
+    serializer.save()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+  File "/home/x/app/mysite/courses/serializers.py", line 92, in create
+    max_order = Section.objects.filter(parent__isnull=True, courses=course) \
+KeyError: 'order__max'
+[INFO] 2025-11-18 12:13:23,813 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 12:13:24,612 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 12:13:24,623 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-11-18 12:13:34,312 [django.request] Internal Server Error: /sections/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/mixins.py", line 19, in create
+    self.perform_create(serializer)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/mixins.py", line 24, in perform_create
+    serializer.save()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+  File "/home/x/app/mysite/courses/serializers.py", line 92, in create
+    max_order = Section.objects.filter(parent__isnull=True, courses=course) \
+KeyError: 'order__max'
+[INFO] 2025-11-18 12:15:16,085 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-18 12:15:17,220 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 12:15:17,231 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-18 12:15:44,179 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 12:15:44,988 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 12:15:44,998 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-18 12:21:48,375 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-18 12:27:09,083 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-18 12:27:10,179 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-18 12:27:10,189 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-18 12:28:16,832 [django.request] Not Found: /favicon.ico

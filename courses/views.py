@@ -114,70 +114,89 @@ class SectionViewSet(viewsets.ModelViewSet):
     queryset = Section.objects.all()
     serializer_class = SectionSerializer
 
-    # Hanya untuk LIST: tampilkan tree (root only)
+    # ──────────────────────────────────────────────────────────────
+    # LIST → hanya root sections (parent=None) + prefetch semua anak + material/assessment
+    # ──────────────────────────────────────────────────────────────
     def get_queryset(self):
         course_id = self.request.query_params.get('course')
-        if course_id:
-            return Section.objects.filter(
-                courses_id=course_id,
-                parent__isnull=True
-            ).select_related('courses').prefetch_related(
-                Prefetch('children', queryset=Section.objects.order_by('order'))
-            ).order_by('order')
-        return Section.objects.none()
+        if not course_id:
+            return Section.objects.none()
 
-    # Untuk RETRIEVE, UPDATE, DELETE: izinkan akses semua Section (termasuk anak)
+        # Prefetch 2 level dalam + materials & assessments hanya di level Unit
+        return Section.objects.filter(
+            courses_id=course_id,
+            parent__isnull=True
+        ).order_by('order').prefetch_related(
+            # Level 1: Subsection
+            Prefetch(
+                'children',
+                queryset=Section.objects.order_by('order').prefetch_related(
+                    # Level 2: Unit → ambil materials & assessments
+                    Prefetch(
+                        'children',
+                        queryset=Section.objects.order_by('order').prefetch_related(
+                            'materials',
+                            'assessments'
+                        )
+                    )
+                )
+            )
+        )
+
+    # ──────────────────────────────────────────────────────────────
+    # RETRIEVE, UPDATE, DELETE → tetap bisa akses semua level via PK
+    # ──────────────────────────────────────────────────────────────
     def get_object(self):
-        """
-        Override agar bisa akses subsection/unit via /sections/<id>/
-        """
         pk = self.kwargs.get('pk')
-        # Cari di semua Section (tidak dibatasi parent=None)
         obj = get_object_or_404(Section, pk=pk)
         self.check_object_permissions(self.request, obj)
         return obj
 
-
-
-
-
+    # ──────────────────────────────────────────────────────────────
+    # REORDER → terima struktur baru dari frontend
+    # ──────────────────────────────────────────────────────────────
     @action(detail=False, methods=['post'])
     def reorder(self, request):
-        """
-        Terima JSON struktur baru dari frontend dan update parent/order.
-        """
-        data = request.data
-        self.update_order_recursive(data, None)
+        data = request.data  # list of dicts: [{id, children: [...]}, ...]
+        self._update_order_recursive(data, parent_id=None)
         return Response({"status": "ok"})
 
-    def update_order_recursive(self, items, parent_id):
+    def _update_order_recursive(self, items, parent_id):
         for index, item in enumerate(items):
-            section = get_object_or_404(Section, pk=item['id'])
-            section.parent_id = parent_id
-            section.order = index
-            section.save()
-            if 'children' in item and item['children']:
-                self.update_order_recursive(item['children'], section.id)
+            section_id = item['id']
+            section = get_object_or_404(Section, pk=section_id)
 
-    def destroy(self, request, pk=None):
-        try:
-            section = get_object_or_404(Section, pk=pk)
-            parent = section.parent  # Simpan parent sebelum delete
-            section.delete()  # Cascade hapus children
-            
-            # Reorder sibling di level yang sama
-            if parent:
-                siblings = parent.children.all().order_by('order')
-            else:
-                siblings = Section.objects.filter(parent__isnull=True, courses=section.courses).order_by('order')
-            
-            for index, sib in enumerate(siblings):
-                sib.order = index
-                sib.save()
-            
-            return Response({'status': 'deleted'}, status=status.HTTP_204_NO_CONTENT)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            # Update parent & order dalam satu save() → lebih cepat
+            Section.objects.filter(pk=section_id).update(
+                parent_id=parent_id,
+                order=index
+            )
+
+            # Rekursif ke children
+            if item.get('children'):
+                self._update_order_recursive(item['children'], parent_id=section_id)
+
+    # ──────────────────────────────────────────────────────────────
+    # DELETE → hapus + rapikan order sibling
+    # ──────────────────────────────────────────────────────────────
+    def destroy(self, request, *args, **kwargs):
+        section = self.get_object()
+        course = section.courses
+        parent = section.parent
+
+        section.delete()  # CASCADE hapus semua anak
+
+        # Rapikan order sibling di level yang sama
+        if parent:
+            siblings = parent.children.all()
+        else:
+            siblings = Section.objects.filter(courses=course, parent__isnull=True)
+
+        for index, sib in enumerate(siblings.order_by('order')):
+            sib.order = index
+            sib.save(update_fields=['order'])
+
+        return Response({"status": "deleted"}, status=status.HTTP_204_NO_CONTENT)
 
 
 def custom_ratelimit(view_func):
