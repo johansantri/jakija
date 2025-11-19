@@ -4023,3 +4023,534 @@ KeyError: 'order__max'
 [INFO] 2025-11-19 14:36:08,956 [django.utils.autoreload] Watching for file changes with StatReloader
 [WARNING] 2025-11-19 14:36:10,623 [django.request] Not Found: /favicon.ico
 [WARNING] 2025-11-19 14:37:09,699 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:41:41,543 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:43:03,374 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-19 14:47:44,371 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 14:47:45,678 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 14:47:45,690 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 14:47:59,139 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 14:48:00,178 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 14:48:00,189 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 14:48:51,973 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 14:48:53,116 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 14:48:53,128 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-19 14:49:00,407 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:50:59,158 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:51:00,108 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:54:54,333 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:55:08,695 [learner.views] Upaya akses tidak sah oleh admin untuk material
+[WARNING] 2025-11-19 14:55:08,695 [django.request] Forbidden: /material/7/edit/
+[WARNING] 2025-11-19 14:55:24,517 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:55:26,394 [learner.views] Upaya akses tidak sah oleh admin untuk material
+[WARNING] 2025-11-19 14:55:26,395 [django.request] Forbidden: /material/7/edit/
+[WARNING] 2025-11-19 14:55:29,917 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:55:30,833 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:55:36,661 [learner.views] Upaya akses tidak sah oleh admin untuk matrial
+[WARNING] 2025-11-19 14:55:36,661 [django.request] Forbidden: /matrial/7/edit/
+[WARNING] 2025-11-19 14:55:39,592 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:57:29,537 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:57:34,287 [learner.views] Upaya akses tidak sah oleh admin untuk edit_matrial
+[WARNING] 2025-11-19 14:57:34,287 [django.request] Forbidden: /edit_matrial/2/7/
+[WARNING] 2025-11-19 14:57:53,488 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:58:06,730 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:58:10,314 [learner.views] Upaya akses tidak sah oleh admin untuk edit-matrial
+[WARNING] 2025-11-19 14:58:10,314 [django.request] Forbidden: /edit-matrial/2/7/
+[WARNING] 2025-11-19 14:58:16,748 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:02:32,217 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:02:39,592 [learner.views] Upaya akses tidak sah oleh admin untuk edit-matrial
+[WARNING] 2025-11-19 15:02:39,592 [django.request] Forbidden: /edit-matrial/2/7/
+[WARNING] 2025-11-19 15:03:05,917 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:03:18,668 [learner.views] Upaya akses tidak sah oleh admin untuk edit-matrial
+[WARNING] 2025-11-19 15:03:18,668 [django.request] Forbidden: /edit-matrial/2/7/
+[WARNING] 2025-11-19 15:03:20,166 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:03:22,086 [learner.views] Upaya akses tidak sah oleh admin untuk edit-matrial
+[WARNING] 2025-11-19 15:03:22,087 [django.request] Forbidden: /edit-matrial/2/7/
+[WARNING] 2025-11-19 15:03:24,336 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:03:26,123 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:03:31,596 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-19 15:05:18,527 [django.request] Internal Server Error: /edit-matrial/2/7
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5545, in edit_matrial
+    return render(request, 'courses/edit_matrial_course.html', {
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 489, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'add_class'
+[WARNING] 2025-11-19 15:05:18,762 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:06:24,690 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:06:39,128 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:07:44,885 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:08:12,004 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:08:50,561 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-19 15:10:36,879 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:10:38,155 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:10:38,166 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 15:10:47,050 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:10:48,267 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:10:48,279 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 15:10:55,107 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:10:56,258 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:10:56,269 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 15:11:59,621 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:12:00,687 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:12:00,698 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 15:12:03,155 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:12:04,196 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:12:04,206 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 15:12:06,153 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:12:07,147 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:12:07,157 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 15:12:34,754 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:12:35,779 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:12:35,789 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 15:12:45,557 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:12:46,643 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:12:46,653 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 15:12:52,236 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:12:53,288 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:12:53,298 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 15:13:03,156 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:13:04,317 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:13:04,328 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 15:13:07,303 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:13:08,350 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:13:08,362 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 15:13:14,532 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:13:15,589 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:13:15,600 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 15:13:22,241 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:13:23,263 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:13:23,273 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-19 15:13:34,903 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:13:49,959 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:14:42,100 [django.request] Not Found: /assessment/undefined/edit/
+[WARNING] 2025-11-19 15:18:07,903 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:21:09,022 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-19 15:23:29,936 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 15:23:31,060 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 15:23:31,071 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-19 15:23:49,296 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:24:37,081 [learner.views] Upaya akses tidak sah oleh admin untuk assessment
+[WARNING] 2025-11-19 15:24:37,081 [django.request] Forbidden: /assessment/4/edit/
+[WARNING] 2025-11-19 15:28:30,550 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:28:34,533 [django.request] Not Found: /edit-assessment/2//5
+[WARNING] 2025-11-19 15:28:34,618 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:28:39,243 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-19 15:31:47,330 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5919, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'edit_material' not found. 'edit_material' is not a valid view function or pattern name.
+[WARNING] 2025-11-19 15:31:47,495 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-19 15:32:32,189 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5919, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'edit_material' not found. 'edit_material' is not a valid view function or pattern name.
+[WARNING] 2025-11-19 15:32:32,286 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-19 15:32:45,896 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5919, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'edit_matrial' with arguments '(2, '', '')' not found. 1 pattern(s) tried: ['edit\\-matrial/(?P<idcourse>[0-9]+)/(?P<idmaterial>[0-9]+)\\Z']
+[WARNING] 2025-11-19 15:32:45,965 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-19 15:34:34,079 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5919, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'edit_matrial' with arguments '(2, '')' not found. 1 pattern(s) tried: ['edit\\-matrial/(?P<idcourse>[0-9]+)/(?P<idmaterial>[0-9]+)\\Z']
+[WARNING] 2025-11-19 15:34:34,177 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-19 15:34:52,447 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5919, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'edit_matrial' with arguments '(2, '')' not found. 1 pattern(s) tried: ['edit\\-matrial/(?P<idcourse>[0-9]+)/(?P<idmaterial>[0-9]+)\\Z']
+[WARNING] 2025-11-19 15:34:52,538 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-19 15:34:53,483 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5919, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'edit_matrial' with arguments '(2, '')' not found. 1 pattern(s) tried: ['edit\\-matrial/(?P<idcourse>[0-9]+)/(?P<idmaterial>[0-9]+)\\Z']
+[WARNING] 2025-11-19 15:34:53,573 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-19 15:34:54,361 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5919, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'edit_matrial' with arguments '(2, '')' not found. 1 pattern(s) tried: ['edit\\-matrial/(?P<idcourse>[0-9]+)/(?P<idmaterial>[0-9]+)\\Z']
+[WARNING] 2025-11-19 15:34:54,456 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:35:57,884 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:36:04,438 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:36:06,378 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:37:00,642 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:37:07,361 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:37:11,525 [django.request] Not Found: /edit-assessment/2//4
+[WARNING] 2025-11-19 15:37:11,607 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:37:20,474 [django.request] Not Found: /edit-assessment/2/1/4/
+[WARNING] 2025-11-19 15:37:20,576 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:37:25,642 [django.request] Not Found: /edit-assessment/2/2/4/
+[WARNING] 2025-11-19 15:37:25,744 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:37:33,466 [django.request] Not Found: /edit-assessment/2/2/4/
+[WARNING] 2025-11-19 15:37:33,552 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:37:37,962 [django.request] Not Found: /edit-assessment/2/3/4/
+[WARNING] 2025-11-19 15:37:38,048 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:38:01,150 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:39:00,761 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:39:04,596 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:39:08,061 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:39:24,280 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 15:42:09,653 [django.request] Not Found: /favicon.ico
