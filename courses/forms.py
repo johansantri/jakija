@@ -425,7 +425,7 @@ class MatrialForm(forms.ModelForm):
         fields = ['title','description']
         widgets = {
             
-            'title': forms.TextInput(attrs={'placeholder': 'Enter short title here', 'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'placeholder': 'Enter short title here', 'class': 'block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}),
             "description": CKEditor5Widget(
                 attrs={"class": "django_ckeditor_5"},
                 config_name="extends",

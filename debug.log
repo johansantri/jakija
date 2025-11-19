@@ -3968,3 +3968,58 @@ KeyError: 'order__max'
 [INFO] 2025-11-18 12:27:10,179 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-11-18 12:27:10,189 [django.utils.autoreload] Watching for file changes with StatReloader
 [WARNING] 2025-11-18 12:28:16,832 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-18 12:45:19,053 [learner.views] Upaya akses tidak sah oleh partner untuk add-material
+[WARNING] 2025-11-18 12:45:19,053 [django.request] Forbidden: /add-material/2/70/
+[ERROR] 2025-11-18 12:53:38,612 [audit.signals] Error in audit log (post_delete) for Section pk=73: Section matching query does not exist.
+[ERROR] 2025-11-18 12:53:38,613 [audit.signals] Error in audit log (post_delete) for Section pk=72: Section matching query does not exist.
+[ERROR] 2025-11-18 12:53:38,614 [audit.signals] Error in audit log (post_delete) for Section pk=71: Section matching query does not exist.
+[ERROR] 2025-11-18 12:53:38,615 [audit.signals] Error in audit log (post_delete) for Section pk=70: Section matching query does not exist.
+[ERROR] 2025-11-18 12:53:38,616 [audit.signals] Error in audit log (post_delete) for Section pk=69: Section matching query does not exist.
+[WARNING] 2025-11-18 12:54:04,919 [learner.views] Upaya akses tidak sah oleh partner untuk add-material
+[WARNING] 2025-11-18 12:54:04,921 [django.request] Forbidden: /add-material/2/76/
+[WARNING] 2025-11-18 13:40:03,821 [django.request] Not Found: /questions/view/2/55/3/
+[WARNING] 2025-11-18 13:40:03,868 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:06,042 [django.request] Not Found: /edit-assessment/2/55/3/
+[WARNING] 2025-11-18 13:40:06,085 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:06,671 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:09,096 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:12,244 [django.request] Not Found: /questions/create/2/55/3/
+[WARNING] 2025-11-18 13:40:12,304 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:12,951 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:13,227 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:13,533 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:13,855 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:14,210 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:14,684 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:15,257 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:15,762 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:16,246 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-18 13:40:17,838 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-19 14:25:42,843 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 14:25:43,630 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 14:25:43,640 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-19 14:26:30,064 [learner.views] Upaya akses tidak sah oleh admin untuk add-material
+[WARNING] 2025-11-19 14:26:30,064 [django.request] Forbidden: /add-material/2/76/
+[WARNING] 2025-11-19 14:26:52,289 [learner.views] Upaya akses tidak sah oleh admin untuk add-material
+[WARNING] 2025-11-19 14:26:52,290 [django.request] Forbidden: /add-material/2/76/
+[INFO] 2025-11-19 14:28:52,980 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 14:28:53,842 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 14:28:53,853 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-19 14:30:47,691 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-19 14:32:31,692 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-19 14:32:33,176 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 14:32:33,189 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 14:33:38,797 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 14:33:39,665 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 14:33:39,676 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 14:33:50,017 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-19 14:33:51,220 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 14:33:51,231 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 14:34:42,173 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-19 14:34:43,398 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 14:34:43,410 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 14:36:07,633 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-19 14:36:08,946 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 14:36:08,956 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-19 14:36:10,623 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 14:37:09,699 [django.request] Not Found: /favicon.ico

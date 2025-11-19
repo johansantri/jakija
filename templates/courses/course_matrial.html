@@ -1,68 +1,46 @@
 {% extends 'home/tes.html' %}
 {% block content %}
 
+  {% include "courses/course_set.html" %}
 
-       
-        {% include "courses/course_set.html"%}
-        <hr>  
-       
-        <div class="support-wrap">
-            <div class="tile">
-              
-             
-                  
-            
-              <div class="tile-body">
-               <form method="POST"  enctype="multipart/form-data"  >
-                  {% csrf_token %}
-               
-                  <h5 style="text-align: left;">Course Matrial</h5>
-                  <hr>
-                    <div class="row " >
-                        
-                        <div class="col-md-12">
-                        
-                        {{form.as_p}}
-                        
-                        </div>
-                         
-                    </div>
-                    
-                   
-                   
+  <hr class="border-gray-300">
 
-                 
-                 
-                  <div class="tile-footer">
-                    &nbsp;
-                    <br>
-                    <button class="btn btn-success btn-sm"  type="submit">save <i class="fa fa-save"></i></button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary btn-sm" href="{% url 'courses:studio' id=course.id %}">cancel <i class="fa fa-close"></i></a>
-                  </div>
-                </form>
-              </div>
-              <br>
-              <h5 style="text-align: left;">Existing Team Members</h5>
+ <section class="py-4">
+    
+    <!-- Form Upload Course Material -->
+    <div class="bg-white rounded-lg border border-gray-200 p-6">
+      <form method="POST" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
 
-<ul>
+        <h5 class="text-xl font-semibold text-gray-800">Course Material</h5>
+        <hr class="border-gray-300">
 
-    {% for member in team_members %}
-
-        <li> 
-
-            <a href="{% url 'courses:remove_team_member' member.id %}" class="btn btn-danger btn-sm" >{{ member.user.email }}   &nbsp; <i class="fa fa-trash"></i></a>
-
-        </li>
-        <hr>
-    {% endfor %}
-
-</ul>
-             
-            </div>
+        <div class="grid grid-cols-1 gap-6">
+          <div>
+            {{ form.as_p }} <!-- Kalau mau lebih rapi, bisa render manual field-nya -->
           </div>
+        </div>
 
+        <div class="flex items-center gap-4 pt-4">
+          <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md shadow-sm transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+            </svg>
+            Save
+          </button>
 
- 
+          <a href="{% url 'courses:studio' id=course.id %}" class="inline-flex items-center px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-md shadow-sm transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
 
+   
 
+  </section>
 
 {% endblock %}
