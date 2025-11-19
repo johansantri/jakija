@@ -4862,3 +4862,23 @@ Traceback (most recent call last):
   File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/backends/sqlite3/base.py", line 360, in execute
     return super().execute(query, params)
 django.db.utils.IntegrityError: NOT NULL constraint failed: courses_material.section_id
+[INFO] 2025-11-19 16:28:40,625 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 16:28:41,758 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 16:28:41,768 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 16:28:46,383 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 16:28:47,487 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 16:28:47,498 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 16:28:54,164 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 16:28:55,272 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 16:28:55,282 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 16:29:00,322 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 16:29:01,326 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 16:29:01,336 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 16:29:03,761 [django.utils.autoreload] /home/x/app/mysite/courses/serializers.py changed, reloading.
+[INFO] 2025-11-19 16:29:04,812 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 16:29:04,822 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-19 16:29:38,273 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 16:29:39,072 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-19 16:29:39,082 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-19 16:30:00,911 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-19 16:31:20,921 [django.request] Not Found: /favicon.ico

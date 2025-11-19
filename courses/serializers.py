@@ -8,14 +8,20 @@ from slugify import slugify
 class MaterialSerializer(serializers.ModelSerializer):
     class Meta:
         model = Material
-        fields = ['id', 'title', 'description']  # tambah field lain kalau perlu
+        fields = ['id', 'title', 'description','section']  # tambah field lain kalau perlu
+        extra_kwargs = {
+            'section': {'required': True}
+        }
 
 
 # Kalau kamu punya model Assessment, buat juga serializer-nya
 class AssessmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assessment
-        fields = ['id', 'name', 'weight']
+        fields = ['id', 'name', 'weight', 'section']  # tambah field lain kalau perlu
+        extra_kwargs = {
+            'section': {'required': True}
+        }
 
 
 class SectionSerializer(serializers.ModelSerializer):
