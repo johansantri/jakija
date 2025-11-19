@@ -1,529 +1,405 @@
 {% extends 'home/tes.html' %}
 {% block content %}
 {% load static %}
-
 <meta name="csrf-token" content="{{ csrf_token }}">
-
-
-
- {% include "courses/course_set.html" %}
-
-
+{% include "courses/course_set.html" %}
 
 <section class="bg-white border p-4 sm:p-6 rounded-lg shadow-sm mt-6 mx-2 sm:mx-0">
   <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
     <h2 class="text-lg sm:text-xl font-semibold border-l-4 border-red-400 pl-2">Course Outline</h2>
-    
-    <!-- Container for buttons aligned to the right -->
     <div class="flex ml-auto items-center gap-3">
-      <!-- Save Button -->
       <button id="save-json" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm flex items-center gap-2">
-        <i class="fas fa-save"></i> <span class="hidden sm:inline"></span>
+        <i class="fas fa-save"></i>
       </button>
-      
-      <!-- Add Section Button -->
       <button id="add-section" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm flex items-center gap-2">
         <i class="fas fa-plus"></i>
       </button>
     </div>
   </div>
-
-  <!-- Sections Container -->
   <div id="sections" class="space-y-3"></div>
 </section>
 
-
-<!-- Modal -->
+<!-- Modal Universal -->
 <div id="modal" class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-  <div class="bg-white w-full max-w-md p-5 sm:p-6 rounded-lg shadow-xl">
-    <h2 id="modal-title" class="text-lg font-semibold mb-3 text-gray-800">Add Item</h2>
-    <input id="modal-input" type="text" placeholder="Enter name..."
-           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-300 focus:outline-none text-sm">
-    <div class="flex justify-end mt-4 space-x-2">
-      <button id="cancel-modal" class="px-3 py-2 text-gray-500 hover:text-gray-700 text-sm flex items-center gap-1">
-        <i class="fas fa-times"></i> Cancel
-      </button>
-      <button id="save-modal" class="bg-red-400 hover:bg-red-500 text-white px-3 py-2 rounded-lg text-sm flex items-center gap-1">
-        <i class="fas fa-check"></i> Save
-      </button>
+  <div class="bg-white w-full max-w-md p-6 rounded-lg shadow-xl">
+    <h2 id="modal-title" class="text-lg font-semibold mb-4 text-gray-800">Tambah Item</h2>
+    <div id="modal-body">
+      <input id="input-title" type="text" placeholder="Judul / Nama" class="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:ring-2 focus:ring-red-300 text-sm">
+      <textarea id="input-desc" placeholder="Deskripsi (opsional)" rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 hidden focus:ring-2 focus:ring-green-300 text-sm"></textarea>
+      <input id="input-weight" type="number" placeholder="Bobot (%)" step="0.01" class="w-full border border-gray-300 rounded-lg px-3 py-2 hidden focus:ring-2 focus:ring-purple-300 text-sm">
+    </div>
+    <div class="flex justify-end mt-5 gap-3">
+      <button id="cancel-modal" class="px-4 py-2 text-gray-600 hover:text-gray-800 text-sm">Batal</button>
+      <button id="save-modal" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg text-sm font-medium">Simpan</button>
     </div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <script>
-  const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-  const courseId = {{ course.id }};
-  const sectionsContainer = document.getElementById('sections');
-  const addSectionBtn = document.getElementById('add-section');
-  const modal = document.getElementById('modal');
-  const modalInput = document.getElementById('modal-input');
-  const modalTitle = document.getElementById('modal-title');
-  const saveModal = document.getElementById('save-modal');
-  const cancelModal = document.getElementById('cancel-modal');
+const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+const courseId = {{ course.id }};
+const API = {
+  sections: '/sections/',
+  materials: '/materials/',
+  assessments: '/assessments/',
+  reorder: '/sections/reorder/'
+};
 
-  let currentAction = null;
-  let currentTarget = null;
+let currentAction = null;
+let currentTarget = null;
+let currentEditId = null;
 
-  // ---- Modal ----
-  function openModal(action, target = null, value = '') {
-    currentAction = action;
-    currentTarget = target;
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    modalInput.value = value;
-    modalInput.focus();
-    modalTitle.textContent = `Add ${action.charAt(0).toUpperCase() + action.slice(1)}`;
+// === MODAL ===
+function openModal(action, target = null, editId = null, data = {}) {
+  currentAction = action;
+  currentTarget = target;
+  currentEditId = editId;
+
+  document.getElementById('input-title').value = data.title || data.name || '';
+  document.getElementById('input-desc').value = data.description || '';
+  document.getElementById('input-weight').value = data.weight || '';
+
+  document.getElementById('input-desc').classList.toggle('hidden', action !== 'material');
+  document.getElementById('input-weight').classList.toggle('hidden', action !== 'assessment');
+
+  document.getElementById('modal-title').textContent =
+    editId ? `Edit ${action}` : `Tambah ${action === 'unit' ? 'Unit' : action}`;
+
+  document.getElementById('modal').classList.remove('hidden');
+  // small delay supaya focus reliable
+  setTimeout(() => document.getElementById('input-title').focus(), 50);
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.add('hidden');
+  currentAction = currentTarget = currentEditId = null;
+}
+
+document.getElementById('cancel-modal').onclick = closeModal;
+document.getElementById('modal').onclick = e => e.target === document.getElementById('modal') && closeModal();
+
+// === SAVE ===
+document.getElementById('save-modal').onclick = async () => {
+  const title = document.getElementById('input-title').value.trim();
+  if (!title && currentAction !== 'material' && currentAction !== 'assessment') return alert('Judul wajib diisi!');
+
+  let url, method, payload;
+
+  if (['section', 'subsection', 'unit'].includes(currentAction)) {
+    payload = { title, courses: courseId };
+    if (currentAction !== 'section' && currentTarget) payload.parent = currentTarget.dataset.id;
+    url = currentEditId ? `${API.sections}${currentEditId}/` : API.sections;
+    method = currentEditId ? 'PATCH' : 'POST';
   }
 
-  function closeModal() {
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    modalInput.value = '';
-    currentAction = null;
-    currentTarget = null;
+  if (currentAction === 'material') {
+    payload = { title, description: document.getElementById('input-desc').value, section: currentTarget.dataset.id };
+    url = currentEditId ? `${API.materials}${currentEditId}/` : API.materials;
+    method = currentEditId ? 'PATCH' : 'POST';
   }
 
-  cancelModal.addEventListener('click', closeModal);
+  if (currentAction === 'assessment') {
+    payload = { name: title, weight: document.getElementById('input-weight').value || 0, section: currentTarget.dataset.id };
+    url = currentEditId ? `${API.assessments}${currentEditId}/` : API.assessments;
+    method = currentEditId ? 'PATCH' : 'POST';
+  }
 
-  // ---- Editable ----
-  function toggleEditable(div, selector) {
-    const label = div.querySelector(selector);
-    const input = div.querySelector('input');
-    const editBtn = div.querySelector('.edit');
-    editBtn.addEventListener('click', () => {
-      label.classList.add('hidden');
-      input.classList.remove('hidden');
-      input.focus();
-      input.select();
-    });
-    input.addEventListener('blur', async () => {
-      const newTitle = input.value.trim();
-      if (!newTitle || newTitle === label.textContent) {
-        label.classList.remove('hidden');
-        input.classList.add('hidden');
-        return;
-      }
-      label.textContent = newTitle;
+  const res = await fetch(url, {
+    method, headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+    body: JSON.stringify(payload)
+  });
+
+  if (res.ok) { closeModal(); fetchSections(); }
+  else { alert('Gagal menyimpan'); }
+};
+
+// === INLINE EDIT (Section, Subsection, Unit) ===
+function setupInlineEdit(div, labelSelector) {
+  const label = div.querySelector(labelSelector);
+  const input = div.querySelector('input'); // lebih toleran (tidak perlu type attr)
+  const editBtn = div.querySelector('.edit');
+
+  if (!editBtn) return;
+  if (!input) {
+    // Jika tidak ada input — jangan lanjutkan, namun log untuk debugging
+    console.warn("setupInlineEdit: input not found for", labelSelector, div);
+    // optionally hide editBtn to avoid confusion
+    // editBtn.style.display = 'none';
+    editBtn.onclick = () => {};
+    return;
+  }
+
+  editBtn.onclick = () => {
+    label.classList.add('hidden');
+    input.classList.remove('hidden');
+    input.focus();
+    input.select();
+  };
+
+  input.onblur = async () => {
+    const newTitle = input.value.trim();
+    if (!newTitle || newTitle === label.textContent.trim()) {
       label.classList.remove('hidden');
       input.classList.add('hidden');
-      if (!div.dataset.id) return;
-      try {
-        await fetch(`/sections/${div.dataset.id}/`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
-          body: JSON.stringify({ title: newTitle })
-        });
-      } catch (err) {
-        console.error('Edit failed:', err);
-      }
-    });
-    input.addEventListener('keydown', e => {
-      if (e.key === 'Enter') input.blur();
-      if (e.key === 'Escape') {
-        input.value = label.textContent;
-        input.blur();
-      }
-    });
-  }
+      return;
+    }
+    // update UI immediately
+    label.textContent = newTitle;
+    label.classList.remove('hidden');
+    input.classList.add('hidden');
 
-  // ---- Collapse (Font Awesome) ----
-  function setupToggle(button, selector) {
-    button.addEventListener('click', () => {
-      const list = button.closest('div').parentElement.nextElementSibling;
-      if (!list || !list.matches(selector)) return;
-      const isHidden = list.classList.toggle('hidden');
-      button.innerHTML = isHidden
-        ? '<i class="fas fa-chevron-right"></i>'
-        : '<i class="fas fa-chevron-down"></i>';
-    });
-  }
+    // PATCH ke endpoint sections (menggunakan div.dataset.id)
+    try {
+      await fetch(`${API.sections}${div.dataset.id}/`, {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+        body: JSON.stringify({ title: newTitle })
+      });
+    } catch (err) {
+      console.error('Failed to save title:', err);
+    }
+  };
 
-  // ---- Create Section (IKON + RESPONSIVE) ----
-  function createSection(title, id, children = []) {
-    const div = document.createElement('div');
-    div.className = 'border border-gray-200 rounded-lg p-3 sm:p-4 bg-white shadow-sm';
-    div.dataset.id = id;
-    div.innerHTML = `
-      <div class="flex justify-between items-center">
-        <div class="flex items-center gap-2 flex-1 min-w-0">
-          <button class="toggle text-gray-500 hover:text-red-400 text-lg">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-          <span class="section-label font-semibold text-gray-800 truncate">${title}</span>
-          <input class="hidden border rounded px-2 py-1 text-sm w-full" value="${title}">
-          <button class="edit text-gray-400 hover:text-red-400">
-            <i class="fas fa-edit"></i>
-          </button>
-        </div>
-        <div class="flex gap-1 sm:gap-2">
-          <button class="add-sub bg-red-100 text-red-400 p-2 rounded-lg hover:bg-red-200">
-            <i class="fas fa-folder-plus"></i>
-          </button>
-          <button class="delete text-gray-400 hover:text-red-500 p-2">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>
-      </div>
-      <div class="subsection-list ml-6 mt-3 space-y-3 hidden"></div>
-    `;
-    const subList = div.querySelector('.subsection-list');
-    div.querySelector('.add-sub').addEventListener('click', () => openModal('subsection', div));
-    div.querySelector('.delete').addEventListener('click', () => deleteItem(id, div));
-    setupToggle(div.querySelector('.toggle'), '.subsection-list');
-    toggleEditable(div, '.section-label');
-    children.forEach(sub => subList.appendChild(createSubsection(sub.title, sub.id, sub.children || [])));
-    makeSortable(subList);
-    return div;
-  }
+  input.onkeydown = e => {
+    if (e.key === 'Enter') input.blur();
+    if (e.key === 'Escape') {
+      input.value = label.textContent;
+      input.blur();
+    }
+  };
+}
 
-  // ---- Create Subsection ----
-  // ---- Create Subsection (diperbaiki) ----
-function createSubsection(title, id, children = []) {
+// helper: escape JSON string for inclusion in HTML attribute
+function escapeForHtmlAttr(str) {
+  return String(str).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// === CREATE ELEMENTS ===
+function createSection(data) {
   const div = document.createElement('div');
-  div.className = 'border border-gray-100 rounded-lg p-3 bg-gray-50';
-  div.dataset.id = id;
+  div.className = 'border border-gray-200 rounded-lg p-3 sm:p-4 bg-white shadow-sm';
+  div.dataset.id = data.id;
   div.innerHTML = `
     <div class="flex justify-between items-center">
       <div class="flex items-center gap-2 flex-1 min-w-0">
-        <button class="toggle text-gray-500 hover:text-red-400 text-lg">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-        <span class="sub-label text-gray-700 font-medium truncate">${title}</span>
-        <input class="hidden border rounded px-2 py-1 text-sm w-full" value="${title}">
-        <button class="edit text-gray-400 hover:text-red-400">
-          <i class="fas fa-edit"></i>
-        </button>
+        <button class="toggle text-gray-500 hover:text-red-400 text-lg"><i class="fas fa-chevron-right"></i></button>
+        <span class="section-label font-semibold text-gray-800 truncate">${data.title}</span>
+        <input type="text" class="hidden border rounded px-2 py-1 text-sm w-full" value="${escapeForHtmlAttr(data.title)}">
+        <button class="edit text-gray-400 hover:text-red-400"><i class="fas fa-edit"></i></button>
       </div>
-      <div class="flex gap-1">
-        <button class="add-unit bg-blue-100 text-blue-500 p-2 rounded-lg hover:bg-blue-200">
-          <i class="fas fa-file-circle-plus"></i>
-        </button>
-        <button class="delete text-gray-400 hover:text-red-500 p-2">
-          <i class="fas fa-trash"></i>
-        </button>
+      <div class="flex gap-2">
+        <button class="add-sub bg-red-100 text-red-600 p-2 rounded hover:bg-red-200"><i class="fas fa-folder-plus"></i></button>
+        <button class="delete-section text-red-600 p-2"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+    <div class="subsection-list ml-6 mt-3 space-y-3 hidden"></div>
+  `;
+  const list = div.querySelector('.subsection-list');
+  data.children?.forEach(child => list.appendChild(createSubsection(child)));
+  div.querySelector('.add-sub').onclick = () => openModal('subsection', div);
+  div.querySelector('.delete-section').onclick = () => deleteSection(data.id);
+
+  setupInlineEdit(div, '.section-label');
+  makeSortable(list);
+
+  // toggle handler with proper `this`
+  div.querySelector('.toggle').onclick = function () {
+    const icon = this.querySelector('i');
+    list.classList.toggle('hidden');
+    if (!icon) return;
+    icon.className = list.classList.contains('hidden') ? 'fas fa-chevron-right' : 'fas fa-chevron-down';
+  };
+
+  return div;
+}
+
+function createSubsection(data) {
+  const div = document.createElement('div');
+  div.className = 'border border-gray-100 rounded-lg p-3 bg-gray-50';
+  div.dataset.id = data.id;
+  div.innerHTML = `
+    <div class="flex justify-between items-center">
+      <div class="flex items-center gap-2 flex-1 min-w-0">
+        <button class="toggle text-gray-500 hover:text-red-400 text-lg"><i class="fas fa-chevron-right"></i></button>
+        <span class="sub-label text-gray-700 font-medium truncate">${data.title}</span>
+        <input type="text" class="hidden border rounded px-2 py-1 text-sm w-full" value="${escapeForHtmlAttr(data.title)}">
+        <button class="edit text-gray-400 hover:text-red-400"><i class="fas fa-edit"></i></button>
+      </div>
+      <div class="flex gap-2">
+        <button class="add-unit bg-blue-100 text-blue-600 p-2 rounded hover:bg-blue-200"><i class="fas fa-file-circle-plus"></i></button>
+        <button class="delete-section text-red-600 p-2"><i class="fas fa-trash"></i></button>
       </div>
     </div>
     <div class="unit-list ml-6 mt-3 space-y-3 hidden"></div>
   `;
+  const list = div.querySelector('.unit-list');
+  data.children?.forEach(unit => list.appendChild(createUnit(unit)));
+  div.querySelector('.add-unit').onclick = () => openModal('unit', div);
+  div.querySelector('.delete-section').onclick = () => deleteSection(data.id);
 
-  const unitList = div.querySelector('.unit-list');
-  div.querySelector('.add-unit').addEventListener('click', () => openModal('unit', div));
-  div.querySelector('.delete').addEventListener('click', () => deleteItem(id, div));
-  setupToggle(div.querySelector('.toggle'), '.unit-list');
-  toggleEditable(div, '.sub-label');
+  setupInlineEdit(div, '.sub-label');
+  makeSortable(list);
 
-  // PERUBAHAN UTAMA: kirim materials & assessments ke createUnit
-  children.forEach(unit => {
-    const materials = unit.materials || [];
-    const assessments = unit.assessments || [];
-    unitList.appendChild(createUnit(unit.title, unit.id, materials, assessments));
-  });
+  div.querySelector('.toggle').onclick = function () {
+    const icon = this.querySelector('i');
+    list.classList.toggle('hidden');
+    if (!icon) return;
+    icon.className = list.classList.contains('hidden') ? 'fas fa-chevron-right' : 'fas fa-chevron-down';
+  };
 
-  makeSortable(unitList);
   return div;
 }
 
-  // ---- Create Unit ----
-  // ---- Create Unit (Dengan Material & Assessment) ----
-// ---- Create Unit (diperbaiki supaya terima materials & assessments) ----
-function createUnit(title, id, materials = [], assessments = []) {
+function createUnit(data) {
   const div = document.createElement('div');
   div.className = 'border border-gray-200 rounded-lg p-4 bg-white shadow-sm';
-  div.dataset.id = id;
+  div.dataset.id = data.id;
 
-  const escape = str => String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const mats = data.materials || [];
+  const asses = data.assessments || [];
 
-  const materialItems = materials.map(m => `
-    <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
-      <div class="flex items-center gap-2">
-        <i class="fas fa-file-alt text-green-600"></i>
-        <span class="text-sm text-gray-700 truncate max-w-xs">${escape(m.title)}</span>
+  // escape JSON for safe inclusion
+  const matHTML = mats.map(m => {
+    const safe = escapeForHtmlAttr(JSON.stringify(m));
+    return `
+    <div class="flex justify-between items-center py-2 border-b last:border-0 group">
+      <span class="text-sm"><i class="fas fa-file-alt text-green-600 mr-2"></i>${escapeForHtmlAttr(m.title)}</span>
+      <div class="opacity-0 group-hover:opacity-100 flex gap-2 text-xs">
+        <button class="edit-material text-blue-600" data-item="${safe}" data-id="${m.id}">Edit</button>
+        <button class="delete-material text-red-600" data-url="${API.materials}${m.id}/">Hapus</button>
       </div>
-      <a href="/edit-matrial/{{ course.id }}/${m.id}" class="text-xs text-blue-600 hover:underline">Edit</a>
     </div>
-  `).join('');
+  `;
+  }).join('');
 
-  const assessmentItems = (assessments || []).map(a => `
-    <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
-      <div class="flex items-center gap-2">
-        <i class="fas fa-clipboard-check text-purple-600"></i>
-        <span class="text-sm font-medium text-gray-800">${escape(a.name || a.title)}</span>
-        ${a.weight > 0 ? `<span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">Bobot: ${a.weight}%</span>` : ''}
+  const assHTML = asses.map(a => {
+    const safe = escapeForHtmlAttr(JSON.stringify(a));
+    return `
+    <div class="flex justify-between items-center py-2 border-b last:border-0 group">
+      <span class="text-sm font-medium"><i class="fas fa-clipboard-check text-purple-600 mr-2"></i>${escapeForHtmlAttr(a.name)}</span>
+      ${a.weight > 0 ? `<span class="ml-2 text-xs bg-purple-100 px-2 py-1 rounded">${a.weight}%</span>` : ''}
+      <div class="opacity-0 group-hover:opacity-100 flex gap-2 text-xs">
+        <button class="edit-assessment text-blue-600" data-item="${safe}" data-id="${a.id}">Edit</button>
+        <button class="delete-assessment text-red-600" data-url="${API.assessments}${a.id}/">Hapus</button>
       </div>
-      <a href="/edit-assessment/{{ course.id }}/{{ section.id }}/${a.id}" class="text-xs text-blue-600 hover:underline">Edit</a>
     </div>
-  `).join('');
+  `;
+  }).join('');
 
   div.innerHTML = `
     <div class="flex justify-between items-start mb-3">
-      <div class="flex-1 min-w-0">
+      <div class="flex-1">
         <div class="flex items-center gap-2">
-          <span class="unit-label font-semibold text-gray-800 truncate">${escape(title)}</span>
-          <button class="edit text-gray-400 hover:text-red-400 text-sm">
-            <i class="fas fa-edit"></i>
-          </button>
+          <span class="unit-label font-semibold text-gray-800 truncate">${escapeForHtmlAttr(data.title)}</span>
+          <button class="edit text-gray-400 hover:text-red-400 text-sm"><i class="fas fa-edit"></i></button>
         </div>
-        <input class="hidden border rounded px-2 py-1 text-sm w-full mt-1" value="${escape(title)}">
+        <input type="text" class="hidden border rounded px-2 py-1 text-sm w-full mt-1" value="${escapeForHtmlAttr(data.title)}">
       </div>
-      <button class="delete text-gray-400 hover:text-red-500">
-        <i class="fas fa-trash"></i>
-      </button>
+      <button class="delete-section text-red-600"><i class="fas fa-trash"></i></button>
     </div>
 
-    ${materials.length > 0 ? `
-      <div class="mt-4 pb-3 border-b">
-        <h4 class="text-xs font-semibold text-gray-600 mb-2 flex items-center gap-1">
-          <i class="fas fa-file-alt"></i> Materials
-        </h4>
-        <div class="space-y-1">${materialItems}</div>
-      </div>
-    ` : ''}
+    ${mats.length ? `<div class="mt-4"><h4 class="text-xs font-bold text-gray-600 mb-2">Materials</h4>${matHTML}</div>` : ''}
+    ${asses.length ? `<div class="mt-4"><h4 class="text-xs font-bold text-gray-600 mb-2">Assessments</h4>${assHTML}</div>` : ''}
 
-    ${assessments.length > 0 ? `
-      <div class="mt-4 pb-3 ${materials.length > 0 ? '' : 'border-t pt-4'}">
-        <h4 class="text-xs font-semibold text-gray-600 mb-2 flex items-center gap-1">
-          <i class="fas fa-clipboard-check"></i> Assessments
-        </h4>
-        <div class="space-y-1">${assessmentItems}</div>
-      </div>
-    ` : ''}
-
-    <div class="flex gap-2 mt-4">
-      <a href="/add-matrial/{{ course.id }}/${id}/" 
-         class="flex-1 bg-green-100 hover:bg-green-200 text-green-700 text-xs font-medium px-3 py-2 rounded-lg text-center flex items-center justify-center gap-1">
-        <i class="fas fa-plus"></i> Add Material
-      </a>
-      <a href="/create-assessment/{{ course.id }}/${id}/" 
-         class="flex-1 bg-purple-100 hover:bg-purple-200 text-purple-700 text-xs font-medium px-3 py-2 rounded-lg text-center flex items-center justify-center gap-1">
-        <i class="fas fa-plus"></i> Add Assessment
-      </a>
+    <div class="flex gap-3 mt-5">
+      <button class="add-material-btn flex-1 bg-green-100 hover:bg-green-200 text-green-700 text-xs font-medium py-2 rounded text-center">+ Material</button>
+      <button class="add-assessment-btn flex-1 bg-purple-100 hover:bg-purple-200 text-purple-700 text-xs font-medium py-2 rounded text-center">+ Assessment</button>
     </div>
   `;
 
-  // Edit & delete events (sama seperti sebelumnya)
-  const label = div.querySelector('.unit-label');
-  const input = div.querySelector('input');
-  const editBtn = div.querySelector('.edit');
-  editBtn.addEventListener('click', () => {
-    label.classList.add('hidden');
-    input.classList.remove('hidden');
-    input.focus(); input.select();
+  // attach handlers for edit/delete material & assessment buttons (delegated)
+  // edit-material
+  div.querySelectorAll('.edit-material').forEach(btn => {
+    btn.onclick = function () {
+      const item = JSON.parse(this.dataset.item);
+      const id = this.dataset.id;
+      openModal('material', div, id, item);
+    };
   });
-  input.addEventListener('blur', async () => {
-    const newTitle = input.value.trim();
-    if (!newTitle || newTitle === label.textContent) {
-      label.classList.remove('hidden'); input.classList.add('hidden'); return;
-    }
-    label.textContent = newTitle;
-    label.classList.remove('hidden'); input.classList.add('hidden');
-    await fetch(`/sections/${id}/`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }, body: JSON.stringify({ title: newTitle }) });
+  div.querySelectorAll('.delete-material').forEach(btn => {
+    btn.onclick = function () {
+      if (!confirm('Hapus item ini?')) return;
+      deleteItem(this.dataset.url);
+    };
   });
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') input.blur(); if (e.key === 'Escape') { input.value = label.textContent; input.blur(); } });
-  div.querySelector('.delete').addEventListener('click', () => deleteItem(id, div));
 
+  div.querySelectorAll('.edit-assessment').forEach(btn => {
+    btn.onclick = function () {
+      const item = JSON.parse(this.dataset.item);
+      const id = this.dataset.id;
+      openModal('assessment', div, id, item);
+    };
+  });
+  div.querySelectorAll('.delete-assessment').forEach(btn => {
+    btn.onclick = function () {
+      if (!confirm('Hapus item ini?')) return;
+      deleteItem(this.dataset.url);
+    };
+  });
+
+  // add new material/assessment buttons
+  div.querySelector('.add-material-btn').onclick = function () { openModal('material', div); };
+  div.querySelector('.add-assessment-btn').onclick = function () { openModal('assessment', div); };
+
+  // delete unit
+  div.querySelector('.delete-section').onclick = () => deleteSection(data.id);
+
+  setupInlineEdit(div, '.unit-label');
   return div;
 }
 
-  // ---- Delete ----
-  async function deleteItem(id, div) {
-    if (!confirm('Are you sure you want to delete this item and all of its contents ??')) return;
-    try {
-      const res = await fetch(`/sections/${id}/`, {
-        method: 'DELETE',
-        headers: { 'X-CSRFToken': csrftoken }
-      });
-      if (res.ok) div.remove();
-      else alert('Failed to delete.');
-    } catch (err) {
-      console.error(err);
-    }
+// === DELETE & SORTABLE & FETCH ===
+async function deleteSection(id) {
+  if (!confirm('Hapus beserta isinya?')) return;
+  await fetch(`${API.sections}${id}/`, { method: 'DELETE', headers: { 'X-CSRFToken': csrftoken } });
+  fetchSections();
+}
+async function deleteItem(url) {
+  if (!confirm('Hapus item ini?')) return;
+  await fetch(url, { method: 'DELETE', headers: { 'X-CSRFToken': csrftoken } });
+  fetchSections();
+}
+
+function makeSortable(el) {
+  if (!el) return;
+  new Sortable(el, { group: 'nested', animation: 150, onEnd: () => saveStructure() });
+}
+
+async function saveStructure() {
+  const getData = el => ({ id: el.dataset.id, children: Array.from(el.querySelectorAll(':scope > div')).map(getData) });
+  const structure = Array.from(document.querySelectorAll('#sections > div')).map(getData);
+  try {
+    await fetch(API.reorder, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }, body: JSON.stringify(structure) });
+  } catch (err) {
+    console.error('Failed to save structure', err);
   }
+}
 
-  // ---- Sortable ----
-  function makeSortable(container) {
-    if (!container || container.sortableInstance) return;
-
-    const sortable = new Sortable(container, {
-      group: 'nested',
-      animation: 150,
-      fallbackOnBody: true,
-      swapThreshold: 0.65,
-      // Tambahan: otomatis simpan saat selesai drag
-      onEnd: function (evt) {
-        // Jangan simpan kalau cuma pindah di tempat yang sama (biar tidak spam request)
-        if (evt.oldIndex !== evt.newIndex || evt.from !== evt.to) {
-          saveCurrentStructure();
-        }
-      }
-    });
-
-    // Simpan instance biar tidak double init
-    container.sortableInstance = sortable;
+async function fetchSections() {
+  try {
+    const res = await fetch(`${API.sections}?course=${courseId}`);
+    const data = await res.json();
+    const container = document.getElementById('sections');
+    container.innerHTML = '';
+    data.forEach(s => container.appendChild(createSection(s)));
+    makeSortable(container);
+  } catch (err) {
+    console.error('Failed to fetch sections', err);
   }
+}
 
-  // ---- ADD ITEM (TANPA RELOAD) ----
-  addSectionBtn.addEventListener('click', () => openModal('section'));
-  saveModal.addEventListener('click', async () => {
-    const title = modalInput.value.trim();
-    if (!title) return alert('Nama tidak boleh kosong!');
-
-    const parentEl = currentTarget;
-    const action = currentAction;
-    const payload = { title, courses: courseId };
-    if (action !== 'section' && parentEl) payload.parent = parentEl.dataset.id;
-
-    try {
-      const res = await fetch('/sections/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
-        body: JSON.stringify(payload)
-      });
-
-      if (res.ok) {
-        let newItem;
-        try { newItem = await res.json(); }
-        catch { console.warn('JSON error → fallback'); closeModal(); await fetchSections(); return; }
-
-        closeModal();
-
-        let newEl = null, parentList = null;
-
-        if (action === 'section') {
-          newEl = createSection(newItem.title, newItem.id);
-          sectionsContainer.appendChild(newEl);
-          makeSortable(sectionsContainer);
-        } else if (parentEl) {
-          const listSelector = action === 'subsection' ? '.subsection-list' : '.unit-list';
-          parentList = parentEl.querySelector(listSelector);
-          if (!parentList) { await fetchSections(); return; }
-
-          newEl = action === 'subsection'
-            ? createSubsection(newItem.title, newItem.id)
-            : createUnit(newItem.title, newItem.id);
-          parentList.appendChild(newEl);
-          makeSortable(parentList);
-        }
-
-        // Auto-expand
-        if (parentList && parentList.classList.contains('hidden')) {
-          parentList.classList.remove('hidden');
-          const toggleBtn = parentEl.querySelector('.toggle');
-          if (toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
-        }
-
-        // Scroll + highlight
-        if (newEl) {
-          newEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          newEl.style.backgroundColor = '#fef3c7';
-          setTimeout(() => newEl.style.backgroundColor = '', 1500);
-        }
-      } else {
-        let msg = 'Gagal tambah item.';
-        try { const e = await res.json(); msg += ' ' + JSON.stringify(e); } catch {}
-        alert(msg);
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Koneksi gagal.');
-    }
-  });
-
-  // ---- Fetch Data ----
-  async function fetchSections() {
-    try {
-      const res = await fetch(`/sections/?course=${courseId}`);
-      if (!res.ok) throw new Error();
-      const data = await res.json();
-      sectionsContainer.innerHTML = '';
-      data.forEach(sec => sectionsContainer.appendChild(createSection(sec.title, sec.id, sec.children || [])));
-      makeSortable(sectionsContainer);
-    } catch (err) {
-      alert('Gagal memuat data.');
-    }
-  }
-
-  // ---- AUTO SAVE URUTAN SETIAP SELESAI DRAG ----
-  async function saveCurrentStructure() {
-    const structure = [];
-    document.querySelectorAll('#sections > div').forEach(el => {
-      structure.push(getNodeData(el));
-    });
-
-    try {
-      const res = await fetch('/sections/reorder/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken
-        },
-        body: JSON.stringify(structure)
-      });
-
-      if (res.ok) {
-        console.log('Urutan berhasil disimpan otomatis');
-        // Optional: beri feedback kecil
-        const saveBtn = document.getElementById('save-json');
-        saveBtn.innerHTML = '<i class="fas fa-check"></i>';
-        setTimeout(() => {
-          saveBtn.innerHTML = '<i class="fas fa-save"></i>';
-        }, 1000);
-      } else {
-        alert('Gagal menyimpan urutan otomatis!');
-      }
-    } catch (err) {
-      console.error('Error auto-save:', err);
-      alert('Koneksi gagal saat menyimpan urutan!');
-    }
-  }
-  // ---- INIT ----
-
-  document.addEventListener('DOMContentLoaded', fetchSections);
-
-  // ---- Simpan Struktur ----
-  document.getElementById('save-json').addEventListener('click', async () => {
-    const structure = [];
-    document.querySelectorAll('#sections > div').forEach(el => structure.push(getNodeData(el)));
-    try {
-      await fetch('/sections/reorder/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
-        body: JSON.stringify(structure)
-      });
-      alert('Struktur tersimpan!');
-    } catch {
-      alert('Gagal simpan.');
-    }
-  });
-
-  function getNodeData(el) {
-    const data = { id: el.dataset.id, children: [] };
-    const childContainer = el.querySelector(':scope > .subsection-list, :scope > .unit-list');
-    if (childContainer) {
-      childContainer.querySelectorAll(':scope > div').forEach(child => data.children.push(getNodeData(child)));
-    }
-    return data;
-  }
+// === INIT ===
+document.getElementById('add-section').onclick = () => openModal('section');
+document.getElementById('save-json').onclick = saveStructure;
+document.addEventListener('DOMContentLoaded', fetchSections);
 </script>
 
-
-
-
-
-
-
-
-
-<!-- Tailwind-like Responsive Classes (No Tailwind needed) -->
 <style>
-  @media (max-width: 640px) {
-    .flex-col { flex-direction: column; }
-    .text-lg { font-size: 1rem; }
-    .p-2 { padding: 0.5rem; }
-    .gap-1 { gap: 0.25rem; }
-    .text-sm { font-size: 0.875rem; }
-  }
-  .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .min-w-0 { min-width: 0; }
+.hidden{display:none!important}
+.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.min-w-0{min-width:0}
+.group:hover .group-hover\\:opacity-100{opacity:1}
 </style>
 {% endblock %}

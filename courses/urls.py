@@ -1,12 +1,13 @@
 from django.urls import path,include
 from rest_framework.routers import DefaultRouter
 from . import views
-from .views import CourseAutocomplete,InstructorAutocomplete,PartnerAutocomplete,SectionViewSet
+from .views import CourseAutocomplete,InstructorAutocomplete,PartnerAutocomplete,SectionViewSet,MaterialViewSet,AssessmentViewSet
 app_name = 'courses'
 
 router = DefaultRouter()
 router.register(r'sections', SectionViewSet, basename='section')
-
+router.register(r'materials', MaterialViewSet, basename='material')
+router.register(r'assessments', AssessmentViewSet, basename='assessment')
 urlpatterns = [
     path('courses/', views.courseView, name='course_view'),
     path('course/<int:course_id>/enroll/', views.enroll_course, name='enroll_course'),

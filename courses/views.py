@@ -108,7 +108,7 @@ from rest_framework import viewsets,status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
-from .serializers import SectionSerializer
+from .serializers import SectionSerializer,MaterialSerializer,AssessmentSerializer
 
 class SectionViewSet(viewsets.ModelViewSet):
     queryset = Section.objects.all()
@@ -198,6 +198,13 @@ class SectionViewSet(viewsets.ModelViewSet):
 
         return Response({"status": "deleted"}, status=status.HTTP_204_NO_CONTENT)
 
+class MaterialViewSet(viewsets.ModelViewSet):
+    queryset = Material.objects.all()
+    serializer_class = MaterialSerializer
+
+class AssessmentViewSet(viewsets.ModelViewSet):
+    queryset = Assessment.objects.all()
+    serializer_class = AssessmentSerializer
 
 def custom_ratelimit(view_func):
     def wrapper(request, *args, **kwargs):
