@@ -109,6 +109,60 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from .serializers import SectionSerializer,MaterialSerializer,AssessmentSerializer
+from django.views.decorators.http import require_http_methods
+
+@csrf_exempt
+@require_POST
+def ckeditor_upload_image(request):
+    """
+    View khusus untuk CKEditor 5 image upload
+    CKEditor mengharapkan response:
+    { "url": "https://domain.com/media/xxx.jpg" }
+    """
+    if not request.FILES.get('upload'):
+        return JsonResponse({
+            'error': {'message': 'No file uploaded.'}
+        }, status=400)
+
+    uploaded_file = request.FILES['upload']
+
+    # Validasi tipe file
+    allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
+    if uploaded_file.content_type not in allowed_types:
+        return JsonResponse({
+            'error': {'message': 'File type not allowed.'}
+        }, status=400)
+
+    # Validasi ukuran maksimal 5MB (sesuaikan kalau mau)
+    if uploaded_file.size > 5 * 1024 * 1024:
+        return JsonResponse({
+            'error': {'message': 'File too large (max 5MB).'}
+        }, status=400)
+
+    # Buat nama file unik
+    ext = os.path.splitext(uploaded_file.name)[1].lower()
+    new_filename = f"ckeditor_{timezone.now().strftime('%Y%m%d')}_{uuid.uuid4().hex}{ext}"
+
+    # Tentukan path penyimpanan
+    upload_path = os.path.join('ckeditor', timezone.now().strftime('%Y/%m/%d'))
+    full_path = os.path.join(upload_path, new_filename)
+
+    # Simpan file
+    file_url = settings.MEDIA_URL + full_path.replace('\\', '/')
+    file_path = os.path.join(settings.MEDIA_ROOT, full_path.replace('\\', '/').lstrip('/'))
+
+    # Pastikan folder ada
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+    with open(file_path, 'wb+') as destination:
+        for chunk in uploaded_file.chunks():
+            destination.write(chunk)
+
+    # Response yang diharapkan CKEditor 5
+    return JsonResponse({
+        'url': request.build_absolute_uri(file_url)
+    })
+
 
 class SectionViewSet(viewsets.ModelViewSet):
     queryset = Section.objects.all()
@@ -5925,7 +5979,37 @@ def studio(request, id):
     # Render the page with the course and sections data
     return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
 
+@csrf_exempt
+@require_http_methods(["POST"])
+def ckeditor_delete_image(request):
+    try:
+        url = request.POST.get('url')
+        if not url:
+            return JsonResponse({'error': 'No URL provided'}, status=400)
 
+        # Pastikan URL adalah absolute (dari CKEditor biasanya begitu)
+        parsed = urlparse(url)
+        if parsed.netloc:  # ada domain → absolute URL
+            # Ambil hanya path-nya
+            path = parsed.path
+        else:
+            path = url  # sudah path relatif
+
+        # Hilangkan query string jika ada (kadang CKEditor nambah ?ckcsrf=xxx)
+        path = path.split('?')[0]
+
+        # Bangun path file di server
+        file_path = os.path.join(settings.MEDIA_ROOT, path.lstrip('/'))
+
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+            return JsonResponse({'message': 'Deleted'})
+        else:
+            # Debug: lihat path yang salah
+            return JsonResponse({'error': 'File not found', 'debug_path': file_path}, status=404)
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 
 

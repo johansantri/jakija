@@ -1,0 +1,7 @@
+{# templates/ckeditor_include.html #}
+{% if not ckeditor_included %}
+    {{ form.media }}
+    <script>
+        window._ckeditor_included = true;
+    </script>
+{% endif %}

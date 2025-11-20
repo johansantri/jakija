@@ -547,7 +547,9 @@ CONTENT_SECURITY_POLICY = {
 
         # Izinkan permintaan (AJAX, WebSocket, fetch, dsb) hanya ke domain sendiri dan ke Moodle
         'connect-src': (
-            "'self'",  # domain aplikasi ini sendiri
+            "'self'",
+              
+            'https://cdn.ckeditor.com',  # domain aplikasi ini sendiri
             
         ),
 
@@ -605,6 +607,7 @@ CONTENT_SECURITY_POLICY = {
             "'unsafe-inline'",  # mengizinkan <script> inline — sebaiknya dihindari untuk keamanan
             "'unsafe-eval'",
             'https://www.youtube.com',
+            'https://cdn.ckeditor.com',
         ),
 
         # Izinkan file CSS dari domain sendiri dan CDN berikut

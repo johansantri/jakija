@@ -4882,3 +4882,1371 @@ django.db.utils.IntegrityError: NOT NULL constraint failed: courses_material.sec
 [INFO] 2025-11-19 16:29:39,082 [django.utils.autoreload] Watching for file changes with StatReloader
 [WARNING] 2025-11-19 16:30:00,911 [django.request] Not Found: /favicon.ico
 [WARNING] 2025-11-19 16:31:20,921 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 10:03:34,599 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:03:35,390 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:03:35,400 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 10:03:46,723 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-20 10:17:36,138 [audit.signals] Error in audit log (post_delete) for Section pk=79: Section matching query does not exist.
+[ERROR] 2025-11-20 10:17:36,139 [audit.signals] Error in audit log (post_delete) for Section pk=78: Section matching query does not exist.
+[WARNING] 2025-11-20 10:22:12,340 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-11-20 10:23:40,484 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1035, in find_library
+    return parser.libraries[name]
+KeyError: 'ckeditor_5_tags'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5926, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1097, in load
+    lib = find_library(parser, name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1037, in find_library
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: 'ckeditor_5_tags' is not a registered tag library. Must be one of:
+account
+admin_list
+admin_modify
+admin_urls
+allauth
+blog_filters
+cache
+csp
+custom_filters
+django_htmx
+extra_custom_filters
+extra_filters
+form_filters
+humanize
+i18n
+import_export_tags
+l10n
+learner_tags
+log
+mathfilters
+rest_framework
+socialaccount
+static
+tz
+[WARNING] 2025-11-20 10:23:40,532 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 10:24:28,814 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-20 10:24:29,383 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 10:24:42,771 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 10:27:52,103 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 10:28:11,491 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 10:30:01,804 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 10:31:00,607 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 10:31:15,281 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:31:16,074 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:31:16,084 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-11-20 10:31:19,720 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1035, in find_library
+    return parser.libraries[name]
+KeyError: 'ckeditor_5_tags'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5926, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1097, in load
+    lib = find_library(parser, name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1037, in find_library
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: 'ckeditor_5_tags' is not a registered tag library. Must be one of:
+account
+admin_list
+admin_modify
+admin_urls
+allauth
+blog_filters
+cache
+csp
+custom_filters
+django_htmx
+extra_custom_filters
+extra_filters
+form_filters
+humanize
+i18n
+import_export_tags
+l10n
+learner_tags
+log
+mathfilters
+rest_framework
+socialaccount
+static
+tz
+[INFO] 2025-11-20 10:31:38,108 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-20 10:31:38,634 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 10:31:46,674 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 10:31:53,921 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 10:33:24,277 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:33:25,072 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:33:25,083 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-11-20 10:33:27,887 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1035, in find_library
+    return parser.libraries[name]
+KeyError: 'ckeditor_5_tags'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5926, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1097, in load
+    lib = find_library(parser, name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1037, in find_library
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: 'ckeditor_5_tags' is not a registered tag library. Must be one of:
+account
+admin_list
+admin_modify
+admin_urls
+allauth
+blog_filters
+cache
+csp
+custom_filters
+django_htmx
+extra_custom_filters
+extra_filters
+form_filters
+humanize
+i18n
+import_export_tags
+l10n
+learner_tags
+log
+mathfilters
+rest_framework
+socialaccount
+static
+tz
+[ERROR] 2025-11-20 10:34:43,611 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1035, in find_library
+    return parser.libraries[name]
+KeyError: 'django_ckeditor_5'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5926, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1097, in load
+    lib = find_library(parser, name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1037, in find_library
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: 'django_ckeditor_5' is not a registered tag library. Must be one of:
+account
+admin_list
+admin_modify
+admin_urls
+allauth
+blog_filters
+cache
+csp
+custom_filters
+django_htmx
+extra_custom_filters
+extra_filters
+form_filters
+humanize
+i18n
+import_export_tags
+l10n
+learner_tags
+log
+mathfilters
+rest_framework
+socialaccount
+static
+tz
+[ERROR] 2025-11-20 10:34:44,428 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1035, in find_library
+    return parser.libraries[name]
+KeyError: 'django_ckeditor_5'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5926, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1097, in load
+    lib = find_library(parser, name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1037, in find_library
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: 'django_ckeditor_5' is not a registered tag library. Must be one of:
+account
+admin_list
+admin_modify
+admin_urls
+allauth
+blog_filters
+cache
+csp
+custom_filters
+django_htmx
+extra_custom_filters
+extra_filters
+form_filters
+humanize
+i18n
+import_export_tags
+l10n
+learner_tags
+log
+mathfilters
+rest_framework
+socialaccount
+static
+tz
+[ERROR] 2025-11-20 10:35:07,554 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 510, in parse
+    compile_func = self.tags[command]
+KeyError: 'ckeditor_5_field'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5926, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 567, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 42: 'ckeditor_5_field', expected 'endblock'. Did you forget to register or load this tag?
+[INFO] 2025-11-20 10:37:36,701 [django.utils.autoreload] /home/x/app/mysite/courses/models.py changed, reloading.
+[INFO] 2025-11-20 10:37:37,801 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:37:37,812 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 10:38:47,829 [django.utils.autoreload] /home/x/app/mysite/courses/models.py changed, reloading.
+[INFO] 2025-11-20 10:38:48,883 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:38:48,894 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 10:39:02,981 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:39:52,117 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:40:01,742 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:40:06,509 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:40:07,302 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:40:07,313 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 10:41:42,236 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:41:43,038 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 10:41:43,048 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 10:42:12,189 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 10:53:33,733 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-20 10:58:53,855 [django.request] Internal Server Error: /sections/reorder/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 161, in reorder
+    self._update_order_recursive(data, parent_id=None)
+  File "/home/x/app/mysite/courses/views.py", line 177, in _update_order_recursive
+    self._update_order_recursive(item['children'], parent_id=section_id)
+  File "/home/x/app/mysite/courses/views.py", line 166, in _update_order_recursive
+    section_id = item['id']
+KeyError: 'id'
+[ERROR] 2025-11-20 11:04:21,960 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5926, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'ckeditor_upload' not found. 'ckeditor_upload' is not a valid view function or pattern name.
+[ERROR] 2025-11-20 11:07:06,661 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 214, in select_template
+    raise TemplateDoesNotExist(", ".join(not_found))
+django.template.exceptions.TemplateDoesNotExist: courses/outline_functions.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5926, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 109, in render
+    reraise(exc, self.backend)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 130, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: courses/outline_functions.html
+[WARNING] 2025-11-20 11:08:10,093 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:10:42,414 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:10:54,334 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:11:03,549 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:11:55,995 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 11:15:57,644 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:16:19,636 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 11:16:23,436 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 11:17:58,906 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 11:17:59,784 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 11:17:59,794 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 11:18:02,857 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:18:06,254 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 11:18:14,467 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 11:18:15,332 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 11:18:15,344 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 11:18:17,530 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 11:18:34,035 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 11:18:34,922 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 11:18:34,933 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 11:18:37,063 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:20:34,151 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:22:19,226 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:22:20,426 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:22:20,772 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:22:20,999 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 11:23:39,054 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-20 11:23:40,171 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 11:23:40,182 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 11:23:44,825 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-20 11:23:45,928 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 11:23:45,939 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 11:24:00,220 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-20 11:24:01,371 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 11:24:01,381 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 11:24:06,059 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-20 11:24:07,191 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 11:24:07,202 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 11:24:12,353 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 11:24:31,475 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-20 11:24:32,582 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 11:24:32,592 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 11:24:35,638 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-11-20 11:24:38,187 [django.request] Internal Server Error: /sections/reorder/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 161, in reorder
+    self._update_order_recursive(data, parent_id=None)
+  File "/home/x/app/mysite/courses/views.py", line 177, in _update_order_recursive
+    self._update_order_recursive(item['children'], parent_id=section_id)
+  File "/home/x/app/mysite/courses/views.py", line 166, in _update_order_recursive
+    section_id = item['id']
+KeyError: 'id'
+[WARNING] 2025-11-20 11:30:48,031 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:30:52,689 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:30:52,907 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:30:53,079 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:30:53,302 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:30:53,503 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:32:06,642 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:32:07,722 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-11-20 11:34:28,260 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5926, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 523, in parse
+    self.unclosed_block_tag(parse_until)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 590, in unclosed_block_tag
+    raise self.error(token, msg)
+django.template.exceptions.TemplateSyntaxError: Unclosed tag on line 2: 'block'. Looking for one of: endblock.
+[WARNING] 2025-11-20 11:34:28,350 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:34:56,941 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:36:20,281 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:37:40,218 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:43:52,608 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:45:11,804 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:45:28,333 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:47:00,057 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:47:34,822 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:49:09,414 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:49:10,277 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:49:10,567 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:49:10,979 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:49:11,362 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:49:12,008 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:49:12,306 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:49:12,532 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:51:55,402 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:52:22,118 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:52:45,445 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:52:50,920 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:52:51,669 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:55:37,304 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 11:55:40,558 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 12:00:45,932 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 12:00:49,154 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 12:00:51,699 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 12:04:18,780 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 12:05:36,485 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 12:05:39,105 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 12:07:13,250 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 12:07:14,530 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 12:07:55,783 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 13:05:01,796 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:05:05,285 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:08:11,065 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:19:41,786 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:19:44,244 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:21:46,486 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:23:38,417 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:23:39,639 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:24:10,989 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:25:48,552 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 13:29:02,316 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 13:33:49,071 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-20 13:33:50,244 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 13:33:50,254 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 13:34:18,992 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-20 13:34:20,154 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 13:34:20,165 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 13:35:24,869 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 13:37:35,944 [django_ckeditor_5.signals] Failed to delete unused images: expected str, bytes or os.PathLike object, not cached_property
+[WARNING] 2025-11-20 13:43:40,948 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 13:43:45,591 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 13:45:01,155 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:45:17,405 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:47:01,578 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:47:02,886 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:47:03,969 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:48:52,076 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 13:49:46,375 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:49:49,027 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:50:44,496 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:53:17,210 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 13:53:17,900 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 13:53:18,334 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 13:53:18,581 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 13:53:18,781 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 13:53:18,959 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 13:53:19,183 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 13:54:36,473 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 13:54:40,941 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 13:54:45,858 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 13:54:46,658 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 13:54:46,668 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 13:54:52,849 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 13:57:17,586 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 13:57:21,285 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 13:57:22,096 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 13:57:22,106 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 13:57:27,415 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:58:38,103 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:58:39,540 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 13:58:40,630 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 14:01:39,323 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-20 14:01:40,537 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:01:40,548 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:02:08,427 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:04:06,969 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 14:05:41,000 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:05:41,798 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:05:41,808 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:05:46,846 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 14:05:58,025 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:06:05,188 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:06:11,324 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:06:12,122 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:06:12,131 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:06:16,874 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 14:07:12,807 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-20 14:07:13,876 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:07:13,886 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:07:18,219 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:07:19,627 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:07:24,765 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:07:26,103 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 14:08:38,968 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:08:45,955 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:08:46,743 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:08:46,753 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:08:53,746 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:08:56,920 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:10:20,787 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 14:11:25,053 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:11:25,857 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:11:25,867 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:11:30,335 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 14:12:00,683 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:12:21,531 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:12:28,021 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:12:28,824 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:12:28,834 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:12:33,419 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 14:13:35,461 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:13:36,251 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:13:36,261 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:13:40,199 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:13:41,821 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:13:44,919 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:13:46,428 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:13:58,467 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:14:16,973 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:15:19,215 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:15:20,412 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:15:21,352 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:15:22,056 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:16:20,806 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 14:16:49,787 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:17:41,445 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:17:42,234 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:17:42,244 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:17:46,685 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 14:19:59,376 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:20:06,186 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:20:06,978 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:20:06,987 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:20:15,374 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:20:24,932 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 14:21:29,925 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:21:30,739 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:21:30,749 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:21:35,400 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:25:17,737 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:25:20,594 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-11-20 14:29:50,244 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/smartif.py", line 180, in translate_token
+    op = OPERATORS[token]
+KeyError: 'request._ckeditor5_included'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 823, in __init__
+    self.literal = float(var)
+ValueError: could not convert string to float: 'request._ckeditor5_included'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 839, in __init__
+    self.literal = mark_safe(unescape_string_literal(var))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/utils/functional.py", line 231, in wrapper
+    return func(*args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/utils/text.py", line 447, in unescape_string_literal
+    raise ValueError("Not a string literal: %r" % s)
+ValueError: Not a string literal: 'request._ckeditor5_included'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5984, in studio
+    return render(request, 'courses/course_detail.html', context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 208, in select_template
+    return self.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 961, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 894, in __init__
+    super().__init__(*args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/smartif.py", line 171, in __init__
+    mapped_tokens.append(self.translate_token(token))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/smartif.py", line 182, in translate_token
+    return self.create_var(token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 897, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 697, in __init__
+    var_obj = Variable(var)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 844, in __init__
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: Variables and attributes may not begin with underscores: 'request._ckeditor5_included'
+[WARNING] 2025-11-20 14:29:50,308 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 14:31:01,717 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:31:02,520 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:31:02,530 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-11-20 14:31:06,282 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 510, in parse
+    compile_func = self.tags[command]
+KeyError: 'do'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5984, in studio
+    return render(request, 'courses/course_detail.html', context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 208, in select_template
+    return self.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 962, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 567, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 10: 'do', expected 'elif', 'else' or 'endif'. Did you forget to register or load this tag?
+[WARNING] 2025-11-20 14:31:06,343 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-11-20 14:32:25,971 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1035, in find_library
+    return parser.libraries[name]
+KeyError: 'do'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5984, in studio
+    return render(request, 'courses/course_detail.html', context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 208, in select_template
+    return self.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1097, in load
+    lib = find_library(parser, name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 1037, in find_library
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: 'do' is not a registered tag library. Must be one of:
+account
+admin_list
+admin_modify
+admin_urls
+allauth
+blog_filters
+cache
+csp
+custom_filters
+django_htmx
+extra_custom_filters
+extra_filters
+form_filters
+humanize
+i18n
+import_export_tags
+l10n
+learner_tags
+log
+mathfilters
+rest_framework
+socialaccount
+static
+tz
+[WARNING] 2025-11-20 14:32:26,089 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:32:46,284 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:32:54,631 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 14:34:13,414 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-20 14:34:14,553 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:34:14,563 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 14:34:18,082 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-20 14:34:19,011 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:34:19,022 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:34:22,801 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:34:25,477 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:34:27,193 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:37:17,142 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:37:40,692 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:38:02,208 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:38:10,651 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:38:11,764 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:38:24,989 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:38:26,273 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:38:38,876 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-20 14:41:26,998 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 214, in select_template
+    raise TemplateDoesNotExist(", ".join(not_found))
+django.template.exceptions.TemplateDoesNotExist: ckeditor_include.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5985, in studio
+    return render(request, 'courses/course_detail.html', context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 109, in render
+    reraise(exc, self.backend)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 130, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: ckeditor_include.html
+[WARNING] 2025-11-20 14:41:27,108 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:42:00,009 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:42:38,232 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:45:31,167 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 14:46:32,874 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-20 14:46:33,978 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:46:33,989 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 14:46:46,091 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-20 14:46:47,133 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:46:47,144 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:46:54,294 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:47:10,242 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:50:17,065 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:52:26,906 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:52:28,080 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:54:13,097 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:54:13,864 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:54:14,350 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 14:54:49,447 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:55:25,996 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 14:57:58,956 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-20 14:58:00,046 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:58:00,056 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:58:03,773 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 14:58:22,361 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 14:58:35,310 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:58:40,707 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:58:41,486 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 14:58:41,496 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 14:58:46,075 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 15:13:47,693 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 15:13:50,329 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 15:14:00,466 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 15:14:01,110 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 15:14:01,718 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 15:14:27,932 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:14:33,340 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:14:34,139 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:14:34,149 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 15:14:40,478 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 15:14:59,272 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-20 15:15:00,396 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:15:00,406 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 15:15:02,926 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-20 15:15:03,996 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:15:04,008 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 15:15:07,919 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 15:16:00,380 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-20 15:16:01,428 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:16:01,438 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 15:16:03,934 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-20 15:16:04,964 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:16:04,975 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 15:16:14,807 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-20 15:16:15,859 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:16:15,869 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 15:16:18,271 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-20 15:16:19,296 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:16:19,306 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 15:16:22,795 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-20 15:16:23,841 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:16:23,851 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 15:16:28,084 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 15:18:52,952 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-20 15:18:54,344 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:18:54,354 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-20 15:19:38,789 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-20 15:19:39,878 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:19:39,888 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 15:20:49,915 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 15:21:33,415 [django.request] Not Found: /ckeditor/delete-image/
+[WARNING] 2025-11-20 15:21:54,916 [django.request] Not Found: /ckeditor/delete-image/
+[WARNING] 2025-11-20 15:21:56,473 [django_ckeditor_5.signals] Failed to delete unused images: expected str, bytes or os.PathLike object, not cached_property
+[WARNING] 2025-11-20 15:23:07,331 [django.request] Not Found: /ckeditor/delete-image/
+[WARNING] 2025-11-20 15:23:12,915 [django.request] Not Found: /ckeditor/delete-image/
+[WARNING] 2025-11-20 15:23:14,629 [django_ckeditor_5.signals] Failed to delete unused images: expected str, bytes or os.PathLike object, not cached_property
+[WARNING] 2025-11-20 15:23:33,978 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 15:26:09,105 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 15:26:19,838 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 15:26:34,153 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 15:28:08,718 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 15:30:46,635 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 15:30:59,861 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 15:31:25,493 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 15:33:00,403 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 15:34:46,637 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 15:36:00,994 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 15:39:50,384 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-20 15:59:05,237 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:59:06,107 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 15:59:06,118 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 16:03:12,712 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-20 16:03:14,802 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-20 16:27:22,598 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 16:27:23,381 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 16:27:23,392 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 16:28:19,838 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 16:29:32,113 [django.request] Not Found: /ckeditor/delete-image/
+[WARNING] 2025-11-20 16:29:34,293 [django_ckeditor_5.signals] Failed to delete unused images: expected str, bytes or os.PathLike object, not cached_property
+[INFO] 2025-11-20 16:33:24,158 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-20 16:33:25,253 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 16:33:25,263 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 16:34:21,882 [django.request] Not Found: /ckeditor/delete-image/
+[WARNING] 2025-11-20 16:34:26,592 [django_ckeditor_5.signals] Failed to delete unused images: expected str, bytes or os.PathLike object, not cached_property
+[WARNING] 2025-11-20 16:35:12,730 [django.request] Not Found: /ckeditor/delete-image/
+[INFO] 2025-11-20 16:36:26,052 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-11-20 16:36:27,203 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-20 16:36:27,213 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-20 16:36:48,079 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-20 16:37:05,841 [django.request] Not Found: /ckeditor/delete-image/

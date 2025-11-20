@@ -11,7 +11,8 @@ router.register(r'assessments', AssessmentViewSet, basename='assessment')
 urlpatterns = [
     path('courses/', views.courseView, name='course_view'),
     path('course/<int:course_id>/enroll/', views.enroll_course, name='enroll_course'),
-    
+    path('upload-image/', views.ckeditor_upload_image, name='ckeditor_upload_image'),
+    path('ckeditor/delete-image/', views.ckeditor_delete_image, name='ckeditor_delete_image'),
     path('instructor-add/', views.become_instructor, name='instructor_add'),
     path('partner-autocomplete/', PartnerAutocomplete.as_view(), name='partner-autocomplete'),
     path('partner-autocomplete/', views.partner_autocomplete, name='partner_autocomplete'),

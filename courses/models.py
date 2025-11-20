@@ -30,6 +30,7 @@ import json
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
 from jwcrypto import jwk
+from django_ckeditor_5.fields import CKEditor5Field
 
 logger = logging.getLogger(__name__)
 
@@ -811,7 +812,7 @@ class Material(models.Model):
 
     title = models.CharField(max_length=100)
 
-    description = models.TextField(blank=True, null=True)
+    description = CKEditor5Field('Text', config_name='extends', blank=True, null=True)
 
     
 
