@@ -1,123 +1,154 @@
 {% extends 'home/tes.html' %}
+{% load widget_tweaks %}
+
 {% block content %}
+{% include "courses/course_set.html" %}
+<hr class="my-10 border-gray-300">
 
+<div class="max-w-5xl mx-auto">
+    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <div class="p-8 lg:p-12">
+            <form method="post" class="space-y-10">
+                {% csrf_token %}
+                {{ form.media }}
 
-
-       
-        {% include "courses/course_set.html"%}
-        <hr>  
-       
-        <div class="support-wrap">
-            <div class="tile">
-              
-              
-
-                <form method="post">
-                    {% csrf_token %}
-                   
-                    <div>
-                        <label for="text">Question Text:</label>
-                        {{form.id }}
-                        {{form.text}}
-                        
-                        
+                <!-- Question Text -->
+                <div>
+                    <label class="block text-2xl font-bold text-gray-800 mb-6">Pertanyaan</label>
+                    <div class="rounded-xl overflow-hidden border-2 border-gray-300 
+                        {% if 'CKEditor5Widget' in form.text.field.widget|stringformat:"s" %}
+                            shadow-sm
+                        {% else %}
+                            focus-within:border-indigo-500 transition
+                        {% endif %}">
+                        {{ form.id }}
+                        {{ form.text|add_class:"w-full focus:outline-none" }}
                     </div>
-                    
-                
-                    &nbsp;
-                    {{ choice_formset.management_form }}
-                    <table class="table table-hover" id="choice-formset">
-                        <thead class="table-light">
-                            <th>Choice Text</th>
-                            <th>Is Correct</th>
-                            <th>Delete?</th>
-                        </thead>
-                        <tbody>
-                            {% for form in choice_formset %}
-                            <tr class="choice-form">
-                                {{ form.id }} 
-                                <td>{{ form.text }}</td>
-                                <td>{{ form.is_correct }}</td>
-                                <td>{{ form.DELETE }}</td> <!-- DELETE checkbox -->
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                      </table>
-                      
-                    
-                
-                    <button type="button" id="add-choice" class="btn btn-info btn-sm">Add another Choice</button>
-                    <br><br>
-                    <button type="submit" name="save" class="btn btn-success btn-sm">Save</button>
-                    <button type="submit" name="save_and_add_another" class="btn btn-primary btn-sm">Save and Add Another</button>
-                    <a class="btn btn-danger btn-sm" href="{% url "courses:view-question" course.id section.id assessment.id %}">Cencel <i class="fa fa-close"></i></a>
-                </form>
-                
-                
-       
-        {% endblock %}
-             
+                </div>
 
- {% block scripts %}
- 
+                <!-- Choices -->
+                {{ choice_formset.management_form }}
 
-          <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        const formsetTable = document.getElementById("choice-formset");
-                        const addChoiceButton = document.getElementById("add-choice");
-                        const totalFormsInput = document.querySelector("#id_choices-TOTAL_FORMS");
-                
-                        addChoiceButton.addEventListener("click", function () {
-                            const formCount = parseInt(totalFormsInput.value, 10); // Current total forms
-                            const newFormIndex = formCount;
-                
-                            // Clone the last form
-                            const lastForm = formsetTable.querySelector("tr.choice-form:last-child");
-                            const newForm = lastForm.cloneNode(true);
-                
-                            // Update form inputs
-                            const regex = new RegExp(`-\\d+-`, "g");
-                            newForm.innerHTML = newForm.innerHTML.replace(regex, `-${newFormIndex}-`);
-                
-                            // Clear input values in the cloned form
-                            Array.from(newForm.querySelectorAll("input")).forEach((input) => {
-                                if (input.type === "text") input.value = "";
-                                if (input.type === "checkbox") input.checked = false;
-                
-                                // Ensure DELETE checkbox has a proper name attribute
-                                if (input.name.includes("DELETE")) {
-                                    input.name = input.name.replace(regex, `-${newFormIndex}-`);
-                                }
-                            });
-                
-                            // Append the new form to the table
-                            formsetTable.querySelector("tbody").appendChild(newForm);
-                
-                            // Increment the TOTAL_FORMS counter
-                            totalFormsInput.value = newFormIndex + 1;
-                        });
-                
-                        // Handle Delete Checkbox Visibility for Newly Added Rows
-                        formsetTable.addEventListener("click", function (event) {
-                            if (event.target.type === "checkbox" && event.target.name.includes("DELETE")) {
-                                const row = event.target.closest("tr.choice-form");
-                                if (event.target.checked) {
-                                    // Hide the row if DELETE is checked
-                                    row.style.display = "none";
-                                } else {
-                                    // Show the row if DELETE is unchecked
-                                    row.style.display = "";
-                                }
-                            }
-                        });
-                    });
-                </script>
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center mb-8">
+                        <h3 class="text-xl font-bold text-gray-800">Pilihan Jawaban</h3>
+                        <button type="button" id="add-choice"
+                                class="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:from-indigo-700 hover:to-purple-700 shadow-lg transform hover:scale-105 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Tambah Pilihan
+                        </button>
+                    </div>
 
-                
-                
-            
-            </div>
-                
+                    <div class="border-2 border-gray-200 rounded-xl overflow-hidden">
+                        <table class="w-full">
+                            <thead class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white">
+                                <tr>
+                                    <th class="px-8 py-5 text-left font-medium">Teks Pilihan</th>
+                                    <th class="px-8 py-5 text-center font-medium w-40">Benar?</th>
+                                    <th class="px-8 py-5 text-center font-medium w-40">Hapus?</th>
+                                </tr>
+                            </thead>
+                            <tbody id="choice-tbody" class="divide-y divide-gray-200 bg-white">
 
+                                {% for choice_form in choice_formset %}
+                                <tr class="choice-row hover:bg-gray-50 transition">
+                                    <td class="px-8 py-6">
+                                        {{ choice_form.id }}
+                                        <div class="rounded-lg overflow-hidden border border-gray-300 
+                                            {% if 'CKEditor5Widget' in choice_form.text.field.widget|stringformat:"s" %}
+                                                shadow-sm
+                                            {% else %}
+                                                focus-within:border-indigo-500 transition
+                                            {% endif %}">
+                                            {{ choice_form.text|add_class:"w-full focus:outline-none" }}
+                                        </div>
+                                    </td>
+
+                                    <td class="px-8 py-6 text-center">
+                                        <div class="flex justify-center">
+                                            {{ choice_form.is_correct }}
+                                        </div>
+                                    </td>
+
+                                    <td class="px-8 py-6 text-center">
+                                        <div class="flex justify-center">
+                                            {{ choice_form.DELETE }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center pt-8 border-t-2 border-gray-200">
+                    <button type="submit" name="save"
+                            class="px-10 py-4 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 shadow-lg transform hover:scale-105 transition">
+                        Simpan
+                    </button>
+
+                    <button type="submit" name="save_and_add_another"
+                            class="px-10 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-lg transform hover:scale-105 transition">
+                        Simpan & Tambah Lagi
+                    </button>
+
+                    <a href="{% url 'courses:view-question' course.id section.id assessment.id %}"
+                       class="px-10 py-4 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 shadow-lg transform hover:scale-105 transition text-center">
+                        Batal
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const tbody = document.getElementById("choice-tbody");
+    const addBtn = document.getElementById("add-choice");
+    const totalForms = document.querySelector("#id_choices-TOTAL_FORMS");
+
+    const templateRow = tbody.querySelector("tr.choice-row");
+
+    addBtn.addEventListener("click", function () {
+        const count = parseInt(totalForms.value);
+        const newRow = templateRow.cloneNode(true);
+
+        newRow.innerHTML = newRow.innerHTML.replace(/__prefix__/g, count);
+
+        const input = newRow.querySelector("textarea, input[type='text']");
+        if (input) {
+            input.value = "";
+            if (input.ckeditorInstance) {
+                input.ckeditorInstance.setData("");
+            }
+        }
+
+        newRow.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+
+        tbody.appendChild(newRow);
+        totalForms.value = count + 1;
+    });
+
+    tbody.addEventListener("change", function (e) {
+        if (e.target.name && e.target.name.includes("-DELETE") && e.target.checked) {
+            e.target.closest("tr").style.display = "none";
+        }
+    });
+
+    const oldError = console.error;
+    console.error = function () {
+        if (arguments[0] && String(arguments[0]).includes("license-key-missing")) return;
+        oldError.apply(this, arguments);
+    };
+});
+</script>
 
 {% endblock %}
