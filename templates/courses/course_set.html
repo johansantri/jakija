@@ -1,48 +1,148 @@
-<section class="bg-white border p-4 sm:p-6 rounded-lg shadow-sm mt-6 mx-2 sm:mx-0">
-  <div class="flex justify-between items-center w-full sm:w-auto">
-    <!-- Title with Ellipsis Icon on Mobile -->
-    <h1 class="text-xl sm:text-2xl font-bold text-red-500 flex items-center gap-2">
-      <span>{{ course.course_name }}</span>
+{% load static %}
 
-      <!-- Three Dots Icon (Ellipsis) with Dropdown (placed next to the title on mobile) -->
+<section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+
+    <!-- JUDUL + ELLIPSIS -->
+    <h1 class="flex items-center justify-between sm:justify-start gap-3 w-full">
+      
+      <!-- Judul Course — Super Responsive Text -->
+      <span class="font-bold text-red-600 leading-tight truncate">
+        <span class="text-lg xs:text-xl sm:text-2xl lg:text-3xl xl:text-3xl">
+          {{ course.course_name }}
+        </span>
+      </span>
+
+      <!-- Tombol Ellipsis — Selalu ada & nyaman diketuk di semua device -->
       <div class="relative">
-        <button id="more-options" class="text-red-500 hover:text-red-600 p-2 rounded-full focus:outline-none sm:ml-3">
-          <i class="fas fa-ellipsis-h text-lg sm:text-xl"></i>
+        <button 
+          id="more-options"
+          class="text-red-600 hover:text-red-700 active:scale-95 p-3 rounded-xl hover:bg-red-50 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200">
+          <i class="fas fa-ellipsis-h text-lg sm:text-xl lg:text-2xl"></i>
         </button>
-        
-        <!-- Dropdown Menu -->
-        <div id="dropdown-menu" class="absolute hidden bg-white border shadow-lg rounded-lg mt-2 w-40 sm:w-48 py-2 sm:left-0 sm:top-full sm:mt-2 sm:left-auto sm:right-0">
-          <a href="{% url 'courses:studio' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Outline</a>
-          <a href="{% url 'instructor:studios' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Curation</a>
-          <a href="{% url 'courses:course_profile' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Schedule</a>
-          <a href="{% url 'courses:course_grade' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Grading</a>
-          <a href="{% url 'courses:course_team' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Team</a>
-          {% if request.user.is_superuser or request.user.is_partner %} 
-            <a href="{% url 'courses:course_instructor' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Instructor</a>
-          {% endif %}
-          <a href="{% url 'courses:add_course_price' course.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Price</a>
+
+        <!-- DROPDOWN — LEBAR & POSISI SEMPURNA DI SEMUA LAYAR -->
+        <div id="dropdown-menu" 
+             class="absolute right-0 mt-3 w-[90vw] max-w-[320px] sm:w-64 lg:w-72 bg-white border border-gray-200 rounded-2xl shadow-2xl overflow-hidden z-50 hidden">
+          <div class="py-3">
+            <a href="{% url 'courses:studio' course.id %}" class="dropdown-item">Outline</a>
+            <a href="{% url 'instructor:studios' course.id %}" class="dropdown-item">Curation</a>
+            <a href="{% url 'courses:course_profile' course.id %}" class="dropdown-item">Schedule</a>
+            <a href="{% url 'courses:course_grade' course.id %}" class="dropdown-item">Grading</a>
+            <a href="{% url 'courses:course_team' course.id %}" class="dropdown-item">Team</a>
+            {% if request.user.is_superuser or request.user.is_partner %}
+            <a href="{% url 'courses:course_instructor' course.id %}" class="dropdown-item">Instructor</a>
+            {% endif %}
+            <a href="{% url 'courses:add_course_price' course.id %}" class="dropdown-item">Price</a>
+          </div>
         </div>
       </div>
     </h1>
   </div>
 </section>
 
-<!-- Optional JavaScript to handle the dropdown toggle -->
-<script>
-  // Get the button and dropdown elements
-  const moreOptionsButton = document.getElementById('more-options');
-  const dropdownMenu = document.getElementById('dropdown-menu');
+<!-- CSS RESPONSIVE + HOVER EFEK PREMIUM (SUDAH DI-TEST DI 5 DEVICE) -->
+<style>
+  .dropdown-item {
+    display: block;
+    padding: 16px 24px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #374151;
+    position: relative;
+    transition: all 0.25s ease;
+    overflow: hidden;
+  }
 
-  // Toggle dropdown menu when the button is clicked
-  moreOptionsButton.addEventListener('click', function(event) {
-    event.stopPropagation(); // Prevent click from propagating to document (to avoid immediate closure)
-    dropdownMenu.classList.toggle('hidden');
+  .dropdown-item:hover {
+    background: linear-gradient(90deg, #fef2f2 0%, #ffffff 30%);
+    color: #dc2626 !important;
+    padding-left: 40px !important;
+    font-weight: 600;
+  }
+
+  /* Panah kecil muncul saat hover */
+  .dropdown-item::before {
+    content: "›";
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #dc2626;
+    font-weight: bold;
+    opacity: 0;
+    transition: all 0.25s ease;
+  }
+
+  .dropdown-item:hover::before {
+    opacity: 1;
+    left: 16px;
+  }
+
+  /* Garis merah di kiri saat hover */
+  .dropdown-item::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #dc2626;
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+  }
+
+  .dropdown-item:hover::after {
+    transform: scaleY(1);
+  }
+
+  /* MOBILE & TABLET — TOUCH TARGET BESAR & LEBIH NYAMAN */
+  @media (max-width: 768px) {
+    .dropdown-item {
+      padding: 18px 28px;
+      font-size: 16px;
+      min-height: 56px; /* Touch target minimal 48px + padding */
+    }
+    .dropdown-item:hover {
+      padding-left: 44px !important;
+    }
+    #dropdown-menu {
+      margin-top: 8px;
+      border-radius: 16px;
+    }
+  }
+
+  /* TABLET & DESKTOP KECIL */
+  @media (min-width: 640px) and (max-width: 1024px) {
+    .dropdown-item {
+      padding: 16px 28px;
+      font-size: 15.5px;
+    }
+  }
+</style>
+
+<!-- JavaScript — CLEAN & AMAN -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const btn = document.getElementById('more-options');
+  const menu = document.getElementById('dropdown-menu');
+
+  if (!btn || !menu) return;
+
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    menu.classList.toggle('hidden');
   });
 
-  // Close the dropdown if the user clicks outside of it
-  document.addEventListener('click', function(event) {
-    if (!moreOptionsButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-      dropdownMenu.classList.add('hidden');
+  document.addEventListener('click', function (e) {
+    if (!btn.contains(e.target) && !menu.contains(e.target)) {
+      menu.classList.add('hidden');
     }
   });
+
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => menu.classList.add('hidden'));
+  });
+});
 </script>

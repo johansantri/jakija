@@ -4,504 +4,308 @@
 <meta name="csrf-token" content="{{ csrf_token }}">
 {% include "courses/course_set.html" %}
 
-<section class="bg-white border p-4 sm:p-6 rounded-lg shadow-sm mt-6 mx-2 sm:mx-0">
-  <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
-    <h2 class="text-lg sm:text-xl font-semibold border-l-4 border-red-400 pl-2">Course Outline</h2>
-    <div class="flex ml-auto items-center gap-3">
-      <button id="save-json" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 shadow-md">
-        <i class="fas fa-save"></i> Simpan Urutan
-      </button>
-      <button id="add-section" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 shadow-md">
-        <i class="fas fa-plus"></i> Tambah Section
-      </button>
+<!-- FULL WIDTH CARD -->
+<section class="bg-white border-t border-x border-gray-200 min-h-screen">
+  <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Course Outline</h1>
+      <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+        <button id="save-json" class="flex items-center justify-center gap-2 px-5 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium text-sm sm:text-base shadow-sm transition">
+          Simpan Urutan
+        </button>
+        <button id="add-section" class="flex items-center justify-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium text-sm sm:text-base shadow-sm transition">
+          Tambah Section
+        </button>
+      </div>
     </div>
+
+    <div id="sections" class="space-y-5"></div>
   </div>
-  <div id="sections" class="space-y-4"></div>
 </section>
 
-<!-- MODAL FULLSCREEN — TOMBOL SELALU KELIHATAN -->
-<div id="modal" class="fixed inset-0 hidden bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
-  <div class="bg-white w-full max-w-7xl h-[94vh] rounded-xl shadow-2xl flex flex-col overflow-hidden">
-    <!-- Header -->
-    <div class="flex justify-between items-center p-6 border-b bg-gray-50 shrink-0">
-      <h2 id="modal-title" class="text-2xl font-bold text-gray-800">Tambah Material</h2>
-      <button id="cancel-modal" class="text-4xl text-gray-500 hover:text-gray-700 leading-none">&times;</button>
+<!-- MODAL — Scrollable + Tombol Selalu Kelihatan -->
+<div id="modal" class="fixed inset-0 hidden bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 overflow-y-auto">
+  <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-screen flex flex-col my-4">
+    <div class="p-5 sm:p-6 border-b flex justify-between items-center">
+      <h3 id="modal-title" class="text-lg sm:text-xl font-semibold text-gray-900">Tambah Material</h3>
+      <button id="cancel-modal" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
     </div>
-
-    <!-- Body Scrollable -->
-    <div class="flex-1 overflow-y-auto p-6">
-      <input id="input-title" type="text" placeholder="Judul / Nama" 
-             class="w-full border border-gray-300 rounded-lg px-5 py-4 mb-6 text-lg font-medium focus:ring-4 focus:ring-red-200 focus:outline-none">
-
-      <div id="ckeditor-wrapper" class="hidden mb-6">
-        <label class="block text-sm font-semibold text-gray-700 mb-3">Deskripsi (Rich Text)</label>
-        <textarea id="ckeditor-desc"></textarea>
+    <div class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Judul</label>
+        <input id="input-title" type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none text-base">
       </div>
-
-      <input id="input-weight" type="number" placeholder="Bobot (%)" step="0.01"
-             class="w-full border border-gray-300 rounded-lg px-5 py-4 hidden mb-6 focus:ring-4 focus:ring-purple-200">
+      <div id="ckeditor-wrapper" class="hidden">
+        <label class="block text-sm font-medium text-gray-700 mb-3">Deskripsi</label>
+        <div class="border border-gray-300 rounded-lg overflow-hidden">
+          <textarea id="ckeditor-desc"></textarea>
+        </div>
+      </div>
+      <div id="weight-wrapper" class="hidden">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Bobot (%)</label>
+        <input id="input-weight" type="number" step="0.01" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none text-base">
+      </div>
     </div>
-
-    <!-- Footer SELALU KELIHATAN -->
-    <div class="p-6 border-t bg-gray-50 flex justify-end gap-4 shrink-0">
-      <button id="cancel-modal" class="px-10 py-3.5 border-2 border-gray-400 rounded-lg hover:bg-gray-100 text-gray-700 font-semibold transition">
-        Batal
-      </button>
-      <button id="save-modal" class="px-12 py-3.5 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold shadow-lg transition">
-        Simpan
-      </button>
+    <div class="p-5 sm:p-6 border-t bg-gray-50 flex flex-col sm:flex-row-reverse gap-3">
+      <button id="save-modal" class="w-full sm:w-auto px-8 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition">Simpan</button>
+      <button id="cancel-modal" class="w-full sm:w-auto px-8 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition">Batal</button>
     </div>
   </div>
 </div>
 
-<!-- CKEditor + Dependencies -->
 <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
   const courseId = {{ course.id|safe }};
-  const API = {
-    sections: '/sections/',
-    materials: '/materials/',
-    assessments: '/assessments/',
-    reorder: '/sections/reorder/'
-  };
+  const API = { sections: '/sections/', materials: '/materials/', assessments: '/assessments/', reorder: '/sections/reorder/' };
+  let currentAction = null, currentTarget = null, currentEditId = null, ckeditor = null;
 
-  let currentAction = null;
-  let currentTarget = null;
-  let currentEditId = null;
-  let ckeditor = null;
-
-  // ================== UPLOAD + HAPUS GAMBAR OTOMATIS ==================
+  // CKEditor Upload
   class CustomUploadAdapter {
     constructor(loader) { this.loader = loader; }
     upload() {
       return this.loader.file.then(file => new Promise((resolve, reject) => {
-        const data = new FormData();
-        data.append('upload', file);
-        fetch('{% url "courses:ckeditor_upload_image" %}', {
-          method: 'POST',
-          body: data,
-          headers: { 'X-CSRFToken': csrftoken }
-        })
-        .then(r => r.json())
-        .then(res => res.url ? resolve({ default: res.url }) : reject(res.error?.message || 'Upload failed'))
-        .catch(() => reject('Upload failed'));
+        const data = new FormData(); data.append('upload', file);
+        fetch('{% url "courses:ckeditor_upload_image" %}', { method: 'POST', body: data, headers: { 'X-CSRFToken': csrftoken } })
+          .then(r => r.json()).then(res => res.url ? resolve({ default: res.url }) : reject()).catch(reject);
       }));
     }
     abort() {}
   }
-
   function CustomUploadAdapterPlugin(editor) {
     editor.plugins.get('FileRepository').createUploadAdapter = loader => new CustomUploadAdapter(loader);
-
-    let previousData = editor.getData();
-    editor.model.document.on('change:data', () => {
-      const currentData = editor.getData();
-      const prevUrls = (previousData.match(/src="([^"]*\/media\/ckeditor\/[^"]*)"/g) || []);
-      const currUrls = (currentData.match(/src="([^"]*\/media\/ckeditor\/[^"]*)"/g) || []);
-      const removedUrls = prevUrls
-        .map(m => m.match(/src="([^"]*)"/)[1])
-        .filter(url => !currUrls.some(c => c.includes(url)));
-
-      removedUrls.forEach(url => {
-        fetch('{% url "courses:ckeditor_delete_image" %}', {
-          method: 'POST',
-          headers: {
-            'X-CSRFToken': csrftoken,
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: 'url=' + encodeURIComponent(url)
-        }).catch(() => {});
-      });
-
-      previousData = currentData;
-    });
   }
-
-  // ================== CKEDITOR INIT & DESTROY ==================
   async function initCKEditor() {
     if (ckeditor) await destroyCKEditor();
-    try {
-      ckeditor = await ClassicEditor.create(document.querySelector('#ckeditor-desc'), {
-        extraPlugins: [CustomUploadAdapterPlugin],
-        toolbar: [
-          'heading', '|',
-          'bold', 'italic', 'underline', 'strikethrough', '|',
-          'link', 'bulletedList', 'numberedList', 'todoList', '|',
-          'imageUpload', 'mediaEmbed', 'insertTable', '|',
-          'undo', 'redo'
-        ],
-        image: {
-          toolbar: ['imageTextAlternative', 'imageStyle:inline', 'imageStyle:block', 'imageStyle:side']
-        }
-      });
-    } catch (e) {
-      console.error('CKEditor init error:', e);
-      ckeditor = null;
-    }
+    ckeditor = await ClassicEditor.create(document.getElementById('ckeditor-desc'), {
+      extraPlugins: [CustomUploadAdapterPlugin],
+      toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'imageUpload', 'mediaEmbed', 'table', 'undo', 'redo']
+    });
   }
+  async function destroyCKEditor() { if (ckeditor) await ckeditor.destroy(); ckeditor = null; }
 
-  async function destroyCKEditor() {
-    if (ckeditor) {
-      try { await ckeditor.destroy(); } catch (e) {}
-      ckeditor = null;
-    }
-  }
-
-  // ================== MODAL ==================
-  async function openModal(action, target = null, editId = null, data = {}) {
-    currentAction = action;
-    currentTarget = target;
-    currentEditId = editId;
-
-    // Reset form
+  function openModal(action, target = null, editId = null, data = {}) {
+    currentAction = action; currentTarget = target; currentEditId = editId;
     document.getElementById('input-title').value = data.title || data.name || '';
     document.getElementById('input-weight').value = data.weight || '';
-    document.getElementById('ckeditor-wrapper').classList.add('hidden');
-    document.getElementById('input-weight').classList.add('hidden');
-
-    if (action === 'material') {
-      document.getElementById('ckeditor-wrapper').classList.remove('hidden');
-      setTimeout(async () => {
-        await initCKEditor();
-        if (ckeditor) ckeditor.setData(data.description || '');
-      }, 100);
-    }
-    if (action === 'assessment') {
-      document.getElementById('input-weight').classList.remove('hidden');
-    }
-
-    document.getElementById('modal-title').textContent = 
-      editId ? `Edit ${action.charAt(0).toUpperCase() + action.slice(1)}`
-             : `Tambah ${action === 'unit' ? 'Unit' : action.charAt(0).toUpperCase() + action.slice(1)}`;
-
+    document.getElementById('ckeditor-wrapper').classList.toggle('hidden', action !== 'material');
+    document.getElementById('weight-wrapper').classList.toggle('hidden', action !== 'assessment');
+    if (action === 'material') setTimeout(() => initCKEditor().then(() => ckeditor?.setData(data.description || '')), 100);
+    document.getElementById('modal-title').textContent = editId ? `Edit ${action.charAt(0).toUpperCase()+action.slice(1)}` : `Tambah ${action === 'unit' ? 'Unit' : action.charAt(0).toUpperCase()+action.slice(1)}`;
     document.getElementById('modal').classList.remove('hidden');
     document.getElementById('input-title').focus();
   }
-
-  async function closeModal() {
-    await destroyCKEditor();
-    document.getElementById('modal').classList.add('hidden');
-    currentAction = currentTarget = currentEditId = null;
-
-    // Bersihkan form setelah modal tertutup
-    setTimeout(() => {
-      document.getElementById('input-title').value = '';
-      document.getElementById('input-weight').value = '';
-    }, 300);
-  }
-
+  function closeModal() { destroyCKEditor(); document.getElementById('modal').classList.add('hidden'); }
   document.getElementById('modal').addEventListener('click', e => e.target.id === 'modal' && closeModal());
-  document.querySelectorAll('#cancel-modal').forEach(btn => btn.addEventListener('click', closeModal));
+  document.querySelectorAll('#cancel-modal').forEach(b => b.onclick = closeModal);
 
-  // ================== SAVE ==================
-  document.getElementById('save-modal').addEventListener('click', async () => {
+  document.getElementById('save-modal').onclick = async () => {
     const title = document.getElementById('input-title').value.trim();
-    if (!title && currentAction !== 'assessment') {
-      alert('Judul wajib diisi!');
-      return;
-    }
-
+    if (!title && currentAction !== 'assessment') return alert('Judul wajib diisi!');
     let payload = {}, url, method;
-
-    if (['section', 'subsection', 'unit'].includes(currentAction)) {
+    if (['section','subsection','unit'].includes(currentAction)) {
       payload = { title, courses: courseId };
       if (currentAction !== 'section' && currentTarget) payload.parent = currentTarget.dataset.id;
       url = currentEditId ? `${API.sections}${currentEditId}/` : API.sections;
       method = currentEditId ? 'PATCH' : 'POST';
     }
-
     if (currentAction === 'material') {
       payload = { title, description: ckeditor?.getData() || '', section: currentTarget.dataset.id };
       url = currentEditId ? `${API.materials}${currentEditId}/` : API.materials;
       method = currentEditId ? 'PATCH' : 'POST';
     }
-
     if (currentAction === 'assessment') {
       payload = { name: title, weight: document.getElementById('input-weight').value || 0, section: currentTarget.dataset.id };
       url = currentEditId ? `${API.assessments}${currentEditId}/` : API.assessments;
       method = currentEditId ? 'PATCH' : 'POST';
     }
-
-    const res = await fetch(url, {
-      method,
-      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
-      body: JSON.stringify(payload)
-    });
-
+    const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }, body: JSON.stringify(payload) });
     if (res.ok) {
-      await closeModal();
-      fetchSections();
-    } else {
-      alert('Gagal menyimpan data');
-    }
-  });
+      closeModal();
+      const activeUnitId = currentTarget?.dataset.id || null;
+      fetchSections(false, activeUnitId);
+    } else alert('Gagal menyimpan');
+  };
 
-  // ================== UI BUILDERS ==================
-  function escape(str) {
-    return String(str)
-      .replace(/&/g, "&amp;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
-  }
+  function escape(str) { return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
 
-  function setupInlineEdit(div, labelSelector) {
-    const label = div.querySelector(labelSelector);
+  function setupInlineEdit(div, selector) {
+    const label = div.querySelector(selector);
     const input = div.querySelector('input[type="text"]');
-    const editBtn = div.querySelector('.edit');
-    if (!editBtn || !input || !label) return;
-
-    editBtn.onclick = () => {
-      label.classList.add('hidden');
-      input.classList.remove('hidden');
-      input.focus();
-      input.select();
-    };
-
+    const btn = div.querySelector('.edit');
+    if (!label || !input || !btn) return;
+    btn.onclick = () => { label.classList.add('hidden'); input.classList.remove('hidden'); input.focus(); input.select(); };
     input.onblur = async () => {
-      const newTitle = input.value.trim();
-      if (!newTitle || newTitle === label.textContent.trim()) {
-        label.classList.remove('hidden');
-        input.classList.add('hidden');
-        return;
-      }
-      label.textContent = newTitle;
-      label.classList.remove('hidden');
-      input.classList.add('hidden');
-
-      await fetch(`${API.sections}${div.dataset.id}/`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
-        body: JSON.stringify({ title: newTitle })
-      });
+      const v = input.value.trim();
+      if (!v || v === label.textContent.trim()) return label.classList.remove('hidden'), input.classList.add('hidden');
+      label.textContent = v; label.classList.remove('hidden'); input.classList.add('hidden');
+      await fetch(`${API.sections}${div.dataset.id}/`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }, body: JSON.stringify({title: v}) });
     };
-
-    input.onkeydown = e => {
-      if (e.key === 'Enter') input.blur();
-      if (e.key === 'Escape') {
-        input.value = label.textContent;
-        input.blur();
-      }
-    };
+    input.onkeydown = e => { if (e.key === 'Enter') input.blur(); if (e.key === 'Escape') { input.value = label.textContent; input.blur(); } };
   }
 
   function createSection(data) {
     const div = document.createElement('div');
-    div.className = 'border border-gray-300 rounded-xl p-5 bg-white shadow-md';
+    div.className = 'bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden';
     div.dataset.id = data.id;
     div.innerHTML = `
-      <div class="flex justify-between items-center mb-3">
+      <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-100 hover:bg-gray-50 group">
         <div class="flex items-center gap-3 flex-1 min-w-0">
-          <button class="toggle text-gray-600 hover:text-red-500 text-xl"><i class="fas fa-chevron-right"></i></button>
-          <span class="section-label font-bold text-lg text-gray-800 truncate">${escape(data.title)}</span>
-          <input type="text" class="hidden border rounded px-3 py-1 w-full" value="${escape(data.title)}">
-          <button class="edit text-gray-400 hover:text-blue-600"><i class="fas fa-edit"></i></button>
+          <button class="toggle text-gray-500 hover:text-gray-700"><i class="fas fa-chevron-right text-lg transition"></i></button>
+          <span class="section-label font-semibold text-gray-900 truncate pr-2">${escape(data.title)}</span>
+          <input type="text" class="hidden w-full px-3 py-1.5 border border-gray-300 rounded text-sm" value="${escape(data.title)}">
+          <button class="edit text-gray-400 hover:text-blue-600 text-sm"><i class="fas fa-edit"></i></button>
         </div>
-        <div class="flex gap-2">
-          <button class="add-sub bg-red-100 text-red-700 px-3 py-2 rounded-lg hover:bg-red-200 text-sm"><i class="fas fa-folder-plus"></i> Subsection</button>
-          <button class="delete-section text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button class="add-sub text-xs sm:text-sm px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">+ Subsection</button>
+          <button class="delete-section text-red-600 hover:text-red-800 text-lg"><i class="fas fa-trash"></i></button>
         </div>
       </div>
-      <div class="subsection-list ml-8 mt-4 space-y-4 hidden"></div>
+      <div class="subsection-list"></div>
     `;
-
     const list = div.querySelector('.subsection-list');
-    data.children?.forEach(child => list.appendChild(createSubsection(child)));
-
+    data.children?.forEach(c => list.appendChild(createSubsection(c)));
+    div.querySelector('.toggle').onclick = () => {
+      list.classList.toggle('hidden');
+      div.querySelector('.toggle i').classList.toggle('fa-chevron-down');
+      div.querySelector('.toggle i').classList.toggle('fa-chevron-right');
+    };
     div.querySelector('.add-sub').onclick = () => openModal('subsection', div);
     div.querySelector('.delete-section').onclick = () => deleteSection(data.id);
     setupInlineEdit(div, '.section-label');
     makeSortable(list);
-
-    div.querySelector('.toggle').onclick = function () {
-      list.classList.toggle('hidden');
-      this.querySelector('i').className = list.classList.contains('hidden') ? 'fas fa-chevron-right' : 'fas fa-chevron-down';
-    };
-
     return div;
   }
 
   function createSubsection(data) {
     const div = document.createElement('div');
-    div.className = 'border border-gray-200 rounded-lg p-4 bg-gray-50';
+    div.className = 'ml-4 sm:ml-8 my-3 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden';
     div.dataset.id = data.id;
     div.innerHTML = `
-      <div class="flex justify-between items-center mb-3">
-        <div class="flex items-center gap-3 flex-1 min-w-0">
-          <button class="toggle text-gray-600 hover:text-red-500"><i class="fas fa-chevron-right"></i></button>
-          <span class="sub-label font-semibold text-gray-700 truncate">${escape(data.title)}</span>
-          <input type="text" class="hidden border rounded px-3 py-1 w-full" value="${escape(data.title)}">
-          <button class="edit text-gray-400 hover:text-blue-600"><i class="fas fa-edit"></i></button>
+      <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 hover:bg-gray-50 group">
+        <div class="flex items-center gap-3 flex-1">
+          <button class="toggle text-gray-500 hover:text-gray-700"><i class="fas fa-chevron-right"></i></button>
+          <span class="sub-label font-medium text-gray-800">${escape(data.title)}</span>
+          <input type="text" class="hidden w-full px-3 py-1.5 border border-gray-300 rounded text-sm" value="${escape(data.title)}">
+          <button class="edit text-gray-400 hover:text-blue-600 text-sm"><i class="fas fa-edit"></i></button>
         </div>
         <div class="flex gap-2">
-          <button class="add-unit bg-blue-100 text-blue-700 px-3 py-2 rounded-lg hover:bg-blue-200 text-sm"><i class="fas fa-file-circle-plus"></i> Unit</button>
-          <button class="delete-section text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+          <button class="add-unit text-xs px-3 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100">+ Unit</button>
+          <button class="delete-section text-red-600 hover:text-red-800 text-lg"><i class="fas fa-trash"></i></button>
         </div>
       </div>
-      <div class="unit-list ml-8 mt-4 space-y-4 hidden"></div>
+      <div class="unit-list space-y-4 p-4 hidden"></div>
     `;
-
     const list = div.querySelector('.unit-list');
-    data.children?.forEach(unit => list.appendChild(createUnit(unit)));
-
+    data.children?.forEach(u => list.appendChild(createUnit(u)));
+    div.querySelector('.toggle').onclick = () => list.classList.toggle('hidden');
     div.querySelector('.add-unit').onclick = () => openModal('unit', div);
     div.querySelector('.delete-section').onclick = () => deleteSection(data.id);
     setupInlineEdit(div, '.sub-label');
     makeSortable(list);
-
-    div.querySelector('.toggle').onclick = function () {
-      list.classList.toggle('hidden');
-      this.querySelector('i').className = list.classList.contains('hidden') ? 'fas fa-chevron-right' : 'fas fa-chevron-down';
-    };
-
     return div;
   }
 
   function createUnit(data) {
     const div = document.createElement('div');
-    div.className = 'border-2 border-dashed border-gray-300 rounded-lg p-5 bg-white';
+    div.className = 'bg-gray-50 rounded-xl p-4 border border-gray-200';
     div.dataset.id = data.id;
-
-    const materials = data.materials || [];
-    const assessments = data.assessments || [];
-
-    const materialHTML = materials.map(m => `
-      <div class="flex justify-between items-center py-3 border-b last:border-0 group">
-        <span class parlent="text-sm"><i class="fas fa-file-alt text-green-600 mr-2"></i>${escape(m.title)}</span>
-        <div class="opacity-0 group-hover:opacity-100 flex gap-3 text-xs">
-          <button class="edit-material text-blue-600 hover:underline" data-id="${m.id}" data-item='${JSON.stringify(m).replace(/'/g, "&#39;")}'>Edit</button>
+    const mats = (data.materials || []).map(m => `
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 border-b last:border-0 gap-2">
+        <div class="flex items-center gap-2 text-sm"><i class="fas fa-file-alt text-green-600"></i> ${escape(m.title)}</div>
+        <div class="flex gap-3 text-xs">
+          <button class="edit-material text-blue-600 hover:underline" data-id="${m.id}" data-item='${JSON.stringify(m).replace(/'/g,"&#39;")}'>Edit</button>
           <button class="delete-material text-red-600 hover:underline" data-url="${API.materials}${m.id}/">Hapus</button>
         </div>
       </div>
     `).join('');
-
-    const assessmentHTML = assessments.map(a => `
-      <div class="flex justify-between items-center py-3 border-b last:border-0 group">
-        <span class="text-sm font-medium"><i class="fas fa-clipboard-check text-purple-600 mr-2"></i>${escape(a.name)}</span>
-        ${a.weight > 0 ? `<span class="ml-2 text-xs bg-purple-100 px-2 py-1 rounded">${a.weight}%</span>` : ''}
-        <div class="opacity-0 group-hover:opacity-100 flex gap-3 text-xs">
-          <button class="edit-assessment text-blue-600 hover:underline" data-id="${a.id}" data-item='${JSON.stringify(a).replace(/'/g, "&#39;")}'>Edit</button>
+    const asses = (data.assessments || []).map(a => `
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 border-b last:border-0 gap-2">
+        <div class="flex items-center gap-2 text-sm"><i class="fas fa-clipboard-check text-purple-600"></i> ${escape(a.name)} ${a.weight>0 ? `<span class="text-xs bg-purple-100 px-2 py-1 rounded">${a.weight}%</span>` : ''}</div>
+        <div class="flex gap-3 text-xs">
+          <button class="edit-assessment text-blue-600 hover:underline" data-id="${a.id}" data-item='${JSON.stringify(a).replace(/'/g,"&#39;")}'>Edit</button>
           <button class="delete-assessment text-red-600 hover:underline" data-url="${API.assessments}${a.id}/">Hapus</button>
         </div>
       </div>
     `).join('');
-
     div.innerHTML = `
-      <div class="flex justify-between items-start mb-4">
-        <div class="flex-1">
-          <div class="flex items-center gap-3">
-            <span class="unit-label font-bold text-gray-800">${escape(data.title)}</span>
-            <button class="edit text-gray-400 hover:text-blue-600"><i class="fas fa-edit"></i></button>
-          </div>
-          <input type="text" class="hidden border rounded px-3 py-1 w-full mt-2" value="${escape(data.title)}">
+      <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-4">
+        <div class="flex items-center gap-2 flex-1">
+          <span class="unit-label font-semibold text-gray-900">${escape(data.title)}</span>
+          <button class="edit text-gray-400 hover:text-blue-600 text-sm"><i class="fas fa-edit"></i></button>
+          <input type="text" class="hidden w-full px-3 py-1.5 border border-gray-300 rounded text-sm" value="${escape(data.title)}">
         </div>
-        <button class="delete-section text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+        <button class="delete-section text-red-600 hover:text-red-800 text-lg"><i class="fas fa-trash"></i></button>
       </div>
-
-      ${materials.length ? `<div class="mt-4"><h4 class="font-semibold text-gray-700 mb-3">Materials</h4>${materialHTML}</div>` : ''}
-      ${assessments.length ? `<div class="mt-4"><h4 class="font-semibold text-gray-700 mb-3">Assessments</h4>${assessmentHTML}</div>` : ''}
-
-      <div class="flex gap-4 mt-6">
-        <button class="add-material-btn flex-1 bg-green-100 hover:bg-green-200 text-green-700 py-3 rounded-lg font-medium">+ Material</button>
-        <button class="add-assessment-btn flex-1 bg-purple-100 hover:bg-purple-200 text-purple-700 py-3 rounded-lg font-medium">+ Assessment</button>
+      ${mats ? `<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Materials</div>${mats}</div>` : ''}
+      ${asses ? `<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Assessments</div>${asses}</div>` : ''}
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <button class="add-material-btn py-2.5 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 text-sm font-medium">+ Material</button>
+        <button class="add-assessment-btn py-2.5 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 text-sm font-medium">+ Assessment</button>
       </div>
     `;
-
-    div.querySelectorAll('.edit-material').forEach(btn => btn.onclick = () => openModal('material', div, btn.dataset.id, JSON.parse(btn.dataset.item.replace(/&#39;/g, "'"))));
-    div.querySelectorAll('.delete-material').forEach(btn => btn.onclick = () => confirm('Hapus material ini?') && deleteItem(btn.dataset.url));
-    div.querySelectorAll('.edit-assessment').forEach(btn => btn.onclick = () => openModal('assessment', div, btn.dataset.id, JSON.parse(btn.dataset.item.replace(/&#39;/g, "'"))));
-    div.querySelectorAll('.delete-assessment').forEach(btn => btn.onclick = () => confirm('Hapus assessment ini?') && deleteItem(btn.dataset.url));
+    div.querySelectorAll('.edit-material,.edit-assessment').forEach(b => b.onclick = () => openModal(b.classList.contains('edit-material')?'material':'assessment', div, b.dataset.id, JSON.parse(b.dataset.item.replace(/&#39;/g,"'"))));
+    div.querySelectorAll('.delete-material,.delete-assessment').forEach(b => b.onclick = () => confirm('Hapus?') && deleteItem(b.dataset.url));
     div.querySelector('.add-material-btn').onclick = () => openModal('material', div);
     div.querySelector('.add-assessment-btn').onclick = () => openModal('assessment', div);
     div.querySelector('.delete-section').onclick = () => deleteSection(data.id);
     setupInlineEdit(div, '.unit-label');
-
     return div;
   }
 
-  // ================== UTILITIES ==================
-  async function deleteSection(id) {
-    if (confirm('Hapus section beserta semua isinya?')) {
-      await fetch(`${API.sections}${id}/`, { method: 'DELETE', headers: { 'X-CSRFToken': csrftoken } });
-      fetchSections();
+  function openParents(unitDiv) {
+    let parent = unitDiv.parentElement;
+    while (parent) {
+      if (parent.classList.contains('subsection-list') || parent.classList.contains('unit-list')) {
+        parent.classList.remove('hidden');
+        const toggle = parent.previousElementSibling?.querySelector('.toggle i');
+        if (toggle) { toggle.classList.remove('fa-chevron-right'); toggle.classList.add('fa-chevron-down'); }
+      }
+      parent = parent.parentElement;
     }
   }
 
-  async function deleteItem(url) {
-    if (confirm('Hapus item ini?')) {
-      await fetch(url, { method: 'DELETE', headers: { 'X-CSRFToken': csrftoken } });
-      fetchSections();
-    }
-  }
-
-  function makeSortable(el) {
-    if (el) new Sortable(el, { group: 'nested', animation: 150, fallbackOnBody: true, swapThreshold: 0.65, onEnd: saveStructure });
-  }
-
-  async function saveStructure() {
-    const getData = el => ({
-      id: el.dataset.id,
-      children: [...el.querySelectorAll(':scope > div')].map(getData)
-    });
-    const structure = [...document.querySelectorAll('#sections > div')].map(getData);
-    await fetch(API.reorder, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
-      body: JSON.stringify(structure)
-    });
-  }
-
-  async function fetchSections() {
+  async function fetchSections(preserveOpen = false, activeUnitId = null) {
     const res = await fetch(`${API.sections}?course=${courseId}`);
     const data = await res.json();
     const container = document.getElementById('sections');
     container.innerHTML = '';
-    data.forEach(section => container.appendChild(createSection(section)));
+    data.forEach(s => container.appendChild(createSection(s)));
     makeSortable(container);
+
+    if (activeUnitId) {
+      const activeUnit = document.querySelector(`[data-id="${activeUnitId}"]`);
+      if (activeUnit) {
+        openParents(activeUnit);
+        setTimeout(() => activeUnit.scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
+      }
+    }
   }
 
-  // ================== INIT ==================
+  async function deleteSection(id) { if (confirm('Hapus beserta semua isinya?')) { await fetch(`${API.sections}${id}/`, { method: 'DELETE', headers: { 'X-CSRFToken': csrftoken } }); fetchSections(); } }
+  async function deleteItem(url) { if (confirm('Hapus?')) { await fetch(url, { method: 'DELETE', headers: { 'X-CSRFToken': csrftoken } }); fetchSections(); } }
+  function makeSortable(el) { if (el) new Sortable(el, { group: 'nested', animation: 150, fallbackOnBody: true, swapThreshold: 0.65, onEnd: saveStructure }); }
+
+  async function saveStructure() {
+    const getData = el => ({ id: el.dataset.id, children: Array.from(el.children).filter(c => c.dataset?.id).map(getData) });
+    const structure = Array.from(document.querySelectorAll('#sections > div')).map(getData);
+    await fetch(API.reorder, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }, body: JSON.stringify(structure) });
+  }
+
   document.getElementById('add-section').onclick = () => openModal('section');
   document.getElementById('save-json').onclick = saveStructure;
   fetchSections();
 });
 </script>
+
 <style>
 .hidden { display: none !important; }
-.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.group:hover .group-hover\\:opacity-100 { opacity: 1; }
-
-/* INI YANG MEMBUAT TOMBOL SIMPAN SELALU KELIHATAN */
-.ck-editor__editable {
-    min-height: 400px !important;
-    max-height: 60vh !important;
-    overflow-y: auto !important;
-    resize: vertical !important;
-    border: 1px solid #ddd !important;
-    border-radius: 0.75rem !important;
-    padding: 1rem !important;
-    background: white !important;
-}
-
-/* Pastikan body modal tidak ikut membesar */
-#modal .flex-1 {
-    display: flex;
-    flex-direction: column;
-}
-#modal .overflow-y-auto {
-    overscroll-behavior: contain;
-}
+@media (max-width: 640px) { .edit { display: block !important; opacity: 1 !important; } }
+.ck-editor__editable { min-height: 320px !important; max-height: 60vh !important; overflow-y: auto !important; }
+@media (max-width: 640px) { .ck-editor__editable { min-height: 240px !important; max-height: 50vh !important; } }
 </style>
-<style>
-.hidden { display: none !important; }
-.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.group:hover .group-hover\\:opacity-100 { opacity: 1; }
-</style>
-
 {% endblock %}

@@ -6250,3 +6250,53 @@ django.template.exceptions.TemplateDoesNotExist: ckeditor_include.html
 [INFO] 2025-11-20 16:36:27,213 [django.utils.autoreload] Watching for file changes with StatReloader
 [WARNING] 2025-11-20 16:36:48,079 [django.request] Not Found: /favicon.ico
 [WARNING] 2025-11-20 16:37:05,841 [django.request] Not Found: /ckeditor/delete-image/
+[INFO] 2025-11-21 08:12:48,590 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-21 08:12:49,421 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-21 08:12:49,431 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-21 08:17:22,218 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:17:44,313 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:24:53,910 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:27:34,904 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:27:39,214 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 08:32:32,504 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 08:34:11,595 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 08:36:15,383 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:36:20,892 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:36:23,847 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:36:28,482 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 08:38:18,221 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:38:35,689 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 08:40:50,732 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:40:59,141 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 08:42:32,629 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 08:43:06,446 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:43:10,266 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:45:36,641 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:45:53,246 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:46:47,492 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:46:53,594 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 08:49:23,386 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 08:55:48,498 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 09:08:40,184 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:10:14,877 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:10:52,478 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:10:55,104 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-21 09:14:23,294 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-21 09:14:24,074 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-21 09:14:24,084 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-21 09:14:55,928 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:14:58,280 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:20:20,639 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:20:25,296 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:21:53,671 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 09:24:00,657 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:25:51,877 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:27:05,871 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:28:38,033 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:29:14,868 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:29:35,765 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-21 09:31:43,241 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:33:23,228 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:33:25,322 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:35:48,789 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-21 09:36:02,269 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
