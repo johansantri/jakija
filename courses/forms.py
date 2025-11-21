@@ -368,41 +368,47 @@ class AssessmentForm(forms.ModelForm):
         return duration
 
 class QuestionForm(forms.ModelForm):
-    text = forms.CharField(required=True)  # Default field is optional
+    text = forms.CharField(required=True, widget=forms.Textarea)  # Default widget sementara
 
     class Meta:
         model = Question
         fields = ['text']
 
     def __init__(self, *args, **kwargs):
-        # Extract the assessment object from kwargs
         assessment = kwargs.pop('assessment', None)
         super().__init__(*args, **kwargs)
 
-        # Conditionally set widget based on the assessment flag
-        if assessment and assessment.flag:
-            self.fields['text'].widget = CKEditor5Widget("extends")  # CKEditor widget
+        if assessment and getattr(assessment, 'flag', False):
+            self.fields['text'].widget = CKEditor5Widget(config_name="extends")
         else:
-            self.fields['text'].widget = forms.TextInput(attrs={'class': 'form-control'})  # Plain text widget
-    
-       
+            self.fields['text'].widget = forms.Textarea(attrs={
+                'class': 'w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-xl focus:border-indigo-600 focus:outline-none transition-shadow focus:ring-4 focus:ring-indigo-100',
+                'rows': 6,
+                'placeholder': 'Tulis pertanyaan di sini...',
+                'style': 'resize: vertical; min-height: 160px;'
+            })
+
+
 class ChoiceForm(forms.ModelForm):
-    text = forms.CharField(required=True)  # Default field is optional
+    text = forms.CharField(required=True, widget=forms.Textarea)  # Default sementara
 
     class Meta:
         model = Choice
         fields = ['text', 'is_correct']
 
     def __init__(self, *args, **kwargs):
-        # Extract the assessment object from kwargs
         assessment = kwargs.pop('assessment', None)
         super().__init__(*args, **kwargs)
 
-        # Conditionally set widget based on the assessment flag
-        if assessment and assessment.flag:
-            self.fields['text'].widget = CKEditor5Widget("extends")  # CKEditor widget
+        if assessment and getattr(assessment, 'flag', False):
+            self.fields['text'].widget = CKEditor5Widget(config_name="extends")
         else:
-            self.fields['text'].widget = forms.TextInput(attrs={'class': 'form-control'})  # Plain text widget
+            self.fields['text'].widget = forms.Textarea(attrs={
+                'class': 'w-full px-5 py-4 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition',
+                'rows': 4,
+                'placeholder': 'Tulis pilihan jawaban...',
+                'style': 'resize: vertical;'
+            })
        
 ChoiceFormSet = inlineformset_factory(
     Question,

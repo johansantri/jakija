@@ -1,120 +1,144 @@
 {% extends 'home/tes.html' %}
+{% load widget_tweaks %}
+
 {% block content %}
+{% include "courses/course_set.html" %}
 
+<div class="max-w-4xl mx-auto my-10">
+    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <div class="p-8 lg:p-12">
+            <form method="post">
+                {% csrf_token %}
+                {{ question_form.media }}
 
-
-       
-        {% include "courses/course_set.html"%}
-        <hr>  
-       
-        <div class="support-wrap">
-            <div class="tile">
-              
-              
-
-                <form method="post">
-                    {% csrf_token %}
-                   
-                    <div>
-                        <label for="text" style="color:black; font-weight: bold;">Question Text:</label>
+                <!-- Question Text -->
+                <div class="mb-10">
+                    <label class="block text-2xl font-bold text-gray-800 mb-5">Pertanyaan</label>
+                    <div class="rounded-xl overflow-hidden border-2 border-gray-200">
                         {{ question_form.text }}
-                        {{ question_form.media }}
                     </div>
-                    
-                
-                    &nbsp;
-                    {{ choice_formset.management_form }}
-                    <table class="table table-hover" id="choice-formset">
-                        <thead class="table-light">
-                            <th>Choice Text</th>
-                            <th>Is Correct</th>
-                            <th>Delete?</th>
-                        </thead>
-                        <tbody>
-                            {% for form in choice_formset %}
-                            <tr class="choice-form">
-                                <td>{{ form.text }}</td>
-                                <td>{{ form.is_correct }}</td>
-                                <td>{{ form.DELETE }}</td> <!-- DELETE checkbox -->
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                      </table>
-                      
-                    
-                
-                    <button type="button" id="add-choice" class="btn btn-info btn-sm">Add another Choice</button>
-                    <br><br>
-                    <button type="submit" name="save" class="btn btn-success btn-sm">Save</button>
-                    <button type="submit" name="save_and_add_another" class="btn btn-primary btn-sm">Save and Add Another</button>
-                    <a class="btn btn-danger btn-sm" href="{% url "courses:view-question" course.id section.id assessment.id %}">Cancel <i class="fa fa-close"></i></a>
-                </form>
-                
-          
-                
-                
-            
-            </div>
-                
-        {% endblock %}
-             
-       {% block scripts %}
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        const formsetTable = document.getElementById("choice-formset");
-                        const addChoiceButton = document.getElementById("add-choice");
-                        const totalFormsInput = document.querySelector("#id_choices-TOTAL_FORMS");
-                
-                        addChoiceButton.addEventListener("click", function () {
-                            const formCount = parseInt(totalFormsInput.value, 10); // Current total forms
-                            const newFormIndex = formCount;
-                
-                            // Clone the last form
-                            const lastForm = formsetTable.querySelector("tr.choice-form:last-child");
-                            const newForm = lastForm.cloneNode(true);
-                
-                            // Update form inputs
-                            const regex = new RegExp(`-\\d+-`, "g");
-                            newForm.innerHTML = newForm.innerHTML.replace(regex, `-${newFormIndex}-`);
-                
-                            // Clear input values in the cloned form
-                            Array.from(newForm.querySelectorAll("input")).forEach((input) => {
-                                if (input.type === "text") input.value = "";
-                                if (input.type === "checkbox") input.checked = false;
-                
-                                // Ensure DELETE checkbox has a proper name attribute
-                                if (input.name.includes("DELETE")) {
-                                    input.name = input.name.replace(regex, `-${newFormIndex}-`);
-                                }
-                            });
-                
-                            // Append the new form to the table
-                            formsetTable.querySelector("tbody").appendChild(newForm);
-                
-                            // Increment the TOTAL_FORMS counter
-                            totalFormsInput.value = newFormIndex + 1;
-                        });
-                
-                        // Handle Delete Checkbox Visibility for Newly Added Rows
-                        formsetTable.addEventListener("click", function (event) {
-                            if (event.target.type === "checkbox" && event.target.name.includes("DELETE")) {
-                                const row = event.target.closest("tr.choice-form");
-                                if (event.target.checked) {
-                                    // Hide the row if DELETE is checked
-                                    row.style.display = "none";
-                                } else {
-                                    // Show the row if DELETE is unchecked
-                                    row.style.display = "";
-                                }
-                            }
-                        });
-                    });
-                </script>
+                </div>
 
+                <!-- Choices Table -->
+                {{ choice_formset.management_form }}
 
- 
+                <div class="mb-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-800">Pilihan Jawaban</h3>
+                        <button type="button" id="add-choice"
+                                class="flex items-center gap-2 px-5 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 shadow-md transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Tambah Pilihan
+                        </button>
+                    </div>
 
- 
+                    <div class="border-2 border-gray-200 rounded-xl overflow-hidden">
+                        <table class="w-full">
+                            <thead class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white">
+                                <tr>
+                                    <th class="px-8 py-5 text-left font-semibold">Teks Pilihan</th>
+                                    <th class="px-8 py-5 text-center font-semibold w-32">Benar?</th>
+                                    <th class="px-8 py-5 text-center font-semibold w-32">Hapus?</th>
+                                </tr>
+                            </thead>
+                            <tbody id="choice-tbody" class="bg-white divide-y divide-gray-200">
+                                {% for form in choice_formset %}
+                                <tr class="choice-row hover:bg-gray-50 transition">
+                                    <td class="px-8 py-6">
+                                        {{ form.id }}
+                                        <div class="rounded-lg overflow-hidden border border-gray-300">
+                                            {{ form.text }}
+                                        </div>
+                                    </td>
+                                    <td class="px-8 py-6 text-center">
+                                        <div class="flex justify-center">
+                                            {{ form.is_correct }}
+                                        </div>
+                                    </td>
+                                    <td class="px-8 py-6 text-center">
+                                        <div class="flex justify-center">
+                                            {{ form.DELETE }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center pt-8 border-t-2 border-gray-200">
+                    <button type="submit" name="save"
+                            class="px-8 py-4 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 shadow-lg transition transform hover:scale-105">
+                        Simpan Pertanyaan
+                    </button>
+                    <button type="submit" name="save_and_add_another"
+                            class="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-lg transition transform hover:scale-105">
+                        Simpan & Tambah Lagi
+                    </button>
+                    <a href="{% url 'courses:view-question' course.id section.id assessment.id %}"
+                       class="px-8 py-4 bg-gray-600 text-white font-bold rounded-xl hover:bg-gray-700 shadow-lg transition transform hover:scale-105 text-center">
+                        Batal
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const tbody = document.getElementById("choice-tbody");
+    const addBtn = document.getElementById("add-choice");
+    const totalForms = document.querySelector("#id_choices-TOTAL_FORMS");
+    
+    // Gunakan baris pertama sebagai template (yang pasti sudah ada CKEditor)
+    const templateRow = tbody.querySelector("tr.choice-row");
+
+    addBtn.addEventListener("click", function () {
+        const count = parseInt(totalForms.value);
+
+        // Clone persis baris yang sudah ada
+        const newRow = templateRow.cloneNode(true);
+
+        // Ganti __prefix__ dengan index baru
+        newRow.innerHTML = newRow.innerHTML.replace(/__prefix__/g, count);
+
+        // Kosongkan CKEditor
+        const textarea = newRow.querySelector("textarea");
+        if (textarea) {
+            textarea.value = "";
+            if (textarea.ckeditorInstance) {
+                textarea.ckeditorInstance.setData("");
+            }
+        }
+
+        // Reset semua checkbox
+        newRow.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+
+        // Tambahkan ke tabel
+        tbody.appendChild(newRow);
+
+        // Update jumlah form
+        totalForms.value = count + 1;
+    });
+
+    // Sembunyikan baris jika centang "Hapus"
+    tbody.addEventListener("change", function (e) {
+        if (e.target.name && e.target.name.includes("-DELETE") && e.target.checked) {
+            e.target.closest("tr").style.display = "none";
+        }
+    });
+
+    // Sembunyikan pesan license-key-missing
+    const oldError = console.error;
+    console.error = function () {
+        if (arguments[0] && String(arguments[0]).includes("license-key-missing")) return;
+        oldError.apply(this, arguments);
+    };
+});
+</script>
 {% endblock %}

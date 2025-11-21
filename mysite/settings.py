@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     'lti_consumer',  # Aplikasi LTI Consumer
     'dal',
     'dal_select2',#selct2 server
+    'widget_tweaks',
  
     
 ]

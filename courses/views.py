@@ -4879,7 +4879,9 @@ def create_question_view(request, idcourse, idsection, idassessment):
     # Pass assessment to each form in the formset
     for choice_form in choice_formset.forms:
         choice_form.fields['text'].widget = (
-            CKEditor5Widget("extends") if assessment.flag else forms.TextInput(attrs={'class': 'form-control'})
+            CKEditor5Widget("extends") if assessment.flag else forms.Textarea(attrs={'class': 'w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-indigo-500',
+                'rows': 4,
+                'placeholder': 'Tulis pilihan jawaban...'})
         )
 
     if request.method == 'POST':
