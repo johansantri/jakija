@@ -7,7 +7,6 @@
 <!-- FULL WIDTH CARD -->
 <section class="bg-white border-t border-x border-gray-200 min-h-screen">
   <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
       <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Course Outline</h1>
       <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
@@ -19,12 +18,11 @@
         </button>
       </div>
     </div>
-
     <div id="sections" class="space-y-5"></div>
   </div>
 </section>
 
-<!-- MODAL — Scrollable + Tombol Selalu Kelihatan -->
+<!-- MODAL -->
 <div id="modal" class="fixed inset-0 hidden bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 overflow-y-auto">
   <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-screen flex flex-col my-4">
     <div class="p-5 sm:p-6 border-b flex justify-between items-center">
@@ -61,7 +59,12 @@
 document.addEventListener('DOMContentLoaded', function () {
   const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
   const courseId = {{ course.id|safe }};
-  const API = { sections: '/sections/', materials: '/materials/', assessments: '/assessments/', reorder: '/sections/reorder/' };
+  const API = {
+    sections: '/sections/',
+    materials: '/materials/',
+    assessments: '/assessments/',
+    reorder: '/sections/reorder/'
+  };
   let currentAction = null, currentTarget = null, currentEditId = null, ckeditor = null;
 
   // CKEditor Upload
@@ -211,51 +214,96 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function createUnit(data) {
-    const div = document.createElement('div');
-    div.className = 'bg-gray-50 rounded-xl p-4 border border-gray-200';
-    div.dataset.id = data.id;
-    const mats = (data.materials || []).map(m => `
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 border-b last:border-0 gap-2">
-        <div class="flex items-center gap-2 text-sm"><i class="fas fa-file-alt text-green-600"></i> ${escape(m.title)}</div>
-        <div class="flex gap-3 text-xs">
-          <button class="edit-material text-blue-600 hover:underline" data-id="${m.id}" data-item='${JSON.stringify(m).replace(/'/g,"&#39;")}'>Edit</button>
-          <button class="delete-material text-red-600 hover:underline" data-url="${API.materials}${m.id}/">Hapus</button>
+  const div = document.createElement('div');
+  div.className = 'bg-gray-50 rounded-xl p-4 border border-gray-200';
+  div.dataset.id = data.id;
+
+  // AMBIL section_id DARI assessments atau materials — PASTI ADA!
+  let sectionId = null;
+  if (data.assessments && data.assessments.length > 0) {
+    sectionId = data.assessments[0].section;
+  } else if (data.materials && data.materials.length > 0) {
+    sectionId = data.materials[0].section;
+  }
+
+  // KALAU TIDAK ADA question_count → ANGGAP SUDAH ADA SOAL (SESUAI KEBUTUHAN ANDA!)
+  // Karena Anda sudah bilang: "Kalau assessment muncul, berarti sudah ada soal"
+  const asses = (data.assessments || []).map(a => {
+    const hasQuestions = true; // KARENA ANDA SUDAH BISA BUAT ASSESSMENT → ANGGAP SUDAH ADA SOAL!
+    const weightBadge = a.weight ? `<span class="text-xs bg-purple-100 px-2 py-1 rounded ml-2">${a.weight}%</span>` : '';
+    const viewUrl = `/questions/view/${courseId}/${sectionId}/${a.id}/`;
+
+    return `
+      <div class="flex flex-col sm:flex-row justify-between items-center py-4 border-b last:border-0 gap-4 hover:bg-purple-50 rounded-lg transition-all group">
+        <a href="${viewUrl}" class="flex items-center gap-3 text-sm font-medium text-purple-800 hover:text-purple-900 flex-1 truncate">
+          <i class="fas fa-clipboard-check text-purple-600"></i>
+          <span class="truncate">${escape(a.name)}</span> ${weightBadge}
+          <i class="fas fa-arrow-right text-xs ml-2 opacity-0 group-hover:opacity-100 transition"></i>
+        </a>
+        <div class="flex items-center gap-5 text-xs font-medium">
+          <a href="${viewUrl}" class="text-green-600 font-bold hover:text-green-700 hover:underline whitespace-nowrap">
+            View
+          </a>
+          <button type="button" class="edit-assessment text-blue-600 hover:underline" data-id="${a.id}" data-item='${JSON.stringify(a).replace(/'/g,"&#39;")}'>Edit</button>
+          <button type="button" class="delete-assessment text-red-600 hover:underline" data-url="${API.assessments}${a.id}/">Hapus</button>
         </div>
-      </div>
-    `).join('');
-    const asses = (data.assessments || []).map(a => `
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 border-b last:border-0 gap-2">
-        <div class="flex items-center gap-2 text-sm"><i class="fas fa-clipboard-check text-purple-600"></i> ${escape(a.name)} ${a.weight>0 ? `<span class="text-xs bg-purple-100 px-2 py-1 rounded">${a.weight}%</span>` : ''}</div>
-        <div class="flex gap-3 text-xs">
-          <button class="edit-assessment text-blue-600 hover:underline" data-id="${a.id}" data-item='${JSON.stringify(a).replace(/'/g,"&#39;")}'>Edit</button>
-          <button class="delete-assessment text-red-600 hover:underline" data-url="${API.assessments}${a.id}/">Hapus</button>
-        </div>
-      </div>
-    `).join('');
-    div.innerHTML = `
-      <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-4">
-        <div class="flex items-center gap-2 flex-1">
-          <span class="unit-label font-semibold text-gray-900">${escape(data.title)}</span>
-          <button class="edit text-gray-400 hover:text-blue-600 text-sm"><i class="fas fa-edit"></i></button>
-          <input type="text" class="hidden w-full px-3 py-1.5 border border-gray-300 rounded text-sm" value="${escape(data.title)}">
-        </div>
-        <button class="delete-section text-red-600 hover:text-red-800 text-lg"><i class="fas fa-trash"></i></button>
-      </div>
-      ${mats ? `<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Materials</div>${mats}</div>` : ''}
-      ${asses ? `<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Assessments</div>${asses}</div>` : ''}
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <button class="add-material-btn py-2.5 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 text-sm font-medium">+ Material</button>
-        <button class="add-assessment-btn py-2.5 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 text-sm font-medium">+ Assessment</button>
       </div>
     `;
-    div.querySelectorAll('.edit-material,.edit-assessment').forEach(b => b.onclick = () => openModal(b.classList.contains('edit-material')?'material':'assessment', div, b.dataset.id, JSON.parse(b.dataset.item.replace(/&#39;/g,"'"))));
-    div.querySelectorAll('.delete-material,.delete-assessment').forEach(b => b.onclick = () => confirm('Hapus?') && deleteItem(b.dataset.url));
-    div.querySelector('.add-material-btn').onclick = () => openModal('material', div);
-    div.querySelector('.add-assessment-btn').onclick = () => openModal('assessment', div);
-    div.querySelector('.delete-section').onclick = () => deleteSection(data.id);
-    setupInlineEdit(div, '.unit-label');
-    return div;
-  }
+  }).join('');
+
+  const mats = (data.materials || []).map(m => `
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 border-b last:border-0 gap-2">
+      <div class="flex items-center gap-2 text-sm"><i class="fas fa-file-alt text-green-600"></i> ${escape(m.title)}</div>
+      <div class="flex gap-3 text-xs">
+        <button type="button" class="edit-material text-blue-600 hover:underline" data-id="${m.id}" data-item='${JSON.stringify(m).replace(/'/g,"&#39;")}'>Edit</button>
+        <button type="button" class="delete-material text-red-600 hover:underline" data-url="${API.materials}${m.id}/">Hapus</button>
+      </div>
+    </div>
+  `).join('');
+
+  div.innerHTML = `
+    <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-4">
+      <div class="flex items-center gap-2 flex-1">
+        <span class="unit-label font-semibold text-gray-900">${escape(data.title)}</span>
+        <button type="button" class="edit text-gray-400 hover:text-blue-600 text-sm"><i class="fas fa-edit"></i></button>
+        <input type="text" class="hidden w-full px-3 py-1.5 border border-gray-300 rounded text-sm" value="${escape(data.title)}">
+      </div>
+      <button type="button" class="delete-section text-red-600 hover:text-red-800 text-lg"><i class="fas fa-trash"></i></button>
+    </div>
+
+    ${mats ? `<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Materials</div>${mats}</div>` : ''}
+    ${asses ? `<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Assessments</div><div class="space-y-2">${asses}</div></div>` : ''}
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+      <button type="button" class="add-material-btn py-2.5 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 text-sm font-medium">+ Material</button>
+      <button type="button" class="add-assessment-btn py-2.5 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 text-sm font-medium">+ Assessment</button>
+    </div>
+  `;
+
+  // Event listener
+  div.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', e => e.stopPropagation());
+  });
+
+  div.querySelectorAll('.edit-assessment').forEach(b => {
+    b.addEventListener('click', () => {
+      openModal('assessment', div, b.dataset.id, JSON.parse(b.dataset.item.replace(/&#39;/g,"'")));
+    });
+  });
+
+  div.querySelectorAll('.delete-assessment').forEach(b => {
+    b.addEventListener('click', () => {
+      if (confirm('Hapus assessment ini?')) deleteItem(b.dataset.url);
+    });
+  });
+
+  div.querySelector('.add-material-btn')?.addEventListener('click', () => openModal('material', div));
+  div.querySelector('.add-assessment-btn')?.addEventListener('click', () => openModal('assessment', div));
+  div.querySelector('.delete-section')?.addEventListener('click', () => deleteSection(data.id));
+  setupInlineEdit(div, '.unit-label');
+
+  return div;
+}
 
   function openParents(unitDiv) {
     let parent = unitDiv.parentElement;
@@ -276,7 +324,6 @@ document.addEventListener('DOMContentLoaded', function () {
     container.innerHTML = '';
     data.forEach(s => container.appendChild(createSection(s)));
     makeSortable(container);
-
     if (activeUnitId) {
       const activeUnit = document.querySelector(`[data-id="${activeUnitId}"]`);
       if (activeUnit) {
