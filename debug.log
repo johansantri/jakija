@@ -7408,3 +7408,166 @@ django.template.exceptions.TemplateSyntaxError: Invalid filter: 'str'
 [WARNING] 2025-11-24 15:21:36,915 [django.request] Not Found: /favicon.ico
 [WARNING] 2025-11-24 15:21:38,190 [django.request] Not Found: /favicon.ico
 [WARNING] 2025-11-24 15:21:46,353 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:22:22,007 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:22:23,131 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:25:19,241 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:25:20,715 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:25:46,172 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:25:47,465 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:31:18,922 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:31:19,866 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:31:28,825 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:31:33,611 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:31:38,270 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:31:59,200 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:01,151 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:04,381 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:05,291 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:06,234 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-24 15:32:06,987 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:32:06,989 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[WARNING] 2025-11-24 15:32:07,179 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:15,116 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:17,026 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:17,722 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:24,391 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:26,306 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:27,356 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:41,119 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:42,313 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:42,993 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:43,613 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-24 15:32:44,205 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:32:44,206 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[WARNING] 2025-11-24 15:32:44,353 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:32:53,109 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-24 15:33:54,098 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:33:54,100 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[WARNING] 2025-11-24 15:34:31,472 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[DEBUG] 2025-11-24 15:54:16,945 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:54:16,947 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[DEBUG] 2025-11-24 15:54:19,232 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:54:19,234 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[DEBUG] 2025-11-24 15:54:23,869 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:54:23,871 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[WARNING] 2025-11-24 15:55:25,968 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-24 15:56:25,975 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-24 15:56:31,353 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-24 15:56:32,050 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:56:32,052 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[WARNING] 2025-11-24 15:56:32,911 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-24 15:56:33,907 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:56:33,910 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[DEBUG] 2025-11-24 15:56:35,523 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:56:35,525 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[WARNING] 2025-11-24 15:57:45,561 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-24 15:57:47,654 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:57:47,656 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[DEBUG] 2025-11-24 16:03:21,871 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 16:03:21,873 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[DEBUG] 2025-11-24 16:03:25,057 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 16:03:25,059 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[WARNING] 2025-11-24 16:05:46,355 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-24 16:07:57,235 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 16:07:57,237 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[DEBUG] 2025-11-24 16:08:01,157 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 16:08:01,160 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[DEBUG] 2025-11-24 16:09:12,257 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 16:09:12,259 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[WARNING] 2025-11-24 16:09:14,959 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-24 16:09:15,831 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 16:09:15,834 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[WARNING] 2025-11-24 16:10:34,567 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-24 16:14:58,982 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 16:15:00,106 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:15:00,117 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 16:15:16,881 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 16:15:17,888 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:15:17,899 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-11-24 16:15:32,982 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5989, in studio
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section, 'form': form})
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1081, in render
+    return render_value_in_context(output, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1058, in render_value_in_context
+    value = str(value)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/forms/utils.py", line 79, in __str__
+    return self.as_widget()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/forms/boundfield.py", line 95, in as_widget
+    attrs = self.build_widget_attrs(attrs, widget)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/forms/boundfield.py", line 270, in build_widget_attrs
+    widget.use_required_attribute(self.initial)
+AttributeError: 'CKEditor5Field' object has no attribute 'use_required_attribute'
+[WARNING] 2025-11-24 16:15:33,060 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-24 16:16:21,665 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 16:16:22,757 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:16:22,767 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 16:16:36,370 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 16:16:37,353 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:16:37,363 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 16:16:46,203 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 16:16:47,274 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:16:47,285 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 16:16:50,770 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-24 16:17:02,867 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 16:17:03,929 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:17:03,939 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 16:17:12,749 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 16:17:13,837 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:17:13,848 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 16:17:19,417 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:17:20,220 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:17:20,230 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 16:17:31,702 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:17:35,178 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:17:35,971 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:17:35,981 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 16:17:45,104 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-24 16:17:48,814 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-24 16:20:48,692 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-24 16:21:15,428 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 16:21:16,535 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:21:16,546 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 16:21:20,124 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 16:21:21,270 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 16:21:21,280 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 16:21:23,741 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
