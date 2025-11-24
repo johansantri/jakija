@@ -20,8 +20,10 @@
 </head>
 <body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
 
-    <!-- Navbar -->
-    <header class="fixed w-full top-0 bg-gray-50 shadow-md z-50 flex items-center justify-between px-6 py-4 border-b border-red-100">
+    <header class="fixed w-full top-0 bg-gray-50 shadow-md z-50 border-b border-red-100">
+    <div class="relative flex items-center justify-between px-6 py-4">
+
+        <!-- Logo / Admin Panel -->
         <div class="flex items-center space-x-3">
             <label for="sidebar-toggle" class="cursor-pointer md:hidden text-red-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -31,12 +33,12 @@
             <h1 class="text-2xl font-bold text-red-400">Admin<span class="text-gray-800">Panel</span></h1>
         </div>
 
-        <!-- Messages -->
+        <!-- Messages di tengah header -->
         {% if messages %}
-        <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-full max-w-md z-50 pointer-events-none">
-            <div class="space-y-3 pointer-events-auto">
+        <div id="header-messages" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div class="flex flex-col space-y-1">
                 {% for message in messages %}
-                <div class="p-4 rounded-lg text-sm font-medium shadow-md
+                <div class="p-2 rounded-lg text-sm font-medium shadow-md
                     {% if message.tags == 'success' %}bg-green-100 text-green-800 border border-green-200
                     {% elif message.tags == 'error' %}bg-red-100 text-red-800 border border-red-200
                     {% elif message.tags == 'warning' %}bg-yellow-100 text-yellow-800 border border-yellow-200
@@ -48,7 +50,16 @@
             </div>
         </div>
         {% endif %}
-    </header>
+
+    </div>
+</header>
+
+
+
+
+
+
+
 
     <!-- Sidebar Toggle -->
     <input type="checkbox" id="sidebar-toggle" class="hidden peer"/>
@@ -370,6 +381,24 @@
         }
     });
     </script>
+    <!-- Script untuk hilang otomatis -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const messages = document.getElementById('header-messages');
+    if (messages) {
+        setTimeout(() => {
+            // Tambahkan animasi fade out (optional)
+            messages.style.transition = "opacity 0.5s ease";
+            messages.style.opacity = 0;
+
+            // Hapus element dari DOM setelah animasi
+            setTimeout(() => {
+                messages.remove();
+            }, 500);
+        }, 5000); // 5000ms = 5 detik
+    }
+});
+</script>
 
 </body>
 </html>

@@ -1,26 +1,29 @@
 {% extends 'home/tes.html' %}
 {% block content %}
 
+{% include "courses/course_set.html" %}
+<section class="my-10 border-gray-300"></section>
 
 
-       
-        {% include "courses/course_set.html"%}
-        <hr>  
-       
-        <div class="support-wrap">
-         
-        
-             <h2>Create AskOra Question</h2>
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ question_form.as_p }}
-    {{ question_form.media }}
-    <button type="submit" class="btn btn-primary">Submit Question</button>
-  </form>
+    
+    <h2 class="text-2xl font-semibold mb-4 text-gray-800">
+        Create AskOra Question
+    </h2>
 
+    <form method="POST" enctype="multipart/form-data" class="space-y-4">
+        {% csrf_token %}
 
- 
-    </div>
- 
+        <div class="space-y-4">
+            {{ question_form.as_p }}
+            {{ question_form.media }}
+        </div>
 
+        <button 
+            type="submit" 
+            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition-colors">
+            Submit Question
+        </button>
+    </form>
+
+</section>
 {% endblock %}

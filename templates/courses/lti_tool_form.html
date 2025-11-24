@@ -1,50 +1,74 @@
 {% extends 'home/tes.html' %}
 
 {% block content %}
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-          <h5 class="mb-0">Tambahkan LTI External Tool (LTI 1.1)</h5>
-          
+{% include "courses/course_set.html" %}
+<section class="bg-gray-50 min-h-screen py-10 w-full">
+    
+    <!-- Card -->
+    <div class="bg-white shadow-lg border border-gray-200 rounded-2xl w-full mx-auto px-6 sm:px-8 py-8">
+
+        <!-- Header -->
+        <div class="bg-blue-600 text-white px-4 py-4 rounded-t-2xl">
+            <h2 class="text-xl font-semibold">Tambahkan LTI External Tool (LTI 1.1)</h2>
+            <p class="text-blue-100 text-sm mt-1">Isi form untuk menambahkan external tool LTI.</p>
         </div>
-        <div class="card-body">
-          <form method="post" novalidate>
-            {% csrf_token %}
 
-            {% if form.non_field_errors %}
-              <div class="alert alert-danger">
-                {{ form.non_field_errors }}
-              </div>
-            {% endif %}
+        <!-- Body -->
+        <div class="mt-6 w-full">
 
-            {% for field in form %}
-              <div class="mb-3">
-                {{ field.label_tag }}
-                {{ field }}
+            <form method="post" novalidate class="w-full">
+                {% csrf_token %}
 
-                {% if field.help_text %}
-                  <div class="form-text text-muted">
-                    {{ field.help_text }}
-                  </div>
+                <!-- Non-field errors -->
+                {% if form.non_field_errors %}
+                    <div class="mb-6 bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-lg">
+                        {{ form.non_field_errors }}
+                    </div>
                 {% endif %}
 
-                {% for error in field.errors %}
-                  <div class="text-danger small">
-                    {{ error }}
-                  </div>
-                {% endfor %}
-              </div>
-            {% endfor %}
+                <!-- Full-width fields -->
+                <div class="space-y-6 w-full">
+                    {% for field in form %}
+                        <div class="w-full">
 
-            <div class="d-flex justify-content-end">
-              <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-          </form>
+                            <!-- Label -->
+                            <label for="{{ field.id_for_label }}" class="block text-gray-800 font-medium mb-2">
+                                {{ field.label }}
+                            </label>
+
+                            <!-- Input -->
+                            <div class="w-full">
+                                {{ field }}
+                            </div>
+
+                            <!-- Help text -->
+                            {% if field.help_text %}
+                                <p class="text-sm text-gray-500 mt-1">{{ field.help_text }}</p>
+                            {% endif %}
+
+                            <!-- Field errors -->
+                            {% for error in field.errors %}
+                                <p class="text-red-600 text-sm mt-1">{{ error }}</p>
+                            {% endfor %}
+
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex justify-end mt-8 w-full">
+                    <button
+                        type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium transition">
+                        Simpan
+                    </button>
+                </div>
+
+            </form>
+
         </div>
-      </div>
     </div>
-  </div>
-</div>
+
+</section>
+
 {% endblock %}

@@ -7193,3 +7193,83 @@ django.template.exceptions.TemplateSyntaxError: Invalid filter: 'str'
 [WARNING] 2025-11-24 10:46:42,208 [django.request] Not Found: /favicon.ico
 [WARNING] 2025-11-24 10:46:43,798 [django.request] Not Found: /favicon.ico
 [WARNING] 2025-11-24 10:46:49,668 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:18:35,541 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:18:39,710 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:18:41,752 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:26:54,765 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:34:58,169 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:35:57,460 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:39:24,785 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:40:32,471 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:40:54,050 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:41:35,661 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:41:57,575 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:43:04,593 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:43:54,338 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 13:45:42,935 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-24 13:45:44,043 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 13:45:44,054 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 13:45:46,525 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-24 13:45:47,648 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 13:45:47,658 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 13:45:50,438 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:46:23,767 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:46:25,708 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:46:35,350 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:46:52,500 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:46:56,749 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:47:40,383 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 13:58:43,094 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-24 13:58:44,125 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 13:58:44,135 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 13:58:47,612 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:59:20,961 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 13:59:39,851 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 14:00:24,652 [courses.views] LTI 1.1 Launch requested by user admin (ID: 1)
+[DEBUG] 2025-11-24 14:00:24,656 [courses.views] Sending LTI Launch to https://asimarif.h5p.com/lti with params: {'oauth_consumer_key': 'asimarif-b1bec', 'oauth_signature_method': 'HMAC-SHA1', 'oauth_version': '1.0', 'oauth_nonce': 'dddfcfb206a3498dacf6038db8d18c78', 'oauth_timestamp': '1763967624', 'resource_link_id': 'res-7', 'user_id': '1', 'roles': 'Instructor', 'lis_person_name_full': 'mr admin', 'lis_person_contact_email_primary': 'admin@admin.com', 'context_id': 'course-2', 'context_title': 'Course', 'launch_presentation_locale': 'en-US', 'lti_version': 'LTI-1p0', 'lti_message_type': 'basic-lti-launch-request', 'tool_consumer_info_product_family_code': 'django-lms', 'tool_consumer_info_version': '1.0', 'launch_presentation_document_target': 'iframe', 'lis_outcome_service_url': 'http://127.0.0.1:8000/lti/grade-callback', 'lis_result_sourcedid': 'lti-7-1', 'oauth_signature': 'wOQW00+N/wsUvxYZikQ9O6FU7hI='}
+[INFO] 2025-11-24 14:00:24,662 [courses.views] Initialized LTIResult for user 1, assessment 7
+[WARNING] 2025-11-24 14:03:24,787 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:03:29,448 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:05:02,043 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:06:33,726 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:07:55,374 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:08:54,643 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:09:05,579 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:09:11,210 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:09:14,507 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:09:18,191 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:10:01,443 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:10:28,101 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:10:37,065 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:10:44,732 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:11:21,768 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:12:09,361 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:12:29,466 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:13:32,606 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:13:43,886 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-24 14:14:25,642 [audit.signals] Error in audit log (post_delete) for Section pk=76: Section matching query does not exist.
+[ERROR] 2025-11-24 14:14:25,642 [audit.signals] Error in audit log (post_delete) for Section pk=75: Section matching query does not exist.
+[ERROR] 2025-11-24 14:14:28,319 [audit.signals] Error in audit log (post_delete) for Section pk=83: Section matching query does not exist.
+[ERROR] 2025-11-24 14:14:28,320 [audit.signals] Error in audit log (post_delete) for Section pk=82: Section matching query does not exist.
+[ERROR] 2025-11-24 14:14:28,320 [audit.signals] Error in audit log (post_delete) for Section pk=81: Section matching query does not exist.
+[WARNING] 2025-11-24 14:18:25,461 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:20:34,537 [django.request] Not Found: /course/2/section/76/lti/7/create/
+[WARNING] 2025-11-24 14:20:34,624 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:20:42,379 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:20:44,113 [django.request] Not Found: /course/2/section/76/lti/7/create/
+[WARNING] 2025-11-24 14:20:44,180 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:20:48,081 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:20:52,208 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:21:12,784 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:21:16,397 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:21:21,921 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:22:16,266 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:22:31,173 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-24 14:24:53,558 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-11-24 14:24:53,559 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-11-24 14:24:53,560 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-11-24 06:24:53.558341+00:00
+[WARNING] 2025-11-24 14:25:05,501 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-24 14:25:08,569 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-24 14:25:15,796 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-24 14:25:18,610 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-24 14:25:21,687 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json

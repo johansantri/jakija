@@ -1,59 +1,92 @@
-<!-- templates/courses/edit_lti_tool_form.html -->
 {% extends 'home/tes.html' %}
 {% load static %}
 {% block content %}
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-10 col-lg-8">
-            <div class="card shadow-lg border-0 animate__animated animate__fadeIn">
-                <div class="card-header bg-primary text-white text-center">
-                    <h3 class="mb-0">Edit LTI Tool</h3>
+{% include "courses/course_set.html" %}
+<section class="bg-white border-t border-x border-gray-200 min-h-screen">
+  
+
+                <!-- Header -->
+                <div class="bg-blue-600 text-white text-center py-4 px-6">
+                    <h3 class="text-xl font-semibold">Edit LTI Tool</h3>
                 </div>
-                <div class="card-body p-4">
-                    <p class="text-muted text-center mb-4">
+
+                <!-- Body -->
+                <div class="p-6">
+                    <p class="text-gray-500 text-center mb-6">
                         Edit LTI tool for assessment <strong>"{{ assessment.name }}"</strong>.
                     </p>
 
                     {% if messages %}
                         {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            <div class="mb-4 px-4 py-3 rounded border 
+                                {% if message.tags == 'success' %}
+                                    bg-green-100 border-green-300 text-green-700
+                                {% elif message.tags == 'error' %}
+                                    bg-red-100 border-red-300 text-red-700
+                                {% else %}
+                                    bg-gray-100 border-gray-300 text-gray-700
+                                {% endif %}
+                            ">
                                 {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         {% endfor %}
                     {% endif %}
 
                     <form method="POST" id="lti-tool-form" novalidate>
                         {% csrf_token %}
+
                         {% for field in form %}
-                            <div class="mb-3">
-                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                                {{ field }}
+                            <div class="mb-5">
+                                <label for="{{ field.id_for_label }}" class="block text-gray-700 font-medium mb-1">
+                                    {{ field.label }}
+                                </label>
+
+                                <!-- Field itself -->
+                                <div class="w-full">
+                                    {{ field }}
+                                </div>
+
                                 {% if field.help_text %}
-                                    <div class="form-text text-muted">{{ field.help_text }}</div>
+                                    <p class="text-sm text-gray-500 mt-1">{{ field.help_text }}</p>
                                 {% endif %}
+
                                 {% for error in field.errors %}
-                                    <div class="text-danger small">{{ error }}</div>
+                                    <p class="text-red-600 text-sm mt-1">{{ error }}</p>
                                 {% endfor %}
                             </div>
                         {% endfor %}
 
-                        <div class="d-flex justify-content-center mt-4">
-                            <button type="submit" class="btn btn-primary btn-lg px-5 me-3" id="submit-btn">
-                                <span class="spinner-border spinner-border-sm me-2 d-none" role="status"></span>
+                        <!-- Buttons -->
+                        <div class="flex justify-center mt-6 space-x-4">
+                            <button 
+                                type="submit" 
+                                class="bg-blue-600 hover:bg-blue-700 text-white text-lg px-6 py-2 rounded-lg flex items-center justify-center gap-2 transition disabled:opacity-50"
+                                id="submit-btn"
+                            >
+                                <span 
+                                    class="hidden spinner-border w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" 
+                                    role="status"
+                                ></span>
                                 Update
                             </button>
-                            <a href="{% url 'courses:view-question' idcourse=course.id idsection=section.id idassessment=assessment.id %}" class="btn btn-outline-secondary btn-lg px-5">Cancel</a>
+
+                            <a href="{% url 'courses:view-question' idcourse=course.id idsection=section.id idassessment=assessment.id %}" 
+                               class="text-gray-700 border border-gray-400 px-6 py-2 rounded-lg text-lg hover:bg-gray-100 transition">
+                                Cancel
+                            </a>
                         </div>
                     </form>
                 </div>
-                <div class="card-footer text-center text-muted small">
+
+                <!-- Footer -->
+                <div class="bg-gray-100 text-center text-gray-500 text-sm py-3">
                     Please ensure all LTI details are accurate before saving.
                 </div>
+
             </div>
-        </div>
-    </div>
-</div>
+
+ 
+</section>
 {% endblock %}
 
 {% block scripts %}
@@ -80,7 +113,7 @@ document.getElementById('lti-tool-form').addEventListener('submit', function(e) 
     const spinner = submitBtn.querySelector('.spinner-border');
 
     submitBtn.disabled = true;
-    spinner.classList.remove('d-none');
+    spinner.classList.remove('hidden');
 
     const formData = new FormData(form);
 
@@ -95,7 +128,7 @@ document.getElementById('lti-tool-form').addEventListener('submit', function(e) 
     .then(response => response.json())
     .then(data => {
         submitBtn.disabled = false;
-        spinner.classList.add('d-none');
+        spinner.classList.add('hidden');
 
         if (data.success) {
             Swal.fire({
@@ -117,7 +150,7 @@ document.getElementById('lti-tool-form').addEventListener('submit', function(e) 
     })
     .catch(error => {
         submitBtn.disabled = false;
-        spinner.classList.add('d-none');
+        spinner.classList.add('hidden');
         Swal.fire({
             icon: 'error',
             title: 'Request Failed',

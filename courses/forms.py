@@ -78,9 +78,26 @@ class LTIExternalToolForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
-        
+
+        # Tailwind base class for input fields
+        base_input_class = (
+            "w-full px-4 py-2 border border-gray-300 rounded-lg "
+            "focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800"
+        )
+
+        # Tailwind class for textarea
+        base_textarea_class = (
+            "w-full px-4 py-2 border border-gray-300 rounded-lg "
+            "focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800"
+        )
+
+        for name, field in self.fields.items():
+            if isinstance(field.widget, forms.Textarea):
+                field.widget.attrs['class'] = base_textarea_class
+            else:
+                field.widget.attrs['class'] = base_input_class
+
+        # Placeholders
         self.fields['tool_name'].widget.attrs.update({
             'placeholder': 'e.g., H5P, Labster, Moodle Quiz Tool'
         })
@@ -100,6 +117,7 @@ class LTIExternalToolForm(forms.ModelForm):
             'placeholder': 'key1=value1\nkey2=value2\n(optional)',
             'rows': 4,
         })
+
 
 
 class CourseRatingForm(forms.ModelForm):
@@ -162,16 +180,29 @@ class AskOraForm(forms.ModelForm):
         fields = ['title','question_text','response_deadline']  # Menyesuaikan field dengan model AskOra
         
         widgets = {
-            'title':forms.TextInput(attrs={'class':'form-control','placeholder':'title '}),
+            'title': forms.TextInput(
+                attrs={
+                    'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none',
+                    'placeholder': 'Title'
+                }
+            ),
+
             "question_text": CKEditor5Widget(
-                attrs={"class": "django_ckeditor_5"},
+                attrs={
+                    "class": "django_ckeditor_5 w-full border border-gray-300 rounded-lg",
+                },
                 config_name="extends",
             ),
-            #'question_text': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Insert Question hare', 'rows': 4}),
-            'response_deadline': forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'Select response deadline', 'type': 'datetime-local'})
-           
-           
+
+            'response_deadline': forms.DateTimeInput(
+                attrs={
+                    'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none',
+                    'placeholder': 'Select response deadline',
+                    'type': 'datetime-local'
+                }
+            ),
         }
+
         def clean_response_deadline(self):
             response_deadline = self.cleaned_data['response_deadline']
             if response_deadline < timezone.now():

@@ -7,9 +7,9 @@
     <h1 class="flex items-center justify-between sm:justify-start gap-3 w-full">
       
       <!-- Judul Course — Super Responsive Text -->
-      <span class="font-bold text-red-600 leading-tight truncate">
+      <span class="font-bold  leading-tight truncate">
         <span class="text-lg xs:text-xl sm:text-2xl lg:text-3xl xl:text-3xl">
-          {{ course.course_name }}
+          <a href="{% url 'courses:studio' course.id %}">{{ course.course_name }}</a>
         </span>
       </span>
 
@@ -17,7 +17,7 @@
       <div class="relative">
         <button 
           id="more-options"
-          class="text-red-600 hover:text-red-700 active:scale-95 p-3 rounded-xl hover:bg-red-50 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200">
+          class=" hover:text-red-700 active:scale-95 p-3 rounded-xl hover:bg-red-50 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200">
           <i class="fas fa-ellipsis-h text-lg sm:text-xl lg:text-2xl"></i>
         </button>
 
