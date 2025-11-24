@@ -7036,3 +7036,19 @@ Traceback (most recent call last):
 django.template.exceptions.TemplateSyntaxError: Invalid filter: 'str'
 [WARNING] 2025-11-21 16:57:48,854 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
 [WARNING] 2025-11-21 16:59:39,784 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-11-24 09:26:48,724 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 09:26:49,553 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 09:26:49,563 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 09:27:07,039 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 09:28:45,443 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-24 09:28:55,439 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-24 09:28:57,214 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-24 09:28:58,805 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-24 09:29:01,255 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-24 09:29:02,498 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-24 09:29:07,646 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-11-24 09:29:57,528 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 09:30:25,710 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 09:34:00,138 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 09:34:32,900 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 09:34:34,691 [django.request] Not Found: /favicon.ico
