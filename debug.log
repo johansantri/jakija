@@ -7052,3 +7052,122 @@ django.template.exceptions.TemplateSyntaxError: Invalid filter: 'str'
 [WARNING] 2025-11-24 09:34:00,138 [django.request] Not Found: /favicon.ico
 [WARNING] 2025-11-24 09:34:32,900 [django.request] Not Found: /favicon.ico
 [WARNING] 2025-11-24 09:34:34,691 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 09:41:12,312 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 09:41:13,739 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 09:43:54,050 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 09:44:33,883 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 09:44:35,536 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 09:53:16,342 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 09:56:38,128 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 09:58:46,393 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 09:58:47,613 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 09:58:47,625 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 09:59:07,176 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 09:59:08,326 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 09:59:08,339 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 09:59:22,641 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 09:59:23,691 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 09:59:23,702 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 09:59:28,242 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 09:59:47,796 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 09:59:48,891 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 09:59:48,902 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:00:09,740 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:00:10,812 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:00:10,823 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:00:14,957 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:01:57,817 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:01:58,964 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:01:58,974 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:02:01,450 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:02:50,452 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:02:51,501 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:02:51,512 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:02:54,932 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:05:23,069 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-24 10:07:08,889 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:07:09,655 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:07:09,665 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:07:16,847 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:07:49,139 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:08:18,724 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:08:19,517 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:08:19,527 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:08:21,971 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:10:24,601 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:10:29,879 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:10:30,668 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:10:30,678 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:10:36,272 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:11:04,202 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-24 10:11:05,237 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:11:05,247 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:11:15,164 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-24 10:11:16,199 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:11:16,209 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:11:25,052 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:11:36,328 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:11:37,121 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:11:37,131 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:12:07,779 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:14:00,643 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:14:01,782 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:14:01,792 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:14:12,836 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:14:13,924 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:14:13,935 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:14:16,716 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:14:22,988 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:14:28,994 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:14:29,786 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:14:29,796 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:16:17,429 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-24 10:16:18,463 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:16:18,473 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:16:20,298 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:16:39,040 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-24 10:16:40,101 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:16:40,111 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:16:47,962 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-24 10:16:49,084 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:16:49,095 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:16:51,686 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:17:13,974 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-24 10:17:15,024 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:17:15,034 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:17:17,817 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:17:21,884 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:17:25,921 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:17:26,780 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:18:36,381 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:18:37,471 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:18:37,481 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:18:59,365 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:19:07,818 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:19:08,615 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:19:08,625 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:19:13,151 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:20:09,523 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:20:44,915 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:21:46,478 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-11-24 10:21:47,545 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:21:47,555 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:21:53,134 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:22:06,146 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:22:07,252 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:22:07,263 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:22:13,998 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:22:18,043 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:22:18,856 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:22:18,866 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:22:21,160 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:22:38,308 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:22:39,087 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:22:39,097 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:22:59,687 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:23:00,742 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:23:00,753 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:23:13,893 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:23:14,969 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:23:14,980 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:23:17,263 [django.request] Not Found: /favicon.ico

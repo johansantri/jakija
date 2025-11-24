@@ -5948,6 +5948,11 @@ def category_create_view(request):
 
 #studio detail courses
 
+
+class CKEditorForm(forms.Form):
+    description = forms.CharField(widget=CKEditor5Widget(config_name='extends'), required=False)
+
+
 def studio(request, id):
     # Check if the user is authenticated
     if not request.user.is_authenticated:
@@ -5979,9 +5984,9 @@ def studio(request, id):
     section = Section.objects.filter(
     parent=None, courses=course
 ).prefetch_related('materials', 'assessments')  # Add all necessary relationships
-
+    form = CKEditorForm()
     # Render the page with the course and sections data
-    return render(request, 'courses/course_detail.html', {'course': course, 'section': section})
+    return render(request, 'courses/course_detail.html', {'course': course, 'section': section, 'form': form})
 
 @csrf_exempt
 @require_http_methods(["POST"])
