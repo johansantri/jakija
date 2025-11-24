@@ -1,18 +1,43 @@
 {% extends 'home/tes.html' %}
 {% block content %}
 
+<section class="bg-white border-t border-x border-gray-200 min-h-screen">
+<div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">update {{ microcredential.title }}</h1>
+    
+</div>
 
 
-    <h1>Edit Microcredential: {{ microcredential.title }}</h1>
 
-    <form method="post" enctype="multipart/form-data">
+
+    <form method="post" enctype="multipart/form-data" class="space-y-6">
         {% csrf_token %}
 
-        {{ form.as_p }}
+        {% for field in form %}
+            <div>
+                {{ field.label_tag }}
+                {{ field }}
 
-        <button type="submit" class="btn btn-success">Simpan Perubahan</button>
-        <a href="{% url 'courses:microcredential-list' %}" class="btn btn-secondary">Batal</a>
+                {% if field.help_text %}
+                    <p class="text-sm text-gray-500 mt-1">{{ field.help_text }}</p>
+                {% endif %}
+
+                {% for error in field.errors %}
+                    <p class="text-sm text-red-600 mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <div class="flex justify-end gap-3">
+            <button type="submit" class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg shadow transition">
+                Simpan Perubahan
+            </button>
+            <a href="{% url 'courses:microcredential-list' %}" class="px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-900 font-medium rounded-lg shadow transition">
+                Batal
+            </a>
+        </div>
     </form>
-
-
+</div>
+</section>
 {% endblock %}

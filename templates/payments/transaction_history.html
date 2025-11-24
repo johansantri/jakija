@@ -1,165 +1,116 @@
 {% extends 'home/tes.html' %}
 {% load humanize static %}
 
-{% block extra_css %}
-<link href="{% static 'css/custom.css' %}" rel="stylesheet">
-{% endblock %}
-
 {% block content %}
-<div class="container py-5">
+<div class="container mx-auto py-12 px-4">
+
   <!-- Header -->
-  <div class="text-center mb-5">
-    <h1 class="display-5 fw-bold text-primary">
-      <i class="bi bi-wallet2 me-2"></i>Transaction History
+  <div class="text-center mb-12">
+    <h1 class="text-3xl font-bold text-blue-600 flex items-center justify-center gap-2">
+      <i class="bi bi-wallet2 text-2xl"></i> Transaction History
     </h1>
-    <p class="text-muted lead">Track your past and pending transactions</p>
+    <p class="text-gray-500 text-lg mt-2">Track your past and pending transactions</p>
   </div>
 
   {% if transactions %}
-    <!-- Filter Status → Ubah ke status baru: completed, pending, failed, cancelled -->
-    <div class="d-flex flex-wrap justify-content-center gap-2 mb-4" role="radiogroup" aria-label="Transaction status filters">
-      <a href="?status=all" class="btn btn-outline-primary rounded-pill px-3 py-2 {% if selected_status == 'all' %}active{% endif %}" role="radio" aria-checked="{% if selected_status == 'all' %}true{% else %}false{% endif %}">All</a>
-      <a href="?status=completed" class="btn btn-outline-success rounded-pill px-3 py-2 {% if selected_status == 'completed' %}active{% endif %}" role="radio" aria-checked="{% if selected_status == 'completed' %}true{% else %}false{% endif %}">Completed</a>
-      <a href="?status=pending" class="btn btn-outline-warning text-dark rounded-pill px-3 py-2 {% if selected_status == 'pending' %}active{% endif %}" role="radio" aria-checked="{% if selected_status == 'pending' %}true{% else %}false{% endif %}">Pending</a>
-      <a href="?status=failed" class="btn btn-outline-danger rounded-pill px-3 py-2 {% if selected_status == 'failed' %}active{% endif %}" role="radio" aria-checked="{% if selected_status == 'failed' %}true{% else %}false{% endif %}">Failed</a>
-      <a href="?status=cancelled" class="btn btn-outline-secondary rounded-pill px-3 py-2 {% if selected_status == 'cancelled' %}active{% endif %}" role="radio" aria-checked="{% if selected_status == 'cancelled' %}true{% else %}false{% endif %}">Cancelled</a>
+    <!-- Filter Status -->
+    <div class="flex flex-wrap justify-center gap-2 mb-8" role="radiogroup" aria-label="Transaction status filters">
+      <a href="?status=all" class="px-4 py-2 rounded-full border border-blue-500 text-blue-500 hover:bg-blue-50 {% if selected_status == 'all' %}bg-blue-500 text-white{% endif %}" role="radio" aria-checked="{% if selected_status == 'all' %}true{% else %}false{% endif %}">All</a>
+      <a href="?status=completed" class="px-4 py-2 rounded-full border border-green-500 text-green-500 hover:bg-green-50 {% if selected_status == 'completed' %}bg-green-500 text-white{% endif %}" role="radio" aria-checked="{% if selected_status == 'completed' %}true{% else %}false{% endif %}">Completed</a>
+      <a href="?status=pending" class="px-4 py-2 rounded-full border border-yellow-400 text-yellow-700 hover:bg-yellow-50 {% if selected_status == 'pending' %}bg-yellow-400 text-white{% endif %}" role="radio" aria-checked="{% if selected_status == 'pending' %}true{% else %}false{% endif %}">Pending</a>
+      <a href="?status=failed" class="px-4 py-2 rounded-full border border-red-500 text-red-500 hover:bg-red-50 {% if selected_status == 'failed' %}bg-red-500 text-white{% endif %}" role="radio" aria-checked="{% if selected_status == 'failed' %}true{% else %}false{% endif %}">Failed</a>
+      <a href="?status=cancelled" class="px-4 py-2 rounded-full border border-gray-400 text-gray-500 hover:bg-gray-100 {% if selected_status == 'cancelled' %}bg-gray-400 text-white{% endif %}" role="radio" aria-checked="{% if selected_status == 'cancelled' %}true{% else %}false{% endif %}">Cancelled</a>
     </div>
 
-    <!-- Summary Info → Ganti total_paid ke total_completed, tambah cancelled opsional -->
-    <div class="row g-4 mb-5">
-      <div class="col-md-3">
-        <div class="card shadow border-0 rounded-3 bg-info bg-opacity-10 text-info-emphasis h-100 animate-card">
-          <div class="card-body text-center">
-            <i class="bi bi-list-check fs-1 mb-3"></i>
-            <h5 class="card-title mb-1">Total Transactions</h5>
-            <h3 class="fw-bold">{{ total_transactions }}</h3>
-          </div>
-        </div>
+    <!-- Summary Info -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div class="bg-blue-50 text-blue-600 rounded-lg shadow p-5 text-center">
+        <i class="bi bi-list-check text-3xl mb-2"></i>
+        <h5 class="font-semibold">Total Transactions</h5>
+        <p class="text-2xl font-bold">{{ total_transactions }}</p>
       </div>
-      <div class="col-md-3">
-        <div class="card shadow border-0 rounded-3 bg-success bg-opacity-10 text-success-emphasis h-100 animate-card">
-          <div class="card-body text-center">
-            <i class="bi bi-check-circle-fill fs-1 mb-3"></i>
-            <h5 class="card-title mb-1">Total Completed</h5>
-            <h3 class="fw-bold">IDR {{ total_completed|intcomma }}</h3>
-          </div>
-        </div>
+      <div class="bg-green-50 text-green-600 rounded-lg shadow p-5 text-center">
+        <i class="bi bi-check-circle-fill text-3xl mb-2"></i>
+        <h5 class="font-semibold">Total Completed</h5>
+        <p class="text-2xl font-bold">IDR {{ total_completed|intcomma }}</p>
       </div>
-      <div class="col-md-3">
-        <div class="card shadow border-0 rounded-3 bg-warning bg-opacity-10 text-warning-emphasis h-100 animate-card">
-          <div class="card-body text-center">
-            <i class="bi bi-hourglass-split fs-1 mb-3"></i>
-            <h5 class="card-title mb-1">Total Pending</h5>
-            <h3 class="fw-bold">IDR {{ total_pending|intcomma }}</h3>
-          </div>
-        </div>
+      <div class="bg-yellow-50 text-yellow-700 rounded-lg shadow p-5 text-center">
+        <i class="bi bi-hourglass-split text-3xl mb-2"></i>
+        <h5 class="font-semibold">Total Pending</h5>
+        <p class="text-2xl font-bold">IDR {{ total_pending|intcomma }}</p>
       </div>
-      <div class="col-md-3">
-        <div class="card shadow border-0 rounded-3 bg-secondary bg-opacity-10 text-secondary-emphasis h-100 animate-card">
-          <div class="card-body text-center">
-            <i class="bi bi-x-circle fs-1 mb-3"></i>
-            <h5 class="card-title mb-1">Total Cancelled</h5>
-            <h3 class="fw-bold">IDR {{ total_cancelled|intcomma|default:"0" }}</h3>  <!-- Tambah ini di view kalau mau -->
-          </div>
-        </div>
+      <div class="bg-gray-100 text-gray-700 rounded-lg shadow p-5 text-center">
+        <i class="bi bi-x-circle text-3xl mb-2"></i>
+        <h5 class="font-semibold">Total Cancelled</h5>
+        <p class="text-2xl font-bold">IDR {{ total_cancelled|intcomma|default:"0" }}</p>
       </div>
     </div>
 
-    <!-- Transaction List → Ubah kondisi ke completed, pending, cancelled/failed -->
-  <!-- Transaction List → Ubah kondisi ke completed, pending, cancelled/failed -->
-    <div class="accordion accordion-flush" id="transactionAccordion">
+    <!-- Transaction List -->
+    <div class="space-y-4">
       {% for tx in transactions %}
-        <div class="accordion-item shadow-sm rounded-3 mb-3
-          {% if tx.status == 'completed' %}border-start border-4 border-success
-          {% elif tx.status == 'pending' %}border-start border-4 border-warning
-          {% elif tx.status == 'cancelled' %}border-start border-4 border-secondary
-          {% else %}border-start border-4 border-danger{% endif %} animate-card">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed bg-transparent" type="button" data-bs-toggle="collapse"
-              data-bs-target="#collapse-{{ tx.id }}" aria-expanded="false" aria-controls="collapse-{{ tx.id }}">
-              <div class="d-flex justify-content-between align-items-center w-100">
-                <div>
-                  <h5 class="mb-0">
-                    <i class="bi 
-                      {% if tx.status == 'completed' %}bi-check-circle-fill text-success
-                      {% elif tx.status == 'pending' %}bi-hourglass-split text-warning
-                      {% elif tx.status == 'cancelled' %}bi-x-circle text-secondary
-                      {% else %}bi-x-circle-fill text-danger{% endif %} me-2"></i>
-                    TXN-{{ tx.id|stringformat:"05d" }}
-                  </h5>
-                  <p class="mb-0 text-muted small">IDR {{ tx.total_amount|intcomma }} • {{ tx.created_at|date:"d M Y, H:i" }}</p>
-                </div>
-                <span class="badge rounded-pill
-                  {% if tx.status == 'completed' %}bg-success
-                  {% elif tx.status == 'pending' %}bg-warning text-dark
-                  {% elif tx.status == 'cancelled' %}bg-secondary
-                  {% else %}bg-danger{% endif %}">
-                  {{ tx.status|title }}
-                </span>
-              </div>
-            </button>
-          </h2>
-          <div id="collapse-{{ tx.id }}" class="accordion-collapse collapse" data-bs-parent="#transactionAccordion">
-            <div class="accordion-body">
-              {% if tx.description %}
-                <p class="mb-2"><strong>Description:</strong> {{ tx.description }} 
-                  
-                </p>
-              {% endif %}
-              <p class="mb-2"><strong>Courses:</strong></p>
-              <ul class="list-group list-group-flush">
-                {% for course in tx.courses.all %}
-                  <li class="list-group-item border-0 ps-0">
-                    <a href="{% url 'courses:course_lms_detail' course.id course.slug %}" class="text-decoration-none text-primary">
-                      {{ course.course_name }}
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
-
-              {# ✅ Untuk pending: Link ke transaction_detail via merchant_ref (jika belum expired) #}
-              {% if tx.status == 'pending' %}
-                {% now "Y-m-d H:i:s" as current_time %}
-                {% if tx.expired_at|date:"Y-m-d H:i:s" > current_time %}
-                  <div class="mt-3">
-                    <a href="{% url 'payments:transaction_detail' merchant_ref=tx.merchant_ref %}" 
-                      class="btn btn-warning btn-sm w-100">
-                      <i class="bi bi-credit-card me-1"></i> Resume Payment
-                    </a>
-                    <p class="text-muted small mt-1 mb-0">Expired in: {{ tx.expired_at|timeuntil }}</p>
-                  </div>
-                {% else %}
-                  <div class="mt-3 p-3 bg-danger bg-opacity-10 border border-danger rounded">
-                    <p class="text-danger small mb-0">Payment expired. Please checkout again.</p>
-                  </div>
-                {% endif %}
-              {% endif %}
-
-              {# ✅ Untuk completed: Link ke invoice detail (mirip desain pending) #}
-              {% if tx.status == 'completed' %}
-                <div class="mt-3">
-                  <a href="{% url 'payments:transaction_invoice_detail' pk=tx.id %}" 
-                    class="btn btn-success btn-sm w-100">
-                    <i class="bi bi-file-earmark-text me-1"></i> View Invoice
-                  </a>
-                  <p class="text-muted small mt-1 mb-0">Completed on: {{ tx.updated_at|date:"d M Y, H:i" }}</p>
-                </div>
-              {% endif %}
+        <div class="border-l-4 rounded-lg shadow p-4 {% if tx.status == 'completed' %}border-green-500{% elif tx.status == 'pending' %}border-yellow-400{% elif tx.status == 'cancelled' %}border-gray-400{% else %}border-red-500{% endif %}">
+          <button class="w-full text-left flex justify-between items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ tx.id }}" aria-expanded="false" aria-controls="collapse-{{ tx.id }}">
+            <div>
+              <h5 class="font-semibold flex items-center gap-2">
+                <i class="bi {% if tx.status == 'completed' %}bi-check-circle-fill text-green-600{% elif tx.status == 'pending' %}bi-hourglass-split text-yellow-500{% elif tx.status == 'cancelled' %}bi-x-circle text-gray-500{% else %}bi-x-circle-fill text-red-600{% endif %}"></i>
+                TXN-{{ tx.id|stringformat:"05d" }}
+              </h5>
+              <p class="text-gray-500 text-sm">IDR {{ tx.total_amount|intcomma }} • {{ tx.created_at|date:"d M Y, H:i" }}</p>
             </div>
+            <span class="px-3 py-1 rounded-full text-sm font-semibold {% if tx.status == 'completed' %}bg-green-600 text-white{% elif tx.status == 'pending' %}bg-yellow-400 text-gray-800{% elif tx.status == 'cancelled' %}bg-gray-400 text-white{% else %}bg-red-600 text-white{% endif %}">
+              {{ tx.status|title }}
+            </span>
+          </button>
+          <div id="collapse-{{ tx.id }}" class="collapse mt-3">
+            {% if tx.description %}
+              <p class="mb-2"><strong>Description:</strong> {{ tx.description }}</p>
+            {% endif %}
+            <p class="mb-2"><strong>Courses:</strong></p>
+            <ul class="list-disc list-inside mb-2">
+              {% for course in tx.courses.all %}
+                <li>
+                  <a href="{% url 'courses:course_lms_detail' course.id course.slug %}" class="text-blue-600 hover:underline">
+                    {{ course.course_name }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+
+            {% if tx.status == 'pending' %}
+              {% now "Y-m-d H:i:s" as current_time %}
+              {% if tx.expired_at|date:"Y-m-d H:i:s" > current_time %}
+                <a href="{% url 'payments:transaction_detail' merchant_ref=tx.merchant_ref %}" class="block w-full text-center bg-yellow-400 text-gray-800 rounded-lg py-2 font-semibold hover:bg-yellow-500 transition">
+                  <i class="bi bi-credit-card me-1"></i> Resume Payment
+                </a>
+                <p class="text-gray-500 text-sm mt-1">Expired in: {{ tx.expired_at|timeuntil }}</p>
+              {% else %}
+                <div class="bg-red-100 border border-red-400 rounded p-3 text-red-600 text-sm mt-2">
+                  Payment expired. Please checkout again.
+                </div>
+              {% endif %}
+            {% endif %}
+
+            {% if tx.status == 'completed' %}
+              <a href="{% url 'payments:transaction_invoice_detail' pk=tx.id %}" class="block w-full text-center bg-green-600 text-white rounded-lg py-2 font-semibold hover:bg-green-700 transition mt-2">
+                <i class="bi bi-file-earmark-text me-1"></i> View Invoice
+              </a>
+              <p class="text-gray-500 text-sm mt-1">Completed on: {{ tx.updated_at|date:"d M Y, H:i" }}</p>
+            {% endif %}
           </div>
         </div>
       {% endfor %}
     </div>
+
   {% else %}
     <!-- No Data Fallback -->
-    <div class="card shadow border-0 rounded-3 p-4 mx-auto text-center w-md-50 animate-card" role="alert" aria-live="polite">
-      <div class="card-body">
-        <i class="bi bi-exclamation-circle fs-1 text-muted mb-3"></i>
-        <h4 class="card-title text-dark">No Transactions Yet</h4>
-        <p class="text-muted mb-4">Explore our courses to make your first transaction!</p>
-        <a href="{% url 'authentication:course_list' %}" class="btn btn-primary rounded-pill px-4">Browse Courses</a>
-      </div>
+    <div class="bg-white shadow rounded-lg p-6 text-center mx-auto w-full sm:w-2/3 lg:w-1/2">
+      <i class="bi bi-exclamation-circle text-4xl text-gray-400 mb-3"></i>
+      <h4 class="font-semibold text-gray-800 mb-2">No Transactions Yet</h4>
+      <p class="text-gray-500 mb-4">Explore our courses to make your first transaction!</p>
+      <a href="{% url 'authentication:course_list' %}" class="inline-block px-6 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition">Browse Courses</a>
     </div>
   {% endif %}
+
 </div>
 {% endblock %}

@@ -2,32 +2,49 @@
 {% load static %}
 
 {% block content %}
+<!-- FULL WIDTH CARD -->
+<section class="bg-white border-t border-x border-gray-200 min-h-screen">
+<div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Add New Microcredential</h1>
+    
+</div>
 
 
-    <h1>add new microcredential</h1>
+<form method="post" enctype="multipart/form-data" class="space-y-4">
+    {% csrf_token %}
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+    {{ form.as_p }}
 
-        {{ form.as_p }}
-
-        <button type="submit" class="btn btn-primary">save</button>
-    </form>
-
+    
+    <div class="flex justify-end gap-3">
+            <button type="submit" class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg shadow transition">
+                Simpan Perubahan
+            </button>
+            <a href="{% url 'courses:microcredential-list' %}" class="px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-900 font-medium rounded-lg shadow transition">
+                Batal
+            </a>
+        </div>
+</form>
+</div>
+</section>
 <script>
-function listingslug(value) {
-    // Create a slug from the title input
-    let slug = value.toLowerCase()
-                    .replace(/[^a-z0-9\s-]/g, '')  // Remove invalid chars
-                    .replace(/\s+/g, '-')          // Replace spaces with -
-                    .replace(/-+/g, '-')           // Collapse multiple -
-                    .substring(0, 200);            // Optional: limit to 200 chars
-
-    // Set the value of the slug input
-    document.getElementById('id_slug').value = slug;
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const titleInput = document.getElementById('id_title');
+    if (titleInput) {
+        titleInput.addEventListener('input', e => {
+            let slug = e.target.value.toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '') // remove invalid chars
+                .replace(/\s+/g, '-')         // replace spaces with -
+                .replace(/-+/g, '-')          // collapse multiple -
+                .substring(0, 200)            // optional: max length
+                .replace(/^-+|-+$/g, '');     // remove leading/trailing -
+            
+            const slugInput = document.getElementById('id_slug');
+            if (slugInput) slugInput.value = slug;
+        });
+    }
+});
 </script>
-
-
 
 {% endblock %}

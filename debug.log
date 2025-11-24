@@ -7273,3 +7273,138 @@ django.template.exceptions.TemplateSyntaxError: Invalid filter: 'str'
 [WARNING] 2025-11-24 14:25:15,796 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
 [WARNING] 2025-11-24 14:25:18,610 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
 [WARNING] 2025-11-24 14:25:21,687 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-11-24 14:26:17,149 [audit.signals] Error in audit log (post_delete) for Section pk=86: Section matching query does not exist.
+[ERROR] 2025-11-24 14:26:17,150 [audit.signals] Error in audit log (post_delete) for Section pk=85: Section matching query does not exist.
+[WARNING] 2025-11-24 14:26:36,233 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:31:42,608 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-24 14:32:23,245 [audit.signals] Error in audit log (post_delete) for Section pk=89: Section matching query does not exist.
+[ERROR] 2025-11-24 14:32:23,246 [audit.signals] Error in audit log (post_delete) for Section pk=88: Section matching query does not exist.
+[ERROR] 2025-11-24 14:32:25,885 [audit.signals] Error in audit log (post_delete) for Section pk=95: Section matching query does not exist.
+[ERROR] 2025-11-24 14:32:25,886 [audit.signals] Error in audit log (post_delete) for Section pk=94: Section matching query does not exist.
+[ERROR] 2025-11-24 14:32:25,887 [audit.signals] Error in audit log (post_delete) for Section pk=93: Section matching query does not exist.
+[ERROR] 2025-11-24 14:32:25,887 [audit.signals] Error in audit log (post_delete) for Section pk=92: Section matching query does not exist.
+[ERROR] 2025-11-24 14:32:25,888 [audit.signals] Error in audit log (post_delete) for Section pk=91: Section matching query does not exist.
+[WARNING] 2025-11-24 14:34:42,075 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-11-24 14:35:24,998 [audit.signals] Error in audit log (post_delete) for Section pk=98: Section matching query does not exist.
+[ERROR] 2025-11-24 14:35:24,999 [audit.signals] Error in audit log (post_delete) for Section pk=97: Section matching query does not exist.
+[WARNING] 2025-11-24 14:35:36,128 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:49:01,076 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 14:50:31,026 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-24 14:50:32,196 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 14:50:32,207 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 14:52:34,141 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:53:30,249 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:54:04,109 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:54:13,580 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 14:55:07,944 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-24 14:55:08,979 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 14:55:08,990 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 14:55:43,372 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-11-24 14:55:44,503 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 14:55:44,513 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2025-11-24 14:56:19,771 [PIL.Image] Importing BlpImagePlugin
+[DEBUG] 2025-11-24 14:56:19,773 [PIL.Image] Importing BmpImagePlugin
+[DEBUG] 2025-11-24 14:56:19,773 [PIL.Image] Importing BufrStubImagePlugin
+[DEBUG] 2025-11-24 14:56:19,774 [PIL.Image] Importing CurImagePlugin
+[DEBUG] 2025-11-24 14:56:19,774 [PIL.Image] Importing DcxImagePlugin
+[DEBUG] 2025-11-24 14:56:19,776 [PIL.Image] Importing DdsImagePlugin
+[DEBUG] 2025-11-24 14:56:19,783 [PIL.Image] Importing EpsImagePlugin
+[DEBUG] 2025-11-24 14:56:19,784 [PIL.Image] Importing FitsImagePlugin
+[DEBUG] 2025-11-24 14:56:19,785 [PIL.Image] Importing FliImagePlugin
+[DEBUG] 2025-11-24 14:56:19,786 [PIL.Image] Importing FpxImagePlugin
+[DEBUG] 2025-11-24 14:56:19,787 [PIL.Image] Image: failed to import FpxImagePlugin: No module named 'olefile'
+[DEBUG] 2025-11-24 14:56:19,787 [PIL.Image] Importing FtexImagePlugin
+[DEBUG] 2025-11-24 14:56:19,788 [PIL.Image] Importing GbrImagePlugin
+[DEBUG] 2025-11-24 14:56:19,788 [PIL.Image] Importing GifImagePlugin
+[DEBUG] 2025-11-24 14:56:19,788 [PIL.Image] Importing GribStubImagePlugin
+[DEBUG] 2025-11-24 14:56:19,789 [PIL.Image] Importing Hdf5StubImagePlugin
+[DEBUG] 2025-11-24 14:56:19,790 [PIL.Image] Importing IcnsImagePlugin
+[DEBUG] 2025-11-24 14:56:19,791 [PIL.Image] Importing IcoImagePlugin
+[DEBUG] 2025-11-24 14:56:19,792 [PIL.Image] Importing ImImagePlugin
+[DEBUG] 2025-11-24 14:56:19,793 [PIL.Image] Importing ImtImagePlugin
+[DEBUG] 2025-11-24 14:56:19,794 [PIL.Image] Importing IptcImagePlugin
+[DEBUG] 2025-11-24 14:56:19,795 [PIL.Image] Importing JpegImagePlugin
+[DEBUG] 2025-11-24 14:56:19,795 [PIL.Image] Importing Jpeg2KImagePlugin
+[DEBUG] 2025-11-24 14:56:19,795 [PIL.Image] Importing McIdasImagePlugin
+[DEBUG] 2025-11-24 14:56:19,796 [PIL.Image] Importing MicImagePlugin
+[DEBUG] 2025-11-24 14:56:19,796 [PIL.Image] Image: failed to import MicImagePlugin: No module named 'olefile'
+[DEBUG] 2025-11-24 14:56:19,796 [PIL.Image] Importing MpegImagePlugin
+[DEBUG] 2025-11-24 14:56:19,797 [PIL.Image] Importing MpoImagePlugin
+[DEBUG] 2025-11-24 14:56:19,800 [PIL.Image] Importing MspImagePlugin
+[DEBUG] 2025-11-24 14:56:19,800 [PIL.Image] Importing PalmImagePlugin
+[DEBUG] 2025-11-24 14:56:19,802 [PIL.Image] Importing PcdImagePlugin
+[DEBUG] 2025-11-24 14:56:19,802 [PIL.Image] Importing PcxImagePlugin
+[DEBUG] 2025-11-24 14:56:19,802 [PIL.Image] Importing PdfImagePlugin
+[DEBUG] 2025-11-24 14:56:19,809 [PIL.Image] Importing PixarImagePlugin
+[DEBUG] 2025-11-24 14:56:19,809 [PIL.Image] Importing PngImagePlugin
+[DEBUG] 2025-11-24 14:56:19,809 [PIL.Image] Importing PpmImagePlugin
+[DEBUG] 2025-11-24 14:56:19,810 [PIL.Image] Importing PsdImagePlugin
+[DEBUG] 2025-11-24 14:56:19,810 [PIL.Image] Importing QoiImagePlugin
+[DEBUG] 2025-11-24 14:56:19,811 [PIL.Image] Importing SgiImagePlugin
+[DEBUG] 2025-11-24 14:56:19,811 [PIL.Image] Importing SpiderImagePlugin
+[DEBUG] 2025-11-24 14:56:19,812 [PIL.Image] Importing SunImagePlugin
+[DEBUG] 2025-11-24 14:56:19,812 [PIL.Image] Importing TgaImagePlugin
+[DEBUG] 2025-11-24 14:56:19,813 [PIL.Image] Importing TiffImagePlugin
+[DEBUG] 2025-11-24 14:56:19,813 [PIL.Image] Importing WebPImagePlugin
+[DEBUG] 2025-11-24 14:56:19,818 [PIL.Image] Importing WmfImagePlugin
+[DEBUG] 2025-11-24 14:56:19,819 [PIL.Image] Importing XbmImagePlugin
+[DEBUG] 2025-11-24 14:56:19,820 [PIL.Image] Importing XpmImagePlugin
+[DEBUG] 2025-11-24 14:56:19,821 [PIL.Image] Importing XVThumbImagePlugin
+[WARNING] 2025-11-24 14:56:35,823 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 14:57:50,637 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:02:19,759 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:02:20,840 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:02:21,714 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:02:22,868 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:02:24,862 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:02:25,754 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:02:26,580 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:02:31,049 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:02:32,335 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:02:33,413 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:02:36,484 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:02:52,071 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 15:03:37,861 [django.utils.autoreload] /home/x/app/mysite/payments/urls.py changed, reloading.
+[INFO] 2025-11-24 15:03:38,929 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 15:03:38,939 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 15:03:54,135 [django.utils.autoreload] /home/x/app/mysite/payments/urls.py changed, reloading.
+[INFO] 2025-11-24 15:03:55,174 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 15:03:55,184 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 15:04:14,701 [django.utils.autoreload] /home/x/app/mysite/payments/urls.py changed, reloading.
+[INFO] 2025-11-24 15:04:15,712 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 15:04:15,723 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 15:06:17,793 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:06:34,127 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-24 15:06:36,372 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-11-24 15:06:36,374 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-11-24 07:06:36.372433+00:00
+[INFO] 2025-11-24 15:06:36,374 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0", path_info: "/logout/"}.
+[DEBUG] 2025-11-24 15:06:53,267 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-11-24 15:06:53,267 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-11-24 15:06:53,268 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-11-24 07:06:53.267442+00:00
+[INFO] 2025-11-24 15:06:53,865 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0", path_info: "/login/"}.
+[INFO] 2025-11-24 15:06:53,866 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-11-24 07:06:53.267442+00:00
+[DEBUG] 2025-11-24 15:06:53,872 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-11-24 15:06:55,201 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-11-24 15:07:09,623 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-11-24 15:07:16,911 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:07:16,914 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[DEBUG] 2025-11-24 15:07:29,434 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:07:29,436 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[DEBUG] 2025-11-24 15:07:31,074 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:07:31,075 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[DEBUG] 2025-11-24 15:09:40,336 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-11-24 15:09:40,338 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, None)]
+[WARNING] 2025-11-24 15:14:52,294 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:14:59,417 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:15:04,394 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:15:09,567 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:16:58,625 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:17:04,834 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:19:45,472 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:19:51,352 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:20:06,921 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:20:16,908 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:20:17,887 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:21:36,915 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:21:38,190 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 15:21:46,353 [django.request] Not Found: /favicon.ico

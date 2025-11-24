@@ -153,25 +153,50 @@ class SosPostForm(forms.ModelForm):
         return content
 
 class MicroCredentialForm(forms.ModelForm):
-    description = forms.CharField(widget=CKEditor5Widget())
+    description = forms.CharField(widget=CKEditor5Widget(config_name="extends"))
 
     class Meta:
         model = MicroCredential
-        fields = ['title', 'slug', 'description', 'required_courses', 'status', 'start_date', 'end_date', 'image', 'category', 'min_total_score']
+        fields = [
+            'title', 'slug', 'description', 'required_courses', 
+            'status', 'start_date', 'end_date', 'image', 'category', 
+            'min_total_score'
+        ]
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 100%; font-size: 18px;', "oninput": "listingslug(value)"}),
-            'slug': forms.HiddenInput(attrs={"class": "form-control", "maxlength": "200"}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
-            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'status': forms.Select(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={
+                'class': 'w-full text-lg px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 outline-none',
+                'oninput': 'listingslug(value)',
+            }),
+            'slug': forms.HiddenInput(attrs={'maxlength': '200'}),
+            'description': forms.Textarea(attrs={
+                'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 outline-none',
+                'rows': 4
+            }),
+            'start_date': forms.DateInput(attrs={
+                'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 outline-none',
+                'type': 'date'
+            }),
+            'end_date': forms.DateInput(attrs={
+                'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 outline-none',
+                'type': 'date'
+            }),
+            'status': forms.Select(attrs={
+                'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none'
+            }),
             'required_courses': autocomplete.ModelSelect2Multiple(
                 url='courses:course-autocomplete',
-                attrs={'class': 'form-control'}
+                attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none'}
             ),
-            'category': forms.Select(attrs={'class': 'form-control'}),
-            'min_total_score': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1'}),
-            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'category': forms.Select(attrs={
+                'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none'
+            }),
+            'min_total_score': forms.NumberInput(attrs={
+                'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none',
+                'step': '0.1'
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'w-full text-sm text-gray-700 border border-gray-300 rounded-md cursor-pointer focus:outline-none'
+            }),
         }
 
 class AskOraForm(forms.ModelForm):
@@ -342,9 +367,7 @@ class GradeRangeForm(forms.ModelForm):
             }),
         }
 
-# courses/forms.py
-from django import forms
-from .models import Assessment
+
 
 class AssessmentForm(forms.ModelForm):
     class Meta:
