@@ -4764,7 +4764,7 @@ def edit_question(request, idcourse, idquestion, idsection, idassessment):
     for choice_form in choice_formset.forms:
         choice_form.fields['text'].widget = (
             CKEditor5Widget("extends") if assessment.flag else forms.Textarea(attrs={'class': 'w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-indigo-500',
-                'rows': 4,
+                'rows': 2,
                 'placeholder': 'Tulis pilihan jawaban...'})
         )
 
@@ -4882,7 +4882,7 @@ def create_question_view(request, idcourse, idsection, idassessment):
     for choice_form in choice_formset.forms:
         choice_form.fields['text'].widget = (
             CKEditor5Widget("extends") if assessment.flag else forms.Textarea(attrs={'class': 'w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-indigo-500',
-                'rows': 4,
+                'rows': 2,
                 'placeholder': 'Tulis pilihan jawaban...'})
         )
 

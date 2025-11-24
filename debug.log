@@ -7171,3 +7171,25 @@ django.template.exceptions.TemplateSyntaxError: Invalid filter: 'str'
 [INFO] 2025-11-24 10:23:14,969 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-11-24 10:23:14,980 [django.utils.autoreload] Watching for file changes with StatReloader
 [WARNING] 2025-11-24 10:23:17,263 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:24:15,092 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:42:37,413 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:42:38,536 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:42:38,547 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:43:23,700 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:43:24,772 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:43:24,782 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:43:29,382 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:43:30,497 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:43:30,508 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:43:32,295 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:43:39,911 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:43:41,150 [django.request] Not Found: /favicon.ico
+[INFO] 2025-11-24 10:44:14,890 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-11-24 10:44:16,081 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-11-24 10:44:16,093 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-11-24 10:44:17,611 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:46:15,068 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:46:37,189 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:46:42,208 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:46:43,798 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-24 10:46:49,668 [django.request] Not Found: /favicon.ico
