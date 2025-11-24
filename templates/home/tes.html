@@ -317,10 +317,7 @@
                     {% if request.resolver_match.url_name == 'transaction_history' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-history w-5"></i><span>Transaction History</span>
                 </a>
-                <a href="{% url 'blog:blog-list-admin' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
-                    {% if request.resolver_match.url_name == 'blog-list-admin' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
-                    <i class="fas fa-blog w-5"></i><span>Blog Admin</span>
-                </a>
+               
                 
 
             {% else %}
