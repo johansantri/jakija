@@ -10,8 +10,12 @@ from decimal import Decimal, ROUND_HALF_UP
 import logging
 from django.db import models  # Tambah import ini untuk Prefetch
 from django.db.models import Prefetch  # Import Prefetch secara eksplisit
+from django.utils.safestring import mark_safe
 
 register = template.Library()
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
 
 @register.filter
 def split_by_equal(value):
@@ -33,10 +37,31 @@ def linepartition(value, separator="="):
 
 @register.filter
 def make_iframes_responsive(value):
-    # Tambahkan wrapper div responsive pada semua iframe
-    pattern = r'(<iframe.*?</iframe>)'
-    replacement = r'<div class="ratio ratio-16x9">\1</div>'
-    return re.sub(pattern, replacement, value, flags=re.DOTALL)
+    """
+    Membungkus semua <iframe> (YouTube, Vimeo, dll) dengan div responsive Tailwind
+    """
+    if not value:
+        return value
+
+    # Pattern yang lebih kuat & aman
+    pattern = r'(<iframe[^>]*>)(.*?)(</iframe>)'
+    
+    def replace_match(match):
+        iframe_tag = match.group(0)
+        # Tambah atribut yang sering hilang (biar aman)
+        iframe_tag = iframe_tag.replace('<iframe', '<iframe class="w-full h-full" allowfullscreen ')
+        # Bungkus dengan div aspect ratio Tailwind
+        return f'<div class="relative w-full overflow-hidden rounded-lg shadow-lg" style="padding-top: 56.25%;">{iframe_tag}</div><div class="absolute inset-0">{iframe_tag}</div></div>'  # salah, coba yang benar:
+
+    # Cara yang benar & paling simpel (rekomendasi)
+    replacement = (
+        '<div class="relative w-full overflow-hidden rounded-xl shadow-lg" style="padding-top: 56.25%;">'
+        '<iframe class="absolute inset-0 w-full h-full" \\1 allowfullscreen loading="lazy"></iframe>'
+        '</div>'
+    )
+    
+    result = re.sub(pattern, replacement, value, flags=re.IGNORECASE | re.DOTALL)
+    return mark_safe(result)
 
 @register.filter
 def shuffled(value):

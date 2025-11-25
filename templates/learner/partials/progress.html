@@ -1,4 +1,5 @@
-<div class="progress-bar bg-success" role="progressbar" style="width: {{ course_progress }}%;" 
-     aria-valuenow="{{ course_progress }}" aria-valuemin="0" aria-valuemax="100">
+<div 
+    class="h-full bg-green-500 flex items-center justify-center text-white font-semibold text-sm transition-all duration-500"
+    style="width: {{ course_progress }}%;">
     {{ course_progress|floatformat:0 }}%
 </div>

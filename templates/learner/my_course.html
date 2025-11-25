@@ -1,79 +1,46 @@
-{% extends 'home/tes.html' %}
+{% extends 'home/set.html' %}
 {% load static %}
 
-{% block title %}<a href="{% url 'authentication:dashbord' %}">
-  {{ course_name|default:"Kursus" }}
-</a>{% endblock %}
-
-{% block extra_head %}
-<style>
-    .sidebar {
-        position: sticky;
-        top: 20px;
-        max-height: calc(100vh - 40px);
-        overflow-y: auto;
-        background: #f8f9fa;
-        border-right: 1px solid #ddd;
-        min-height: 200px;
-    }
-    #content-area {
-        min-height: 400px;
-    }
-    .content-column {
-        background: #fff;
-        border-radius: 8px;
-        padding: 20px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .list-group-item a:hover {
-        background-color: #e9ecef;
-    }
-    @media (max-width: 767.98px) {
-        .sidebar {
-            position: static;
-            border-right: none;
-            border-top: 1px solid #ddd;
-            margin-top: 20px;
-            padding-top: 20px;
-        }
-        .content-column {
-            margin-bottom: 20px;
-        }
-    }
-</style>
+{% block title %}
+  <a href="{% url 'authentication:dashbord' %}">
+    {{ course_name|default:"Kursus" }}
+  </a>
 {% endblock %}
 
 {% block content %}
 <div id="content-area">
-    {% include 'learner/partials/content.html' %}
+  {% include 'learner/partials/content.html' %}
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const timerElement = document.getElementById('timer');
-        if (timerElement) {
-            let timeLeft = parseInt(timerElement.textContent);
-            const interval = setInterval(() => {
-                timeLeft--;
-                timerElement.textContent = timeLeft;
-                if (timeLeft <= 0) {
-                    clearInterval(interval);
-                    timerElement.parentElement.innerHTML = '<div class="alert alert-danger">Waktu habis!</div>';
-                }
-            }, 1000);
+  document.addEventListener('DOMContentLoaded', function() {
+    // Timer untuk quiz (jika ada elemen #timer)
+    const timerElement = document.getElementById('timer');
+    if (timerElement && !timerElement.dataset.initialized) {
+      timerElement.dataset.initialized = 'true';
+      let timeLeft = parseInt(timerElement.textContent);
+      const interval = setInterval(() => {
+        timeLeft--;
+        timerElement.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          timerElement.closest('div')?.insertAdjacentHTML('afterend',
+            '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">Waktu habis!</div>');
         }
-        // Log HTMX errors
-        document.body.addEventListener('htmx:afterRequest', function(evt) {
-            if (evt.detail.xhr.status >= 400) {
-                console.error('HTMX request failed:', evt.detail.xhr.status, evt.detail.xhr.responseText);
-            }
-        });
-        // Reinisialisasi HTMX
-        htmx.process(document.body);
-        // Trigger contentLoaded saat halaman dimuat
-        document.body.dispatchEvent(new Event('contentLoaded'));
+      }, 1000);
+    }
+
+    // Log error HTMX
+    document.body.addEventListener('htmx:afterRequest', function(evt) {
+      if (evt.detail.xhr.status >= 400) {
+        console.error('HTMX request failed:', evt.detail.xhr.status, evt.detail.xhr.responseText);
+      }
     });
+
+    htmx.process(document.body);
+    document.body.dispatchEvent(new Event('contentLoaded'));
+  });
 </script>
 {% endblock %}

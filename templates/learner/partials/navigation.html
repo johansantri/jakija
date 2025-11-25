@@ -1,227 +1,224 @@
 {% load learner_tags %}
-<!-- Completion Card atau Warning -->
 {% get_course_completion_status as completion_status %}
-{% with is_completed=completion_status.is_completed certificate_url=completion_status.certificate_url assessments_completed_percentage=completion_status.assessments_completed_percentage course_progress=completion_status.course_progress overall_percentage=completion_status.overall_percentage passing_threshold=completion_status.passing_threshold %}
-    {% if not next_url %}
-        {% if is_completed %}
-            <div class="completion-overlay" id="completion-overlay">
-                <div class="card shadow-lg border-0 text-center p-4 p-md-5 completed-card mx-auto" 
-                    style="max-width: 900px; width: 95%;" 
-                    role="alert" 
-                    aria-label="Selamat, Anda telah lulus kursus {{ course_name }}">
-                    
-                    <div class="mb-4">
-                        <i class="bi bi-trophy display-4 display-md-2 text-success"></i>
-                    </div>
+{% with is_completed=completion_status.is_completed certificate_url=completion.certificate_url assessments_completed_percentage=completion_status.assessments_completed_percentage course_progress=completion_status.course_progress overall_percentage=completion_status.overall_percentage passing_threshold=completion_status.passing_threshold %}
 
-                    <h1 class="fw-bold text-success h3 h-md-1 mb-3">Congratulations, You Passed!</h1>
+{# ==================== COMPLETION OVERLAY (LULUS) ==================== #}
+{% if not next_url and is_completed %}
+<div id="completion-overlay"
+     class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 overflow-y-auto">
 
-                    <p class="text-muted mb-4 fs-5 fs-md-4">
-                        <span class="text-success">{{ request.user.get_full_name|default:request.user.username }}</span>, 
-                        you have successfully completed the course <strong>{{ course_name }}</strong>!<br>
-                        Final score: <strong>{{ overall_percentage }}%</strong> (Passing threshold: {{ passing_threshold }}%).
-                    </p>
+  <div class="w-full max-w-3xl animate-[fadeIn_0.4s_ease,zoomIn_0.4s_ease]">
+    <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 text-center">
 
-                    <div class="d-flex justify-content-center gap-2 gap-md-3 flex-wrap">
-                        <a href="{% url 'authentication:dashbord' %}" class="btn btn-outline-danger btn-sm btn-md-lg">
-                            <i class="bi bi-house-door me-1 me-md-2"></i>Back to Dashboard
-                        </a>
-                        {% if certificate_url %}
-                        <button type="button"
-                                class="btn btn-outline-success btn-sm btn-md-lg open-cert-btn"
-                                data-url="{{ certificate_url|escape }}">
-                        <i class="bi bi-award me-1 me-md-2"></i> Get Certificate
-                        </button>
+      <!-- Icon -->
+      <div class="flex justify-center mb-8">
+        <div class="w-24 h-24 md:w-32 md:h-32 flex items-center justify-center rounded-full 
+                    bg-green-100 text-green-600 shadow-inner">
+          <i class="bi bi-trophy text-6xl md:text-7xl"></i>
+        </div>
+      </div>
 
-                        <script>
-                        document.addEventListener('click', function(e){
-                        const btn = e.target.closest('.open-cert-btn');
-                        if (!btn) return;
-                        const url = btn.dataset.url;
-                        if (!url) return;
-                        window.open(url, '_blank', 'noopener,noreferrer');
-                        });
-                        </script>
+      <!-- Heading -->
+      <h1 class="text-3xl md:text-5xl font-extrabold text-green-600 mb-4">
+        Congratulations, You Passed! 🎉
+      </h1>
 
-                        {% endif %}
-                        <button class="btn btn-secondary btn-sm btn-md-lg"
-                                onclick="document.getElementById('completion-overlay').style.display='none';"
-                                aria-label="Tutup kartu kelulusan">
-                            <i class="bi bi-x-circle me-1 me-md-2"></i>Close
-                        </button>
-                    </div>
-                </div>
-            </div>
+      <!-- Description -->
+      <p class="text-lg md:text-xl text-gray-700 leading-relaxed mb-10">
+        <span class="text-green-600 font-semibold">
+          {{ request.user.get_full_name|default:request.user.username }}
+        </span>,<br>
+        you have successfully completed the course
+        <strong>{{ course_name }}</strong>!<br>
+        Final score:
+        <strong class="text-green-600">{{ overall_percentage }}%</strong>
+        (Passing threshold: {{ passing_threshold }}%).
+      </p>
 
-        {% elif course_progress >= 100 and not is_completed %}
-            <!-- Modal Warning Otomatis -->
-            <div class="modal fade" id="completionWarningModal" tabindex="-1" aria-labelledby="completionWarningModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header bg-warning text-dark border-warning">
-                            <h5 class="modal-title" id="completionWarningModalLabel">
-                                <i class="bi bi-exclamation-triangle me-2"></i>
-                                Course Completion Alert
-                            </h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body text-center p-4">
-                            <i class="bi bi-exclamation-triangle me-2 fs-1 text-warning"></i>
-                            {% if overall_percentage < passing_threshold %}
-                                <p class="mb-0 fs-5">
-                                    Hello <span class="text-danger fw-bold">{{ request.user.get_full_name|default:request.user.username }}</span>,<br>
-                                    your score (<strong>{{ overall_percentage }}%</strong>) has not reached the passing threshold (<strong>{{ passing_threshold }}%</strong>).<br>
-                                    <span class="text-muted">Please try to improve your score.</span>
-                                </p>
-                            {% else %}
-                                <p class="mb-0 fs-5">
-                                    Hello <span class="text-danger fw-bold">{{ request.user.get_full_name|default:request.user.username }}</span>,<br>
-                                    you have not completed all assessments.<br>
-                                    <span class="text-muted">Please complete them to pass this course.</span>
-                                </p>
-                            {% endif %}
-                        </div>
-                        <div class="modal-footer justify-content-center">
-                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">
-                                <i class="bi bi-check-circle me-1"></i> Got It, I'll Improve!
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <!-- Buttons -->
+      <div class="flex flex-wrap justify-center gap-4">
 
-            <!-- JavaScript untuk Auto-Show Modal -->
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var warningModal = new bootstrap.Modal(document.getElementById('completionWarningModal'), {
-                        backdrop: 'static',  // Nggak bisa close dengan klik background (opsional, biar user baca dulu)
-                        keyboard: true       // Bisa close dengan ESC
-                    });
-                    warningModal.show();  // Trigger otomatis pas load
-                });
-            </script>
-        {% endif %}
-    {% endif %}
+        <!-- Dashboard -->
+        <a href="{% url 'authentication:dashbord' %}"
+           class="group inline-flex items-center px-6 py-3 bg-white border border-gray-300 
+                  text-gray-700 rounded-xl font-medium hover:bg-gray-100 transition shadow-sm">
+          <i class="bi bi-house-door mr-2 text-gray-500 group-hover:text-gray-700"></i>
+          Back to Dashboard
+        </a>
 
-    <!-- Tombol Navigasi -->
-    <div class="d-flex justify-content-between mt-4 mb-4">
-        <!-- Tombol Sebelumnya -->
-        {% if previous_url %}
-            <a href="{{ previous_url }}"
-               hx-get="{{ previous_url }}"
-               hx-target="#content-area"
-               hx-swap="innerHTML"
-               hx-push-url="true"
-               class="btn btn-outline-danger"
-               hx-on::after-request="document.body.dispatchEvent(new Event('contentLoaded'))">
-                <i class="bi bi-chevron-left me-2"></i>Previous
-            </a>
-        {% else %}
-            <button class="btn btn-danger" disabled><i class="bi bi-chevron-left me-2"></i>Previous</button>
+        <!-- Certificate -->
+        {% if certificate_url %}
+        <button type="button"
+                class="group open-cert-btn inline-flex items-center px-6 py-3 bg-green-600 text-white 
+                       rounded-xl font-medium hover:bg-green-700 transition shadow-md"
+                data-url="{{ certificate_url|escape }}">
+          <i class="bi bi-award mr-2 text-white"></i>
+          Get Certificate
+        </button>
         {% endif %}
 
-        <!-- Tombol Selanjutnya -->
-        {% if next_url %}
-            <a href="{{ next_url }}"
-            hx-get="{{ next_url }}"
-            hx-target="#content-area"
-            hx-swap="innerHTML"
-            hx-push-url="true"
-            class="btn btn-outline-danger"
-            hx-on::after-request="htmx.trigger('#progress-bar', 'load')">
-                Next<i class="bi bi-chevron-right ms-2"></i>
-            </a>
-        {% else %}
-            <button class="btn btn-danger" disabled>Next<i class="bi bi-chevron-right ms-2"></i></button>
-        {% endif %}
+        <!-- Close -->
+        <button onclick="document.getElementById('completion-overlay').remove()"
+                class="inline-flex items-center px-6 py-3 bg-gray-200 text-gray-700 rounded-xl 
+                       font-medium hover:bg-gray-300 transition shadow-sm">
+          <i class="bi bi-x-circle mr-2"></i>
+          Close
+        </button>
+      </div>
+
     </div>
+  </div>
+</div>
 
-
-        {% if not next_url %}
-        
-        <div
-            hx-post="{% url 'learner:mark_progress' %}"
-            hx-trigger="load"
-            hx-ext="json-enc"
-            hx-encoding="json"
-            hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-            hx-vals='{
-                "content_type": "{{ current_content.0 }}",
-                "content_id": "{{ current_content.1.id }}"
-            }'
-            style="display:none"
-        ></div>
-        {% endif %}
-
-{% endwith %}
-
-<!-- Animasi CSS -->
+<!-- Smooth Fade-in + Zoom Animation -->
 <style>
 @keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
-.completion-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    overflow-y: auto;
-}
-.completed-card {
-    animation: fadeIn 0.8s ease-out;
-    background: linear-gradient(135deg, #ffffff, #f1f3f5);
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    padding: 2rem;
-}
-@media (max-width: 576px) {
-    .completed-card {
-        width: 95%;
-        padding: 1.5rem;
-    }
-    .completed-card h1 {
-        font-size: 1.75rem;
-    }
-    .completed-card p {
-        font-size: 1rem;
-    }
+@keyframes zoomIn {
+  from { transform: scale(.9); }
+  to   { transform: scale(1); }
 }
 </style>
 
-<!-- Efek Confetti -->
+{% endif %}
+
+{# ==================== WARNING MODAL (BELUM LULUS) ==================== #}
+{% if not next_url and course_progress >= 100 and not is_completed %}
+<div x-data="{ showWarning: true }" x-init="showWarning && $nextTick(() => showWarning = true)" x-show="showWarning"
+     class="fixed inset-0 z-50 flex items-center justify-center bg-black/60" style="display: none;">
+  <div @click.outside="showWarning = false" class="w-full max-w-2xl mx-4">
+    <div class="bg-white rounded-xl shadow-2xl overflow-hidden">
+      <!-- Header -->
+      <div class="bg-yellow-400 text-gray-900 px-6 py-4 flex justify-between items-center">
+        <h5 class="text-xl font-bold flex items-center">
+          <i class="bi bi-exclamation-triangle mr-2"></i>
+          Course Completion Alert
+        </h5>
+        <button @click="showWarning = false" class="text-gray-900 hover:text-gray-700">
+          <i class="bi bi-x text-3xl"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="p-8 text-center">
+        <i class="bi bi-exclamation-triangle text-7xl text-yellow-500 mb-4"></i>
+        {% if overall_percentage < passing_threshold %}
+        <p class="text-lg md:text-xl">
+          Hello <span class="text-red-600 font-bold">{{ request.user.get_full_name|default:request.user.username }}</span>,<br>
+          your score (<strong>{{ overall_percentage }}%</strong>) has not reached the passing threshold (<strong>{{ passing_threshold }}%</strong>).<br>
+          <span class="text-gray-500">Please try to improve your score.</span>
+        </p>
+        {% else %}
+        <p class="text-lg md:text-xl">
+          Hello <span class="text-red-600 font-bold">{{ request.user.get_full_name|default:request.user.username }}</span>,<br>
+          you have not completed all assessments.<br>
+          <span class="text-gray-500">Please complete them to pass this course.</span>
+        </p>
+        {% endif %}
+      </div>
+
+      <!-- Footer -->
+      <div class="bg-gray-50 px-6 py-4 text-center">
+        <button @click="showWarning = false"
+                class="inline-flex items-center px-8 py-3 bg-yellow-500 text-white rounded-lg font-medium hover:bg-yellow-600 transition">
+          <i class="bi bi-check-circle mr-2"></i> Got It, I'll Improve!
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{# ==================== NAVIGATION BUTTONS ==================== #}
+<div class="flex justify-between mt-8 mb-12">
+  <!-- Previous -->
+  {% if previous_url %}
+  <a href="{{ previous_url }}"
+     hx-get="{{ previous_url }}"
+     hx-target="#content-area"
+     hx-swap="innerHTML"
+     hx-push-url="true"
+     hx-on::after-request="document.body.dispatchEvent(new Event('contentLoaded'))"
+     class="inline-flex items-center px-6 py-3 bg-white border-2 border-red-600 text-red-600 rounded-lg font-medium hover:bg-red-50 transition">
+    <i class="bi bi-chevron-left mr-2"></i>Previous
+  </a>
+  {% else %}
+  <button disabled class="inline-flex items-center px-6 py-3 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed">
+    <i class="bi bi-chevron-left mr-2"></i>Previous
+  </button>
+  {% endif %}
+
+  <!-- Next -->
+  {% if next_url %}
+  <a href="{{ next_url }}"
+     hx-get="{{ next_url }}"
+     hx-target="#content-area"
+     hx-swap="innerHTML"
+     hx-push-url="true"
+     hx-on::after-request="htmx.trigger('#progress-bar', 'load')"
+     class="inline-flex items-center px-6 py-3 bg-white border-2 border-red-600 text-red-600 rounded-lg font-medium hover:bg-red-50 transition">
+    Next<i class="bi bi-chevron-right ml-2"></i>
+  </a>
+  {% else %}
+  <button disabled class="inline-flex items-center px-6 py-3 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed">
+    Next<i class="bi bi-chevron-right ml-2"></i>
+  </button>
+  {% endif %}
+</div>
+
+{# ==================== MARK PROGRESS (hidden HTMX) ==================== #}
+{% if not next_url %}
+<div hx-post="{% url 'learner:mark_progress' %}"
+     hx-trigger="load"
+     hx-ext="json-enc"
+     hx-encoding="json"
+     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+     hx-vals='{
+       "content_type": "{{ current_content.0 }}",
+       "content_id": "{{ current_content.1.id }}"
+     }'
+     class="hidden"></div>
+{% endif %}
+
+{% endwith %}
+
+{# ==================== SCRIPTS ==================== #}
+<!-- Open Certificate in New Tab -->
+<script>
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.open-cert-btn');
+  if (!btn) return;
+  const url = btn.dataset.url;
+  if (url) window.open(url, '_blank', 'noopener,noreferrer');
+});
+</script>
+
+<!-- Confetti Effect (hanya saat lulus & bukan halaman terakhir) -->
 <script src="https://cdn.jsdelivr.net/npm/js-confetti@0.11.0/dist/js-confetti.browser.js"></script>
 <script>
-    {% if completion_status.is_completed and not next_url %}
-        const jsConfetti = new JSConfetti();
-        jsConfetti.addConfetti({
-            confettiNumber: 300,
-            confettiRadius: 8,
-            confettiSpeed: 30,
-            confettiColors: ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#00d4ff', '#00b7eb', '#ffd700'],
-            spread: 360
-        }).then(() => {
-            setTimeout(() => {
-                jsConfetti.addConfetti({
-                    confettiNumber: 200,
-                    confettiRadius: 6,
-                    confettiSpeed: 25,
-                    confettiColors: ['#ff0a54', '#ff477e', '#00d4ff', '#ffd700']
-                });
-            }, 1000);
-        });
-    {% endif %}
+{% if completion_status.is_completed and not next_url %}
+  const jsConfetti = new JSConfetti();
+  jsConfetti.addConfetti({
+    confettiNumber: 300,
+    confettiRadius: 8,
+    confettiColors: ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#00d4ff', '#00b7eb', '#ffd700'],
+  }).then(() => {
+    setTimeout(() => {
+      jsConfetti.addConfetti({
+        confettiNumber: 200,
+        confettiColors: ['#ff0a54', '#ff477e', '#00d4ff', '#ffd700']
+      });
+    }, 1000);
+  });
+{% endif %}
 </script>
 
-
+<!-- Content Loaded Event (untuk keperluan lain) -->
 <script>
-    document.body.addEventListener('contentLoaded', () => {
-        console.log('Peristiwa contentLoaded dipicu dari tombol Next');
-    });
+document.body.addEventListener('contentLoaded', () => {
+  console.log('Peristiwa contentLoaded dipicu');
+});
 </script>
+

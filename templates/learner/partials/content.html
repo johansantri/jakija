@@ -1,705 +1,208 @@
 {% load learner_tags %}
 {% load static %}
-<div class="container-fluid py-4">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-3 sidebar p-3 rounded">
-            <!-- Sidebar Header -->
-            <div class="sidebar-header">
-                <span class="text-white fs-4 fw-bold">LMSKu</span>
-                <button class="navbar-toggler border-0 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Close sidebar">
-                    <i class="bi bi-list"></i>
-                    <i class="bi bi-x-lg"></i>
-                </button>
+
+<main class="min-h-screen bg-gray-50" id="content-area">
+
+{% if current_content %}
+
+    {% if current_content.0 == 'material' %}
+        {% with material=current_content.1 %}
+        <article class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+            <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-gray-800 leading-tight">
+                {{ material.title }}
+            </h3>
+            <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-12 prose prose-lg lg:prose-xl max-w-none text-gray-700">
+                {{ material.description|make_iframes_responsive|safe }}
             </div>
-            <!-- User Profile -->
-                <div class="user-profile mb-4">
-                    <div class="d-flex align-items-center">
-                        <a href="{% url 'authentication:edit-photo' request.user.id %}" aria-label="Edit profile photo" class="transition-all hover-scale">
-                            {% if request.user.photo %}
-                                <img src="{{ request.user.photo.url }}" alt="User Avatar" class="rounded-circle me-3">
-                            {% else %}
-                                <img src="{% static 'assets/img/user/user1.jpg' %}" alt="User Image" class="rounded-circle me-3">
-                            {% endif %}
-                        </a>
-                        <div>
-                            <p class="mb-0 text-muted fw-bold">
-                                <a href="{% url 'authentication:profile' request.user.username %}" class="text-muted text-decoration-none transition-all hover-scale">{{ request.user.first_name }} {{ request.user.last_name }}</a>
-                            </p>
-                            <small class="text-muted">{{ request.user.hobby|default:"No hobby set" }}</small>
-                            <span class="badge bg-success text-muted mt-2 d-inline-block">
-                                {% if request.user.is_superuser %}
-                                    Superuser
-                                {% elif request.user.is_partner %}
-                                    Partner
-                                {% elif request.user.is_instructor %}
-                                    Instructor
-                                {% elif request.user.is_member %}
-                                    Member
-                                {% elif request.user.is_subscription %}
-                                    Subscription
-                                {% elif request.user.is_audit %}
-                                    Audit
-                                {% elif request.user.is_learner %}
-                                    <a href="{% url 'courses:instructor_add' %}" class="text-white text-decoration-none">Become an Instructor</a>
-                                {% else %}
-                                    <a href="{% url 'courses:instructor_add' %}" class="text-white text-decoration-none">Become an Instructor</a>
-                                {% endif %}
-                            </span>
-                        </div>
+            <div class="mt-12 lg:mt-16">
+                {% include 'learner/partials/comments.html' %}
+            </div>
+        </article>
+        {% endwith %}
+
+    {% elif current_content.0 == 'assessment' %}
+        {% with assessment=current_content.1 %}
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+
+            {% if assessment_locked %}
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 rounded-2xl p-6 lg:p-10 flex flex-col lg:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-5">
+                    <i class="bi bi-exclamation-triangle-fill text-5xl lg:text-7xl text-yellow-600"></i>
+                    <div>
+                        <h5 class="text-2xl lg:text-3xl font-bold text-gray-800">Payment Required</h5>
+                        <p class="text-lg text-gray-600 mt-2">This exam requires payment before it can be started.</p>
                     </div>
                 </div>
-          <h5 class="mb-3">
-            <a href="{% url 'authentication:dashbord' %}" class="btn btn-outline-primary d-inline-block p-2">
-                {{ course_name|default:"Kursus" }}
-            </a>
-        </h5>
-
-
-        <!-- Lihat Overview Button (span with link functionality) -->
-        <span class="btn btn-sm btn-outline-success mt-2 mb-3 d-inline-flex align-items-center gap-1" 
-            role="button" tabindex="0" 
-            onclick="window.open('{% url 'courses:course_lms_detail' course.id course.slug %}', '_blank')"
-            onkeypress="if(event.key === 'Enter'){ window.open('{% url 'courses:course_lms_detail' course.id course.slug %}', '_blank'); }">
-            <i class="bi bi-info-circle me-1"></i> Overview
-        </span>
-
-        <!-- Score Detail Button (span with link functionality) -->
-        <span class="btn btn-sm btn-outline-info mt-2 mb-3 d-inline-flex align-items-center gap-1 flex-fill" 
-            role="button" tabindex="0" 
-            onclick="window.open('{% url 'learner:score_summary' username=username course_id=course.id %}', '_blank')"
-            onkeypress="if(event.key === 'Enter'){ window.open('{% url 'learner:score_summary' username=username course_id=course.id %}', '_blank'); }">
-            <i class="bi bi-bar-chart-line me-1"></i> Score Detail
-        </span>
-
-
-            <!-- Course Progress Bar -->
-            <div id="course-data" data-course-id="{{ id }}" data-csrf-token="{{ csrf_token }}"></div>
-
-            <div class="progress mb-3" id="progress-bar"
-                hx-get="{% url 'learner:get_progress' username=username slug=slug %}"
-                hx-trigger="load, contentLoaded from:body"
-                hx-swap="innerHTML">
-                <div class="progress-bar bg-success" role="progressbar" style="width: {{ course_progress|default:0 }}%;" 
-                    aria-valuenow="{{ course_progress|default:0 }}" aria-valuemin="0" aria-valuemax="100">
-                    {{ course_progress|default:0|floatformat:0 }}%
-                </div>
+                <a href="{{ payment_required_url }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-8 py-4 rounded-xl text-lg lg:text-xl shadow-lg transition whitespace-nowrap">
+                    Checkout Now
+                </a>
             </div>
-
-            <ul class="list-group list-group-flush bg-white rounded-3 shadow-lg">
-                {% for section in sections %}
-                    {% if section.materials.all or section.assessments.all %}
-                        <li class="list-group-item border-0 py-3" data-section-id="{{ section.id }}">
-                            <h6 class="fw-bold text-primary-emphasis mb-3" 
-                                data-bs-toggle="collapse" 
-                                data-bs-target="#section-{{ section.id }}" 
-                                aria-expanded="false" 
-                                aria-controls="section-{{ section.id }}">
-                                <i class="bi bi-chevron-right me-2"></i>{{ section.title }}
-                            </h6>
-                            <ul class="list-group list-group-flush ms-0 collapse" id="section-{{ section.id }}">
-                                {% for material in section.materials.all %}
-                                    <li class="list-group-item border-0 py-2" data-material-id="{{ material.id }}">
-                                        <a href="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='material' content_id=material.id %}"
-                                        hx-get="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='material' content_id=material.id %}"
-                                        hx-target="#content-area"
-                                        hx-swap="innerHTML"
-                                        hx-push-url="true"
-                                        class="text-decoration-none text-body d-flex align-items-center gap-2 {% if current_content.0 == 'material' and current_content.1.id == material.id %}bg-primary-subtle text-primary fw-semibold rounded-2{% endif %}"
-                                        hx-on::after-request="document.body.dispatchEvent(new Event('contentLoaded'))">
-                                            <i class="bi bi-book text-secondary me-1"></i>
-                                            {% is_content_read 'material' material.id as is_material_read %}
-                                            {% if is_material_read %}
-                                                <i class="bi bi-check-circle-fill text-success me-1" title="Sudah dibaca" aria-label="Materi sudah dibaca"></i>
-                                            {% endif %}
-                                            {{ material.title }}
-                                        </a>
-                                    </li>
-                                {% empty %}
-                                    
-                                {% endfor %}
-                                {% for assessment in section.assessments.all %}
-                                    <li class="list-group-item border-0 py-2" data-assessment-id="{{ assessment.id }}">
-                                        <a href="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}"
-                                        hx-get="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}"
-                                        hx-target="#content-area"
-                                        hx-swap="innerHTML"
-                                        hx-push-url="true"
-                                        class="text-decoration-none text-body d-flex align-items-center gap-2 {% if current_content.0 == 'assessment' and current_content.1.id == assessment.id %}bg-primary-subtle text-primary fw-semibold rounded-2{% endif %}"
-                                        hx-on::after-request="document.body.dispatchEvent(new Event('contentLoaded'))">
-                                            <i class="bi bi-clipboard-check text-secondary me-1"></i>
-                                            {% is_content_read 'assessment' assessment.id as is_assessment_read %}
-                                            {% if is_assessment_read %}
-                                                <i class="bi bi-check-circle-fill text-success me-1" title="Sudah dibuka" aria-label="Penilaian sudah dibuka"></i>
-                                            {% endif %}
-                                            {{ assessment.name }}
-                                            {% if assessment_locked and assessment.id == current_content.1.id %}
-                                                <span class="badge bg-warning text-dark ms-2 rounded-pill">Restricted</span>
-                                            {% endif %}
-                                        </a>
-                                    </li>
-                                {% empty %}
-                                    
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    {% endif %}
-                {% empty %}
-                    <li class="list-group-item border-0 py-3">
-                        <p class="text-muted mb-0">There are no sections available..</p>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-
-            <!-- Modal Bootstrap untuk pesan sapaan -->
-        {% if messages %}
-            <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            {% for message in messages %}
-                                <div class="text-center">
-                                    <!-- Gambar kustom (opsional) -->
-                                    
-                                    {{ message | safe }} <!-- Gunakan safe karena pesan berisi HTML -->
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div class="modal-footer">
-                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">View Course Details</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Start Learning!</button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- JavaScript untuk memicu modal saat halaman dimuat -->
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'), {
-                        backdrop: 'static', // Tidak bisa ditutup dengan klik di luar
-                        keyboard: false // Tidak bisa ditutup dengan tombol Esc
-                    });
-                    welcomeModal.show();
-
-                    // Redirect ke detail kursus jika tombol sekunder diklik
-                    document.querySelector('.modal-footer .btn-secondary').addEventListener('click', function() {
-                        window.location.href = '{% url "courses:course_lms_detail" id=course.id slug=slug %}';
-                    });
-                });
-            </script>
-        {% endif %}
-
-        <!-- Konten Utama -->
-        <div class="col-md-12 content-column" id="content-area">
-            {% if current_content %}
-                {% if current_content.0 == 'material' %}
-                    <h3 class="mb-4">{{ material.title }}</h3>
-                    <div class="content-body">{{ material.description|make_iframes_responsive|safe }}</div>
-                    <div id="comments-section" class="mt-5">
-                        {% include 'learner/partials/comments.html' %}
-                    </div>
-                {% elif current_content.0 == 'assessment' %}
-                    {% if assessment_locked %}
-                        <div class="alert alert-warning d-flex justify-content-between align-items-center shadow-sm p-4 rounded-3" role="alert">
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-exclamation-triangle-fill me-3 fs-3 text-warning"></i>
-                                <div>
-                                    <h5 class="mb-1 fw-semibold">Payment Required</h5>
-                                        <p class="mb-0">This exam requires payment before it can be started.</p>
-
-                                </div>
-                            </div>
-                            <a href="{{ payment_required_url }}" class="btn btn-outline-warning ms-4">
-                                <i class="bi bi-credit-card"></i> Checkout Now
-                            </a>
-                        </div>
-                    {% else %}
-                        <h3 class="mb-4">{{ assessment.name }}</h3>
-                        <!-- Bagian soal ora -->
-                        {% if ask_oras %}
-                            <h4>Open Response Assessment Question</h4>
-                            <p>Please answer the following question in your own words.</p>
-                            {% for ask_ora in ask_oras %}
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <h5>{{ ask_ora.title }}</h5>
-                                        <div class="mb-3">
-                                            {{ ask_ora.question_text|safe }}
-                                        </div>
-                                        <p class="text-muted">
-                                            <i class="bi bi-clock"></i> 
-                                            Deadline: {{ ask_ora.response_deadline|date:"d M Y H:i" }}
-                                        </p>
-                                        {% if askora_can_submit|dict_get:ask_ora.id %}
-                                            <form method="POST"
-                                                  hx-post="{% url 'learner:submit_answer_askora_new' ask_ora.id %}"
-                                                  hx-target="#content-area"
-                                                  hx-swap="innerHTML"
-                                                  enctype="multipart/form-data"
-                                                  class="mt-4">
-                                                {% csrf_token %}
-                                                <div class="mb-3">
-                                                    <label for="answer_text" class="form-label">
-                                                        <i class="bi bi-pencil-square"></i> Your Response
-                                                    </label>
-                                                    <textarea name="answer_text" id="answer_text" 
-                                                              class="form-control" rows="6" required
-                                                              placeholder="Enter your answer here..."></textarea>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="answer_file" class="form-label">
-                                                        <i class="bi bi-paperclip"></i> Optional File Attachment
-                                                    </label>
-                                                    <input type="file" class="form-control" 
-                                                           name="answer_file" id="answer_file">
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">
-                                                    <span class="htmx-indicator">
-                                                        <span class="spinner-border spinner-border-sm" role="status"></span>
-                                                        Submitting...
-                                                    </span>
-                                                    <span class="non-htmx-indicator">
-                                                        <i class="bi bi-send"></i> Send Answer
-                                                    </span>
-                                                </button>
-                                            </form>
-                                        {% else %}
-                                            <div class="alert alert-danger">
-                                                {% if not ask_ora.is_responsive %}
-                                                    <i class="bi bi-exclamation-circle"></i> Submission time is over.
-                                                {% else %}
-                                                    <i class="bi bi-check-circle"></i> You’ve already submitted your answer.
-                                                {% endif %}
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                        <!-- Bagian Jawaban User -->
-                        {% if user_submissions %}
-                            <div class="mt-5">
-                                <h4><i class="bi bi-journal-text"></i> My Response</h4>
-                                {% for submission in user_submissions %}
-                                    <div class="card mb-4 {% if submission.score %}border-primary{% endif %}">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                                <h5>{{ submission.askora.title }}</h5>
-                                                {% if submission.score %}
-                                                    <span class="badge bg-primary fs-6">
-                                                        Score: {{ submission.score }}
-                                                    </span>
-                                                {% endif %}
-                                            </div>
-                                            <div class="mb-3">
-                                                <p class="text-muted">
-                                                    <i class="bi bi-clock"></i> 
-                                                    Submitted at: {{ submission.submitted_at|date:"d M Y H:i" }}
-                                                </p>
-                                                <div class="bg-light p-3 rounded">
-                                                    {{ submission.answer_text|linebreaks }}
-                                                </div>
-                                            </div>
-                                            {% if submission.answer_file %}
-                                                <a href="{{ submission.answer_file.url }}" class="btn btn-sm btn-outline-primary" target="_blank">
-                                                    <i class="bi bi-download"></i> Download Attachment
-                                                </a>
-                                            {% endif %}
-                                            <!-- Bagian Status Penilaian -->
-                                            <div class="mt-4 p-3 bg-light rounded">
-                                                <h6><i class="bi bi-info-circle"></i> Assessment Status:</h6>
-                                                <ul class="mb-0">
-                                                    <li>
-                                                        <i class="bi bi-people-fill"></i>
-                                                        {% if peer_review_stats.total_participants == 0 %}
-                                                            Not yet in peer review process
-                                                        {% else %}
-                                                            Has been reviewed by 
-                                                            {{ peer_review_stats.distinct_reviewers }} of 
-                                                            {{ peer_review_stats.total_participants }} peer(s)
-                                                            {% if peer_review_stats.distinct_reviewers >= peer_review_stats.total_participants %}
-                                                                <span class="badge bg-success ms-2">Done</span>
-                                                            {% else %}
-                                                                <span class="badge bg-warning ms-2">In Progress</span>
-                                                            {% endif %}
-                                                        {% endif %}
-                                                    </li>
-
-                                                    <li>
-                                                        <i class="bi bi-star-fill"></i> Average Grade: 
-                                                        {% if peer_review_stats.avg_score %}
-                                                            <strong>{{ peer_review_stats.avg_score }}</strong>/5.00
-                                                        {% else %}
-                                                            <span class="text-muted">No grade assigned</span>
-                                                        {% endif %}
-                                                    </li>
-
-                                                    <li>
-                                                        <i class="bi bi-clock"></i> Completion Estimate:
-                                                        {% if peer_review_stats.total_participants == 0 %}
-                                                            Waiting for peer reviewers to be assigned
-                                                        {% else %}
-                                                            {% with remaining=peer_review_stats.total_participants|subtract:peer_review_stats.distinct_reviewers %}
-                                                                {% if remaining > 0 %}
-                                                                    {% if remaining == 1 %}
-                                                                        Awaiting 1 last review
-                                                                    {% else %}
-                                                                        Waiting {{ remaining }} more reviews
-                                                                    {% endif %}
-                                                                {% else %}
-                                                                    The assessment has been completed
-                                                                {% endif %}
-                                                            {% endwith %}
-                                                        {% endif %}
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                        <!-- Bagian Peer Review -->
-                        {% if can_review and submissions and user_submissions|length > 0 %}
-
-                            <div id="peer-review-section" class="mt-5 border-top pt-4">
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <h4><i class="bi bi-people-fill"></i> Evaluate Your Peer’s Answer</h4>
-                                    <span class="badge bg-info">
-                                        {{ submissions|length }} This answer requires review
-                                    </span>
-                                </div>
-                                <div class="alert alert-info">
-                                    <h5><i class="bi bi-lightbulb"></i> Peer Review Guidelines:</h5>
-                                    <ol class="mb-0">
-                                        <li>Read the answer carefully</li>
-                                        <li>Give a score from 1 to 5 (1 = very poor, 5 = excellent)</li>
-                                        <li>Provide constructive feedback (optional)</li>
-                                        <li>Your review will impact your peer’s score</li>
-
-                                    </ol>
-                                </div>
-                                {% for submission in submissions %}
-                                    <div class="card mb-4">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                                <h5>{{ submission.askora.title }}</h5>
-                                                <small class="text-muted">
-                                                    Oleh: {{ submission.user.get_full_name|default:submission.user.username }}
-                                                </small>
-                                            </div>
-                                            <div class="mb-4 p-3 bg-light rounded">
-                                                <p class="fw-bold mb-2">Answer:</p>
-                                                {{ submission.answer_text|linebreaks }}
-                                                {% if submission.answer_file %}
-                                                    <div class="mt-2">
-                                                        <a href="{{ submission.answer_file.url }}" class="btn btn-sm btn-outline-secondary" target="_blank">
-                                                            <i class="bi bi-download"></i> Download File
-                                                        </a>
-                                                    </div>
-                                                {% endif %}
-                                            </div>
-                                            <form method="post" 
-                                                  hx-post="{% url 'learner:submit_peer_review_new' submission.id %}"
-                                                  hx-target="#content-area"
-                                                  hx-swap="innerHTML">
-                                                {% csrf_token %}
-                                                <div class="mb-3">
-                                                    <label class="form-label">
-                                                        <i class="bi bi-star-fill"></i> Assign a Score
-                                                    </label>
-                                                    <select name="score" class="form-select" required>
-                                                        <option value="">Select a score from 1 to 5</option>
-                                                        <option value="1">1 - Very Poor</option>
-                                                        <option value="2">2 - Poor</option>
-                                                        <option value="3">3 - Fair</option>
-                                                        <option value="4">4 - Good</option>
-                                                        <option value="5">5 - Excellent</option>
-                                                    </select>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">
-                                                        <i class="bi bi-chat-left-text"></i> Comment (optional)
-                                                    </label>
-                                                    <textarea name="comment" class="form-control" rows="3" 
-                                                              placeholder="Give constructive input..."></textarea>
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="bi bi-send"></i> Send Review
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {% if has_other_submissions %}
-                                <div id="peer-review-section" class="mt-5 border-top pt-4">
-                                    <div class="alert alert-info">
-                                        You've reviewed all current submissions. You'll be able to review more if new ones are submitted.
-                                    </div>
-                                </div>
-                            {% endif %}
-                        {% endif %}
-                        <!-- Bagian untuk Skor Kuis -->
-                        {% if course_scores %}
-                            <h4>Hasil Kuis</h4>
-                            {% for score in course_scores %}
-                                <div class="card mb-3">
-                                    <div class="card-body">
-                                        <p><strong>Score:</strong> {{ score.score }}/{{ score.total_questions }} ({{ score.grade }})</p>
-                                        <p><strong>Time:</strong> {{ score.date }}</p>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                        <!-- Bagian untuk soal pilihan ganda (quiz) dengan timer -->
-                        {% if is_quiz %}
-                            {% if is_started %}
-                                {% if is_expired %}
-                                    <div class="alert alert-danger">The assessment period has ended.</div>
-                                    {% for question in assessment.questions.all %}
-                                        <div class="card mb-3 border 
-                                              {% with answer=answered_questions|get_question_answer:question.id %}
-                                                  {% if answer and answer.choice.is_correct %}
-                                                      border-success
-                                                  {% else %}
-                                                      border-danger
-                                                  {% endif %}
-                                              {% endwith %}">
-                                            <div class="card-body">
-                                                <h5>{{ question.text }}</h5>
-                                                <ul class="list-group">
-                                                    {% for choice in question.choices.all %}
-                                                        {% with answer=answered_questions|get_question_answer:question.id %}
-                                                            <li class="list-group-item
-                                                                {% if choice.is_correct %}
-                                                                    list-group-item-success
-                                                                {% elif answer and answer.choice.id == choice.id %}
-                                                                    list-group-item-danger
-                                                                {% endif %}">
-                                                                {{ choice.text }}
-                                                                {% if choice.is_correct %}
-                                                                    <span class="badge bg-success">Correct</span>
-                                                                {% endif %}
-                                                                {% if answer and answer.choice.id == choice.id %}
-                                                                    <span class="badge bg-primary">Your Response</span>
-                                                                {% endif %}
-                                                            </li>
-                                                        {% endwith %}
-                                                    {% endfor %}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                {% else %}
-                                    <!-- Bagian Timer dan Progress Bar -->
-                                    <div class="mb-4 sticky-top bg-white py-2" style="z-index: 1000;">
-                                    <div class="d-flex justify-content-between align-items-center mb-1">
-                                        <span class="fw-semibold text-muted">
-                                            Remaining Time: <span id="timer-countdown" class="text-dark fw-bold">{{ remaining_time }}</span> seconds
-                                        </span>
-                                        <span id="progress-percent" class="text-muted small">100%</span>
-                                    </div>
-                                    <div class="progress" style="height: 20px;">
-                                        <div id="timer-progress" class="progress-bar bg-primary" role="progressbar"
-                                            style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                    <!-- Form Quiz Pilihan Ganda -->
-                                    <form id="quiz-form"
-                                          hx-post="{% url 'learner:submit_assessment_new' assessment.id %}"
-                                          hx-target="#content-area"
-                                          hx-swap="innerHTML"
-                                          method="POST">
-                                        {% csrf_token %}
-                                        {% for question in assessment.questions.all|shuffled %}
-                                            <div class="card mb-3">
-                                                <div class="card-body">
-                                                    <h5>{{ question.text }}</h5>
-                                                    <input type="hidden" name="question_ids" value="{{ question.id }}">
-                                                    {% for choice in question.choices.all|shuffled %}
-                                                        <div class="form-check mb-2">
-                                                            {% with answer=answered_questions|get_question_answer:question.id %}
-                                                                <input type="radio"
-                                                                    name="answers_{{ question.id }}"
-                                                                    value="{{ choice.id }}"
-                                                                    id="choice_{{ question.id }}_{{ choice.id }}"
-                                                                    class="form-check-input"
-                                                                    {% if answer and answer.choice.id == choice.id %}checked{% endif %}>
-                                                                <label class="form-check-label" for="choice_{{ question.id }}_{{ choice.id }}">
-                                                                    {{ choice.text }}
-                                                                </label>
-                                                            {% endwith %}
-                                                        </div>
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                        <div class="text-end mt-4">
-                                            <button type="submit" class="btn btn-outline-danger">
-                                                <i class="bi bi-send"></i> Submit All Responses
-
-                                            </button>
-                                        </div>
-                                    </form>
-                                    <!-- Script Countdown Otomatis Submit -->
-                                    <script>
-                                        (function () {
-                                            const timerElement = document.getElementById("timer-countdown");
-                                            const progressBar = document.getElementById("timer-progress");
-                                            const percentElement = document.getElementById("progress-percent");
-                                            if (!timerElement) return;
-                                            let totalTime = parseInt(timerElement.textContent);
-                                            let timeLeft = totalTime;
-                                            const interval = setInterval(() => {
-                                                timeLeft--;
-                                                const percent = Math.max(0, Math.round((timeLeft / totalTime) * 100));
-                                                timerElement.textContent = timeLeft;
-                                                progressBar.style.width = percent + "%";
-                                                progressBar.setAttribute("aria-valuenow", percent);
-                                                percentElement.textContent = percent + "%";
-                                                if (percent <= 25) {
-                                                    progressBar.classList.remove("bg-primary", "bg-warning");
-                                                    progressBar.classList.add("bg-danger");
-                                                } else if (percent <= 50) {
-                                                    progressBar.classList.remove("bg-primary");
-                                                    progressBar.classList.add("bg-warning");
-                                                }
-                                                if (timeLeft <= 0) {
-                                                    clearInterval(interval);
-                                                    const form = document.getElementById("quiz-form");
-                                                    if (form) {
-                                                        const inputs = form.querySelectorAll('input[type="radio"]');
-                                                        inputs.forEach(input => {
-                                                            if (!input.checked) {
-                                                                input.disabled = true;
-                                                            }
-                                                        });
-                                                        if (typeof htmx !== 'undefined') {
-                                                            htmx.trigger(form, 'submit');
-                                                        } else {
-                                                            form.submit();
-                                                        }
-                                                    }
-                                                }
-                                            }, 1000);
-                                        })();
-                                    </script>
-                                    <script>
-                                        (function() {
-                                            const timerElement = document.getElementById('timer');
-                                            if (timerElement && !timerElement.dataset.timerInitialized) {
-                                                let timeLeft = parseInt(timerElement.textContent);
-                                                timerElement.dataset.timerInitialized = 'true';
-                                                const interval = setInterval(() => {
-                                                    timeLeft--;
-                                                    timerElement.textContent = timeLeft;
-                                                    if (timeLeft <= 0) {
-                                                        clearInterval(interval);
-                                                        const form = document.getElementById('quiz-form');
-                                                        if (form) {
-                                                            htmx.trigger(form, 'submit');
-                                                        }
-                                                    }
-                                                }, 1000);
-                                            }
-                                        })();
-                                    </script>
-                                {% endif %}
-                            {% else %}
-                                <div id="manual-confirmation" class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-                                    <div class="card shadow-lg border-0" style="max-width: 480px; width: 100%;">
-                                        <div class="card-body text-center p-5">
-                                            <div class="mb-4">
-                                                <i class="bi bi-journal-check text-danger display-4"></i>
-                                            </div>
-                                            <h4 class="mb-3 fw-semibold">Are You Ready to Begin the Test?</h4>
-
-                                            <p class="mb-4 text-muted">
-                                               You are given <strong>{{ assessment.duration_in_minutes }} minutes</strong> to complete this assessment. Ensure you're prepared before starting.
-                                            </p>
-                                            <form 
-                                                  hx-post="{% url 'learner:start_assessment' assessment.id %}"
-                                                  hx-target="#content-area"
-                                                  hx-swap="innerHTML"
-                                                  hx-push-url="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}">
-                                                <button type="submit" class="btn btn-lg btn-outline-danger w-100">
-                                                    <i class="bi bi-play-circle me-2"></i> Get Started
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        {% endif %}
-
-                          <!-- Bagian untuk lti lunch -->
-                        {% if is_lti %}
-                            {% if is_lti and lti_tool %}
-                           <div class="card text-center shadow-lg border-0 my-4">
-                            <div class="card-body">
-                                <h4 class="card-title mb-3">LTI Tool: {{ lti_tool.tool_name }}</h4>
-                                <p class="card-text text-muted">
-                                Klik tombol di bawah untuk membuka tool eksternal ini di tab baru.
-                                </p>
-                                <form action="{% url 'learner:lti_consume_course' assessment.id %}" 
-                                    method="get" 
-                                    target="_blank" 
-                                    style="display:inline;">
-                                <button type="submit" class="btn btn-primary btn-lg">
-                                    🚀 Launch LTI
-                                </button>
-                                </form>
-                            </div>
-                            </div>
-
-
-                            {% endif %}
-
-
-
-
-                        {% endif %}
-                    {% endif %}
-                {% endif %}
-                <!-- Tombol Navigasi -->
-                {% include 'learner/partials/navigation.html' %}
             {% else %}
-                <p>Please choose a material or an assessment from the sidebar.</p>
+
+                {% if ask_oras %}
+                <div class="bg-white rounded-2xl shadow-xl p-6 lg:p-10">
+                    <h4 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-10 text-indigo-700">Open Response Assessment</h4>
+                    {% for ask_ora in ask_oras %}
+                    <div class="border border-gray-200 rounded-xl p-6 lg:p-8 mb-8 bg-gray-50">
+                        <h5 class="text-xl lg:text-2xl font-semibold text-gray-800">{{ ask_ora.title }}</h5>
+                        <div class="my-5 prose prose-indigo">{{ ask_ora.question_text|safe }}</div>
+                        <p class="text-sm lg:text-base text-gray-600 mb-5">Deadline: {{ ask_ora.response_deadline|date:"d M Y H:i" }}</p>
+                        {% if askora_can_submit|dict_get:ask_ora.id %}
+                        <form method="POST" hx-post="{% url 'learner:submit_answer_askora_new' ask_ora.id %}" hx-target="#content-area" hx-swap="innerHTML" enctype="multipart/form-data" class="space-y-6">
+                            {% csrf_token %}
+                            <textarea name="answer_text" rows="8" required class="w-full border border-gray-300 rounded-lg p-4 text-base lg:text-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Tulis jawaban Anda di sini..."></textarea>
+                            <input type="file" name="answer_file" class="block w-full text-sm lg:text-base">
+                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg shadow transition text-base lg:text-lg">
+                                Submit Answer
+                            </button>
+                        </form>
+                        {% else %}
+                        <div class="bg-red-100 border border-red-300 text-red-700 px-6 py-4 rounded-lg font-medium text-base lg:text-lg">
+                            Submission period has closed.
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if is_quiz and is_started and not is_expired %}
+                <div class="sticky top-0 bg-white shadow-2xl z-50 p-4 lg:p-6 mb-10 rounded-2xl border border-gray-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <span class="text-lg lg:text-xl font-semibold text-gray-700">
+                            Remaining Time: <span id="timer-countdown" class="text-3xl lg:text-4xl font-bold text-red-600">{{ remaining_time }}</span>s
+                        </span>
+                        <span id="progress-percent" class="text-base lg:text-lg font-medium text-gray-600">100%</span>
+                    </div>
+                    <div class="w-full bg-gray-300 rounded-full h-8 lg:h-10 mt-3 overflow-hidden">
+                        <div id="timer-progress" class="bg-gradient-to-r from-blue-500 to-blue-700 h-full rounded-full transition-all duration-1000 flex items-center justify-end pr-4">
+                            <span class="text-white font-bold text-sm lg:text-base">100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="quiz-form" hx-post="{% url 'learner:submit_assessment_new' assessment.id %}" hx-target="#content-area" hx-swap="innerHTML" method="POST" class="space-y-10">
+                    {% csrf_token %}
+                    {% for question in assessment.questions.all|shuffled %}
+                    <div class="bg-white p-6 lg:p-10 rounded-2xl shadow-xl border border-gray-200">
+                        <h5 class="text-xl sm:text-2xl lg:text-3xl font-semibold mb-8 text-gray-800 leading-tight">
+                            {{ forloop.counter }}. {{ question.text }}
+                        </h5>
+                        <div class="space-y-5">
+                            {% for choice in question.choices.all|shuffled %}
+                            {% with answered=answered_questions|get_item:question.id %}
+                            <label class="flex items-start gap-5 cursor-pointer p-5 lg:p-6 rounded-xl hover:bg-gray-50 transition border border-gray-200">
+                                <input type="radio" name="answers_{{ question.id }}" value="{{ choice.id }}"
+                                       class="mt-1 w-5 h-5 lg:w-6 lg:h-6 text-indigo-600 focus:ring-indigo-500"
+                                       {% if answered and answered.choice.id == choice.id %}checked{% endif %}>
+                                <span class="text-base sm:text-lg lg:text-xl text-gray-700 leading-relaxed flex-1">{{ choice.text }}</span>
+                            </label>
+                            {% endwith %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="text-center mt-16">
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold text-xl sm:text-2xl lg:text-3xl px-12 lg:px-20 py-5 lg:py-7 rounded-xl shadow-2xl transition transform hover:scale-105">
+                            Submit All Answers
+                        </button>
+                    </div>
+                </form>
+
+                <script>
+                (function () {
+                    const timerEl = document.getElementById('timer-countdown');
+                    const progress = document.getElementById('timer-progress');
+                    const percentEl = document.getElementById('progress-percent');
+                    if (!timerEl) return;
+                    let total = parseInt(timerEl.textContent);
+                    let left = total;
+                    const iv = setInterval(() => {
+                        left--;
+                        const pct = Math.round((left / total) * 100);
+                        timerEl.textContent = left;
+                        progress.style.width = pct + '%';
+                        percentEl.textContent = pct + '%';
+                        progress.querySelector('span').textContent = pct + '%';
+                        if (pct <= 25) progress.classList.replace('from-blue-500', 'from-red-500');
+                        else if (pct <= 50) progress.classList.replace('from-blue-500', 'from-yellow-500');
+                        if (left <= 0) {
+                            clearInterval(iv);
+                            document.querySelectorAll('#quiz-form input[type=radio]').forEach(i => i.disabled = true);
+                            htmx.trigger('#quiz-form', 'submit');
+                        }
+                    }, 1000);
+                })();
+                </script>
+                {% endif %}
+
+                {% if is_lti and lti_tool %}
+                <div class="text-center py-24 lg:py-32 bg-gradient-to-b from-indigo-50 to-white rounded-3xl">
+                    <h4 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-gray-800">{{ lti_tool.tool_name }}</h4>
+                    <p class="text-lg lg:text-xl text-gray-600 mb-12 max-w-2xl mx-auto">Klik tombol di bawah untuk membuka alat eksternal.</p>
+                    <form action="{% url 'learner:lti_consume_course' assessment.id %}" method="get" target="_blank">
+                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-2xl lg:text-4xl px-20 lg:px-32 py-8 lg:py-12 rounded-xl shadow-2xl transition transform hover:scale-105">
+                            Launch LTI Tool
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+
+                {% if is_quiz and not is_started and not assessment_locked %}
+                <div class="text-center py-32 lg:py-40 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-3xl">
+                    <h3 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-10 text-gray-800">{{ assessment.title }}</h3>
+                    <p class="text-xl lg:text-2xl text-gray-600 mb-16">Siap untuk memulai kuis?</p>
+                    <form method="POST" hx-post="{% url 'learner:start_assessment' assessment.id %}" hx-target="#content-area" hx-swap="innerHTML">
+                        {% csrf_token %}
+                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold text-3xl lg:text-5xl px-20 lg:px-32 py-10 lg:py-16 rounded-xl shadow-2xl transition transform hover:scale-110">
+                            Start Quiz Now
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+
             {% endif %}
+        </div>
+        {% endwith %}
+    {% endif %}
+
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 lg:mt-24">
+        {% include 'learner/partials/navigation.html' %}
+    </div>
+
+{% else %}
+    <div class="text-center py-32 lg:py-48">
+        <p class="text-2xl lg:text-3xl text-gray-500">Please select a material or assessment from the sidebar.</p>
+    </div>
+{% endif %}
+
+</main>
+
+<!-- Welcome Modal (tetap sama, sudah responsif) -->
+{% if messages %}
+<div class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4" id="welcomeModal">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden">
+        <div class="p-8 text-center">
+            <button onclick="document.getElementById('welcomeModal').remove()" class="float-right text-gray-500 hover:text-gray-700">
+                <i class="bi bi-x-lg text-3xl"></i>
+            </button>
+            {% for message in messages %}
+                <div class="prose prose-lg max-w-none text-gray-700">{{ message|safe }}</div>
+            {% endfor %}
+        </div>
+        <div class="bg-gray-50 px-8 py-6 flex flex-col sm:flex-row gap-4">
+            <button onclick="window.location.href='{% url 'courses:course_lms_detail' course.id course.slug %}'"
+                    class="flex-1 py-4 border-2 border-gray-300 rounded-xl font-semibold hover:bg-gray-100 transition text-base lg:text-lg">
+                View Course Details
+            </button>
+            <button onclick="document.getElementById('welcomeModal').remove()"
+                    class="flex-1 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold hover:from-indigo-700 hover:to-purple-700 transition shadow-lg text-base lg:text-lg">
+                Start Learning!
+            </button>
         </div>
     </div>
 </div>
-
-<!-- CSS untuk Highlight Sidebar dan Checklist -->
-<style>
-.sidebar .active {
-    font-weight: bold;
-    color: #007bff; /* Warna biru untuk link aktif */
-    background-color: #f8f9fa; /* Latar belakang abu-abu muda */
-    padding: 8px 12px;
-    border-radius: 4px;
-    display: block;
-}
-.sidebar .active:hover {
-    color: #0056b3; /* Warna hover lebih gelap */
-    background-color: #e9ecef;
-}
-.sidebar .bi-check-circle {
-    font-size: 0.9rem; /* Ukuran ikon checklist sedikit lebih kecil */
-    vertical-align: middle;
-}
-</style>
+{% endif %}
 
 <script src="{% static 'js/pingSession.js' %}"></script>

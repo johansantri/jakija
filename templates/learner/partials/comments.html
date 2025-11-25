@@ -1,65 +1,70 @@
 {% load learner_tags %}
-<div class="comments mt-4" id="comments-section">
-    <h5 class="fw-semibold text-dark">Comments</h5>
-    <p class="text-muted small mb-3">Please keep comments relevant to the discussion topic and avoid content containing hate speech, pornography, or spam.</p>
 
+<div class="comments mt-8" id="comments-section" x-data>
+    <h5 class="text-xl font-bold text-gray-900 mb-2">Comments</h5>
+    <p class="text-sm text-gray-600 mb-6">
+        Please keep comments relevant to the discussion topic and avoid content containing hate speech, pornography, or spam.
+    </p>
 
-    
-
+    <!-- Form Komentar Utama -->
     {% if user.is_authenticated %}
         <form hx-post="{% url 'learner:add_comment' %}"
               hx-target="#comments-section"
               hx-swap="innerHTML"
-              hx-on::after-request="document.body.dispatchEvent(new Event('contentLoaded')); this.reset()"
-              class="mb-4 card card-body shadow-sm border-0 bg-light">
+              hx-on::after-request="
+                  this.reset();
+                  $dispatch('contentloaded');
+                  // Tutup semua form reply yang terbuka
+                  document.querySelectorAll('[x-data]').forEach(el => {
+                      if (el.__x) el.__x.$data.replyOpen = false;
+                  });
+              "
+              class="mb-8 bg-gray-50 rounded-xl p-5 border border-gray-200 shadow-sm">
             <input type="hidden" name="material_id" value="{{ material.id|default:'' }}">
             <input type="hidden" name="parent_id" value="">
 
-            <div class="mb-3">
-                <label for="comment_text" class="form-label">Write your feedback</label>
-                <textarea name="comment_text" class="form-control" rows="4" placeholder="Leave your comment..." required></textarea>
+            <div class="mb-4">
+                <label for="main-comment" class="block text-sm font-medium text-gray-700 mb-2">
+                    Write your feedback
+                </label>
+                <textarea name="comment_text"
+                          id="main-comment"
+                          rows="4"
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none text-gray-800 placeholder-gray-400"
+                          placeholder="Leave your comment..." required></textarea>
             </div>
 
-            <button type="submit" class="btn btn-outline-info">
-                <i class="bi bi-send me-1"></i> Post Comment
-            </button>
+            <div class="flex justify-end">
+                <button type="submit"
+                        class="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 text-white font-medium text-sm rounded-lg hover:bg-indigo-700 transition shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                    </svg>
+                    Post Comment
+                </button>
+            </div>
         </form>
     {% else %}
-        <div class="alert alert-secondary small" role="alert">
-            Please <a href="{% url 'login' %}" class="alert-link">log in</a> to add a comment.
-
+        <div class="bg-gray-100 border border-gray-300 text-gray-700 px-5 py-4 rounded-lg text-sm mb-8">
+            Please <a href="{% url 'login' %}" class="font-medium text-indigo-600 hover:text-indigo-700 underline">log in</a> to add a comment.
         </div>
     {% endif %}
 
-    <div class="mt-4">
+    <!-- Daftar Komentar -->
+    <div class="space-y-6">
         {% for comment in comments %}
             {% include 'learner/partials/comment.html' with comment=comment user_reactions=user_reactions level=0 %}
         {% empty %}
-            <p class="text-muted fst-italic">No comments available.</p>
+            <p class="text-gray-500 italic text-center py-8">No comments yet. Be the first to comment!</p>
         {% endfor %}
     </div>
 </div>
 
-<!-- Optional Custom CSS (masukkan ke file CSS eksternal) -->
-<style>
-    .border-left-reply {
-        border-left: 4px solid var(--bs-primary);
-    }
-
-    .reply-form {
-        background-color: var(--bs-light);
-        border-radius: 0.25rem;
-    }
-</style>
-
+<!-- Optional: Global event untuk trigger setelah load komentar baru -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.body.addEventListener('htmx:afterSwap', function (event) {
-            if (event.detail.target.id === 'comments-section') {
-                document.querySelectorAll('.reply-form.show').forEach(form => {
-                    form.classList.remove('show');
-                });
-            }
-        });
+    document.body.addEventListener('contentloaded', () => {
+        // Bisa ditambahkan efek scroll ke komentar baru, highlight, dll
+        console.log('Comments updated via HTMX');
     });
 </script>
