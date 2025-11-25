@@ -209,10 +209,10 @@
                         hx-swap="innerHTML"
                         hx-push-url="true"
                         hx-on::after-request="document.body.dispatchEvent(new Event('contentLoaded'))"
-                        class="flex items-center space-x-3 px-6 py-2 rounded-lg text-gray-600
+                        class="sidebar-item flex items-center space-x-3 px-6 py-2 rounded-lg text-gray-600
                                hover:bg-red-50 hover:text-red-400 transition
                                {% if current_content.0 == 'material' and current_content.1.id == material.id %}
-                                   bg-red-100 text-red-600 font-semibold
+                                   bg-red-100 text-red-600 font-semibold sidebar-item-active
                                {% endif %}">
 
                         <i class="fas fa-chevron-right w-5"></i>
@@ -235,10 +235,10 @@
                         hx-swap="innerHTML"
                         hx-push-url="true"
                         hx-on::after-request="document.body.dispatchEvent(new Event('contentLoaded'))"
-                        class="flex items-center space-x-3 px-6 py-2 rounded-lg text-gray-600
+                        class="sidebar-item flex items-center space-x-3 px-6 py-2 rounded-lg text-gray-600
                                hover:bg-red-50 hover:text-red-400 transition
                                {% if current_content.0 == 'assessment' and current_content.1.id == assessment.id %}
-                                   bg-red-100 text-red-600 font-semibold
+                                   bg-red-100 text-red-600 font-semibold sidebar-item-active
                                {% endif %}">
 
                         <i class="fas fa-chevron-right w-5"></i>
@@ -352,6 +352,80 @@ function toggleSection(id) {
         icon.classList.add("fa-chevron-right");
     }
 }
+</script>
+
+<script>
+// UPDATE SIDEBAR ACTIVE STATE SETIAP HTMX GANTI KONTEN
+document.body.addEventListener('htmx:afterSwap', function(evt) {
+    // Hanya jalankan jika yang di-swap adalah #content-area
+    if (evt.detail.target.id !== 'content-area') return;
+
+    // Ambil URL saat ini (setelah hx-push-url)
+    const currentUrl = window.location.pathname + window.location.search;
+
+    // Hapus semua class aktif dulu
+    document.querySelectorAll('.sidebar-item-active').forEach(el => {
+        el.classList.remove('bg-red-100', 'text-red-600', 'font-semibold');
+        el.classList.add('text-gray-600', 'hover:text-red-400');
+    });
+
+    // Cari link di sidebar yang href-nya cocok dengan URL saat ini
+    const activeLink = document.querySelector(`a[href="${currentUrl}"]`);
+    if (activeLink) {
+        activeLink.classList.remove('text-gray-600', 'hover:text-red-400');
+        activeLink.classList.add('bg-red-100', 'text-red-600', 'font-semibold');
+        activeLink.classList.add('sidebar-item-active'); // untuk tracking
+    }
+
+    // Optional: Buka section yang aktif (jika tertutup)
+    const sectionButton = activeLink?.closest('[id^="section-"]')?.previousElementSibling;
+    if (sectionButton && sectionButton.tagName === 'BUTTON') {
+        const sectionId = sectionButton.dataset.section;
+        const sectionDiv = document.getElementById('section-' + sectionId);
+        const icon = document.getElementById('icon-' + sectionId);
+
+        if (sectionDiv && sectionDiv.style.display === 'none') {
+            sectionDiv.style.display = 'block';
+            icon.classList.remove('fa-chevron-right');
+            icon.classList.add('fa-chevron-down');
+        }
+    }
+});
+</script>
+
+<script>
+function activateSidebar() {
+    const currentUrl = window.location.pathname + window.location.search.replace(/[\?\&]from_next=1/g, ''); // bersihkan ?from_next=1
+
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.classList.remove('bg-red-100', 'text-red-600', 'font-semibold');
+        item.classList.add('text-gray-600');
+    });
+
+    const active = document.querySelector(`.sidebar-item[href="${currentUrl.split('?')[0]}"]`) ||
+                   document.querySelector(`.sidebar-item[href="${currentUrl}"]`);
+
+    if (active) {
+        active.classList.remove('text-gray-600');
+        active.classList.add('bg-red-100', 'text-red-600', 'font-semibold');
+
+        const section = active.closest('[id^="section-"]');
+        if (section && section.style.display === 'none') {
+            const id = section.id.replace('section-', '');
+            const icon = document.getElementById('icon-' + id);
+            section.style.display = 'block';
+            if (icon) icon.classList.remove('fa-chevron-right'), icon.classList.add('fa-chevron-down');
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', activateSidebar);
+document.body.addEventListener('htmx:afterSwap', e => {
+    if (e.detail.target.id === 'content-area') {
+        setTimeout(activateSidebar, 10);
+    }
+});
+window.addEventListener('popstate', activateSidebar);
 </script>
 </body>
 </html>

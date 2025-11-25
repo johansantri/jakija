@@ -132,7 +132,9 @@
 {% endif %}
 
 {# ==================== NAVIGATION BUTTONS ==================== #}
+{# ==================== NAVIGATION BUTTONS ==================== #}
 <div class="flex justify-between mt-8 mb-12">
+
   <!-- Previous -->
   {% if previous_url %}
   <a href="{{ previous_url }}"
@@ -140,13 +142,12 @@
      hx-target="#content-area"
      hx-swap="innerHTML"
      hx-push-url="true"
-     hx-on::after-request="document.body.dispatchEvent(new Event('contentLoaded'))"
      class="inline-flex items-center px-6 py-3 bg-white border-2 border-red-600 text-red-600 rounded-lg font-medium hover:bg-red-50 transition">
-    <i class="bi bi-chevron-left mr-2"></i>Previous
+    Previous
   </a>
   {% else %}
   <button disabled class="inline-flex items-center px-6 py-3 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed">
-    <i class="bi bi-chevron-left mr-2"></i>Previous
+    Previous
   </button>
   {% endif %}
 
@@ -157,15 +158,15 @@
      hx-target="#content-area"
      hx-swap="innerHTML"
      hx-push-url="true"
-     hx-on::after-request="htmx.trigger('#progress-bar', 'load')"
      class="inline-flex items-center px-6 py-3 bg-white border-2 border-red-600 text-red-600 rounded-lg font-medium hover:bg-red-50 transition">
-    Next<i class="bi bi-chevron-right ml-2"></i>
+    Next
   </a>
   {% else %}
   <button disabled class="inline-flex items-center px-6 py-3 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed">
-    Next<i class="bi bi-chevron-right ml-2"></i>
+    Next
   </button>
   {% endif %}
+
 </div>
 
 {# ==================== MARK PROGRESS (hidden HTMX) ==================== #}
