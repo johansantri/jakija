@@ -1045,7 +1045,7 @@ def _get_navigation_urls(username, id, slug, combined_content, current_index):
                 'slug': slug,
                 'content_type': next_content[0],
                 'content_id': next_content[1].id
-            }) + '?from_next=1'  # Tambahkan parameter from_next
+            })# + '?from_next=1'  # Tambahkan parameter from_next
     except NoReverseMatch as e:
         logger.error(f"NoReverseMatch di _get_navigation_urls: {str(e)}")
         previous_url = None

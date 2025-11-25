@@ -10705,3 +10705,9 @@ AttributeError: 'CKEditor5Field' object has no attribute 'use_required_attribute
 [INFO] 2025-11-25 15:38:44,245 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=True, assessments=1/1, overall=100.00%, threshold=61.00, progress=100.00%
 [WARNING] 2025-11-25 15:38:44,332 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
 [WARNING] 2025-11-25 15:38:44,333 [django.request] Bad Request: /mark-progress/
+[WARNING] 2025-11-25 15:39:06,588 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:39:06,597 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:39:06,631 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:39:06,665 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:39:06,686 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:39:06,697 [django.request] Not Found: /partner/ping-session/
