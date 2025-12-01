@@ -4728,7 +4728,7 @@ def delete_assessment(request, idcourse, idsection, idassessment):
 
 #edit question and choice
 #@login_required
-@csrf_exempt
+#@csrf_exempt
 def edit_question(request, idcourse, idquestion, idsection, idassessment):
     # Check if the user is authenticated
     if not request.user.is_authenticated:
