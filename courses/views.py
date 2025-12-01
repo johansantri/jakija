@@ -4846,77 +4846,88 @@ def delete_question(request, idcourse, idquestion, idsection, idassessment):
         'assessment': assessment,
     })
 
-#create question and choice
-#@login_required
-#@csrf_exempt
+
+
+
+@login_required
 def create_question_view(request, idcourse, idsection, idassessment):
-    # Check if the user is authenticated
-    if not request.user.is_authenticated:
-        return redirect("/login/?next=%s" % request.path)
-    
-    # Determine the course based on the user's role
+    # ==================== AUTHORIZATION ====================
     if request.user.is_superuser:
         course = get_object_or_404(Course, id=idcourse)
-    elif request.user.is_partner:
-        # Ensure the course is associated with the partner
-        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=request.user.id)
-    elif request.user.is_instructor:
-        # Ensure the course is associated with the instructor
-        course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id)
+    elif hasattr(request.user, 'is_partner') and request.user.is_partner:
+        course = get_object_or_404(Course, id=idcourse, org_partner__user=request.user)
+    elif hasattr(request.user, 'is_instructor') and request.user.is_instructor:
+        course = get_object_or_404(Course, id=idcourse, instructor=request.user)
     else:
-        # Unauthorized access
-        messages.error(request, "You do not have permission to create questions for this course.")
-        return redirect('courses:home')  # Redirect to a safe page
+        messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+        return redirect('courses:home')
 
-    # Ensure the section belongs to the course
     section = get_object_or_404(Section, id=idsection, courses=course)
-
-    # Ensure the assessment belongs to the section
     assessment = get_object_or_404(Assessment, id=idassessment, section=section)
 
-    # Initialize forms
+    # ==================== FORMS ====================
     question_form = QuestionForm(request.POST or None, assessment=assessment)
-    choice_formset = ChoiceFormSet(request.POST or None, instance=Question())
 
-    # Pass assessment to each form in the formset
-    for choice_form in choice_formset.forms:
-        choice_form.fields['text'].widget = (
-            CKEditor5Widget("extends") if assessment.flag else forms.Textarea(attrs={'class': 'w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-indigo-500',
-                'rows': 2,
-                'placeholder': 'Tulis pilihan jawaban...'})
-        )
+    # INI KUNCI UTAMA: kasih assessment ke setiap ChoiceForm (termasuk empty_form!)
+    choice_formset = ChoiceFormSet(
+        data=request.POST or None,
+        instance=Question(),           # dummy instance
+        prefix='choices',
+        form_kwargs={'assessment': assessment}   # KEREN BANGET INI!
+    )
 
+    # Set widget untuk pertanyaan utama (bukan di form, karena QuestionForm belum support assessment)
+    if assessment.flag:
+        question_form.fields['text'].widget = CKEditor5Widget(config_name='extends')
+    else:
+        question_form.fields['text'].widget = forms.Textarea(attrs={
+            'class': 'w-full px-6 py-5 border-2 border-gray-300 rounded-xl focus:border-indigo-500 focus:ring-0',
+            'rows': 8,
+            'placeholder': 'Tulis pertanyaan di sini...',
+            'style': 'resize: vertical; min-height: 180px;'
+        })
+
+    # ==================== POST HANDLING ====================
     if request.method == 'POST':
         if question_form.is_valid() and choice_formset.is_valid():
-            # Save question instance
+            # Simpan pertanyaan
             question = question_form.save(commit=False)
             question.section = section
             question.assessment = assessment
             question.save()
 
-            # Link and save choices
+            # Hubungkan & simpan pilihan jawaban
             choice_formset.instance = question
             choice_formset.save()
 
-            messages.success(request, "Question and choices created successfully!")
+            messages.success(request, "Soal dan pilihan jawaban berhasil dibuat!")
 
-            # Check if 'save and add another' button was clicked
+            # Tombol "Simpan & Tambah Lagi"
             if 'save_and_add_another' in request.POST:
-                return redirect('courses:create_question', idcourse=course.id, idsection=section.id, idassessment=assessment.id)
+                return redirect('courses:create_question',
+                                idcourse=course.id,
+                                idsection=section.id,
+                                idassessment=assessment.id)
 
-            # Redirect to a view or list of questions
-            return redirect('courses:view-question', idcourse=course.id, idsection=section.id, idassessment=assessment.id)
+            # Tombol "Simpan Soal"
+            return redirect('courses:view-question',
+                            idcourse=course.id,
+                            idsection=section.id,
+                            idassessment=assessment.id)
+
         else:
-            messages.error(request, "There was an error saving the question. Please correct the errors below.")
+            messages.error(request, "Terdapat kesalahan. Silakan periksa kembali isian Anda.")
 
-    # For GET requests or if forms are invalid
-    return render(request, 'courses/create_question.html', {
+    # ==================== CONTEXT ====================
+    context = {
         'course': course,
         'section': section,
         'assessment': assessment,
         'question_form': question_form,
         'choice_formset': choice_formset,
-    })
+    }
+
+    return render(request, 'courses/create_question.html', context)
 
 
 

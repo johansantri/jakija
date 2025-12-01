@@ -444,33 +444,42 @@ class QuestionForm(forms.ModelForm):
 
 
 class ChoiceForm(forms.ModelForm):
-    text = forms.CharField(required=True, widget=forms.Textarea)  # Default sementara
-
     class Meta:
         model = Choice
         fields = ['text', 'is_correct']
+        widgets = {
+            'is_correct': forms.CheckboxInput(attrs={
+                'class': 'w-6 h-6 text-indigo-600 rounded focus:ring-indigo-500'
+            }),
+        }
+        labels = {
+            'text': '',
+            'is_correct': '',   # PALING PENTING: kosongin biar tidak muncul label duplikat
+        }
 
     def __init__(self, *args, **kwargs):
-        assessment = kwargs.pop('assessment', None)
+        self.assessment = kwargs.pop('assessment', None)
         super().__init__(*args, **kwargs)
 
-        if assessment and getattr(assessment, 'flag', False):
-            self.fields['text'].widget = CKEditor5Widget(config_name="extends")
+        if self.assessment and getattr(self.assessment, 'flag', False):
+            self.fields['text'].widget = CKEditor5Widget(config_name='extends')
         else:
             self.fields['text'].widget = forms.Textarea(attrs={
-                'class': 'w-full px-5 py-4 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition',
+                'class': 'w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:border-indigo-500',
                 'rows': 4,
-                'placeholder': 'Tulis pilihan jawaban...',
-                'style': 'resize: vertical;'
+                'placeholder': 'Tulis jawaban...'
             })
-       
+
+
+# Formset — tetap sama, tapi sekarang benar-benar bersih!
 ChoiceFormSet = inlineformset_factory(
     Question,
     Choice,
     form=ChoiceForm,
     fields=['text', 'is_correct'],
     extra=1,
-    can_delete=True
+    can_delete=True,
+    max_num=10,  # opsional, biar tidak kebanyakan
 )
 #add section
 class SectionForm(forms.ModelForm):

@@ -10711,3 +10711,540 @@ AttributeError: 'CKEditor5Field' object has no attribute 'use_required_attribute
 [WARNING] 2025-11-25 15:39:06,665 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-11-25 15:39:06,686 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-11-25 15:39:06,697 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:39:43,685 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-11-25 15:39:43,700 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-11-25 15:39:43,706 [learner.views] Created CourseSessionLog for user 5, course 2, material 14
+[DEBUG] 2025-11-25 15:39:43,722 [learner.views] Updated LastAccessCourse for user 5, course 2, material 14
+[INFO] 2025-11-25 15:39:43,730 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 14
+[DEBUG] 2025-11-25 15:39:43,749 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=100.00
+[INFO] 2025-11-25 15:39:43,749 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=True, assessments=1/1, overall=100.00%, threshold=61.00, progress=100.00%
+[WARNING] 2025-11-25 15:39:44,336 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:39:44,882 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-11-25 15:39:44,896 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-11-25 15:39:44,903 [learner.views] Created CourseSessionLog for user 5, course 2, material 15
+[DEBUG] 2025-11-25 15:39:44,921 [learner.views] Updated LastAccessCourse for user 5, course 2, material 15
+[INFO] 2025-11-25 15:39:44,927 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 15
+[DEBUG] 2025-11-25 15:39:44,935 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=100.00
+[INFO] 2025-11-25 15:39:44,935 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=True, assessments=1/1, overall=100.00%, threshold=61.00, progress=100.00%
+[WARNING] 2025-11-25 15:39:45,913 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-11-25 15:39:45,931 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-11-25 15:39:45,939 [learner.views] Created CourseSessionLog for user 5, course 2, material 16
+[DEBUG] 2025-11-25 15:39:45,959 [learner.views] Updated LastAccessCourse for user 5, course 2, material 16
+[INFO] 2025-11-25 15:39:45,968 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 16
+[DEBUG] 2025-11-25 15:39:45,986 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=100.00
+[INFO] 2025-11-25 15:39:45,987 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=True, assessments=1/1, overall=100.00%, threshold=61.00, progress=100.00%
+[WARNING] 2025-11-25 15:39:51,097 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-11-25 15:39:51,114 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-11-25 15:39:51,122 [learner.views] Created CourseSessionLog for user 5, course 2, material 15
+[DEBUG] 2025-11-25 15:39:51,137 [learner.views] Updated LastAccessCourse for user 5, course 2, material 15
+[INFO] 2025-11-25 15:39:51,142 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 15
+[DEBUG] 2025-11-25 15:39:51,152 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=100.00
+[INFO] 2025-11-25 15:39:51,152 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=True, assessments=1/1, overall=100.00%, threshold=61.00, progress=100.00%
+[WARNING] 2025-11-25 15:39:53,836 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-11-25 15:39:53,859 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-11-25 15:39:53,867 [learner.views] Created CourseSessionLog for user 5, course 2, material 14
+[DEBUG] 2025-11-25 15:39:53,882 [learner.views] Updated LastAccessCourse for user 5, course 2, material 14
+[INFO] 2025-11-25 15:39:53,888 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 14
+[DEBUG] 2025-11-25 15:39:53,901 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=100.00
+[INFO] 2025-11-25 15:39:53,901 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=True, assessments=1/1, overall=100.00%, threshold=61.00, progress=100.00%
+[WARNING] 2025-11-25 15:39:55,555 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-11-25 15:39:55,578 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-11-25 15:39:55,585 [learner.views] Created CourseSessionLog for user 5, course 2, material 15
+[DEBUG] 2025-11-25 15:39:55,599 [learner.views] Updated LastAccessCourse for user 5, course 2, material 15
+[INFO] 2025-11-25 15:39:55,608 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 15
+[DEBUG] 2025-11-25 15:39:55,620 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=100.00
+[INFO] 2025-11-25 15:39:55,620 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=True, assessments=1/1, overall=100.00%, threshold=61.00, progress=100.00%
+[WARNING] 2025-11-25 15:40:02,906 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-11-25 15:40:06,633 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:40:06,655 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:40:06,695 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:40:06,723 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:40:06,729 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:40:06,763 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-11-25 15:40:06,873 [learner.views] Redirecting to load_content: /learn/2/public-speaking-for-beginners-speak-with-confidence/material/15/
+[WARNING] 2025-11-25 15:40:06,888 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-11-25 15:40:06,919 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-11-25 15:40:06,928 [learner.views] Created CourseSessionLog for user 5, course 2, material 15
+[DEBUG] 2025-11-25 15:40:06,945 [learner.views] Updated LastAccessCourse for user 5, course 2, material 15
+[INFO] 2025-11-25 15:40:06,953 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, material 15
+[DEBUG] 2025-11-25 15:40:06,979 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=100.00
+[INFO] 2025-11-25 15:40:06,979 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=True, assessments=1/1, overall=100.00%, threshold=61.00, progress=100.00%
+[WARNING] 2025-11-25 15:41:06,633 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:41:06,659 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:41:06,692 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:41:06,707 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:41:06,725 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:41:06,745 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:41:07,787 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:42:07,839 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:42:07,863 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:42:07,867 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:42:07,869 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:42:07,898 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:42:07,921 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:42:07,949 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:43:07,834 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:43:07,838 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:43:07,841 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:43:07,907 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:43:07,871 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:43:07,922 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:43:07,967 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:44:07,805 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:44:07,840 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:44:07,854 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:44:07,877 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:44:07,917 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:44:07,921 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:44:07,941 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:45:07,858 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:45:07,940 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:45:07,945 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:45:07,962 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:45:07,985 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:45:08,013 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:45:08,027 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:46:07,985 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:46:08,006 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:46:08,035 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:46:08,066 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:46:08,071 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:46:08,095 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:46:08,118 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:47:08,022 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:47:08,066 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:47:08,091 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:47:08,095 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:47:08,133 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:47:08,140 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:47:08,172 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:48:08,034 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:48:08,085 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:48:08,128 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:48:08,141 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:48:08,146 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:48:08,147 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:48:08,173 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:49:08,569 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:49:08,572 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:49:08,612 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:49:08,618 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:49:08,658 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:49:08,659 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:49:08,736 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:50:08,560 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:50:08,587 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:50:08,607 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:50:08,661 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:50:08,665 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:50:08,673 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:50:08,698 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:51:08,562 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:51:08,594 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:51:08,638 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:51:08,640 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:51:08,661 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:51:08,707 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:51:08,708 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:52:09,073 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:52:09,109 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:52:09,145 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:52:09,154 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:52:09,185 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:52:09,196 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:52:09,220 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:53:09,131 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:53:09,161 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:53:09,189 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:53:09,211 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:53:09,219 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:53:09,253 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:53:09,272 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:54:09,667 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:54:09,669 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:54:09,702 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:54:09,730 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:54:09,750 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:54:09,759 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:54:09,781 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:55:09,753 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:55:09,771 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:55:09,779 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:55:09,791 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:55:09,796 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:55:09,826 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:55:09,850 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:56:10,301 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:56:10,334 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:56:10,355 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:56:10,390 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:56:10,410 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:56:10,418 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:56:10,440 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:57:10,530 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:57:10,543 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:57:10,588 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:57:10,623 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:57:10,631 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:57:10,635 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:57:10,661 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:58:10,656 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:58:10,704 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:58:10,723 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:58:10,731 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:58:10,735 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:58:10,758 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:58:10,782 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:59:10,832 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:59:10,870 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:59:10,877 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:59:10,915 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:59:10,918 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:59:10,945 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 15:59:10,969 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:00:11,460 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:00:11,486 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:00:11,528 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:00:11,549 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:00:11,562 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:00:11,579 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:00:11,608 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:01:11,490 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:01:11,511 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:01:11,559 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:01:11,585 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:01:11,618 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:01:11,614 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:01:11,640 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:02:11,478 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:02:11,501 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:02:11,525 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:02:11,569 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:02:11,573 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:02:11,594 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:02:11,619 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:03:11,490 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:03:11,516 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:03:11,562 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:03:11,564 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:03:11,602 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:03:11,610 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-11-25 16:03:11,635 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-01 13:19:50,369 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-01 13:19:51,172 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-01 13:19:51,182 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2025-12-01 13:20:10,110 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-12-01 13:20:10,113 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-12-01 13:20:10,114 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-12-01 05:20:10.110332+00:00
+[INFO] 2025-12-01 13:20:10,728 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/login/"}.
+[INFO] 2025-12-01 13:20:10,729 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-01 05:20:10.110332+00:00
+[DEBUG] 2025-12-01 13:20:10,736 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-12-01 13:20:10,991 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[ERROR] 2025-12-01 13:36:42,045 [django.request] Internal Server Error: /questions/create/2/117/10/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4913, in create_question_view
+    return render(request, 'courses/create_question.html', {
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1081, in render
+    return render_value_in_context(output, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1058, in render_value_in_context
+    value = str(value)
+TypeError: __str__ returned non-string (type NoneType)
+[INFO] 2025-12-01 13:40:21,135 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-01 13:40:22,264 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-01 13:40:22,276 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-12-01 13:42:49,437 [django.request] Internal Server Error: /questions/create/2/117/10/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4911, in create_question_view
+    return render(request, 'courses/create_question.html', {
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+[ERROR] 2025-12-01 13:43:18,946 [django.request] Internal Server Error: /questions/create/2/117/10/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4911, in create_question_view
+    return render(request, 'courses/create_question.html', {
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'course_detail' not found. 'course_detail' is not a valid view function or pattern name.
+[ERROR] 2025-12-01 13:43:30,441 [django.request] Internal Server Error: /questions/create/2/117/10/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4911, in create_question_view
+    return render(request, 'courses/create_question.html', {
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'section_detail' not found. 'section_detail' is not a valid view function or pattern name.
+[WARNING] 2025-12-01 13:44:09,669 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-12-01 13:45:52,465 [django.request] Internal Server Error: /questions/create/2/117/10/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4911, in create_question_view
+    return render(request, 'courses/create_question.html', {
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+[WARNING] 2025-12-01 13:45:52,514 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:46:19,817 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:46:38,525 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:46:39,438 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:48:41,978 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:49:18,914 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:49:22,376 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:49:35,325 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:49:36,287 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:49:37,886 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:49:40,702 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:49:42,828 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-12-01 13:50:56,937 [django.request] Internal Server Error: /questions/create/2/117/10/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4911, in create_question_view
+    return render(request, 'courses/create_question.html', {
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+[WARNING] 2025-12-01 13:50:56,990 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:51:10,477 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:52:26,026 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:52:34,172 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 13:54:21,366 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:03:56,537 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:06:00,288 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:06:22,283 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:11:07,559 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-12-01 14:14:29,370 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-01 14:14:30,476 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-01 14:14:30,489 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-01 14:19:02,466 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-01 14:19:03,442 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-01 14:19:03,452 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-01 14:19:25,519 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-01 14:19:26,556 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-01 14:19:26,567 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-01 14:22:00,872 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-12-01 14:22:02,019 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-01 14:22:02,031 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-01 14:29:41,422 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:30:35,951 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:32:55,791 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-12-01 14:34:27,506 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-12-01 14:34:28,600 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-01 14:34:28,611 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-01 14:34:33,876 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:37:26,403 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:37:29,039 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:38:29,024 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:38:48,412 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:39:04,833 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-12-01 14:40:48,247 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-12-01 14:40:49,325 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-01 14:40:49,336 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-01 14:40:53,069 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:41:21,924 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:41:23,988 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:42:24,197 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:44:12,192 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:44:45,850 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:44:48,589 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:45:02,923 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:45:07,296 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:45:10,262 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:45:13,835 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:45:15,174 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:45:31,618 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:45:34,129 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:45:41,025 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:45:44,051 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:46:23,656 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-01 14:46:41,002 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
