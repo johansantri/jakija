@@ -11543,3 +11543,49 @@ django.urls.exceptions.NoReverseMatch: Reverse for 'dashboard' not found. 'dashb
 [WARNING] 2025-12-02 16:01:30,286 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-02 16:01:30,323 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-02 16:01:30,331 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:01:31,202 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:01:50,365 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:01:51,399 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:02:30,215 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:02:30,260 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:02:30,294 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:02:30,301 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:02:30,308 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:02:30,329 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:02:31,210 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-02 16:02:33,906 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-12-02 16:02:33,907 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-12-02 16:02:33,907 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-12-02 08:02:33.905998+00:00
+[INFO] 2025-12-02 16:02:34,509 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/login/"}.
+[INFO] 2025-12-02 16:02:34,510 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-02 08:02:33.905998+00:00
+[DEBUG] 2025-12-02 16:02:34,517 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-12-02 16:02:34,747 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-12-02 16:02:50,366 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:02:51,373 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:03:30,238 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:03:30,252 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:03:30,279 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:03:30,311 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:03:30,318 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:03:30,332 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:03:31,212 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:03:50,348 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:03:51,363 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:04:30,221 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:04:30,272 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:04:30,302 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:04:30,326 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:04:30,331 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:04:30,335 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:04:31,225 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:04:50,358 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:04:51,396 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:05:30,225 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:05:30,288 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:05:30,291 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:05:30,299 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:05:30,316 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:05:30,337 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:05:31,186 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:05:50,367 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 16:05:51,398 [django.request] Not Found: /partner/ping-session/
