@@ -3,107 +3,111 @@
 {% block content %}
 
 <!-- Header -->
+<h2>Participant Data</h2>
+<p>Information about participants, enrollment, and certificates.</p>
 
-    <h2>Participant Data</h2>
-    <p>Information about participants, enrollment, and certificates.</p>
+{% if license_course_data %}
+    {% for data in license_course_data %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">License: {{ data.license.name }}</h5>
+                <p>ID: {{ data.license.id }}</p>
+            </div>
+            <div class="card-body">
+                {% for course_data in data.courses %}
+                    <h6 class="mb-3">Course: {{ course_data.course.course_name }} ({{ course_data.enrollment_count }} participants)</h6>
 
-    {% if license_course_data %}
-        {% for data in license_course_data %}
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">License: {{ data.license.name }}</h5>
-                    <p>ID: {{ data.license.id }}</p>
-                </div>
-                <div class="card-body">
-                    {% for course_data in data.courses %}
-                        <h6 class="mb-3">Course: {{ course_data.course.course_name }} ({{ course_data.enrollment_count }} participants)</h6>
-
-                        <!-- Tabel Data Peserta -->
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
-                                <thead>
+                    <!-- Participant Data Table -->
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Participant Name</th>
+                                    <th>Email</th>
+                                    <th>Course</th>
+                                    <th>Certificate</th>
+                                    <th>Last Accessed Material</th>
+                                    <th>Last Completed Assessment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for enrollment_data in course_data.enrollments %}
                                     <tr>
-                                        <th>Participant Name</th>
-                                        <th>Email</th>
-                                        <th>Course</th>
-                                        <th>Certificate</th>
-                                        <th>Last Accessed Material</th>
-                                        <th>Last Completed Assessment</th>
+                                        <td>
+                                            <a href="{% url 'learner:learner_detail' username=enrollment_data.enrollment.user.username %}" target="_blank">
+                                                {{ enrollment_data.enrollment.user.get_full_name }}
+                                            </a>
+                                        </td>
+                                        <td>{{ enrollment_data.enrollment.user.email }}</td>
+                                        <td>
+                                            <a href="{% url 'courses:course_lms_detail' id=enrollment_data.enrollment.course.id slug=enrollment_data.enrollment.course.slug %}" target="_blank">
+                                                {{ enrollment_data.enrollment.course.course_name|title }} | {{ enrollment_data.enrollment.course.org_partner.name.kode|title }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {% if enrollment_data.certificate %}
+                                                Passed ({{ enrollment_data.certificate.issue_date|date:"Y-m-d" }}) | Score: {{ enrollment_data.certificate.total_score }}
+                                            {% else %}
+                                                Not Passed (No Certificate)
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if enrollment_data.last_accessed_material %}
+                                                {{ enrollment_data.last_accessed_material|date:"Y-m-d H:i" }}
+                                            {% else %}
+                                                Not accessed yet
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if enrollment_data.last_completed_assessment %}
+                                                {{ enrollment_data.last_completed_assessment|date:"Y-m-d H:i" }}
+                                            {% else %}
+                                                Not completed yet
+                                            {% endif %}
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {% for enrollment_data in course_data.enrollments %}
-                                        <tr>
-                                            <td>
-                                                <a href="{% url 'learner:learner_detail' username=enrollment_data.enrollment.user.username %}" target="_blank">
-                                                    {{ enrollment_data.enrollment.user.get_full_name }}
-                                                </a>
-                                            </td>
-                                            <td>{{ enrollment_data.enrollment.user.email }}</td>
-                                            <td>
-                                                <a href="{% url 'courses:course_lms_detail' id=enrollment_data.enrollment.course.id slug=enrollment_data.enrollment.course.slug %}" target="_blank">
-                                                    {{ enrollment_data.enrollment.course.course_name|title }} | {{ enrollment_data.enrollment.course.org_partner.name.kode|title }}
-                                                </a>
-                                            </td>
-                                            <td>
-                                                {% if enrollment_data.certificate %}
-                                                    Passed ({{ enrollment_data.certificate.issue_date|date:"Y-m-d" }}) | Score: {{ enrollment_data.certificate.total_score }}
-                                                {% else %}
-                                                    Not Passed (No Certificate)
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                {% if enrollment_data.last_accessed_material %}
-                                                    {{ enrollment_data.last_accessed_material|date:"Y-m-d H:i" }}
-                                                {% else %}
-                                                    Not accessed yet
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                {% if enrollment_data.last_completed_assessment %}
-                                                    {{ enrollment_data.last_completed_assessment|date:"Y-m-d H:i" }}
-                                                {% else %}
-                                                    Not completed yet
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                    {% empty %}
-                                        <tr>
-                                            <td colspan="6">No participants are enrolled in this course.</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    {% empty %}
-                        <p>No courses are associated with this license.</p>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endfor %}
-
-        <!-- Paginasi -->
-        <div class="d-flex justify-content-center my-4">
-            <div class="step-links">
-                {% if page_obj.has_previous %}
-                    <a class="btn btn-link" href="?page=1">&laquo; first</a>
-                    <a class="btn btn-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
-
-                <span class="mx-3">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
-
-                {% if page_obj.has_next %}
-                    <a class="btn btn-link" href="?page={{ page_obj.next_page_number }}">next</a>
-                    <a class="btn btn-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="6" class="text-center">No participants are enrolled in this course.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% empty %}
+                    <p>No courses are associated with this license.</p>
+                {% endfor %}
             </div>
         </div>
+    {% endfor %}
 
-    {% else %}
-        <div class="alert alert-info">
-            No participant data available for your licenses.
+    <!-- Pagination Controls -->
+    <div class="d-flex justify-content-center my-4">
+        <div class="step-links">
+            {% if page_obj.has_previous %}
+                <a class="btn btn-link" href="?page=1">&laquo; First</a>
+                <a class="btn btn-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% else %}
+                <span class="btn btn-link disabled">« First</span>
+                <span class="btn btn-link disabled">Previous</span>
+            {% endif %}
+
+            <span class="mx-3">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+                <a class="btn btn-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a class="btn btn-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+            {% else %}
+                <span class="btn btn-link disabled">Next</span>
+                <span class="btn btn-link disabled">Last »</span>
+            {% endif %}
         </div>
-    {% endif %}
+    </div>
 
+{% else %}
+    <div class="alert alert-info">
+        No participant data available for your licenses.
+    </div>
+{% endif %}
 
 {% endblock %}

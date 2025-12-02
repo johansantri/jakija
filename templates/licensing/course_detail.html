@@ -3,63 +3,63 @@
 
 {% block content %}
 
-<h3 class="mb-4">Course Details: {{ course.course_name }}</h3>
+<h3 class="text-2xl font-semibold mb-4">Course Details: {{ course.course_name }}</h3>
 
 <!-- Search Form -->
-<!-- Search Form -->
-<form method="get" class="d-flex align-items-center">
-    <input type="text" name="search" class="form-control me-2" value="{{ search_query }}" placeholder="Search by name or email" style="width: auto;">
-    <button type="submit" class="btn btn-sm btn-success">Search</button>
+<form method="get" class="flex items-center mb-6">
+    <input type="text" name="search" class="form-input w-80 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ search_query }}" placeholder="Search by name or email">
+    <button type="submit" class="ml-2 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400">
+        Search
+    </button>
 </form>
 
-
 {% if participants_data %}
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover align-middle">
-            <thead class="table-light">
+    <div class="overflow-x-auto">
+        <table class="min-w-full table-auto border-separate border border-gray-300 rounded-md">
+            <thead class="bg-gray-100 text-left">
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Enrollment Date</th>
-                    <th>Certificate Status</th>
-                    <th>Score</th>
-                    <th>Last Accessed Material</th>
-                    <th>Last Completed Assessment</th>
+                    <th class="px-4 py-2 border-b">Name</th>
+                    <th class="px-4 py-2 border-b">Email</th>
+                    <th class="px-4 py-2 border-b">Enrollment Date</th>
+                    <th class="px-4 py-2 border-b">Certificate Status</th>
+                    <th class="px-4 py-2 border-b">Score</th>
+                    <th class="px-4 py-2 border-b">Last Accessed Material</th>
+                    <th class="px-4 py-2 border-b">Last Completed Assessment</th>
                 </tr>
             </thead>
             <tbody>
                 {% for data in participants_data %}
-                <tr>
-                    <td>{{ data.enrollment.user.get_full_name }}</td>
-                    <td>{{ data.enrollment.user.email }}</td>
-                    <td>{{ data.enrollment.enrolled_at|date:"d M Y" }}</td>
-                    <td>
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2 border-b">{{ data.enrollment.user.get_full_name }}</td>
+                    <td class="px-4 py-2 border-b">{{ data.enrollment.user.email }}</td>
+                    <td class="px-4 py-2 border-b">{{ data.enrollment.enrolled_at|date:"d M Y" }}</td>
+                    <td class="px-4 py-2 border-b">
                         {% if data.certificate %}
-                            <span class="badge bg-success">Passed</span><br>
-                            <small>{{ data.certificate.issued_at|date:"d M Y" }}</small>
+                            <span class="bg-green-200 text-green-800 px-2 py-1 rounded-full text-xs">Passed</span><br>
+                            <small class="text-gray-500">{{ data.certificate.issued_at|date:"d M Y" }}</small>
                         {% else %}
-                            <span class="badge bg-secondary">Not Yet</span>
+                            <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs">Not Yet</span>
                         {% endif %}
                     </td>
-                    <td>
+                    <td class="px-4 py-2 border-b">
                         {% if data.certificate %}
                         {{ data.certificate.total_score }}
                         {% else %}
                         No score available
                         {% endif %}
                     </td>
-                    <td>
+                    <td class="px-4 py-2 border-b">
                         {% if data.last_accessed_material %}
                             {{ data.last_accessed_material|date:"d M Y H:i" }}
                         {% else %}
-                            <span class="text-muted">Not available</span>
+                            <span class="text-gray-500">Not available</span>
                         {% endif %}
                     </td>
-                    <td>
+                    <td class="px-4 py-2 border-b">
                         {% if data.last_completed_assessment %}
                             {{ data.last_completed_assessment|date:"d M Y H:i" }}
                         {% else %}
-                            <span class="text-muted">Not available</span>
+                            <span class="text-gray-500">Not available</span>
                         {% endif %}
                     </td>
                 </tr>
@@ -68,28 +68,35 @@
         </table>
     </div>
 {% else %}
-    <div class="alert alert-info">
+    <div class="alert alert-info p-4 bg-blue-100 text-blue-700 border border-blue-300 rounded-md">
         No participants have registered for this course yet.
     </div>
 {% endif %}
 
 <!-- Pagination Controls -->
-<div class="pagination">
-    <span class="step-links">
+<div class="mt-6 flex justify-between items-center">
+    <div>
         {% if participants_data.has_previous %}
-            <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}">&laquo; first</a>
-            <a href="?page={{ participants_data.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">previous</a>
+            <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}" class="text-blue-600 hover:underline">&laquo; First</a>
+            <a href="?page={{ participants_data.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" class="ml-2 text-blue-600 hover:underline">Previous</a>
         {% endif %}
+    </div>
 
-        <span class="current">
-            Page {{ participants_data.number }} of {{ participants_data.paginator.num_pages }}.
-        </span>
+    <div class="text-sm text-gray-600">
+        Page {{ participants_data.number }} of {{ participants_data.paginator.num_pages }}.
+    </div>
 
+    <div>
         {% if participants_data.has_next %}
-            <a href="?page={{ participants_data.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">next</a>
-            <a href="?page={{ participants_data.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}">last &raquo;</a>
+            <a href="?page={{ participants_data.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" class="ml-2 text-blue-600 hover:underline">Next</a>
+            <a href="?page={{ participants_data.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}" class="ml-2 text-blue-600 hover:underline">Last &raquo;</a>
         {% endif %}
-    </span>
+    </div>
 </div>
-<a href="{% url 'licensing:course_participants_dashboard' %}" class="btn btn-sm btn-info">back</a>
+
+<!-- Back Button -->
+<a href="{% url 'licensing:course_participants_dashboard' %}" class="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">
+    Back
+</a>
+
 {% endblock %}

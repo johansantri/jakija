@@ -8,7 +8,7 @@ class InvitationForm(forms.Form):
     invitee_emails = forms.CharField(
         widget=forms.Textarea(attrs={
             'rows': 5,
-            'class': 'form-control',
+            'class': 'w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
             'placeholder': 'Enter email addresses (one per line or separated by commas)'
         }),
         label="Invitee Emails",

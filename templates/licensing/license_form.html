@@ -1,76 +1,159 @@
 {% extends 'home/tes.html' %}
-{% load form_filters %} 
+{% load form_filters %}
+
 {% block content %}
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+<h1 class="text-3xl font-bold text-red-600 mb-4">licence form</h1>
   <h2>{{ title }}</h2>
+
+  <!-- Display Messages -->
   {% if messages %}
     {% for message in messages %}
-      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      <div class="alert alert-{{ message.tags }} mb-3">{{ message }}</div>
     {% endfor %}
   {% endif %}
+
+  <!-- Form -->
   <form method="post">
     {% csrf_token %}
     <div class="row">
-      <div class="col-md-6">
+      <!-- Left Column -->
+      <div class="col-md-6 col-sm-12">
         <div class="mb-3">
           <label class="form-label">{{ form.name.label }}</label>
           {{ form.name|add_class:"form-control" }}
-          {{ form.name.errors }}
+          {% if form.name.errors %}
+            <div class="text-danger">
+              {% for error in form.name.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
         <div class="mb-3">
           <label class="form-label">{{ form.license_type.label }}</label>
           {{ form.license_type|add_class:"form-select" }}
-          {{ form.license_type.errors }}
+          {% if form.license_type.errors %}
+            <div class="text-danger">
+              {% for error in form.license_type.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
         <div class="mb-3">
           <label class="form-label">{{ form.start_date.label }}</label>
           {{ form.start_date|add_class:"form-control" }}
-          {{ form.start_date.errors }}
+          {% if form.start_date.errors %}
+            <div class="text-danger">
+              {% for error in form.start_date.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
         <div class="mb-3">
           <label class="form-label">{{ form.expiry_date.label }}</label>
           {{ form.expiry_date|add_class:"form-control" }}
-          {{ form.expiry_date.errors }}
+          {% if form.expiry_date.errors %}
+            <div class="text-danger">
+              {% for error in form.expiry_date.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
         <div class="mb-3">
           <label class="form-label">{{ form.status.label }}</label>
           {{ form.status|add_class:"form-check-input" }}
-          {{ form.status.errors }}
+          {% if form.status.errors %}
+            <div class="text-danger">
+              {% for error in form.status.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
       </div>
-      <div class="col-md-6">
+
+      <!-- Right Column -->
+      <div class="col-md-6 col-sm-12">
         <div class="mb-3">
-        <label class="form-label">{{ form.user_email.label }}</label>
-        {{ form.user_email|add_class:"form-control" }}
-        {{ form.user_email.errors }}
+          <label class="form-label">{{ form.user_email.label }}</label>
+          {{ form.user_email|add_class:"form-control" }}
+          {% if form.user_email.errors %}
+            <div class="text-danger">
+              {% for error in form.user_email.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
         <div class="mb-3">
           <label class="form-label">{{ form.max_users.label }}</label>
           {{ form.max_users|add_class:"form-control" }}
-          {{ form.max_users.errors }}
+          {% if form.max_users.errors %}
+            <div class="text-danger">
+              {% for error in form.max_users.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
         <div class="mb-3">
           <label class="form-label">{{ form.subscription_type.label }}</label>
           {{ form.subscription_type|add_class:"form-select" }}
-          {{ form.subscription_type.errors }}
+          {% if form.subscription_type.errors %}
+            <div class="text-danger">
+              {% for error in form.subscription_type.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
         <div class="mb-3">
           <label class="form-label">{{ form.subscription_frequency.label }}</label>
           {{ form.subscription_frequency|add_class:"form-select" }}
-          {{ form.subscription_frequency.errors }}
+          {% if form.subscription_frequency.errors %}
+            <div class="text-danger">
+              {% for error in form.subscription_frequency.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
         <div class="mb-3">
           <label class="form-label">{{ form.university.label }}</label>
           {{ form.university|add_class:"form-select" }}
-          {{ form.university.errors }}
+          {% if form.university.errors %}
+            <div class="text-danger">
+              {% for error in form.university.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
+
+    <!-- Description Field -->
     <div class="mb-3">
       <label class="form-label">{{ form.description.label }}</label>
       {{ form.description|add_class:"form-control" }}
-      {{ form.description.errors }}
+      {% if form.description.errors %}
+        <div class="text-danger">
+          {% for error in form.description.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
     </div>
-    <button type="submit" class="btn btn-primary">Simpan</button>
-    <a href="{% url 'licensing:subscription_management' %}" class="btn btn-secondary">Batal</a>
+
+    <!-- Buttons -->
+    <div class="d-flex justify-content-between">
+      <button type="submit" class="btn btn-primary">Simpan</button>
+      <a href="{% url 'licensing:subscription_management' %}" class="btn btn-secondary">Batal</a>
+    </div>
   </form>
+</section>
 {% endblock %}

@@ -16,6 +16,6 @@ urlpatterns = [
     path('course-participants-dashboard/', views.course_participants_dashboard, name='course_participants_dashboard'),
     path('course-detail/<int:course_id>/', views.course_detail, name='course_detail'),
     path('create/', views.license_create, name='license_create'),
-    path('update/<int:pk>/', views.license_update, name='license_update'),
+    path('update/license/<int:pk>/', views.license_update, name='license_update'),
     path('manage/', views.subscription_management, name='subscription_management'),
 ]

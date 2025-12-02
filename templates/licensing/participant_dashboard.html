@@ -1,9 +1,9 @@
 {% extends 'home/base.html' %}
 {% block content %}
 <div class="container mt-5">
-    <h2 class="mb-4">Dashboard Peserta</h2>
+    <h2 class="text-2xl font-bold mb-4">Dashboard Peserta</h2>
 
-    <!-- Menampilkan pesan -->
+    <!-- Display Messages -->
     {% if messages %}
         {% for message in messages %}
             <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -13,32 +13,32 @@
         {% endfor %}
     {% endif %}
 
-    <!-- Bagian untuk menampilkan lisensi -->
-    <h3 class="mb-3">Lisensi Anda</h3>
+    <!-- Licenses Section -->
+    <h3 class="text-xl font-semibold mb-3">Lisensi Anda</h3>
     {% if licenses %}
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-                <thead class="table-dark">
+        <div class="overflow-x-auto">
+            <table class="min-w-full table-auto border-collapse border border-gray-300 rounded-lg">
+                <thead class="bg-gray-800 text-white">
                     <tr>
-                        <th scope="col">Nama Lisensi</th>
-                        <th scope="col">Tipe</th>
-                        <th scope="col">Tanggal Mulai</th>
-                        <th scope="col">Tanggal Berakhir</th>
-                        <th scope="col">Status</th>
+                        <th class="px-4 py-2 text-left">Nama Lisensi</th>
+                        <th class="px-4 py-2 text-left">Tipe</th>
+                        <th class="px-4 py-2 text-left">Tanggal Mulai</th>
+                        <th class="px-4 py-2 text-left">Tanggal Berakhir</th>
+                        <th class="px-4 py-2 text-left">Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-white">
                     {% for license in licenses %}
-                        <tr>
-                            <td>{{ license.name }}</td>
-                            <td>{{ license.get_license_type_display }}</td>
-                            <td>{{ license.start_date }}</td>
-                            <td>{{ license.expiry_date }}</td>
-                            <td>
+                        <tr class="hover:bg-gray-100">
+                            <td class="px-4 py-2">{{ license.name }}</td>
+                            <td class="px-4 py-2">{{ license.get_license_type_display }}</td>
+                            <td class="px-4 py-2">{{ license.start_date }}</td>
+                            <td class="px-4 py-2">{{ license.expiry_date }}</td>
+                            <td class="px-4 py-2">
                                 {% if license.status %}
-                                    <span class="badge bg-success">Aktif</span>
+                                    <span class="bg-green-200 text-green-800 px-2 py-1 rounded-full">Aktif</span>
                                 {% else %}
-                                    <span class="badge bg-danger">Tidak Aktif</span>
+                                    <span class="bg-red-200 text-red-800 px-2 py-1 rounded-full">Tidak Aktif</span>
                                 {% endif %}
                             </td>
                         </tr>
@@ -47,7 +47,7 @@
             </table>
         </div>
     {% else %}
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-info mt-4 p-3 bg-blue-100 text-blue-800 rounded-lg">
             Anda belum memiliki lisensi aktif.
         </div>
     {% endif %}
