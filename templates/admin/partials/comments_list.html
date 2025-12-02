@@ -7,11 +7,11 @@
         hx-get="?page={{ page_obj.next_page_number }}"
         hx-target="#comments-container"
         hx-swap="innerHTML"
-        class="btn btn-outline-primary w-100 mt-3"
+        class="w-full mt-6 py-3 px-6 bg-blue-500 text-white text-lg font-medium rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out"
         id="load-more-btn"
     >
         Load More
     </button>
 {% else %}
-    <p class="text-muted text-center mt-3" id="end-comments-msg">No more comments.</p>
+    <p class="text-center text-sm text-gray-500 mt-3" id="end-comments-msg">No more comments.</p>
 {% endif %}

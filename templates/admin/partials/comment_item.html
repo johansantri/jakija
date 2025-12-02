@@ -1,64 +1,67 @@
 {% load humanize %}
 {% load static %}
 {% load extra_filters %}
-<div class="comment-box border p-3 mb-3 rounded " id="comment-{{ comment.id }}">
+
+<div class="comment-box border p-4 mb-4 rounded-lg shadow-sm bg-white" id="comment-{{ comment.id }}">
     <!-- Header: Avatar & User Info -->
-    <div class="d-flex align-items-center mb-2">
+    <div class="flex items-center mb-2">
         {% if comment.user.photo %}
             <img src="{{ comment.user.photo.url }}"
                  alt="Avatar"
-                 class="rounded-circle me-2 border"
+                 class="rounded-full me-2 border"
                  style="width: 40px; height: 40px; object-fit: cover;">
         {% else %}
             <!-- If no photo, display circle with initials -->
-            <div class="rounded-circle me-2 border bg-secondary text-white d-flex justify-content-center align-items-center"
+            <div class="rounded-full me-2 border bg-secondary text-white flex justify-center items-center"
                  style="width: 40px; height: 40px; font-weight: 700; font-size: 1rem;">
                 {{ comment.user.get_full_name|default:comment.user.email|initials }}
             </div>
         {% endif %}
 
-        <div class="text-muted">
+        <div class="text-gray-600">
             <strong>{{ comment.user.get_full_name|default:comment.user.email }}</strong><br>
-            <small class="text-muted">{{ comment.created_at|naturaltime }}</small>
+            <small class="text-gray-500">{{ comment.created_at|naturaltime }}</small>
         </div>
     </div>
 
     <!-- Comment Content -->
-    <p class="mb-2 text-muted">{{ comment.content }}</p>
+    <p class="mb-2 text-gray-700">{{ comment.content }}</p>
 
     <!-- Course and Material Info -->
-    <small class="text-muted fst-italic">
+    <small class="text-gray-500 italic">
         Material: <strong>{{ comment.material.title }}</strong> &mdash; 
         Course: <strong>{{ comment.material.section.courses.course_name }}</strong>
     </small>
 
     <!-- Actions: Reply Form and Delete Button -->
-    <div class="row align-items-start g-2 mt-2 mb-3">
+    <div class="flex flex-wrap items-start gap-2 mt-3 mb-4">
         <!-- Reply Form -->
-        <div class="col-12 col-md">
+        <div class="w-full md:w-auto">
             <form 
                 hx-post="{% url 'authentication:reply_comment' comment.id %}" 
                 hx-target="#replies-{{ comment.id }}" 
                 hx-swap="beforeend" 
-                hx-on::after-request="this.reset()"  
+                hx-on::after-request="this.reset()"
             >
                 {% csrf_token %}
-                <div class="input-group input-group-sm">
+                <div class="flex items-center gap-2">
                     <textarea 
                         name="content" 
-                        class="form-control" 
+                        class="form-control w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
                         placeholder="Write a reply..." 
                         required 
                         rows="1"
                         style="resize: vertical;"
                     ></textarea>
-                    <button type="submit" class="btn btn-outline-primary px-3">Reply</button>
+                    <button type="submit" class="btn btn-outline-primary px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                        Reply
+                    </button>
                 </div>
             </form>
         </div>
 
         <!-- Delete Button -->
-        <div class="col-auto">
+        <div class="w-auto">
             <form 
                 hx-post="{% url 'authentication:delete_comment' comment.id %}" 
                 hx-target="#comment-{{ comment.id }}" 
@@ -66,7 +69,7 @@
                 onsubmit="return confirm('Are you sure you want to delete this comment?')"
             >
                 {% csrf_token %}
-                <button type="submit" class="btn btn-outline-danger btn-sm">
+                <button type="submit" class="btn btn-outline-danger text-red-500 hover:text-white hover:bg-red-500 text-sm p-2 rounded-md">
                     🗑 Delete
                 </button>
             </form>
@@ -74,7 +77,7 @@
     </div>
 
     <!-- Nested Replies -->
-    <div id="replies-{{ comment.id }}" class="ms-4 mt-3">
+    <div id="replies-{{ comment.id }}" class="ml-6 mt-3">
         {% for reply in comment.children.all %}
             {% include 'admin/partials/comment_item.html' with comment=reply %}
         {% endfor %}
