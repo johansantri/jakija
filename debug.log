@@ -11430,3 +11430,32 @@ django.urls.exceptions.NoReverseMatch: Reverse for 'dashboard' not found. 'dashb
 [INFO] 2025-12-02 14:44:53,128 [django.utils.autoreload] Watching for file changes with StatReloader
 [WARNING] 2025-12-02 14:57:30,171 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
 [WARNING] 2025-12-02 14:58:30,579 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-12-02 15:51:52,025 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 15:51:52,036 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-02 15:51:54,630 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-12-02 15:51:55,655 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 15:51:55,665 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-02 15:52:14,266 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-12-02 15:52:15,287 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 15:52:15,297 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-02 15:52:22,966 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 15:52:22,989 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 15:52:25,122 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 15:52:28,838 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 15:52:29,398 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 15:52:29,424 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 15:52:29,449 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 15:52:29,481 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 15:52:29,500 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 15:52:29,508 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 15:52:30,361 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-02 15:52:31,849 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 15:52:33,704 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 15:52:34,790 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 15:52:35,772 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 15:52:36,317 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 15:52:36,581 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 15:52:38,499 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 15:52:38,529 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 15:52:39,425 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 15:52:40,074 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
