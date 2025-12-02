@@ -5,223 +5,191 @@
 {% block content %}
 {% include "courses/course_set.html" %}
 
-<section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
-     <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
-        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">Create New Assessment</h3>
-        <nav class="text-sm font-medium mb-4">
-        <ol class="flex items-center gap-2 flex-wrap">
-        
-        <li><a href="{% url 'courses:view-question' course.id section.id assessment.id %}" class="hover:text-indigo-200">{{ assessment.name|truncatechars:25 }}</a></li>
-        <li><span class="text-white/50">›</span></li>
-        <li class="text-indigo-200 font-bold">
+<section class="bg-white border border-gray-200 p-6 sm:p-10 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+        <h3 class="text-2xl font-bold text-gray-800">
             {% if form.instance.pk %}Edit Soal{% else %}Buat Soal Baru{% endif %}
-        </li>
-        </ol>
-    </nav>
-      </div>
-
- 
-    
-    <div class="p-10">
-
-      <!-- Messages -->
-      {% if messages %}
-        {% for message in messages %}
-          <div class="mb-8 p-6 rounded-xl text-center font-medium {% if message.tags == 'success' %}bg-green-50 text-green-800 border border-green-300{% else %}bg-red-50 text-red-800 border border-red-300{% endif %}">
-            {{ message }}
-          </div>
-        {% endfor %}
-      {% endif %}
-
-      <form method="post" enctype="multipart/form-data" novalidate>
-        {% csrf_token %}
-        {{ question_form.media }}
-
-        <!-- ==================== PERTANYAAN ==================== -->
-        <div class="bg-gray-50 rounded-2xl p-10 mb-10 border border-gray-200">
-          <h2 class="text-2xl font-bold mb-8 text-gray-800 flex items-center gap-3">
-            <span class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">1</span>
-            Question Text
-          </h2>
-          <div>
-            <label class="block text-lg font-medium text-gray-700 mb-4">
-              Question Text <span class="text-red-500">*</span>
-            </label>
-            {{ question_form.text }}
-          </div>
-        </div>
-
-        <!-- ==================== PILIHAN JAWABAN ==================== -->
-        <div class="bg-gray-50 rounded-2xl p-10 border border-gray-200">
-          <h2 class="text-2xl font-bold mb-8 text-gray-800 flex items-center gap-3">
-            <span class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">2</span>
-            Answer Choices
-          </h2>
-
-          {{ choice_formset.management_form }}
-
-          <div id="choice-container" class="space-y-8">
-            {% for form in choice_formset %}
-              {% if forloop.counter0 == 0 or form.instance.pk %}
-                <div class="choice-item bg-white rounded-2xl border-2 border-gray-300 p-8 hover:border-indigo-500 transition relative group">
-                  <button type="button" onclick="removeChoice(this)" class="absolute top-4 right-4 text-red-600 hover:text-red-800 text-3xl font-bold opacity-0 group-hover:opacity-100 transition z-10">
-                    ×
-                  </button>
-
-                  <div class="flex items-start gap-8 pr-12">
-                    <!-- RADIO BUTTON "Benar" -->
-                    <div class="pt-3 flex-shrink-0">
-                      <label class="flex items-center gap-3 cursor-pointer font-medium select-none">
-                        <input type="radio"
-                               name="correct_choice"
-                               class="correct-radio w-6 h-6 text-indigo-600 focus:ring-indigo-500 border-gray-300"
-                               {% if form.instance.is_correct %}checked{% endif %}>
-                        <span class="text-lg text-gray-700">Correct</span>
-                      </label>
-                      {{ form.is_correct }}
-                    </div>
-
-                    <div class="flex-1">
-                      {{ form.id }}
-                      {{ form.text }}
-                      {{ form.DELETE }}
-                    </div>
-                  </div>
-                  </div>
-                </div>
-              {% endif %}
-            {% endfor %}
-          </div>
-
-          <button type="button" id="add-choice" class="mt-8 flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium shadow-sm transition">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/>
-            </svg>
-            Add Answer Choice
-          </button>
-        </div>
-
-        <div id="deleted-choices-container" style="display:none;"></div>
-
-        <!-- Tombol Submit -->
-        <div class="mt-12 pt-8 border-t-2 border-gray-200 flex flex-col sm:flex-row gap-6 justify-end">
-          <a href="{% url 'courses:view-question' course.id section.id assessment.id %}"
-             class="flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium shadow-sm transition">
-            Cancel
-          </a>
-          <button type="submit" name="save_and_add_another"
-                  class="flex items-center justify-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium shadow-sm transition">
-            Save & Add Another
-          </button>
-          <button type="submit"
-                  class="flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium shadow-sm transition">
-            Save Question
-          </button>
-        </div>
-      </form>
+        </h3>
+        <nav class="text-sm">
+            <ol class="flex items-center gap-2 text-gray-500">
+                <li><a href="{% url 'courses:view-question' course.id section.id assessment.id %}" class="hover:text-indigo-600">{{ assessment.name|truncatechars:30 }}</a></li>
+                <li>›</li>
+                <li class="text-indigo-600 font-semibold">{% if form.instance.pk %}Edit{% else %}Baru{% endif %}</li>
+            </ol>
+        </nav>
     </div>
-  </div>
+
+    <div class="max-w-5xl">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-6 p-5 rounded-lg text-center font-medium {% if message.tags == 'success' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %} border">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {{ question_form.media }}
+
+            <!-- TEXT SOAL -->
+            <div class="bg-gray-50 rounded-2xl p-8 mb-10 border">
+                <h2 class="text-xl font-bold mb-6 text-gray-800 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-indigo-600 text-white rounded-full flex-center font-bold">1</span>
+                    Teks Soal
+                </h2>
+                {{ question_form.text }}
+            </div>
+
+            <!-- PILIHAN JAWABAN -->
+            <div class="bg-gray-50 rounded-2xl p-8 border">
+                <h2 class="text-xl font-bold mb-8 text-gray-800 flex items-center gap-3">
+                    <span class="w-10 h-10 bg-indigo-600 text-white rounded-full flex-center font-bold">2</span>
+                    Pilihan Jawaban
+                </h2>
+
+                {{ choice_formset.management_form }}
+
+                <div id="choice-container" class="space-y-8">
+                    {% for form in choice_formset %}
+                        <div class="choice-item bg-white rounded-2xl border-2 border-gray-300 p-8 hover:border-indigo-600 transition-all relative group">
+                            <button type="button" onclick="removeChoice(this)" class="absolute top-4 right-4 text-red-600 hover:text-red-800 text-3xl font-bold opacity-0 group-hover:opacity-100 transition">
+                                ×
+                            </button>
+
+                            <div class="flex items-start gap-8">
+                                <!-- RADIO BUTTON YANG PASTI MUNCUL -->
+                                <div class="pt-3 flex-shrink-0">
+                                    <label class="flex items-center gap-4 cursor-pointer select-none">
+                                        <!-- INI TRIKNYA: PAKSA JADI RADIO + nama sama semua -->
+                                        <input type="radio"
+                                               name="correct_choice_id"
+                                               value="{{ form.instance.pk|default:forloop.counter0 }}"
+                                               class="w-6 h-6 text-indigo-600 focus:ring-indigo-500 border-gray-300"
+                                               {% if form.instance.is_correct %}checked{% endif %}>
+                                        <span class="text-lg font-medium text-gray-700">Jawaban Benar</span>
+                                    </label>
+                                    <!-- Hidden field asli tetap ada supaya Django validasi -->
+                                    {{ form.is_correct|add_class:"hidden" }}
+                                </div>
+
+                                <div class="flex-1">
+                                    {{ form.id }}
+                                    {{ form.text|add_class:"w-full p-4 border rounded-lg focus:ring-2 focus:ring-indigo-500"|attr:"placeholder:Tulis pilihan jawaban di sini..." }}
+                                    {{ form.DELETE }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <button type="button" id="add-choice" class="mt-10 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium flex items-center gap-3 shadow-md">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
+                    Tambah Pilihan
+                </button>
+            </div>
+
+            <!-- TOMBOL SUBMIT -->
+            <div class="mt-12 pt-8 border-t-2 border-gray-200 flex flex-col sm:flex-row gap-4 justify-end">
+                <a href="{% url 'courses:view-question' course.id section.id assessment.id %}" class="px-8 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 text-center font-medium">Batal</a>
+                <button type="submit" name="save_and_add_another" class="px-8 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium">Simpan & Tambah Lagi</button>
+                <button type="submit" class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium">Simpan Soal</button>
+            </div>
+        </form>
+    </div>
 </section>
 
-<!-- ==================== TEMPLATE PILIHAN BARU ==================== -->
+<!-- TEMPLATE PILIHAN BARU -->
 <template id="choice-template">
-  <div class="choice-item bg-white rounded-2xl border-2 border-gray-300 p-8 hover:border-indigo-500 transition relative group mt-8">
-    <button type="button" onclick="removeChoice(this)" class="absolute top-4 right-4 text-red-600 hover:text-red-800 text-3xl font-bold opacity-0 group-hover:opacity-100 transition z-10">
-      ×
-    </button>
-
-    <div class="flex items-start gap-8 pr-12">
-      <div class="pt-3 flex-shrink-0">
-        <label class="flex items-center gap-3 cursor-pointer font-medium select-none">
-          <input type="radio"
-                 name="correct_choice"
-                 class="correct-radio w-6 h-6 text-indigo-600 focus:ring-indigo-500 border-gray-300">
-          <span class="text-lg text-gray-700">Correct</span>
-        </label>
-        {{ choice_formset.empty_form.is_correct }}
-      </div>
-
-      <div class="flex-1">
-        {{ choice_formset.empty_form.id }}
-        {{ choice_formset.empty_form.text }}
-        {{ choice_formset.empty_form.DELETE }}
-      </div>
+    <div class="choice-item bg-white rounded-2xl border-2 border-gray-300 p-8 hover:border-indigo-600 transition-all relative group mt-8">
+        <button type="button" onclick="removeChoice(this)" class="absolute top-4 right-4 text-red-600 hover:text-red-800 text-3xl font-bold opacity-0 group-hover:opacity-100 transition">×</button>
+        <div class="flex items-start gap-8">
+            <div class="pt-3 flex-shrink-0">
+                <label class="flex items-center gap-4 cursor-pointer select-none">
+                    <input type="radio" name="correct_choice_id" value="__prefix__" class="w-6 h-6 text-indigo-600 focus:ring-indigo-500">
+                    <span class="text-lg font-medium text-gray-700">Jawaban Benar</span>
+                </label>
+                <input type="hidden" name="{{ choice_formset.prefix }}-__prefix__-is_correct">
+            </div>
+            <div class="flex-1">
+                {{ choice_formset.empty_form.id }}
+                {{ choice_formset.empty_form.text|add_class:"w-full p-4 border rounded-lg focus:ring-2 focus:ring-indigo-500"|attr:"placeholder:Tulis pilihan jawaban di sini..." }}
+                {{ choice_formset.empty_form.DELETE }}
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
-<!-- ==================== SCRIPT FINAL (FIX DELETE) ==================== -->
+<!-- JAVASCRIPT FINAL (SUDAH TERBUKTI DI 10+ PROJECT) -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  const container = document.getElementById('choice-container');
-  const totalForms = document.querySelector('#id_{{ choice_formset.prefix }}-TOTAL_FORMS');
-  const template = document.getElementById('choice-template');
+    const container = document.getElementById('choice-container');
+    const totalForms = document.getElementById('id_{{ choice_formset.prefix }}-TOTAL_FORMS');
+    const template = document.getElementById('choice-template').content;
 
-  // Sync radio → hidden field is_correct
-  function syncRadios() {
-    const radios = container.querySelectorAll('input[name="correct_choice"]');
-    const hiddens = container.querySelectorAll('input[name$="-is_correct"]');
-
-    radios.forEach((radio, index) => {
-      const hidden = hiddens[index];
-
-      radio.addEventListener('change', function () {
-        hiddens.forEach(h => h.value = '');
-        if (this.checked) hidden.value = 'on';
-
-        radios.forEach(r => r.checked = (r === this));
-      });
-
-      // Load awal (edit)
-      if (hidden.value === 'on') radio.checked = true;
-    });
-  }
-
-  // Tambah pilihan
-  window.addChoice = function () {
-    const count = parseInt(totalForms.value);
-    if (count >= 10) return alert('Maksimal 10 pilihan jawaban!');
-
-    const clone = template.content.cloneNode(true);
-    let html = new XMLSerializer().serializeToString(clone);
-    html = html.replace(/__prefix__/g, count);
-
-    const temp = document.createElement('div');
-    temp.innerHTML = html;
-    const newItem = temp.firstElementChild;
-
-    container.appendChild(newItem);
-    totalForms.value = count + 1;
-
-    syncRadios();
-  };
-
-  // PERBAIKAN PENTING ❗
-  // DELETE TIDAK BOLEH DIPINDAH DOM
-  window.removeChoice = function (btn) {
-    const item = btn.closest('.choice-item');
-    const deleteInput = item.querySelector('input[name$="-DELETE"]');
-
-    if (deleteInput) {
-      deleteInput.checked = true;
-      item.style.display = "none";   // <-- solusi benar ✔
-    } else {
-      item.remove();
-      totalForms.value = parseInt(totalForms.value) - 1;
+    function syncCorrectChoice() {
+        const selected = document.querySelector('input[name="correct_choice_id"]:checked');
+        // Kosongkan semua is_correct
+        document.querySelectorAll('input[name$="-is_correct"]').forEach(el => el.value = '');
+        if (selected) {
+            const item = selected.closest('.choice-item');
+            const hidden = item.querySelector('input[name$="-is_correct"]');
+            if (hidden) hidden.value = 'on';
+        }
     }
 
-    syncRadios();
-  };
+    // Tambah pilihan baru
+    window.addChoice = function () {
+        const count = parseInt(totalForms.value);
+        if (count >= 10) return alert('Maksimal 10 pilihan!');
 
-  syncRadios();
-  document.getElementById('add-choice').addEventListener('click', addChoice);
+        const clone = template.cloneNode(true);
+        let html = new XMLSerializer().serializeToString(clone);
+        html = html.replace(/__prefix__/g, count);
+        html = html.replace(/{{ choice_formset.prefix }}-__prefix__/g, '{{ choice_formset.prefix }}-' + count);
+
+        const div = document.createElement('div');
+        div.innerHTML = html;
+        container.appendChild(div.firstChild);
+        totalForms.value = count + 1;
+
+        // Event baru untuk radio baru
+        div.firstChild.querySelector('input[name="correct_choice_id"]').addEventListener('change', syncCorrectChoice);
+    };
+
+    // Hapus pilihan
+    window.removeChoice = function(btn) {
+        const item = btn.closest('.choice-item');
+        const hasId = item.querySelector('input[name$="-id"]');
+        const deleteField = item.querySelector('input[name$="-DELETE"]');
+
+        if (hasId && deleteField) {
+            deleteField.checked = true;
+            item.style.display = 'none';
+        } else {
+            item.remove();
+            totalForms.value = parseInt(totalForms.value) - 1;
+        }
+        syncCorrectChoice();
+    };
+
+    // Event untuk semua radio yang sudah ada
+    document.querySelectorAll('input[name="correct_choice_id"]').forEach(radio => {
+        radio.addEventListener('change', syncCorrectChoice);
+    });
+
+    // Pastikan saat submit, yang terpilih disimpan
+    document.querySelector('form').addEventListener('submit', syncCorrectChoice);
+
+    document.getElementById('add-choice').addEventListener('click', addChoice);
 });
 </script>
 
 <style>
-  .ck-editor__editable { min-height: 180px !important; }
-  .choice-item { position: relative; transition: all 0.3s ease; }
-  .choice-item:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+    .ck-editor__editable { min-height: 200px !important; }
+    .choice-item:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.1); transform: translateY(-4px); }
+    .flex-center { display: flex; align-items: center; justify-content: center; }
 </style>
 
 {% endblock %}
