@@ -11356,3 +11356,75 @@ django.urls.exceptions.NoReverseMatch: Reverse for 'dashboard' not found. 'dashb
 [INFO] 2025-12-01 16:21:43,736 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
 [INFO] 2025-12-01 16:21:44,823 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-12-01 16:21:44,835 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-02 13:49:55,020 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 13:49:55,030 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-02 13:49:57,311 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 13:52:32,901 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 13:53:01,489 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 13:53:04,483 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 13:53:15,475 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 13:53:15,524 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-12-02 13:55:21,548 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-02 13:55:22,664 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 13:55:22,674 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-02 13:56:33,586 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-02 13:56:34,610 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 13:56:34,620 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-02 13:57:18,374 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-02 13:57:19,410 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 13:57:19,421 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-02 13:57:32,120 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 13:57:56,463 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 13:57:56,497 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 13:57:58,156 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 13:58:26,407 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 13:58:37,607 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-12-02 14:00:52,015 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-02 14:00:53,127 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 14:00:53,138 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-02 14:01:05,892 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 14:01:06,682 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 14:01:06,692 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-02 14:01:14,075 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:01:21,853 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:01:26,381 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:01:36,868 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:01:39,906 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:01:49,414 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:02:00,009 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-12-02 14:05:03,084 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-12-02 14:05:04,149 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 14:05:04,159 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-02 14:05:42,880 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:05:56,561 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:05:58,816 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:06:08,588 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:06:10,569 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:06:17,669 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:06:23,772 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:06:37,996 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:06:42,457 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:23:46,446 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:39:36,753 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-02 14:40:05,498 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-12-02 14:40:45,399 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-12-02 14:40:46,515 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 14:40:46,526 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-02 14:42:04,469 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-12-02 14:42:05,514 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 14:42:05,525 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-02 14:42:58,792 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-12-02 14:42:59,857 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 14:42:59,868 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-02 14:44:12,145 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-12-02 14:44:13,176 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 14:44:13,186 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-02 14:44:15,716 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-12-02 14:44:16,764 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 14:44:16,774 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-02 14:44:48,487 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-12-02 14:44:49,527 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 14:44:49,537 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-02 14:44:52,085 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-12-02 14:44:53,118 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-02 14:44:53,128 [django.utils.autoreload] Watching for file changes with StatReloader

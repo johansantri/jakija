@@ -4729,75 +4729,91 @@ def delete_assessment(request, idcourse, idsection, idassessment):
 #edit question and choice
 #@login_required
 #@csrf_exempt
-def edit_question(request, idcourse, idquestion, idsection, idassessment):
-    # Check if the user is authenticated
-    if not request.user.is_authenticated:
-        return redirect("/login/?next=%s" % request.path)
-    # Determine the course based on the user's role
+@login_required
+def edit_question(request, idcourse, idsection, idassessment, idquestion):
+    # ==================== AUTHORIZATION ====================
     if request.user.is_superuser:
         course = get_object_or_404(Course, id=idcourse)
-    elif request.user.is_partner:
-        # Ensure the course is associated with the partner
-        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=request.user.id)
-    elif request.user.is_instructor:
-        # Ensure the course is associated with the instructor
-        course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id)
+    elif hasattr(request.user, 'is_partner') and request.user.is_partner:
+        course = get_object_or_404(Course, id=idcourse, org_partner__user=request.user)
+    elif hasattr(request.user, 'is_instructor') and request.user.is_instructor:
+        course = get_object_or_404(Course, id=idcourse, instructor=request.user)
     else:
-        # Unauthorized access
-        messages.error(request, "You do not have permission to edit questions for this course.")
-        return redirect('courses:home')  # Redirect to a safe page
+        messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+        return redirect('courses:home')
 
-    # Ensure the section belongs to the course
     section = get_object_or_404(Section, id=idsection, courses=course)
-
-    # Ensure the assessment belongs to the section
     assessment = get_object_or_404(Assessment, id=idassessment, section=section)
-
-    # Ensure the question belongs to the assessment
     question = get_object_or_404(Question, id=idquestion, assessment=assessment)
 
-    # Pass the assessment to the forms
-    form = QuestionForm(request.POST or None, instance=question, assessment=assessment)
-    choice_formset = ChoiceFormSet(request.POST or None, instance=question)
+    # ==================== FORMS ====================
+    question_form = QuestionForm(request.POST or None, instance=question, assessment=assessment)
 
-    # Pass assessment to each form in the formset
-    for choice_form in choice_formset.forms:
-        choice_form.fields['text'].widget = (
-            CKEditor5Widget("extends") if assessment.flag else forms.Textarea(attrs={'class': 'w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-indigo-500',
-                'rows': 2,
-                'placeholder': 'Tulis pilihan jawaban...'})
-        )
+    choice_formset = ChoiceFormSet(
+        data=request.POST or None,
+        instance=question,
+        prefix='choices',
+        form_kwargs={'assessment': assessment}
+    )
 
+    # Set CKEditor hanya jika flag True
+    if assessment.flag:
+        question_form.fields['text'].widget = CKEditor5Widget(config_name='extends')
+    else:
+        question_form.fields['text'].widget = forms.Textarea(attrs={
+            'class': 'w-full px-6 py-5 border-2 border-gray-300 rounded-xl focus:border-indigo-500 focus:ring-0',
+            'rows': 8,
+            'placeholder': 'Tulis pertanyaan di sini...',
+            'style': 'resize: vertical; min-height: 180px;'
+        })
+
+    # ==================== POST HANDLING ====================
+    # ==================== POST HANDLING ====================
     if request.method == 'POST':
-        if form.is_valid() and choice_formset.is_valid():
-            # Save the question form
-            question = form.save(commit=False)
-            question.section = section
-            question.save()
+        if question_form.is_valid() and choice_formset.is_valid():
 
-            # Save the formset
+            question = question_form.save()
+
             choice_formset.instance = question
             choice_formset.save()
 
-            messages.success(request, "Question and choices updated successfully!")
+            messages.success(request, "Soal berhasil diperbarui!")
 
-            # Check if 'save and add another' button was clicked
-            if 'save_and_add_another' in request.POST:
-                return redirect('courses:create_question', idcourse=course.id, idsection=section.id, idassessment=assessment.id)
+            return redirect('courses:view-question',
+                            idcourse=course.id,
+                            idsection=section.id,
+                            idassessment=assessment.id)
 
-            return redirect('courses:view-question', idcourse=course.id, idsection=section.id, idassessment=assessment.id)
         else:
-            print("Form errors:", form.errors)
-            print("Formset errors:", [choice_form.errors for choice_form in choice_formset.forms])
-            messages.error(request, "There was an error updating the question. Please check your inputs.")
+            # ==================== LOG ERROR DETAIL ====================
+            print("\n================= EDIT QUESTION ERRORS =================")
+            print("QUESTION FORM ERRORS:", question_form.errors)
+            print("QUESTION NON-FIELD ERRORS:", question_form.non_field_errors())
 
-    return render(request, 'courses/edit_question.html', {
-        'form': form,
-        'choice_formset': choice_formset,
+            print("\nFORMSET NON-FIELD ERRORS:", choice_formset.non_form_errors())
+
+            for i, f in enumerate(choice_formset.forms):
+                print(f"\n--- Choice Form {i} ---")
+                print("Errors:", f.errors)
+                print("Non-field:", f.non_field_errors())
+            print("=========================================================\n")
+
+            messages.error(request, "Terdapat kesalahan. Periksa kembali isian Anda.")
+
+
+    # ==================== CONTEXT ====================
+    context = {
         'course': course,
         'section': section,
         'assessment': assessment,
-    })
+        'question': question,
+        'question_form': question_form,
+        'choice_formset': choice_formset,
+        'edit_mode': True,
+    }
+
+    return render(request, 'courses/create_question.html', context)
+
 
 #delete question
 @csrf_exempt

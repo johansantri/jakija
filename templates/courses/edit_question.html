@@ -1,149 +1,176 @@
-{% extends 'home/tes.html' %}
-{% load widget_tweaks %}
+{% extends "home/tes.html" %}
+{% load static widget_tweaks %}
 
 {% block content %}
-{% include "courses/course_set.html" %}
-<section class="my-10 border-gray-300">
-    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
-        <div class="p-8 lg:p-12">
-            <form method="post" class="space-y-10">
-                {% csrf_token %}
-                {{ form.media }}
 
-                <!-- Question Text -->
-                <div>
-                    <label class="block text-2xl font-bold text-gray-800 mb-6">Pertanyaan</label>
-                    <div class="rounded-xl overflow-hidden border-2 border-gray-300 
-                        {% if 'CKEditor5Widget' in form.text.field.widget|stringformat:"s" %}
-                            shadow-sm
-                        {% else %}
-                            focus-within:border-indigo-500 transition
-                        {% endif %}">
-                        {{ form.id }}
-                        {{ form.text|add_class:"w-full focus:outline-none" }}
-                    </div>
-                </div>
+<form method="post" class="space-y-10">
+    {% csrf_token %}
 
-                <!-- Choices -->
-                {{ choice_formset.management_form }}
+    <!-- ================================
+         QUESTION FORM
+    ================================= -->
+    <div class="bg-white p-6 rounded-xl shadow">
+        <h2 class="text-xl font-semibold mb-4">
+            {% if edit_mode %} Edit Soal {% else %} Buat Soal {% endif %}
+        </h2>
 
-                <div class="space-y-6">
-                    <div class="flex justify-between items-center mb-8">
-                        <h3 class="text-xl font-bold text-gray-800">Pilihan Jawaban</h3>
-                        <button type="button" id="add-choice"
-                                class="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:from-indigo-700 hover:to-purple-700 shadow-lg transform hover:scale-105 transition">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                            </svg>
-                            Tambah Pilihan
-                        </button>
-                    </div>
+        {{ question_form.non_field_errors }}
 
-                    <div class="border-2 border-gray-200 rounded-xl overflow-hidden">
-                        <table class="w-full">
-                            <thead class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white">
-                                <tr>
-                                    <th class="px-8 py-5 text-left font-medium">Teks Pilihan</th>
-                                    <th class="px-8 py-5 text-center font-medium w-40">Benar?</th>
-                                    <th class="px-8 py-5 text-center font-medium w-40">Hapus?</th>
-                                </tr>
-                            </thead>
-                            <tbody id="choice-tbody" class="divide-y divide-gray-200 bg-white">
-
-                                {% for choice_form in choice_formset %}
-                                <tr class="choice-row hover:bg-gray-50 transition">
-                                    <td class="px-8 py-6">
-                                        {{ choice_form.id }}
-                                        <div class="rounded-lg overflow-hidden border border-gray-300 
-                                            {% if 'CKEditor5Widget' in choice_form.text.field.widget|stringformat:"s" %}
-                                                shadow-sm
-                                            {% else %}
-                                                focus-within:border-indigo-500 transition
-                                            {% endif %}">
-                                            {{ choice_form.text|add_class:"w-full focus:outline-none" }}
-                                        </div>
-                                    </td>
-
-                                    <td class="px-8 py-6 text-center">
-                                        <div class="flex justify-center">
-                                            {{ choice_form.is_correct }}
-                                        </div>
-                                    </td>
-
-                                    <td class="px-8 py-6 text-center">
-                                        <div class="flex justify-center">
-                                            {{ choice_form.DELETE }}
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex flex-col sm:flex-row gap-4 justify-center pt-8 border-t-2 border-gray-200">
-                    <button type="submit" name="save"
-                            class="px-8 py-4 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 shadow-lg transition transform hover:scale-105">
-                        Simpan Pertanyaan
-                    </button>
-                    <button type="submit" name="save_and_add_another"
-                            class="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-lg transition transform hover:scale-105">
-                        Simpan & Tambah Lagi
-                    </button>
-                    <a href="{% url 'courses:view-question' course.id section.id assessment.id %}"
-                       class="px-8 py-4 bg-gray-600 text-white font-bold rounded-xl hover:bg-gray-700 shadow-lg transition transform hover:scale-105 text-center">
-                        Batal
-                    </a>
-                </div>
-
-            </form>
+        <div class="mb-6">
+            {{ question_form.text.label_tag }}
+            {{ question_form.text }}
+            {{ question_form.text.errors }}
         </div>
     </div>
-</section>
 
 
+    <!-- ================================
+         CHOICE FORMSET
+    ================================= -->
+    <div class="bg-white p-6 rounded-xl shadow space-y-6">
+
+        <h3 class="text-lg font-semibold">Pilihan Jawaban</h3>
+
+        <!-- MANAGEMENT FORM -->
+        {{ choice_formset.management_form }}
+
+        <div id="choices-container" class="space-y-6">
+
+            {% for form in choice_formset %}
+
+            <div class="choice-form-row border p-5 rounded-xl bg-gray-50 relative">
+
+                {{ form.id }} 
+                {{ form.DELETE }} <!-- HARUS ADA -->
+
+                <div class="flex items-start gap-4">
+
+                    <!-- Radio Kunci Jawaban -->
+                    <div>
+                        <input type="radio"
+                               name="correct-answer"
+                               class="correct-radio h-5 w-5 mt-2"
+                               data-target="{{ form.prefix }}-is_correct"
+                               {% if form.instance.is_correct %} checked {% endif %}>
+                    </div>
+
+                    <!-- Jawaban -->
+                    <div class="flex-1">
+                        {{ form.text }}
+                        {{ form.text.errors }}
+                    </div>
+
+                </div>
+
+                <!-- Hidden field is_correct -->
+                {{ form.is_correct }}
+
+                <!-- Tombol hapus -->
+                <button type="button"
+                        class="delete-choice text-red-600 absolute top-3 right-3">
+                    Hapus
+                </button>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <button id="add-choice"
+                type="button"
+                class="px-4 py-2 bg-indigo-600 text-white rounded-lg">
+            + Tambah Pilihan
+        </button>
+
+    </div>
+
+
+    <!-- ================================
+         SUBMIT
+    ================================= -->
+    <div class="text-right">
+        <button type="submit"
+                class="px-6 py-3 bg-green-600 text-white rounded-xl">
+            Simpan
+        </button>
+    </div>
+
+</form>
+
+
+<!-- ================================
+     JAVASCRIPT
+================================= -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const tbody = document.getElementById("choice-tbody");
-    const addBtn = document.getElementById("add-choice");
-    const totalForms = document.querySelector("#id_choices-TOTAL_FORMS");
+/* =====================================
+   DELETE BUTTON (FIX UTAMA)
+===================================== */
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("delete-choice")) {
 
-    const templateRow = tbody.querySelector("tr.choice-row");
+        let row = e.target.closest(".choice-form-row");
+        let deleteField = row.querySelector('input[name$="-DELETE"]');
 
-    addBtn.addEventListener("click", function () {
-        const count = parseInt(totalForms.value);
-        const newRow = templateRow.cloneNode(true);
+        deleteField.checked = true;      // wajib kirim DELETE ke Django
+        row.style.display = "none";      // sembunyikan saja
+    }
+});
 
-        newRow.innerHTML = newRow.innerHTML.replace(/__prefix__/g, count);
 
-        const input = newRow.querySelector("textarea, input[type='text']");
-        if (input) {
-            input.value = "";
-            if (input.ckeditorInstance) {
-                input.ckeditorInstance.setData("");
-            }
-        }
+/* =====================================
+   RADIO: SYNC KE is_correct hidden
+===================================== */
+document.addEventListener("change", function (e) {
+    if (e.target.classList.contains("correct-radio")) {
 
-        newRow.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+        // matikan semua radio
+        document.querySelectorAll(".correct-radio").forEach(r => r.checked = false);
 
-        tbody.appendChild(newRow);
-        totalForms.value = count + 1;
-    });
+        // nyalakan radio yang diklik
+        e.target.checked = true;
 
-    tbody.addEventListener("change", function (e) {
-        if (e.target.name && e.target.name.includes("-DELETE") && e.target.checked) {
-            e.target.closest("tr").style.display = "none";
-        }
-    });
+        // set semua is_correct ke false dulu
+        document.querySelectorAll('input[name$="-is_correct"]').forEach(hidden => {
+            hidden.value = "";
+        });
 
-    const oldError = console.error;
-    console.error = function () {
-        if (arguments[0] && String(arguments[0]).includes("license-key-missing")) return;
-        oldError.apply(this, arguments);
-    };
+        // set yang dipilih ke true
+        let targetField = document.getElementById(e.target.dataset.target);
+        targetField.value = "True";
+    }
+});
+
+
+/* =====================================
+   ADD FORMSET ITEM
+===================================== */
+document.getElementById("add-choice").addEventListener("click", function () {
+    let formCount = document.getElementById("id_choices-TOTAL_FORMS");
+    let current = parseInt(formCount.value);
+
+    let container = document.getElementById("choices-container");
+
+    // clone form terakhir
+    let newForm = container.children[0].cloneNode(true);
+
+    // update prefix
+    newForm.innerHTML = newForm.innerHTML.replace(/choices-\d+/g, `choices-${current}`);
+    newForm.style.display = "";  
+
+    // reset field
+    newForm.querySelectorAll("textarea,input[type='text']").forEach(el => el.value = "");
+    newForm.querySelectorAll("input[type='hidden'][name$='-is_correct']").forEach(el => el.value = "");
+    newForm.querySelector(".correct-radio").checked = false;
+
+    container.appendChild(newForm);
+
+    formCount.value = current + 1;
+
+    // re-init CKEditor jika pakai CKEditor
+    if (typeof ClassicEditor !== "undefined") {
+        newForm.querySelectorAll(".ck-editor__editable").forEach(el => el.remove());
+    }
 });
 </script>
 

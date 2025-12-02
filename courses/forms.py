@@ -445,28 +445,31 @@ class QuestionForm(forms.ModelForm):
 
 # forms.py
 class ChoiceForm(forms.ModelForm):
-    # Field tambahan hanya untuk tampilan (tidak pakai RadioSelect lagi)
+    # Field tambahan hanya untuk tampilan
     is_correct_radio = forms.BooleanField(
         required=False,
-        widget=forms.CheckboxInput(attrs={'class': 'hidden'}),  # kita sembunyikan, pakai manual
+        widget=forms.CheckboxInput(attrs={'class': 'hidden'}),
         label=''
     )
 
     class Meta:
         model = Choice
         fields = ['text', 'is_correct']
-        labels = {'text': '', 'is_correct': ''}
+        labels = {
+            'text': '',
+            'is_correct': '',
+        }
 
     def __init__(self, *args, **kwargs):
         self.assessment = kwargs.pop('assessment', None)
         super().__init__(*args, **kwargs)
 
-        # Hidden field untuk is_correct yang asli
+        # Hidden field untuk is_correct asli
         self.fields['is_correct'].widget = forms.HiddenInput()
 
         # CKEditor atau textarea biasa
         if self.assessment and getattr(self.assessment, 'flag', False):
-            self.fields['text'].widget = CKEditor5Widget(config_name='extends')
+            self.fields['text'].widget = CKEditor5Widget(config_name='default')
         else:
             self.fields['text'].widget = forms.Textarea(attrs={
                 'class': 'w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:border-indigo-500 focus:ring-0',
@@ -474,10 +477,9 @@ class ChoiceForm(forms.ModelForm):
                 'placeholder': 'Tulis jawaban...'
             })
 
-    def clean(self):
-        cleaned_data = super().clean()
-        # Tidak perlu sync manual lagi, akan ditangani JS
-        return cleaned_data
+        # ⛔ PENTING: biar form baru tidak wajib diisi
+        self.empty_permitted = True
+
 
 
 # Formset — tetap sama, tapi sekarang benar-benar bersih!

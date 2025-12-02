@@ -307,6 +307,7 @@ CKEDITOR_5_CONFIGS = {
             "bulletedList",
             "numberedList",
             "blockQuote",
+            "insertImage",
         ],
         "link": {
             "defaultProtocol": "https://",  # Menggunakan https:// sebagai default

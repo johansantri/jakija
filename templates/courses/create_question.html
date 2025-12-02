@@ -69,7 +69,7 @@
                   </button>
 
                   <div class="flex items-start gap-8 pr-12">
-                    <!-- RADIO BUTTON "Benar" (manual, name sama semua) -->
+                    <!-- RADIO BUTTON "Benar" -->
                     <div class="pt-3 flex-shrink-0">
                       <label class="flex items-center gap-3 cursor-pointer font-medium select-none">
                         <input type="radio"
@@ -78,11 +78,9 @@
                                {% if form.instance.is_correct %}checked{% endif %}>
                         <span class="text-lg text-gray-700">Correct</span>
                       </label>
-                      <!-- Hidden field asli Django -->
                       {{ form.is_correct }}
                     </div>
 
-                    <!-- Teks jawaban -->
                     <div class="flex-1">
                       {{ form.id }}
                       {{ form.text }}
@@ -103,7 +101,6 @@
           </button>
         </div>
 
-        <!-- Container buat pilihan yang dihapus (formset butuh ini) -->
         <div id="deleted-choices-container" style="display:none;"></div>
 
         <!-- Tombol Submit -->
@@ -153,46 +150,37 @@
   </div>
 </template>
 
-<!-- ==================== SCRIPT (SUDAH DIPERBAIKI TOTAL) ==================== -->
+<!-- ==================== SCRIPT FINAL (FIX DELETE) ==================== -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const container = document.getElementById('choice-container');
-  const deletedContainer = document.getElementById('deleted-choices-container');
   const totalForms = document.querySelector('#id_{{ choice_formset.prefix }}-TOTAL_FORMS');
   const template = document.getElementById('choice-template');
 
-  // Sync semua radio button → hidden field is_correct
+  // Sync radio → hidden field is_correct
   function syncRadios() {
     const radios = container.querySelectorAll('input[name="correct_choice"]');
     const hiddens = container.querySelectorAll('input[name$="-is_correct"]');
 
-    radios.forEach((radio, i) => {
-      const hidden = hiddens[i];
+    radios.forEach((radio, index) => {
+      const hidden = hiddens[index];
 
       radio.addEventListener('change', function () {
-        // Reset semua hidden jadi False
         hiddens.forEach(h => h.value = '');
-        // Yang dipilih jadi True
-        if (this.checked && hidden) hidden.value = 'on';
+        if (this.checked) hidden.value = 'on';
 
-        // Visual hanya satu yang checked
         radios.forEach(r => r.checked = (r === this));
       });
 
-      // Saat edit soal → cek yang sudah benar
-      if (hidden && hidden.value === 'on') {
-        radio.checked = true;
-      }
+      // Load awal (edit)
+      if (hidden.value === 'on') radio.checked = true;
     });
   }
 
-  // Tambah pilihan baru
+  // Tambah pilihan
   window.addChoice = function () {
     const count = parseInt(totalForms.value);
-    if (count >= 10) {
-      alert('Maksimal 10 pilihan jawaban!');
-      return;
-    }
+    if (count >= 10) return alert('Maksimal 10 pilihan jawaban!');
 
     const clone = template.content.cloneNode(true);
     let html = new XMLSerializer().serializeToString(clone);
@@ -205,34 +193,31 @@ document.addEventListener('DOMContentLoaded', function () {
     container.appendChild(newItem);
     totalForms.value = count + 1;
 
-    syncRadios(); // penting!
+    syncRadios();
   };
 
-  // Hapus pilihan
+  // PERBAIKAN PENTING ❗
+  // DELETE TIDAK BOLEH DIPINDAH DOM
   window.removeChoice = function (btn) {
     const item = btn.closest('.choice-item');
     const deleteInput = item.querySelector('input[name$="-DELETE"]');
 
     if (deleteInput) {
       deleteInput.checked = true;
-      deletedContainer.appendChild(item);
+      item.style.display = "none";   // <-- solusi benar ✔
     } else {
       item.remove();
       totalForms.value = parseInt(totalForms.value) - 1;
     }
 
-    syncRadios(); // update ulang setelah hapus
+    syncRadios();
   };
 
-  // Jalankan pertama kali
   syncRadios();
-
-  // Tombol tambah
   document.getElementById('add-choice').addEventListener('click', addChoice);
 });
 </script>
 
-<!-- Styling tambahan -->
 <style>
   .ck-editor__editable { min-height: 180px !important; }
   .choice-item { position: relative; transition: all 0.3s ease; }
