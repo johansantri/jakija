@@ -11699,3 +11699,11 @@ django.urls.exceptions.NoReverseMatch: Reverse for 'dashboard' not found. 'dashb
 [INFO] 2025-12-02 16:30:03,718 [django.utils.autoreload] /home/x/app/mysite/licensing/urls.py changed, reloading.
 [INFO] 2025-12-02 16:30:04,730 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-12-02 16:30:04,740 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 08:13:16,708 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 08:13:17,519 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 08:13:17,529 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-03 08:13:46,278 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-03 08:14:28,448 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-03 08:18:29,964 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-03 08:19:33,586 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-03 08:19:39,716 [django.request] Not Found: /favicon.ico

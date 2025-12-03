@@ -3,157 +3,108 @@
 
 {% block content %}
 <section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
-<h1 class="text-3xl font-bold text-red-600 mb-4">licence form</h1>
-  <h2>{{ title }}</h2>
+    <h1 class="text-3xl font-bold text-center text-red-600 mb-8">Buat Lisensi Baru</h1>
+    
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+        
+        <!-- Email Pemilik -->
+        <div class="flex flex-col">
+            <label for="id_user_email" class="font-medium text-gray-700">Email Pemilik</label>
+            {{ form.user_email|add_class:"mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" }}
+            {% if form.user_email.errors %}
+                <div class="text-red-600 text-sm mt-2">
+                    {% for error in form.user_email.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Nama -->
+        <div class="flex flex-col">
+            <label for="id_name" class="font-medium text-gray-700">Nama Lisensi</label>
+            {{ form.name|add_class:"mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" }}
+            {% if form.name.errors %}
+                <div class="text-red-600 text-sm mt-2">
+                    {% for error in form.name.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- License Type -->
+        <div class="flex flex-col">
+            <label for="id_license_type" class="font-medium text-gray-700">Tipe Lisensi</label>
+            {{ form.license_type|add_class:"mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" }}
+            {% if form.license_type.errors %}
+                <div class="text-red-600 text-sm mt-2">
+                    {% for error in form.license_type.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
 
-  <!-- Display Messages -->
-  {% if messages %}
-    {% for message in messages %}
-      <div class="alert alert-{{ message.tags }} mb-3">{{ message }}</div>
-    {% endfor %}
-  {% endif %}
+        <!-- Tanggal Mulai -->
+        <div class="flex flex-col">
+            <label for="id_start_date" class="font-medium text-gray-700">Tanggal Mulai</label>
+            {{ form.start_date|add_class:"mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" }}
+            {% if form.start_date.errors %}
+                <div class="text-red-600 text-sm mt-2">
+                    {% for error in form.start_date.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
 
-  <!-- Form -->
-  <form method="post">
-    {% csrf_token %}
-    <div class="row">
-      <!-- Left Column -->
-      <div class="col-md-6 col-sm-12">
-        <div class="mb-3">
-          <label class="form-label">{{ form.name.label }}</label>
-          {{ form.name|add_class:"form-control" }}
-          {% if form.name.errors %}
-            <div class="text-danger">
-              {% for error in form.name.errors %}
-                <p>{{ error }}</p>
-              {% endfor %}
-            </div>
-          {% endif %}
+        <!-- Tanggal Kadaluarsa -->
+        <div class="flex flex-col">
+            <label for="id_expiry_date" class="font-medium text-gray-700">Tanggal Kadaluarsa</label>
+            {{ form.expiry_date|add_class:"mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" }}
+            {% if form.expiry_date.errors %}
+                <div class="text-red-600 text-sm mt-2">
+                    {% for error in form.expiry_date.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
-        <div class="mb-3">
-          <label class="form-label">{{ form.license_type.label }}</label>
-          {{ form.license_type|add_class:"form-select" }}
-          {% if form.license_type.errors %}
-            <div class="text-danger">
-              {% for error in form.license_type.errors %}
-                <p>{{ error }}</p>
-              {% endfor %}
-            </div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <label class="form-label">{{ form.start_date.label }}</label>
-          {{ form.start_date|add_class:"form-control" }}
-          {% if form.start_date.errors %}
-            <div class="text-danger">
-              {% for error in form.start_date.errors %}
-                <p>{{ error }}</p>
-              {% endfor %}
-            </div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <label class="form-label">{{ form.expiry_date.label }}</label>
-          {{ form.expiry_date|add_class:"form-control" }}
-          {% if form.expiry_date.errors %}
-            <div class="text-danger">
-              {% for error in form.expiry_date.errors %}
-                <p>{{ error }}</p>
-              {% endfor %}
-            </div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <label class="form-label">{{ form.status.label }}</label>
-          {{ form.status|add_class:"form-check-input" }}
-          {% if form.status.errors %}
-            <div class="text-danger">
-              {% for error in form.status.errors %}
-                <p>{{ error }}</p>
-              {% endfor %}
-            </div>
-          {% endif %}
-        </div>
-      </div>
 
-      <!-- Right Column -->
-      <div class="col-md-6 col-sm-12">
-        <div class="mb-3">
-          <label class="form-label">{{ form.user_email.label }}</label>
-          {{ form.user_email|add_class:"form-control" }}
-          {% if form.user_email.errors %}
-            <div class="text-danger">
-              {% for error in form.user_email.errors %}
-                <p>{{ error }}</p>
-              {% endfor %}
-            </div>
-          {% endif %}
+        <!-- Deskripsi -->
+        <div class="flex flex-col">
+            <label for="id_description" class="font-medium text-gray-700">Deskripsi</label>
+            {{ form.description|add_class:"mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" }}
+            {% if form.description.errors %}
+                <div class="text-red-600 text-sm mt-2">
+                    {% for error in form.description.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
-        <div class="mb-3">
-          <label class="form-label">{{ form.max_users.label }}</label>
-          {{ form.max_users|add_class:"form-control" }}
-          {% if form.max_users.errors %}
-            <div class="text-danger">
-              {% for error in form.max_users.errors %}
-                <p>{{ error }}</p>
-              {% endfor %}
-            </div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <label class="form-label">{{ form.subscription_type.label }}</label>
-          {{ form.subscription_type|add_class:"form-select" }}
-          {% if form.subscription_type.errors %}
-            <div class="text-danger">
-              {% for error in form.subscription_type.errors %}
-                <p>{{ error }}</p>
-              {% endfor %}
-            </div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <label class="form-label">{{ form.subscription_frequency.label }}</label>
-          {{ form.subscription_frequency|add_class:"form-select" }}
-          {% if form.subscription_frequency.errors %}
-            <div class="text-danger">
-              {% for error in form.subscription_frequency.errors %}
-                <p>{{ error }}</p>
-              {% endfor %}
-            </div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <label class="form-label">{{ form.university.label }}</label>
-          {{ form.university|add_class:"form-select" }}
-          {% if form.university.errors %}
-            <div class="text-danger">
-              {% for error in form.university.errors %}
-                <p>{{ error }}</p>
-              {% endfor %}
-            </div>
-          {% endif %}
-        </div>
-      </div>
-    </div>
 
-    <!-- Description Field -->
-    <div class="mb-3">
-      <label class="form-label">{{ form.description.label }}</label>
-      {{ form.description|add_class:"form-control" }}
-      {% if form.description.errors %}
-        <div class="text-danger">
-          {% for error in form.description.errors %}
-            <p>{{ error }}</p>
-          {% endfor %}
+        <!-- Maksimum Pengguna -->
+        <div class="flex flex-col">
+            <label for="id_max_users" class="font-medium text-gray-700">Maksimum Pengguna</label>
+            {{ form.max_users|add_class:"mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" }}
+            {% if form.max_users.errors %}
+                <div class="text-red-600 text-sm mt-2">
+                    {% for error in form.max_users.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
-      {% endif %}
-    </div>
 
-    <!-- Buttons -->
-    <div class="d-flex justify-content-between">
-      <button type="submit" class="btn btn-primary">Simpan</button>
-      <a href="{% url 'licensing:subscription_management' %}" class="btn btn-secondary">Batal</a>
-    </div>
-  </form>
+        <!-- Submit Button -->
+        <div>
+            <button type="submit" class="w-full bg-red-600 text-white p-3 rounded-md hover:bg-red-700 transition">
+                Buat Lisensi
+            </button>
+        </div>
+    </form>
 </section>
 {% endblock %}
