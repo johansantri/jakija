@@ -1,93 +1,88 @@
 {% extends 'home/tes.html' %}
 {% load static %}
 {% block content %}
-<div class="row justify-content-center">
-    <div class="container mt-5">
-        <h2 class="mb-4">Instructor Learning Progress Report</h2>
-        <p>Instructor: {{ instructor.user.username }}</p>
+<div class="container mx-auto mt-5">
+    <h2 class="text-2xl font-semibold mb-4">Instructor Learning Progress Report</h2>
+    <p>Instructor: {{ instructor.user.username }}</p>
 
-        <!-- Filters -->
-        <form method="get" class="mb-4">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="course_id">Filter by Course:</label>
-                        <select name="course_id" id="course_id" class="form-control" onchange="this.form.submit()">
-                            <option value="">All Courses</option>
-                            {% for course in courses %}
-                            <option value="{{ course.id }}" {% if selected_course == course.id|stringformat:"s" %}selected{% endif %}>
-                                {{ course.course_name }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="learner_id">Filter by Learner:</label>
-                        <select name="learner_id" id="learner_id" class="form-control" onchange="this.form.submit()">
-                            <option value="">All Learners</option>
-                            {% for learner in all_learners %}
-                            <option value="{{ learner.id }}" {% if selected_learner == learner.id|stringformat:"s" %}selected{% endif %}>
-                                {{ learner.username }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
+    <!-- Filters -->
+    <form method="get" class="mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label for="course_id" class="block text-sm font-medium text-gray-700">Filter by Course:</label>
+                <select name="course_id" id="course_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" onchange="this.form.submit()">
+                    <option value="">All Courses</option>
+                    {% for course in courses %}
+                    <option value="{{ course.id }}" {% if selected_course == course.id|stringformat:"s" %}selected{% endif %}>
+                        {{ course.course_name }}
+                    </option>
+                    {% endfor %}
+                </select>
             </div>
-        </form>
+            <div>
+                <label for="learner_id" class="block text-sm font-medium text-gray-700">Filter by Learner:</label>
+                <select name="learner_id" id="learner_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" onchange="this.form.submit()">
+                    <option value="">All Learners</option>
+                    {% for learner in all_learners %}
+                    <option value="{{ learner.id }}" {% if selected_learner == learner.id|stringformat:"s" %}selected{% endif %}>
+                        {{ learner.username }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </form>
 
-        <!-- Export to CSV -->
-        <a href="?export=true{% if selected_course %}&course_id={{ selected_course }}{% endif %}{% if selected_learner %}&learner_id={{ selected_learner }}{% endif %}" class="btn btn-primary mb-3">Export to CSV</a>
+    <!-- Export to CSV -->
+    <a href="?export=true{% if selected_course %}&course_id={{ selected_course }}{% endif %}{% if selected_learner %}&learner_id={{ selected_learner }}{% endif %}" class="inline-block px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mb-3">Export to CSV</a>
 
-        {% if report_data %}
-        <div class="accordion" id="learnerAccordion">
-            {% for data in report_data %}
-            <div class="accordion-item mb-3">
-                <h2 class="accordion-header" id="heading{{ forloop.counter }}">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+    {% if report_data %}
+    <div id="learnerAccordion">
+        {% for data in report_data %}
+        <div class="mb-3">
+            <div class="bg-gray-100 rounded-md shadow-sm">
+                <h2>
+                    <button class="w-full px-4 py-2 text-left text-lg font-semibold text-gray-800 bg-gray-200 rounded-md focus:outline-none hover:bg-gray-300" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
                         {{ data.learner.username }} - {{ data.course.course_name }}
                     </button>
                 </h2>
-                <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#learnerAccordion">
-                    <div class="accordion-body">
-                        <p><strong>Full Name:</strong> <a href="{% url 'instructor:instructor_learner_detail_report' %}?learner_id={{ data.learner.id }}" class="btn btn-sm btn-info float-right">{{ data.learner_full_name }}</a></p>
+                <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#learnerAccordion">
+                    <div class="p-4 bg-white rounded-b-md">
+                        <p><strong>Full Name:</strong> <a href="{% url 'instructor:instructor_learner_detail_report' %}?learner_id={{ data.learner.id }}" class="inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded-md">{{ data.learner_full_name }}</a></p>
                         <p><strong>Email:</strong> {{ data.learner_email }}</p>
                         <p><strong>University:</strong> {{ data.learner_university }}</p>
                         <p><strong>Gender:</strong> {{ data.learner_gender|title }}</p>
                         <p><strong>Progress:</strong> {{ data.progress_percentage|floatformat:2 }}%</p>
                         <p><strong>Materials Read:</strong> {{ data.materials_read }}/{{ data.total_materials }} ({{ data.materials_read_percentage|floatformat:2 }}%)</p>
                         <p><strong>Assessments Completed:</strong> {{ data.assessments_completed }}/{{ data.total_assessments }} ({{ data.assessments_completed_percentage|floatformat:2 }}%)</p>
-                        <p>
-                            <strong>Threshold:</strong> {{ data.threshold|floatformat:2 }}
+                        <p><strong>Threshold:</strong> {{ data.threshold|floatformat:2 }}
                             <strong>Total Score:</strong> {{ data.total_score|floatformat:2 }}
                             <strong>Status:</strong> {{ data.status }}
                             {% if data.status == "Pass" %}
-                                <span class="text-success">🎉 Congratulations!</span>
+                            <span class="text-green-500">🎉 Congratulations!</span>
                             {% else %}
-                                <span class="text-danger">Needs Improvement</span>
+                            <span class="text-red-500">Needs Improvement</span>
                             {% endif %}
                         </p>
                         <p><strong>Last Login:</strong> {% if data.last_login %}{{ data.last_login|date:"Y-m-d H:i:s" }}{% else %}Never logged in{% endif %}</p>
 
                         <!-- Material Access Table -->
-                        <h5>Material Access Details</h5>
+                        <h5 class="font-semibold mt-4">Material Access Details</h5>
                         {% if data.material_access_details %}
-                        <table class="table table-striped table-bordered mt-3">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Material</th>
-                                    <th>Access Time</th>
-                                    <th>Estimated Duration (Minutes)</th>
+                        <table class="min-w-full table-auto mt-3 border border-gray-200">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="px-4 py-2 text-left">Material</th>
+                                    <th class="px-4 py-2 text-left">Access Time</th>
+                                    <th class="px-4 py-2 text-left">Estimated Duration (Minutes)</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for material in data.material_access_details %}
                                 <tr>
-                                    <td>{{ material.material_name }}</td>
-                                    <td>{{ material.access_time|date:"Y-m-d H:i:s" }}</td>
-                                    <td>{% if material.duration %}{{ material.duration|floatformat:2 }}{% else %}N/A{% endif %}</td>
+                                    <td class="px-4 py-2">{{ material.material_name }}</td>
+                                    <td class="px-4 py-2">{{ material.access_time|date:"Y-m-d H:i:s" }}</td>
+                                    <td class="px-4 py-2">{% if material.duration %}{{ material.duration|floatformat:2 }}{% else %}N/A{% endif %}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -97,21 +92,21 @@
                         {% endif %}
 
                         <!-- Assessment Breakdown Table -->
-                        <h5>Assessment Breakdown</h5>
-                        <table class="table table-striped table-bordered mt-3">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Assessment</th>
-                                    <th>Weight</th>
-                                    <th>Score</th>
+                        <h5 class="font-semibold mt-4">Assessment Breakdown</h5>
+                        <table class="min-w-full table-auto mt-3 border border-gray-200">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="px-4 py-2 text-left">Assessment</th>
+                                    <th class="px-4 py-2 text-left">Weight</th>
+                                    <th class="px-4 py-2 text-left">Score</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for assessment in data.assessment_details %}
-                                <tr {% if assessment.name == 'Total' %}class="font-weight-bold"{% endif %}>
-                                    <td>{{ assessment.name }}</td>
-                                    <td>{{ assessment.weight|floatformat:2 }}</td>
-                                    <td>{{ assessment.score|floatformat:2 }}</td>
+                                <tr {% if assessment.name == 'Total' %}class="font-bold"{% endif %}>
+                                    <td class="px-4 py-2">{{ assessment.name }}</td>
+                                    <td class="px-4 py-2">{{ assessment.weight|floatformat:2 }}</td>
+                                    <td class="px-4 py-2">{{ assessment.score|floatformat:2 }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -119,32 +114,33 @@
                     </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
-
-        <!-- Pagination Controls -->
-        <nav aria-label="Page navigation" class="mt-3">
-            <ul class="pagination">
-                {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if selected_course %}&course_id={{ selected_course }}{% endif %}{% if selected_learner %}&learner_id={{ selected_learner }}{% endif %}">Previous</a>
-                </li>
-                {% endif %}
-                {% for num in page_obj.paginator.page_range %}
-                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-                    <a class="page-link" href="?page={{ num }}{% if selected_course %}&course_id={{ selected_course }}{% endif %}{% if selected_learner %}&learner_id={{ selected_learner }}{% endif %}">{{ num }}</a>
-                </li>
-                {% endfor %}
-                {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if selected_course %}&course_id={{ selected_course }}{% endif %}{% if selected_learner %}&learner_id={{ selected_learner }}{% endif %}">Next</a>
-                </li>
-                {% endif %}
-            </ul>
-        </nav>
-        {% else %}
-        <p class="alert alert-info">No learners are enrolled in your courses, or there is no progress data available.</p>
-        {% endif %}
+        {% endfor %}
     </div>
+
+    <!-- Pagination Controls -->
+    <nav class="mt-3" aria-label="Page navigation">
+        <ul class="flex justify-center space-x-2">
+            {% if page_obj.has_previous %}
+            <li>
+                <a class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300" href="?page={{ page_obj.previous_page_number }}{% if selected_course %}&course_id={{ selected_course }}{% endif %}{% if selected_learner %}&learner_id={{ selected_learner }}{% endif %}">Previous</a>
+            </li>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+            <li>
+                <a class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 {% if page_obj.number == num %}bg-blue-500 text-white{% endif %}" href="?page={{ num }}{% if selected_course %}&course_id={{ selected_course }}{% endif %}{% if selected_learner %}&learner_id={{ selected_learner }}{% endif %}">{{ num }}</a>
+            </li>
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <li>
+                <a class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300" href="?page={{ page_obj.next_page_number }}{% if selected_course %}&course_id={{ selected_course }}{% endif %}{% if selected_learner %}&learner_id={{ selected_learner }}{% endif %}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    {% else %}
+    <p class="mt-4 text-center text-lg text-gray-600">No learners are enrolled in your courses, or there is no progress data available.</p>
+    {% endif %}
 </div>
 {% endblock %}

@@ -617,6 +617,25 @@ class Course(models.Model):
     def has_been_rated_by(self, user):
         return self.ratings.filter(user=user).exists()
 
+class CourseTeam(models.Model):
+    ROLE_CHOICES = [
+        ('instructor', 'Instruktur'),
+        ('assistant', 'Asisten Instruktur'),
+        ('admin', 'Administrator'),
+        ('moderator', 'Moderator'),
+        # Bisa ditambah role lain jika diperlukan
+    ]
+    
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="teams")
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="course_teams")
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='assistant')
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.user.get_full_name()} ({self.get_role_display()}) - {self.course.course_name}"
+
+    class Meta:
+        unique_together = ['course', 'user']  # Pastikan satu user hanya bisa ada satu kali di tim untuk kursus yang sama
 
 
 class CourseViewLog(models.Model):

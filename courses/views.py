@@ -72,7 +72,7 @@ from django_ratelimit.decorators import ratelimit
 
 # Internal imports - forms
 from .forms import (
-    MicroCredentialCommentForm, MicroCredentialReviewForm, LTIExternalToolForm,
+    CourseTeamForm, MicroCredentialCommentForm, MicroCredentialReviewForm, LTIExternalToolForm,
     CoursePriceForm, CourseRatingForm, SosPostForm, MicroCredentialForm, AskOraForm,
     CourseForm, CourseRerunForm, PartnerForm, PartnerFormUpdate, CourseInstructorForm,
     SectionForm, GradeRangeForm, ProfilForm, InstructorForm, InstructorAddCoruseForm,
@@ -5311,72 +5311,7 @@ class PartnerAutocomplete(autocomplete.Select2QuerySetView):
         return qs
 
 
-#add course team
-#@login_required
 
-def course_team(request, id):
-    # Check if the user is authenticated
-    if not request.user.is_authenticated:
-        return redirect("/login/?next=%s" % request.path)
-    # Fetch the course object
-    user = request.user
-
-    # Retrieve the course based on the provided ID
-
-    course = get_object_or_404(Course, id=id)
-
-
-    # Check if the user is either the instructor or an organization partner
-
-    is_instructor = course.instructor is not None and course.instructor.user == user
-
-    is_partner = course.org_partner is not None and course.org_partner.user == user
-    is_superuser = user.is_superuser
-
-    if not (is_instructor or is_partner or is_superuser):
-
-        return redirect('/courses')  # Redirect if the user is not authorized
-
-
-    if request.method == 'POST':
-
-        form = TeamMemberForm(request.POST)
-
-        if form.is_valid():
-
-            email = form.cleaned_data['email']  # Get the email from the form
-
-            try:
-
-                user_instance = CustomUser.objects.get(email=email)  # Retrieve the User instance
-
-                team_member = TeamMember(course=course, user=user_instance)
-
-                team_member.save()  # Save the new team member
-
-                return redirect('courses:course_team', id=course.id)
-
-            except CustomUser.DoesNotExist:
-
-                form.add_error('email', "No user found with this email.")  # Add an error if user not found
-
-    else:
-
-        form = TeamMemberForm()
-
-
-    team_members = course.team_members.all()
-
-
-    return render(request, 'courses/course_team.html', {
-
-        'course': course,
-
-        'form': form,
-
-        'team_members': team_members,
-
-    })
 #remove team
 #@login_required
 
@@ -6477,3 +6412,33 @@ def course_delete(request, pk):
 def course_list(request):
     courses = Course.objects.all()[:100]
     return render(request, 'courses/course_list.html', {'courses': courses})
+
+
+#add course team
+
+
+
+def course_team(request, course_id):
+    # Pastikan pengguna sudah login
+    if not request.user.is_authenticated:
+        return redirect("/login/?next=%s" % request.path)
+
+    # Ambil data kursus berdasarkan ID
+    course = get_object_or_404(Course, id=course_id)
+
+    # Pastikan yang menambah tim adalah instruktur kursus
+    if request.user != course.instructor.user:
+        messages.error(request, "You are not authorized to add team members to this course, instructor only.")
+        return redirect('courses:course_view')  # Halaman lain yang sesuai
+
+    if request.method == 'POST':
+        form = CourseTeamForm(request.POST, course=course)  # Pass 'course' ke form
+        if form.is_valid():
+            form.save()  # Menyimpan tim ke dalam kursus
+            messages.success(request, "Team members added successfully.")
+            return redirect('courses:course_team', course_id=course.id)
+    else:
+        form = CourseTeamForm(course=course)  # Pass 'course' ke form
+
+    return render(request, 'courses/course_team.html', {'form': form, 'course': course})
+

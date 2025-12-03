@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.forms import inlineformset_factory
 from django.core.cache import cache
-from .models import MicroCredentialComment,LTIExternalTool1,MicroCredentialReview,Course,SosPost,CourseStatus,CourseRating,MicroCredential, AskOra,Partner,Category, Section,Instructor,TeamMember,GradeRange, Material,Question, Choice,Assessment,PricingType, CoursePrice
+from .models import CourseTeam,MicroCredentialComment,LTIExternalTool1,MicroCredentialReview,Course,SosPost,CourseStatus,CourseRating,MicroCredential, AskOra,Partner,Category, Section,Instructor,TeamMember,GradeRange, Material,Question, Choice,Assessment,PricingType, CoursePrice
 from django_ckeditor_5.widgets import CKEditor5Widget
 import os
 from authentication.models import CustomUser, Universiti
@@ -1067,3 +1067,60 @@ class TeamMemberForm(forms.ModelForm):
             raise forms.ValidationError("User dengan email ini sudah tergabung dalam tim.")
         
         return email
+    
+
+
+class CourseTeamForm(forms.ModelForm):
+    user = forms.ModelChoiceField(
+        queryset=CustomUser.objects.none(),
+        widget=autocomplete.ModelSelect2(
+            url='courses:user-autocomplete',  # pastikan nama url ini benar di urls.py
+            forward=['course'],  # kirim course instance ke autocomplete view
+            attrs={
+                'class': 'tailwind-select block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500',
+                'data-placeholder': 'search username...',
+                'data-minimum-input-length': 2,
+                'data-dropdown-auto-width': 'true',
+                'data-width': 'resolve',
+                'style': 'height:2.5rem;',  # naikkan tinggi input
+                
+            }
+        ),
+        label="Pengguna",
+    )
+
+    class Meta:
+        model = CourseTeam
+        fields = ['user', 'role']
+
+    def __init__(self, *args, **kwargs):
+        self.course = kwargs.pop('course', None)  # course object (bukan ID)
+        super().__init__(*args, **kwargs)
+
+        # UPDATE QUERYSERT DI SINI → ini yang bikin "Select a valid choice" hilang!
+        if self.course:
+            self.fields['user'].queryset = CustomUser.objects.exclude(
+                course_teams__course=self.course
+            )
+        else:
+            self.fields['user'].queryset = CustomUser.objects.none()
+
+        # Styling role
+        self.fields['role'].widget.attrs.update({
+            'class': 'block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'
+        })
+
+    def clean_user(self):
+        user = self.cleaned_data.get('user')
+        if user and self.course:
+            # Pakai related_name yang benar: course.teams (bukan .team)
+            if self.course.teams.filter(user=user).exists():
+                raise forms.ValidationError("Pengguna ini sudah tergabung dalam tim kursus ini.")
+        return user
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.course = self.course
+        if commit:
+            instance.save()
+        return instance

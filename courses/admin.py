@@ -1,9 +1,25 @@
 from django.contrib import admin
 from . import models 
-from .models import  UserActivityLog,CourseSessionLog,InstructorCertificate,LTIResult,LastAccessCourse,LTIExternalTool1,MicroClaim,UserMicroProgress,MicroCredentialComment,Certificate,Submission,CourseRating,UserProfile,Hashtag,SosPost,AskOra,BlacklistedKeyword, PeerReview,MicroCredential, AssessmentScore,Partner,Comment,CourseComment,AssessmentRead,Choice,AssessmentSession,QuestionAnswer,CourseStatusHistory,CourseStatus,CourseProgress,MaterialRead,CalculateAdminPrice,Universiti,GradeRange,Enrollment,PricingType,CoursePrice, Instructor, Category, Course, TeamMember, Section, Material,Question, Choice, Score, AttemptedQuestion,Assessment
+from .models import  CourseTeam,UserActivityLog,CourseSessionLog,InstructorCertificate,LTIResult,LastAccessCourse,LTIExternalTool1,MicroClaim,UserMicroProgress,MicroCredentialComment,Certificate,Submission,CourseRating,UserProfile,Hashtag,SosPost,AskOra,BlacklistedKeyword, PeerReview,MicroCredential, AssessmentScore,Partner,Comment,CourseComment,AssessmentRead,Choice,AssessmentSession,QuestionAnswer,CourseStatusHistory,CourseStatus,CourseProgress,MaterialRead,CalculateAdminPrice,Universiti,GradeRange,Enrollment,PricingType,CoursePrice, Instructor, Category, Course, TeamMember, Section, Material,Question, Choice, Score, AttemptedQuestion,Assessment
 from import_export.admin import ImportExportModelAdmin
 from django.utils.html import format_html
 from django.utils.text import slugify
+
+
+@admin.register(CourseTeam)
+class CourseTeamAdmin(admin.ModelAdmin):
+    list_display = ('user', 'course', 'role', 'created_at')
+    list_filter = ('role', 'course')
+    search_fields = ('user__email', 'user__first_name', 'user__last_name', 'course__course_name')
+    ordering = ('created_at',)
+    raw_id_fields = ('user', 'course')  # Mempermudah pencarian user dan course
+
+    # Custom form untuk menambahkan validation atau fitur lain jika diperlukan
+    def save_model(self, request, obj, form, change):
+        # Contoh: Mengatur role default jika belum diatur
+        if not obj.role:
+            obj.role = 'assistant'
+        super().save_model(request, obj, form, change)
 
 @admin.register(UserActivityLog)
 class UserActivityLogAdmin(admin.ModelAdmin):
