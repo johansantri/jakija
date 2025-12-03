@@ -1,285 +1,915 @@
-{% extends 'home/tes.html' %}
+{% extends 'home/base.html' %}
+{% load humanize %}
 {% load static %}
-{% load extra_custom_filters %}
+{% block meta %}
+    <!-- Standard Meta Tags -->
+    <title>{{ course.course_name }} - JakIja</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja untuk meningkatkan keterampilan Anda dengan panduan dari instruktur ahli.'|truncatechars:160|safe }}">
+    <meta name="keywords" content="{{ course.course_name }}, {{ course.category.name }}, online course, e-learning, JakIja, {{ course.instructor.user.get_full_name }}, {{ course.get_language_display }}, {{ course.level }}">
+    <meta name="author" content="{{ course.instructor.user.get_full_name|default:'JakIja Team' }}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" content="{{ request.build_absolute_uri }}">
 
+    <!-- Additional SEO Meta Tags -->
+    <meta name="geo.placename" content="{{ course.instructor.user.city|default:'Unknown' }}">
+    <meta name="geo.region" content="{{ course.instructor.user.country|default:'Unknown' }}">
+    <meta name="language" content="{{ course.get_language_display|default:'Indonesian' }}">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Open Graph (OG) Tags for Social Media (Facebook, LinkedIn, WhatsApp) -->
+    <meta property="og:title" content="{{ course.course_name }} - JakIja">
+    <meta property="og:description" content="{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja untuk meningkatkan keterampilan Anda dengan panduan dari instruktur ahli.'|truncatechars:256|safe }}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    {% if course.image %}
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ course.image.url }}">
+        <meta property="og:image:secure_url" content="{{ request.scheme }}://{{ request.get_host }}{{ course.image.url }}">
+    {% else %}
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'assets/img/icon/course-default.jpg' %}">
+        <meta property="og:image:secure_url" content="{{ request.scheme }}://{{ request.get_host }}{% static 'assets/img/icon/course-default.jpg' %}">
+    {% endif %}
+    <meta property="og:image:alt" content="Gambar untuk kursus {{ course.course_name }} di JakIja">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="JakIja">
+    <meta property="og:locale" content="id_ID">
+
+    <!-- Twitter Card Tags (for X) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ course.course_name }} - JakIja">
+    <meta name="twitter:description" content="{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja untuk meningkatkan keterampilan Anda dengan panduan dari instruktur ahli.'|truncatechars:200|safe }}">
+    {% if course.image %}
+        <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ course.image.url }}">
+        <meta name="twitter:image:src" content="{{ request.scheme }}://{{ request.get_host }}{{ course.image.url }}">
+    {% else %}
+        <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'assets/img/icon/course-default.jpg' %}">
+        <meta name="twitter:image:src" content="{{ request.scheme }}://{{ request.get_host }}{% static 'assets/img/icon/course-default.jpg' %}">
+    {% endif %}
+    <meta name="twitter:image:alt" content="Gambar untuk kursus {{ course.course_name }} di JakIja">
+    <meta name="twitter:site" content="@JakIja">
+    <meta name="twitter:creator" content="@{{ course.instructor.user.username|default:'JakIja' }}">
+
+    <!-- Structured Data (JSON-LD) for Course -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "{{ course.course_name|safe }}",
+        "description": "{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja untuk meningkatkan keterampilan Anda dengan panduan dari instruktur ahli.'|truncatechars:256|safe }}",
+        "url": "{{ request.build_absolute_uri }}",
+        "image": "{% if course.image %}{{ request.scheme }}://{{ request.get_host }}{{ course.image.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'assets/img/icon/course-default.jpg' %}{% endif %}",
+        "provider": {
+            "@type": "Organization",
+            "name": "JakIja",
+            "sameAs": "{{ request.scheme }}://{{ request.get_host }}"
+        },
+        "instructor": {
+            "@type": "Person",
+            "name": "{{ course.instructor.user.get_full_name|default:'JakIja Instructor'|safe }}",
+            "url": "{% url 'courses:instructor_profile' course.instructor.user.username %}"
+        },
+        "courseCode": "{{ course.course_number|safe }}",
+        "educationalLevel": "{{ course.level|safe }}",
+        "inLanguage": "{{ course.get_language_display|safe }}",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "{{ average_rating|default:'0' }}",
+            "reviewCount": "{{ reviews.count|default:'0' }}"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "{% if course.payment_model == 'free' %}0{% else %}{{ course.get_course_price.user_payment|default:'0' }}{% endif %}",
+            "priceCurrency": "IDR",
+            "availability": "https://schema.org/InStock"
+        },
+        "hasCourseInstance": {
+            "@type": "CourseInstance",
+            "courseMode": "online",
+            "startDate": "{{ course.start_date|date:'c' }}",
+            "endDate": "{{ course.end_date|date:'c' }}"
+        }
+    }
+    </script>
+
+    <!-- Structured Data for Breadcrumb -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "{{ request.scheme }}://{{ request.get_host }}"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "{{ course.category.name|safe }}",
+                "item": "{% url 'courses:category_list' course.category.slug %}"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "{{ course.course_name|safe }}",
+                "item": "{{ request.build_absolute_uri }}"
+            }
+        ]
+    }
+    </script>
+
+    <!-- Favicon and App Icons -->
+    <link rel="icon" href="{% static 'assets/img/icon/course-default.jpg' %}" type="image/jpeg">
+    <link rel="apple-touch-icon" href="{% static 'assets/img/icon/apple-touch-icon.png' %}">
+
+    <!-- Security and Performance -->
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+{% endblock %}
 {% block content %}
-<!-- Inner Banner -->
-<div class="row align-items-center">
-    <div class="col-lg-8">
-        <span class="badge bg-primary mb-3">{{ course.category }}</span>
-        <h2 class="fw-bold text-dark">{{ course.course_name }}</h2>
-        <p class="text-muted">{{ course.sort_description }}</p>
-        <div class="course-info d-flex flex-wrap gap-3 border-top pt-3">
-            <div class="cou-info d-flex align-items-center">
-                <img src="{% static 'assets/img/icon/icon-01.svg' %}" alt="Lessons" class="me-2" style="width: 20px;">
-                <p class="mb-0">0 Lessons</p>
-            </div>
-            <div class="cou-info d-flex align-items-center">
-                <img src="{% static 'assets/img/icon/timer-icon.svg' %}" alt="Duration" class="me-2" style="width: 20px;">
-                <p class="mb-0">0hr 00min</p>
-            </div>
-            <div class="cou-info d-flex align-items-center">
-                <img src="{% static 'assets/img/icon/people.svg' %}" alt="Students" class="me-2" style="width: 20px;">
-                <p class="mb-0">0 students enrolled</p>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /Inner Banner -->
 
-<!-- Course Content -->
-<section class="page-content course-sec py-5">
-    <div class="row g-4">
-        <div class="col-lg-8">
-            <!-- Overview -->
-            <div class="card overview-sec border-0 shadow-sm mb-4">
-                <div class="card-body">
-                    <h5 class="subs-title text-primary fw-semibold mb-3 border-bottom pb-2">Overview</h5>
-                    <h6 class="fw-semibold text-muted">Course Description</h6>
-                    <p class="text-muted">{{ course.description | safe }}</p>
-                </div>
-            </div>
-            <!-- /Overview -->
+<!-- Course Content Section -->
+<section class="py-8 bg-white font-sans">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <!-- Overview -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <!-- Inner Banner -->
+                    <div class="bg-gray-100 border border-gray-200 rounded-xl p-6 mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-3">{{ course.course_name }}</h2>
+                        <a href="{% url 'courses:category_list' course.category.slug %}" class="inline-block">
+                            <span class="inline-block bg-red-500 text-white text-sm font-medium px-3 py-1 rounded-md mb-3">{{ course.category }}</span>
+                        </a>
+                        <p class="text-gray-600 mb-4">{{ course.sort_description }}</p>
+                        <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm flex flex-wrap gap-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-book text-red-500 mr-2"></i>
+                                <span class="font-medium">{{ total_sections }} Lessons</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock text-red-500 mr-2"></i>
+                                <span class="font-medium">{{ total_effort_hours }}hr</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-users text-red-500 mr-2"></i>
+                                <span class="font-medium">{{ total_students }} Students </span>
+                               
+                            </div>
 
-            <!-- Course Content -->
-            <div class="card content-sec border-0 shadow-sm mb-4">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="subs-title text-primary fw-semibold">Course Content</h5>
-                        <h6 class="text-muted">92 Lectures | 10:56:11</h6>
-                    </div>
-                    <div class="accordion" id="courseAccordion">
-                        {% for section in "In which areas do you operate?,The Brief,Wireframing Low Fidelity,Type, Color & Icon Introduction"|split:"," %}
-                            <div class="course-card mb-3">
-                                <h6 class="cou-title mb-0">
-                                    <a class="collapsed text-muted text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#collapse{{ forloop.counter }}" aria-expanded="false">{{ section }}</a>
-                                </h6>
-                                <div id="collapse{{ forloop.counter }}" class="collapse" data-bs-parent="#courseAccordion">
-                                    <ul class="list-unstyled mt-2">
-                                        {% for i in "1,2,3,4,5"|split:"," %}
-                                            <li class="d-flex justify-content-between align-items-center py-2 border-bottom">
-                                                <p class="mb-0"><img src="{% static 'assets/img/icon/play.svg' %}" alt="Play" class="me-2" style="width: 16px;">Lecture{{ forloop.parentloop.counter }}.{{ i }} {{ section }} Content</p>
-                                                <div>
-                                                    <a href="javascript:void(0);" class="text-primary me-3">Preview</a>
-                                                    <span class="text-muted">02:53</span>
-                                                </div>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
+                           <div class="flex items-center">
+                                <svg class="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" stroke-width="1.5"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7
+                                            -1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                <span class="font-medium">{{ course.view_count }}</span>
+                            </div>
+
+                            <div class="flex items-center">
+                                <div class="flex">
+                                    {% for i in full_star_range %}
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                    {% endfor %}
+                                    {% if half_star %}
+                                        <i class="fas fa-star-half-alt text-yellow-400"></i>
+                                    {% endif %}
+                                    {% for i in empty_star_range %}
+                                        <i class="far fa-star text-gray-400"></i>
+                                    {% endfor %}
                                 </div>
+                                <span class="font-medium ml-2">{{ average_rating }} Rating</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="text-lg font-bold text-gray-900 mb-3">Overview</h5>
+                    
+
+                    
+                    <div 
+                            x-data="{ expanded: false }" 
+                            class="relative bg-white rounded-xl shadow-sm border p-4 mb-6"
+                        >
+                            
+
+                            <div 
+                                :class="expanded ? '' : 'line-clamp-4'" 
+                                class="text-gray-600 text-sm leading-relaxed transition-all duration-300 ease-in-out"
+                            >
+                                {{ course.description|safe }}
+                            </div>
+
+                            <button 
+                                @click="expanded = !expanded" 
+                                class="mt-3 text-sm font-medium text-red-600 hover:underline focus:outline-none"
+                                x-text="expanded ? 'Show less' : 'Read more'"
+                            ></button>
+                        </div>
+
+                </div>
+
+                <!-- Course Content -->
+                <div class="bg-white rounded-xl shadow-md mt-6 p-6">
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                        <h5 class="text-xl font-bold text-gray-900">Course Content</h5>
+                        <h6 class="text-gray-500 text-sm mt-2 md:mt-0">Note</h6>
+                    </div>
+                    <div id="courseAccordion">
+                        {% for i in section_data %}
+                        {% if not i.children.all %}
+                            <div class="bg-blue-100 text-blue-800 p-4 rounded-xl text-sm mb-4">
+                            No sections available yet.
+                            </div>
+                        {% else %}
+                            {% for obj in i.children.all %}
+                            <details class="rounded-xl mb-4 shadow-sm bg-gray-50 group">
+                                <summary class="cursor-pointer border-b border-gray-200 w-full flex justify-between items-center px-4 py-3 font-semibold text-gray-800 bg-gray-100 rounded-t-xl hover:bg-red-500 hover:text-white transition-colors">
+                                <span>{{ obj.title }}</span>
+                                <svg class="w-4 h-4 ml-2 transition-transform duration-300 text-gray-500 group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                                </summary>
+                                <div class="px-4 py-3">
+                                <ul class="space-y-3">
+                                    {% if not obj.children.all %}
+                                    {% for material in obj.materials.all %}
+                                        <li class="flex justify-between items-center border-b border-gray-200 pb-2">
+                                        <p class="text-sm text-gray-700">
+                                           
+
+                                            {% if is_enrolled %}
+                                                <a href="{% url 'learner:load_content' username=user.username id=course.id slug=course.slug content_type='material' content_id=material.id %}" class="text-blue-500 hover:underline">
+                                                    <i class="fas fa-file text-red-500 mr-2"></i> {{ material.title }}
+                                                </a>
+                                            {% else %}
+                                               <i class="fas fa-file text-red-500 mr-2"></i> {{ material.title }}
+                                            {% endif %}
+                                        </p>
+                                        <div class="text-sm text-gray-500">{{ material.duration }}</div>
+                                        </li>
+                                    {% empty %}
+                                        
+
+
+
+                                    {% endfor %}
+                                    {% for assesment in obj.assessments.all %}
+                                        <li class="flex justify-between items-center border-b border-gray-200 pb-2">
+                                        <p class="text-sm text-gray-700">
+                                        {% if is_enrolled %}
+                                            <a href="{% url 'learner:load_content' username=user.username id=course.id slug=course.slug content_type='assessment' content_id=assesment.id %}" class="text-blue-500 hover:underline">
+                                                <i class="fas fa-check text-red-500 mr-2"></i>{{ assesment.name | safe }}
+                                            </a>
+                                        {% else %}
+                                            <i class="fas fa-check text-red-500 mr-2"></i>{{ assesment.name | safe }}
+                                        {% endif %}
+                                            
+                                        </p>
+                                        <span class="bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full">{{ assesment.weight }}%</span>
+                                        </li>
+                                    {% empty %}
+                                       
+
+
+
+                                       
+                                    {% endfor %}
+                                    {% else %}
+                                    {% for subobj in obj.children.all %}
+                                        <li class="border-b border-gray-200 pb-2">
+                                        <p class="text-sm text-gray-700">
+                                            <i class="fas fa-play-circle text-red-500 mr-2"></i>A.1.1 {{ subobj.title }}
+                                        </p>
+                                        </li>
+                                    {% endfor %}
+                                    <div class="mt-4 flex gap-3">
+                                        <a href="javascript:void(0);" class="bg-red-500 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">Add Article</a>
+                                        <a href="javascript:void(0);" class="border border-gray-300 text-sm text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">Add Description</a>
+                                    </div>
+                                    {% endif %}
+                                </ul>
+                                </div>
+                            </details>
+                            {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    </div>
+
+
+                <!-- Similar Courses -->
+                <div class="mt-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4 sm:px-3">Similar Courses with <strong>{{ course.instructor.user.first_name }}</strong></h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        {% for similar_course in similar_courses %}
+                            <div>
+                                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                                    {% if similar_course.image %}
+                                        <a href="{% url 'courses:course_lms_detail' similar_course.id similar_course.slug %}">
+                                            <img src="{{ similar_course.image.url }}" class="w-full h-30 object-cover sm:h-30" alt="{{ similar_course.course_name }}">
+                                        </a>
+                                    {% else %}
+                                        <img src="https://via.placeholder.com/150" class="w-full h-40 object-cover sm:h-36" alt="No Image">
+                                    {% endif %}
+                                    <div class="p-4">
+                                        <h5 class="text-lg font-semibold">
+                                            <a href="{% url 'courses:course_lms_detail' similar_course.id similar_course.slug %}" class="text-gray-900 hover:text-red-500 transition-colors">
+                                                {{ similar_course.course_name }}
+                                            </a>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="col-span-full">
+                                <div class="bg-yellow-100 text-yellow-800 rounded-xl p-4 text-center sm:px-3">No similar courses available.</div>
                             </div>
                         {% endfor %}
                     </div>
                 </div>
-            </div>
-            <!-- /Course Content -->
 
-            <!-- Instructor -->
-            <div class="card instructor-sec border-0 shadow-sm mb-4">
-                <div class="card-body">
-                    <h5 class="subs-title text-primary fw-semibold mb-3 border-bottom pb-2">About the Instructor</h5>
-                    <div class="instructor-wrap d-flex flex-wrap align-items-center">
-                        <div class="about-instructor d-flex align-items-center">
-                            <div class="abt-instructor-img me-3">
+                <!-- Instructor -->
+                <div class="bg-white rounded-xl shadow-md p-6 mt-6">
+                    <h5 class="text-lg font-bold text-gray-900 mb-4">About the Instructor</h5>
+                    <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm mb-4 flex flex-wrap items-center gap-4">
+                        <div class="flex items-center">
+                            <div class="mr-3">
                                 {% if course.instructor.user.photo %}
-                                    <a href="instructor-profile.html">
-                                        <img src="{{ course.instructor.user.photo.url }}" alt="Instructor" class="img-fluid rounded-circle" style="width: 60px; height: 60px; object-fit: cover;">
+                                    <a href="{% url 'courses:instructor_profile' course.instructor.user.username %}">
+                                        <img src="{{ course.instructor.user.photo.url }}" alt="Instructor" class="w-16 h-16 object-cover rounded-full border">
                                     </a>
                                 {% else %}
-                                    <a href="instructor-profile.html">
-                                        <img src="{% static 'assets/img/user/user1.jpg' %}" alt="Default" class="img-fluid rounded-circle" style="width: 60px; height: 60px; object-fit: cover;">
+                                    <a href="{% url 'courses:instructor_profile' course.instructor.user.username %}">
+                                        <img src="{% static 'assets/img/user/user1.jpg' %}" alt="Instructor" class="w-16 h-16 object-cover rounded-full border">
                                     </a>
                                 {% endif %}
                             </div>
-                            <div class="instructor-detail">
-                                <h5 class="mb-1"><a href="instructor-profile.html" class="text-dark text-decoration-none">{{ course.instructor.user.first_name }} {{ course.instructor.user.last_name }}</a></h5>
-                                <p class="text-muted mb-0">{{ course.instructor.user.hobby }}</p>
+                            <div>
+                                <h5 class="text-md font-bold">
+                                    <a href="{% url 'courses:instructor_profile' course.instructor.user.username %}" class="text-gray-900 hover:text-red-500 transition-colors">{{ course.instructor.user.first_name }} {{ course.instructor.user.last_name }}</a>
+                                </h5>
+                                <p class="text-gray-600 mb-0">{{ course.instructor.user.hobby }}</p>
                             </div>
                         </div>
-                        <div class="rating ms-auto">
-                            <i class="fas fa-star filled text-warning"></i>
-                            <i class="fas fa-star filled text-warning"></i>
-                            <i class="fas fa-star filled text-warning"></i>
-                            <i class="fas fa-star filled text-warning"></i>
-                            <i class="fas fa-star text-muted"></i>
-                            <span class="d-inline-block average-rating ms-2">4.5 Instructor Rating</span>
+                       <div class="ml-auto flex items-center">
+                            <div class="flex">
+                                {% for i in full_star_range %}
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                {% endfor %}
+                                {% if half_star %}
+                                    <i class="fas fa-star-half-alt text-yellow-400"></i>
+                                {% endif %}
+                                {% for i in empty_star_range %}
+                                    <i class="far fa-star text-gray-400"></i>
+                                {% endfor %}
+                            </div>
+                            <span class="font-bold ml-1">{{ average_rating|floatformat:1 }} ({{ total_reviews }} Reviews)</span>
                         </div>
                     </div>
-                    <div class="course-info d-flex flex-wrap gap-3 mt-3">
-                        <div class="cou-info d-flex align-items-center"><img src="{% static 'assets/img/icon/play.svg' %}" alt="Courses" class="me-2" style="width: 20px;">5 Courses</div>
-                        <div class="cou-info d-flex align-items-center"><img src="{% static 'assets/img/icon/icon-01.svg' %}" alt="Lessons" class="me-2" style="width: 20px;">12+ Lessons</div>
-                        <div class="cou-info d-flex align-items-center"><img src="{% static 'assets/img/icon/icon-02.svg' %}" alt="Duration" class="me-2" style="width: 20px;">9hr 30min</div>
-                        <div class="cou-info d-flex align-items-center"><img src="{% static 'assets/img/icon/people.svg' %}" alt="Students" class="me-2" style="width: 20px;">270,866 students enrolled</div>
+                    <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm mb-4 flex flex-wrap gap-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-play-circle text-red-500 mr-2"></i>
+                            <span class="font-medium">{{ instructor_total_courses }} Courses</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-book text-red-500 mr-2"></i>
+                            <span class="font-medium">{{ instructor_total_sections }} Sections </span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-clock text-red-500 mr-2"></i>
+                            <span class="font-medium">{{ instructor_total_effort_hours }} Hours</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-users text-red-500 mr-2"></i>
+                            <span class="font-medium">{{ instructor_total_students }} Students</span>
+                        </div>
                     </div>
-                    <p class="mt-3 text-dark">{{ course.instructor.bio }}</p>
+                    <p class="text-gray-600">{{ course.instructor.bio }}</p>
                 </div>
+
+                <!-- Reviews -->
+                <div class="bg-white rounded-xl shadow-md p-6 mt-6">
+                    <h5 class="text-lg font-bold text-gray-900 mb-4">Reviews</h5>
+                    {% for review in reviews %}
+                        <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm mb-4">
+                            <!-- Flex container for user info and rating -->
+                            <div class="flex flex-wrap items-center gap-4 mb-3">
+                                <div class="flex items-center">
+                                    <div class="mr-3">
+                                        <a href="{% url 'learner:learner_detail' review.user.username %}" target="_blank">
+                                            {% if review.user.photo %}
+                                                <img src="{{ review.user.photo.url }}" alt="Reviewer" class="w-16 h-16 object-cover rounded-full border">
+                                            {% else %}
+                                                <div class="w-16 h-16 flex items-center justify-center rounded-full border bg-red-600 text-white font-bold text-xl">
+                                                    {% with review.user.full_name|default:review.user.get_full_name as full_name %}
+                                                        {% if full_name %}
+                                                            {{ full_name|slice:":1" }}{% with full_name.split|last as last_name %}{{ last_name|slice:":1" }}{% endwith %}
+                                                        {% else %}
+                                                            U
+                                                        {% endif %}
+                                                    {% endwith %}
+                                                </div>
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-md font-bold">
+                                            <a href="{% url 'learner:learner_detail' review.user.username %}" target="_blank" class="text-gray-900 hover:text-red-500 transition-colors">{{ review.user.username }}</a>
+                                        </h5>
+                                        <p class="text-gray-600 mb-0">{{ review.user.get_full_name }}</p>
+                                    </div>
+                                </div>
+                                <div class="ml-auto flex items-center">
+                                    {% for i in range %}
+                                        <i class="fas fa-star {% if i <= review.rating %}text-yellow-400{% else %}text-gray-400{% endif %}"></i>
+                                    {% endfor %}
+                                    <span class="font-bold ml-1">{{ review.rating }}</span>
+                                </div>
+                            </div>
+                            <!-- Comment always below -->
+                            <p class="text-gray-600">“{{ review.comment }}”</p>
+                        </div>
+                        
+                    {% empty %}
+                        <p class="text-gray-600">Belum ada review untuk kursus ini.</p>
+                    {% endfor %}
+                    <ul class="flex justify-center gap-2 mt-4">
+                        {% if reviews.has_previous %}
+                            <li>
+                                <a class="px-3 py-1 rounded-md shadow-sm text-red-500 border border-gray-200 hover:bg-red-500 hover:text-white transition-colors" href="?page=1" aria-label="First">
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="px-3 py-1 rounded-md shadow-sm text-red-500 border border-gray-200 hover:bg-red-500 hover:text-white transition-colors" href="?page={{ reviews.previous_page_number }}" aria-label="Previous">
+                                    <i class="fas fa-angle-left"></i>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="opacity-50">
+                                <span class="px-3 py-1 rounded-md shadow-sm text-gray-400 border border-gray-200"><i class="fas fa-angle-double-left"></i></span>
+                            </li>
+                            <li class="opacity-50">
+                                <span class="px-3 py-1 rounded-md shadow-sm text-gray-400 border border-gray-200"><i class="fas fa-angle-left"></i></span>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <span class="bg-red-500 text-white px-4 py-1 rounded-md shadow-sm">
+                                {{ reviews.number }} of {{ reviews.paginator.num_pages }}
+                            </span>
+                        </li>
+                        {% if reviews.has_next %}
+                            <li>
+                                <a class="px-3 py-1 rounded-md shadow-sm text-red-500 border border-gray-200 hover:bg-red-500 hover:text-white transition-colors" href="?page={{ reviews.next_page_number }}" aria-label="Next">
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="px-3 py-1 rounded-md shadow-sm text-red-500 border border-gray-200 hover:bg-red-500 hover:text-white transition-colors" href="?page={{ reviews.paginator.num_pages }}" aria-label="Last">
+                                    <i class="fas fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="opacity-50">
+                                <span class="px-3 py-1 rounded-md shadow-sm text-gray-400 border border-gray-200"><i class="fas fa-angle-right"></i></span>
+                            </li>
+                            <li class="opacity-50">
+                                <span class="px-3 py-1 rounded-md shadow-sm text-gray-400 border border-gray-200"><i class="fas fa-angle-double-right"></i></span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <!-- Comment Section -->
+                <div class="bg-white rounded-xl shadow-md p-6 mt-6">
+                    <h5 class="text-lg font-bold text-gray-900 mb-4">Post a Comment</h5>
+                    <form method="POST" action="{% url 'courses:add_comment_course' course_id=course.id %}">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <textarea name="content" rows="4" class="w-full border border-gray-200 rounded-xl shadow-sm p-3 focus:border-red-500 focus:ring focus:ring-red-100 transition-colors" placeholder="Your Comments" required></textarea>
+                        </div>
+                        <input type="hidden" name="parent_id" value="">
+                        <button type="submit" class="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">Submit</button>
+                    </form>
+                </div>
+
+                <!-- Comments -->
+              <!-- Comments Section -->
+                <div class="mt-6 space-y-4">
+                    {% for comment in comments %}
+                        <!-- Komentar Utama -->
+                        <div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-lg transition-all duration-200 flex gap-4 items-start">
+                            <!-- Foto User -->
+                            <img src="{{ comment.user.photo.url }}" alt="{{ comment.user.username }}"
+                                class="w-12 h-12 rounded-full object-cover border-2 border-gray-200 flex-shrink-0"
+                                onerror="this.src='/static/images/default-avatar.png'">
+
+                            <!-- Isi Komentar -->
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-col">
+                                    <p class="mb-2">
+                                        <strong class="text-gray-900 font-semibold text-base">{{ comment.user.username }}</strong>
+                                        <small class="text-gray-500 block mt-1">{{ comment.created_at|date:"F j, Y, g:i a" }}</small>
+                                    </p>
+                                    <p class="text-gray-700 mb-3 leading-relaxed">{{ comment.content }}</p>
+
+                                    <!-- Reply Button -->
+                                    <button class="text-red-500 hover:text-red-600 font-medium text-sm flex items-center gap-1 self-end transition-colors"
+                                            onclick="toggleReplyForm('comment-reply-form-{{ comment.id }}')">
+                                        <i class="bi bi-reply-fill"></i>Reply
+                                    </button>
+
+                                    <!-- Form Balasan -->
+                                    <div id="comment-reply-form-{{ comment.id }}" class="hidden mt-4 animate-fade-in">
+                                        <form method="POST" action="{% url 'courses:add_comment_course' course_id=course.id %}" class="space-y-2">
+                                            {% csrf_token %}
+                                            <div class="flex flex-col sm:flex-row gap-2">
+                                                <textarea name="content" class="flex-1 border border-gray-300 rounded-xl shadow-sm p-3 focus:border-red-500 focus:ring-2 focus:ring-red-100 focus:outline-none transition-all resize-none" rows="2" placeholder="Reply to this comment..." required></textarea>
+                                                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                                                <button type="submit" class="bg-red-500 text-white px-6 py-2 rounded-xl hover:bg-red-600 transition-all font-medium whitespace-nowrap">Reply</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <!-- Replies Container -->
+                                    <div class="ml-0 sm:ml-16 mt-4 space-y-3 border-l-2 border-gray-200 pl-4 sm:pl-6 -mx-4 sm:mx-0"> <!-- Tambah -mx-4 di mobile untuk kompensasi indent -->
+                                        {% for reply in comment.replies.all %}
+                                            <!-- Reply Level -->
+                                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 sm:p-4 shadow-sm flex gap-3 sm:gap-4 items-start relative">
+                                                <!-- Avatar -->
+                                                <img src="{{ reply.user.photo.url }}" alt="{{ reply.user.username }}"
+                                                    class="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover border border-gray-300 flex-shrink-0"
+                                                    onerror="this.src='/static/images/default-avatar.png'">
+
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="flex flex-col">
+                                                        <p class="mb-1.5 sm:mb-2">
+                                                            <strong class="text-gray-900 font-medium text-sm sm:text-base">{{ reply.user.username }}</strong>
+                                                            <small class="text-gray-500 block mt-0.5 sm:mt-1 text-xs">{{ reply.created_at|date:"F j, Y, g:i a" }}</small>
+                                                        </p>
+                                                        <p class="text-gray-700 mb-2.5 sm:mb-3 leading-relaxed text-sm sm:text-base whitespace-pre-wrap">{{ reply.content }}</p>
+
+                                                        <!-- Sub-Reply Button -->
+                                                        <button class="text-red-500 hover:text-red-600 font-medium text-xs sm:text-sm flex items-center gap-1 self-end transition-colors"
+                                                                onclick="toggleReplyForm('reply-form-{{ reply.id }}')">
+                                                            <i class="bi bi-reply-fill"></i>Reply
+                                                        </button>
+
+                                                        <!-- Form Balas Sub-Reply -->
+                                                        <div id="reply-form-{{ reply.id }}" class="hidden mt-3 animate-fade-in max-w-full -mx-3 sm:mx-0"> <!-- Tambah -mx-3 di mobile -->
+                                                            <form method="POST" action="{% url 'courses:add_comment_course' course_id=course.id %}" class="space-y-2">
+                                                                {% csrf_token %}
+                                                                <div class="flex flex-col sm:flex-row gap-2">
+                                                                    <textarea name="content" rows="2" required
+                                                                        placeholder="Reply to this reply..."
+                                                                        class="flex-1 border border-gray-300 rounded-xl shadow-sm p-3 focus:border-red-500 focus:ring-2 focus:ring-red-100 focus:outline-none transition-all resize-none text-sm w-full"></textarea>
+                                                                    <input type="hidden" name="parent_id" value="{{ reply.id }}">
+                                                                    <button type="submit"
+                                                                        class="bg-red-500 text-white px-4 sm:px-6 py-2 rounded-xl hover:bg-red-600 transition-all font-medium whitespace-nowrap">
+                                                                        Reply
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                        <!-- Sub-Replies Container -->
+                                                        <div class="ml-0 sm:ml-12 mt-3 space-y-2 border-l-2 border-gray-300 pl-3 sm:pl-4 -mx-3 sm:mx-0"> <!-- Tambah -mx-3 di mobile -->
+                                                            {% for sub_reply in reply.replies.all %}
+                                                                <!-- Sub-Reply Level -->
+                                                                <div class="bg-gray-100 border border-gray-200 rounded-lg p-3 shadow-sm flex gap-3 items-start relative">
+                                                                    <!-- Avatar Sub-Reply -->
+                                                                    <img src="{{ sub_reply.user.photo.url }}" alt="{{ sub_reply.user.username }}"
+                                                                        class="w-9 h-9 rounded-full object-cover border border-gray-300 flex-shrink-0"
+                                                                        onerror="this.src='/static/images/default-avatar.png'">
+
+                                                                    <div class="flex-1 min-w-0">
+                                                                        <div class="flex flex-col">
+                                                                            <p class="mb-1">
+                                                                                <strong class="text-gray-900 font-medium text-sm">{{ sub_reply.user.username }}</strong>
+                                                                                <small class="text-gray-500 block mt-0.5 text-xs">{{ sub_reply.created_at|date:"F j, Y, g:i a" }}</small>
+                                                                            </p>
+                                                                            <p class="text-gray-700 mb-2 leading-relaxed text-sm whitespace-pre-wrap">{{ sub_reply.content }}</p>
+
+                                                                            <!-- Sub-Sub-Reply Button -->
+                                                                            <button class="text-red-500 hover:text-red-600 font-medium text-xs flex items-center gap-1 self-end transition-colors"
+                                                                                    onclick="toggleReplyForm('sub-reply-form-{{ sub_reply.id }}')">
+                                                                                <i class="bi bi-reply-fill"></i>Reply
+                                                                            </button>
+
+                                                                            <!-- Form Sub-Sub-Reply -->
+                                                                            <div id="sub-reply-form-{{ sub_reply.id }}" class="hidden mt-2 animate-fade-in max-w-full -mx-3 sm:mx-0"> <!-- Tambah -mx-3 di mobile untuk mencegah overflow -->
+                                                                                <form method="POST" action="{% url 'courses:add_comment_course' course_id=course.id %}" class="space-y-2">
+                                                                                    {% csrf_token %}
+                                                                                    <div class="flex flex-col sm:flex-row gap-2">
+                                                                                        <textarea name="content" rows="2" required
+                                                                                            placeholder="Reply to this sub-reply..."
+                                                                                            class="flex-1 border border-gray-300 rounded-xl shadow-sm p-3 focus:border-red-500 focus:ring-2 focus:ring-red-100 focus:outline-none transition-all resize-none text-sm w-full"></textarea>
+                                                                                        <input type="hidden" name="parent_id" value="{{ sub_reply.id }}">
+                                                                                        <button type="submit"
+                                                                                            class="bg-red-500 text-white px-4 sm:px-6 py-2 rounded-xl hover:bg-red-600 transition-all font-medium whitespace-nowrap">
+                                                                                            Reply
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="bg-white border border-gray-200 rounded-2xl p-6 text-center text-gray-600">
+                            No comments yet. Be the first to comment!
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <style>
+                    @keyframes fade-in {
+                        from { opacity: 0; transform: translateY(10px); }
+                        to { opacity: 1; transform: translateY(0); }
+                    }
+                    .animate-fade-in {
+                        animation: fade-in 0.3s ease-out;
+                    }
+                </style>
+
+                <script>
+                    function toggleReplyForm(formId) {
+                        const form = document.getElementById(formId);
+                        if (form) {
+                            form.classList.toggle('hidden');
+                        }
+                    }
+                </script>
+
             </div>
-            <!-- /Instructor -->
-        </div>
 
-        <div class="col-lg-4">
-            <div class="sidebar-sec sticky-top" style="top: 20px;">
-                <!-- Video -->
-                <div class="video-sec vid-bg mb-4">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body p-0">
-                            {% if course.link_video %}
-                                <a href="{{ course.link_video }}" class="video-thumbnail position-relative d-block" data-fancybox="video-gallery" style="pointer-events: auto;">
-                                    <div class="play-icon position-absolute top-50 start-50 translate-middle text-white" style="font-size: 3rem; z-index: 20; background: rgba(0, 0, 0, 0.7); border-radius: 50%; padding: 20px; transition: all 0.3s ease;">
-                                        <i class="fa-solid fa-play"></i>
-                                    </div>
-                                    <div class="thumbnail-overlay position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0, 0, 0, 0.4); z-index: 10; border-radius: 0.25rem;"></div>
-                                    {% if course.image %}
-                                        <img class="img-fluid rounded" src="{{ course.image.url }}" alt="{{ course.name }} Image">
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="sticky top-20 z-10">
+                    <!-- Video -->
+                    <div class="mb-6">
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <div class="relative mb-4">
+                                {% if course.link_video %}
+                                    <a href="{{ course.link_video }}" class="block" data-fancybox="video-gallery">
+                                        {% if course.image %}
+                                            <img src="{{ course.image.url }}" alt="{{ course.name }} Image" class="w-full h-40 object-cover rounded-xl hover:scale-105 transition-transform">
+                                        {% else %}
+                                            <img src="{% static 'assets/img/user/logo.5272a797c07c.png' %}" alt="Default Image" class="w-full h-52 object-cover rounded-xl hover:scale-105 transition-transform">
+                                        {% endif %}
+                                        <div class="absolute inset-0 flex items-center justify-center bg-red-500 bg-opacity-75 rounded-full w-16 h-16 transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+                                            <i class="fas fa-play text-white text-2xl"></i>
+                                        </div>
+                                    </a>
+                                {% else %}
+                                    <a href="https://www.youtube.com/watch?v=nc6m9WM3Gyw&t=1s" class="block" data-fancybox="video-gallery">
+                                        <img src="{% static 'assets/img/user/logo.5272a797c07c.png' %}" alt="Default Image" class="w-full h-52 object-cover rounded-xl hover:scale-105 transition-transform">
+                                        <div class="absolute inset-0 flex items-center justify-center bg-red-500 bg-opacity-75 rounded-full w-16 h-16 transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+                                            <i class="fas fa-play text-white text-2xl"></i>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div class="text-center">
+                              
+                                {% if course_prices %}
+                                <ul>
+                                    {% for price_type_name, price_obj in course_prices.items %}
+                                    <li>
+                                        <!-- Harga atau label Free -->
+                                        <p class="bg-red-50 text-red-800 px-3 py-1 rounded-lg text-3xl text-center">
+                                        {% if price_obj.portal_price|floatformat:2 == "0.00" %}
+                                            {{ price_type_name }}
+                                        {% else %}
+                                            IDR {{ price_obj.portal_price|intcomma }}
+                                            <!-- Tipe Harga -->
+                                             <br>
+                                            <span class="text-sm text-gray-600 mt-1">
+                                            <strong>{{ price_type_name }}</strong>
+                                            </span>
+                                            <br>
+                                        {% endif %}
+                                        </p>
+
+                                        
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% else %}
+                                <!-- jika tidak diset harga info -->
+                                {% endif %}
+
+
+                            <br>
+
+                               <div class="grid grid-cols-3 gap-2 sm:gap-3 mb-4">
+                                <!-- Wishlist -->
+                                <a href="#" 
+                                class="flex items-center justify-center border border-red-500 text-red-500 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-red-500 hover:text-white transition-colors"
+                                aria-label="Add to Wishlist">
+                                    <i class="fas fa-heart text-sm sm:text-base mr-1"></i>
+                                    <span class="text-xs sm:text-sm"></span>
+                                </a>
+                                <!-- WhatsApp Share -->
+                                <a href="https://api.whatsapp.com/send?text={{ course.course_name|urlencode }}%0A{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja!'|truncatechars:200|urlencode }}%0A{{ request.build_absolute_uri|urlencode }}"
+                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Share on WhatsApp">
+                                    <i class="fab fa-whatsapp text-green-500 text-sm sm:text-base mr-1"></i>
+                                    <span class="text-xs sm:text-sm"></span>
+                                </a>
+                                <!-- Facebook Share -->
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
+                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Share on Facebook">
+                                    <i class="fab fa-facebook-f text-blue-600 text-sm sm:text-base mr-1"></i>
+                                    <span class="text-xs sm:text-sm"></span>
+                                </a>
+                                <!-- LinkedIn Share -->
+                                <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode }}&title={{ course.course_name|urlencode }}&summary={{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja untuk meningkatkan keterampilan Anda dengan panduan dari instruktur ahli.'|truncatechars:256|urlencode }}&source={{ request.scheme }}://{{ request.get_host }}"
+                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Share on LinkedIn">
+                                    <i class="fab fa-linkedin-in text-blue-700 text-sm sm:text-base mr-1"></i>
+                                    <span class="text-xs sm:text-sm"></span>
+                                </a>
+                                <!-- X Share -->
+                                <a href="https://x.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ course.course_name|urlencode }}%20-%20{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja!'|truncatechars:200|urlencode }}"
+                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Share on X">
+                                    <i class="fab fa-x-twitter text-black text-sm sm:text-base mr-1"></i>
+                                    <span class="text-xs sm:text-sm"></span>
+                                </a>
+                                <!-- Instagram Share -->
+                                <button onclick="copyToClipboard('{{ request.build_absolute_uri }}')"
+                                        class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                        aria-label="Copy link for your share">
+                                    <i class="fas fa-share-alt text-gray-600 text-sm sm:text-base mr-1"></i>
+                                    <span class="text-xs sm:text-sm"></span>
+                                </button>
+                            </div>
+                            </div>
+                            <script>
+                            function copyToClipboard(url) {
+                                navigator.clipboard.writeText(url).then(() => {
+                                    alert('Link copied to clipboard! Paste it anywhere to share.');
+                                }).catch(err => {
+                                    console.error('Failed to copy: ', err);
+                                    alert('Failed to copy link. Please copy the URL manually.');
+                                });
+                            }
+                            </script>
+                             
+
+
+                              {% with today=now|date:"Y-m-d" %}
+                                {% if request.user.is_authenticated %}
+                                    
+                                    {% if is_enrolled %}
+                                        {# ✅ USER SUDAH TERDAFTAR — tampilkan tombol Resume/Get Started/Completed #}
+                                        {% if course_status == 'completed' %}
+                                            <button onclick="window.location.href='{% url 'courses:generate_certificate' course_id=course.id %}'" 
+                                                    class="block w-full border border-green-500 text-green-600 px-4 py-2 rounded-lg 
+                                                        hover:bg-green-100 transition-colors text-center"
+                                                    aria-label="Download certificate for completed course">
+                                                ✅ Completed
+                                            </button>
+
+
+                                        {% elif course_status == 'resume' %}
+                                            <a href="{% url 'learner:course_learn' request.user.username course.id course.slug %}"
+                                            class="flex justify-center items-center w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">
+                                            ▶️ Resume Course
+                                            </a>
+
+                                        {% elif course_status == 'get_started' %}
+                                            <a href="{% url 'learner:course_learn' request.user.username course.id course.slug %}"
+                                            class="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-center">
+                                            🚀 Get Started
+                                            </a>
+
+                                        {% endif %}
+
                                     {% else %}
-                                        <img class="img-fluid rounded" src="{% static 'assets/img/user/logo.5272a797c07c.png' %}" alt="Default Image">
+                                        {# ✅ USER BELUM TERDAFTAR — cek apakah enrollment masih dibuka dan tampilkan Enroll Now/Add to Cart #}
+                                        {% if course.end_enrol and course.end_enrol|stringformat:"Y-m-d" < today %}
+                                            <button class="block w-full bg-gray-400 text-white px-4 py-2 rounded-lg cursor-not-allowed" disabled>
+                                                Enrollment Closed
+                                            </button>
+                                        {% else %}
+                                            {% with course_prices=course.get_course_price %}
+                                                {% if course.payment_model and course.payment_model.code != 'buy_first' %}
+                                                    <a href="{% url 'courses:course_profile' course.id %}" 
+                                                    class="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-center">
+                                                        studio
+                                                    </a>
+                                                {% elif course.payment_model and course.payment_model.code == 'buy_first' %}
+                                                    {% if course_prices %}
+                                                        <form method="POST" action="{% url 'payments:add_to_cart' course.id %}">
+                                                            {% csrf_token %}
+                                                            <button type="submit" class="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">
+                                                                Add to Cart
+                                                            </button>
+                                                        </form>
+                                                    {% else %}
+                                                        <p class="text-gray-500 text-sm italic text-center">Harga belum tersedia</p>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <p class="text-gray-500 text-sm italic text-center">Tipe pembayaran belum disetel</p>
+                                                {% endif %}
+                                            {% endwith %}
+                                        {% endif %}
                                     {% endif %}
-                                </a>
-                            {% else %}
-                                <a href="https://www.youtube.com/watch?v=nc6m9WM3Gyw" class="video-thumbnail position-relative d-block" data-fancybox="video-gallery" style="pointer-events: auto;">
-                                    <div class="play-icon position-absolute top-50 start-50 translate-middle text-white" style="font-size: 3rem; z-index: 20; background: rgba(0, 0, 0, 0.7); border-radius: 50%; padding: 20px; transition: all 0.3s ease;">
-                                        <i class="fa-solid fa-play"></i>
-                                    </div>
-                                    <div class="thumbnail-overlay position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0, 0, 0, 0.4); z-index: 10; border-radius: 0.25rem;"></div>
-                                    <img class="img-fluid rounded" src="{% static 'assets/img/user/logo.5272a797c07c.png' %}" alt="Default Image">
-                                </a>
-                            {% endif %}
+
+                                {% else %}
+                                    {# ✅ USER BELUM LOGIN — tampilkan tombol Join Now #}
+                                    <a href="{% url 'authentication:register' %}?next={% url 'courses:course_lms_detail' id=course.id slug=course.slug %}" 
+                                    class="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-center">
+                                        Join Now
+                                    </a>
+                                {% endif %}
+                            {% endwith %}
+
+
+
+
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- /Video -->
-
-                <!-- Features -->
-                <div class="card feature-sec border-0 shadow-sm">
-                    <div class="card-body">
-                        <h4 class="text-primary fw-semibold mb-3 border-bottom pb-2">Includes</h4>
-                        <ul class="list-unstyled">
-                            <li class="d-flex justify-content-between py-1"><span>Course Number:</span> <span>{{ course.course_number }}</span></li>
-                            <li class="d-flex justify-content-between py-1"><span>Class Run:</span> <span>{{ course.course_run }}</span></li>
-                            <li class="d-flex justify-content-between py-1"><span>Class Start:</span> <span>{{ course.start_date }}</span></li>
-                            <li class="d-flex justify-content-between py-1"><span>Class End:</span> <span>{{ course.end_date }}</span></li>
-                            <li class="d-flex justify-content-between py-1"><span>Enroll Start:</span> <span>{{ course.start_enrol }}</span></li>
-                            <li class="d-flex justify-content-between py-1"><span>Enroll End:</span> <span>{{ course.end_enrol }}</span></li>
-                            <li class="d-flex justify-content-between py-1"><span>Hours Effort:</span> <span>{{ course.hour }}</span></li>
-                            <li class="d-flex justify-content-between py-1"><span>Language:</span> <span>{{ course.language }}</span></li>
-                            <li class="d-flex justify-content-between py-1"><span>Level:</span> <span>{{ course.level }}</span></li>
+                    <!-- Features -->
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h4 class="text-xl font-bold text-gray-900 mb-3">Includes</h4>
+                        <ul class="list-none">
+                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                <span class="font-medium text-gray-900">Course Number:</span>
+                                <span class="text-gray-600">{{ course.course_number }}</span>
+                            </li>
+                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                <span class="font-medium text-gray-900">Class Run:</span>
+                                <span class="text-gray-600">{{ course.course_run }}</span>
+                            </li>
+                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                <span class="font-medium text-gray-900">Class Start:</span>
+                                <span class="text-gray-600">{{ course.start_date }}</span>
+                            </li>
+                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                <span class="font-medium text-gray-900">Class End:</span>
+                                <span class="text-gray-600">{{ course.end_date }}</span>
+                            </li>
+                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                <span class="font-medium text-gray-900">Enroll Start:</span>
+                                <span class="text-gray-600">{{ course.start_enrol }}</span>
+                            </li>
+                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                <span class="font-medium text-gray-900">Enroll End:</span>
+                                <span class="text-gray-600">{{ course.end_enrol }}</span>
+                            </li>
+                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                <span class="font-medium text-gray-900">Hours Effort:</span>
+                                <span class="text-gray-600">{{ course.hour }}</span>
+                            </li>
+                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                <span class="font-medium text-gray-900">Language:</span>
+                                <span class="text-gray-600">{{ course.get_language_display }}</span>
+                            </li>
+                            <li class="flex justify-between items-center py-2">
+                                <span class="font-medium text-gray-900">Level:</span>
+                                <span class="text-gray-600">{{ course.level }}</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <!-- /Features -->
             </div>
         </div>
     </div>
 </section>
-<!-- /Course Content -->
-{% endblock %}
 
-{% block scripts %}
-<!-- Pastikan Font Awesome dan Fancybox dimuat -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
-<!-- CSS Kustom untuk video dan ikon -->
-<style>
-    .video-thumbnail {
-        position: relative;
-        display: block;
-    }
-    .video-thumbnail::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.4); /* Overlay gelap */
-        z-index: 10;
-        border-radius: 0.25rem;
-    }
-    .play-icon {
-        z-index: 20; /* Di atas overlay */
-        transition: all 0.3s ease;
-    }
-    .play-icon:hover {
-        transform: scale(1.2); /* Efek zoom saat hover */
-    }
-    .fancybox-centered-video .fancybox__container {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        z-index: 10000 !important;
-    }
-    .fancybox-centered-video .fancybox__content {
-        max-width: 90vw !important;
-        max-height: 90vh !important;
-        width: auto !important;
-        height: auto !important;
-        margin: auto !important;
-        background: #000 !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-    }
-    .fancybox-centered-video .fancybox__content iframe,
-    .fancybox-centered-video .fancybox__content video {
-        max-width: 100% !important;
-        max-height: 100% !important;
-        width: auto !important;
-        height: auto !important;
-        margin: auto !important;
-    }
-</style>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        Fancybox.bind('[data-fancybox="video-gallery"]', {
-            infinite: false,
-            arrows: true,
-            closeButton: "top",
-            dragToClose: true,
-            mainClass: "fancybox-centered-video",
-            contentClick: "play",
-            on: {
-                init: () => {
-                    document.querySelectorAll(".fancybox__content video, .fancybox__content iframe").forEach(el => {
-                        el.style.maxWidth = "90vw";
-                        el.style.maxHeight = "90vh";
-                        el.style.width = "auto";
-                        el.style.height = "auto";
-                        el.style.margin = "auto";
-                    });
-                },
-                ready: () => {
-                    const fancyboxContainer = document.querySelector(".fancybox__container");
-                    if (fancyboxContainer) {
-                        fancyboxContainer.style.display = "flex";
-                        fancyboxContainer.style.justifyContent = "center";
-                        fancyboxContainer.style.alignItems = "center";
-                        fancyboxContainer.style.position = "fixed";
-                        fancyboxContainer.style.top = "0";
-                        fancyboxContainer.style.left = "0";
-                        fancyboxContainer.style.width = "100vw";
-                        fancyboxContainer.style.height = "100vh";
-                        fancyboxContainer.style.zIndex = "10000";
-                    }
-                }
-            }
-        });
-    });
 
-    function enrollCourse() {
-        fetch("{% url 'courses:enroll_course' course.id %}", {
-            method: "GET",
-            headers: { "X-Requested-With": "XMLHttpRequest" }
-        })
-        .then(response => response.json())
-        .then(data => alert(data.message));
-    }
-</script>
+
 {% endblock %}

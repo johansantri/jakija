@@ -15567,3 +15567,406 @@ django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is n
 [WARNING] 2025-12-03 11:23:05,853 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
 [WARNING] 2025-12-03 11:23:08,293 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
 [WARNING] 2025-12-03 11:23:09,391 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 16:17:07,554 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-12-03 16:17:10,293 [django.request] Internal Server Error: /questions/edit/2/8/117/10
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4743, in edit_question
+    return redirect('courses:home')
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+[WARNING] 2025-12-03 16:17:10,336 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-12-03 16:17:18,053 [django.request] Internal Server Error: /questions/create/2/117/10/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4879, in create_question_view
+    return redirect('courses:home')
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+[WARNING] 2025-12-03 16:17:18,097 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-12-03 16:17:33,034 [django.request] Internal Server Error: /questions/create/2/117/10/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4879, in create_question_view
+    return redirect('courses:home')
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+[WARNING] 2025-12-03 16:17:33,092 [django.request] Not Found: /favicon.ico
+[INFO] 2025-12-03 16:18:32,704 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:18:33,965 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:18:33,976 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-03 16:18:37,545 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-12-03 16:18:46,365 [django.request] Internal Server Error: /questions/edit/2/8/117/10
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4743, in edit_question
+    return redirect('courses:home')
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+[WARNING] 2025-12-03 16:18:46,414 [django.request] Not Found: /favicon.ico
+[INFO] 2025-12-03 16:22:00,929 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:22:02,058 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:22:02,068 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:22:49,072 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:22:50,130 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:22:50,140 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:22:54,620 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:22:55,555 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:22:55,565 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:22:59,008 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:22:59,944 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:22:59,954 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:23:02,328 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:23:03,254 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:23:03,264 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:23:17,335 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:23:18,435 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:23:18,446 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:23:20,970 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:23:22,007 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:23:22,017 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:23:34,017 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:23:35,040 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:23:35,050 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:23:39,623 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:23:40,660 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:23:40,670 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:23:47,317 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:23:48,351 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:23:48,361 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-03 16:23:58,590 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-03 16:24:02,294 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-12-03 16:24:06,593 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-03 16:24:06,595 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-03 16:24:11,416 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-12-03 16:24:12,262 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-03 16:24:12,264 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-03 16:24:13,959 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-03 16:24:13,961 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-03 16:24:18,603 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-03 16:24:18,605 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-03 16:24:51,847 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-03 16:24:51,849 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-03 16:24:55,419 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-03 16:24:55,421 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-03 16:24:57,380 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-03 16:24:57,383 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-03 16:24:58,816 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-03 16:24:58,817 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[INFO] 2025-12-03 16:27:31,047 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:27:32,221 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:27:32,231 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:27:35,777 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:27:36,812 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:27:36,822 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:27:45,594 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:27:46,685 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:27:46,696 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:27:50,294 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:27:51,338 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:27:51,349 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:29:27,901 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:29:28,959 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:29:28,970 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:29:34,695 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:29:35,784 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:29:35,795 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:29:40,448 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:29:41,479 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:29:41,490 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:29:51,438 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:29:52,492 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:29:52,503 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-03 16:37:03,957 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-03 16:37:12,592 [django.request] Not Found: /favicon.ico
+[INFO] 2025-12-03 16:38:09,734 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:38:10,833 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:38:10,844 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:38:17,552 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:38:18,653 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:38:18,663 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:38:21,175 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:38:22,289 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:38:22,300 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-12-03 16:38:31,931 [django.request] Internal Server Error: /course-grade/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4504, in course_grade
+    course_id=id, user=user
+NameError: name 'idcourse' is not defined
+[INFO] 2025-12-03 16:39:09,639 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:39:10,675 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:39:10,685 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:39:13,290 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:39:14,373 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:39:14,383 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-12-03 16:39:18,105 [django.request] Internal Server Error: /course-grade/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4511, in course_grade
+    return redirect('courses:home')
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+[WARNING] 2025-12-03 16:39:18,152 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-12-03 16:39:19,053 [django.request] Internal Server Error: /course-grade/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4511, in course_grade
+    return redirect('courses:home')
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+[WARNING] 2025-12-03 16:39:19,098 [django.request] Not Found: /favicon.ico
+[INFO] 2025-12-03 16:39:38,397 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:39:39,537 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:39:39,548 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-12-03 16:39:42,082 [django.request] Internal Server Error: /course-grade/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'autentication'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4511, in course_grade
+    return redirect('authentication:home')
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'autentication' is not a registered namespace
+[WARNING] 2025-12-03 16:39:42,135 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-12-03 16:39:42,993 [django.request] Internal Server Error: /course-grade/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'autentication'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4511, in course_grade
+    return redirect('authentication:home')
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'autentication' is not a registered namespace
+[WARNING] 2025-12-03 16:39:43,037 [django.request] Not Found: /favicon.ico
+[INFO] 2025-12-03 16:40:14,532 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:40:15,605 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:40:15,616 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:40:25,631 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:40:26,426 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:40:26,435 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-03 16:40:37,936 [django.request] Not Found: /favicon.ico
+[INFO] 2025-12-03 16:42:08,800 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:42:09,876 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:42:09,887 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:42:15,534 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:42:16,675 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:42:16,686 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 16:42:19,268 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:42:20,361 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:42:20,371 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-03 16:42:30,663 [django.request] Not Found: /favicon.ico
+[INFO] 2025-12-03 16:42:48,926 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:42:50,029 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:42:50,039 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-12-03 16:43:09,199 [django.request] Internal Server Error: /update-grade-range/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4576, in update_grade_range
+    if course.instructor.user_id != request.user.id:
+AttributeError: 'NoneType' object has no attribute 'instructor'
+[ERROR] 2025-12-03 16:43:09,268 [django.request] Internal Server Error: /update-grade-range/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4576, in update_grade_range
+    if course.instructor.user_id != request.user.id:
+AttributeError: 'NoneType' object has no attribute 'instructor'
+[ERROR] 2025-12-03 16:43:09,334 [django.request] Internal Server Error: /update-grade-range/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4576, in update_grade_range
+    if course.instructor.user_id != request.user.id:
+AttributeError: 'NoneType' object has no attribute 'instructor'
+[ERROR] 2025-12-03 16:43:09,348 [django.request] Internal Server Error: /update-grade-range/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4576, in update_grade_range
+    if course.instructor.user_id != request.user.id:
+AttributeError: 'NoneType' object has no attribute 'instructor'
+[ERROR] 2025-12-03 16:43:09,380 [django.request] Internal Server Error: /update-grade-range/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4576, in update_grade_range
+    if course.instructor.user_id != request.user.id:
+AttributeError: 'NoneType' object has no attribute 'instructor'
+[ERROR] 2025-12-03 16:43:09,457 [django.request] Internal Server Error: /update-grade-range/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4576, in update_grade_range
+    if course.instructor.user_id != request.user.id:
+AttributeError: 'NoneType' object has no attribute 'instructor'
+[ERROR] 2025-12-03 16:43:09,474 [django.request] Internal Server Error: /update-grade-range/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4576, in update_grade_range
+    if course.instructor.user_id != request.user.id:
+AttributeError: 'NoneType' object has no attribute 'instructor'
+[ERROR] 2025-12-03 16:43:09,500 [django.request] Internal Server Error: /update-grade-range/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4576, in update_grade_range
+    if course.instructor.user_id != request.user.id:
+AttributeError: 'NoneType' object has no attribute 'instructor'
+[ERROR] 2025-12-03 16:43:09,581 [django.request] Internal Server Error: /update-grade-range/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4576, in update_grade_range
+    if course.instructor.user_id != request.user.id:
+AttributeError: 'NoneType' object has no attribute 'instructor'
+[ERROR] 2025-12-03 16:43:09,611 [django.request] Internal Server Error: /update-grade-range/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4576, in update_grade_range
+    if course.instructor.user_id != request.user.id:
+AttributeError: 'NoneType' object has no attribute 'instructor'
+[ERROR] 2025-12-03 16:43:09,646 [django.request] Internal Server Error: /update-grade-range/2/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4576, in update_grade_range
+    if course.instructor.user_id != request.user.id:
+AttributeError: 'NoneType' object has no attribute 'instructor'
+[INFO] 2025-12-03 16:43:45,277 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 16:43:46,414 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 16:43:46,424 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-03 16:43:51,450 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-03 16:43:57,615 [django.request] Not Found: /favicon.ico
