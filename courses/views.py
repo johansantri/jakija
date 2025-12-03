@@ -91,7 +91,7 @@ from .models import (
     AskOra, PeerReview, AssessmentScore, Submission, CourseStatus, AssessmentSession,
     CourseComment, Comment, Choice, Score, CoursePrice, AssessmentRead, QuestionAnswer,
     Enrollment, PricingType, Partner, CourseProgress, MaterialRead, GradeRange, Category,
-    Section, Instructor, TeamMember, Material, Question, Assessment,LTIResult,
+    Section, Instructor, TeamMember, Material, Question, Assessment,LTIResult,CourseTeam,
 )
 
 # Project-level apps
@@ -4948,37 +4948,43 @@ def create_question_view(request, idcourse, idsection, idassessment):
 
 
 #view question
-#@login_required
-@csrf_exempt
+
 def question_view(request, idcourse, idsection, idassessment):
-    # Check if the user is authenticated
+    # 1️⃣ Pastikan user login
     if not request.user.is_authenticated:
         return redirect("/login/?next=%s" % request.path)
-    
-    # Determine the course based on the user's role
-    if request.user.is_superuser:
-        course = get_object_or_404(Course, id=idcourse)
-    elif request.user.is_partner:
-        # Ensure the course is associated with the partner
-        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=request.user.id)
-    elif request.user.is_instructor:
-        # Ensure the course is associated with the instructor
-        course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id)
-    else:
-        # Unauthorized access
-        messages.error(request, "You do not have permission to view questions for this course.")
-        return redirect('courses:home')  # Redirect to a safe page
 
-    # Ensure the section belongs to the course
+    user = request.user
+    course = None
+    team_member = None  # inisialisasi
+
+    # 2️⃣ Prioritas superuser / curation
+    if user.is_superuser or user.is_curation:
+        course = get_object_or_404(Course, id=idcourse)
+
+    # 3️⃣ Partner / instructor hanya jika course belum ditemukan
+    if not course and user.is_partner:
+        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=user.id)
+
+    if not course and user.is_instructor:
+        course = get_object_or_404(Course, id=idcourse, instructor__user_id=user.id)
+
+    # 4️⃣ Cek CourseTeam sebagai fallback
+    if not course:
+        team_member = CourseTeam.objects.filter(course_id=idcourse, user=user).first()
+        if team_member:
+            course = team_member.course
+        else:
+            messages.error(request, "You do not have permission to view questions for this course.")
+            return redirect('courses:home')
+
+    # 5️⃣ Pastikan section benar-benar milik course
     section = get_object_or_404(Section, id=idsection, courses=course)
 
+    # 6️⃣ Ambil assessment dan prefetch related untuk performance
     assessment = get_object_or_404(
-        Assessment.objects.select_related(
-            'lti_tool'  # gunakan select_related karena OneToOneField
-        ).prefetch_related(
-            'questions__choices',  # untuk multiple-choice
-            'ask_oras'             # untuk open-response
-        ),
+        Assessment.objects.select_related('lti_tool')
+        .prefetch_related('questions__choices', 'ask_oras'),
         id=idassessment,
         section=section
     )
@@ -4987,6 +4993,7 @@ def question_view(request, idcourse, idsection, idassessment):
         'course': course,
         'section': section,
         'assessment': assessment,
+        'user_role': getattr(team_member, 'role', None)  # bisa dipakai di template
     })
 
 
@@ -5916,39 +5923,48 @@ class CKEditorForm(forms.Form):
 
 
 def studio(request, id):
-    # Check if the user is authenticated
     if not request.user.is_authenticated:
         return redirect("/login/?next=%s" % request.path)
-    if request.user.is_authenticated:
-        UserActivityLog.objects.create(user=request.user, activity_type='course_learn')
+    
+    UserActivityLog.objects.create(user=request.user, activity_type='course_learn')
     user = request.user
     course = None
-
-  
-    # Determine the course based on the user's role
+    team_member = None  # inisialisasi
+    
+    # 1️⃣ Prioritas superuser / curation
     if user.is_superuser or user.is_curation:
         course = get_object_or_404(Course, id=id)
-    elif user.is_partner:
-        #course = Course.objects.filter(id=id, org_partner_id=request.user.id).first()
+    
+    # 2️⃣ Partner / instructor hanya jika course belum ditemukan
+    if not course and user.is_partner:
         course = get_object_or_404(Course, id=id, org_partner__user_id=user.id)
-        #print(course)
-    elif user.is_instructor:
+    
+    if not course and user.is_instructor:
         course = get_object_or_404(Course, id=id, instructor__user_id=user.id)
-    # If no course is found, redirect to the courses list page
-        #print(course)
-    if not course:
-        return redirect('/courses')
 
-    # Fetch sections related to the specific course
-    #section = Section.objects.filter(parent=None, courses_id=course.id)
-    #section = Section.objects.filter(parent=None, courses=course).prefetch_related('materials')
-    #section = Section.objects.filter(parent=None, courses=course).prefetch_related('questions')
-    section = Section.objects.filter(
-    parent=None, courses=course
-).prefetch_related('materials', 'assessments')  # Add all necessary relationships
+    # 3️⃣ CourseTeam sebagai fallback
+    if not course:
+        team_member = CourseTeam.objects.filter(course_id=id, user=user).first()
+        if team_member:
+            course = team_member.course
+        else:
+            return redirect('/courses')  # user tidak punya akses
+    
+    # Fetch sections
+    sections = Section.objects.filter(
+        parent=None, courses=course
+    ).prefetch_related('materials', 'assessments')
+
     form = CKEditorForm()
-    # Render the page with the course and sections data
-    return render(request, 'courses/course_detail.html', {'course': course, 'section': section, 'form': form})
+    
+    return render(request, 'courses/course_detail.html', {
+        'course': course,
+        'section': sections,
+        'form': form,
+        'user_role': getattr(team_member, 'role', None)
+    })
+
+
 
 @csrf_exempt
 @require_http_methods(["POST"])

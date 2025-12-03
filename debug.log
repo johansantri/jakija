@@ -15352,3 +15352,218 @@ AttributeError: 'Course' object has no attribute 'team'
 [INFO] 2025-12-03 11:07:34,219 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
 [INFO] 2025-12-03 11:07:35,305 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-12-03 11:07:35,316 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2025-12-03 11:09:15,754 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-12-03 11:09:15,756 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-03 03:09:15.754852+00:00
+[INFO] 2025-12-03 11:09:15,756 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0", path_info: "/logout/"}.
+[WARNING] 2025-12-03 11:09:32,398 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:09:33,841 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:09:35,062 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:09:36,341 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-12-03 11:15:12,789 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 11:15:13,898 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 11:15:13,909 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-12-03 11:15:17,867 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5957, in studio
+    'user_role': getattr(team_member, 'role', None)  # None kalau superuser/flag lama
+UnboundLocalError: local variable 'team_member' referenced before assignment
+[WARNING] 2025-12-03 11:15:18,020 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-12-03 11:15:41,319 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 11:15:42,392 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 11:15:42,402 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-12-03 11:15:45,277 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5957, in studio
+    'user_role': getattr(team_member, 'role', None)  # None kalau superuser/flag lama
+UnboundLocalError: local variable 'team_member' referenced before assignment
+[WARNING] 2025-12-03 11:15:45,439 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-12-03 11:15:46,894 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5957, in studio
+    'user_role': getattr(team_member, 'role', None)  # None kalau superuser/flag lama
+UnboundLocalError: local variable 'team_member' referenced before assignment
+[WARNING] 2025-12-03 11:15:46,953 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-12-03 11:15:47,733 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5957, in studio
+    'user_role': getattr(team_member, 'role', None)  # None kalau superuser/flag lama
+UnboundLocalError: local variable 'team_member' referenced before assignment
+[WARNING] 2025-12-03 11:15:47,793 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-12-03 11:15:47,888 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5957, in studio
+    'user_role': getattr(team_member, 'role', None)  # None kalau superuser/flag lama
+UnboundLocalError: local variable 'team_member' referenced before assignment
+[WARNING] 2025-12-03 11:15:47,948 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-12-03 11:15:48,086 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5957, in studio
+    'user_role': getattr(team_member, 'role', None)  # None kalau superuser/flag lama
+UnboundLocalError: local variable 'team_member' referenced before assignment
+[WARNING] 2025-12-03 11:15:48,159 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[ERROR] 2025-12-03 11:15:48,245 [django.request] Internal Server Error: /studio/2
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5957, in studio
+    'user_role': getattr(team_member, 'role', None)  # None kalau superuser/flag lama
+UnboundLocalError: local variable 'team_member' referenced before assignment
+[WARNING] 2025-12-03 11:15:48,294 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-12-03 11:16:41,441 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 11:16:42,596 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 11:16:42,606 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-03 11:16:44,558 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[DEBUG] 2025-12-03 11:17:40,203 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-12-03 11:17:40,204 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-12-03 11:17:40,205 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-12-03 03:17:40.203558+00:00
+[INFO] 2025-12-03 11:17:40,805 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0", path_info: "/login/"}.
+[INFO] 2025-12-03 11:17:40,806 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-03 03:17:40.203558+00:00
+[DEBUG] 2025-12-03 11:17:40,811 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-12-03 11:17:41,069 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-12-03 11:17:42,539 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-12-03 11:18:05,452 [django.request] Internal Server Error: /questions/view/2/117/10/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4970, in question_view
+    return redirect('courses:home')  # Redirect to a safe page
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+[WARNING] 2025-12-03 11:18:05,495 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-12-03 11:18:33,006 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-12-03 11:18:33,009 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-03 03:18:33.006776+00:00
+[INFO] 2025-12-03 11:18:33,009 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/logout/"}.
+[WARNING] 2025-12-03 11:18:33,153 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:18:34,621 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[DEBUG] 2025-12-03 11:18:47,599 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-12-03 11:18:47,599 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-12-03 11:18:47,600 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-12-03 03:18:47.599385+00:00
+[INFO] 2025-12-03 11:18:48,216 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/login/"}.
+[INFO] 2025-12-03 11:18:48,216 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-03 03:18:47.599385+00:00
+[DEBUG] 2025-12-03 11:18:48,222 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-12-03 11:18:48,477 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-12-03 11:18:48,618 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:18:49,622 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:18:52,596 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:18:53,751 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:18:58,636 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:19:01,580 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:19:01,652 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[DEBUG] 2025-12-03 11:19:21,237 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-12-03 11:19:21,241 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-03 03:19:21.237706+00:00
+[INFO] 2025-12-03 11:19:21,242 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/logout/"}.
+[WARNING] 2025-12-03 11:19:21,390 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:19:22,988 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-12-03 11:20:24,462 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 11:20:25,534 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 11:20:25,544 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2025-12-03 11:20:38,003 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-12-03 11:20:38,003 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-12-03 11:20:38,004 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-12-03 03:20:38.003062+00:00
+[INFO] 2025-12-03 11:20:38,603 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/login/"}.
+[INFO] 2025-12-03 11:20:38,604 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-03 03:20:38.003062+00:00
+[DEBUG] 2025-12-03 11:20:38,610 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-12-03 11:20:39,177 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-12-03 11:20:39,474 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:20:40,310 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:20:41,512 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:20:42,548 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:20:46,273 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:20:50,701 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-12-03 11:21:20,597 [django.request] Internal Server Error: /questions/view/2/117/10/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4970, in question_view
+    return redirect('courses:home')  # Redirect to a safe page
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+[WARNING] 2025-12-03 11:21:20,640 [django.request] Not Found: /favicon.ico
+[INFO] 2025-12-03 11:21:58,757 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 11:21:59,881 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 11:21:59,892 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 11:22:20,221 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 11:22:21,325 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 11:22:21,335 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-03 11:22:25,962 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-03 11:22:27,053 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-03 11:22:27,063 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-03 11:22:32,147 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:22:35,279 [django.request] Not Found: /favicon.ico
+[ERROR] 2025-12-03 11:22:41,464 [django.request] Internal Server Error: /edit-assessment/2/117/10/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4647, in edit_assessment
+    return redirect('courses:home')  # Redirect to a safe page
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+[WARNING] 2025-12-03 11:22:41,507 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-03 11:22:49,486 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-12-03 11:22:54,193 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-03 11:22:54,195 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-03 11:23:05,142 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:23:05,853 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:23:08,293 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-03 11:23:09,391 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
