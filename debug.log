@@ -17637,3 +17637,130 @@ django.core.exceptions.FieldError: Cannot resolve keyword 'course_team' into fie
 [WARNING] 2025-12-04 15:28:59,113 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-04 15:29:06,124 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-04 15:29:15,676 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:29:55,629 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:29:56,605 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:29:57,730 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:29:59,112 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:30:06,126 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:30:15,790 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:30:55,743 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:30:56,739 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:30:57,797 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:30:59,114 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:31:06,124 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:31:15,868 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:31:55,741 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:31:56,736 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:31:57,802 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:31:59,105 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:32:06,125 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:32:15,969 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:32:25,606 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-12-04 15:32:46,825 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-12-04 15:32:46,828 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-04 07:32:46.825086+00:00
+[INFO] 2025-12-04 15:32:46,829 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0", path_info: "/logout/"}.
+[WARNING] 2025-12-04 15:32:55,893 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:32:56,860 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:32:57,893 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:32:59,200 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-04 15:33:00,257 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-12-04 15:33:00,257 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-12-04 15:33:00,258 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-12-04 07:33:00.257411+00:00
+[INFO] 2025-12-04 15:33:00,917 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0", path_info: "/login/"}.
+[INFO] 2025-12-04 15:33:00,920 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-04 07:33:00.257411+00:00
+[DEBUG] 2025-12-04 15:33:00,990 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-12-04 15:33:01,254 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-12-04 15:33:02,820 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-12-04 15:33:04,922 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=None, last_access_assessment=10
+[DEBUG] 2025-12-04 15:33:04,924 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 10)]
+[WARNING] 2025-12-04 15:33:06,188 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-04 15:33:13,590 [learner.views] Redirecting to load_content: /learn/2/public-speaking-for-beginners-speak-with-confidence/assessment/10/
+[WARNING] 2025-12-04 15:33:13,601 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-04 15:33:13,615 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-04 15:33:13,623 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 10
+[DEBUG] 2025-12-04 15:33:13,639 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 10
+[INFO] 2025-12-04 15:33:13,652 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 10
+[DEBUG] 2025-12-04 15:33:13,675 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=100.00
+[INFO] 2025-12-04 15:33:13,675 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=True, assessments=1/1, overall=100.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-04 15:33:13,778 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-04 15:33:13,780 [django.request] Bad Request: /mark-progress/
+[WARNING] 2025-12-04 15:33:16,061 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:33:17,526 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-04 15:33:17,547 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-04 15:33:17,557 [learner.views] Created CourseSessionLog for user 5, course 2, material 14
+[DEBUG] 2025-12-04 15:33:17,572 [learner.views] Updated LastAccessCourse for user 5, course 2, material 14
+[INFO] 2025-12-04 15:33:17,578 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 14
+[DEBUG] 2025-12-04 15:33:17,594 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=100.00
+[INFO] 2025-12-04 15:33:17,594 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=True, assessments=1/1, overall=100.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-04 15:33:56,013 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:33:57,012 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:33:58,011 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:33:59,195 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:34:06,224 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:34:14,044 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:34:16,142 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:34:17,734 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:34:56,099 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:34:57,095 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:34:58,092 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:34:59,209 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:35:06,277 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:35:14,105 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:35:16,156 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:35:17,737 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:35:56,086 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:35:57,093 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:35:58,142 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:35:59,181 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:36:06,298 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:36:14,225 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:36:16,288 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:36:17,711 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:36:56,283 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:36:57,287 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:36:58,283 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:36:59,283 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:37:06,283 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:37:14,272 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:37:16,297 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:37:17,710 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:37:56,248 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:37:57,277 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:37:58,285 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:37:59,281 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:38:06,281 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:38:14,388 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:38:16,493 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:38:17,706 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:38:56,286 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:38:57,280 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:38:58,273 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:38:59,270 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:39:06,374 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:39:14,539 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:39:16,609 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:39:17,744 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:39:56,272 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:39:57,359 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:39:58,361 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:39:59,426 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:40:06,485 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:40:14,599 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:40:16,735 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:40:17,735 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:40:56,299 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:40:57,360 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:40:58,387 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:40:59,431 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:41:06,625 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:41:14,743 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:41:16,843 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:41:17,718 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:41:56,500 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:41:57,500 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:41:58,601 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:41:59,614 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:42:06,681 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:42:14,815 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:42:16,932 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:42:17,835 [django.request] Not Found: /partner/ping-session/

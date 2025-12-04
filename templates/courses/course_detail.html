@@ -12,10 +12,10 @@
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Course Outline</h1>
     <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
         <button id="save-json" class="flex items-center justify-center gap-2 px-5 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium shadow-sm transition">
-            Simpan Urutan
+            Save Order
         </button>
         <button id="add-section" class="flex items-center justify-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium shadow-sm transition">
-            Tambah Section
+            Add Section
         </button>
     </div>
 </div>
@@ -24,32 +24,38 @@
 </section>
 
 <!-- MODAL -->
-<div id="modal" class="fixed inset-0 hidden bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 overflow-y-auto">
-<div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-screen flex flex-col my-4">
-    <div class="p-6 border-b flex justify-between items-center">
-        <h3 id="modal-title" class="text-xl font-semibold text-gray-900">Tambah Material</h3>
-        <button id="cancel-modal" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
-    </div>
-    <div class="flex-1 overflow-y-auto p-6 space-y-6">
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Judul</label>
-            <input id="input-title" type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-base">
+<div id="modal" class="fixed inset-0 hidden bg-black bg-opacity-60 flex items-start justify-center z-50 p-4 overflow-y-auto">
+    <div class="bg-white w-full h-full rounded-none shadow-2xl flex flex-col my-0">
+        <!-- Header -->
+        <div class="p-6 border-b flex justify-between items-center sticky top-0 bg-white z-10">
+            <h3 id="modal-title" class="text-xl font-semibold text-gray-900">Add Material</h3>
+            <button id="cancel-modal" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
         </div>
-        <div id="ckeditor-wrapper" class="hidden">
-            <label class="block text-sm font-medium text-gray-700 mb-3">Deskripsi</label>
-            {{ form.description }}
+
+        <!-- Content -->
+        <div class="flex-1 overflow-y-auto p-6 space-y-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                <input id="input-title" type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-base">
+            </div>
+            <div id="ckeditor-wrapper" class="hidden">
+                <label class="block text-sm font-medium text-gray-700 mb-3">Description</label>
+                {{ form.description }}
+            </div>
+            <div id="weight-wrapper" class="hidden">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Weight (%)</label>
+                <input id="input-weight" type="number" step="0.01" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none text-base">
+            </div>
         </div>
-        <div id="weight-wrapper" class="hidden">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Bobot (%)</label>
-            <input id="input-weight" type="number" step="0.01" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none text-base">
+
+        <!-- Footer -->
+        <div class="p-6 border-t bg-gray-50 flex flex-col sm:flex-row-reverse gap-3 sticky bottom-0 bg-gray-50 z-10">
+            <button id="save-modal" class="w-full sm:w-auto px-8 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition">Save</button>
+            <button id="cancel-modal" class="w-full sm:w-auto px-8 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition">Cancel</button>
         </div>
-    </div>
-    <div class="p-6 border-t bg-gray-50 flex flex-col sm:flex-row-reverse gap-3">
-        <button id="save-modal" class="w-full sm:w-auto px-8 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition">Simpan</button>
-        <button id="cancel-modal" class="w-full sm:w-auto px-8 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition">Batal</button>
     </div>
 </div>
-</div>
+
 
 
 
@@ -79,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('weight-wrapper').classList.toggle('hidden', action !== 'assessment');
 
         document.getElementById('modal-title').textContent = editId 
-            ? `Edit ${action.charAt(0).toUpperCase() + action.slice(1)}`
-            : `Tambah ${action === 'unit' ? 'Unit' : action.charAt(0).toUpperCase() + action.slice(1)}`;
+            ? `Update ${action.charAt(0).toUpperCase() + action.slice(1)}`
+            : `Add ${action === 'unit' ? 'Unit' : action.charAt(0).toUpperCase() + action.slice(1)}`;
 
         if (action === 'material' && data.description) {
             setTimeout(() => {
