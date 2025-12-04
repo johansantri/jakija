@@ -16518,3 +16518,30 @@ AttributeError: 'NoneType' object has no attribute 'instructor'
 [WARNING] 2025-12-04 11:59:37,901 [django.request] Not Found: /favicon.ico
 [WARNING] 2025-12-04 11:59:54,093 [django.request] Not Found: /favicon.ico
 [WARNING] 2025-12-04 11:59:56,109 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:51:07,253 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:53:34,246 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:53:37,079 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:53:39,100 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:53:43,236 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:54:28,250 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:54:30,671 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:54:33,204 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:54:38,100 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:54:51,856 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:56:28,006 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:56:29,866 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:56:47,842 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 12:58:56,777 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 13:01:42,076 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 13:01:53,919 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 13:01:55,764 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 13:03:10,474 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 13:03:19,582 [django.request] Not Found: /favicon.ico
+[INFO] 2025-12-04 13:04:09,490 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-12-04 13:04:10,700 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-04 13:04:10,710 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-04 13:04:14,773 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 13:04:45,636 [django.request] Not Found: /favicon.ico
+[INFO] 2025-12-04 13:06:19,467 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-12-04 13:06:20,573 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-04 13:06:20,584 [django.utils.autoreload] Watching for file changes with StatReloader

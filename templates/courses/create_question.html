@@ -34,6 +34,11 @@
                 {{ form.id }}
                 {{ form.is_correct }}
                 {{ form.DELETE.as_hidden }}
+            <style>
+                input[name$="-DELETE"] {
+                    display: none;
+                }
+            </style>
 
                 <div class="flex items-start gap-4">
 
@@ -98,7 +103,7 @@
         </div>
 
         {{ question_form.media }}
-        {{ choice_formset.media }}
+        
 
         <!-- Submit -->
         <div class="mt-6 flex gap-3">
