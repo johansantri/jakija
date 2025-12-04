@@ -17865,3 +17865,55 @@ django.core.exceptions.FieldError: Cannot resolve keyword 'course_team' into fie
 [DEBUG] 2025-12-04 15:55:37,878 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
 [DEBUG] 2025-12-04 15:55:42,953 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
 [DEBUG] 2025-12-04 15:55:42,955 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 15:56:15,922 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:56:18,272 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:56:18,296 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:57:16,046 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:57:18,462 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:57:18,485 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-04 15:57:24,524 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 15:57:24,527 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 15:57:40,476 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 15:57:40,480 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 15:57:41,210 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 15:57:41,213 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 15:57:41,548 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 15:57:41,549 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 15:57:41,718 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 15:57:41,720 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 15:57:41,941 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 15:57:41,943 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 15:57:42,110 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 15:57:42,112 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 15:57:48,598 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 15:57:48,599 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 15:57:49,527 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 15:57:49,531 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 15:57:49,736 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 15:57:49,737 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 15:58:04,409 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 15:58:04,413 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 15:58:16,088 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:58:18,480 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:58:18,481 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:59:16,227 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:59:18,440 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 15:59:18,443 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:00:16,325 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:00:18,561 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:00:18,563 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-04 16:00:42,171 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:00:42,173 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 16:00:51,388 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:00:51,390 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 16:01:16,428 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:01:18,525 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:01:18,528 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:01:25,239 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-04 16:01:25,253 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-04 16:01:25,260 [learner.views] Created CourseSessionLog for user 5, course 2, material 14
+[DEBUG] 2025-12-04 16:01:25,277 [learner.views] Updated LastAccessCourse for user 5, course 2, material 14
+[INFO] 2025-12-04 16:01:25,286 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, material 14
+[DEBUG] 2025-12-04 16:01:25,330 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-04 16:01:25,330 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-04 16:02:16,471 [django.request] Not Found: /partner/ping-session/
