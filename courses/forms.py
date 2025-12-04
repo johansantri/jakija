@@ -130,7 +130,6 @@ class CourseRatingForm(forms.ModelForm):
         }
 
 class SosPostForm(forms.ModelForm):
-    #captcha = CaptchaField()
     
     class Meta:
         model = SosPost
@@ -139,7 +138,11 @@ class SosPostForm(forms.ModelForm):
             'content': forms.Textarea(attrs={
                 'rows': 2,
                 'maxlength': 150,
-                'class': 'form-control',
+                'class': (
+                    'w-full px-4 py-3 text-gray-900 placeholder-gray-400 '
+                    'border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 '
+                    'focus:outline-none text-base resize-none'
+                ),
                 'placeholder': 'Apa yang ada di pikiranmu?',
                 'hx-target': '#post-list',
                 'hx-swap': 'prepend'
@@ -151,6 +154,7 @@ class SosPostForm(forms.ModelForm):
         if len(content) > 150:
             raise forms.ValidationError("Maksimum 150 karakter!")
         return content
+
 
 class MicroCredentialForm(forms.ModelForm):
     description = forms.CharField(widget=CKEditor5Widget(config_name="extends"))

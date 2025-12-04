@@ -3,72 +3,77 @@
 
 {% block content %}
 
-  <div class="row">
+<section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0 flex flex-col md:flex-row gap-6">
     <!-- Konten Utama: 8 kolom di tengah -->
-    <div class="col-12 col-md-8">
+    <div class="w-full md:w-2/3">
      
         <div id="messages" class="alert-messages" hx-swap-oob="true"></div>
 
         <!-- Form Posting -->
-        <div class="card tweet-card tweet-card-post mb-3">
-          <div class="card-body">
-            <form hx-post="{% url 'courses:create_post' %}" hx-target="#new-posts" hx-swap="prepend">
+        <div class="bg-white border border-gray-200 rounded-xl shadow p-4 mb-3">
+          <form hx-post="{% url 'courses:create_post' %}" hx-target="#new-posts" hx-swap="prepend">
               {% csrf_token %}
-              <textarea name="content" id="id_content" class="form-control" rows="3" placeholder="What do you think?"></textarea>
-              <div id="charCount" class="text-end mt-1">0/150</div>
+              <textarea 
+                name="content" 
+                id="id_content" 
+                rows="2" 
+                placeholder="What do you think?"
+                class="w-full px-4 py-3 text-gray-900 placeholder-gray-400 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none text-base resize-none">
+              </textarea>
+
+              <div id="charCount" class="text-right mt-1 text-sm text-gray-500">0/150</div>
               {{ form.captcha }}
-              <button type="submit" class="btn btn-primary mt-3">Post</button>
-            </form>
-          </div>
+              <button type="submit" class="mt-3 w-full sm:w-auto px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition">Post</button>
+          </form>
         </div>
 
         <!-- Daftar Postingan -->
-        <div id="post-list">
+        <div id="post-list" class="space-y-4">
           <div id="new-posts"></div>
           {% for post in posts %}
             {% if not post.parent %}
               {% include 'home/post_item.html' with post=post %}
             {% endif %}
           {% endfor %}
-          <div id="loading" class="text-center my-2" style="display: none;">Loading...</div>
-          <div id="no-more" class="text-center text-muted my-2" style="display: none;">No more posts to load.</div>
+          <div id="loading" class="text-center my-2 text-gray-500 hidden">Loading...</div>
+          <div id="no-more" class="text-center text-gray-400 my-2 hidden">No more posts to load.</div>
         </div>
       
     </div>
 
     <!-- Sidebar: 4 kolom di kanan -->
-    <div class="col-12 col-md-4">
-      <div class="sidebar-right">
-        <h5>Searching</h5>
+    <div class="w-full md:w-1/3 space-y-6">
+      <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+        <h5 class="text-lg font-semibold mb-2">Searching</h5>
         <input type="text" 
-               class="form-control mb-3" 
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none text-sm mb-3" 
                placeholder="Search Post..." 
                hx-get="{% url 'courses:search_posts' %}" 
                hx-target="#post-list" 
                hx-swap="innerHTML" 
                hx-trigger="keyup delay:500ms" 
                name="q">
-        
-        <h5>Trend</h5>
-        <ul class="list-group mb-3">
+
+        <h5 class="text-lg font-semibold mb-2">Trend</h5>
+        <ul class="space-y-2">
           {% for trend in trending %}
-            <li class="list-group-item">
+            <li class="bg-gray-50 px-3 py-2 rounded hover:bg-gray-100">
               <a href="#"
                  hx-get="{% url 'courses:posts_by_hashtag' hashtag=trend.name %}"
                  hx-target="#post-list"
                  hx-swap="innerHTML"
-                 onclick="setCurrentHashtag('{{ trend.name }}')">
+                 onclick="setCurrentHashtag('{{ trend.name }}')"
+                 class="text-blue-500 hover:underline">
                 #{{ trend.name }} ({{ trend.count }})
               </a>
             </li>
           {% empty %}
-            <li class="list-group-item">No trends available yet</li>
+            <li class="text-gray-400">No trends available yet</li>
           {% endfor %}
         </ul>
       </div>
     </div>
-  </div>
-
+</section>
 
 <!-- Script -->
 <script>
@@ -115,7 +120,7 @@
 
     if (mainContent.scrollTop + mainContent.clientHeight >= mainContent.scrollHeight - 100) {
       loading = true;
-      loadingDiv.style.display = 'block';
+      loadingDiv.classList.remove('hidden');
 
       let url = `{% url 'courses:load_more_posts' %}?offset=${offset}`;
       if (currentHashtag) {
@@ -127,9 +132,9 @@
       fetch(url)
         .then(response => response.text())
         .then(html => {
-          loadingDiv.style.display = 'none';
+          loadingDiv.classList.add('hidden');
           if (html.includes('No more posts')) {
-            noMoreDiv.style.display = 'block';
+            noMoreDiv.classList.remove('hidden');
           } else {
             postList.insertAdjacentHTML('beforeend', html);
             offset += 10;
@@ -138,10 +143,11 @@
         })
         .catch(error => {
           console.error('Error loading more posts:', error);
-          loadingDiv.style.display = 'none';
+          loadingDiv.classList.add('hidden');
           loading = false;
         });
     }
   });
 </script>
+
 {% endblock content %}
