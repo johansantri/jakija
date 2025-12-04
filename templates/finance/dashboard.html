@@ -3,147 +3,121 @@
 {% load humanize %}
 
 {% block content %}
-<div class=" py-5">
 
-  <!-- Total Cards -->
-    <div class="row g-3 mb-4">
-    <div class="col-12 col-sm-6 col-md-3">
-        <div class="card text-white bg-info shadow-sm">
-        <div class="card-body">
-            <h6 class="card-title">Total Completed Transactions</h6>
-            <p class="fs-3 fw-bold mb-0">{{ total_completed_transactions }}</p>
+<div class="py-5 space-y-8">
+
+    <!-- ====== SUMMARY CARDS ====== -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="bg-red-500 text-white rounded-xl shadow p-5">
+            <h6 class="text-sm font-medium">Total Completed Transactions</h6>
+            <p class="text-3xl font-bold mt-2">{{ total_completed_transactions }}</p>
         </div>
+
+        <div class="bg-blue-600 text-white rounded-xl shadow p-5">
+            <h6 class="text-sm font-medium">Total Revenue</h6>
+            <p class="text-3xl font-bold mt-2">Rp {{ total_revenue|intcomma }}</p>
         </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-3">
-        <div class="card text-white bg-primary shadow-sm">
-        <div class="card-body">
-            <h6 class="card-title">Total Revenue</h6>
-            <p class="fs-3 fw-bold mb-0">Rp {{ total_revenue|intcomma }}</p>
+
+        <div class="bg-green-600 text-white rounded-xl shadow p-5">
+            <h6 class="text-sm font-medium">Total Partner Revenue</h6>
+            <p class="text-3xl font-bold mt-2">Rp {{ total_partner_revenue|intcomma }}</p>
         </div>
+
+        <div class="bg-yellow-400 text-white rounded-xl shadow p-5">
+            <h6 class="text-sm font-medium">Total ICE Revenue</h6>
+            <p class="text-3xl font-bold mt-2">Rp {{ total_ice_revenue|intcomma }}</p>
         </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-3">
-        <div class="card text-white bg-success shadow-sm">
-        <div class="card-body">
-            <h6 class="card-title">Total Partner Revenue</h6>
-            <p class="fs-3 fw-bold mb-0">Rp {{ total_partner_revenue|intcomma }}</p>
-        </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-3">
-        <div class="card text-white bg-warning shadow-sm">
-        <div class="card-body">
-            <h6 class="card-title">Total ICE Revenue</h6>
-            <p class="fs-3 fw-bold mb-0">Rp {{ total_ice_revenue|intcomma }}</p>
-        </div>
-        </div>
-    </div>
     </div>
 
-    <!-- Revenue Chart -->
-    <div class="row mb-4">
-    <div class="col-12">
-        <div class="card shadow-sm">
-        <div class="card-body">
-            <h6 class="card-title">Revenue Trend (Last 30 Days)</h6>
-            <canvas id="revenueChart" height="100"></canvas>
-        </div>
-        </div>
-    </div>
+    <!-- ====== REVENUE CHART ====== -->
+    <div class="bg-white rounded-xl shadow p-6">
+        <h6 class="text-lg font-semibold mb-4">Revenue Trend (Last 30 Days)</h6>
+        <canvas id="revenueChart" height="100"></canvas>
     </div>
 
-  <!-- Recent Transactions -->
-  <div class="row mb-4">
-    <div class="col-md-12">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h6 class="card-title">Recent Transactions</h6>
-          <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-              <thead class="thead-light">
-                <tr>
-                  <th>No</th>
-                  <th>Transaction ID</th>
-                  <th>User</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Payment Model</th>
-                  <th>Payment Method</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for tx in recent_transactions %}
-                <tr>
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{ tx.transaction_id|default:tx.linked_transaction.transaction_id|default:"-" }}</td>
-                  <td>{{ tx.user.get_full_name|default:tx.user.username }}</td>
-                  <td>Rp {{ tx.amount|intcomma }}</td>
-                  <td>
-                    <span class="badge 
-                      {% if tx.status == 'completed' %} bg-success
-                      {% elif tx.status == 'pending' %} bg-warning text-dark
-                      {% else %} bg-danger {% endif %}">
-                      {{ tx.get_status_display }}
-                    </span>
-                  </td>
-                  <td>{{ tx.get_payment_model_display }}</td>
-                  <td>{{ tx.payment_method|default:tx.linked_transaction.payment_method|default:"-" }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                  <td colspan="7" class="text-center">No recent transactions</td>
-                </tr>
-                {% endfor %}
-              </tbody>
+    <!-- ====== RECENT TRANSACTIONS ====== -->
+    <div class="bg-white rounded-xl shadow p-6">
+        <h6 class="text-lg font-semibold mb-4">Recent Transactions</h6>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden text-sm">
+                <thead class="bg-gray-100 text-gray-700">
+                    <tr>
+                        <th class="px-4 py-3 border">No</th>
+                        <th class="px-4 py-3 border">Transaction ID</th>
+                        <th class="px-4 py-3 border">User</th>
+                        <th class="px-4 py-3 border">Amount</th>
+                        <th class="px-4 py-3 border">Status</th>
+                        <th class="px-4 py-3 border">Payment Model</th>
+                        <th class="px-4 py-3 border">Payment Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tx in recent_transactions %}
+                    <tr class="odd:bg-white even:bg-gray-50">
+                        <td class="px-4 py-3 border">{{ forloop.counter }}</td>
+                        <td class="px-4 py-3 border">{{ tx.transaction_id|default:tx.linked_transaction.transaction_id|default:"-" }}</td>
+                        <td class="px-4 py-3 border">{{ tx.user.get_full_name|default:tx.user.username }}</td>
+                        <td class="px-4 py-3 border">Rp {{ tx.amount|intcomma }}</td>
+                        <td class="px-4 py-3 border">
+                            <span class="px-2 py-1 rounded text-xs font-medium 
+                                {% if tx.status == 'completed' %} bg-green-100 text-green-700 
+                                {% elif tx.status == 'pending' %} bg-yellow-100 text-yellow-700 
+                                {% else %} bg-red-100 text-red-700 {% endif %}">
+                                {{ tx.get_status_display }}
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 border">{{ tx.get_payment_model_display }}</td>
+                        <td class="px-4 py-3 border">{{ tx.payment_method|default:tx.linked_transaction.payment_method|default:"-" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4 border text-gray-500">No recent transactions</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Cart Items -->
-  <div class="row mb-4">
-    <div class="col-md-12">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h6 class="card-title">Cart Items</h6>
-          <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-              <thead class="thead-light">
-                <tr>
-                  <th>No</th>
-                  <th>User</th>
-                  <th>Course</th>
-                  <th>Added At</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for item in cart_items %}
-                <tr>
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{ item.user.get_full_name|default:item.user.username }}</td>
-                  <td>{{ item.course.course_name }}</td>
-                  <td>{{ item.added_at|date:"d M Y H:i" }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                  <td colspan="4" class="text-center">No cart items</td>
-                </tr>
-                {% endfor %}
-              </tbody>
+    <!-- ====== CART ITEMS ====== -->
+    <div class="bg-white rounded-xl shadow p-6">
+        <h6 class="text-lg font-semibold mb-4">Cart Items</h6>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden text-sm">
+                <thead class="bg-gray-100 text-gray-700">
+                    <tr>
+                        <th class="px-4 py-3 border">No</th>
+                        <th class="px-4 py-3 border">User</th>
+                        <th class="px-4 py-3 border">Course</th>
+                        <th class="px-4 py-3 border">Added At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr class="odd:bg-white even:bg-gray-50">
+                        <td class="px-4 py-3 border">{{ forloop.counter }}</td>
+                        <td class="px-4 py-3 border">{{ item.user.get_full_name|default:item.user.username }}</td>
+                        <td class="px-4 py-3 border">{{ item.course.course_name }}</td>
+                        <td class="px-4 py-3 border">{{ item.added_at|date:"d M Y H:i" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-4 border text-gray-500">No cart items</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 
 </div>
 
 <!-- Chart.js -->
 <script src="{% static 'js/chart.umd.min.js' %}"></script>
+
 <script>
   const ctx = document.getElementById('revenueChart').getContext('2d');
   const revenueChart = new Chart(ctx, {
@@ -156,19 +130,16 @@
               backgroundColor: 'rgba(54, 162, 235, 0.2)',
               borderColor: 'rgba(54, 162, 235, 1)',
               borderWidth: 2,
+              tension: 0.3,
               fill: true,
-              tension: 0.3
           }]
       },
       options: {
           responsive: true,
-          plugins: {
-              legend: { display: true },
-          },
-          scales: {
-              y: { beginAtZero: true }
-          }
+          plugins: { legend: { display: true }},
+          scales: { y: { beginAtZero: true }}
       }
   });
 </script>
+
 {% endblock %}

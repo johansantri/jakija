@@ -18071,3 +18071,74 @@ django.core.exceptions.FieldError: Cannot resolve keyword 'course_team' into fie
 [WARNING] 2025-12-04 16:19:19,169 [django.request] Not Found: /partner/ping-session/
 [DEBUG] 2025-12-04 16:19:32,072 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
 [DEBUG] 2025-12-04 16:19:32,075 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 16:19:57,298 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-12-04 16:19:57,304 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-04 08:19:57.298863+00:00
+[INFO] 2025-12-04 16:19:57,304 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/logout/"}.
+[DEBUG] 2025-12-04 16:20:05,804 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-12-04 16:20:05,805 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-12-04 16:20:05,805 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-12-04 08:20:05.804919+00:00
+[INFO] 2025-12-04 16:20:06,400 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/login/"}.
+[INFO] 2025-12-04 16:20:06,401 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-04 08:20:05.804919+00:00
+[DEBUG] 2025-12-04 16:20:06,406 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-12-04 16:20:06,665 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-12-04 16:20:18,284 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:20:19,180 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:20:19,244 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:20:42,693 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:21:18,327 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:21:19,258 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:21:19,320 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:22:18,429 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:22:19,326 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:22:19,406 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-04 16:23:10,162 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-12-04 16:23:10,165 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-04 08:23:10.162119+00:00
+[INFO] 2025-12-04 16:23:10,166 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/logout/"}.
+[DEBUG] 2025-12-04 16:23:17,125 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-12-04 16:23:17,125 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-12-04 16:23:17,126 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-12-04 08:23:17.125166+00:00
+[INFO] 2025-12-04 16:23:17,744 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/login/"}.
+[INFO] 2025-12-04 16:23:17,745 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-04 08:23:17.125166+00:00
+[DEBUG] 2025-12-04 16:23:17,748 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-12-04 16:23:18,009 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-12-04 16:23:18,513 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:23:19,415 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:23:19,481 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:24:18,605 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:24:19,484 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:24:19,571 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-04 16:25:06,264 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:25:06,266 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 16:25:18,588 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:25:19,594 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:25:19,625 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:26:02,936 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:26:18,788 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:26:19,666 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:26:19,792 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:26:45,844 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:26:46,617 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:26:46,809 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:26:47,053 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:27:10,084 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:27:16,833 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:27:18,839 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:27:18,889 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:27:19,770 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:27:19,835 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:27:21,658 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:27:21,695 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:27:24,686 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:27:26,559 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:27:26,589 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:27:27,588 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:28:18,902 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:28:19,821 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:28:19,902 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:29:13,194 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:29:19,018 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:29:19,915 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:29:19,983 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:29:28,748 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:29:30,246 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:29:31,419 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
