@@ -4,150 +4,152 @@
 {% block content %}
 
 <section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0 flex flex-col md:flex-row gap-6">
-    <!-- Konten Utama: 8 kolom di tengah -->
+    <!-- Konten Utama: 2/3 lebar -->
     <div class="w-full md:w-2/3">
      
         <div id="messages" class="alert-messages" hx-swap-oob="true"></div>
 
         <!-- Form Posting -->
         <div class="bg-white border border-gray-200 rounded-xl shadow p-4 mb-3">
-          <form hx-post="{% url 'courses:create_post' %}" hx-target="#new-posts" hx-swap="prepend">
-              {% csrf_token %}
+            <form hx-post="{% url 'courses:create_post' %}" hx-target="#new-posts" hx-swap="prepend">
+                {% csrf_token %}
               <textarea 
                 name="content" 
                 id="id_content" 
                 rows="2" 
                 placeholder="What do you think?"
-                class="w-full px-4 py-3 text-gray-900 placeholder-gray-400 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none text-base resize-none">
-              </textarea>
+                class="w-full px-4 py-3 text-gray-900 placeholder-gray-400 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none text-base resize-none"></textarea>
 
-              <div id="charCount" class="text-right mt-1 text-sm text-gray-500">0/150</div>
-              {{ form.captcha }}
-              <button type="submit" class="mt-3 w-full sm:w-auto px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition">Post</button>
-          </form>
+
+                <div id="charCount" class="text-right mt-1 text-sm text-gray-500">0/150</div>
+                {{ form.captcha }}
+                <button type="submit" class="mt-3 w-full sm:w-auto px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition">Post</button>
+            </form>
         </div>
 
         <!-- Daftar Postingan -->
         <div id="post-list" class="space-y-4">
-          <div id="new-posts"></div>
-          {% for post in posts %}
-            {% if not post.parent %}
-              {% include 'home/post_item.html' with post=post %}
-            {% endif %}
-          {% endfor %}
-          <div id="loading" class="text-center my-2 text-gray-500 hidden">Loading...</div>
-          <div id="no-more" class="text-center text-gray-400 my-2 hidden">No more posts to load.</div>
+            <div id="new-posts"></div>
+            {% for post in posts %}
+                {% if not post.parent %}
+                    {% include 'home/post_item.html' with post=post %}
+                {% endif %}
+            {% endfor %}
+            <div id="loading" class="text-center my-2 text-gray-500 hidden">Loading...</div>
+            <div id="no-more" class="text-center text-gray-400 my-2 hidden">No more posts to load.</div>
         </div>
       
     </div>
 
-    <!-- Sidebar: 4 kolom di kanan -->
+    <!-- Sidebar: 1/3 lebar -->
     <div class="w-full md:w-1/3 space-y-6">
-      <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
-        <h5 class="text-lg font-semibold mb-2">Searching</h5>
-        <input type="text" 
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none text-sm mb-3" 
-               placeholder="Search Post..." 
-               hx-get="{% url 'courses:search_posts' %}" 
-               hx-target="#post-list" 
-               hx-swap="innerHTML" 
-               hx-trigger="keyup delay:500ms" 
-               name="q">
+        <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+            <h5 class="text-lg font-semibold mb-2">Searching</h5>
+            <input type="text" 
+                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none text-sm mb-3" 
+                   placeholder="Search Post..." 
+                   hx-get="{% url 'courses:search_posts' %}" 
+                   hx-target="#post-list" 
+                   hx-swap="innerHTML" 
+                   hx-trigger="keyup delay:500ms" 
+                   name="q">
 
-        <h5 class="text-lg font-semibold mb-2">Trend</h5>
-        <ul class="space-y-2">
-          {% for trend in trending %}
-            <li class="bg-gray-50 px-3 py-2 rounded hover:bg-gray-100">
-              <a href="#"
-                 hx-get="{% url 'courses:posts_by_hashtag' hashtag=trend.name %}"
-                 hx-target="#post-list"
-                 hx-swap="innerHTML"
-                 onclick="setCurrentHashtag('{{ trend.name }}')"
-                 class="text-blue-500 hover:underline">
-                #{{ trend.name }} ({{ trend.count }})
-              </a>
-            </li>
-          {% empty %}
-            <li class="text-gray-400">No trends available yet</li>
-          {% endfor %}
-        </ul>
-      </div>
+            <h5 class="text-lg font-semibold mb-2">Trend</h5>
+            <ul class="space-y-2">
+                {% for trend in trending %}
+                    <li class="bg-gray-50 px-3 py-2 rounded hover:bg-gray-100">
+                        <a href="#"
+                           hx-get="{% url 'courses:posts_by_hashtag' hashtag=trend.name %}"
+                           hx-target="#post-list"
+                           hx-swap="innerHTML"
+                           onclick="setCurrentHashtag('{{ trend.name }}')"
+                           class="text-blue-500 hover:underline">
+                            #{{ trend.name }} ({{ trend.count }})
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="text-gray-400">No trends available yet</li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </section>
 
 <!-- Script -->
 <script>
-  let mainTextarea = document.querySelector('#id_content');
-  mainTextarea.addEventListener('input', function () {
-    let chars = this.value.length;
-    document.getElementById('charCount').innerText = `${chars}/150`;
-  });
-
-  document.body.addEventListener('clearForm', function () {
-    mainTextarea.value = '';
-    document.getElementById('charCount').innerText = '0/150';
-    document.querySelectorAll('textarea[name="content"]').forEach(textarea => {
-      textarea.value = '';
+    // Update char count
+    const mainTextarea = document.querySelector('#id_content');
+    mainTextarea.addEventListener('input', function () {
+        let chars = this.value.length;
+        document.getElementById('charCount').innerText = `${chars}/150`;
     });
-  });
 
-  let offset = 10;
-  let loading = false;
-  let currentHashtag = '';
-  let currentQuery = '';
-  const mainContent = document.querySelector('.main-content');
-
-  function setCurrentHashtag(hashtag) {
-    currentHashtag = hashtag;
-    currentQuery = '';
-    offset = 10;
-    document.getElementById('no-more').style.display = 'none';
-  }
-
-  document.querySelector('input[name="q"]').addEventListener('input', function () {
-    currentQuery = this.value.trim();
-    currentHashtag = '';
-    offset = 10;
-    document.getElementById('no-more').style.display = 'none';
-  });
-
-  mainContent.addEventListener('scroll', function () {
-    if (loading) return;
-
-    const postList = document.getElementById('post-list');
-    const loadingDiv = document.getElementById('loading');
-    const noMoreDiv = document.getElementById('no-more');
-
-    if (mainContent.scrollTop + mainContent.clientHeight >= mainContent.scrollHeight - 100) {
-      loading = true;
-      loadingDiv.classList.remove('hidden');
-
-      let url = `{% url 'courses:load_more_posts' %}?offset=${offset}`;
-      if (currentHashtag) {
-        url += `&hashtag=${encodeURIComponent(currentHashtag)}`;
-      } else if (currentQuery) {
-        url += `&q=${encodeURIComponent(currentQuery)}`;
-      }
-
-      fetch(url)
-        .then(response => response.text())
-        .then(html => {
-          loadingDiv.classList.add('hidden');
-          if (html.includes('No more posts')) {
-            noMoreDiv.classList.remove('hidden');
-          } else {
-            postList.insertAdjacentHTML('beforeend', html);
-            offset += 10;
-            loading = false;
-          }
-        })
-        .catch(error => {
-          console.error('Error loading more posts:', error);
-          loadingDiv.classList.add('hidden');
-          loading = false;
+    document.body.addEventListener('clearForm', function () {
+        mainTextarea.value = '';
+        document.getElementById('charCount').innerText = '0/150';
+        document.querySelectorAll('textarea[name="content"]').forEach(textarea => {
+            textarea.value = '';
         });
+    });
+
+    // Infinite scroll
+    let offset = 10;
+    let loading = false;
+    let currentHashtag = '';
+    let currentQuery = '';
+
+    function setCurrentHashtag(hashtag) {
+        currentHashtag = hashtag;
+        currentQuery = '';
+        offset = 10;
+        document.getElementById('no-more').classList.add('hidden');
     }
-  });
+
+    const searchInput = document.querySelector('input[name="q"]');
+    searchInput.addEventListener('input', function () {
+        currentQuery = this.value.trim();
+        currentHashtag = '';
+        offset = 10;
+        document.getElementById('no-more').classList.add('hidden');
+    });
+
+    window.addEventListener('scroll', function () {
+        if (loading) return;
+
+        const postList = document.getElementById('post-list');
+        const loadingDiv = document.getElementById('loading');
+        const noMoreDiv = document.getElementById('no-more');
+
+        if ((window.scrollY + window.innerHeight) >= document.body.scrollHeight - 100) {
+            loading = true;
+            loadingDiv.classList.remove('hidden');
+
+            let url = `{% url 'courses:load_more_posts' %}?offset=${offset}`;
+            if (currentHashtag) {
+                url += `&hashtag=${encodeURIComponent(currentHashtag)}`;
+            } else if (currentQuery) {
+                url += `&q=${encodeURIComponent(currentQuery)}`;
+            }
+
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    loadingDiv.classList.add('hidden');
+                    if (html.includes('No more posts')) {
+                        noMoreDiv.classList.remove('hidden');
+                    } else {
+                        postList.insertAdjacentHTML('beforeend', html);
+                        offset += 10;
+                        loading = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading more posts:', error);
+                    loadingDiv.classList.add('hidden');
+                    loading = false;
+                });
+        }
+    });
 </script>
 
 {% endblock content %}

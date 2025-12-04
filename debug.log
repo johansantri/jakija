@@ -17917,3 +17917,84 @@ django.core.exceptions.FieldError: Cannot resolve keyword 'course_team' into fie
 [DEBUG] 2025-12-04 16:01:25,330 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
 [INFO] 2025-12-04 16:01:25,330 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
 [WARNING] 2025-12-04 16:02:16,471 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:02:18,554 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:02:18,560 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:02:40,139 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-12-04 16:02:42,465 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:02:42,466 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 16:02:42,625 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 16:02:43,470 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 16:02:45,036 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 16:02:45,922 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 16:02:47,259 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 16:03:00,345 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 16:03:16,610 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:03:18,519 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:03:18,537 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:04:16,728 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:04:18,589 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:04:18,590 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:05:01,400 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 16:05:07,728 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 16:05:08,745 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 16:05:09,472 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 16:05:09,911 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-12-04 16:05:10,437 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:05:10,439 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 16:05:10,647 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 16:05:11,231 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-12-04 16:05:12,273 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:05:12,274 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 16:05:12,425 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-04 16:05:16,763 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:05:18,517 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:05:18,530 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:06:17,000 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:06:18,512 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:06:18,530 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-04 16:07:02,012 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:07:02,014 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 16:07:17,108 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:07:18,564 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:07:18,582 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:08:17,179 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:08:18,557 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:08:18,558 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-04 16:08:56,425 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:08:56,428 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 16:09:17,248 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:09:18,583 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:09:18,587 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-04 16:09:31,984 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:09:31,986 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 16:09:36,236 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:09:36,237 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 16:09:44,083 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:10:17,320 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:10:18,514 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:10:18,535 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-04 16:10:49,319 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:10:49,321 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 16:10:49,405 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[DEBUG] 2025-12-04 16:10:53,488 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:10:53,490 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 16:11:06,733 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:11:06,735 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[DEBUG] 2025-12-04 16:11:12,859 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:11:12,862 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 16:11:17,418 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:11:18,666 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:11:18,683 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-04 16:12:00,017 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-12-04 16:12:01,122 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-04 16:12:01,134 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-04 16:12:06,858 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:12:17,533 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:12:18,535 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:12:18,556 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:12:51,642 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:12:52,407 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:13:17,611 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:13:18,542 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:13:18,576 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:13:42,941 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json

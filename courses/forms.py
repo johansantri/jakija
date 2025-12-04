@@ -143,7 +143,7 @@ class SosPostForm(forms.ModelForm):
                     'border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 '
                     'focus:outline-none text-base resize-none'
                 ),
-                'placeholder': 'Apa yang ada di pikiranmu?',
+                
                 'hx-target': '#post-list',
                 'hx-swap': 'prepend'
             }),

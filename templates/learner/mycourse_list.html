@@ -1,190 +1,181 @@
 {% extends 'home/tes.html' %}
 {% load static %}
 {% load extra_custom_filters %}
+
 {% block content %}
-<section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0 flex flex-col md:flex-row gap-6">
-<!-- Header -->
-<div class="text-center mb-8">
-    <h1 class="text-3xl font-bold text-gray-800">My Courses</h1>
-    <p class="text-gray-500 mt-2">Track your learning progress and achievements</p>
-</div>
+<div class="max-w-7xl mx-auto mt-8 px-4 sm:px-6 lg:px-8 space-y-10">
 
-<!-- Search Form -->
-<div class="flex justify-center mb-8">
-    <div class="w-full max-w-md">
-        <form method="get" action="{% url 'authentication:mycourse' %}">
-            <div class="flex">
-                <input type="text" name="search" value="{{ search_query }}" placeholder="Search for courses..." 
-                    class="flex-1 border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-                <button type="submit" 
-                    class="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 flex items-center gap-1">
-                    <i class="fas fa-search"></i> Search
-                </button>
+    <!-- ===== BLOK ATAS: Header + Search + Stats ===== -->
+    <div class="bg-white shadow rounded-xl p-6 space-y-6">
+        <!-- Header -->
+        <div class="text-center">
+            <h1 class="text-4xl font-extrabold text-gray-800">My Courses</h1>
+            <p class="text-gray-500 mt-2">Track your learning progress and achievements</p>
+        </div>
+
+        <!-- Search Form -->
+        <div class="flex justify-center">
+            <div class="w-full max-w-md">
+                <form method="get" action="{% url 'authentication:mycourse' %}" class="flex shadow-sm rounded-lg overflow-hidden">
+                    <input type="text" name="search" value="{{ search_query }}" placeholder="Search for courses..." 
+                        class="flex-1 px-4 py-2 text-gray-900 placeholder-gray-400 border-none focus:ring-2 focus:ring-blue-500 focus:outline-none rounded-l-lg" />
+                    <button type="submit" 
+                        class="bg-blue-600 text-white px-4 py-2 flex items-center gap-2 hover:bg-blue-700 transition-colors rounded-r-lg">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
 
-<!-- Course Stats -->
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-    <div class="bg-blue-50 text-blue-600 rounded-lg shadow text-center p-5">
-        <h5 class="text-lg font-semibold">Total Enrollments</h5>
-        <p class="text-2xl font-bold">{{ total_enrollments }}</p>
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div class="bg-blue-50 text-blue-700 shadow rounded-xl p-6 flex flex-col items-center justify-center">
+                <h5 class="text-lg font-semibold">Total Enrollments</h5>
+                <p class="text-3xl font-bold mt-2">{{ total_enrollments }}</p>
+            </div>
+            <div class="bg-green-50 text-green-700 shadow rounded-xl p-6 flex flex-col items-center justify-center">
+                <h5 class="text-lg font-semibold">Active Courses</h5>
+                <p class="text-3xl font-bold mt-2">{{ active_courses.count }}</p>
+            </div>
+            <div class="bg-teal-50 text-teal-700 shadow rounded-xl p-6 flex flex-col items-center justify-center">
+                <h5 class="text-lg font-semibold">Completed Courses</h5>
+                <p class="text-3xl font-bold mt-2">{{ completed_courses.count }}</p>
+            </div>
+        </div>
     </div>
-    <div class="bg-green-50 text-green-600 rounded-lg shadow text-center p-5">
-        <h5 class="text-lg font-semibold">Active Courses</h5>
-        <p class="text-2xl font-bold">{{ active_courses.count }}</p>
-    </div>
-    <div class="bg-teal-50 text-teal-600 rounded-lg shadow text-center p-5">
-        <h5 class="text-lg font-semibold">Completed Courses</h5>
-        <p class="text-2xl font-bold">{{ completed_courses.count }}</p>
-    </div>
-</div>
-</section>
-<section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0 flex flex-col md:flex-row gap-6">
-{% if page_obj %}
-<!-- Courses Table -->
-<div class="bg-white shadow rounded-lg overflow-hidden">
-    <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-100">
-                <tr>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Course Name</th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Enrollment Date</th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Progress</th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Score</th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Certificate</th>
-                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">Action</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-                {% for data in page_obj %}
-                {% with enrollment=data.enrollment %}
-                <tr>
-                    <td class="px-6 py-4">
-                        <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}" 
-                            class="text-blue-600 hover:underline font-medium">
-                            {{ enrollment.course.course_name }}
-                        </a>
-                        &nbsp;&nbsp;
-                        <a href="{% url 'learner:score_summary' username=request.user.username course_id=enrollment.course.id %}" 
-                            class="text-blue-600 hover:underline font-medium">
-                            <i class="bi bi-clipboard-data me-1"></i>Score
-                        </a>
-                    </td>
-                    <td class="px-6 py-4">{{ enrollment.enrolled_at|date:"d M Y" }}</td>
-                    <td class="px-6 py-4">
-                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-1">
-                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ data.progress }}%"></div>
-                        </div>
-                        <small class="text-gray-500">{{ data.progress|floatformat:2 }}%</small>
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ data.overall_percentage|floatformat:2 }}%
-                        <small class="text-gray-500">(Pass: {{ data.passing_threshold|floatformat:2 }}%)</small>
-                    </td>
-                    <td class="px-6 py-4">
-                        {% if data.certificate_issued %}
-                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">Issued</span>
-                        {% elif data.certificate_eligible %}
-                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-semibold">Eligible</span>
-                        {% else %}
-                            <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-semibold">Not Eligible</span>
-                        {% endif %}
-                    </td>
-                    <td class="px-6 py-4 text-right space-x-1">
-                        <div class="inline-flex flex-wrap gap-1">
-                        {% with last_access=last_access_map|get_item:enrollment.course.id %}
-                            {% if data.progress == 100 %}
-                                <span class="bg-green-600 text-white px-2 py-1 rounded text-xs inline-flex items-center">
-                                    <i class="fas fa-check-circle me-1"></i> Completed
-                                </span>
-                            {% elif data.progress > 0 or last_access %}
-                                {% if last_access and last_access.material %}
-                                    <a href="{% url 'learner:load_content' enrollment.user.username enrollment.course.id enrollment.course.slug 'material' last_access.material.id %}" 
-                                        class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-xs inline-flex items-center hover:bg-yellow-500">
-                                        <i class="fas fa-play-circle me-1"></i> Resume
-                                    </a>
-                                {% elif last_access and last_access.assessment %}
-                                    <a href="{% url 'learner:load_content' enrollment.user.username enrollment.course.id enrollment.course.slug 'assessment' last_access.assessment.id %}" 
-                                        class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-xs inline-flex items-center hover:bg-yellow-500">
-                                        <i class="fas fa-play-circle me-1"></i> Resume
-                                    </a>
+
+    <!-- ===== BLOK BAWAH: Courses Table + Pagination ===== -->
+    <div class="bg-white shadow rounded-xl p-6 space-y-6">
+    {% if page_obj %}
+        <!-- Courses Table -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Course Name</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Enrollment Date</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Progress</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Score</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Certificate</th>
+                        <th class="px-6 py-3 text-right text-sm font-semibold text-gray-700">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    {% for data in page_obj %}
+                    {% with enrollment=data.enrollment %}
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}" 
+                                class="text-blue-600 font-medium hover:underline">{{ enrollment.course.course_name }}</a>
+                            <a href="{% url 'learner:score_summary' username=request.user.username course_id=enrollment.course.id %}" 
+                                class="text-gray-500 text-sm ml-2 hover:underline"><i class="bi bi-clipboard-data mr-1"></i>Score</a>
+                        </td>
+                        <td class="px-6 py-4 text-gray-600">{{ enrollment.enrolled_at|date:"d M Y" }}</td>
+                        <td class="px-6 py-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-1 overflow-hidden">
+                                <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: {{ data.progress }}%"></div>
+                            </div>
+                            <small class="text-gray-500">{{ data.progress|floatformat:2 }}%</small>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="text-gray-800 font-medium">{{ data.overall_percentage|floatformat:2 }}%</span>
+                            <small class="text-gray-500">(Pass: {{ data.passing_threshold|floatformat:2 }}%)</small>
+                        </td>
+                        <td class="px-6 py-4">
+                            {% if data.certificate_issued %}
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">Issued</span>
+                            {% elif data.certificate_eligible %}
+                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold">Eligible</span>
+                            {% else %}
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-semibold">Not Eligible</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 text-right space-x-1 flex flex-wrap justify-end">
+                            {% with last_access=last_access_map|get_item:enrollment.course.id %}
+                                {% if data.progress == 100 %}
+                                    <span class="bg-green-600 text-white px-2 py-1 rounded text-xs flex items-center"><i class="fas fa-check-circle mr-1"></i>Completed</span>
+                                {% elif data.progress > 0 or last_access %}
+                                    {% if last_access and last_access.material %}
+                                        <a href="{% url 'learner:load_content' enrollment.user.username enrollment.course.id enrollment.course.slug 'material' last_access.material.id %}" 
+                                            class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-xs flex items-center hover:bg-yellow-500"><i class="fas fa-play-circle mr-1"></i>Resume</a>
+                                    {% elif last_access and last_access.assessment %}
+                                        <a href="{% url 'learner:load_content' enrollment.user.username enrollment.course.id enrollment.course.slug 'assessment' last_access.assessment.id %}" 
+                                            class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-xs flex items-center hover:bg-yellow-500"><i class="fas fa-play-circle mr-1"></i>Resume</a>
+                                    {% else %}
+                                        <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}" 
+                                            class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-xs flex items-center hover:bg-yellow-500"><i class="fas fa-play-circle mr-1"></i>Resume</a>
+                                    {% endif %}
                                 {% else %}
                                     <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}" 
-                                        class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-xs inline-flex items-center hover:bg-yellow-500">
-                                        <i class="fas fa-play-circle me-1"></i> Resume
-                                    </a>
+                                        class="bg-blue-600 text-white px-2 py-1 rounded text-xs flex items-center hover:bg-blue-700"><i class="fas fa-rocket mr-1"></i>Get Started</a>
                                 {% endif %}
-                            {% else %}
-                                <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}" 
-                                    class="bg-blue-600 text-white px-2 py-1 rounded text-xs inline-flex items-center hover:bg-blue-700">
-                                    <i class="fas fa-rocket me-1"></i> Get Started
-                                </a>
-                            {% endif %}
 
-                            {% if data.certificate_eligible and not data.certificate_issued %}
-                                <a href="{% url 'courses:generate_certificate' enrollment.course.id %}" 
-                                    class="bg-green-600 text-white px-2 py-1 rounded text-xs inline-flex items-center hover:bg-green-700">
-                                    <i class="fas fa-download me-1"></i> Claim Certificate
-                                </a>
-                            {% endif %}
-
-                            {% if data.certificate_eligible %}
-                                {% if data.has_reviewed %}
-                                    <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}" 
-                                        class="bg-teal-500 text-white px-2 py-1 rounded text-xs inline-flex items-center hover:bg-teal-600">
-                                        <i class="fas fa-eye me-1"></i> View Review
-                                    </a>
-                                {% else %}
-                                    <a href="{% url 'courses:submit_rating' enrollment.course.id enrollment.course.slug %}" 
-                                        class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-xs inline-flex items-center hover:bg-yellow-500">
-                                        <i class="fas fa-star me-1"></i> Submit Review
-                                    </a>
+                                {% if data.certificate_eligible and not data.certificate_issued %}
+                                    <a href="{% url 'courses:generate_certificate' enrollment.course.id %}" 
+                                        class="bg-green-600 text-white px-2 py-1 rounded text-xs flex items-center hover:bg-green-700"><i class="fas fa-download mr-1"></i>Claim Certificate</a>
                                 {% endif %}
-                            {% endif %}
-                        {% endwith %}
-                        </div>
-                    </td>
-                </tr>
-                {% endwith %}
-                {% endfor %}
-            </tbody>
-        </table>
+
+                                {% if data.certificate_eligible %}
+                                    {% if data.has_reviewed %}
+                                        <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}" 
+                                            class="bg-teal-500 text-white px-2 py-1 rounded text-xs flex items-center hover:bg-teal-600"><i class="fas fa-eye mr-1"></i>View Review</a>
+                                    {% else %}
+                                        <a href="{% url 'courses:submit_rating' enrollment.course.id enrollment.course.slug %}" 
+                                            class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-xs flex items-center hover:bg-yellow-500"><i class="fas fa-star mr-1"></i>Submit Review</a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endwith %}
+                        </td>
+                    </tr>
+                    {% endwith %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <!-- Pagination Responsive -->
+        <div class="mt-6 flex justify-center">
+            <div class="overflow-x-auto w-full">
+                <nav class="inline-flex flex-wrap gap-1">
+                    {% if page_obj.has_previous %}
+                        <a href="?enrollments_page=1&search={{ search_query }}" class="px-3 py-1 bg-white border text-gray-700 rounded hover:bg-gray-100 transition">First</a>
+                        <a href="?enrollments_page={{ page_obj.previous_page_number }}&search={{ search_query }}" class="px-3 py-1 bg-white border text-gray-700 rounded hover:bg-gray-100 transition">&laquo; Previous</a>
+                    {% else %}
+                        <span class="px-3 py-1 bg-gray-100 border text-gray-400 rounded cursor-not-allowed">First</span>
+                        <span class="px-3 py-1 bg-gray-100 border text-gray-400 rounded cursor-not-allowed">&laquo; Previous</span>
+                    {% endif %}
+
+                    <!-- Page Numbers -->
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if num == page_obj.number %}
+                            <span class="px-3 py-1 bg-blue-600 text-white border rounded font-semibold">{{ num }}</span>
+                        {% else %}
+                            <a href="?enrollments_page={{ num }}&search={{ search_query }}" class="px-3 py-1 bg-white border text-gray-700 rounded hover:bg-gray-100 transition">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <a href="?enrollments_page={{ page_obj.next_page_number }}&search={{ search_query }}" class="px-3 py-1 bg-white border text-gray-700 rounded hover:bg-gray-100 transition">Next &raquo;</a>
+                        <a href="?enrollments_page={{ page_obj.paginator.num_pages }}&search={{ search_query }}" class="px-3 py-1 bg-white border text-gray-700 rounded hover:bg-gray-100 transition">Last</a>
+                    {% else %}
+                        <span class="px-3 py-1 bg-gray-100 border text-gray-400 rounded cursor-not-allowed">Next &raquo;</span>
+                        <span class="px-3 py-1 bg-gray-100 border text-gray-400 rounded cursor-not-allowed">Last</span>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+
+
+    {% else %}
+        <!-- No Courses Fallback -->
+        <div class="text-center py-20">
+            <i class="fas fa-book-open text-5xl text-gray-400 mb-4"></i>
+            <h4 class="text-xl font-semibold text-gray-800 mb-2">No Courses Enrolled</h4>
+            <p class="text-gray-500 mb-4">You haven't enrolled in any courses yet. Start exploring now!</p>
+            <a href="{% url 'authentication:course_list' %}" class="inline-block bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">Browse Courses</a>
+        </div>
+    {% endif %}
     </div>
 </div>
-</section>
-<!-- Pagination -->
-<div class="mt-6 flex justify-center">
-    <nav class="inline-flex -space-x-px">
-        {% if page_obj.has_previous %}
-            <a href="?enrollments_page=1&search={{ search_query }}" class="px-3 py-1 border rounded-l-md text-gray-700 bg-white hover:bg-gray-100">First</a>
-            <a href="?enrollments_page={{ page_obj.previous_page_number }}&search={{ search_query }}" class="px-3 py-1 border text-gray-700 bg-white hover:bg-gray-100">&laquo; Previous</a>
-        {% else %}
-            <span class="px-3 py-1 border rounded-l-md text-gray-400 bg-gray-100 cursor-not-allowed">First</span>
-            <span class="px-3 py-1 border text-gray-400 bg-gray-100 cursor-not-allowed">&laquo; Previous</span>
-        {% endif %}
-
-        <span class="px-3 py-1 border text-gray-700 bg-white">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-
-        {% if page_obj.has_next %}
-            <a href="?enrollments_page={{ page_obj.next_page_number }}&search={{ search_query }}" class="px-3 py-1 border text-gray-700 bg-white hover:bg-gray-100">Next &raquo;</a>
-            <a href="?enrollments_page={{ page_obj.paginator.num_pages }}&search={{ search_query }}" class="px-3 py-1 border rounded-r-md text-gray-700 bg-white hover:bg-gray-100">Last</a>
-        {% else %}
-            <span class="px-3 py-1 border text-gray-400 bg-gray-100 cursor-not-allowed">Next &raquo;</span>
-            <span class="px-3 py-1 border rounded-r-md text-gray-400 bg-gray-100 cursor-not-allowed">Last</span>
-        {% endif %}
-    </nav>
-</div>
-
-{% else %}
-<!-- No Courses Fallback -->
-<div class="bg-white shadow rounded-lg p-10 text-center">
-    <i class="fas fa-book-open text-4xl text-gray-400 mb-3"></i>
-    <h4 class="text-lg font-semibold text-gray-800 mb-2">No Courses Enrolled</h4>
-    <p class="text-gray-500 mb-4">You haven't enrolled in any courses yet. Start exploring now!</p>
-    <a href="{% url 'authentication:course_list' %}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Browse Courses</a>
-</div>
-{% endif %}
-
 {% endblock %}
