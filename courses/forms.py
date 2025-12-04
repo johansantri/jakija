@@ -470,7 +470,7 @@ class ChoiceForm(forms.ModelForm):
 
         # CKEditor atau textarea biasa
         if self.assessment and getattr(self.assessment, 'flag', False):
-            self.fields['text'].widget = CKEditor5Widget(config_name='default')
+            self.fields['text'].widget = CKEditor5Widget(config_name='extends')
         else:
             self.fields['text'].widget = forms.Textarea(attrs={
                 'class': 'w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 transition',

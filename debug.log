@@ -16549,3 +16549,59 @@ AttributeError: 'NoneType' object has no attribute 'instructor'
 [INFO] 2025-12-04 13:11:02,698 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
 [INFO] 2025-12-04 13:11:03,741 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-12-04 13:11:03,751 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-04 13:13:19,614 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-12-04 13:13:20,691 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-04 13:13:20,701 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-12-04 13:15:36,702 [django.request] Internal Server Error: /questions/delete/2/27/117/10
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2128, in get_prep_value
+    return int(value)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'builtin_function_or_method'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 4988, in delete_question
+    team_member = CourseTeam.objects.filter(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/models/query.py", line 1491, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/models/query.py", line 1509, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/models/query.py", line 1516, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1643, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1675, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1585, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1412, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/models/lookups.py", line 38, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/models/fields/related_lookups.py", line 112, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2130, in get_prep_value
+    raise e.__class__(
+TypeError: Field 'id' expected a number but got <built-in function id>.
+[INFO] 2025-12-04 13:16:06,420 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-04 13:16:07,572 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-04 13:16:07,583 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-04 13:16:11,239 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-04 13:16:12,278 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-04 13:16:12,288 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-04 13:16:14,817 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-04 13:16:15,828 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-04 13:16:15,838 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-04 13:16:18,364 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-04 13:16:19,400 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-04 13:16:19,410 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-04 13:17:03,956 [django.request] Not Found: /favicon.ico
