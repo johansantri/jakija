@@ -353,7 +353,7 @@ class MaterialAdmin(admin.ModelAdmin):
 
 class ChoiceInline(admin.TabularInline):
     model = Choice
-    extra = 4
+    extra = 0
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]

@@ -459,6 +459,7 @@ class ChoiceForm(forms.ModelForm):
             'text': '',
             'is_correct': '',
         }
+        
 
     def __init__(self, *args, **kwargs):
         self.assessment = kwargs.pop('assessment', None)
@@ -472,7 +473,7 @@ class ChoiceForm(forms.ModelForm):
             self.fields['text'].widget = CKEditor5Widget(config_name='default')
         else:
             self.fields['text'].widget = forms.Textarea(attrs={
-                'class': 'w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:border-indigo-500 focus:ring-0',
+                'class': 'w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 transition',
                 'rows': 4,
                 'placeholder': 'Tulis jawaban...'
             })
@@ -488,7 +489,7 @@ ChoiceFormSet = inlineformset_factory(
     Choice,
     form=ChoiceForm,
     fields=['text', 'is_correct'],
-    extra=1,
+    extra=0,
     can_delete=True,
     max_num=10,  # opsional, biar tidak kebanyakan
 )

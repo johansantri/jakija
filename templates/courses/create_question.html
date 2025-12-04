@@ -5,191 +5,199 @@
 {% block content %}
 {% include "courses/course_set.html" %}
 
-<section class="bg-white border border-gray-200 p-6 sm:p-10 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-        <h3 class="text-2xl font-bold text-gray-800">
-            {% if form.instance.pk %}Edit Soal{% else %}Buat Soal Baru{% endif %}
-        </h3>
-        <nav class="text-sm">
-            <ol class="flex items-center gap-2 text-gray-500">
-                <li><a href="{% url 'courses:view-question' course.id section.id assessment.id %}" class="hover:text-indigo-600">{{ assessment.name|truncatechars:30 }}</a></li>
-                <li>›</li>
-                <li class="text-indigo-600 font-semibold">{% if form.instance.pk %}Edit{% else %}Baru{% endif %}</li>
-            </ol>
-        </nav>
-    </div>
+<section class="bg-white p-6 rounded-xl shadow-sm mt-6">
 
-    <div class="max-w-5xl">
+    <h2 class="text-xl font-semibold mb-4">
+        {% if edit_mode %} Edit Pertanyaan {% else %} Buat Pertanyaan {% endif %}
+    </h2>
 
-        {% if messages %}
-            {% for message in messages %}
-                <div class="mb-6 p-5 rounded-lg text-center font-medium {% if message.tags == 'success' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %} border">
-                    {{ message }}
+    <form method="POST" id="questionForm">
+        {% csrf_token %}
+
+        <!-- ===================== FORM PERTANYAAN ===================== -->
+        <div class="mb-6">
+            <label class="font-semibold block mb-2">Pertanyaan</label>
+            {{ question_form.text }}
+        </div>
+
+        <!-- ===================== FORMSET ===================== -->
+        <h3 class="font-semibold text-lg mb-3">Pilihan Jawaban</h3>
+
+        {{ choice_formset.management_form }}
+
+        <div id="choices-wrapper" class="space-y-4">
+
+            {% for form in choice_formset %}
+            <div class="choice-item bg-white border border-gray-200 rounded-xl p-4 shadow-sm"
+                 data-form-index="{{ forloop.counter0 }}">
+
+                {{ form.id }}
+                {{ form.is_correct }}
+                {{ form.DELETE.as_hidden }}
+
+                <div class="flex items-start gap-4">
+
+                    <!-- Checkbox benar -->
+                    <input type="checkbox"
+                           class="correct-checkbox h-5 w-5 mt-1 rounded border-gray-300 text-indigo-600"
+                           {% if form.initial.is_correct %}checked{% endif %}>
+
+                    <!-- Textarea -->
+                    <div class="w-full">
+                        {{ form.text }}
+                    </div>
+
+                    <!-- Checkbox hapus -->
+                    <label class="delete-form flex items-center text-red-600 cursor-pointer font-medium mt-1">
+                        <input type="checkbox" class="delete-checkbox h-5 w-5">
+                        <span class="ml-2">Hapus</span>
+                    </label>
+
                 </div>
+            </div>
             {% endfor %}
-        {% endif %}
+        </div>
 
-        <form method="post" enctype="multipart/form-data" novalidate>
-            {% csrf_token %}
-            {{ question_form.media }}
+        <!-- ===================== EMPTY FORM TEMPLATE ===================== -->
+        <template id="empty-form-template">
+            <div class="choice-item bg-white border border-gray-200 rounded-xl p-4 shadow-sm"
+                 data-form-index="__prefix__">
 
-            <!-- TEXT SOAL -->
-            <div class="bg-gray-50 rounded-2xl p-8 mb-10 border">
-                <h2 class="text-xl font-bold mb-6 text-gray-800 flex items-center gap-3">
-                    <span class="w-10 h-10 bg-indigo-600 text-white rounded-full flex-center font-bold">1</span>
-                    Teks Soal
-                </h2>
-                {{ question_form.text }}
-            </div>
+                {{ choice_formset.empty_form.id }}
+                {{ choice_formset.empty_form.is_correct }}
+                {{ choice_formset.empty_form.DELETE }}
 
-            <!-- PILIHAN JAWABAN -->
-            <div class="bg-gray-50 rounded-2xl p-8 border">
-                <h2 class="text-xl font-bold mb-8 text-gray-800 flex items-center gap-3">
-                    <span class="w-10 h-10 bg-indigo-600 text-white rounded-full flex-center font-bold">2</span>
-                    Pilihan Jawaban
-                </h2>
+                <div class="flex items-start gap-4">
 
-                {{ choice_formset.management_form }}
+                    <!-- Checkbox benar -->
+                    <input type="checkbox"
+                           class="correct-checkbox h-5 w-5 mt-1 rounded border-gray-300 text-indigo-600">
 
-                <div id="choice-container" class="space-y-8">
-                    {% for form in choice_formset %}
-                        <div class="choice-item bg-white rounded-2xl border-2 border-gray-300 p-8 hover:border-indigo-600 transition-all relative group">
-                            <button type="button" onclick="removeChoice(this)" class="absolute top-4 right-4 text-red-600 hover:text-red-800 text-3xl font-bold opacity-0 group-hover:opacity-100 transition">
-                                ×
-                            </button>
+                    <!-- Textarea -->
+                    <div class="w-full">
+                        {{ choice_formset.empty_form.text }}
+                    </div>
 
-                            <div class="flex items-start gap-8">
-                                <!-- RADIO BUTTON YANG PASTI MUNCUL -->
-                                <div class="pt-3 flex-shrink-0">
-                                    <label class="flex items-center gap-4 cursor-pointer select-none">
-                                        <!-- INI TRIKNYA: PAKSA JADI RADIO + nama sama semua -->
-                                        <input type="radio"
-                                               name="correct_choice_id"
-                                               value="{{ form.instance.pk|default:forloop.counter0 }}"
-                                               class="w-6 h-6 text-indigo-600 focus:ring-indigo-500 border-gray-300"
-                                               {% if form.instance.is_correct %}checked{% endif %}>
-                                        <span class="text-lg font-medium text-gray-700">Jawaban Benar</span>
-                                    </label>
-                                    <!-- Hidden field asli tetap ada supaya Django validasi -->
-                                    {{ form.is_correct|add_class:"hidden" }}
-                                </div>
+                    <!-- Checkbox hapus -->
+                    <label class="delete-form flex items-center text-red-600 cursor-pointer font-medium mt-1">
+                        <input type="checkbox" class="delete-checkbox h-5 w-5">
+                        <span class="ml-2">Hapus</span>
+                    </label>
 
-                                <div class="flex-1">
-                                    {{ form.id }}
-                                    {{ form.text|add_class:"w-full p-4 border rounded-lg focus:ring-2 focus:ring-indigo-500"|attr:"placeholder:Tulis pilihan jawaban di sini..." }}
-                                    {{ form.DELETE }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
                 </div>
-
-                <button type="button" id="add-choice" class="mt-10 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium flex items-center gap-3 shadow-md">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
-                    Tambah Pilihan
-                </button>
             </div>
+        </template>
 
-            <!-- TOMBOL SUBMIT -->
-            <div class="mt-12 pt-8 border-t-2 border-gray-200 flex flex-col sm:flex-row gap-4 justify-end">
-                <a href="{% url 'courses:view-question' course.id section.id assessment.id %}" class="px-8 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 text-center font-medium">Batal</a>
-                <button type="submit" name="save_and_add_another" class="px-8 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium">Simpan & Tambah Lagi</button>
-                <button type="submit" class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium">Simpan Soal</button>
-            </div>
-        </form>
-    </div>
+        <!-- Button tambah -->
+        <div class="mt-4">
+            <button type="button"
+                    id="addChoiceBtn"
+                    class="px-4 py-2 bg-green-600 text-white rounded-xl shadow-sm hover:shadow-md hover:bg-green-700 transition">
+                + Tambah Pilihan
+            </button>
+        </div>
+
+        {{ question_form.media }}
+        {{ choice_formset.media }}
+
+        <!-- Submit -->
+        <div class="mt-6 flex gap-3">
+            <button class="px-6 py-3 bg-indigo-600 text-white rounded-xl shadow-sm hover:bg-indigo-700 hover:shadow-md transition">
+                Simpan
+            </button>
+            {% if not edit_mode %}
+            <button name="save_and_add_another"
+                    class="px-6 py-3 bg-gray-600 text-white rounded-xl shadow-sm hover:bg-gray-700 hover:shadow-md transition">
+                Simpan & Tambah Lagi
+            </button>
+            {% endif %}
+        </div>
+
+    </form>
 </section>
 
-<!-- TEMPLATE PILIHAN BARU -->
-<template id="choice-template">
-    <div class="choice-item bg-white rounded-2xl border-2 border-gray-300 p-8 hover:border-indigo-600 transition-all relative group mt-8">
-        <button type="button" onclick="removeChoice(this)" class="absolute top-4 right-4 text-red-600 hover:text-red-800 text-3xl font-bold opacity-0 group-hover:opacity-100 transition">×</button>
-        <div class="flex items-start gap-8">
-            <div class="pt-3 flex-shrink-0">
-                <label class="flex items-center gap-4 cursor-pointer select-none">
-                    <input type="radio" name="correct_choice_id" value="__prefix__" class="w-6 h-6 text-indigo-600 focus:ring-indigo-500">
-                    <span class="text-lg font-medium text-gray-700">Jawaban Benar</span>
-                </label>
-                <input type="hidden" name="{{ choice_formset.prefix }}-__prefix__-is_correct">
-            </div>
-            <div class="flex-1">
-                {{ choice_formset.empty_form.id }}
-                {{ choice_formset.empty_form.text|add_class:"w-full p-4 border rounded-lg focus:ring-2 focus:ring-indigo-500"|attr:"placeholder:Tulis pilihan jawaban di sini..." }}
-                {{ choice_formset.empty_form.DELETE }}
-            </div>
-        </div>
-    </div>
-</template>
-
-<!-- JAVASCRIPT FINAL (SUDAH TERBUKTI DI 10+ PROJECT) -->
+<!-- ============================================ JAVASCRIPT ============================================ -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const container = document.getElementById('choice-container');
-    const totalForms = document.getElementById('id_{{ choice_formset.prefix }}-TOTAL_FORMS');
-    const template = document.getElementById('choice-template').content;
+document.addEventListener("DOMContentLoaded", function () {
 
-    function syncCorrectChoice() {
-        const selected = document.querySelector('input[name="correct_choice_id"]:checked');
-        // Kosongkan semua is_correct
-        document.querySelectorAll('input[name$="-is_correct"]').forEach(el => el.value = '');
-        if (selected) {
-            const item = selected.closest('.choice-item');
-            const hidden = item.querySelector('input[name$="-is_correct"]');
-            if (hidden) hidden.value = 'on';
-        }
+    /* ============================================================
+       SYNC CHECKBOX BENAR (correct)
+    ============================================================ */
+    function bindCorrectCheckbox() {
+        const checkboxes = document.querySelectorAll(".correct-checkbox");
+
+        checkboxes.forEach(chk => {
+            chk.onclick = function () {
+                const hidden = this.closest(".choice-item")
+                                   .querySelector("input[name$='is_correct']");
+
+                {% if assessment.multiple_answer %}
+                    hidden.value = this.checked ? "True" : "False";
+                    return;
+                {% endif %}
+
+                checkboxes.forEach(cb => {
+                    cb.checked = false;
+                    cb.closest(".choice-item")
+                      .querySelector("input[name$='is_correct']").value = "False";
+                });
+
+                this.checked = true;
+                hidden.value = "True";
+            };
+        });
     }
 
-    // Tambah pilihan baru
-    window.addChoice = function () {
-        const count = parseInt(totalForms.value);
-        if (count >= 10) return alert('Maksimal 10 pilihan!');
+    /* ============================================================
+       DELETE FORMSET: SET VALUE "on" (Django requirement)
+    ============================================================ */
+    function bindDeleteButtons() {
+        const deleteChecks = document.querySelectorAll(".delete-checkbox");
 
-        const clone = template.cloneNode(true);
-        let html = new XMLSerializer().serializeToString(clone);
-        html = html.replace(/__prefix__/g, count);
-        html = html.replace(/{{ choice_formset.prefix }}-__prefix__/g, '{{ choice_formset.prefix }}-' + count);
+        deleteChecks.forEach(box => {
+            box.onchange = function () {
+                const item = this.closest(".choice-item");
+                const hiddenDelete = item.querySelector("input[name$='DELETE']");
 
-        const div = document.createElement('div');
-        div.innerHTML = html;
-        container.appendChild(div.firstChild);
-        totalForms.value = count + 1;
+                if (this.checked) {
+                    hiddenDelete.value = "on";                     // WAJIB UNTUK DJANGO
+                    item.classList.add("opacity-40");             // tampak tidak aktif
+                    item.querySelector("textarea").disabled = true;
+                    item.querySelector(".correct-checkbox").disabled = true;
+                } else {
+                    hiddenDelete.value = "";
+                    item.classList.remove("opacity-40");
+                    item.querySelector("textarea").disabled = false;
+                    item.querySelector(".correct-checkbox").disabled = false;
+                }
+            };
+        });
+    }
 
-        // Event baru untuk radio baru
-        div.firstChild.querySelector('input[name="correct_choice_id"]').addEventListener('change', syncCorrectChoice);
+    bindCorrectCheckbox();
+    bindDeleteButtons();
+
+    /* ============================================================
+       ADD FORM DINAMIS
+    ============================================================ */
+    const wrapper = document.getElementById("choices-wrapper");
+    const addBtn = document.getElementById("addChoiceBtn");
+    const template = document.getElementById("empty-form-template").innerHTML;
+    const totalForms = document.getElementById("id_choices-TOTAL_FORMS");
+
+    addBtn.onclick = function () {
+        let index = parseInt(totalForms.value);
+        let newForm = template.replace(/__prefix__/g, index);
+
+        wrapper.insertAdjacentHTML("beforeend", newForm);
+
+        totalForms.value = index + 1;
+
+        bindCorrectCheckbox();
+        bindDeleteButtons();
     };
 
-    // Hapus pilihan
-    window.removeChoice = function(btn) {
-        const item = btn.closest('.choice-item');
-        const hasId = item.querySelector('input[name$="-id"]');
-        const deleteField = item.querySelector('input[name$="-DELETE"]');
-
-        if (hasId && deleteField) {
-            deleteField.checked = true;
-            item.style.display = 'none';
-        } else {
-            item.remove();
-            totalForms.value = parseInt(totalForms.value) - 1;
-        }
-        syncCorrectChoice();
-    };
-
-    // Event untuk semua radio yang sudah ada
-    document.querySelectorAll('input[name="correct_choice_id"]').forEach(radio => {
-        radio.addEventListener('change', syncCorrectChoice);
-    });
-
-    // Pastikan saat submit, yang terpilih disimpan
-    document.querySelector('form').addEventListener('submit', syncCorrectChoice);
-
-    document.getElementById('add-choice').addEventListener('click', addChoice);
 });
 </script>
-
-<style>
-    .ck-editor__editable { min-height: 200px !important; }
-    .choice-item:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.1); transform: translateY(-4px); }
-    .flex-center { display: flex; align-items: center; justify-content: center; }
-</style>
 
 {% endblock %}
