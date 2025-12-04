@@ -489,7 +489,7 @@ ChoiceFormSet = inlineformset_factory(
     Choice,
     form=ChoiceForm,
     fields=['text', 'is_correct'],
-    extra=0,
+    extra=1,
     can_delete=True,
     max_num=10,  # opsional, biar tidak kebanyakan
 )

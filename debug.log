@@ -16545,3 +16545,7 @@ AttributeError: 'NoneType' object has no attribute 'instructor'
 [INFO] 2025-12-04 13:06:19,467 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
 [INFO] 2025-12-04 13:06:20,573 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-12-04 13:06:20,584 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-04 13:07:30,685 [django.request] Not Found: /favicon.ico
+[INFO] 2025-12-04 13:11:02,698 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
+[INFO] 2025-12-04 13:11:03,741 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-04 13:11:03,751 [django.utils.autoreload] Watching for file changes with StatReloader
