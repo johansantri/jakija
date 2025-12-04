@@ -1,167 +1,143 @@
 {% extends 'home/tes.html' %}
 {% block content %}
 
-  {% include "courses/course_set.html" %}
+{% include "courses/course_set.html" %}
 
-<section class="bg-gray-100 py-10">
+<section class="bg-gray-100 py-6">
 
-    <!-- Header Assessment -->
-    <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h2 class="text-2xl font-bold text-gray-800">
-            Questions for Assessment:
-            <a href="{% url "courses:edit_assessment" course.id section.id assessment.id %}"
-               class="text-blue-600 hover:text-blue-800 underline font-semibold">
-              {{ assessment.name }}
-            </a>
-          </h2>
-        </div>
-        <a href="{% url "courses:delete_assessment" course.id section.id assessment.id %}"
-           onclick="return confirm('Yakin hapus assessment {{ assessment.name }} dan semua soalnya?')"
-           class="text-red-600 hover:text-red-800 transition">
-          <i class="fas fa-trash-alt text-xl"></i>
+  <!-- Header Assessment -->
+  <div class="bg-white rounded-xl shadow border border-gray-200 p-4 mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <h2 class="text-lg font-bold text-gray-800">
+        Questions for Assessment:
+        <a href="{% url "courses:edit_assessment" course.id section.id assessment.id %}"
+           class="text-blue-600 hover:text-blue-800 underline font-semibold">
+          {{ assessment.name }}
         </a>
-      </div>
-    </div>
-
-    <!-- Tombol Tambah Soal -->
-    <div class="flex flex-col sm:flex-row gap-4 mb-8">
-      <a href="{% url "courses:create_question" course.id section.id assessment.id %}"
-         class="inline-flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition transform hover:scale-105">
-        <i class="fas fa-plus"></i>
-        Add Multiple Choice Question
-      </a>
-
-      <a href="{% url 'courses:create_askora' idcourse=course.id idsection=section.id idassessment=assessment.id %}"
-         class="inline-flex items-center gap-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition transform hover:scale-105">
-        <i class="fas fa-comment-dots"></i>
-        Add Open Response
-      </a>
-
-      <a href="{% url 'courses:create_lti' idcourse=course.id idsection=section.id idlti=assessment.id %}"
-         class="inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition transform hover:scale-105">
-        <i class="fas fa-puzzle-piece"></i>
-        Add LTI Tool
+      </h2>
+      <a href="{% url "courses:delete_assessment" course.id section.id assessment.id %}"
+         onclick="return confirm('Yakin hapus assessment {{ assessment.name }} dan semua soalnya?')"
+         class="text-red-600 hover:text-red-800 transition">
+        <i class="fas fa-trash-alt"></i>
       </a>
     </div>
+  </div>
 
-    <!-- Tabel Soal -->
-    <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-      <div class="overflow-x-auto">
-        <table class="w-full table-auto">
-          <thead class="bg-gray-50 border-b border-gray-200">
-            <tr>
-              <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">#</th>
-              <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Question</th>
-              <th class="px-6 py-4 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">Actions</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200">
+  <!-- Tombol Tambah Soal -->
+  <div class="flex flex-wrap gap-2 mb-6">
+    <a href="{% url "courses:create_question" course.id section.id assessment.id %}"
+       class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
+      <i class="fas fa-plus"></i> MCQ
+    </a>
 
-            <!-- Multiple Choice Questions -->
-            {% for question in assessment.questions.all %}
-              <tr class="hover:bg-gray-50 transition">
-                <td class="px-6 py-5 text-sm text-gray-700">{{ forloop.counter }}</td>
-                <td class="px-6 py-5">
-                  <a href="{% url 'courses:edit_question' course.id question.id section.id assessment.id %}"
-                     class="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2 group">
-                    <span class="truncate max-w-2xl block">{{ question.text|safe|truncatechars:120 }}</span>
-                    <i class="fas fa-edit text-gray-500 group-hover:text-blue-600"></i>
-                  </a>
-                </td>
-                <td class="px-6 py-5 text-center">
-                  <form method="POST" action="{% url 'courses:delete_question' course.id question.id section.id assessment.id %}"
-                        class="inline" onsubmit="return confirm('Yakin hapus soal ini?')">
-                    {% csrf_token %}
-                    <button type="submit"
-                            class="text-red-600 hover:text-red-800 hover:bg-red-50 p-3 rounded-lg transition">
-                      <i class="fas fa-trash-alt"></i>
-                    </button>
-                  </form>
-                </td>
-              </tr>
-            {% empty %}
-              
-            {% endfor %}
+    <a href="{% url 'courses:create_askora' idcourse=course.id idsection=section.id idassessment=assessment.id %}"
+       class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
+      <i class="fas fa-comment-dots"></i> Open
+    </a>
 
-            <!-- Open Response (Askora) -->
-            {% for askora in assessment.ask_oras.all %}
-              <tr class="hover:bg-gray-50 transition">
-                <td class="px-6 py-5 text-sm text-gray-700">{{ forloop.counter|add:assessment.questions.count }}</td>
-                <td class="px-6 py-5">
-                  <a href="{% url 'courses:edit_askora' course.id askora.id section.id assessment.id %}"
-                     class="text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-2 group">
-                    <span class="truncate max-w-2xl block">{{ askora.question_text|safe|truncatechars:120 }}</span>
-                    <i class="fas fa-edit text-gray-500 group-hover:text-indigo-600"></i>
-                  </a>
-                </td>
-                <td class="px-6 py-5 text-center">
-                  <form method="POST" action="{% url 'courses:delete_askora' course.id askora.id section.id assessment.id %}"
-                        class="inline" onsubmit="return confirm('Yakin hapus soal open response ini?')">
-                    {% csrf_token %}
-                    <button type="submit"
-                            class="text-red-600 hover:text-red-800 hover:bg-red-50 p-3 rounded-lg transition">
-                      <i class="fas fa-trash-alt"></i>
-                    </button>
-                  </form>
-                </td>
-              </tr>
-            {% empty %}
-              {% if not assessment.questions.all %}
-                
-              {% endif %}
-            {% endfor %}
+    <a href="{% url 'courses:create_lti' idcourse=course.id idsection=section.id idlti=assessment.id %}"
+       class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
+      <i class="fas fa-puzzle-piece"></i> LTI
+    </a>
+  </div>
 
-            <!-- LTI Tool -->
-            {% if assessment.lti_tool %}
-              <tr class="hover:bg-gray-50 transition">
-                <td class="px-6 py-5 text-sm text-gray-700">LTI</td>
-                <td class="px-6 py-5">
-                  <div class="flex flex-col sm:flex-row sm:items-center gap-3">
-                    <a href="{% url 'courses:edit_lti' idcourse=course.id idsection=section.id idlti=assessment.id id_lti_tool=assessment.lti_tool.id %}"
-                       class="text-purple-600 hover:text-purple-800 font-medium flex items-center gap-2 group">
-                      <span>{{ assessment.lti_tool.tool_name|safe|truncatechars:100 }}</span>
-                      <i class="fas fa-edit text-gray-500 group-hover:text-purple-600"></i>
-                    </a>
-                    <a href="{% url 'courses:launch_lti' idcourse=course.id idsection=section.id idlti=assessment.id id_lti_tool=assessment.lti_tool.id %}"
-                       target="_blank"
-                       class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
-                      <i class="fas fa-external-link-alt"></i> Launch
-                    </a>
-                  </div>
-                </td>
-                <td class="px-6 py-5 text-center">
-                  <form method="POST" action="{% url 'courses:delete_lti' idcourse=course.id idsection=section.id idlti=assessment.id id_lti_tool=assessment.lti_tool.id %}"
-                        class="inline" onsubmit="return confirm('Hapus LTI tool ini?')">
-                    {% csrf_token %}
-                    <button type="submit"
-                            class="text-red-600 hover:text-red-800 hover:bg-red-50 p-3 rounded-lg transition">
-                      <i class="fas fa-trash-alt"></i>
-                    </button>
-                  </form>
-                </td>
-              </tr>
-            {% else %}
-              {% if not assessment.questions.all and not assessment.ask_oras.all %}
-                
-              {% endif %}
-            {% endif %}
+  <!-- Tabel Soal Compact -->
+  <div class="bg-white rounded-xl shadow border border-gray-200 overflow-x-auto">
+    <table class="w-full table-auto text-sm">
+      <thead class="bg-gray-50 border-b border-gray-200">
+        <tr>
+          <th class="px-3 py-2 text-left font-bold text-gray-600 uppercase">#</th>
+          <th class="px-3 py-2 text-left font-bold text-gray-600 uppercase">Question</th>
+          <th class="px-3 py-2 text-center font-bold text-gray-600 uppercase">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
 
-          </tbody>
-        </table>
-      </div>
-    </div>
+        {% for question in assessment.questions.all %}
+          <tr class="hover:bg-gray-50 transition">
+            <td class="px-3 py-2 text-gray-700">{{ forloop.counter }}</td>
+            <td class="px-3 py-2">
+              <a href="{% url 'courses:edit_question' course.id question.id section.id assessment.id %}"
+                 class="text-blue-600 hover:text-blue-800 flex items-center gap-1 truncate max-w-xl">
+                <span>{{ question.text|truncatechars:80|safe }}</span>
+                <i class="fas fa-edit text-gray-400 hover:text-blue-600"></i>
+              </a>
+            </td>
+            <td class="px-3 py-2 text-center">
+              <form method="POST" action="{% url 'courses:delete_question' course.id question.id section.id assessment.id %}"
+                    class="inline" onsubmit="return confirm('Yakin hapus soal ini?')">
+                {% csrf_token %}
+                <button type="submit" class="text-red-600 hover:text-red-800 p-2 rounded transition">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
 
-    <!-- Back to Studio -->
-    <div class="mt-10 text-center">
-      <a href="{% url 'courses:studio' course.id %}"
-         class="inline-flex items-center gap-3 text-gray-600 hover:text-gray-800 font-medium">
-        <i class="fas fa-arrow-left"></i>
-        Back to Course Studio
-      </a>
-    </div>
+        {% for askora in assessment.ask_oras.all %}
+          <tr class="hover:bg-gray-50 transition">
+            <td class="px-3 py-2 text-gray-700">{{ forloop.counter|add:assessment.questions.count }}</td>
+            <td class="px-3 py-2">
+              <a href="{% url 'courses:edit_askora' course.id askora.id section.id assessment.id %}"
+                 class="text-indigo-600 hover:text-indigo-800 flex items-center gap-1 truncate max-w-xl">
+                <span>{{ askora.question_text|truncatechars:80|safe }}</span>
+                <i class="fas fa-edit text-gray-400 hover:text-indigo-600"></i>
+              </a>
+            </td>
+            <td class="px-3 py-2 text-center">
+              <form method="POST" action="{% url 'courses:delete_askora' course.id askora.id section.id assessment.id %}"
+                    class="inline" onsubmit="return confirm('Yakin hapus soal open response ini?')">
+                {% csrf_token %}
+                <button type="submit" class="text-red-600 hover:text-red-800 p-2 rounded transition">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
 
-  </section>
+        {% if assessment.lti_tool %}
+          <tr class="hover:bg-gray-50 transition">
+            <td class="px-3 py-2 text-gray-700">LTI</td>
+            <td class="px-3 py-2">
+              <div class="flex items-center gap-2">
+                <a href="{% url 'courses:edit_lti' idcourse=course.id idsection=section.id idlti=assessment.id id_lti_tool=assessment.lti_tool.id %}"
+                   class="text-purple-600 hover:text-purple-800 flex items-center gap-1">
+                  <span>{{ assessment.lti_tool.tool_name|truncatechars:60|safe }}</span>
+                  <i class="fas fa-edit text-gray-400 hover:text-purple-600"></i>
+                </a>
+                <a href="{% url 'courses:launch_lti' idcourse=course.id idsection=section.id idlti=assessment.id id_lti_tool=assessment.lti_tool.id %}"
+                   target="_blank"
+                   class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium py-1 px-3 rounded transition">
+                  <i class="fas fa-external-link-alt"></i>
+                </a>
+              </div>
+            </td>
+            <td class="px-3 py-2 text-center">
+              <form method="POST" action="{% url 'courses:delete_lti' idcourse=course.id idsection=section.id idlti=assessment.id id_lti_tool=assessment.lti_tool.id %}"
+                    class="inline" onsubmit="return confirm('Hapus LTI tool ini?')">
+                {% csrf_token %}
+                <button type="submit" class="text-red-600 hover:text-red-800 p-2 rounded transition">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+        {% endif %}
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Back to Studio -->
+  <div class="mt-6 text-center">
+    <a href="{% url 'courses:studio' course.id %}"
+       class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 text-sm">
+      <i class="fas fa-arrow-left"></i> Back to Course Studio
+    </a>
+  </div>
+
+</section>
 
 {% endblock %}

@@ -10,7 +10,10 @@
     <h2 class="text-xl font-semibold mb-4">
         {% if edit_mode %} update question {% else %} create question {% endif %}
     </h2>
-
+    <a href="{% url 'courses:view-question' idcourse=course.id idsection=section.id idassessment=assessment.id %}"
+    class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4">
+        <i class="fas fa-arrow-left"></i> Back to list Questions
+    </a>
     <form method="POST" id="questionForm">
         {% csrf_token %}
 
@@ -55,7 +58,7 @@
                     <!-- Checkbox hapus -->
                     <label class="delete-form flex items-center text-red-600 cursor-pointer font-medium mt-1">
                         <input type="checkbox" class="delete-checkbox h-5 w-5">
-                        <span class="ml-2">Delete</span>
+                        <i class="fas fa-trash-alt"></i>
                     </label>
 
                 </div>
@@ -86,7 +89,7 @@
                     <!-- Checkbox hapus -->
                     <label class="delete-form flex items-center text-red-600 cursor-pointer font-medium mt-1">
                         <input type="checkbox" class="delete-checkbox h-5 w-5">
-                        <span class="ml-2">Delete</span>
+                        <i class="fas fa-trash-alt"></i>
                     </label>
 
                 </div>
@@ -102,8 +105,10 @@
             </button>
         </div>
 
-        {{ question_form.media }}
         
+        {% block extra_head %}
+        {{ question_form.media }}
+{% endblock extra_head %} 
 
         <!-- Submit -->
         <div class="mt-6 flex gap-3">
@@ -116,6 +121,8 @@
                 Save & Add Another
             </button>
             {% endif %}
+            
+
         </div>
 
     </form>

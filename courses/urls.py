@@ -10,6 +10,7 @@ router.register(r'materials', MaterialViewSet, basename='material')
 router.register(r'assessments', AssessmentViewSet, basename='assessment')
 urlpatterns = [
     path('courses/', views.courseView, name='course_view'),
+    path('course/tim/', views.courseViewTim, name='course_view_tim'),
     path('course/<int:course_id>/enroll/', views.enroll_course, name='enroll_course'),
     path('upload-image/', views.ckeditor_upload_image, name='ckeditor_upload_image'),
     path('ckeditor/delete-image/', views.ckeditor_delete_image, name='ckeditor_delete_image'),

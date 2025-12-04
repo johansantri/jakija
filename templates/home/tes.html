@@ -25,7 +25,9 @@
 <!-- Alpine.js -->
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>    
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+{% block extra_head %}
+{% endblock extra_head %} 
 </head>
 <body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
 
@@ -290,7 +292,7 @@
                 </a>
                 <a href="{% url 'courses:course_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'course_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
-                    <i class="fas fa-book w-5"></i><span>Kursus</span>
+                    <i class="fas fa-book w-5"></i><span>Studio</span>
                 </a>
                 <a href="{% url 'instructor:instructor_learning_report' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'instructor_learning_report' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
@@ -312,8 +314,11 @@
                 </a>
                 <a href="{% url 'authentication:mycourse' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'mycourse' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
-                    <i class="fas fa-book-open w-5"></i><span>Kursus Saya</span>
+                    <i class="fas fa-book-open w-5"></i><span>My Course</span>
                 </a>
+
+                
+
                 <a href="{% url 'authentication:microcredential' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'microcredential' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-graduation-cap w-5"></i><span>Microcredential</span>
@@ -326,7 +331,13 @@
                     {% if request.resolver_match.url_name == 'transaction_history' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-history w-5"></i><span>Transaction History</span>
                 </a>
-               
+                {% if user.course_teams.exists %}
+                    <a href="{% url 'courses:course_view_tim' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                        {% if request.resolver_match.url_name == 'course_view_tim' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                        <i class="fas fa-book w-5"></i><span>Studio</span>
+                    </a>
+                {% endif %}
+
                 
 
             {% else %}

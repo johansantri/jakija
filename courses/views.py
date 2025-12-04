@@ -984,16 +984,34 @@ logger = logging.getLogger(__name__)
 
 @login_required
 def create_lti(request, idcourse, idsection, idlti):
-    # Verifikasi hak akses pengguna
-    if request.user.is_superuser:
+
+    # 1️⃣ Pastikan user login
+    if not request.user.is_authenticated:
+        return redirect("/login/?next=%s" % request.path)
+
+    user = request.user
+    course = None
+    team_member = None  # inisialisasi
+
+    # 2️⃣ Prioritas superuser / curation
+    if user.is_superuser or user.is_curation:
         course = get_object_or_404(Course, id=idcourse)
-    elif request.user.is_partner:
-        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=request.user.id)
-    elif request.user.is_instructor:
-        course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id)
-    else:
-        messages.error(request, "Anda tidak memiliki izin untuk membuat alat LTI di kursus ini.")
-        return redirect('courses:home')
+
+    # 3️⃣ Partner / instructor hanya jika course belum ditemukan
+    if not course and user.is_partner:
+        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=user.id)
+
+    if not course and user.is_instructor:
+        course = get_object_or_404(Course, id=idcourse, instructor__user_id=user.id)
+
+    # 4️⃣ Cek CourseTeam sebagai fallback
+    if not course:
+        team_member = CourseTeam.objects.filter(course_id=idcourse, user=user).first()
+        if team_member:
+            course = team_member.course
+        else:
+            messages.error(request, "You do not have permission to view questions for this course.")
+            return redirect('authentication:home')
 
     # Ambil section dan assessment terkait
     section = get_object_or_404(Section, id=idsection, courses=course)
@@ -1024,18 +1042,33 @@ def create_lti(request, idcourse, idsection, idlti):
 
 @login_required
 def edit_lti(request, idcourse, idsection, idlti, id_lti_tool):
-    # Tentukan course berdasarkan peran pengguna
-    if request.user.is_superuser:
+    # 1️⃣ Pastikan user login
+    if not request.user.is_authenticated:
+        return redirect("/login/?next=%s" % request.path)
+
+    user = request.user
+    course = None
+    team_member = None  # inisialisasi
+
+    # 2️⃣ Prioritas superuser / curation
+    if user.is_superuser or user.is_curation:
         course = get_object_or_404(Course, id=idcourse)
-    elif request.user.is_partner:
-        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=request.user.id)
-    elif request.user.is_instructor:
-        course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id)
-    else:
-        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-            return JsonResponse({'success': False, 'errors': 'Anda tidak memiliki izin untuk mengedit alat LTI di kursus ini.'}, status=403)
-        messages.error(request, "Anda tidak memiliki izin untuk mengedit alat LTI di kursus ini.")
-        return redirect('courses:home')
+
+    # 3️⃣ Partner / instructor hanya jika course belum ditemukan
+    if not course and user.is_partner:
+        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=user.id)
+
+    if not course and user.is_instructor:
+        course = get_object_or_404(Course, id=idcourse, instructor__user_id=user.id)
+
+    # 4️⃣ Cek CourseTeam sebagai fallback
+    if not course:
+        team_member = CourseTeam.objects.filter(course_id=idcourse, user=user).first()
+        if team_member:
+            course = team_member.course
+        else:
+            messages.error(request, "You do not have permission to view questions for this course.")
+            return redirect('authentication:home')
 
     # Pastikan section milik course
     section = get_object_or_404(Section, id=idsection, courses=course)
@@ -1087,18 +1120,33 @@ def edit_lti(request, idcourse, idsection, idlti, id_lti_tool):
 
 @login_required
 def delete_lti(request, idcourse, idsection, idlti, id_lti_tool):
-    # Tentukan course berdasarkan peran pengguna
-    if request.user.is_superuser:
+    # 1️⃣ Pastikan user login
+    if not request.user.is_authenticated:
+        return redirect("/login/?next=%s" % request.path)
+
+    user = request.user
+    course = None
+    team_member = None  # inisialisasi
+
+    # 2️⃣ Prioritas superuser / curation
+    if user.is_superuser or user.is_curation:
         course = get_object_or_404(Course, id=idcourse)
-    elif request.user.is_partner:
-        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=request.user.id)
-    elif request.user.is_instructor:
-        course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id)
-    else:
-        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-            return JsonResponse({'success': False, 'errors': 'Anda tidak memiliki izin untuk menghapus alat LTI di kursus ini.'}, status=403)
-        messages.error(request, "Anda tidak memiliki izin untuk menghapus alat LTI di kursus ini.")
-        return redirect('courses:home')
+
+    # 3️⃣ Partner / instructor hanya jika course belum ditemukan
+    if not course and user.is_partner:
+        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=user.id)
+
+    if not course and user.is_instructor:
+        course = get_object_or_404(Course, id=idcourse, instructor__user_id=user.id)
+
+    # 4️⃣ Cek CourseTeam sebagai fallback
+    if not course:
+        team_member = CourseTeam.objects.filter(course_id=idcourse, user=user).first()
+        if team_member:
+            course = team_member.course
+        else:
+            messages.error(request, "You do not have permission to view questions for this course.")
+            return redirect('authentication:home')
 
     # Pastikan section milik course
     section = get_object_or_404(Section, id=idsection, courses=course)
@@ -2571,20 +2619,33 @@ def calculate_score_for_user_and_course(user, course):
 #ora create question
 @csrf_exempt
 def create_askora(request, idcourse, idsection, idassessment):
-    # Cek apakah pengguna sudah login
+    # 1️⃣ Pastikan user login
     if not request.user.is_authenticated:
         return redirect("/login/?next=%s" % request.path)
-    
-    # Tentukan course berdasarkan peran pengguna
-    if request.user.is_superuser:
+
+    user = request.user
+    course = None
+    team_member = None  # inisialisasi
+
+    # 2️⃣ Prioritas superuser / curation
+    if user.is_superuser or user.is_curation:
         course = get_object_or_404(Course, id=idcourse)
-    elif request.user.is_partner:
-        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=request.user.id)
-    elif request.user.is_instructor:
-        course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id)
-    else:
-        messages.error(request, "Anda tidak memiliki izin untuk membuat pertanyaan di kursus ini.")
-        return redirect('courses:home')  # Redirect ke halaman aman
+
+    # 3️⃣ Partner / instructor hanya jika course belum ditemukan
+    if not course and user.is_partner:
+        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=user.id)
+
+    if not course and user.is_instructor:
+        course = get_object_or_404(Course, id=idcourse, instructor__user_id=user.id)
+
+    # 4️⃣ Cek CourseTeam sebagai fallback
+    if not course:
+        team_member = CourseTeam.objects.filter(course_id=idcourse, user=user).first()
+        if team_member:
+            course = team_member.course
+        else:
+            messages.error(request, "You do not have permission to view questions for this course.")
+            return redirect('authentication:home')
 
     # Pastikan section milik course
     section = get_object_or_404(Section, id=idsection, courses=course)
@@ -2620,6 +2681,34 @@ def create_askora(request, idcourse, idsection, idassessment):
 
 
 def edit_askora(request, idcourse, idaskora, idsection, idassessment):
+    # 1️⃣ Pastikan user login
+    if not request.user.is_authenticated:
+        return redirect("/login/?next=%s" % request.path)
+
+    user = request.user
+    course = None
+    team_member = None  # inisialisasi
+
+    # 2️⃣ Prioritas superuser / curation
+    if user.is_superuser or user.is_curation:
+        course = get_object_or_404(Course, id=idcourse)
+
+    # 3️⃣ Partner / instructor hanya jika course belum ditemukan
+    if not course and user.is_partner:
+        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=user.id)
+
+    if not course and user.is_instructor:
+        course = get_object_or_404(Course, id=idcourse, instructor__user_id=user.id)
+
+    # 4️⃣ Cek CourseTeam sebagai fallback
+    if not course:
+        team_member = CourseTeam.objects.filter(course_id=idcourse, user=user).first()
+        if team_member:
+            course = team_member.course
+        else:
+            messages.error(request, "You do not have permission to view questions for this course.")
+            return redirect('authentication:home')
+        
     # Fetch the objects needed (course, section, assessment, and askora)
     course = get_object_or_404(Course, id=idcourse)
     section = get_object_or_404(Section, id=idsection)
@@ -2647,6 +2736,34 @@ def edit_askora(request, idcourse, idaskora, idsection, idassessment):
 
 
 def delete_askora(request, idcourse, idaskora, idsection, idassessment):
+    # 1️⃣ Pastikan user login
+    if not request.user.is_authenticated:
+        return redirect("/login/?next=%s" % request.path)
+
+    user = request.user
+    course = None
+    team_member = None  # inisialisasi
+
+    # 2️⃣ Prioritas superuser / curation
+    if user.is_superuser or user.is_curation:
+        course = get_object_or_404(Course, id=idcourse)
+
+    # 3️⃣ Partner / instructor hanya jika course belum ditemukan
+    if not course and user.is_partner:
+        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=user.id)
+
+    if not course and user.is_instructor:
+        course = get_object_or_404(Course, id=idcourse, instructor__user_id=user.id)
+
+    # 4️⃣ Cek CourseTeam sebagai fallback
+    if not course:
+        team_member = CourseTeam.objects.filter(course_id=idcourse, user=user).first()
+        if team_member:
+            course = team_member.course
+        else:
+            messages.error(request, "You do not have permission to view questions for this course.")
+            return redirect('authentication:home')
+            
     # Fetch the relevant objects
     course = get_object_or_404(Course, id=idcourse)
     section = get_object_or_404(Section, id=idsection)
@@ -5946,6 +6063,105 @@ def courseView(request):
         'archive_count': archive_count,
         'curation_count': curation_count
     })
+
+
+
+#kusus tim
+def courseViewTim(request):
+    # 1️⃣ Pastikan user login
+    if not request.user.is_authenticated:
+        return redirect(f"/login/?next={request.path}")
+
+    user = request.user
+
+    # 2️⃣ Periksa kelengkapan profil
+    required_fields = {
+        'first_name': 'First Name',
+        'last_name': 'Last Name',
+        'email': 'Email',
+        'phone': 'Phone Number',
+        'gender': 'Gender',
+        'birth': 'Date of Birth',
+    }
+    missing_fields = [label for field, label in required_fields.items() if not getattr(user, field)]
+    if missing_fields:
+        messages.warning(request, f"Please complete the following information: {', '.join(missing_fields)}")
+        return redirect('authentication:edit-profile', pk=user.pk)
+
+    # 3️⃣ Filter dari query string
+    course_filter = request.GET.get('filter', 'all')
+    search_query = request.GET.get('search', '').strip()
+
+    # 4️⃣ Update status course yang sudah habis enrol date
+    try:
+        published_status = CourseStatus.objects.get(status='published')
+        archive_status = CourseStatus.objects.get(status='archived')
+        Course.objects.filter(
+            status_course=published_status,
+            end_enrol__lt=timezone.now().date()
+        ).update(status_course=archive_status)
+    except CourseStatus.DoesNotExist:
+        pass
+
+    # 5️⃣ Ambil semua course yang user adalah anggota tim
+    courses = Course.objects.filter(teams__user=user).distinct()
+
+    # 6️⃣ Apply filter status
+    if course_filter == 'draft':
+        courses = courses.filter(status_course__status='draft')
+    elif course_filter == 'published':
+        courses = courses.filter(status_course__status='published')
+    elif course_filter == 'archive':
+        courses = courses.filter(status_course__status='archived')
+    elif course_filter == 'curation':
+        courses = courses.filter(status_course__status='curation')
+
+    # 7️⃣ Apply search
+    if search_query:
+        courses = courses.filter(course_name__icontains=search_query)
+
+    # 8️⃣ Annotate extra fields (opsional)
+    courses = courses.annotate(
+        instructor_email=F('instructor__user__email'),
+        org_partner_name=F('org_partner__name__name'),
+        enrolment_count=Count('enrollments')
+    )
+
+    # 9️⃣ Pagination
+    paginator = Paginator(courses, 10)
+    page_number = request.GET.get('page', 1)
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+
+    # 10️⃣ Hitung jumlah berdasarkan status
+    try:
+        draft_status = CourseStatus.objects.get(status='draft')
+        published_status = CourseStatus.objects.get(status='published')
+        archive_status = CourseStatus.objects.get(status='archived')
+        curation_status = CourseStatus.objects.get(status='curation')
+    except CourseStatus.DoesNotExist:
+        draft_status = published_status = archive_status = curation_status = None
+
+    draft_count = courses.filter(status_course=draft_status).count() if draft_status else 0
+    published_count = courses.filter(status_course=published_status).count() if published_status else 0
+    archive_count = courses.filter(status_course=archive_status).count() if archive_status else 0
+    curation_count = courses.filter(status_course=curation_status).count() if curation_status else 0
+
+    # 11️⃣ Render
+    return render(request, 'courses/course_view_tim.html', {
+        'page_obj': page_obj,
+        'course_filter': course_filter,
+        'all_count': courses.count(),
+        'draft_count': draft_count,
+        'published_count': published_count,
+        'archive_count': archive_count,
+        'curation_count': curation_count
+    })
+
 
 @login_required
 def user_detail(request, user_id):
