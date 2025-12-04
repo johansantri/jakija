@@ -17998,3 +17998,76 @@ django.core.exceptions.FieldError: Cannot resolve keyword 'course_team' into fie
 [WARNING] 2025-12-04 16:13:18,542 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-04 16:13:18,576 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-04 16:13:42,941 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:13,665 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:14,304 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[DEBUG] 2025-12-04 16:14:15,241 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:14:15,243 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 16:14:15,305 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:16,184 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:17,788 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:14:18,475 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:18,699 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:14:18,754 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:14:21,720 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:23,685 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:23,713 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:24,879 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:26,768 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:26,800 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:35,020 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:40,303 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:45,401 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:47,949 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:14:53,675 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:15:02,632 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:15:08,798 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[DEBUG] 2025-12-04 16:15:17,096 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:15:17,099 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 16:15:17,182 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:15:17,803 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:15:17,851 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:15:18,378 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:15:18,780 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:15:18,847 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:15:18,885 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:15:19,376 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:15:53,558 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:16:17,958 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:16:18,823 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:16:18,919 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:16:22,443 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:16:52,624 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:16:54,320 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:16:55,604 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:16:56,334 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:16:56,737 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:17:02,053 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:17:02,674 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:17:03,360 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:17:18,028 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:17:18,940 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:17:19,014 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:17:29,717 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:17:32,818 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:17:33,909 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:17:34,607 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[DEBUG] 2025-12-04 16:17:35,653 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:17:35,655 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
+[WARNING] 2025-12-04 16:17:35,731 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:17:36,321 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:18:18,123 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:18:19,025 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:18:19,087 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:18:31,851 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:18:33,330 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:18:34,882 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:18:34,910 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:18:36,380 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:18:38,689 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:18:38,718 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:19:16,151 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-04 16:19:18,201 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:19:19,104 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-04 16:19:19,169 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-04 16:19:32,072 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=14, last_access_assessment=None
+[DEBUG] 2025-12-04 16:19:32,075 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, 14, None)]
