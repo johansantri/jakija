@@ -4630,22 +4630,43 @@ def update_grade_range(request, id):
 #@csrf_protect
 def create_assessment(request, idcourse, idsection):
     # Check if the user is authenticated
+    # Check if the user is authenticated
     if not request.user.is_authenticated:
         return redirect("/login/?next=%s" % request.path)
+    
+    user = request.user
+    course = None
+    team_member = None  # inisialisasi untuk aman
 
-    # Determine the course based on the user's role
-    if request.user.is_superuser:
-        course = get_object_or_404(Course, id=idcourse)
-    elif request.user.is_partner:
-        # Ensure the course is associated with the partner
-        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=request.user.id)
-    elif request.user.is_instructor:
-        # Ensure the course is associated with the instructor
-        course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id)
-    else:
-        # Unauthorized access
-        messages.error(request, "You do not have permission to create assessments for this course.")
-        return redirect('courses:home')  # Redirect to a safe page
+    # ==================== AUTHORIZATION ====================
+
+    # 1️⃣ Prioritas superuser / curation
+    if user.is_superuser or getattr(user, 'is_curation', False):
+        course = get_object_or_404(Course, id=id)
+
+    # 2️⃣ Partner
+    if not course and getattr(user, 'is_partner', False):
+        course = get_object_or_404(
+            Course, id=id, org_partner__user_id=user.id
+        )
+
+    # 3️⃣ Instructor
+    if not course and getattr(user, 'is_instructor', False):
+        course = get_object_or_404(
+            Course, id=id, instructor__user_id=user.id
+        )
+
+    # 4️⃣ Fallback: CourseTeam
+    if not course:
+        team_member = CourseTeam.objects.filter(
+            course_id=id, user=user
+        ).first()
+
+        if team_member:
+            course = team_member.course
+        else:
+            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            return redirect('authentication:home')
 
     # Ensure the section belongs to the course
     section = get_object_or_404(Section, id=idsection, courses=course)
@@ -4681,20 +4702,43 @@ def create_assessment(request, idcourse, idsection):
 @csrf_protect
 def edit_assessment(request, idcourse, idsection, idassessment):
     # Check if the user is authenticated
+    # Check if the user is authenticated
     if not request.user.is_authenticated:
         return redirect("/login/?next=%s" % request.path)
+    
+    user = request.user
+    course = None
+    team_member = None  # inisialisasi untuk aman
 
-    # Determine the course based on the user's role
-    if request.user.is_superuser:
+    # ==================== AUTHORIZATION ====================
+
+    # 1️⃣ Prioritas superuser / curation
+    if user.is_superuser or getattr(user, 'is_curation', False):
         course = get_object_or_404(Course, id=idcourse)
-    elif request.user.is_partner:
-        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=request.user.id)
-    elif request.user.is_instructor:
-        course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id)
-    else:
-        # Unauthorized access
-        messages.error(request, "You do not have permission to edit assessments for this course.")
-        return redirect('courses:home')  # Redirect to a safe page
+
+    # 2️⃣ Partner
+    if not course and getattr(user, 'is_partner', False):
+        course = get_object_or_404(
+            Course, id=idcourse, org_partner__user_id=user.id
+        )
+
+    # 3️⃣ Instructor
+    if not course and getattr(user, 'is_instructor', False):
+        course = get_object_or_404(
+            Course, id=idcourse, instructor__user_id=user.id
+        )
+
+    # 4️⃣ Fallback: CourseTeam
+    if not course:
+        team_member = CourseTeam.objects.filter(
+            course_id=idcourse, user=user
+        ).first()
+
+        if team_member:
+            course = team_member.course
+        else:
+            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            return redirect('authentication:home')
 
     # Ensure the section belongs to the course
     section = get_object_or_404(Section, id=idsection, courses=course)
@@ -4742,19 +4786,40 @@ def delete_assessment(request, idcourse, idsection, idassessment):
     # Check if the user is authenticated
     if not request.user.is_authenticated:
         return redirect("/login/?next=%s" % request.path)
-    # Determine the course based on the user's role
-    if request.user.is_superuser:
+    
+    user = request.user
+    course = None
+    team_member = None  # inisialisasi untuk aman
+
+    # ==================== AUTHORIZATION ====================
+
+    # 1️⃣ Prioritas superuser / curation
+    if user.is_superuser or getattr(user, 'is_curation', False):
         course = get_object_or_404(Course, id=idcourse)
-    elif request.user.is_partner:
-        # Ensure the course is associated with the partner
-        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=request.user.id)
-    elif request.user.is_instructor:
-        # Ensure the course is associated with the instructor
-        course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id)
-    else:
-        # Unauthorized access
-        messages.error(request, "You do not have permission to delete assessments for this course.")
-        return redirect('courses:home')  # Redirect to a safe page
+
+    # 2️⃣ Partner
+    if not course and getattr(user, 'is_partner', False):
+        course = get_object_or_404(
+            Course, id=idcourse, org_partner__user_id=user.id
+        )
+
+    # 3️⃣ Instructor
+    if not course and getattr(user, 'is_instructor', False):
+        course = get_object_or_404(
+            Course, id=idcourse, instructor__user_id=user.id
+        )
+
+    # 4️⃣ Fallback: CourseTeam
+    if not course:
+        team_member = CourseTeam.objects.filter(
+            course_id=idcourse, user=user
+        ).first()
+
+        if team_member:
+            course = team_member.course
+        else:
+            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            return redirect('authentication:home')
 
     # Ensure the section belongs to the course
     section = get_object_or_404(Section, id=idsection, courses=course)
@@ -4895,20 +4960,40 @@ def delete_question(request, idcourse, idquestion, idsection, idassessment):
     # Check if the user is authenticated
     if not request.user.is_authenticated:
         return redirect("/login/?next=%s" % request.path)
+    
+    user = request.user
+    course = None
+    team_member = None  # inisialisasi untuk aman
 
-    # Determine the course based on the user's role
-    if request.user.is_superuser:
-        course = get_object_or_404(Course, id=idcourse)
-    elif request.user.is_partner:
-        # Ensure the course is associated with the partner
-        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=request.user.id)
-    elif request.user.is_instructor:
-        # Ensure the course is associated with the instructor
-        course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id)
-    else:
-        # Unauthorized access
-        messages.error(request, "You do not have permission to delete questions for this course.")
-        return redirect('authentication:home')  # Redirect to a safe page
+    # ==================== AUTHORIZATION ====================
+
+    # 1️⃣ Prioritas superuser / curation
+    if user.is_superuser or getattr(user, 'is_curation', False):
+        course = get_object_or_404(Course, id=id)
+
+    # 2️⃣ Partner
+    if not course and getattr(user, 'is_partner', False):
+        course = get_object_or_404(
+            Course, id=id, org_partner__user_id=user.id
+        )
+
+    # 3️⃣ Instructor
+    if not course and getattr(user, 'is_instructor', False):
+        course = get_object_or_404(
+            Course, id=id, instructor__user_id=user.id
+        )
+
+    # 4️⃣ Fallback: CourseTeam
+    if not course:
+        team_member = CourseTeam.objects.filter(
+            course_id=id, user=user
+        ).first()
+
+        if team_member:
+            course = team_member.course
+        else:
+            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            return redirect('authentication:home')
 
     # Ensure the section belongs to the course
     section = get_object_or_404(Section, id=idsection, courses=course)
