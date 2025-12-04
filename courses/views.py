@@ -6852,26 +6852,43 @@ def course_list(request):
 
 
 def course_team(request, course_id):
-    # Pastikan pengguna sudah login
     if not request.user.is_authenticated:
         return redirect("/login/?next=%s" % request.path)
 
-    # Ambil data kursus berdasarkan ID
     course = get_object_or_404(Course, id=course_id)
 
-    # Pastikan yang menambah tim adalah instruktur kursus
     if request.user != course.instructor.user:
         messages.error(request, "You are not authorized to add team members to this course, instructor only.")
-        return redirect('courses:course_view')  # Halaman lain yang sesuai
+        return redirect('courses:course_view')
 
     if request.method == 'POST':
-        form = CourseTeamForm(request.POST, course=course)  # Pass 'course' ke form
+        form = CourseTeamForm(request.POST, course=course)
         if form.is_valid():
-            form.save()  # Menyimpan tim ke dalam kursus
+            form.save()
             messages.success(request, "Team members added successfully.")
             return redirect('courses:course_team', course_id=course.id)
     else:
-        form = CourseTeamForm(course=course)  # Pass 'course' ke form
+        form = CourseTeamForm(course=course)
 
-    return render(request, 'courses/course_team.html', {'form': form, 'course': course})
+    # Ambil semua tim yang sudah ada
+    team_members = CourseTeam.objects.filter(course=course)
+
+    return render(request, 'courses/course_team.html', {
+        'form': form,
+        'course': course,
+        'team_members': team_members,  # kirim ke template
+    })
+
+def course_team_remove(request, course_id, member_id):
+    course = get_object_or_404(Course, id=course_id)
+    
+    # Pastikan user instruktur
+    if request.user != course.instructor.user:
+        messages.error(request, "You are not authorized to remove team members.")
+        return redirect('courses:course_team', course_id=course.id)
+    
+    member = get_object_or_404(CourseTeam, id=member_id, course=course)
+    member.delete()
+    messages.success(request, f"{member.user.username} has been removed from the team.")
+    return redirect('courses:course_team', course_id=course.id)
 

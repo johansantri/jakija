@@ -61,6 +61,7 @@ urlpatterns = [
     path('course-grade/<int:id>/', views.course_grade, name='course_grade'),
     path("update-grade-range/<int:id>/", views.update_grade_range, name="update_grade_range"),
     path('course-team/<int:course_id>/', views.course_team, name='course_team'),
+    path('course/<int:course_id>/team/remove/<int:member_id>/', views.course_team_remove, name='course_team_remove'),
     path('course-instructor/<int:id>/', views.course_instructor, name='course_instructor'),
     path('instructor-autocomplete/', InstructorAutocomplete.as_view(), name='instructor-autocomplete'),
     
