@@ -948,9 +948,8 @@ class InstructorForm(forms.ModelForm):
         widget=autocomplete.ModelSelect2(
             url='courses:partner-autocomplete',
             attrs={
-                'class': 'form-control',
+                'class': 'w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500',
                 'data-placeholder': 'Type to search institution...',
-                'style': 'width: 100%;'
             }
         ),
         label="Select Your Institution"
@@ -973,41 +972,42 @@ class InstructorForm(forms.ModelForm):
         }
         widgets = {
             'bio': forms.Textarea(attrs={
-                'class': 'form-control',
+                'class': 'w-full border border-gray-300 rounded-lg p-3 shadow-sm focus:ring-blue-500 focus:border-blue-500',
                 'rows': 4,
                 'placeholder': 'Write a short professional biography...',
-                'style': 'padding: 10px; border-radius: 6px; border: 1.5px solid #ccc; box-shadow: 0 1px 3px rgba(0,0,0,0.05);'
             }),
             'experience_years': forms.NumberInput(attrs={
-                'class': 'form-control',
+                'class': 'w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500',
                 'placeholder': 'Enter total years of experience',
                 'min': 0,
-                'style': 'padding: 10px; border-radius: 6px;'
             }),
             'tech': forms.URLInput(attrs={
-                'class': 'form-control',
+                'class': 'w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500',
                 'placeholder': 'https://your-stack-profile.com',
-                'style': 'padding: 10px; border-radius: 6px;'
             }),
             'agreement': forms.CheckboxInput(attrs={
-                'class': 'form-check-input',
-                'style': 'transform: scale(1.2); margin-right: 8px;'
+                'class': 'h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500',
             }),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # memastikan autocomplete menampilkan pilihan yang benar
         if self.instance.pk and self.instance.provider:
             self.fields['provider'].queryset = Partner.objects.filter(pk=self.instance.provider.pk)
         else:
             self.fields['provider'].queryset = Partner.objects.all()
 
-        # Optional: tambahkan CSS class untuk semua field secara otomatis
-        for field_name, field in self.fields.items():
-            if field.widget.__class__.__name__ != 'CheckboxInput':
-                field.widget.attrs.setdefault('class', 'form-control')
-            field.widget.attrs.setdefault('style', 'border-radius: 6px; padding: 8px;')
+        # Tambahkan default Tailwind class untuk semua field kecuali checkbox
+        for name, field in self.fields.items():
+            widget = field.widget
+
+            if widget.__class__.__name__ != 'CheckboxInput':
+                widget.attrs.setdefault(
+                    'class',
+                    'w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500'
+                )
 
     def clean_experience_years(self):
         experience = self.cleaned_data.get('experience_years')
@@ -1020,6 +1020,7 @@ class InstructorForm(forms.ModelForm):
         if not data or len(data.strip()) < 10:
             raise forms.ValidationError("Please describe your expertise in at least 10 characters.")
         return data
+
  
 #instructor add coruse
 class InstructorAddCoruseForm(forms.ModelForm):
