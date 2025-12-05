@@ -18183,3 +18183,13 @@ django.core.exceptions.FieldError: Cannot resolve keyword 'course_team' into fie
 [INFO] 2025-12-05 08:16:31,773 [django.utils.autoreload] /home/x/app/mysite/courses/forms.py changed, reloading.
 [INFO] 2025-12-05 08:16:32,872 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-12-05 08:16:32,883 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2025-12-05 08:24:12,731 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-12-05 08:24:12,750 [axes.handlers.database] AXES: Cleaned up 1 expired access attempts from database that were older than 2025-12-05 00:24:12.731556+00:00
+[INFO] 2025-12-05 08:24:12,751 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/logout/"}.
+[DEBUG] 2025-12-05 08:24:44,873 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-12-05 08:24:44,874 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-12-05 08:24:44,874 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-12-05 00:24:44.873809+00:00
+[INFO] 2025-12-05 08:24:45,486 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/login/"}.
+[INFO] 2025-12-05 08:24:45,487 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-05 00:24:44.873809+00:00
+[DEBUG] 2025-12-05 08:24:45,493 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-12-05 08:24:45,746 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
