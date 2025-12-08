@@ -565,6 +565,8 @@ CONTENT_SECURITY_POLICY = {
             'https://cdn.jsdelivr.net',  # CDN umum
             'https://fonts.googleapis.com',  # stylesheet Google Fonts (kadang diminta juga)
             'https://fonts.gstatic.com',  # tempat file font Google Fonts di-host
+            'data:',
+
         ),
 
         'frame-ancestors': (
@@ -610,6 +612,7 @@ CONTENT_SECURITY_POLICY = {
             "'unsafe-eval'",
             'https://www.youtube.com',
             'https://cdn.ckeditor.com',
+            'https://cdn.jsdelivr.net',
         ),
 
         # Izinkan file CSS dari domain sendiri dan CDN berikut
@@ -618,6 +621,7 @@ CONTENT_SECURITY_POLICY = {
             'https://cdn.jsdelivr.net',  # CDN umum
             'https://cdnjs.cloudflare.com',  # CDN umum
             'https://fonts.googleapis.com',  # stylesheet dari Google Fonts
+            'https://cdn.jsdelivr.net',  # CDN umum
             "'unsafe-inline'",  # mengizinkan <style> inline — sebaiknya dihindari jika memungkinkan
         ),
 

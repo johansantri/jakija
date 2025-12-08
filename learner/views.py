@@ -4,6 +4,7 @@ except ImportError:
     from pylti import common  # Impor modul utama jika LTI tidak ada
 import csv
 import logging
+from multiprocessing import context
 import uuid
 import base64
 import xml.etree.ElementTree as ET
@@ -46,7 +47,7 @@ from courses.models import (
     AskOra, Choice, Comment, Course, CourseProgress, CourseStatusHistory,
     Enrollment, GradeRange, Instructor, LTIExternalTool1, Material,
     MaterialRead, Payment, PeerReview, Question, QuestionAnswer,LTIResult,
-    Score, Section, Submission, UserActivityLog, CommentReaction, AttemptedQuestion,LastAccessCourse,CourseSessionLog,
+    Score, Section, Submission, UserActivityLog, CommentReaction, AttemptedQuestion,LastAccessCourse,CourseSessionLog,QuizResult,Video,Quiz
 )
 from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
@@ -57,6 +58,7 @@ from geoip2.database import Reader as GeoIP2Reader
 import geoip2.errors
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_protect
 from decimal import Decimal, ROUND_HALF_UP
 logger = logging.getLogger(__name__)
 
@@ -1214,8 +1216,8 @@ def load_content(request, username, id, slug, content_type, content_id):
         logger.warning(f"Gagal mendapatkan lokasi untuk IP {ip_address}: {str(e)}")
 
     last_session = CourseSessionLog.objects.filter(
-        user=request.user, 
-        course=course, 
+        user=request.user,
+        course=course,
         ended_at__isnull=True
     ).order_by('-started_at').first()
     if last_session:
@@ -1248,7 +1250,7 @@ def load_content(request, username, id, slug, content_type, content_id):
         last_access.assessment = Assessment.objects.filter(id=content_id).first() if content_type == 'assessment' else None
         last_access.last_viewed_at = timezone.now()
         last_access.save()
-        logger.debug(f"Updated LastAccessCourse for user {request.user.id}, course {course.id}, {content_type} {content_id}")
+    logger.debug(f"Updated LastAccessCourse for user {request.user.id}, course {course.id}, {content_type} {content_id}")
 
     sections = Section.objects.filter(courses=course).prefetch_related(
         Prefetch('materials', queryset=Material.objects.all()),
@@ -1257,13 +1259,11 @@ def load_content(request, username, id, slug, content_type, content_id):
 
     combined_content = _build_combined_content(sections)
     current_index = 0
-
     user_progress, _ = CourseProgress.objects.get_or_create(user=request.user, course=course, defaults={'progress_percentage': 0})
 
     # Periksa apakah permintaan berasal dari klik tombol "next"
     from_next = request.GET.get('from_next', '0') == '1'
     if from_next:
-        # Ambil konten sebelumnya dari sesi
         prev_content_type = request.session.get('prev_content_type')
         prev_content_id = request.session.get('prev_content_id')
         if prev_content_type and prev_content_id:
@@ -1278,9 +1278,9 @@ def load_content(request, username, id, slug, content_type, content_id):
             user_progress.save()
             logger.info(f"Progress updated for user {request.user.username} on course {course.course_name}: {user_progress.progress_percentage}%")
 
-    # Simpan konten saat ini ke sesi untuk digunakan saat klik "next" berikutnya
-    request.session['prev_content_type'] = content_type
-    request.session['prev_content_id'] = content_id
+        # Simpan konten saat ini ke sesi untuk digunakan saat klik "next" berikutnya
+        request.session['prev_content_type'] = content_type
+        request.session['prev_content_id'] = content_id
 
     context = {
         'course': course,
@@ -1313,6 +1313,11 @@ def load_content(request, username, id, slug, content_type, content_id):
         'is_lti': False,
         'show_timer': False,
         'lti_tool': None,
+        # Tambahan untuk in-video quiz
+        'video': None,
+        'quizzes_data': [],
+        'quiz_result': None,
+        'is_video_quiz': False,
     }
 
     if content_type == 'material':
@@ -1333,8 +1338,6 @@ def load_content(request, username, id, slug, content_type, content_id):
         context['is_lti'] = bool(lti_tool)
 
         if course.payment_model and course.payment_model.code == 'buy_take_exam':
-   
-
             payment = Payment.objects.filter(
                 user=request.user, course=course, status='completed', payment_model='buy_take_exam'
             ).first()
@@ -1346,10 +1349,8 @@ def load_content(request, username, id, slug, content_type, content_id):
                 })
                 logger.info(f"Pembayaran diperlukan untuk penilaian {content_id} di kursus {course.id} untuk pengguna {request.user.username}")
             else:
-                # AssessmentRead ditunda sampai klik "next"
                 pass
         else:
-            # AssessmentRead ditunda sampai klik "next"
             pass
 
         session = AssessmentSession.objects.filter(user=request.user, assessment=assessment).first()
@@ -1364,19 +1365,84 @@ def load_content(request, username, id, slug, content_type, content_id):
                     user=request.user, question__assessment=assessment
                 ).select_related('question', 'choice')
             }
+            context.update(_build_assessment_context(assessment, request.user))
 
-        context.update(_build_assessment_context(assessment, request.user))
+        # ==================== TAMBAHAN: IN-VIDEO QUIZ (SESUAI MODEL KAMU) ====================
+        quiz_with_video = assessment.quizzes.filter(video__isnull=False).first()
+        if quiz_with_video and quiz_with_video.video:
+            video = quiz_with_video.video
+            quizzes_data = []
+            for q in video.quizzes.filter(assessment=assessment).order_by('time_in_video'):
+                quiz_dict = {
+                    "time": float(q.time_in_video),
+                    "question": q.question,
+                    "explanation": q.explanation or ""
+                }
+                if q.question_type == "MC":
+                    quiz_dict["type"] = "multiple-choice"
+                    quiz_dict["options"] = [opt.text for opt in q.options.all()]
+                    correct_opt = q.options.filter(is_correct=True).first()
+                    quiz_dict["correct"] = list(q.options.all()).index(correct_opt) if correct_opt else 0
+                elif q.question_type == "TF":
+                    quiz_dict["type"] = "true-false"
+                    correct_val = (q.correct_answer_text or "").lower()
+                    quiz_dict["correct"] = correct_val in ["true", "benar", "1", "yes"]
+                elif q.question_type in ["FB", "ES"]:
+                    quiz_dict["type"] = "fill-blank"
+                    quiz_dict["correct"] = q.correct_answer_text or ""
+                elif q.question_type == "DD":
+                    quiz_dict["type"] = "drag-and-drop"
+                    quiz_dict["items"] = [opt.text for opt in q.options.all()]
+                    quiz_dict["correct"] = q.correct_answer_text
+                quizzes_data.append(quiz_dict)
+
+            result = QuizResult.objects.filter(user=request.user, video=video, assessment=assessment).first()
+            result_json = None
+            if result:
+                result_json = {
+                    "score": result.score,
+                    "total_questions": result.total_questions,
+                    "answers": result.answers
+                }
+
+            context['video'] = video
+            context['quizzes_data'] = quizzes_data
+            context['quiz_result'] = result_json
+            context['is_video_quiz'] = True
+            context['quizzes_json'] = json.dumps(quizzes_data)
+            context['result_json_dump'] = json.dumps(result_json)
+
+        # ==================== AKHIR TAMBAHAN IN-VIDEO QUIZ ====================
 
     context['previous_url'], context['next_url'] = _get_navigation_urls(username, id, slug, combined_content, current_index)
-
     template = 'learner/partials/content.html' if request.headers.get('HX-Request') == 'true' else 'learner/my_course.html'
-
     logger.info(f"load_content: Rendering {template} untuk pengguna {username}, {content_type} {content_id}")
     response = render(request, template, context)
     response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     return response
 
-
+@login_required
+@csrf_protect
+def save_invideo_quiz(request, video_id):
+    if request.method == "POST":
+        import json
+        data = json.loads(request.body)
+        video = get_object_or_404(Video, id=video_id)
+        assessment_id = request.GET.get('assessment_id')  # atau ambil dari session kalau perlu
+        assessment = get_object_or_404(Assessment, id=assessment_id)
+        
+        QuizResult.objects.update_or_create(
+            user=request.user,
+            video=video,
+            assessment=assessment,
+            defaults={
+                'answers': data.get('answers', {}),
+                'total_questions': video.quizzes.filter(assessment=assessment).count(),
+                'score': 0  # bisa dihitung nanti
+            }
+        )
+        return JsonResponse({"status": "saved"})
+    return JsonResponse({"error": "invalid"}, status=400)
 
 logger = logging.getLogger(__name__)
 

@@ -4,6 +4,9 @@ from django.utils.html import format_html
 from django.urls import reverse
 from courses.models import Course
 
+
+
+
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'post_count')

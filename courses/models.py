@@ -1560,3 +1560,55 @@ class LTIResult(models.Model):
 
     def __str__(self):
         return f"LTIResult({self.user}, {self.assessment}, score={self.score})"
+    
+
+class Video(models.Model):
+    title = models.CharField(max_length=255)
+    file = models.FileField(upload_to="videos/")
+
+    def __str__(self):
+        return self.title
+
+class Quiz(models.Model):
+    QUESTION_TYPES = [
+        ('MC', 'Multiple Choice'),
+        ('TF', 'True/False'),
+        ('FB', 'Fill in Blank'),
+        ('ES', 'Essay'),
+        ('DD', 'Drag & Drop')
+    ]
+
+    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, related_name="quizzes")  # Menghubungkan Quiz dengan Assessment
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, related_name="quizzes")
+    time_in_video = models.FloatField()
+    question_type = models.CharField(max_length=2, choices=QUESTION_TYPES)
+    question = models.TextField()
+    
+    # untuk TF, FB, ES
+    correct_answer_text = models.CharField(max_length=255, blank=True, null=True)
+
+    # opsional
+    explanation = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.video.title} - {self.question}"
+
+class Option(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name="options")
+    text = models.CharField(max_length=255)
+    is_correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.text
+
+class QuizResult(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, related_name="results")  # Menambahkan hubungan ke Assessment
+    answers = models.JSONField(default=dict)  # Simpan jawaban tiap soal
+    score = models.IntegerField()
+    total_questions = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} - {self.video.title} ({self.score}/{self.total_questions})"

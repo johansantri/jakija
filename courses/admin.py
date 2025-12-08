@@ -1,9 +1,26 @@
 from django.contrib import admin
 from . import models 
-from .models import  CourseTeam,UserActivityLog,CourseSessionLog,InstructorCertificate,LTIResult,LastAccessCourse,LTIExternalTool1,MicroClaim,UserMicroProgress,MicroCredentialComment,Certificate,Submission,CourseRating,UserProfile,Hashtag,SosPost,AskOra,BlacklistedKeyword, PeerReview,MicroCredential, AssessmentScore,Partner,Comment,CourseComment,AssessmentRead,Choice,AssessmentSession,QuestionAnswer,CourseStatusHistory,CourseStatus,CourseProgress,MaterialRead,CalculateAdminPrice,Universiti,GradeRange,Enrollment,PricingType,CoursePrice, Instructor, Category, Course, TeamMember, Section, Material,Question, Choice, Score, AttemptedQuestion,Assessment
+from .models import  Option,Video,Quiz, QuizResult,CourseTeam,UserActivityLog,CourseSessionLog,InstructorCertificate,LTIResult,LastAccessCourse,LTIExternalTool1,MicroClaim,UserMicroProgress,MicroCredentialComment,Certificate,Submission,CourseRating,UserProfile,Hashtag,SosPost,AskOra,BlacklistedKeyword, PeerReview,MicroCredential, AssessmentScore,Partner,Comment,CourseComment,AssessmentRead,Choice,AssessmentSession,QuestionAnswer,CourseStatusHistory,CourseStatus,CourseProgress,MaterialRead,CalculateAdminPrice,Universiti,GradeRange,Enrollment,PricingType,CoursePrice, Instructor, Category, Course, TeamMember, Section, Material,Question, Choice, Score, AttemptedQuestion,Assessment
 from import_export.admin import ImportExportModelAdmin
 from django.utils.html import format_html
 from django.utils.text import slugify
+
+
+class OptionInline(admin.TabularInline):
+    model = Option
+    extra = 4  # default 4 opsi muncul
+
+class QuizAdmin(admin.ModelAdmin):
+    list_display = ('question', 'question_type', 'video', 'time_in_video')
+    inlines = [OptionInline]
+
+admin.site.register(Video)
+admin.site.register(Quiz, QuizAdmin)
+@admin.register(QuizResult)
+class QuizResultAdmin(admin.ModelAdmin):
+    list_display = ("id", "user", "video", "score", "total_questions", "created_at")
+    list_filter = ("video", "user")
+    search_fields = ("user__username", "video__title")
 
 
 @admin.register(CourseTeam)
