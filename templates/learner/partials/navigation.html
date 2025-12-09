@@ -153,8 +153,8 @@
 
   <!-- Next -->
   {% if next_url %}
-  <a href="{{ next_url }}"
-     hx-get="{{ next_url }}"
+  <a href="{{ next_url }}?from_next=1"
+     hx-get="{{ next_url }}?from_next=1"
      hx-target="#content-area"
      hx-swap="innerHTML"
      hx-push-url="true"

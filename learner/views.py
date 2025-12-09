@@ -1462,6 +1462,7 @@ def load_content(request, username, id, slug, content_type, content_id):
     logger.info(f"load_content: Rendering {template} untuk pengguna {username}, {content_type} {content_id}")
     response = render(request, template, context)
     response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    
     return response
 
 
