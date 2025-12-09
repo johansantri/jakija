@@ -459,7 +459,7 @@
                             {% for question in assessment.questions.all|shuffled %}
                             <div class="bg-white p-6 lg:p-10 rounded-2xl shadow-xl border border-gray-200">
                                 <h5 class="text-xl sm:text-2xl lg:text-3xl font-semibold mb-8 text-gray-800 leading-tight">
-                                    {{ forloop.counter }}. {{ question.text }}
+                                    {{ forloop.counter }}. {{ question.text|safe }}
                                 </h5>
                                 <div class="space-y-5">
                                     {% for choice in question.choices.all|shuffled %}
@@ -468,7 +468,7 @@
                                         <input type="radio" name="answers_{{ question.id }}" value="{{ choice.id }}"
                                             class="mt-1 w-5 h-5 lg:w-6 lg:h-6 text-indigo-600 focus:ring-indigo-500"
                                             {% if answered and answered.choice.id == choice.id %}checked{% endif %}>
-                                        <span class="text-base sm:text-lg lg:text-xl text-gray-700 leading-relaxed flex-1">{{ choice.text }}</span>
+                                        <span class="text-base sm:text-lg lg:text-xl text-gray-700 leading-relaxed flex-1">{{ choice.text|safe }}</span>
                                     </label>
                                     {% endwith %}
                                     {% endfor %}
@@ -524,7 +524,7 @@
 
                 {% if is_quiz and not is_started and not assessment_locked %}
                 <div class="text-center py-32 lg:py-40 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-3xl">
-                    <h3 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-10 text-gray-800">{{ assessment.title }}</h3>
+                    <h3 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-10 text-gray-800">{{ assessment.title|safe }}</h3>
                     <p class="text-xl lg:text-2xl text-gray-600 mb-16">Siap untuk memulai kuis?</p>
                     <form method="POST" hx-post="{% url 'learner:start_assessment' assessment.id %}" hx-target="#content-area" hx-swap="innerHTML">
                         {% csrf_token %}

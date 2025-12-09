@@ -1324,6 +1324,7 @@ def load_content(request, username, id, slug, content_type, content_id):
 
     if content_type == 'material':
         material = get_object_or_404(Material, id=content_id)
+        MaterialRead.objects.get_or_create(user=request.user, material=material)
         context['material'] = material
         context['current_content'] = ('material', material, next((s for s in sections if material in s.materials.all()), None))
         context['comments'] = Comment.objects.filter(material=material, parent=None).select_related('user', 'parent').prefetch_related('children').order_by('-created_at')
@@ -1335,10 +1336,12 @@ def load_content(request, username, id, slug, content_type, content_id):
         context['current_content'] = ('assessment', assessment, next((s for s in sections if assessment in s.assessments.all()), None))
         current_index = next((i for i, c in enumerate(combined_content) if c[0] == 'assessment' and c[1].id == assessment.id), 0)
 
+        # LTI Tool
         lti_tool = getattr(assessment, 'lti_tool', None)
         context['lti_tool'] = lti_tool
         context['is_lti'] = bool(lti_tool)
 
+        # Payment check (buy_take_exam) — tetap sama persis
         if course.payment_model and course.payment_model.code == 'buy_take_exam':
             payment = Payment.objects.filter(
                 user=request.user, course=course, status='completed', payment_model='buy_take_exam'
@@ -1350,11 +1353,17 @@ def load_content(request, username, id, slug, content_type, content_id):
                     'payment_type': 'exam'
                 })
                 logger.info(f"Pembayaran diperlukan untuk penilaian {content_id} di kursus {course.id} untuk pengguna {request.user.username}")
-            else:
-                pass
-        else:
-            pass
 
+        # =================================================================
+        # PENTING: Default anggap ini KUIS BIASA (yang pakai Question/Choice)
+        # =================================================================
+        # Kenapa? Karena selama ini kalau ada video quiz, is_quiz jadi False
+        # dan kuis biasa ga pernah muncul.
+        # =================================================================
+        context['is_quiz'] = True
+        context['is_video_quiz'] = False
+
+        # Logic kuis biasa (timer, session, jawaban, dll) — JALANKAN DULU
         session = AssessmentSession.objects.filter(user=request.user, assessment=assessment).first()
         if session:
             context['is_started'] = True
@@ -1369,51 +1378,83 @@ def load_content(request, username, id, slug, content_type, content_id):
             }
             context.update(_build_assessment_context(assessment, request.user))
 
-        # ==================== TAMBAHAN: IN-VIDEO QUIZ (SESUAI MODEL KAMU) ====================
-        quiz_with_video = assessment.quizzes.filter(video__isnull=False).first()
-        if quiz_with_video and quiz_with_video.video:
-            video = quiz_with_video.video
+        # =================================================================
+        # BARU SETELAH ITU → cek apakah ini sebenarnya VIDEO QUIZ
+        # Jika ada assessment.quizzes → pasti video quiz → matikan kuis biasa
+        # =================================================================
+        # =================================================================
+        # VIDEO QUIZ → hanya jika ada assessment.quizzes
+        # =================================================================
+        if assessment.quizzes.exists():
+            context['is_video_quiz'] = True
+            context['is_quiz'] = False  # matikan kuis biasa
+
+            # Ambil video (pasti ada karena quizzes exists)
+            video = assessment.quizzes.first().video  # semua quiz pakai video yang sama
+
+            # Cek apakah user sudah pernah selesai mengerjakan video quiz ini
+            result = QuizResult.objects.filter(
+                user=request.user,
+                video=video,
+                assessment=assessment
+            ).first()
+
+            # INI YANG PALING PENTING: Jika sudah ada hasil → anggap assessment selesai!
+            if result:
+                AssessmentRead.objects.get_or_create(
+                    user=request.user,
+                    assessment=assessment
+                )
+
+            # Build data kuis untuk JavaScript
             quizzes_data = []
-            for q in video.quizzes.filter(assessment=assessment).order_by('time_in_video'):
+            for q in assessment.quizzes.all().order_by('time_in_video'):
                 quiz_dict = {
                     "time": float(q.time_in_video),
                     "question": q.question,
                     "explanation": q.explanation or ""
                 }
+
                 if q.question_type == "MC":
                     quiz_dict["type"] = "multiple-choice"
                     quiz_dict["options"] = [opt.text for opt in q.options.all()]
                     correct_opt = q.options.filter(is_correct=True).first()
                     quiz_dict["correct"] = list(q.options.all()).index(correct_opt) if correct_opt else 0
+
                 elif q.question_type == "TF":
                     quiz_dict["type"] = "true-false"
-                    correct_val = (q.correct_answer_text or "").lower()
+                    correct_val = (q.correct_answer_text or "").lower().strip()
                     quiz_dict["correct"] = correct_val in ["true", "benar", "1", "yes"]
+
                 elif q.question_type in ["FB", "ES"]:
                     quiz_dict["type"] = "fill-blank"
-                    quiz_dict["correct"] = q.correct_answer_text or ""
+                    quiz_dict["correct"] = (q.correct_answer_text or "").strip()
+
                 elif q.question_type == "DD":
                     quiz_dict["type"] = "drag-and-drop"
                     quiz_dict["items"] = [opt.text for opt in q.options.all()]
-                    quiz_dict["correct"] = q.correct_answer_text
+                    quiz_dict["correct"] = q.correct_answer_text or ""
+
                 quizzes_data.append(quiz_dict)
 
-            result = QuizResult.objects.filter(user=request.user, video=video, assessment=assessment).first()
+            # Siapkan result_json untuk JS (biar tahu sudah dijawab sebelumnya)
             result_json = None
             if result:
                 result_json = {
                     "score": result.score,
                     "total_questions": result.total_questions,
-                    "answers": result.answers
+                    "answers": result.answers or {}
                 }
 
-            context['video'] = video
-            context['quizzes_data'] = quizzes_data
-            context['quiz_result'] = result_json
-            context['is_video_quiz'] = True
-            context['quizzes_json'] = json.dumps(quizzes_data)
-            context['result_json'] = json.dumps(result_json)
-           # print(context['result_json_dump'])
+            # Masukkan ke context
+            context.update({
+                'video': video,
+                'quizzes_data': quizzes_data,
+                'quiz_result': result_json,
+                'quizzes_json': json.dumps(quizzes_data, ensure_ascii=False),
+                'result_json_dump': json.dumps(result_json, ensure_ascii=False) if result_json else None,
+            })
+
         # ==================== AKHIR TAMBAHAN IN-VIDEO QUIZ ====================
 
     context['previous_url'], context['next_url'] = _get_navigation_urls(username, id, slug, combined_content, current_index)
@@ -1422,6 +1463,9 @@ def load_content(request, username, id, slug, content_type, content_id):
     response = render(request, template, context)
     response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     return response
+
+
+
 
 @login_required
 def save_invideo_quiz(request, video_id, assessment_id):
@@ -1455,21 +1499,21 @@ logger = logging.getLogger(__name__)
 def mark_progress(request):
     try:
         if not request.body:
-           # logger.warning("Empty request body in mark_progress")
+            logger.warning("Empty request body in mark_progress")
             return JsonResponse({'error': 'Empty request body'}, status=400)
 
         try:
             data = json.loads(request.body)
-            #logger.debug(f"Parsed JSON data: {data}")  # For debugging
+            logger.debug(f"Parsed JSON data: {data}")  # For debugging
         except json.JSONDecodeError as e:
-            #logger.warning(f"Invalid JSON in mark_progress: {e}")
+            logger.warning(f"Invalid JSON in mark_progress: {e}")
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
         content_type = data.get('content_type')
         content_id = data.get('content_id')
 
         if not content_type or not content_id:
-            #logger.warning(f"Missing content_type or content_id: {data}")
+            logger.warning(f"Missing content_type or content_id: {data}")
             return JsonResponse({'error': 'Missing content_type or content_id'}, status=400)
 
         user = request.user
@@ -1500,12 +1544,12 @@ def mark_progress(request):
                 if not created:  # Only recalc if existing
                     progress.progress_percentage = calculate_course_progress(user, course)
                     progress.save(update_fields=['progress_percentage'])
-                #logger.info(f"Updated progress for user {user.id} in course {course.id}: {progress.progress_percentage}%")
+                logger.info(f"Updated progress for user {user.id} in course {course.id}: {progress.progress_percentage}%")
 
         return JsonResponse({'status': 'success'})
 
     except Exception as e:
-        #logger.exception("Unexpected error in mark_progress")
+        logger.exception("Unexpected error in mark_progress")
         return JsonResponse({'error': 'Internal server error'}, status=500)
 
 @login_required
@@ -1966,16 +2010,32 @@ def get_progress(request, username, slug):
 
 
 def calculate_course_progress(user, course):
-    materials = Material.objects.filter(section__courses=course).distinct()
-    assessments = Assessment.objects.filter(section__courses=course).distinct()
-    total_materials = materials.count()
-    total_assessments = assessments.count()
-    materials_read = MaterialRead.objects.filter(user=user, material__in=materials).count()
-    assessments_read = AssessmentRead.objects.filter(user=user, assessment__in=assessments).count()
-    materials_progress = (materials_read / total_materials * 100) if total_materials > 0 else 0
-    assessments_progress = (assessments_read / total_assessments * 100) if total_assessments > 0 else 0
-    total_content = total_materials + total_assessments
-    return (materials_progress + assessments_progress) / 2 if total_content > 0 else 0
+    """
+    Hitung progress kursus secara akurat: total konten yang sudah dibaca / total konten.
+    """
+    # Ambil semua materi & assessment di course ini
+    materials = Material.objects.filter(section__courses=course)
+    assessments = Assessment.objects.filter(section__courses=course)
+
+    total_content = materials.count() + assessments.count()
+    
+    if total_content == 0:
+        return 100
+
+    # Hitung yang sudah dibaca
+    read_materials = MaterialRead.objects.filter(
+        user=user,
+        material__section__courses=course
+    ).count()
+
+    read_assessments = AssessmentRead.objects.filter(
+        user=user,
+        assessment__section__courses=course
+    ).count()
+
+    completed = read_materials + read_assessments
+
+    return round((completed / total_content) * 100)
 
 @login_required
 def submit_answer_askora_new(request, ask_ora_id):
