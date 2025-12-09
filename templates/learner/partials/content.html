@@ -233,7 +233,7 @@
                             if(q.type === "multiple-choice"){
                                 q.options.forEach((opt,i)=>{
                                     const b = document.createElement('button');
-                                    b.className = "w-full p-4 text-left bg-gray-100 rounded-xl font-medium transition text-base md:text-lg";
+                                    b.className = "w-full p-4 text-center bg-gray-100 rounded-xl font-medium transition text-base md:text-lg";
                                     b.textContent = opt;
                                     if(i === q.correct) b.classList.add("bg-green-500");
                                     if(alreadyAnswered.userAnswer === i && !alreadyAnswered.correct) b.classList.add("bg-red-500","text-white");
@@ -290,7 +290,7 @@
                         if(q.type==="multiple-choice"){
                             q.options.forEach((opt,i)=>{
                                 const b = document.createElement('button');
-                                b.className = "w-full p-4 text-left bg-gray-100 hover:bg-gray-200 rounded-xl font-medium transition text-base md:text-lg";
+                                b.className = "w-full p-4 text-center bg-blue-100 hover:bg-gray-200 rounded-xl font-medium transition text-base md:text-lg";
                                 b.textContent = opt;
                                 b.onclick=()=>handleAnswer(i===q.correct,b);
                                 optionsContainer.appendChild(b);
