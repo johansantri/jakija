@@ -171,7 +171,7 @@
                     }
 
 
-                    console.log(getCSRFToken());  // Cek apakah token CSRF diambil dengan benar
+                   // console.log(getCSRFToken());  // Cek apakah token CSRF diambil dengan benar
 
 
 
@@ -349,51 +349,71 @@
                     };
 
                     // Simpan hasil dan tampilkan UI akhir
-                    function endQuiz() {
-                        const csrfToken = getCSRFToken();
-                        console.log("CSRF Token:", csrfToken); // Cek token CSRF yang diambil
-                        const videoEl = document.getElementById("myVideo");
+                    // Simpan hasil dan tampilkan UI akhir
+                // Fungsi untuk melanjutkan menonton video
+                // Fungsi untuk melanjutkan menonton video dan menyembunyikan overlay
+                function continueWatching() {
+                    const video = document.getElementById('myVideo');
+                    const overlay = document.getElementById('quizOverlay');
+                    const quizCard = document.querySelector('.quiz-card');
 
-                        // 🔥 JANGAN LUPA INI
-                        const assessmentId = videoEl.dataset.assessment;
-
-                        console.log("Assessment ID:", assessmentId);
-                        overlay.classList.add('active');
-                        fetch(`/video/${videoEl.dataset.id}/save-result/${assessmentId}/`, {
-                            method: "POST",
-                            credentials: "same-origin", 
-                            headers: {
-                                "Content-Type": "application/json",
-                                "X-CSRFToken": getCSRFToken(),
-                            },
-                            body: JSON.stringify({
-                                score: score,
-                                total: quizzes.length,
-                                answers: answeredQuizzes
-                            })
-                        })
-                        .then(res => {
-                            if (!res.ok) {
-                                return res.text().then(text => {throw new Error(text)});
-                            }
-                            return res.json();
-                        })
-                        .then(data => {
-                            console.log("Saved:", data);
-                        })
-                        .catch(error => {
-                            console.error("Request failed:", error);
-                            alert('CSRF Token Error or server issue. ' + error.message);
-                        });
-
-                        quizCard.innerHTML = `
-                            <div class="text-center py-12">
-                                <i class="fas fa-trophy text-8xl text-yellow-400 mb-6"></i>
-                                <h2 class="text-4xl font-bold mb-4">Kuis Selesai!</h2>
-                                <p class="text-6xl font-black text-green-400">${score}/${quizzes.length}</p>
-                                <button onclick="location.reload()" class="mt-8 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-5 rounded-full text-xl">Main Lagi</button>
-                            </div>`;
+                    if (video.paused) {
+                        video.play();  // Lanjutkan video jika belum selesai
                     }
+
+                    // Sembunyikan overlay dan quiz card
+                    overlay.classList.remove('active'); // Menghapus class 'active' untuk menyembunyikan overlay
+                    quizCard.classList.add('hidden');   // Menambahkan class 'hidden' untuk menyembunyikan quiz card
+                }
+
+
+                function endQuiz() {
+                    const csrfToken = getCSRFToken();
+                    //console.log("CSRF Token:", csrfToken); // Cek token CSRF yang diambil
+                    const videoEl = document.getElementById("myVideo");
+
+                    // 🔥 JANGAN LUPA INI
+                    const assessmentId = videoEl.dataset.assessment;
+
+                   // console.log("Assessment ID:", assessmentId);
+                    overlay.classList.add('active');
+                    fetch(`/video/${videoEl.dataset.id}/save-result/${assessmentId}/`, {
+                        method: "POST",
+                        credentials: "same-origin", 
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": getCSRFToken(),
+                        },
+                        body: JSON.stringify({
+                            score: score,
+                            total: quizzes.length,
+                            answers: answeredQuizzes
+                        })
+                    })
+                    .then(res => {
+                        if (!res.ok) {
+                            return res.text().then(text => {throw new Error(text)});
+                        }
+                        return res.json();
+                    })
+                    .then(data => {
+                        console.log("Saved:", data);
+                    })
+                    .catch(error => {
+                        console.error("Request failed:", error);
+                        alert('CSRF Token Error or server issue. ' + error.message);
+                    });
+
+                    quizCard.innerHTML = `
+                        <div class="text-center py-12">
+                            <i class="fas fa-trophy text-8xl text-yellow-400 mb-6"></i>
+                            <h2 class="text-4xl font-bold mb-4">Kuis Selesai!</h2>
+                            <p class="text-6xl font-black text-green-400">${score}/${quizzes.length}</p>
+                            <button onclick="continueWatching()" class="mt-8 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-5 rounded-full text-xl">Lanjut Menonton Sampai Selesai</button>
+                        </div>`;
+                }
+
+
 
 
 

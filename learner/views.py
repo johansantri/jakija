@@ -1059,7 +1059,7 @@ def my_course(request, username, id, slug):
     if request.user.username != username:
         logger.warning(f"Upaya akses tidak sah oleh {request.user.username} untuk {username}")
         return HttpResponse(status=403)
-
+    
     user = request.user
     required_fields = {
         'first_name': 'First Name',
@@ -1193,7 +1193,9 @@ def load_content(request, username, id, slug, content_type, content_id):
     if request.user.username != username:
         logger.warning(f"Upaya akses tidak sah oleh {request.user.username} untuk {username}")
         return HttpResponse(status=403)
-
+        # Reset kuis kalau ada ?reset=1
+    if request.GET.get('reset') == '1':
+        QuizResult.objects.filter(user=request.user, assessment_id=content_id).delete()
     course = get_object_or_404(Course, id=id, slug=slug)
     if not Enrollment.objects.filter(user=request.user, course=course).exists():
         logger.warning(f"Pengguna {request.user.username} tidak terdaftar di kursus {slug}")
@@ -1410,8 +1412,8 @@ def load_content(request, username, id, slug, content_type, content_id):
             context['quiz_result'] = result_json
             context['is_video_quiz'] = True
             context['quizzes_json'] = json.dumps(quizzes_data)
-            context['result_json_dump'] = json.dumps(result_json)
-
+            context['result_json'] = json.dumps(result_json)
+           # print(context['result_json_dump'])
         # ==================== AKHIR TAMBAHAN IN-VIDEO QUIZ ====================
 
     context['previous_url'], context['next_url'] = _get_navigation_urls(username, id, slug, combined_content, current_index)
@@ -1447,7 +1449,7 @@ def save_invideo_quiz(request, video_id, assessment_id):
 
 logger = logging.getLogger(__name__)
 
-@csrf_exempt
+#@csrf_exempt
 @login_required
 @require_POST
 def mark_progress(request):
