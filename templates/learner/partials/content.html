@@ -68,441 +68,446 @@
 
                 <!-- IN-VIDEO QUIZ: VERSI ULTIMATE (Video.js + GSAP + Sound + Score + Super Cantik) -->
                  {% if is_video_quiz and video %}
-                <style>
-                    .quiz-overlay{
-                        position:fixed; inset:0;
-                        background:rgba(0,0,0,0.85);
-                        backdrop-filter:blur(15px);
-                        opacity:0; pointer-events:none;
-                        transition:opacity .35s ease;
-                        z-index:50;
-                        display:flex; align-items:center; justify-content:center;
-                        padding:1.5rem; overflow-y:auto;
-                    }
-                    .quiz-overlay.active{
-                        opacity:1; pointer-events:all;
-                    }
+                 <h1 class="sr-only">{{ video.title }}</h1>
+                        <style>
+                            .quiz-overlay{
+                                position:fixed; inset:0;
+                                background:rgba(0,0,0,0.85);
+                                backdrop-filter:blur(15px);
+                                opacity:0; pointer-events:none;
+                                transition:opacity .35s ease;
+                                z-index:50;
+                                display:flex; align-items:center; justify-content:center;
+                                padding:1.5rem; overflow-y:auto;
+                            }
+                            .quiz-overlay.active{
+                                opacity:1; pointer-events:all;
+                            }
 
-                    .quiz-card{
-                        background:rgba(255,255,255,0.96);
-                        border-radius:1.75rem;
-                        padding:2rem;
-                        width:100%; max-width:480px;
-                        box-shadow:0 25px 60px -12px rgba(0,0,0,0.45);
-                        transform:scale(.9); opacity:0;
-                    }
+                            .quiz-card{
+                                background:rgba(255,255,255,0.96);
+                                border-radius:1.75rem;
+                                padding:2rem;
+                                width:100%; max-width:480px;
+                                box-shadow:0 25px 60px -12px rgba(0,0,0,0.45);
+                                transform:scale(.9); opacity:0;
+                            }
 
-                    /* Buttons */
-                    .quiz-option{
-                        @apply w-full p-4 text-left rounded-xl font-medium transition-all cursor-pointer;
-                        background:#f8fafc;
-                        border:2px solid transparent;
-                    }
-                    .quiz-option:hover{
-                        background:#eef2ff;
-                        border-color:#c7d2fe;
-                        transform:translateY(-2px);
-                        box-shadow:0 6px 16px rgba(0,0,0,0.15);
-                    }
+                            /* Buttons */
+                            .quiz-option{
+                                @apply w-full p-4 text-left rounded-xl font-medium transition-all cursor-pointer;
+                                background:#f8fafc;
+                                border:2px solid transparent;
+                            }
+                            .quiz-option:hover{
+                                background:#eef2ff;
+                                border-color:#c7d2fe;
+                                transform:translateY(-2px);
+                                box-shadow:0 6px 16px rgba(0,0,0,0.15);
+                            }
 
-                    .quiz-btn-true{
-                        @apply w-full p-5 text-2xl font-bold rounded-xl text-white transition;
-                        background:#10b981;
-                    }
-                    .quiz-btn-true:hover{ background:#059669; }
+                            .quiz-btn-true{
+                                @apply w-full p-5 text-2xl font-bold rounded-xl text-white transition;
+                                background:#10b981;
+                            }
+                            .quiz-btn-true:hover{ background:#059669; }
 
-                    .quiz-btn-false{
-                        @apply w-full p-5 text-2xl font-bold rounded-xl text-white transition;
-                        background:#ef4444;
-                    }
-                    .quiz-btn-false:hover{ background:#dc2626; }
+                            .quiz-btn-false{
+                                @apply w-full p-5 text-2xl font-bold rounded-xl text-white transition;
+                                background:#ef4444;
+                            }
+                            .quiz-btn-false:hover{ background:#dc2626; }
 
-                    .finish-card-icon{
-                        filter: drop-shadow(0px 8px 12px rgba(255,200,0,0.7));
-                    }
-                </style>
+                            .finish-card-icon{
+                                filter: drop-shadow(0px 8px 12px rgba(255,200,0,0.7));
+                            }
+                        </style>
+                    
+                        <div class="relative w-full max-w-10xl shadow-2xl rounded-2xl overflow-hidden bg-black">
+                            
+                            <video id="myVideo" data-id="{{ video.id }}" data-assessment="{{ assessment.id }}" class="w-full" controls preload="auto">
+                                <source src="{{ video.file.url }}" type="video/mp4">
+                                Browser tidak mendukung video.
+                            </video>
 
-                    <div class="relative w-full max-w-10xl shadow-2xl rounded-2xl overflow-hidden bg-black">
-                        <video id="myVideo" data-id="{{ video.id }}" data-assessment="{{ assessment.id }}" class="w-full" controls preload="auto">
-                            <source src="{{ video.file.url }}" type="video/mp4">
-                            Browser tidak mendukung video.
-                        </video>
+                            <div class="absolute top-4 left-4 bg-black/70 backdrop-blur px-5 py-3 rounded-full flex items-center gap-3 z-50">
+                                <i class="fas fa-trophy text-yellow-400 text-xl"></i>
+                                <span id="scoreDisplay" class="font-bold text-xl">0 / 0</span>
+                            </div>
 
-                        <div class="absolute top-4 left-4 bg-black/70 backdrop-blur px-5 py-3 rounded-full flex items-center gap-3 z-50">
-                            <i class="fas fa-trophy text-yellow-400 text-xl"></i>
-                            <span id="scoreDisplay" class="font-bold text-xl">0 / 0</span>
-                        </div>
-
-                        <div id="quizOverlay" class="quiz-overlay">
-                            <div class="quiz-card">
-                                <h2 id="questionText" class="text-xl md:text-2xl font-bold text-center mb-6 leading-relaxed"></h2>
-                                <div id="optionsContainer" class="space-y-4 mb-6"></div>
-                                <div id="explanation" class="p-4 bg-green-100 rounded-xl text-green-800 font-medium hidden"></div>
-                                <button id="nextButton" class="w-full mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-5 rounded-full text-lg shadow-lg transition transform hover:scale-105">
-                                    Lanjutkan Video
-                                </button>
+                            <div id="quizOverlay" class="quiz-overlay">
+                                <div class="quiz-card">
+                                    <h2 id="questionText" class="text-xl md:text-2xl font-bold text-center mb-6 leading-relaxed"></h2>
+                                    <div id="optionsContainer" class="space-y-4 mb-6"></div>
+                                    <div id="explanation" class="p-4 bg-green-100 rounded-xl text-green-800 font-medium hidden"></div>
+                                    <button id="nextButton" class="w-full mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-5 rounded-full text-lg shadow-lg transition transform hover:scale-105">
+                                        Lanjutkan Video
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <audio id="correctSound">
-                    <source src="{% static 'sounds/correct-156911.mp3' %}" type="audio/mp3">
-                    </audio>
-                    <audio id="wrongSound">
-                    <source src="{% static 'sounds/error-mistake-sound-effect-incorrect-answer-437420.mp3' %}" type="audio/mp3">
-                    </audio>
-
+                        <audio id="correctSound">
+                        <source src="{% static 'sounds/correct-156911.mp3' %}" type="audio/mp3">
+                        </audio>
+                        <audio id="wrongSound">
+                        <source src="{% static 'sounds/error-mistake-sound-effect-incorrect-answer-437420.mp3' %}" type="audio/mp3">
+                        </audio>
+                    <!--invideoquiz-->
                     <script>
-                    const quizzes = {{ quizzes_json|safe }};
-                    let currentQuiz = 0;
-                    let score = 0;
-                    let answeredQuizzes = {};
+                        const quizzes = {{ quizzes_json|safe }};
+                        let currentQuiz = 0;
+                        let score = 0;
+                        let answeredQuizzes = {};
 
-                    function getCSRFToken() {
-                        const name = "csrftoken=";
-                        const cookies = document.cookie.split(';');
-                        for (let cookie of cookies) {
-                            cookie = cookie.trim();
-                            if (cookie.startsWith(name)) {
-                                return cookie.substring(name.length);
+                        function getCSRFToken() {
+                            const name = "csrftoken=";
+                            const cookies = document.cookie.split(';');
+                            for (let cookie of cookies) {
+                                cookie = cookie.trim();
+                                if (cookie.startsWith(name)) {
+                                    return cookie.substring(name.length);
+                                }
                             }
+                            return null;
                         }
-                        return null;
-                    }
 
 
-                   // console.log(getCSRFToken());  // Cek apakah token CSRF diambil dengan benar
+                        // console.log(getCSRFToken());  // Cek apakah token CSRF diambil dengan benar
 
 
 
 
 
-                    const video = document.getElementById('myVideo');
-                    const overlay = document.getElementById('quizOverlay');
-                    const quizCard = document.querySelector('.quiz-card');
-                    const questionText = document.getElementById('questionText');
-                    const optionsContainer = document.getElementById('optionsContainer');
-                    const nextButton = document.getElementById('nextButton');
-                    const explanation = document.getElementById('explanation');
-                    const scoreDisplay = document.getElementById('scoreDisplay');
+                        const video = document.getElementById('myVideo');
+                        const overlay = document.getElementById('quizOverlay');
+                        const quizCard = document.querySelector('.quiz-card');
+                        const questionText = document.getElementById('questionText');
+                        const optionsContainer = document.getElementById('optionsContainer');
+                        const nextButton = document.getElementById('nextButton');
+                        const explanation = document.getElementById('explanation');
+                        const scoreDisplay = document.getElementById('scoreDisplay');
 
-                    const result = JSON.parse('{{ result_json|default:"null"|escapejs }}');
+                        const result = JSON.parse('{{ result_json|default:"null"|escapejs }}');
 
-                    // Jika user pernah submit sebelumnya
-                    if(result){
-                        score = result.score || 0;
-                        if(result.answers){
-                            Object.keys(result.answers).forEach(index => {
-                                answeredQuizzes[index] = {
-                                    answered: true,
-                                    correct: result.answers[index].correct,
-                                    userAnswer: result.answers[index].answer,
-                                    shown: false // overlay belum ditampilkan
-                                };
-                            });
-                        }
-                        updateScoreDisplay();
-                    }
-
-                    // Fungsi main
-                    function playSound(correct){
-                        const s = correct ? document.getElementById('correctSound') : document.getElementById('wrongSound');
-                        s.pause(); s.currentTime=0; s.play().catch(()=>{});
-                    }
-
-                    function updateScoreDisplay(){
-                        const answeredCount = Object.keys(answeredQuizzes).length;
-                        scoreDisplay.textContent = `${score} / ${answeredCount}`;
-                    }
-
-                    // Tampilkan quiz
-                    function showQuiz(index){
-                        const q = quizzes[index];
-                        video.pause();
-                        overlay.classList.add('active');
-                        gsap.to(quizCard, {scale:1, opacity:1, duration:0.6, ease:"back.out(1.7)"});
-                        questionText.textContent = q.question;
-                        optionsContainer.innerHTML = '';
-                        explanation.classList.add('hidden');
-                        nextButton.classList.add('hidden');
-
-                        const alreadyAnswered = answeredQuizzes[index] || {answered:false, correct:false};
-
-                        // Jika sudah dijawab sebelumnya, tampilkan jawaban disable
-                        if(alreadyAnswered.answered){
-                            if(q.type === "multiple-choice"){
-                                q.options.forEach((opt,i)=>{
-                                    const b = document.createElement('button');
-                                    b.className = "w-full p-4 text-center bg-gray-100 rounded-xl font-medium transition text-base md:text-lg";
-                                    b.textContent = opt;
-                                    if(i === q.correct) b.classList.add("bg-green-500");
-                                    if(alreadyAnswered.userAnswer === i && !alreadyAnswered.correct) b.classList.add("bg-red-500","text-white");
-                                    b.disabled = true;
-                                    optionsContainer.appendChild(b);
+                        // Jika user pernah submit sebelumnya
+                        if(result){
+                            score = result.score || 0;
+                            if(result.answers){
+                                Object.keys(result.answers).forEach(index => {
+                                    answeredQuizzes[index] = {
+                                        answered: true,
+                                        correct: result.answers[index].correct,
+                                        userAnswer: result.answers[index].answer,
+                                        shown: false // overlay belum ditampilkan
+                                    };
                                 });
-                            } else if(q.type === "true-false"){
-                                ["Salah","Benar"].forEach(label=>{
-                                    const btn = document.createElement('button');
-                                    btn.className = `w-full p-6 text-2xl font-bold rounded-xl ${label==="Benar"?"bg-green-500 hover:bg-green-600":"bg-red-500 hover:bg-red-600"} text-white`;
-                                    btn.textContent = label;
-                                    btn.disabled = true;
-                                    if(alreadyAnswered.userAnswer === label && !alreadyAnswered.correct){
-                                        btn.classList.remove("bg-green-500","bg-red-500");
-                                        btn.classList.add("bg-red-500","text-white");
-                                    }
-                                    optionsContainer.appendChild(btn);
-                                });
-                            } else if(q.type==="fill-blank" || q.type==="es"){
-                                const input = document.createElement('input');
-                                input.type="text";
-                                input.value = alreadyAnswered.userAnswer || "";
-                                input.disabled = true;
-                                input.className = "w-full p-5 text-xl text-center border-4 border-gray-300 rounded-xl outline-none " + (alreadyAnswered.correct?"bg-green-500 text-white":"bg-red-500 text-white");
-                                optionsContainer.appendChild(input);
-                            } else if(q.type==="drag-and-drop"){
-                                const drop = document.createElement('div');
-                                drop.className = "border-4 border-dashed border-green-500 rounded-2xl h-32 mb-6 flex items-center justify-center text-lg font-bold";
-                                drop.textContent = alreadyAnswered.userAnswer || "Jawaban: " + q.correct;
-                                optionsContainer.appendChild(drop);
                             }
-
-                            explanation.textContent = q.explanation || "";
-                            explanation.classList.remove('hidden');
-                            nextButton.classList.remove('hidden');
-                            return; // jangan buat tombol submit lagi
-                        }
-
-                        // Jika belum dijawab, tampilkan tombol submit (normal)
-                        function handleAnswer(correct, el){
-                            if(alreadyAnswered.answered) return;
-                            alreadyAnswered.answered = true;
-                            alreadyAnswered.correct = correct;
-                            answeredQuizzes[index] = alreadyAnswered;
-                            if(correct) score++;
-                            playSound(correct);
-                            if(el) el.classList.add(correct ? "bg-green-500" : "bg-red-500","text-white");
-                            explanation.textContent = q.explanation || "";
-                            explanation.classList.remove('hidden');
-                            nextButton.classList.remove('hidden');
                             updateScoreDisplay();
                         }
 
-                        if(q.type==="multiple-choice"){
-                            q.options.forEach((opt,i)=>{
-                                const b = document.createElement('button');
-                                b.className = "w-full p-4 text-center bg-blue-100 hover:bg-gray-200 rounded-xl font-medium transition text-base md:text-lg";
-                                b.textContent = opt;
-                                b.onclick=()=>handleAnswer(i===q.correct,b);
-                                optionsContainer.appendChild(b);
-                            });
-                        } else if(q.type === "true-false"){
-                            const trueButton = document.createElement('button');
-                            trueButton.className = "w-full p-6 text-2xl font-bold rounded-xl bg-red-500 hover:bg-red-600 text-white";
-                            trueButton.textContent="Salah";
-
-                            const falseButton = document.createElement('button');
-                            falseButton.className = "w-full p-6 text-2xl font-bold rounded-xl bg-green-500 hover:bg-green-600 text-white";
-                            falseButton.textContent="Benar";
-
-                            const correctAnswer = String(q.correct).toLowerCase() === "true" || String(q.correct).toLowerCase() === "benar";
-                            trueButton.onclick = () => handleAnswer(correctAnswer === true, trueButton);
-                            falseButton.onclick = () => handleAnswer(correctAnswer === false, falseButton);
-
-                            optionsContainer.appendChild(trueButton);
-                            optionsContainer.appendChild(falseButton);
-                        } else if(q.type==="fill-blank" || q.type==="es"){
-                            const input = document.createElement('input');
-                            input.type="text"; input.autofocus=true; input.placeholder="Ketik jawaban...";
-                            input.className = "w-full p-5 text-xl text-center border-4 border-gray-300 rounded-xl focus:border-emerald-500 outline-none";
-                            const sub = document.createElement('button');
-                            sub.textContent="Submit"; sub.className = "mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-full";
-                            sub.onclick = ()=>handleAnswer(input.value.trim().toLowerCase()===q.correct.toLowerCase(),input);
-                            input.addEventListener("keydown", e=> e.key==="Enter" && sub.click());
-                            optionsContainer.appendChild(input); 
-                            optionsContainer.appendChild(sub);
-                        } else if(q.type==="drag-and-drop"){
-                            const drop=document.createElement('div');
-                            drop.className="border-4 border-dashed border-green-500 rounded-2xl h-32 mb-6 flex items-center justify-center text-lg font-bold";
-                            drop.textContent="Lepas di sini";
-                            drop.ondragover=e=>e.preventDefault();
-                            drop.ondrop=e=>{ e.preventDefault(); handleAnswer(e.dataTransfer.getData("text")===q.correct,drop); };
-                            optionsContainer.appendChild(drop);
-
-                            const items=document.createElement('div'); items.className="grid grid-cols-2 gap-4";
-                            q.items.forEach(item=>{
-                                const el=document.createElement('div');
-                                el.className="bg-green-600 text-white p-5 rounded-xl text-center cursor-move select-none text-base md:text-lg";
-                                el.textContent=item; el.draggable=true;
-                                el.ondragstart=e=>e.dataTransfer.setData("text",item);
-                                items.appendChild(el);
-                            });
-                            optionsContainer.appendChild(items);
+                        // Fungsi main
+                        function playSound(correct){
+                            const s = correct ? document.getElementById('correctSound') : document.getElementById('wrongSound');
+                            s.pause(); s.currentTime=0; s.play().catch(()=>{});
                         }
-                    }
 
-                    // Tombol Next
-                    nextButton.onclick=()=>{
-                        overlay.classList.remove('active');
-                        currentQuiz++;
-                        if(currentQuiz<quizzes.length) video.play();
-                        else endQuiz();
-                    };
-
-                    // Simpan hasil dan tampilkan UI akhir
-                    // Simpan hasil dan tampilkan UI akhir
-                // Fungsi untuk melanjutkan menonton video
-                // Fungsi untuk melanjutkan menonton video dan menyembunyikan overlay
-                function continueWatching() {
-                    const video = document.getElementById('myVideo');
-                    const overlay = document.getElementById('quizOverlay');
-                    const quizCard = document.querySelector('.quiz-card');
-
-                    if (video.paused) {
-                        video.play();  // Lanjutkan video jika belum selesai
-                    }
-
-                    // Sembunyikan overlay dan quiz card
-                    overlay.classList.remove('active'); // Menghapus class 'active' untuk menyembunyikan overlay
-                    quizCard.classList.add('hidden');   // Menambahkan class 'hidden' untuk menyembunyikan quiz card
-                }
-
-
-                function endQuiz() {
-                    const csrfToken = getCSRFToken();
-                    //console.log("CSRF Token:", csrfToken); // Cek token CSRF yang diambil
-                    const videoEl = document.getElementById("myVideo");
-
-                    // 🔥 JANGAN LUPA INI
-                    const assessmentId = videoEl.dataset.assessment;
-
-                   // console.log("Assessment ID:", assessmentId);
-                    overlay.classList.add('active');
-                    fetch(`/video/${videoEl.dataset.id}/save-result/${assessmentId}/`, {
-                        method: "POST",
-                        credentials: "same-origin", 
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-CSRFToken": getCSRFToken(),
-                        },
-                        body: JSON.stringify({
-                            score: score,
-                            total: quizzes.length,
-                            answers: answeredQuizzes
-                        })
-                    })
-                    .then(res => {
-                        if (!res.ok) {
-                            return res.text().then(text => {throw new Error(text)});
+                        function updateScoreDisplay(){
+                            const answeredCount = Object.keys(answeredQuizzes).length;
+                            scoreDisplay.textContent = `${score} / ${answeredCount}`;
                         }
-                        return res.json();
-                    })
-                    .then(data => {
-                        console.log("Saved:", data);
-                    })
-                    .catch(error => {
-                        console.error("Request failed:", error);
-                        alert('CSRF Token Error or server issue. ' + error.message);
-                    });
 
-                    quizCard.innerHTML = `
-                        <div class="text-center py-12">
-                            <i class="fas fa-trophy text-8xl text-yellow-400 mb-6"></i>
-                            <h2 class="text-4xl font-bold mb-4">Kuis Selesai!</h2>
-                            <p class="text-6xl font-black text-green-400">${score}/${quizzes.length}</p>
-                            <button onclick="continueWatching()" class="mt-8 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-5 rounded-full text-xl">Lanjut Menonton Sampai Selesai</button>
-                        </div>`;
-                }
+                        // Tampilkan quiz
+                        function showQuiz(index){
+                            const q = quizzes[index];
+                            video.pause();
+                            overlay.classList.add('active');
+                            gsap.to(quizCard, {scale:1, opacity:1, duration:0.6, ease:"back.out(1.7)"});
+                            questionText.textContent = q.question;
+                            optionsContainer.innerHTML = '';
+                            explanation.classList.add('hidden');
+                            nextButton.classList.add('hidden');
 
+                            const alreadyAnswered = answeredQuizzes[index] || {answered:false, correct:false};
 
+                            // Jika sudah dijawab sebelumnya, tampilkan jawaban disable
+                            if(alreadyAnswered.answered){
+                                if(q.type === "multiple-choice"){
+                                    q.options.forEach((opt,i)=>{
+                                        const b = document.createElement('button');
+                                        b.className = "w-full p-4 text-center bg-gray-100 rounded-xl font-medium transition text-base md:text-lg";
+                                        b.textContent = opt;
+                                        if(i === q.correct) b.classList.add("bg-green-500");
+                                        if(alreadyAnswered.userAnswer === i && !alreadyAnswered.correct) b.classList.add("bg-red-500","text-white");
+                                        b.disabled = true;
+                                        optionsContainer.appendChild(b);
+                                    });
+                                } else if(q.type === "true-false"){
+                                    ["Salah","Benar"].forEach(label=>{
+                                        const btn = document.createElement('button');
+                                        btn.className = `w-full p-6 text-2xl font-bold rounded-xl ${label==="Benar"?"bg-green-500 hover:bg-green-600":"bg-red-500 hover:bg-red-600"} text-white`;
+                                        btn.textContent = label;
+                                        btn.disabled = true;
+                                        if(alreadyAnswered.userAnswer === label && !alreadyAnswered.correct){
+                                            btn.classList.remove("bg-green-500","bg-red-500");
+                                            btn.classList.add("bg-red-500","text-white");
+                                        }
+                                        optionsContainer.appendChild(btn);
+                                    });
+                                } else if(q.type==="fill-blank" || q.type==="es"){
+                                    const input = document.createElement('input');
+                                    input.type="text";
+                                    input.value = alreadyAnswered.userAnswer || "";
+                                    input.disabled = true;
+                                    input.className = "w-full p-5 text-xl text-center border-4 border-gray-300 rounded-xl outline-none " + (alreadyAnswered.correct?"bg-green-500 text-white":"bg-red-500 text-white");
+                                    optionsContainer.appendChild(input);
+                                } else if(q.type==="drag-and-drop"){
+                                    const drop = document.createElement('div');
+                                    drop.className = "border-4 border-dashed border-green-500 rounded-2xl h-32 mb-6 flex items-center justify-center text-lg font-bold";
+                                    drop.textContent = alreadyAnswered.userAnswer || "Jawaban: " + q.correct;
+                                    optionsContainer.appendChild(drop);
+                                }
 
-
-
-                    // Event video timeupdate
-                    video.addEventListener('timeupdate', ()=>{
-                        quizzes.forEach((q,index)=>{
-                            if(video.currentTime >= q.time && !answeredQuizzes[index]?.shown){
-                                answeredQuizzes[index] = answeredQuizzes[index] || {};
-                                answeredQuizzes[index].shown = true;
-                                showQuiz(index);
+                                explanation.textContent = q.explanation || "";
+                                explanation.classList.remove('hidden');
+                                nextButton.classList.remove('hidden');
+                                return; // jangan buat tombol submit lagi
                             }
-                        });
-                    });
-                    </script>
-                {% endif %}
 
+                            // Jika belum dijawab, tampilkan tombol submit (normal)
+                            function handleAnswer(correct, el){
+                                if(alreadyAnswered.answered) return;
+                                alreadyAnswered.answered = true;
+                                alreadyAnswered.correct = correct;
+                                answeredQuizzes[index] = alreadyAnswered;
+                                if(correct) score++;
+                                playSound(correct);
+                                if(el) el.classList.add(correct ? "bg-green-500" : "bg-red-500","text-white");
+                                explanation.textContent = q.explanation || "";
+                                explanation.classList.remove('hidden');
+                                nextButton.classList.remove('hidden');
+                                updateScoreDisplay();
+                            }
 
+                            if(q.type==="multiple-choice"){
+                                q.options.forEach((opt,i)=>{
+                                    const b = document.createElement('button');
+                                    b.className = "w-full p-4 text-center bg-blue-100 hover:bg-gray-200 rounded-xl font-medium transition text-base md:text-lg";
+                                    b.textContent = opt;
+                                    b.onclick=()=>handleAnswer(i===q.correct,b);
+                                    optionsContainer.appendChild(b);
+                                });
+                            } else if(q.type === "true-false"){
+                                const trueButton = document.createElement('button');
+                                trueButton.className = "w-full p-6 text-2xl font-bold rounded-xl bg-red-500 hover:bg-red-600 text-white";
+                                trueButton.textContent="Salah";
 
-                    <!-- AKHIR IN-VIDEO QUIZ ULTIMATE -->
+                                const falseButton = document.createElement('button');
+                                falseButton.className = "w-full p-6 text-2xl font-bold rounded-xl bg-green-500 hover:bg-green-600 text-white";
+                                falseButton.textContent="Benar";
 
-                {% if is_quiz and is_started and not is_expired %}
-                <div class="sticky top-0 bg-white shadow-2xl z-50 p-4 lg:p-6 mb-10 rounded-2xl border border-gray-200">
-                    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-                        <span class="text-lg lg:text-xl font-semibold text-gray-700">
-                            Remaining Time: <span id="timer-countdown" class="text-3xl lg:text-4xl font-bold text-red-600">{{ remaining_time }}</span>s
-                        </span>
-                        <span id="progress-percent" class="text-base lg:text-lg font-medium text-gray-600">100%</span>
-                    </div>
-                    <div class="w-full bg-gray-300 rounded-full h-8 lg:h-10 mt-3 overflow-hidden">
-                        <div id="timer-progress" class="bg-gradient-to-r from-blue-500 to-blue-700 h-full rounded-full transition-all duration-1000 flex items-center justify-end pr-4">
-                            <span class="text-white font-bold text-sm lg:text-base">100%</span>
-                        </div>
-                    </div>
-                </div>
+                                const correctAnswer = String(q.correct).toLowerCase() === "true" || String(q.correct).toLowerCase() === "benar";
+                                trueButton.onclick = () => handleAnswer(correctAnswer === true, trueButton);
+                                falseButton.onclick = () => handleAnswer(correctAnswer === false, falseButton);
 
-                <form id="quiz-form" hx-post="{% url 'learner:submit_assessment_new' assessment.id %}" hx-target="#content-area" hx-swap="innerHTML" method="POST" class="space-y-10">
-                    {% csrf_token %}
-                    {% for question in assessment.questions.all|shuffled %}
-                    <div class="bg-white p-6 lg:p-10 rounded-2xl shadow-xl border border-gray-200">
-                        <h5 class="text-xl sm:text-2xl lg:text-3xl font-semibold mb-8 text-gray-800 leading-tight">
-                            {{ forloop.counter }}. {{ question.text }}
-                        </h5>
-                        <div class="space-y-5">
-                            {% for choice in question.choices.all|shuffled %}
-                            {% with answered=answered_questions|get_item:question.id %}
-                            <label class="flex items-start gap-5 cursor-pointer p-5 lg:p-6 rounded-xl hover:bg-gray-50 transition border border-gray-200">
-                                <input type="radio" name="answers_{{ question.id }}" value="{{ choice.id }}"
-                                       class="mt-1 w-5 h-5 lg:w-6 lg:h-6 text-indigo-600 focus:ring-indigo-500"
-                                       {% if answered and answered.choice.id == choice.id %}checked{% endif %}>
-                                <span class="text-base sm:text-lg lg:text-xl text-gray-700 leading-relaxed flex-1">{{ choice.text }}</span>
-                            </label>
-                            {% endwith %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% endfor %}
+                                optionsContainer.appendChild(trueButton);
+                                optionsContainer.appendChild(falseButton);
+                            } else if(q.type==="fill-blank" || q.type==="es"){
+                                const input = document.createElement('input');
+                                input.type="text"; input.autofocus=true; input.placeholder="Ketik jawaban...";
+                                input.className = "w-full p-5 text-xl text-center border-4 border-gray-300 rounded-xl focus:border-emerald-500 outline-none";
+                                const sub = document.createElement('button');
+                                sub.textContent="Submit"; sub.className = "mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-full";
+                                sub.onclick = ()=>handleAnswer(input.value.trim().toLowerCase()===q.correct.toLowerCase(),input);
+                                input.addEventListener("keydown", e=> e.key==="Enter" && sub.click());
+                                optionsContainer.appendChild(input); 
+                                optionsContainer.appendChild(sub);
+                            } else if(q.type==="drag-and-drop"){
+                                const drop=document.createElement('div');
+                                drop.className="border-4 border-dashed border-green-500 rounded-2xl h-32 mb-6 flex items-center justify-center text-lg font-bold";
+                                drop.textContent="Lepas di sini";
+                                drop.ondragover=e=>e.preventDefault();
+                                drop.ondrop=e=>{ e.preventDefault(); handleAnswer(e.dataTransfer.getData("text")===q.correct,drop); };
+                                optionsContainer.appendChild(drop);
 
-                    <div class="text-center mt-16">
-                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold text-xl sm:text-2xl lg:text-3xl px-12 lg:px-20 py-5 lg:py-7 rounded-xl shadow-2xl transition transform hover:scale-105">
-                            Submit All Answers
-                        </button>
-                    </div>
-                </form>
-
-                <script>
-                (function () {
-                    const timerEl = document.getElementById('timer-countdown');
-                    const progress = document.getElementById('timer-progress');
-                    const percentEl = document.getElementById('progress-percent');
-                    if (!timerEl) return;
-                    let total = parseInt(timerEl.textContent);
-                    let left = total;
-                    const iv = setInterval(() => {
-                        left--;
-                        const pct = Math.round((left / total) * 100);
-                        timerEl.textContent = left;
-                        progress.style.width = pct + '%';
-                        percentEl.textContent = pct + '%';
-                        progress.querySelector('span').textContent = pct + '%';
-                        if (pct <= 25) progress.classList.replace('from-blue-500', 'from-red-500');
-                        else if (pct <= 50) progress.classList.replace('from-blue-500', 'from-yellow-500');
-                        if (left <= 0) {
-                            clearInterval(iv);
-                            document.querySelectorAll('#quiz-form input[type=radio]').forEach(i => i.disabled = true);
-                            htmx.trigger('#quiz-form', 'submit');
+                                const items=document.createElement('div'); items.className="grid grid-cols-2 gap-4";
+                                q.items.forEach(item=>{
+                                    const el=document.createElement('div');
+                                    el.className="bg-green-600 text-white p-5 rounded-xl text-center cursor-move select-none text-base md:text-lg";
+                                    el.textContent=item; el.draggable=true;
+                                    el.ondragstart=e=>e.dataTransfer.setData("text",item);
+                                    items.appendChild(el);
+                                });
+                                optionsContainer.appendChild(items);
+                            }
                         }
-                    }, 1000);
-                })();
-                </script>
+
+                        // Tombol Next
+                        nextButton.onclick=()=>{
+                            overlay.classList.remove('active');
+                            currentQuiz++;
+                            if(currentQuiz<quizzes.length) video.play();
+                            else endQuiz();
+                        };
+
+                        // Simpan hasil dan tampilkan UI akhir
+                        // Simpan hasil dan tampilkan UI akhir
+                        // Fungsi untuk melanjutkan menonton video
+                        // Fungsi untuk melanjutkan menonton video dan menyembunyikan overlay
+                        function continueWatching() {
+                        const video = document.getElementById('myVideo');
+                        const overlay = document.getElementById('quizOverlay');
+                        const quizCard = document.querySelector('.quiz-card');
+
+                        if (video.paused) {
+                            video.play();  // Lanjutkan video jika belum selesai
+                        }
+
+                        // Sembunyikan overlay dan quiz card
+                        overlay.classList.remove('active'); // Menghapus class 'active' untuk menyembunyikan overlay
+                        quizCard.classList.add('hidden');   // Menambahkan class 'hidden' untuk menyembunyikan quiz card
+                        }
+
+
+                        function endQuiz() {
+                        const csrfToken = getCSRFToken();
+                        //console.log("CSRF Token:", csrfToken); // Cek token CSRF yang diambil
+                        const videoEl = document.getElementById("myVideo");
+
+                        // 🔥 JANGAN LUPA INI
+                        const assessmentId = videoEl.dataset.assessment;
+
+                        // console.log("Assessment ID:", assessmentId);
+                        overlay.classList.add('active');
+                        fetch(`/video/${videoEl.dataset.id}/save-result/${assessmentId}/`, {
+                            method: "POST",
+                            credentials: "same-origin", 
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": getCSRFToken(),
+                            },
+                            body: JSON.stringify({
+                                score: score,
+                                total: quizzes.length,
+                                answers: answeredQuizzes
+                            })
+                        })
+                        .then(res => {
+                            if (!res.ok) {
+                                return res.text().then(text => {throw new Error(text)});
+                            }
+                            return res.json();
+                        })
+                        .then(data => {
+                            console.log("Saved:", data);
+                        })
+                        .catch(error => {
+                            console.error("Request failed:", error);
+                            alert('CSRF Token Error or server issue. ' + error.message);
+                        });
+
+                        quizCard.innerHTML = `
+                            <div class="text-center py-12">
+                                <i class="fas fa-trophy text-8xl text-yellow-400 mb-6"></i>
+                                <h2 class="text-4xl font-bold mb-4">Kuis Selesai!</h2>
+                                <p class="text-6xl font-black text-green-400">${score}/${quizzes.length}</p>
+                                <button onclick="continueWatching()" class="mt-8 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-5 rounded-full text-xl">Lanjut Menonton Sampai Selesai</button>
+                            </div>`;
+                        }
+
+
+
+
+
+                        // Event video timeupdate
+                        video.addEventListener('timeupdate', ()=>{
+                            quizzes.forEach((q,index)=>{
+                                if(video.currentTime >= q.time && !answeredQuizzes[index]?.shown){
+                                    answeredQuizzes[index] = answeredQuizzes[index] || {};
+                                    answeredQuizzes[index].shown = true;
+                                    showQuiz(index);
+                                }
+                            });
+                        });
+                    </script>
+                            <!-- endvideo quiz -->
+
+                            
+                        {% endif %}
+
+
+
+                            <!-- AKHIR IN-VIDEO QUIZ ULTIMATE -->
+
+                        {% if is_quiz and is_started and not is_expired %}
+                        <div class="sticky top-0 bg-white shadow-2xl z-50 p-4 lg:p-6 mb-10 rounded-2xl border border-gray-200">
+                            <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                                <span class="text-lg lg:text-xl font-semibold text-gray-700">
+                                    Remaining Time: <span id="timer-countdown" class="text-3xl lg:text-4xl font-bold text-red-600">{{ remaining_time }}</span>s
+                                </span>
+                                <span id="progress-percent" class="text-base lg:text-lg font-medium text-gray-600">100%</span>
+                            </div>
+                            <div class="w-full bg-gray-300 rounded-full h-8 lg:h-10 mt-3 overflow-hidden">
+                                <div id="timer-progress" class="bg-gradient-to-r from-blue-500 to-blue-700 h-full rounded-full transition-all duration-1000 flex items-center justify-end pr-4">
+                                    <span class="text-white font-bold text-sm lg:text-base">100%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="quiz-form" hx-post="{% url 'learner:submit_assessment_new' assessment.id %}" hx-target="#content-area" hx-swap="innerHTML" method="POST" class="space-y-10">
+                            {% csrf_token %}
+                            {% for question in assessment.questions.all|shuffled %}
+                            <div class="bg-white p-6 lg:p-10 rounded-2xl shadow-xl border border-gray-200">
+                                <h5 class="text-xl sm:text-2xl lg:text-3xl font-semibold mb-8 text-gray-800 leading-tight">
+                                    {{ forloop.counter }}. {{ question.text }}
+                                </h5>
+                                <div class="space-y-5">
+                                    {% for choice in question.choices.all|shuffled %}
+                                    {% with answered=answered_questions|get_item:question.id %}
+                                    <label class="flex items-start gap-5 cursor-pointer p-5 lg:p-6 rounded-xl hover:bg-gray-50 transition border border-gray-200">
+                                        <input type="radio" name="answers_{{ question.id }}" value="{{ choice.id }}"
+                                            class="mt-1 w-5 h-5 lg:w-6 lg:h-6 text-indigo-600 focus:ring-indigo-500"
+                                            {% if answered and answered.choice.id == choice.id %}checked{% endif %}>
+                                        <span class="text-base sm:text-lg lg:text-xl text-gray-700 leading-relaxed flex-1">{{ choice.text }}</span>
+                                    </label>
+                                    {% endwith %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <div class="text-center mt-16">
+                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold text-xl sm:text-2xl lg:text-3xl px-12 lg:px-20 py-5 lg:py-7 rounded-xl shadow-2xl transition transform hover:scale-105">
+                                    Submit All Answers
+                                </button>
+                            </div>
+                        </form>
+
+                        <script>
+                        (function () {
+                            const timerEl = document.getElementById('timer-countdown');
+                            const progress = document.getElementById('timer-progress');
+                            const percentEl = document.getElementById('progress-percent');
+                            if (!timerEl) return;
+                            let total = parseInt(timerEl.textContent);
+                            let left = total;
+                            const iv = setInterval(() => {
+                                left--;
+                                const pct = Math.round((left / total) * 100);
+                                timerEl.textContent = left;
+                                progress.style.width = pct + '%';
+                                percentEl.textContent = pct + '%';
+                                progress.querySelector('span').textContent = pct + '%';
+                                if (pct <= 25) progress.classList.replace('from-blue-500', 'from-red-500');
+                                else if (pct <= 50) progress.classList.replace('from-blue-500', 'from-yellow-500');
+                                if (left <= 0) {
+                                    clearInterval(iv);
+                                    document.querySelectorAll('#quiz-form input[type=radio]').forEach(i => i.disabled = true);
+                                    htmx.trigger('#quiz-form', 'submit');
+                                }
+                            }, 1000);
+                        })();
+                    </script>
                 {% endif %}
 
                 {% if is_lti and lti_tool %}

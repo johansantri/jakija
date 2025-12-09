@@ -308,14 +308,15 @@
 <!-- Biarkan form.media handle Select2 + DAL -->
     {{ form.media }}
 
-    <!-- Inisialisasi DAL (opsional, biasanya otomatis) -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            if (typeof yourlabs !== 'undefined') {
-                yourlabs.Widget.prototype.initialize();
-            }
-        });
-    </script>
+
+<!-- Inisialisasi DAL (opsional, biasanya otomatis) -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof yourlabs !== 'undefined') {
+            yourlabs.Widget.prototype.initialize();
+        }
+    });
+</script>
 
     <script>
     document.body.addEventListener('htmx:configRequest', function(evt) {

@@ -1455,21 +1455,21 @@ logger = logging.getLogger(__name__)
 def mark_progress(request):
     try:
         if not request.body:
-            logger.warning("Empty request body in mark_progress")
+           # logger.warning("Empty request body in mark_progress")
             return JsonResponse({'error': 'Empty request body'}, status=400)
 
         try:
             data = json.loads(request.body)
-            logger.debug(f"Parsed JSON data: {data}")  # For debugging
+            #logger.debug(f"Parsed JSON data: {data}")  # For debugging
         except json.JSONDecodeError as e:
-            logger.warning(f"Invalid JSON in mark_progress: {e}")
+            #logger.warning(f"Invalid JSON in mark_progress: {e}")
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
         content_type = data.get('content_type')
         content_id = data.get('content_id')
 
         if not content_type or not content_id:
-            logger.warning(f"Missing content_type or content_id: {data}")
+            #logger.warning(f"Missing content_type or content_id: {data}")
             return JsonResponse({'error': 'Missing content_type or content_id'}, status=400)
 
         user = request.user
@@ -1500,12 +1500,12 @@ def mark_progress(request):
                 if not created:  # Only recalc if existing
                     progress.progress_percentage = calculate_course_progress(user, course)
                     progress.save(update_fields=['progress_percentage'])
-                logger.info(f"Updated progress for user {user.id} in course {course.id}: {progress.progress_percentage}%")
+                #logger.info(f"Updated progress for user {user.id} in course {course.id}: {progress.progress_percentage}%")
 
         return JsonResponse({'status': 'success'})
 
     except Exception as e:
-        logger.exception("Unexpected error in mark_progress")
+        #logger.exception("Unexpected error in mark_progress")
         return JsonResponse({'error': 'Internal server error'}, status=500)
 
 @login_required
