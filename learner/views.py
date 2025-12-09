@@ -1422,15 +1422,14 @@ def load_content(request, username, id, slug, content_type, content_id):
     return response
 
 @login_required
-@csrf_protect
-def save_invideo_quiz(request, video_id):
+def save_invideo_quiz(request, video_id, assessment_id):
     if request.method == "POST":
         import json
         data = json.loads(request.body)
+
         video = get_object_or_404(Video, id=video_id)
-        assessment_id = request.GET.get('assessment_id')  # atau ambil dari session kalau perlu
         assessment = get_object_or_404(Assessment, id=assessment_id)
-        
+
         QuizResult.objects.update_or_create(
             user=request.user,
             video=video,
@@ -1438,11 +1437,13 @@ def save_invideo_quiz(request, video_id):
             defaults={
                 'answers': data.get('answers', {}),
                 'total_questions': video.quizzes.filter(assessment=assessment).count(),
-                'score': 0  # bisa dihitung nanti
+                'score': data.get("score", 0),
             }
         )
         return JsonResponse({"status": "saved"})
+
     return JsonResponse({"error": "invalid"}, status=400)
+
 
 logger = logging.getLogger(__name__)
 

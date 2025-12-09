@@ -22686,3 +22686,277 @@ AttributeError: 'Assessment' object has no attribute 'assessment_type'
 [WARNING] 2025-12-08 16:39:46,300 [django.request] Not Found: /favicon.ico
 [WARNING] 2025-12-08 16:40:15,609 [learner.views] Upaya akses tidak sah oleh learn untuk video
 [WARNING] 2025-12-08 16:40:15,610 [django.request] Forbidden: /video/1/save-result/
+[INFO] 2025-12-09 08:03:53,662 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:03:54,456 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:03:54,467 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-09 08:04:04,880 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-12-09 08:04:07,216 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-12-09 08:04:07,224 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-09 00:04:07.216029+00:00
+[INFO] 2025-12-09 08:04:07,224 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/logout/"}.
+[DEBUG] 2025-12-09 08:04:21,766 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-12-09 08:04:21,767 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-12-09 08:04:21,767 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-12-09 00:04:21.766844+00:00
+[INFO] 2025-12-09 08:04:22,365 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/login/"}.
+[INFO] 2025-12-09 08:04:22,366 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-09 00:04:21.766844+00:00
+[DEBUG] 2025-12-09 08:04:22,372 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-12-09 08:04:22,622 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[DEBUG] 2025-12-09 08:04:25,966 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=75.0%, last_access_material=None, last_access_assessment=12
+[DEBUG] 2025-12-09 08:04:25,969 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 12)]
+[INFO] 2025-12-09 08:04:32,937 [learner.views] Redirecting to load_content: /learn/2/public-speaking-for-beginners-speak-with-confidence/assessment/12/
+[WARNING] 2025-12-09 08:04:32,957 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:04:32,986 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:04:32,994 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:04:33,010 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:04:33,028 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:04:33,057 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:04:33,058 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:04:37,654 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:05:12,309 [learner.views] Upaya akses tidak sah oleh learn untuk video
+[WARNING] 2025-12-09 08:05:12,310 [django.request] Forbidden: /video/1/save-result/
+[WARNING] 2025-12-09 08:05:17,417 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:05:33,149 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:06:33,351 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-09 08:06:48,638 [django.utils.autoreload] /home/x/app/mysite/learner/urls.py changed, reloading.
+[INFO] 2025-12-09 08:06:49,698 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:06:49,709 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-09 08:07:08,639 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:07:08,657 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:07:08,668 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:07:08,687 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:07:08,779 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:07:08,815 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:07:08,815 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:07:08,885 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:07:11,601 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:07:34,128 [learner.views] Upaya akses tidak sah oleh learn untuk video
+[WARNING] 2025-12-09 08:07:34,130 [django.request] Forbidden: /video/1/save-result/
+[WARNING] 2025-12-09 08:09:07,876 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:10:09,355 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:11:09,352 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:12:09,355 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:13:09,316 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:13:33,478 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:13:33,499 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:13:33,508 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:13:33,525 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:13:33,543 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:13:33,574 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:13:33,574 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:13:33,638 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:13:36,947 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:14:34,321 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:15:34,317 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:16:03,589 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:16:03,606 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:16:03,616 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:16:03,629 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:16:03,643 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:16:03,674 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:16:03,674 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:16:03,739 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:16:06,480 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:16:31,251 [learner.views] Upaya akses tidak sah oleh learn untuk video
+[WARNING] 2025-12-09 08:16:31,252 [django.request] Forbidden: /video/1/save-result/
+[WARNING] 2025-12-09 08:17:04,323 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:18:03,659 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:18:03,682 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:18:03,701 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[WARNING] 2025-12-09 08:18:03,760 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-09 08:18:03,760 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:18:03,778 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:18:03,811 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:18:03,811 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:18:03,855 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:18:06,521 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:18:28,586 [learner.views] Upaya akses tidak sah oleh learn untuk video
+[WARNING] 2025-12-09 08:18:28,586 [django.request] Forbidden: /video/1/save-result/
+[WARNING] 2025-12-09 08:19:04,340 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:20:04,350 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-09 08:20:24,323 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:20:25,093 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:20:25,103 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-09 08:20:28,945 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:20:28,962 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:20:28,970 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:20:28,984 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:20:29,080 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:20:29,116 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:20:29,116 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:20:29,173 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:20:31,809 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:20:54,156 [learner.views] Upaya akses tidak sah oleh learn untuk video
+[WARNING] 2025-12-09 08:20:54,157 [django.request] Forbidden: /video/1/save-result/
+[WARNING] 2025-12-09 08:21:29,349 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:22:29,345 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:23:29,224 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:24:29,322 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:25:03,987 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:25:04,006 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:25:04,015 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:25:04,032 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:25:04,049 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:25:04,077 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:25:04,077 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:25:04,133 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:25:07,938 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:25:31,616 [django.security.csrf] Forbidden (CSRF token from the 'X-Csrftoken' HTTP header incorrect.): /video/1/save-result/
+[WARNING] 2025-12-09 08:26:04,140 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:27:04,323 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-09 08:27:38,771 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-12-09 08:27:39,850 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:27:39,861 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-09 08:27:43,226 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:27:43,241 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:27:43,248 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:27:43,263 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:27:43,355 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:27:43,393 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:27:43,393 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:27:43,446 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:27:47,865 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:27:49,789 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:28:13,937 [learner.views] Upaya akses tidak sah oleh learn untuk video
+[WARNING] 2025-12-09 08:28:13,938 [django.request] Forbidden: /video/1/save-result/
+[WARNING] 2025-12-09 08:28:43,489 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-09 08:29:34,668 [django.utils.autoreload] /home/x/app/mysite/learner/views.py changed, reloading.
+[INFO] 2025-12-09 08:29:35,698 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:29:35,709 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-09 08:29:44,447 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:29:45,751 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:29:45,767 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:29:45,778 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:29:45,814 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:29:45,834 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:29:45,872 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:29:45,873 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:29:45,941 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:29:48,754 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:30:08,299 [learner.views] Upaya akses tidak sah oleh learn untuk video
+[WARNING] 2025-12-09 08:30:08,301 [django.request] Forbidden: /video/1/save-result/
+[WARNING] 2025-12-09 08:30:45,940 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-09 08:30:47,045 [django.utils.autoreload] /home/x/app/mysite/mysite/settings.py changed, reloading.
+[INFO] 2025-12-09 08:30:48,081 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:30:48,092 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-09 08:30:52,371 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:30:52,385 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:30:52,393 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:30:52,408 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:30:52,501 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:30:52,539 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:30:52,540 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:30:52,591 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:30:56,143 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:31:18,434 [learner.views] Upaya akses tidak sah oleh learn untuk video
+[WARNING] 2025-12-09 08:31:18,435 [django.request] Forbidden: /video/1/save-result/
+[WARNING] 2025-12-09 08:31:53,326 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:32:53,322 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:33:15,508 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:33:15,528 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:33:15,537 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:33:15,560 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:33:15,580 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:33:15,611 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:33:15,611 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:33:15,663 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:33:18,705 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:33:42,200 [learner.views] Upaya akses tidak sah oleh learn untuk video
+[WARNING] 2025-12-09 08:33:42,202 [django.request] Forbidden: /video/1/save-result/
+[WARNING] 2025-12-09 08:34:16,355 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-09 08:34:39,936 [django.utils.autoreload] /home/x/app/mysite/learner/urls.py changed, reloading.
+[INFO] 2025-12-09 08:34:40,985 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:34:40,995 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-09 08:34:47,776 [django.utils.autoreload] /home/x/app/mysite/learner/urls.py changed, reloading.
+[INFO] 2025-12-09 08:34:48,778 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:34:48,788 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-09 08:35:16,413 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-09 08:36:00,829 [django.utils.autoreload] /home/x/app/mysite/learner/views.py changed, reloading.
+[INFO] 2025-12-09 08:36:01,883 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:36:01,894 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-09 08:36:16,412 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-09 08:37:10,411 [django.utils.autoreload] /home/x/app/mysite/learner/urls.py changed, reloading.
+[INFO] 2025-12-09 08:37:11,479 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:37:11,490 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-09 08:37:16,412 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-09 08:37:18,527 [django.utils.autoreload] /home/x/app/mysite/learner/urls.py changed, reloading.
+[INFO] 2025-12-09 08:37:19,569 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:37:19,580 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-09 08:37:22,063 [django.utils.autoreload] /home/x/app/mysite/learner/urls.py changed, reloading.
+[INFO] 2025-12-09 08:37:23,095 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:37:23,106 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-09 08:37:26,586 [django.utils.autoreload] /home/x/app/mysite/learner/urls.py changed, reloading.
+[INFO] 2025-12-09 08:37:27,612 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:37:27,622 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-09 08:37:32,326 [django.utils.autoreload] /home/x/app/mysite/learner/urls.py changed, reloading.
+[INFO] 2025-12-09 08:37:33,343 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:37:33,353 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-09 08:37:47,590 [django.utils.autoreload] /home/x/app/mysite/learner/views.py changed, reloading.
+[INFO] 2025-12-09 08:37:48,617 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-09 08:37:48,628 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-09 08:38:16,446 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:38:25,747 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:38:25,771 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:38:25,780 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:38:25,798 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:38:25,821 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:38:25,857 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:38:25,858 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:38:25,912 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:38:28,382 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:39:24,038 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:39:24,049 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:39:24,056 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:39:24,069 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:39:24,084 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:39:24,105 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:39:24,105 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:39:24,158 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:39:28,075 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-12-09 08:39:43,118 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-12-09 08:39:43,124 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-09 00:39:43.118542+00:00
+[INFO] 2025-12-09 08:39:43,125 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0", path_info: "/logout/"}.
+[DEBUG] 2025-12-09 08:39:48,905 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-12-09 08:39:48,905 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-12-09 08:39:48,905 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-12-09 00:39:48.905445+00:00
+[INFO] 2025-12-09 08:39:49,510 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0", path_info: "/login/"}.
+[INFO] 2025-12-09 08:39:49,510 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-09 00:39:48.905445+00:00
+[DEBUG] 2025-12-09 08:39:49,516 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-12-09 08:39:49,763 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2025-12-09 08:39:54,379 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:40:24,214 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:40:35,411 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:40:35,437 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:40:35,448 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:40:35,464 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:40:35,479 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:40:35,500 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:40:35,500 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:40:35,572 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:41:36,319 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:42:28,835 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:42:28,858 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:42:28,872 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:42:28,896 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:42:28,918 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:42:28,947 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:42:28,947 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:42:29,005 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:42:32,492 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:42:57,381 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:42:57,403 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:42:57,416 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:42:57,438 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:42:57,455 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:42:57,476 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:42:57,477 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:42:57,542 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:43:57,599 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-09 08:43:57,608 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-09 08:43:57,623 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-09 08:43:57,630 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-09 08:43:57,643 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-09 08:43:57,658 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-09 08:43:57,688 [learner.templatetags.learner_tags] Quiz: correct=5/5, score_value=50.00
+[INFO] 2025-12-09 08:43:57,688 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=100.00%, threshold=47.00, progress=75.00%
+[WARNING] 2025-12-09 08:43:57,741 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-09 08:44:00,191 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-09 08:44:57,762 [django.request] Not Found: /partner/ping-session/

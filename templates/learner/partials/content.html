@@ -68,21 +68,62 @@
 
                 <!-- IN-VIDEO QUIZ: VERSI ULTIMATE (Video.js + GSAP + Sound + Score + Super Cantik) -->
                  {% if is_video_quiz and video %}
-                 <style>
+                <style>
                     .quiz-overlay{
-                        position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);
-                        opacity:0;pointer-events:none;transition:opacity .4s;z-index:50;
-                        display:flex;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;
+                        position:fixed; inset:0;
+                        background:rgba(0,0,0,0.85);
+                        backdrop-filter:blur(15px);
+                        opacity:0; pointer-events:none;
+                        transition:opacity .35s ease;
+                        z-index:50;
+                        display:flex; align-items:center; justify-content:center;
+                        padding:1.5rem; overflow-y:auto;
                     }
-                    .quiz-overlay.active{opacity:1;pointer-events:all;}
+                    .quiz-overlay.active{
+                        opacity:1; pointer-events:all;
+                    }
+
                     .quiz-card{
-                        background:white;color:#1f2937;padding:1.5rem;border-radius:1.5rem;
-                        width:100%;max-width:440px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);
-                        transform:scale(0.9);opacity:0;
+                        background:rgba(255,255,255,0.96);
+                        border-radius:1.75rem;
+                        padding:2rem;
+                        width:100%; max-width:480px;
+                        box-shadow:0 25px 60px -12px rgba(0,0,0,0.45);
+                        transform:scale(.9); opacity:0;
                     }
-                    </style>
-                                    <div class="relative w-full max-w-6xl shadow-2xl rounded-2xl overflow-hidden bg-black">
-                        <video id="myVideo" data-id="{{ video.id }}" class="w-full" controls preload="auto">
+
+                    /* Buttons */
+                    .quiz-option{
+                        @apply w-full p-4 text-left rounded-xl font-medium transition-all cursor-pointer;
+                        background:#f8fafc;
+                        border:2px solid transparent;
+                    }
+                    .quiz-option:hover{
+                        background:#eef2ff;
+                        border-color:#c7d2fe;
+                        transform:translateY(-2px);
+                        box-shadow:0 6px 16px rgba(0,0,0,0.15);
+                    }
+
+                    .quiz-btn-true{
+                        @apply w-full p-5 text-2xl font-bold rounded-xl text-white transition;
+                        background:#10b981;
+                    }
+                    .quiz-btn-true:hover{ background:#059669; }
+
+                    .quiz-btn-false{
+                        @apply w-full p-5 text-2xl font-bold rounded-xl text-white transition;
+                        background:#ef4444;
+                    }
+                    .quiz-btn-false:hover{ background:#dc2626; }
+
+                    .finish-card-icon{
+                        filter: drop-shadow(0px 8px 12px rgba(255,200,0,0.7));
+                    }
+                </style>
+
+                    <div class="relative w-full max-w-6xl shadow-2xl rounded-2xl overflow-hidden bg-black">
+                        <video id="myVideo" data-id="{{ video.id }}" data-assessment="{{ assessment.id }}" class="w-full" controls preload="auto">
                             <source src="{{ video.file.url }}" type="video/mp4">
                             Browser tidak mendukung video.
                         </video>
@@ -118,10 +159,17 @@
                     let answeredQuizzes = {};
 
                     function getCSRFToken() {
-                        // Mengambil token CSRF dari cookie dengan nama baru
-                        const csrfToken = document.cookie.split('; ').find(row => row.startsWith('new_csrf_cookie_name='));
-                        return csrfToken ? csrfToken.split('=')[1] : '';
+                        const name = "csrftoken=";
+                        const cookies = document.cookie.split(';');
+                        for (let cookie of cookies) {
+                            cookie = cookie.trim();
+                            if (cookie.startsWith(name)) {
+                                return cookie.substring(name.length);
+                            }
+                        }
+                        return null;
                     }
+
 
                     console.log(getCSRFToken());  // Cek apakah token CSRF diambil dengan benar
 
@@ -304,10 +352,16 @@
                     function endQuiz() {
                         const csrfToken = getCSRFToken();
                         console.log("CSRF Token:", csrfToken); // Cek token CSRF yang diambil
+                        const videoEl = document.getElementById("myVideo");
 
+                        // 🔥 JANGAN LUPA INI
+                        const assessmentId = videoEl.dataset.assessment;
+
+                        console.log("Assessment ID:", assessmentId);
                         overlay.classList.add('active');
-                        fetch(`/video/${video.dataset.id}/save-result/`, {
+                        fetch(`/video/${videoEl.dataset.id}/save-result/${assessmentId}/`, {
                             method: "POST",
+                            credentials: "same-origin", 
                             headers: {
                                 "Content-Type": "application/json",
                                 "X-CSRFToken": getCSRFToken(),
