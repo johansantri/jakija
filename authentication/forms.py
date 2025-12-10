@@ -8,7 +8,7 @@ from authentication.models import CustomUser, Universiti
 import re
 from .models import CustomUser
 from django.core.exceptions import ValidationError
-import imghdr
+
 from django.core.files.uploadedfile import UploadedFile
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader
@@ -22,8 +22,9 @@ from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
-import imghdr
-
+#import imghdr
+from PIL import Image
+from django.core.exceptions import ValidationError
 logger = logging.getLogger("django.contrib.auth")
 
 
@@ -450,7 +451,11 @@ class UserPhoto(UserChangeForm):
             raise ValidationError("Hanya file gambar yang diperbolehkan.")
 
         # Validasi format file (opsional, lebih ketat)
-        if imghdr.what(photo) not in ['jpeg', 'png','webp']:
-            raise ValidationError("Format gambar tidak dikenali atau tidak didukung.")
+        try:
+            img = Image.open(photo)
+            if img.format.lower() not in ['jpeg', 'jpg', 'png', 'webp']:
+                raise ValidationError("Format gambar tidak dikenali atau tidak didukung.")
+        except Exception:
+            raise ValidationError("File bukan gambar yang valid.")
 
         return photo

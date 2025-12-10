@@ -34363,3 +34363,18 @@ django.template.exceptions.TemplateSyntaxError: Invalid filter: 'mul'
 [INFO] 2025-12-09 15:58:37,317 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-12-09 15:58:37,331 [django.utils.autoreload] Watching for file changes with StatReloader
 [WARNING] 2025-12-09 15:58:39,526 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-10 07:36:18,460 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 07:36:22,310 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 07:36:22,418 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 07:37:11,943 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\authentication\forms.py changed, reloading.
+[INFO] 2025-12-10 07:37:18,601 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 07:37:18,712 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 07:38:15,590 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 07:38:19,191 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 07:38:19,300 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 07:39:19,274 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\authentication\forms.py changed, reloading.
+[INFO] 2025-12-10 07:39:24,619 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 07:39:24,738 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 07:40:06,110 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\authentication\forms.py changed, reloading.
+[INFO] 2025-12-10 07:40:14,611 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 07:40:14,767 [django.utils.autoreload] Watching for file changes with StatReloader
