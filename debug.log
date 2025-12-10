@@ -35360,3 +35360,71 @@ widget_tweaks
 [INFO] 2025-12-10 10:25:18,101 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 12
 [DEBUG] 2025-12-10 10:25:18,214 [learner.templatetags.learner_tags] Quiz: correct=3/5, score_value=30.000
 [INFO] 2025-12-10 10:25:18,215 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=60.00%, threshold=47.00, progress=62.50%
+[WARNING] 2025-12-10 10:26:08,691 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 10:26:19,577 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 10:27:09,176 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 10:27:19,600 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 10:27:52,052 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 10:27:52,085 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 10:27:52,101 [learner.views] Created CourseSessionLog for user 5, course 2, material 14
+[DEBUG] 2025-12-10 10:27:52,130 [learner.views] Updated LastAccessCourse for user 5, course 2, material 14
+[INFO] 2025-12-10 10:27:52,166 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 14
+[DEBUG] 2025-12-10 10:27:52,227 [learner.templatetags.learner_tags] Quiz: correct=3/5, score_value=30.000
+[INFO] 2025-12-10 10:27:52,228 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=60.00%, threshold=47.00, progress=62.50%
+[WARNING] 2025-12-10 10:27:55,948 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 10:27:55,979 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 10:27:55,995 [learner.views] Created CourseSessionLog for user 5, course 2, material 15
+[DEBUG] 2025-12-10 10:27:56,021 [learner.views] Updated LastAccessCourse for user 5, course 2, material 15
+[INFO] 2025-12-10 10:27:56,047 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 15
+[DEBUG] 2025-12-10 10:27:56,066 [learner.templatetags.learner_tags] Quiz: correct=3/5, score_value=30.000
+[INFO] 2025-12-10 10:27:56,066 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=60.00%, threshold=47.00, progress=62.50%
+[WARNING] 2025-12-10 10:28:01,143 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 10:28:01,164 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 10:28:01,183 [learner.views] Created CourseSessionLog for user 5, course 2, material 16
+[DEBUG] 2025-12-10 10:28:01,205 [learner.views] Updated LastAccessCourse for user 5, course 2, material 16
+[INFO] 2025-12-10 10:28:01,246 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 83%
+[INFO] 2025-12-10 10:28:01,260 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 16
+[DEBUG] 2025-12-10 10:28:01,270 [learner.templatetags.learner_tags] Quiz: correct=3/5, score_value=30.000
+[INFO] 2025-12-10 10:28:01,270 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=60.00%, threshold=47.00, progress=83.00%
+[WARNING] 2025-12-10 10:28:03,304 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 10:28:03,332 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 10:28:03,350 [learner.views] Created CourseSessionLog for user 5, course 2, material 17
+[DEBUG] 2025-12-10 10:28:03,376 [learner.views] Updated LastAccessCourse for user 5, course 2, material 17
+[INFO] 2025-12-10 10:28:03,405 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 100%
+[INFO] 2025-12-10 10:28:03,411 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 17
+[DEBUG] 2025-12-10 10:28:03,425 [learner.templatetags.learner_tags] Quiz: correct=3/5, score_value=30.000
+[INFO] 2025-12-10 10:28:03,425 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=60.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 10:28:07,602 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 10:28:07,626 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 10:28:07,641 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-10 10:28:07,666 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-10 10:28:07,695 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 100%
+[INFO] 2025-12-10 10:28:07,737 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, assessment 12
+[DEBUG] 2025-12-10 10:28:07,754 [learner.templatetags.learner_tags] Quiz: correct=3/5, score_value=30.000
+[INFO] 2025-12-10 10:28:07,754 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=60.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 10:28:09,843 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 10:28:10,134 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 10:28:10,159 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 10:28:10,171 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 10
+[DEBUG] 2025-12-10 10:28:10,211 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 10
+[INFO] 2025-12-10 10:28:10,236 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 100%
+[INFO] 2025-12-10 10:28:10,270 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, assessment 10
+[DEBUG] 2025-12-10 10:28:10,316 [learner.templatetags.learner_tags] Quiz: correct=3/5, score_value=30.000
+[INFO] 2025-12-10 10:28:10,316 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=60.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 10:28:10,477 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-10 10:28:10,480 [django.request] Bad Request: /mark-progress/
+[WARNING] 2025-12-10 10:28:14,207 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 10:28:14,249 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 10:28:14,269 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 10
+[DEBUG] 2025-12-10 10:28:14,311 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 10
+[INFO] 2025-12-10 10:28:14,353 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 100%
+[INFO] 2025-12-10 10:28:14,383 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 10
+[DEBUG] 2025-12-10 10:28:14,430 [learner.templatetags.learner_tags] Quiz: correct=3/5, score_value=30.000
+[INFO] 2025-12-10 10:28:14,430 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=60.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 10:28:14,629 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-10 10:28:14,629 [django.request] Bad Request: /mark-progress/
+[DEBUG] 2025-12-10 10:28:48,278 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=None, last_access_assessment=10
+[DEBUG] 2025-12-10 10:28:48,281 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 10)]
+[WARNING] 2025-12-10 10:29:09,829 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 10:29:14,611 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 10:30:09,858 [django.request] Not Found: /partner/ping-session/
