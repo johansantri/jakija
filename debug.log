@@ -35615,3 +35615,83 @@ NameError: name 'completed_courses' is not defined. Did you mean: 'completed_cou
 [WARNING] 2025-12-10 13:07:23,933 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-10 13:08:55,994 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-10 13:09:56,240 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 13:10:56,517 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 13:11:56,036 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 13:12:26,248 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 13:13:23,971 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 13:14:55,796 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 13:15:55,785 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-10 13:15:57,524 [authentication.views] [MYCOURSE] Course 2: progress=100%, last_access_material=None, last_access_assessment=10
+[DEBUG] 2025-12-10 13:15:57,532 [authentication.views] [MYCOURSE] User 5 viewed mycourse — 1 enrollments, 1 last accesses
+[INFO] 2025-12-10 13:16:04,741 [courses.views] Partner logo found: http://127.0.0.1:8000/media/logos/logo-twitter-terbaru_169_zYGKLJL.jpeg
+[INFO] 2025-12-10 13:16:05,010 [courses.views] QR code generated: http://127.0.0.1:8000/media/qrcodes/certificate_a0e89614-974b-47b5-9867-150fc63cf846.png
+[ERROR] 2025-12-10 13:16:05,044 [audit.signals] Error in audit log (post_save) for Certificate pk=1: Object of type UUID is not JSON serializable
+[INFO] 2025-12-10 13:16:05,053 [courses.views] VC JSON generated for new certificate: C:\Users\mei\Downloads\mysite\media\credentials\vc_a0e89614-974b-47b5-9867-150fc63cf846.json
+[INFO] 2025-12-10 13:16:05,053 [courses.views] Certificate a0e89614-974b-47b5-9867-150fc63cf846 saved for user learn
+[WARNING] 2025-12-10 13:16:10,635 [weasyprint] Ignored `min-height: 100vh` at 21:13, invalid value.
+[WARNING] 2025-12-10 13:16:10,636 [weasyprint] Ignored `box-shadow: 0 25px 80px rgba(0, 86, 210, 0.15)` at 34:13, unknown property.
+[WARNING] 2025-12-10 13:16:10,638 [weasyprint] Ignored `font-size: clamp(28px, 6vw, 40px)` at 54:13, invalid value.
+[WARNING] 2025-12-10 13:16:10,640 [weasyprint] Ignored `box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2)` at 76:13, unknown property.
+[WARNING] 2025-12-10 13:16:10,640 [weasyprint] Ignored `font-size: clamp(32px, 7vw, 48px)` at 82:13, invalid value.
+[WARNING] 2025-12-10 13:16:10,640 [weasyprint] Ignored `background-clip: text` at 87:13, invalid value.
+[WARNING] 2025-12-10 13:16:10,641 [weasyprint] Ignored `text-shadow: 0 2px 4px rgba(0, 86, 210, 0.1)` at 91:13, unknown property.
+[WARNING] 2025-12-10 13:16:10,641 [weasyprint] Ignored `box-shadow: 0 12px 40px rgba(0, 86, 210, 0.08)` at 102:13, unknown property.
+[WARNING] 2025-12-10 13:16:10,643 [weasyprint] Ignored `font-size: clamp(28px, 6vw, 36px)` at 107:13, invalid value.
+[WARNING] 2025-12-10 13:16:10,644 [weasyprint] Ignored `font-size: clamp(20px, 4.5vw, 26px)` at 115:13, invalid value.
+[WARNING] 2025-12-10 13:16:10,647 [weasyprint] Ignored `font-size: clamp(15px, 3.5vw, 18px)` at 123:13, invalid value.
+[WARNING] 2025-12-10 13:16:10,650 [weasyprint] Ignored `box-shadow: 0 8px 32px rgba(0, 86, 210, 0.06)` at 172:13, unknown property.
+[WARNING] 2025-12-10 13:16:10,656 [weasyprint] Ignored `font-size: clamp(13px, 3vw, 15px)` at 231:13, invalid value.
+[WARNING] 2025-12-10 13:16:10,658 [weasyprint] Ignored `box-shadow: 0 6px 20px rgba(0, 86, 210, 0.1)` at 263:13, unknown property.
+[WARNING] 2025-12-10 13:16:10,659 [weasyprint] Ignored `font-size: clamp(40px, 10vw, 60px)` at 279:13, invalid value.
+[WARNING] 2025-12-10 13:16:10,663 [weasyprint] Expected a media type, got '(max-width: 768px)'
+[WARNING] 2025-12-10 13:16:10,671 [weasyprint] Invalid media type ' (max-width: 768px) ' the whole @media rule was ignored at 305:9.
+[WARNING] 2025-12-10 13:16:10,671 [weasyprint] Ignored `box-shadow: none` at 387:17, unknown property.
+[DEBUG] 2025-12-10 13:16:10,931 [PIL.PngImagePlugin] STREAM b'IHDR' 16 13
+[DEBUG] 2025-12-10 13:16:10,931 [PIL.PngImagePlugin] STREAM b'IDAT' 41 1057
+[DEBUG] 2025-12-10 13:16:11,434 [PIL.PngImagePlugin] STREAM b'IHDR' 16 13
+[DEBUG] 2025-12-10 13:16:11,434 [PIL.PngImagePlugin] STREAM b'IDAT' 41 2391
+[INFO] 2025-12-10 13:16:11,462 [courses.views] VC JSON attached to email for certificate a0e89614-974b-47b5-9867-150fc63cf846
+[ERROR] 2025-12-10 13:16:13,323 [courses.views] Error generating PDF or sending email: (530, b'5.7.0 Authentication Required. For more information, go to\n5.7.0  https://support.google.com/accounts/troubleshooter/2402620. d2e1a72fcca58-7e29f2ecf89sm17914812b3a.12 - gsmtp', '"Informasi dari LMSku"')
+[DEBUG] 2025-12-10 13:18:12,503 [authentication.views] [MYCOURSE] Course 2: progress=100%, last_access_material=None, last_access_assessment=10
+[DEBUG] 2025-12-10 13:18:12,514 [authentication.views] [MYCOURSE] Course 2: progress=100%, last_access_material=None, last_access_assessment=10
+[DEBUG] 2025-12-10 13:18:12,533 [authentication.views] [MYCOURSE] User 5 viewed mycourse — 1 enrollments, 1 last accesses
+[DEBUG] 2025-12-10 13:18:12,537 [authentication.views] [MYCOURSE] User 5 viewed mycourse — 1 enrollments, 1 last accesses
+[INFO] 2025-12-10 13:20:40,784 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\courses\views.py changed, reloading.
+[INFO] 2025-12-10 13:21:10,627 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 13:21:10,920 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 13:21:50,736 [learner.views] Redirecting to load_content: /learn/2/public-speaking-for-beginners-speak-with-confidence/assessment/10/
+[WARNING] 2025-12-10 13:21:50,794 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 13:21:50,874 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 13:21:50,900 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 10
+[DEBUG] 2025-12-10 13:21:50,967 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 10
+[INFO] 2025-12-10 13:21:51,029 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 10
+[DEBUG] 2025-12-10 13:21:51,108 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=50.00
+[DEBUG] 2025-12-10 13:21:51,111 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 30.000
+[INFO] 2025-12-10 13:21:51,112 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=True, assessments=2/2, overall=80.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 13:21:51,706 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-10 13:21:51,707 [django.request] Bad Request: /mark-progress/
+[INFO] 2025-12-10 13:22:08,659 [courses.views] Partner logo found: http://127.0.0.1:8000/media/logos/logo-twitter-terbaru_169_zYGKLJL.jpeg
+[INFO] 2025-12-10 13:22:08,672 [courses.views] Certificate a0e89614-974b-47b5-9867-150fc63cf846 already exists for user learn
+[INFO] 2025-12-10 13:22:08,713 [courses.views] VC JSON regenerated for existing certificate: C:\Users\mei\Downloads\mysite\media\credentials\vc_a0e89614-974b-47b5-9867-150fc63cf846.json
+[WARNING] 2025-12-10 13:22:13,799 [weasyprint] Ignored `min-height: 100vh` at 21:13, invalid value.
+[WARNING] 2025-12-10 13:22:13,804 [weasyprint] Ignored `box-shadow: 0 25px 80px rgba(0, 86, 210, 0.15)` at 34:13, unknown property.
+[WARNING] 2025-12-10 13:22:13,808 [weasyprint] Ignored `font-size: clamp(28px, 6vw, 40px)` at 54:13, invalid value.
+[WARNING] 2025-12-10 13:22:13,809 [weasyprint] Ignored `box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2)` at 76:13, unknown property.
+[WARNING] 2025-12-10 13:22:13,809 [weasyprint] Ignored `font-size: clamp(32px, 7vw, 48px)` at 82:13, invalid value.
+[WARNING] 2025-12-10 13:22:13,810 [weasyprint] Ignored `background-clip: text` at 87:13, invalid value.
+[WARNING] 2025-12-10 13:22:13,810 [weasyprint] Ignored `text-shadow: 0 2px 4px rgba(0, 86, 210, 0.1)` at 91:13, unknown property.
+[WARNING] 2025-12-10 13:22:13,812 [weasyprint] Ignored `box-shadow: 0 12px 40px rgba(0, 86, 210, 0.08)` at 102:13, unknown property.
+[WARNING] 2025-12-10 13:22:13,816 [weasyprint] Ignored `font-size: clamp(28px, 6vw, 36px)` at 107:13, invalid value.
+[WARNING] 2025-12-10 13:22:13,820 [weasyprint] Ignored `font-size: clamp(20px, 4.5vw, 26px)` at 115:13, invalid value.
+[WARNING] 2025-12-10 13:22:13,820 [weasyprint] Ignored `font-size: clamp(15px, 3.5vw, 18px)` at 123:13, invalid value.
+[WARNING] 2025-12-10 13:22:13,824 [weasyprint] Ignored `box-shadow: 0 8px 32px rgba(0, 86, 210, 0.06)` at 172:13, unknown property.
+[WARNING] 2025-12-10 13:22:13,828 [weasyprint] Ignored `font-size: clamp(13px, 3vw, 15px)` at 231:13, invalid value.
+[WARNING] 2025-12-10 13:22:13,837 [weasyprint] Ignored `box-shadow: 0 6px 20px rgba(0, 86, 210, 0.1)` at 263:13, unknown property.
+[WARNING] 2025-12-10 13:22:13,839 [weasyprint] Ignored `font-size: clamp(40px, 10vw, 60px)` at 279:13, invalid value.
+[WARNING] 2025-12-10 13:22:13,841 [weasyprint] Expected a media type, got '(max-width: 768px)'
+[WARNING] 2025-12-10 13:22:13,842 [weasyprint] Invalid media type ' (max-width: 768px) ' the whole @media rule was ignored at 305:9.
+[WARNING] 2025-12-10 13:22:13,843 [weasyprint] Ignored `box-shadow: none` at 387:17, unknown property.
+[DEBUG] 2025-12-10 13:22:14,150 [PIL.PngImagePlugin] STREAM b'IHDR' 16 13
+[DEBUG] 2025-12-10 13:22:14,153 [PIL.PngImagePlugin] STREAM b'IDAT' 41 1057
+[DEBUG] 2025-12-10 13:22:15,059 [PIL.PngImagePlugin] STREAM b'IHDR' 16 13
+[DEBUG] 2025-12-10 13:22:15,060 [PIL.PngImagePlugin] STREAM b'IDAT' 41 2391

@@ -3728,51 +3728,119 @@ def generate_certificate(request, course_id):
 
     for assessment in assessments:
         score_value = Decimal(0)
+        weight = Decimal(assessment.weight or 1)
 
+        # ==============================
+        # 1. LTI RESULT
+        # ==============================
         lti_result = LTIResult.objects.filter(user=request.user, assessment=assessment).first()
         if lti_result and lti_result.score is not None:
             lti_score = Decimal(lti_result.score)
-            if lti_score > 1.0:
-                logger.warning(f'LTI score {lti_score} > 1.0, normalizing...')
-                lti_score = lti_score / 100
-            score_value = lti_score * Decimal(assessment.weight)
-        else:
-            # MCQ
-            total_questions = assessment.questions.count()
-            if total_questions > 0:
-                total_correct_answers = 0
-                answers_exist = False
-                for question in assessment.questions.all():
-                    answers = QuestionAnswer.objects.filter(question=question, user=request.user)
-                    if answers.exists():
-                        answers_exist = True
-                    total_correct_answers += answers.filter(choice__is_correct=True).count()
-                if not answers_exist:
-                    all_assessments_submitted = False
-                score_value = (Decimal(total_correct_answers) / Decimal(total_questions)) * Decimal(assessment.weight)
-            else:
-                # AskOra
-                askora_submissions = Submission.objects.filter(askora__assessment=assessment, user=request.user)
-                if not askora_submissions.exists():
-                    all_assessments_submitted = False
-                else:
-                    latest_submission = askora_submissions.order_by('-submitted_at').first()
-                    assessment_score = AssessmentScore.objects.filter(submission=latest_submission).first()
-                    if assessment_score:
-                        score_value = Decimal(assessment_score.final_score)
-                    else:
-                        all_assessments_submitted = False
 
-        # Batasi ke bobot maksimum
-        score_value = min(score_value, Decimal(assessment.weight))
+            # Normalisasi jika 0–100
+            if lti_score > 1:
+                logger.warning(f"[LTI] Score {lti_score} >1. Normalizing to {lti_score / 100}")
+                lti_score = lti_score / Decimal(100)
+
+            score_value = lti_score * weight
+            assessment_scores.append({
+                'assessment': assessment,
+                'score': score_value,
+                'weight': weight
+            })
+            total_score += score_value
+            total_max_score += weight
+            continue  # lanjut ke assessment berikutnya
+
+
+        # ==============================
+        # 2. VIDEO QUIZ (QuizResult)
+        # ==============================
+        video_quiz = QuizResult.objects.filter(
+            user=request.user,
+            assessment=assessment
+        ).order_by("-created_at").first()
+
+        if video_quiz:
+            if video_quiz.total_questions > 0:
+                vr_score = Decimal(video_quiz.score) / Decimal(video_quiz.total_questions)
+                score_value = vr_score * weight
+            else:
+                score_value = Decimal(0)
+
+            assessment_scores.append({
+                'assessment': assessment,
+                'score': score_value,
+                'weight': weight
+            })
+            total_score += score_value
+            total_max_score += weight
+            continue
+
+
+        # ==============================
+        # 3. MCQ / MULTIPLE CHOICE
+        # ==============================
+        total_questions = assessment.questions.count()
+        if total_questions > 0:
+            answers_exist = False
+            correct_total = 0
+
+            for q in assessment.questions.all():
+                answers = QuestionAnswer.objects.filter(question=q, user=request.user)
+                if answers.exists():
+                    answers_exist = True
+                correct_total += answers.filter(choice__is_correct=True).count()
+
+            if not answers_exist:
+                all_assessments_submitted = False
+
+            score_value = (
+                Decimal(correct_total) / Decimal(total_questions) * weight
+                if total_questions > 0 else Decimal(0)
+            )
+
+            assessment_scores.append({
+                'assessment': assessment,
+                'score': score_value,
+                'weight': weight
+            })
+            total_score += score_value
+            total_max_score += weight
+            continue
+
+
+        # ==============================
+        # 4. ASKORA / ESSAY
+        # ==============================
+        submission = Submission.objects.filter(
+            askora__assessment=assessment,
+            user=request.user
+        ).order_by('-submitted_at').first()
+
+        if submission:
+            score_obj = AssessmentScore.objects.filter(submission=submission).first()
+            if score_obj:
+                score_value = Decimal(score_obj.final_score)
+            else:
+                all_assessments_submitted = False
+        else:
+            all_assessments_submitted = False
+
+        # ==============================
+        # FINALIZE SCORE
+        # ==============================
+        score_value = min(score_value, weight)
 
         assessment_scores.append({
             'assessment': assessment,
             'score': score_value,
-            'weight': assessment.weight,
+            'weight': weight
         })
-        total_max_score += Decimal(assessment.weight)
+
         total_score += score_value
+        total_max_score += weight
+
 
     total_score = min(total_score, total_max_score)
     overall_percentage = (total_score / total_max_score) * 100 if total_max_score > 0 else 0
