@@ -2475,23 +2475,55 @@ def learner_detail(request, username):
 
         for assessment in assessments:
             score_value = Decimal('0')
-            total_questions = assessment.questions.count()
 
-            if total_questions > 0:
+            # ====================================
+            # 1. Tipe Pilihan Ganda (question–choice)
+            # ====================================
+            total_questions_mcq = assessment.questions.count()
+
+            if total_questions_mcq > 0:
                 correct = QuestionAnswer.objects.filter(
-                    user=learner, question__assessment=assessment, choice__is_correct=True
+                    user=learner, 
+                    question__assessment=assessment, 
+                    choice__is_correct=True
                 ).count()
-                score_value = (Decimal(correct) / Decimal(total_questions)) * assessment.weight
-            else:
-                submission = Submission.objects.filter(askora__assessment=assessment, user=learner).order_by('-submitted_at').first()
-                if submission:
-                    assessment_score = AssessmentScore.objects.filter(submission=submission).first()
-                    if assessment_score and assessment_score.final_score is not None:
-                        score_value = assessment_score.final_score
 
+                score_value = (Decimal(correct) / Decimal(total_questions_mcq)) * assessment.weight
+
+            else:
+                # ====================================
+                # 2. Tipe Video InQuiz (QuizResult)
+                # ====================================
+                quiz_results = QuizResult.objects.filter(user=learner, assessment=assessment)
+
+                if quiz_results.exists():
+                    latest_result = quiz_results.order_by('-created_at').first()
+
+                    if latest_result.total_questions > 0:
+                        score_percentage = Decimal(latest_result.score) / Decimal(latest_result.total_questions) * 100
+                        score_value = (score_percentage / Decimal(100)) * assessment.weight
+
+                else:
+                    # ====================================
+                    # 3. Tipe ORA / LTI / Essay (Submission)
+                    # ====================================
+                    submission = Submission.objects.filter(
+                        askora__assessment=assessment, 
+                        user=learner
+                    ).order_by('-submitted_at').first()
+
+                    if submission:
+                        assessment_score = AssessmentScore.objects.filter(submission=submission).first()
+                        if assessment_score and assessment_score.final_score is not None:
+                            # Sudah berbentuk nilai final 0–100
+                            score_value = (Decimal(assessment_score.final_score) / Decimal(100)) * assessment.weight
+
+            # ====================================
             # Tambahkan ke total
+            # ====================================
             total_score += min(score_value, assessment.weight)
             total_max_score += assessment.weight
+
 
         overall_percentage = (total_score / total_max_score * 100) if total_max_score > 0 else 0
         is_completed = progress == 100 and overall_percentage >= passing_threshold

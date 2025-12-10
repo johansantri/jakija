@@ -91,7 +91,7 @@ from .models import (
     AskOra, PeerReview, AssessmentScore, Submission, CourseStatus, AssessmentSession,
     CourseComment, Comment, Choice, Score, CoursePrice, AssessmentRead, QuestionAnswer,
     Enrollment, PricingType, Partner, CourseProgress, MaterialRead, GradeRange, Category,
-    Section, Instructor, TeamMember, Material, Question, Assessment,LTIResult,CourseTeam,
+    Section, Instructor, TeamMember, Material, Question, Assessment,LTIResult,CourseTeam,Quiz,QuizResult,
 )
 
 # Project-level apps
@@ -1218,17 +1218,17 @@ logger = logging.getLogger(__name__)
 @login_required
 def course_list_enroll(request, id):
     """
-    Menampilkan daftar peserta kursus dengan detail skor, progress, 
-    status kelulusan, dan export CSV.
+    Menampilkan daftar peserta kursus dengan detail skor lengkap
+    (LTI, In-video Quiz, MCQ, Askora), progress, status kelulusan,
+    dan export CSV.
     """
 
     # --- Cek course ---
     course = get_object_or_404(Course, id=id)
-
     user = request.user
 
     # === 🔒 ACCESS CONTROL ===
-    allowed_roles = ['is_curation', 'is_finance']
+    allowed_roles = ['curation', 'finance']
 
     is_allowed = (
         user.is_superuser or
@@ -1237,25 +1237,23 @@ def course_list_enroll(request, id):
         user.groups.filter(name__in=allowed_roles).exists()
     )
 
-    # Partner bisa akses kalau course-nya milik partner dia
+    # Partner
     is_partner_owner = (
         hasattr(user, 'partner_user') and
         course.org_partner and
         course.org_partner.user == user
     )
 
-    # Instructor bisa akses kalau dia instruktur-nya
+    # Instructor
     is_instructor = (
         hasattr(course, 'instructor') and
         course.instructor and
         course.instructor.user == user
     )
 
-    # Kalau tidak memenuhi semua kondisi, tolak akses
     if not (is_allowed or is_partner_owner or is_instructor):
-        messages.error(request, "Access denied. You do not have permission to view this course’s participants.")
+        messages.error(request, "Access denied.")
         return redirect('authentication:home')
-
 
     # --- Ambil enrollments ---
     enrollments = course.enrollments.all()
@@ -1269,45 +1267,47 @@ def course_list_enroll(request, id):
             Q(user__last_name__icontains=search_query)
         )
 
-    # --- Sections & user ids ---
     sections = course.sections.all()
     section_ids = sections.values_list('id', flat=True)
     user_ids = enrollments.values_list('user_id', flat=True)
 
-    # --- Material Reads ---
+    # --- MATERIAL READS ---
     material_reads = MaterialRead.objects.filter(
         user_id__in=user_ids,
         material__section_id__in=section_ids
     ).order_by('-read_at')
+
     last_material_map = {}
     for mr in material_reads:
         key = (mr.user_id, mr.material_id)
         if key not in last_material_map:
             last_material_map[key] = mr.read_at
 
-    # --- Assessment Reads ---
+    # --- ASSESSMENT READS ---
     assessment_ids = []
     for section in sections:
         assessment_ids += list(section.assessments.values_list('id', flat=True))
+
     assessment_reads = AssessmentRead.objects.filter(
         user_id__in=user_ids,
         assessment_id__in=assessment_ids
     ).order_by('-completed_at')
+
     last_assessment_map = {}
     for ar in assessment_reads:
         key = (ar.user_id, ar.assessment_id)
         if key not in last_assessment_map:
             last_assessment_map[key] = ar.completed_at
 
-    # --- Passing threshold dari GradeRange ---
+    # --- Passing threshold ---
     grade_ranges = GradeRange.objects.filter(course=course)
     if grade_ranges.exists():
         grade_fail = grade_ranges.order_by('max_grade').first()
         passing_threshold = grade_fail.max_grade + 1 if grade_fail else Decimal('60')
     else:
-        passing_threshold = Decimal('60')  # fallback default
+        passing_threshold = Decimal('60')
 
-    # --- Siapkan hasil ---
+    # --- SIAPKAN HASIL ---
     enrollment_details = []
     assessments = Assessment.objects.filter(section__courses=course)
 
@@ -1318,83 +1318,130 @@ def course_list_enroll(request, id):
         total_score = Decimal('0')
         all_assessments_submitted = True
 
-        # Hitung skor per assessment
+        # ==========================================
+        # 🔥 PERHITUNGAN SKOR LENGKAP
+        # (LTI → InVideo → MCQ → ASKORA)
+        # ==========================================
         for assessment in assessments:
             score_value = Decimal('0')
             is_submitted = True
             weight = Decimal(assessment.weight)
 
-            # --- Skor LTI ---
+            # === CASE 1: LTI RESULT ===
             lti_result = LTIResult.objects.filter(user=user, assessment=assessment).first()
             if lti_result and lti_result.score is not None:
                 lti_score = Decimal(lti_result.score)
                 if lti_score > 1.0:
-                    logger.warning(
-                        f"LTI score {lti_score} > 1.0 untuk user {user.id}, normalisasi ke {lti_score / 100}"
-                    )
                     lti_score = lti_score / 100
                 score_value = lti_score * weight
+
             else:
-                # --- Skor Multiple Choice ---
-                total_questions = assessment.questions.count()
-                if total_questions > 0:
-                    total_correct = 0
-                    answers_exist = False
-                    for q in assessment.questions.all():
-                        answers = QuestionAnswer.objects.filter(question=q, user=user)
-                        if answers.exists():
-                            answers_exist = True
-                        total_correct += answers.filter(choice__is_correct=True).count()
-                    if not answers_exist:
+                # === CASE 2: IN-VIDEO QUIZ ===
+                invideo_quizzes = Quiz.objects.filter(assessment=assessment)
+
+                if invideo_quizzes.exists():
+                    quiz_result = QuizResult.objects.filter(
+                        user=user,
+                        assessment=assessment
+                    ).first()
+
+                    if quiz_result:
+                        if quiz_result.total_questions > 0:
+                            raw_percentage = Decimal(quiz_result.score) / Decimal(quiz_result.total_questions)
+                            score_value = raw_percentage * weight
+                        else:
+                            score_value = Decimal('0')
+                    else:
                         is_submitted = False
                         all_assessments_submitted = False
-                    score_value = (
-                        (Decimal(total_correct) / Decimal(total_questions)) * weight
-                        if total_questions > 0 else Decimal('0')
-                    )
-                else:
-                    # tidak ada soal, dianggap tidak submit
-                    is_submitted = False
-                    all_assessments_submitted = False
 
-            # Pastikan skor tidak lebih dari bobot
+                else:
+                    # === CASE 3: OLD QUESTION MODEL ===
+                    total_questions = assessment.questions.count()
+                    if total_questions > 0:
+                        total_correct = 0
+                        answers_exist = False
+
+                        for q in assessment.questions.all():
+                            answers = QuestionAnswer.objects.filter(question=q, user=user)
+                            if answers.exists():
+                                answers_exist = True
+                            total_correct += answers.filter(choice__is_correct=True).count()
+
+                        if not answers_exist:
+                            is_submitted = False
+                            all_assessments_submitted = False
+
+                        score_value = (
+                            (Decimal(total_correct) / Decimal(total_questions)) * weight
+                        )
+                    else:
+                        # === CASE 4: ASKORA ===
+                        askora_submissions = Submission.objects.filter(
+                            askora__assessment=assessment, user=user
+                        )
+
+                        if not askora_submissions.exists():
+                            is_submitted = False
+                            all_assessments_submitted = False
+                        else:
+                            latest_submission = askora_submissions.order_by('-submitted_at').first()
+                            assessment_score = AssessmentScore.objects.filter(
+                                submission=latest_submission
+                            ).first()
+
+                            if assessment_score:
+                                score_value = Decimal(assessment_score.final_score)
+                            else:
+                                is_submitted = False
+                                all_assessments_submitted = False
+
+            # Limit ke bobot
             score_value = min(score_value, weight)
 
             total_max_score += weight
             total_score += score_value
 
-        # Batasi total score agar <= total_max_score
+        # === Final scoring ===
         total_score = min(total_score, total_max_score)
-
-        # Persentase nilai
-        overall_percentage = (total_score / total_max_score * 100) if total_max_score > 0 else Decimal('0')
+        overall_percentage = (
+            total_score / total_max_score * 100
+            if total_max_score > 0 else Decimal('0')
+        )
 
         # Bulatkan
-        total_score = total_score.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-        total_max_score = total_max_score.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-        overall_percentage = overall_percentage.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        total_score = total_score.quantize(Decimal("0.01"))
+        total_max_score = total_max_score.quantize(Decimal("0.01"))
+        overall_percentage = overall_percentage.quantize(Decimal("0.01"))
 
-        # Progress
-        course_progress = CourseProgress.objects.filter(user=user, course=course).first()
-        progress_percentage = Decimal(course_progress.progress_percentage) if course_progress else Decimal('0')
-        progress_percentage = progress_percentage.quantize(Decimal("0.01"))
+        # === Progress ===
+        course_progress = CourseProgress.objects.filter(
+            user=user, course=course
+        ).first()
+        progress_percentage = Decimal(
+            course_progress.progress_percentage if course_progress else 0
+        ).quantize(Decimal("0.01"))
 
-        # --- Status kelulusan ---
-        passing_criteria_met = (overall_percentage >= passing_threshold and progress_percentage == 100)
+        # === Status Kelulusan ===
+        passing_criteria_met = (
+            overall_percentage >= passing_threshold and progress_percentage == 100
+        )
         status = "Pass" if all_assessments_submitted and passing_criteria_met else "Fail"
 
-        # --- Waktu terakhir akses ---
+        # === Last Access ===
         last_accessed_material = None
         last_completed_assessment = None
         for section in sections:
+            # materials
             for material in section.materials.all():
-                time = last_material_map.get((user.id, material.id))
-                if time and (not last_accessed_material or time > last_accessed_material):
-                    last_accessed_material = time
+                t = last_material_map.get((user.id, material.id))
+                if t and (not last_accessed_material or t > last_accessed_material):
+                    last_accessed_material = t
+            # assessments
             for assessment in section.assessments.all():
-                time = last_assessment_map.get((user.id, assessment.id))
-                if time and (not last_completed_assessment or time > last_completed_assessment):
-                    last_completed_assessment = time
+                t = last_assessment_map.get((user.id, assessment.id))
+                if t and (not last_completed_assessment or t > last_completed_assessment):
+                    last_completed_assessment = t
 
         enrollment_details.append({
             'user': user,
@@ -1418,12 +1465,12 @@ def course_list_enroll(request, id):
             'last_completed_assessment': last_completed_assessment,
         })
 
-    # --- Pagination ---
+    # === Pagination ===
     paginator = Paginator(enrollment_details, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    # --- CSV download ---
+    # === Export CSV ===
     if request.GET.get('download') == 'csv':
         return download_enrollment_data(course, enrollment_details)
 
@@ -1432,7 +1479,6 @@ def course_list_enroll(request, id):
         'enrollments': page_obj,
         'search_query': search_query,
     })
-
 
 def download_enrollment_data(course, enrollment_details):
     """

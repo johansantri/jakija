@@ -35428,3 +35428,105 @@ widget_tweaks
 [WARNING] 2025-12-10 10:29:09,829 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-10 10:29:14,611 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-10 10:30:09,858 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-10 12:11:02,085 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:11:06,360 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:11:06,419 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-10 12:12:11,926 [django.request] Not Found: /favicon.ico
+[INFO] 2025-12-10 12:16:27,289 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\courses\views.py changed, reloading.
+[INFO] 2025-12-10 12:16:49,530 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:16:49,759 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 12:17:15,234 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\courses\views.py changed, reloading.
+[INFO] 2025-12-10 12:17:33,692 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:17:33,892 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 12:18:08,476 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\courses\views.py changed, reloading.
+[INFO] 2025-12-10 12:18:20,380 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:18:20,658 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2025-12-10 12:19:40,841 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-12-10 12:19:40,994 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-10 04:19:40.831776+00:00
+[INFO] 2025-12-10 12:19:40,994 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0", path_info: "/logout/"}.
+[DEBUG] 2025-12-10 12:19:50,936 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2025-12-10 12:19:50,937 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2025-12-10 12:19:50,938 [axes.handlers.database] AXES: Getting access attempts that are newer than 2025-12-10 04:19:50.936641+00:00
+[INFO] 2025-12-10 12:19:53,801 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0", path_info: "/login/"}.
+[INFO] 2025-12-10 12:19:53,804 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-10 04:19:50.936641+00:00
+[DEBUG] 2025-12-10 12:19:53,885 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2025-12-10 12:19:54,574 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[INFO] 2025-12-10 12:21:48,531 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\authentication\views.py changed, reloading.
+[INFO] 2025-12-10 12:22:02,003 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:22:02,218 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 12:22:12,503 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\authentication\views.py changed, reloading.
+[INFO] 2025-12-10 12:22:18,955 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:22:19,053 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 12:22:26,142 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\authentication\views.py changed, reloading.
+[INFO] 2025-12-10 12:22:33,282 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:22:33,362 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2025-12-10 12:22:48,147 [authentication.views] Course 2 (Public Speaking for Beginners: Speak with Confidence): progress=100%, last_access_material=None, last_access_assessment=10
+[DEBUG] 2025-12-10 12:22:48,152 [authentication.views] User 5 (learn) accessed mycourse: 1 enrollments, 1 last accesses, last_access_map=[(2, None, 10)]
+[INFO] 2025-12-10 12:24:27,787 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\authentication\views.py changed, reloading.
+[INFO] 2025-12-10 12:24:47,188 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:24:47,390 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2025-12-10 12:24:55,440 [authentication.views] [MYCOURSE] Course 2: progress=100%, last_access_material=None, last_access_assessment=10
+[DEBUG] 2025-12-10 12:24:55,449 [authentication.views] [MYCOURSE] User 5 viewed mycourse — 1 enrollments, 1 last accesses
+[DEBUG] 2025-12-10 12:25:13,283 [authentication.views] [MYCOURSE] Course 2: progress=100%, last_access_material=None, last_access_assessment=10
+[DEBUG] 2025-12-10 12:25:13,287 [authentication.views] [MYCOURSE] User 5 viewed mycourse — 1 enrollments, 1 last accesses
+[INFO] 2025-12-10 12:25:25,317 [learner.views] Redirecting to load_content: /learn/2/public-speaking-for-beginners-speak-with-confidence/assessment/10/
+[WARNING] 2025-12-10 12:25:25,527 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 12:25:26,394 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 12:25:26,429 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 10
+[DEBUG] 2025-12-10 12:25:26,509 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 10
+[INFO] 2025-12-10 12:25:26,581 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 10
+[DEBUG] 2025-12-10 12:25:26,698 [learner.templatetags.learner_tags] Quiz: correct=3/5, score_value=30.000
+[INFO] 2025-12-10 12:25:26,698 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=60.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 12:25:27,033 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-10 12:25:27,034 [django.request] Bad Request: /mark-progress/
+[WARNING] 2025-12-10 12:25:54,540 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 12:25:54,597 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 12:25:54,624 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 10
+[DEBUG] 2025-12-10 12:25:54,675 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 10
+[INFO] 2025-12-10 12:25:54,730 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 10
+[DEBUG] 2025-12-10 12:25:54,799 [learner.templatetags.learner_tags] Quiz: correct=3/5, score_value=30.000
+[INFO] 2025-12-10 12:25:54,800 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=60.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 12:25:54,979 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-10 12:25:54,980 [django.request] Bad Request: /mark-progress/
+[WARNING] 2025-12-10 12:26:55,854 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 12:27:54,942 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 12:28:55,801 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 12:29:55,776 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-10 12:30:37,485 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\views.py changed, reloading.
+[INFO] 2025-12-10 12:30:50,578 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:30:50,717 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-10 12:30:58,168 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 12:31:55,133 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 12:31:57,785 [django.request] Not Found: /learn/learn
+[DEBUG] 2025-12-10 12:32:10,384 [learner.views] Processing course: 2 – Public Speaking for Beginners: Speak with Confidence
+[DEBUG] 2025-12-10 12:32:10,444 [learner.views] Learner 5: total courses=1, completed=0
+[INFO] 2025-12-10 12:33:01,065 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\views.py changed, reloading.
+[INFO] 2025-12-10 12:33:15,207 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:33:15,366 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 12:35:53,704 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\views.py changed, reloading.
+[INFO] 2025-12-10 12:36:08,915 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:36:09,081 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 12:38:47,340 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\views.py changed, reloading.
+[INFO] 2025-12-10 12:38:56,693 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:38:56,806 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2025-12-10 12:40:18,335 [learner.views] Processing course: 2 – Public Speaking for Beginners: Speak with Confidence
+[ERROR] 2025-12-10 12:40:19,499 [django.request] Internal Server Error: /learner/learn/
+Traceback (most recent call last):
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\mei\Downloads\mysite\learner\views.py", line 2600, in learner_detail
+    f"completed={len(completed_courses)}"
+                     ^^^^^^^^^^^^^^^^^
+NameError: name 'completed_courses' is not defined. Did you mean: 'completed_courses_data'?
+[INFO] 2025-12-10 12:40:29,480 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\views.py changed, reloading.
+[INFO] 2025-12-10 12:40:38,964 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:40:39,052 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2025-12-10 12:41:00,478 [learner.views] Processing course: 2 – Public Speaking for Beginners: Speak with Confidence
+[DEBUG] 2025-12-10 12:41:00,525 [learner.views] Learner 5: total courses=1, completed=0
+[INFO] 2025-12-10 12:44:28,500 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\views.py changed, reloading.
+[INFO] 2025-12-10 12:44:46,584 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:44:46,717 [django.utils.autoreload] Watching for file changes with StatReloader
