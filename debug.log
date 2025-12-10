@@ -35540,3 +35540,26 @@ NameError: name 'completed_courses' is not defined. Did you mean: 'completed_cou
 [INFO] 2025-12-10 12:45:09,150 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=60.00%, threshold=47.00, progress=100.00%
 [WARNING] 2025-12-10 12:45:09,300 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
 [WARNING] 2025-12-10 12:45:09,305 [django.request] Bad Request: /mark-progress/
+[WARNING] 2025-12-10 12:46:09,989 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 12:47:09,762 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-10 12:47:53,270 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\views.py changed, reloading.
+[INFO] 2025-12-10 12:48:01,757 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:48:01,843 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-10 12:48:09,888 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 12:49:09,758 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 12:50:09,738 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 12:51:09,759 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 12:52:55,754 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-10 12:53:51,621 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\templatetags\learner_tags.py changed, reloading.
+[INFO] 2025-12-10 12:54:00,303 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:54:00,404 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-10 12:54:09,863 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-10 12:55:03,193 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\templatetags\learner_tags.py changed, reloading.
+[INFO] 2025-12-10 12:55:10,050 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:55:10,120 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 12:55:16,721 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\templatetags\learner_tags.py changed, reloading.
+[INFO] 2025-12-10 12:55:24,253 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:55:24,360 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 12:55:50,541 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:55:54,005 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 12:55:54,053 [django.utils.autoreload] Watching for file changes with StatReloader

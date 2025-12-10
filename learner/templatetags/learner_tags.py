@@ -1,7 +1,7 @@
 from django import template
 from django.db.models import Count
 from django.urls import reverse
-from courses.models import PeerReview, LTIResult,Submission,Course, Section, Material, Assessment,MaterialRead, AssessmentRead, QuestionAnswer, Submission, AssessmentScore, GradeRange, CourseProgress
+from courses.models import QuizResult,Quiz,PeerReview, LTIResult,Submission,Course, Section, Material, Assessment,MaterialRead, AssessmentRead, QuestionAnswer, Submission, AssessmentScore, GradeRange, CourseProgress
 import random
 import re
 from decimal import Decimal
@@ -142,131 +142,171 @@ def get_course_completion_status(context):
         return {
             'is_completed': False,
             'certificate_url': None,
-            'assessments_completed_percentage': 0,
-            'course_progress': 0,
-            'overall_percentage': 0,
-            'passing_threshold': 60
+            'assessments_completed_percentage': 0.0,
+            'course_progress': 0.0,
+            'overall_percentage': 0.0,
+            'passing_threshold': 60.0
         }
 
-    # Ambil passing threshold dari GradeRange (konsisten dengan view: Fail max +1)
+    # --- Passing threshold (consistent dengan logic: fail.max + 1) ---
     grade_ranges = GradeRange.objects.filter(course=course)
     if grade_ranges.exists():
         grade_fail = grade_ranges.order_by('max_grade').first()
-        passing_threshold = Decimal(grade_fail.max_grade + 1) if grade_fail else Decimal('60')
+        passing_threshold = Decimal(grade_fail.max_grade) + Decimal(1) if grade_fail else Decimal('60')
     else:
-        passing_threshold = Decimal('60')  # fallback default
+        passing_threshold = Decimal('60')
 
-    # Ambil course_progress dari DB
+    # --- Course progress dari DB (sudah disimpan oleh view lain) ---
     course_progress_obj = CourseProgress.objects.filter(user=user, course=course).first()
     course_progress = Decimal(course_progress_obj.progress_percentage if course_progress_obj else 0)
     course_progress = course_progress.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
-    # Prefetch assessments untuk performa (fix: gunakan 'ltiresult_set' untuk reverse relation)
+    # --- Prefetch assessments dengan LTIResult & QuizResult untuk user ini ---
     assessments = Assessment.objects.filter(section__courses=course).prefetch_related(
-        Prefetch('questions'),
         Prefetch(
-            'ltiresult_set',  # Fix: nama reverse relation dari LTIResult ke Assessment
-            queryset=LTIResult.objects.filter(user=user, score__isnull=False),
-            to_attr='lti_results'
-        )
+            'ltiresult_set',
+            queryset=LTIResult.objects.filter(user=user, score__isnull=False).order_by('-id'),
+            to_attr='prefetched_lti_results'
+        ),
+        Prefetch(
+            'results',  # related_name dari QuizResult (model QuizResult: related_name="results")
+            queryset=QuizResult.objects.filter(user=user).order_by('-created_at'),
+            to_attr='prefetched_quiz_results'
+        ),
+        Prefetch('questions'),  # untuk cek dan hitung MCQ
     )
 
     total_assessments = assessments.count()
     assessments_completed = 0
-    total_score = Decimal(0)
-    total_max_score = Decimal(0)
+    total_score = Decimal('0')
+    total_max_score = Decimal('0')
     all_assessments_submitted = True
 
     for assessment in assessments:
-        score_value = Decimal(0)
-        weight = Decimal(assessment.weight or 1)
+        score_value = Decimal('0')
+        weight = Decimal(assessment.weight or 0)
         is_submitted = True
 
-        # Cek LTI (dari prefetch, to_attr='lti_results' sebagai list)
-        lti_results = getattr(assessment, 'lti_results', [])
+        # 1) LTIResult (prioritas tertinggi)
+        lti_results = getattr(assessment, 'prefetched_lti_results', [])
         if lti_results:
-            lti_result = lti_results[0]  # Ambil yang pertama (atau order_by('-id').first() jika perlu latest)
-            lti_score = Decimal(lti_result.score)
-            if lti_score > 1:  # Normalisasi jika 0-100
-                logger.warning(f"LTI score {lti_score} > 1.0 for user {user.id}, assessment {assessment.id}, normalizing to {lti_score / 100}")
+            lti_result = lti_results[0]
+            try:
+                lti_score = Decimal(lti_result.score)
+            except Exception:
+                lti_score = Decimal('0')
+
+            if lti_score > 1:
+                logger.debug(f"Normalizing LTI score {lti_score} -> /100 for user {user.id}, assessment {assessment.id}")
                 lti_score = lti_score / Decimal(100)
-            score_value = min(lti_score * weight, weight)
+
+            score_value = (lti_score * weight)
+            score_value = min(score_value, weight)
             assessments_completed += 1
-            logger.debug(f"LTI: normalized_score={lti_score}, score_value={score_value}")
-        elif assessment.questions.exists():  # Quiz
-            has_answers = QuestionAnswer.objects.filter(
-                user=user, question__assessment=assessment
-            ).exists()
-            if not has_answers:
-                is_submitted = False
-                all_assessments_submitted = False
-                continue
+            logger.debug(f"LTI score used: {score_value} (weight={weight})")
 
-            total_questions = assessment.questions.count()
-            correct_answers = QuestionAnswer.objects.filter(
-                user=user,
-                question__assessment=assessment,
-                choice__is_correct=True
-            ).count()
-            assessments_completed += 1
-            score_value = (Decimal(correct_answers) / Decimal(total_questions)) * weight if total_questions > 0 else Decimal(0)
-            logger.debug(f"Quiz: correct={correct_answers}/{total_questions}, score_value={score_value}")
-        else:  # ORA
-            submission = Submission.objects.filter(
-                user=user, askora__assessment=assessment
-            ).order_by('-submitted_at').first()
-            if not submission:
-                is_submitted = False
-                all_assessments_submitted = False
-                continue
+        else:
+            # 2) Video InQuiz (Quiz + QuizResult)
+            quiz_results = getattr(assessment, 'prefetched_quiz_results', [])
+            if quiz_results:
+                latest_qr = quiz_results[0]
+                if latest_qr.total_questions and latest_qr.total_questions > 0:
+                    try:
+                        qr_score_frac = (Decimal(latest_qr.score) / Decimal(latest_qr.total_questions))
+                    except Exception:
+                        qr_score_frac = Decimal('0')
+                    score_value = qr_score_frac * weight
+                    score_value = min(score_value, weight)
+                    assessments_completed += 1
+                    logger.debug(f"QuizResult used: score={latest_qr.score}/{latest_qr.total_questions}, score_value={score_value}")
+                else:
+                    # jika tidak ada total_questions, anggap tidak submit
+                    is_submitted = False
+                    all_assessments_submitted = False
+                    logger.debug(f"QuizResult exists but total_questions=0 or invalid for assessment {assessment.id}, user {user.id}")
+            else:
+                # 3) MCQ / QuestionAnswer
+                if assessment.questions.exists():
+                    # cek ada jawaban
+                    has_answers = QuestionAnswer.objects.filter(user=user, question__assessment=assessment).exists()
+                    if not has_answers:
+                        is_submitted = False
+                        all_assessments_submitted = False
+                        logger.debug(f"No QuestionAnswer for assessment {assessment.id}, user {user.id}")
+                    else:
+                        total_questions = assessment.questions.count()
+                        correct_answers = QuestionAnswer.objects.filter(
+                            user=user,
+                            question__assessment=assessment,
+                            choice__is_correct=True
+                        ).count()
+                        if total_questions > 0:
+                            score_value = (Decimal(correct_answers) / Decimal(total_questions)) * weight
+                            score_value = min(score_value, weight)
+                        else:
+                            score_value = Decimal('0')
+                        assessments_completed += 1
+                        logger.debug(f"MCQ used: {correct_answers}/{total_questions} -> {score_value}")
+                else:
+                    # 4) ORA / Submission (AssessmentScore)
+                    submission = Submission.objects.filter(user=user, askora__assessment=assessment).order_by('-submitted_at').first()
+                    if not submission:
+                        is_submitted = False
+                        all_assessments_submitted = False
+                        logger.debug(f"No submission for assessment {assessment.id}, user {user.id}")
+                    else:
+                        score_obj = AssessmentScore.objects.filter(submission=submission).first()
+                        if not score_obj or score_obj.final_score is None:
+                            is_submitted = False
+                            all_assessments_submitted = False
+                            logger.debug(f"Submission exists but no score for assessment {assessment.id}, user {user.id}")
+                        else:
+                            # final_score diasumsikan 0..100
+                            try:
+                                final_frac = Decimal(score_obj.final_score) / Decimal(100)
+                            except Exception:
+                                final_frac = Decimal('0')
+                            score_value = final_frac * weight
+                            score_value = min(score_value, weight)
+                            assessments_completed += 1
+                            logger.debug(f"ORA used: final_score={score_obj.final_score} -> score_value={score_value}")
 
-            score_obj = AssessmentScore.objects.filter(submission=submission).first()
-            if not score_obj:
-                is_submitted = False
-                all_assessments_submitted = False
-                continue
-
-            assessments_completed += 1
-            score_value = Decimal(score_obj.final_score)
-            logger.debug(f"ORA: score={score_value}")
-
+        # tambahkan ke total hanya jika ada bobot (untuk menghindari pembagian 0)
         total_score += score_value
         total_max_score += weight
 
-    # Batasi total_score <= total_max_score
+    # pastikan total_score tidak melebihi total_max_score
     total_score = min(total_score, total_max_score)
 
-    # Hitung persentase
+    # overall percentage
     overall_percentage = (total_score / total_max_score * Decimal(100)) if total_max_score > 0 else Decimal(0)
     overall_percentage = overall_percentage.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
-    assessments_completed_percentage = (
-        (Decimal(assessments_completed) / Decimal(total_assessments) * 100) if total_assessments > 0 else Decimal(0)
-    )
+    # assessments completed percentage
+    assessments_completed_percentage = (Decimal(assessments_completed) / Decimal(total_assessments) * Decimal(100)) if total_assessments > 0 else Decimal(0)
     assessments_completed_percentage = assessments_completed_percentage.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
-    # Evaluasi kelulusan (strict: progress == 100)
-    passing_criteria_met = overall_percentage >= passing_threshold and course_progress == Decimal(100)
-    is_completed = all_assessments_submitted and passing_criteria_met
+    # evaluasi kelulusan: harus semua submit (strict) + progress == 100 + overall >= threshold
+    passing_criteria_met = (overall_percentage >= passing_threshold and course_progress == Decimal(100))
+    is_completed = bool(all_assessments_submitted and passing_criteria_met)
 
-    certificate_url = (
-        reverse('courses:generate_certificate', kwargs={'course_id': course.id})
-        if is_completed else None
+    certificate_url = reverse('courses:generate_certificate', kwargs={'course_id': course.id}) if is_completed else None
+
+    logger.info(
+        f"Completion for user {user.id}, course {course.id}: is_completed={is_completed}, "
+        f"assessments={assessments_completed}/{total_assessments}, overall={overall_percentage}%, "
+        f"threshold={passing_threshold}, progress={course_progress}%"
     )
-
-    logger.info(f"Completion for user {user.id}, course {course.id}: "
-                f"is_completed={is_completed}, assessments={assessments_completed}/{total_assessments}, "
-                f"overall={overall_percentage}%, threshold={passing_threshold}, progress={course_progress}%")
 
     return {
         'is_completed': is_completed,
         'certificate_url': certificate_url,
-        'assessments_completed_percentage': float(assessments_completed_percentage),  # Convert ke float untuk template
+        'assessments_completed_percentage': float(assessments_completed_percentage),
         'course_progress': float(course_progress),
         'overall_percentage': float(overall_percentage),
         'passing_threshold': float(passing_threshold)
     }
-    
+
 @register.simple_tag(takes_context=True)
 def is_content_read(context, content_type, content_id):
     """

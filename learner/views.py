@@ -1424,10 +1424,7 @@ def load_content(request, username, id, slug, content_type, content_id):
             }
             context.update(_build_assessment_context(assessment, request.user))
 
-        # =================================================================
-        # BARU SETELAH ITU → cek apakah ini sebenarnya VIDEO QUIZ
-        # Jika ada assessment.quizzes → pasti video quiz → matikan kuis biasa
-        # =================================================================
+       
         # =================================================================
         # VIDEO QUIZ → hanya jika ada assessment.quizzes
         # =================================================================
