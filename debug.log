@@ -35612,3 +35612,6 @@ NameError: name 'completed_courses' is not defined. Did you mean: 'completed_cou
 [INFO] 2025-12-10 13:06:40,467 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\courses\forms.py changed, reloading.
 [INFO] 2025-12-10 13:07:05,493 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-12-10 13:07:05,706 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-10 13:07:23,933 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 13:08:55,994 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 13:09:56,240 [django.request] Not Found: /partner/ping-session/
