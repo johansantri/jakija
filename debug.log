@@ -35563,3 +35563,30 @@ NameError: name 'completed_courses' is not defined. Did you mean: 'completed_cou
 [INFO] 2025-12-10 12:55:50,541 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-12-10 12:55:54,005 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-12-10 12:55:54,053 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-10 12:56:09,171 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 12:56:09,265 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[WARNING] 2025-12-10 12:56:09,403 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-10 12:56:09,465 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 10
+[DEBUG] 2025-12-10 12:56:09,524 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 10
+[INFO] 2025-12-10 12:56:09,568 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 10
+[DEBUG] 2025-12-10 12:56:09,626 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=50.00
+[DEBUG] 2025-12-10 12:56:09,628 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 30.000
+[INFO] 2025-12-10 12:56:09,629 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=True, assessments=2/2, overall=80.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 12:56:10,755 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-10 12:56:10,756 [django.request] Bad Request: /mark-progress/
+[WARNING] 2025-12-10 12:56:22,055 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 12:56:22,200 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 12:56:22,236 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 10
+[DEBUG] 2025-12-10 12:56:22,970 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 10
+[INFO] 2025-12-10 12:56:23,058 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 10
+[DEBUG] 2025-12-10 12:56:23,107 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=50.00
+[DEBUG] 2025-12-10 12:56:23,109 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 30.000
+[INFO] 2025-12-10 12:56:23,109 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=True, assessments=2/2, overall=80.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 12:56:23,273 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-10 12:56:23,274 [django.request] Bad Request: /mark-progress/
+[DEBUG] 2025-12-10 12:56:37,545 [authentication.views] [MYCOURSE] Course 2: progress=100%, last_access_material=None, last_access_assessment=10
+[DEBUG] 2025-12-10 12:56:37,553 [authentication.views] [MYCOURSE] User 5 viewed mycourse — 1 enrollments, 1 last accesses
+[DEBUG] 2025-12-10 12:56:53,901 [authentication.views] [MYCOURSE] Course 2: progress=100%, last_access_material=None, last_access_assessment=10
+[DEBUG] 2025-12-10 12:56:53,903 [authentication.views] [MYCOURSE] User 5 viewed mycourse — 1 enrollments, 1 last accesses
+[DEBUG] 2025-12-10 12:57:01,702 [authentication.views] [MYCOURSE] Course 2: progress=100%, last_access_material=None, last_access_assessment=10
+[DEBUG] 2025-12-10 12:57:01,704 [authentication.views] [MYCOURSE] User 5 viewed mycourse — 1 enrollments, 1 last accesses
