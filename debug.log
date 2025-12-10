@@ -34621,3 +34621,501 @@ django.template.exceptions.TemplateSyntaxError: Invalid filter: 'mul'
 [DEBUG] 2025-12-10 09:02:04,169 [learner.views] Updated LastAccessCourse for user 5, course 2, material 14
 [INFO] 2025-12-10 09:02:04,175 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 14
 [INFO] 2025-12-10 09:02:04,187 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=50.00%
+[WARNING] 2025-12-10 09:02:56,797 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:03:00,394 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:03:01,198 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:03:01,970 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:03:02,677 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:03:03,391 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:03:04,239 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:03:57,754 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:04:00,728 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:04:01,730 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:04:02,745 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:04:02,773 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:04:03,727 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:04:04,735 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:04:57,741 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:05:00,723 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:05:01,730 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:05:02,729 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:05:02,758 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:05:03,724 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:05:04,730 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:05:57,724 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:06:00,747 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:06:01,764 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:06:02,734 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:06:02,757 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:06:03,770 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:06:04,736 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:06:57,720 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:07:00,731 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:07:01,742 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:07:02,755 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:07:02,761 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:07:03,778 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:07:04,792 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:07:57,732 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:08:00,721 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:08:01,725 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:08:02,730 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:08:02,752 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:08:03,730 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:08:04,751 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:09:55,798 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:09:55,850 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:09:55,898 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:09:55,920 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:09:55,940 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:09:55,965 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:09:55,985 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:10:55,850 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:10:55,864 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:10:55,896 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:10:55,926 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:10:55,949 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:10:56,002 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:11:55,772 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:11:55,794 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:11:55,822 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:11:55,856 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:11:55,880 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:11:55,916 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:11:55,939 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:12:47,675 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:12:47,679 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:12:47,880 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:12:47,885 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:12:47,888 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:12:47,952 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:12:57,730 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:13:00,726 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:13:01,748 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:13:02,777 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:13:02,788 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:13:03,749 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:13:04,745 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:13:57,921 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:14:00,730 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:14:01,736 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:14:02,745 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:14:02,766 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:14:03,748 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:14:04,727 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-10 09:14:14,789 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\views.py changed, reloading.
+[INFO] 2025-12-10 09:14:23,365 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 09:14:23,492 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 09:14:43,161 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\urls.py changed, reloading.
+[INFO] 2025-12-10 09:14:48,215 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 09:14:48,281 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-10 09:15:33,423 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:15:33,455 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:15:33,489 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:15:33,590 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:15:33,591 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:15:34,462 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:15:34,483 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:15:57,728 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:16:00,727 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:16:01,751 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:16:02,722 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:16:02,742 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:16:03,726 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:16:04,719 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:16:14,919 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:16:16,576 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:16:16,726 [learner.views] Created CourseSessionLog for user 5, course 2, material 14
+[DEBUG] 2025-12-10 09:16:16,821 [learner.views] Updated LastAccessCourse for user 5, course 2, material 14
+[INFO] 2025-12-10 09:16:16,858 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, material 14
+[ERROR] 2025-12-10 09:16:18,850 [django.request] Internal Server Error: /learn/2/public-speaking-for-beginners-speak-with-confidence/material/14/
+Traceback (most recent call last):
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'is_content_read'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\mei\Downloads\mysite\learner\views.py", line 1463, in load_content
+    response = render(request, template, context)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\engine.py", line 208, in select_template
+    return self.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\defaulttags.py", line 962, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 36: 'is_content_read', expected 'empty' or 'endfor'. Did you forget to register or load this tag?
+[WARNING] 2025-12-10 09:17:32,124 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:17:32,190 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:17:32,216 [learner.views] Created CourseSessionLog for user 5, course 2, material 14
+[DEBUG] 2025-12-10 09:17:32,259 [learner.views] Updated LastAccessCourse for user 5, course 2, material 14
+[INFO] 2025-12-10 09:17:32,291 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, material 14
+[ERROR] 2025-12-10 09:17:32,554 [django.request] Internal Server Error: /learn/2/public-speaking-for-beginners-speak-with-confidence/material/14/
+Traceback (most recent call last):
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\defaulttags.py", line 1035, in find_library
+    return parser.libraries[name]
+           ~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'progress_tags'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\mei\Downloads\mysite\learner\views.py", line 1463, in load_content
+    response = render(request, template, context)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\engine.py", line 208, in select_template
+    return self.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\defaulttags.py", line 1097, in load
+    lib = find_library(parser, name)
+  File "C:\Users\mei\Downloads\mysite\.venv\Lib\site-packages\django\template\defaulttags.py", line 1037, in find_library
+    raise TemplateSyntaxError(
+    ...<5 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: 'progress_tags' is not a registered tag library. Must be one of:
+account
+admin_list
+admin_modify
+admin_urls
+allauth
+blog_filters
+cache
+csp
+custom_filters
+django_htmx
+extra_custom_filters
+extra_filters
+form_filters
+humanize
+i18n
+import_export_tags
+l10n
+learner_tags
+log
+mathfilters
+rest_framework
+socialaccount
+static
+tz
+widget_tweaks
+[WARNING] 2025-12-10 09:18:37,907 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:18:38,164 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:18:39,149 [learner.views] Created CourseSessionLog for user 5, course 2, material 14
+[DEBUG] 2025-12-10 09:18:40,184 [learner.views] Updated LastAccessCourse for user 5, course 2, material 14
+[INFO] 2025-12-10 09:18:40,242 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, material 14
+[INFO] 2025-12-10 09:18:43,505 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=50.00%
+[WARNING] 2025-12-10 09:18:53,650 [django.request] Not Found: /learn/2/public-speaking-for-beginners-speak-with-confidence/material/15/&from_next=1
+[WARNING] 2025-12-10 09:19:01,729 [django.request] Not Found: /learn/2/public-speaking-for-beginners-speak-with-confidence/material/15/&from_next=1
+[WARNING] 2025-12-10 09:19:06,496 [django.request] Not Found: /learn/2/public-speaking-for-beginners-speak-with-confidence/material/15/&from_next=1
+[WARNING] 2025-12-10 09:19:10,902 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-10 09:19:20,751 [django.request] Not Found: /learn/2/public-speaking-for-beginners-speak-with-confidence/material/15/&from_next=1
+[WARNING] 2025-12-10 09:19:44,733 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:20:12,327 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:20:12,726 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:20:13,130 [learner.views] Created CourseSessionLog for user 5, course 2, material 14
+[DEBUG] 2025-12-10 09:20:13,178 [learner.views] Updated LastAccessCourse for user 5, course 2, material 14
+[INFO] 2025-12-10 09:20:13,206 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, material 14
+[INFO] 2025-12-10 09:20:13,357 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=50.00%
+[WARNING] 2025-12-10 09:20:13,675 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-10 09:20:20,332 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:20:20,529 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:20:20,975 [learner.views] Created CourseSessionLog for user 5, course 2, material 15
+[DEBUG] 2025-12-10 09:20:22,042 [learner.views] Updated LastAccessCourse for user 5, course 2, material 15
+[INFO] 2025-12-10 09:20:22,254 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 67%
+[INFO] 2025-12-10 09:20:22,261 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 15
+[INFO] 2025-12-10 09:20:22,288 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=67.00%
+[WARNING] 2025-12-10 09:20:32,707 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:20:32,740 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:20:32,755 [learner.views] Created CourseSessionLog for user 5, course 2, material 16
+[DEBUG] 2025-12-10 09:20:32,782 [learner.views] Updated LastAccessCourse for user 5, course 2, material 16
+[INFO] 2025-12-10 09:20:32,810 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 67%
+[INFO] 2025-12-10 09:20:32,814 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 16
+[INFO] 2025-12-10 09:20:32,826 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=67.00%
+[WARNING] 2025-12-10 09:20:35,741 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:20:35,769 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:20:35,783 [learner.views] Created CourseSessionLog for user 5, course 2, material 17
+[DEBUG] 2025-12-10 09:20:35,806 [learner.views] Updated LastAccessCourse for user 5, course 2, material 17
+[INFO] 2025-12-10 09:20:35,832 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 67%
+[INFO] 2025-12-10 09:20:35,850 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 17
+[INFO] 2025-12-10 09:20:35,860 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=67.00%
+[WARNING] 2025-12-10 09:20:40,758 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:20:40,784 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:20:40,797 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-10 09:20:40,820 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-10 09:20:40,854 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 83%
+[INFO] 2025-12-10 09:20:40,905 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, assessment 12
+[INFO] 2025-12-10 09:20:40,918 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=83.00%
+[WARNING] 2025-12-10 09:20:45,080 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:20:45,103 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:20:45,117 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 10
+[DEBUG] 2025-12-10 09:20:45,149 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 10
+[INFO] 2025-12-10 09:20:45,191 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 100%
+[INFO] 2025-12-10 09:20:45,199 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, assessment 10
+[INFO] 2025-12-10 09:20:45,213 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 09:20:45,339 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-10 09:20:45,342 [django.request] Bad Request: /mark-progress/
+[WARNING] 2025-12-10 09:20:48,933 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:20:49,337 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:20:49,565 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 10
+[DEBUG] 2025-12-10 09:20:50,292 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 10
+[INFO] 2025-12-10 09:20:50,605 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 100%
+[INFO] 2025-12-10 09:20:50,616 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 10
+[INFO] 2025-12-10 09:20:50,702 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 09:20:51,290 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-10 09:20:51,292 [django.request] Bad Request: /mark-progress/
+[WARNING] 2025-12-10 09:20:57,796 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:20:58,071 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:20:58,565 [learner.views] Created CourseSessionLog for user 5, course 2, material 17
+[DEBUG] 2025-12-10 09:20:58,813 [learner.views] Updated LastAccessCourse for user 5, course 2, material 17
+[INFO] 2025-12-10 09:20:58,835 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 17
+[WARNING] 2025-12-10 09:20:58,850 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[INFO] 2025-12-10 09:20:59,174 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=100.00%
+[DEBUG] 2025-12-10 09:20:59,820 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:21:00,272 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-10 09:21:00,400 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-10 09:21:00,450 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, assessment 12
+[INFO] 2025-12-10 09:21:00,485 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 09:21:02,671 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:21:02,697 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:21:02,713 [learner.views] Created CourseSessionLog for user 5, course 2, material 15
+[DEBUG] 2025-12-10 09:21:02,735 [learner.views] Updated LastAccessCourse for user 5, course 2, material 15
+[INFO] 2025-12-10 09:21:02,748 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 15
+[INFO] 2025-12-10 09:21:02,763 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 09:21:03,339 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:21:03,364 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:21:03,378 [learner.views] Created CourseSessionLog for user 5, course 2, material 16
+[DEBUG] 2025-12-10 09:21:03,401 [learner.views] Updated LastAccessCourse for user 5, course 2, material 16
+[INFO] 2025-12-10 09:21:03,407 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 16
+[INFO] 2025-12-10 09:21:03,421 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 09:21:04,868 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:21:04,896 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:21:04,916 [learner.views] Created CourseSessionLog for user 5, course 2, material 16
+[DEBUG] 2025-12-10 09:21:04,939 [learner.views] Updated LastAccessCourse for user 5, course 2, material 16
+[INFO] 2025-12-10 09:21:04,951 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, material 16
+[INFO] 2025-12-10 09:21:04,986 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 09:21:07,056 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:21:07,251 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:21:07,507 [learner.views] Created CourseSessionLog for user 5, course 2, material 17
+[DEBUG] 2025-12-10 09:21:07,833 [learner.views] Updated LastAccessCourse for user 5, course 2, material 17
+[INFO] 2025-12-10 09:21:07,840 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 17
+[INFO] 2025-12-10 09:21:07,855 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 09:21:09,429 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:21:09,628 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:21:10,346 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-10 09:21:10,565 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-10 09:21:10,585 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, assessment 12
+[INFO] 2025-12-10 09:21:10,599 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=100.00%
+[INFO] 2025-12-10 09:21:49,081 [learner.views] Menampilkan pesan sapaan untuk pengguna learn pada kursus Public Speaking for Beginners: Speak with Confidence
+[DEBUG] 2025-12-10 09:21:49,102 [learner.views] Created LastAccessCourse for user 5, course 2, material 14
+[INFO] 2025-12-10 09:21:49,102 [learner.views] Redirecting to load_content: /learn/2/public-speaking-for-beginners-speak-with-confidence/material/14/
+[WARNING] 2025-12-10 09:21:49,131 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:21:49,163 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:21:49,179 [learner.views] Created CourseSessionLog for user 5, course 2, material 14
+[DEBUG] 2025-12-10 09:21:49,208 [learner.views] Updated LastAccessCourse for user 5, course 2, material 14
+[INFO] 2025-12-10 09:21:49,230 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, material 14
+[INFO] 2025-12-10 09:21:49,272 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=0.00%
+[WARNING] 2025-12-10 09:21:55,757 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:21:55,780 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:21:55,795 [learner.views] Created CourseSessionLog for user 5, course 2, material 15
+[DEBUG] 2025-12-10 09:21:55,816 [learner.views] Updated LastAccessCourse for user 5, course 2, material 15
+[INFO] 2025-12-10 09:21:55,858 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 33%
+[INFO] 2025-12-10 09:21:55,867 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 15
+[INFO] 2025-12-10 09:21:55,878 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=33.00%
+[WARNING] 2025-12-10 09:22:00,671 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:22:00,691 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:22:00,703 [learner.views] Created CourseSessionLog for user 5, course 2, material 16
+[DEBUG] 2025-12-10 09:22:00,724 [learner.views] Updated LastAccessCourse for user 5, course 2, material 16
+[INFO] 2025-12-10 09:22:00,754 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 50%
+[INFO] 2025-12-10 09:22:00,764 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 16
+[INFO] 2025-12-10 09:22:00,775 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=50.00%
+[WARNING] 2025-12-10 09:22:02,643 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:22:02,675 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:22:02,691 [learner.views] Created CourseSessionLog for user 5, course 2, material 16
+[DEBUG] 2025-12-10 09:22:02,714 [learner.views] Updated LastAccessCourse for user 5, course 2, material 16
+[INFO] 2025-12-10 09:22:02,749 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 67%
+[INFO] 2025-12-10 09:22:02,758 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, material 16
+[INFO] 2025-12-10 09:22:02,790 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=67.00%
+[WARNING] 2025-12-10 09:23:03,753 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 09:23:56,046 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:23:56,213 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:23:56,241 [learner.views] Created CourseSessionLog for user 5, course 2, material 16
+[DEBUG] 2025-12-10 09:23:56,289 [learner.views] Updated LastAccessCourse for user 5, course 2, material 16
+[INFO] 2025-12-10 09:23:56,348 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 67%
+[INFO] 2025-12-10 09:23:56,365 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, material 16
+[INFO] 2025-12-10 09:23:58,834 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=67.00%
+[WARNING] 2025-12-10 09:24:02,884 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:24:02,908 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:24:02,921 [learner.views] Created CourseSessionLog for user 5, course 2, material 17
+[DEBUG] 2025-12-10 09:24:02,949 [learner.views] Updated LastAccessCourse for user 5, course 2, material 17
+[INFO] 2025-12-10 09:24:02,976 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 67%
+[INFO] 2025-12-10 09:24:02,991 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, material 17
+[INFO] 2025-12-10 09:24:03,006 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=67.00%
+[WARNING] 2025-12-10 09:24:07,177 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-10 09:24:12,191 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:24:12,226 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:24:12,243 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 12
+[DEBUG] 2025-12-10 09:24:12,271 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 12
+[INFO] 2025-12-10 09:24:12,308 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 83%
+[INFO] 2025-12-10 09:24:12,346 [learner.views] load_content: Rendering learner/partials/content.html untuk pengguna learn, assessment 12
+[INFO] 2025-12-10 09:24:12,367 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=83.00%
+[WARNING] 2025-12-10 09:24:20,331 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 09:24:20,365 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 09:24:20,386 [learner.views] Created CourseSessionLog for user 5, course 2, material 16
+[DEBUG] 2025-12-10 09:24:20,412 [learner.views] Updated LastAccessCourse for user 5, course 2, material 16
+[INFO] 2025-12-10 09:24:20,459 [learner.views] Progress updated for user learn on course Public Speaking for Beginners: Speak with Confidence: 100%
+[INFO] 2025-12-10 09:24:20,462 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, material 16
+[INFO] 2025-12-10 09:24:20,494 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=0/2, overall=0.00%, threshold=47.00, progress=100.00%
+[INFO] 2025-12-10 09:24:53,743 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\views.py changed, reloading.
+[INFO] 2025-12-10 09:25:02,430 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 09:25:02,658 [django.utils.autoreload] Watching for file changes with StatReloader
