@@ -35530,3 +35530,13 @@ NameError: name 'completed_courses' is not defined. Did you mean: 'completed_cou
 [INFO] 2025-12-10 12:44:28,500 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\learner\views.py changed, reloading.
 [INFO] 2025-12-10 12:44:46,584 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2025-12-10 12:44:46,717 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 12:45:08,988 [learner.views] Redirecting to load_content: /learn/2/public-speaking-for-beginners-speak-with-confidence/assessment/10/
+[WARNING] 2025-12-10 12:45:09,016 [learner.views] Gagal mendapatkan lokasi untuk IP 127.0.0.1: [Errno 2] No such file or directory: b'/path/to/GeoLite2-City.mmdb'
+[DEBUG] 2025-12-10 12:45:09,050 [learner.views] Closed previous CourseSessionLog for user 5, course 2
+[DEBUG] 2025-12-10 12:45:09,064 [learner.views] Created CourseSessionLog for user 5, course 2, assessment 10
+[DEBUG] 2025-12-10 12:45:09,093 [learner.views] Updated LastAccessCourse for user 5, course 2, assessment 10
+[INFO] 2025-12-10 12:45:09,113 [learner.views] load_content: Rendering learner/my_course.html untuk pengguna learn, assessment 10
+[DEBUG] 2025-12-10 12:45:09,149 [learner.templatetags.learner_tags] Quiz: correct=3/5, score_value=30.000
+[INFO] 2025-12-10 12:45:09,150 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=1/2, overall=60.00%, threshold=47.00, progress=100.00%
+[WARNING] 2025-12-10 12:45:09,300 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-10 12:45:09,305 [django.request] Bad Request: /mark-progress/
