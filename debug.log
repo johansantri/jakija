@@ -35590,3 +35590,25 @@ NameError: name 'completed_courses' is not defined. Did you mean: 'completed_cou
 [DEBUG] 2025-12-10 12:56:53,903 [authentication.views] [MYCOURSE] User 5 viewed mycourse — 1 enrollments, 1 last accesses
 [DEBUG] 2025-12-10 12:57:01,702 [authentication.views] [MYCOURSE] Course 2: progress=100%, last_access_material=None, last_access_assessment=10
 [DEBUG] 2025-12-10 12:57:01,704 [authentication.views] [MYCOURSE] User 5 viewed mycourse — 1 enrollments, 1 last accesses
+[WARNING] 2025-12-10 12:57:23,739 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 12:58:23,737 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 12:59:23,844 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 13:00:23,761 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 13:01:23,753 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-10 13:01:54,399 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\courses\utils.py changed, reloading.
+[INFO] 2025-12-10 13:02:08,495 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 13:02:08,684 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 13:02:19,661 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\courses\utils.py changed, reloading.
+[INFO] 2025-12-10 13:02:29,096 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 13:02:29,210 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-10 13:02:33,690 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\courses\utils.py changed, reloading.
+[INFO] 2025-12-10 13:02:40,287 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 13:02:40,507 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2025-12-10 13:03:06,304 [authentication.views] [MYCOURSE] Course 2: progress=100%, last_access_material=None, last_access_assessment=10
+[DEBUG] 2025-12-10 13:03:06,306 [authentication.views] [MYCOURSE] User 5 viewed mycourse — 1 enrollments, 1 last accesses
+[WARNING] 2025-12-10 13:03:23,754 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 13:04:56,477 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-10 13:05:55,832 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-10 13:06:40,467 [django.utils.autoreload] C:\Users\mei\Downloads\mysite\courses\forms.py changed, reloading.
+[INFO] 2025-12-10 13:07:05,493 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-10 13:07:05,706 [django.utils.autoreload] Watching for file changes with StatReloader

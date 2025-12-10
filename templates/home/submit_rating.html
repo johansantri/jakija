@@ -1,50 +1,37 @@
 {% extends 'home/tes.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2>Rating for {{ course.course_name }}</h2>
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-lg shadow">
+    <h2 class="text-2xl font-semibold mb-6">Rating for {{ course.course_name }}</h2>
 
-    <form method="post">
+    <form method="post" class="space-y-6">
         {% csrf_token %}
         
         <!-- Star Rating -->
-        <div class="mb-3">
-            <label for="id_rating" class="form-label">Rate (1-5)</label>
-            <div class="rating ms-auto">
-                <i class="fas fa-star" data-value="1"></i>
-                <i class="fas fa-star" data-value="2"></i>
-                <i class="fas fa-star" data-value="3"></i>
-                <i class="fas fa-star" data-value="4"></i>
-                <i class="fas fa-star" data-value="5"></i>
+        <div>
+            <label for="id_rating" class="block text-gray-700 font-medium mb-2">Rate (1-5)</label>
+            <div class="flex space-x-2 rating">
+                <i class="fas fa-star text-gray-300 cursor-pointer text-2xl" data-value="1"></i>
+                <i class="fas fa-star text-gray-300 cursor-pointer text-2xl" data-value="2"></i>
+                <i class="fas fa-star text-gray-300 cursor-pointer text-2xl" data-value="3"></i>
+                <i class="fas fa-star text-gray-300 cursor-pointer text-2xl" data-value="4"></i>
+                <i class="fas fa-star text-gray-300 cursor-pointer text-2xl" data-value="5"></i>
                 <input type="hidden" name="rating" id="rating-input" value="0">
             </div>
         </div>
 
         <!-- Comment -->
-        <div class="mb-3">
-            <label for="id_comment" class="form-label">Comment (optional)</label>
-            {{ form.comment }}
+        <div>
+            <label for="id_comment" class="block text-gray-700 font-medium mb-2">Comment (optional)</label>
+            <div>
+                {{ form.comment }}
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit Rating</button>
+        <button type="submit" class="bg-blue-600 text-white font-semibold px-6 py-2 rounded hover:bg-blue-700 transition">Submit Rating</button>
     </form>
 </div>
-<style>
-.rating i {
-    font-size: 30px;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
 
-.rating i:hover, .rating i.selected {
-    color: #f39c12; /* Selected star color */
-}
-
-.rating .fa-star {
-    color: #ddd; /* Unselected star color */
-}
-
-</style>
 <!-- Add JS script for interactivity -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -59,17 +46,16 @@ document.addEventListener('DOMContentLoaded', function() {
             ratingInput.value = ratingValue;
             
             // Remove the 'selected' class from all stars
-            stars.forEach(s => s.classList.remove('selected'));
+            stars.forEach(s => s.classList.remove('selected', 'text-yellow-400'));
             
             // Add the 'selected' class to the clicked star and all preceding stars
             stars.forEach((s, index) => {
                 if (index < ratingValue) {
-                    s.classList.add('selected');
+                    s.classList.add('selected', 'text-yellow-400');
                 }
             });
         });
     });
 });
 </script>
-
 {% endblock content %}

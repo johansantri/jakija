@@ -125,9 +125,15 @@ class CourseRatingForm(forms.ModelForm):
         model = CourseRating
         fields = ['rating', 'comment']
         widgets = {
-            'rating': forms.Select(attrs={'class': 'form-select'}),
-            'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'rating': forms.Select(attrs={
+                'class': 'block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50'
+            }),
+            'comment': forms.Textarea(attrs={
+                'class': 'block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50',
+                'rows': 3
+            }),
         }
+
 
 class SosPostForm(forms.ModelForm):
     
