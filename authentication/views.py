@@ -673,25 +673,25 @@ def user_detail(request, user_id):
     target_user = get_object_or_404(CustomUser, id=user_id)
     current_user = request.user
 
-    # Validasi akses
-    allowed = (
-        current_user == target_user or
-        current_user.is_superuser or
-        current_user.is_staff or
-        (
-            current_user.is_partner and
-            hasattr(current_user, 'org_partner') and
-            hasattr(target_user, 'org_partner') and
-            current_user.org_partner == target_user.org_partner
-        )
-    )
+    # === Validasi akses (tetap sama) ===
+    partner_instance = getattr(current_user, 'partner_user', None)
+    target_partner_instance = getattr(target_user, 'partner_user', None)
+    is_partner_same_org = False
+    if partner_instance:
+        if target_partner_instance:
+            is_partner_same_org = partner_instance.name_id == target_partner_instance.name_id
+        else:
+            if target_user.university:
+                is_partner_same_org = partner_instance.name_id == target_user.university.id
 
+    allowed = (current_user == target_user or current_user.is_superuser or 
+               current_user.is_staff or is_partner_same_org)
     if not allowed:
-        messages.warning(request, "Access denied: You are not authorized to view this page.")
+        messages.warning(request, "Access denied.")
         return redirect('authentication:dashbord')
 
+    # === Enrollments ===
     enrollments = Enrollment.objects.filter(user=target_user).select_related('course')
-
     search_query = request.GET.get('search', '')
     if search_query:
         enrollments = enrollments.filter(course__course_name__icontains=search_query)
@@ -699,21 +699,34 @@ def user_detail(request, user_id):
     course_details = []
     for enrollment in enrollments:
         course = enrollment.course
-        detail = calculate_course_status(target_user, course)
+        detail = calculate_course_status(target_user, course)  # dict atau object
+
+        # TAMBAHKAN PERSENTASE
+        if hasattr(detail, 'total_max_score'):  # kalau object
+            max_score = detail.total_max_score or 0
+            score = detail.total_score or 0
+        else:  # kalau dict
+            max_score = detail.get('total_max_score', 0) or 0
+            score = detail.get('total_score', 0) or 0
+
+        percentage = (score / max_score * 100) if max_score > 0 else 0
+        if hasattr(detail, '__dict__'):  # object
+            detail.percentage = round(percentage, 1)
+        else:  # dict
+            detail['percentage'] = round(percentage, 1)
+
         course_details.append(detail)
 
+    # === Pagination ===
     paginator = Paginator(course_details, 5)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator.get_page(request.GET.get('page'))
 
     context = {
         'user': target_user,
         'course_details': page_obj,
         'search_query': search_query,
     }
-
     return render(request, 'authentication/user_detail.html', context)
-
 # Fungsi safe_cache_set
 def safe_cache_set(key, value, timeout=300):
     try:

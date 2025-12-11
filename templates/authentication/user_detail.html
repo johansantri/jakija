@@ -3,244 +3,190 @@
 
 {% block content %}
 
-<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
-    <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 md:p-8">
+<!-- KOTAK UTAMA – LEBIH SMOOTH & RESPONSIVE -->
+<section class="bg-white border border-gray-200 rounded-3xl shadow-2xl overflow-hidden mt-8 mx-4 sm:mx-8 lg:mx-auto max-w-7xl">
 
-        <!-- Title -->
-        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-            <i class="fas fa-building text-yellow-500"></i>
-            Personal Information 
-        </h3>
+  <div class="flex flex-col lg:flex-row min-h-screen lg:min-h-0">
 
-    <!-- User Profile Card -->
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="lg:w-96 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white flex flex-col items-center p-8 lg:p-10 relative overflow-hidden">
+      
+      <!-- Background subtle pattern (optional aesthetic) -->
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+      </div>
+
+      <!-- Avatar – lebih besar & dramatis -->
+      <div class="relative z-10 -mt-20 mb-6">
+        <div class="w-44 h-44 rounded-full ring-8 ring-white/30 shadow-2xl overflow-hidden border-4 border-white">
+          {% if user.photo %}
+            <img src="{{ user.photo.url }}" alt="Profile" class="w-full h-full object-cover">
+          {% else %}
+            <img src="{% static 'images/default-avatar.png' %}" alt="Profile" class="w-full h-full object-cover">
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Nama & Info Singkat -->
+      <div class="text-center z-10">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">{{ user.get_full_name|default:user.username }}</h1>
         
-        <!-- Header -->
-        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 text-center">
-            <h4 class="text-2xl font-bold">{{ user.get_full_name }}</h4>
+        <p class="text-white/80 text-sm mt-1">{{ user.email }}</p>
+      </div>
+
+      <!-- Tabs – lebih halus -->
+      <div class="w-full mt-10 bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/20">
+        <div class="flex">
+          <button onclick="openTab(event,'personal')" class="tab-btn active flex-1 py-4 text-sm font-medium transition-all duration-300">
+            Personal Info
+          </button>
+          <button onclick="openTab(event,'contact')" class="tab-btn flex-1 py-4 text-sm font-medium transition-all duration-300">
+            Contact & Education
+          </button>
         </div>
 
-        <!-- Profile Photo -->
-        <div class="flex justify-center -mt-12">
-            {% if user.photo %}
-                <img src="{{ user.photo.url }}" alt="User Photo" 
-                     class="w-28 h-28 rounded-full border-4 border-white shadow-lg object-cover">
-            {% else %}
-                <img src="{% static 'images/default-avatar.png' %}" alt="Default Photo" 
-                     class="w-28 h-28 rounded-full border-4 border-white shadow-lg object-cover">
-            {% endif %}
-        </div>
-
-        <!-- Personal Info -->
-        <div class="p-6 pt-16">
-           
-
-            <!-- Mobile List -->
-            <div class="space-y-3 md:hidden">
-                <div class="flex justify-between py-2 border-b border-gray-100">
-                    <span class="font-medium text-gray-600 flex items-center gap-2">
-                        Username
-                    </span>
-                    <span class="text-gray-800">{{ user.username }}</span>
-                </div>
-                <div class="flex justify-between py-2 border-b border-gray-100">
-                    <span class="font-medium text-gray-600 flex items-center gap-2">
-                        Email
-                    </span>
-                    <span class="text-gray-800">{{ user.email }}</span>
-                </div>
-                <div class="flex justify-between py-2 border-b border-gray-100">
-                    <span class="font-medium text-gray-600 flex items-center gap-2">
-                        First Name
-                    </span>
-                    <span class="text-gray-800">{{ user.first_name }}</span>
-                </div>
-                <div class="flex justify-between py-2 border-b border-gray-100">
-                    <span class="font-medium text-gray-600 flex items-center gap-2">
-                        Last Name
-                    </span>
-                    <span class="text-gray-800">{{ user.last_name }}</span>
-                </div>
-                <div class="flex justify-between py-2 border-b border-gray-100">
-                    <span class="font-medium text-gray-600 flex items-center gap-2">
-                        Gender
-                    </span>
-                    <span class="text-gray-800">{{ user.get_gender_display }}</span>
-                </div>
-                <div class="flex justify-between py-2 border-b border-gray-100">
-                    <span class="font-medium text-gray-600 flex items-center gap-2">
-                        Date of Birth
-                    </span>
-                    <span class="text-gray-800">{{ user.birth|date:"M d, ****" }}</span>
-                </div>
-                <div class="flex justify-between py-2 border-b border-gray-100">
-                    <span class="font-medium text-gray-600 flex items-center gap-2">
-                        Address
-                    </span>
-                    <span class="text-gray-800">{{ user.address|default:"-" }}</span>
-                </div>
-                <div class="flex justify-between py-2 border-b border-gray-100">
-                    <span class="font-medium text-gray-600 flex items-center gap-2">
-                        Country
-                    </span>
-                    <span class="text-gray-800">{{ user.country }}</span>
-                </div>
-                <div class="flex justify-between py-2 border-b border-gray-100">
-                    <span class="font-medium text-gray-600 flex items-center gap-2">
-                        Phone
-                    </span>
-                    <span class="text-gray-800">********{{ user.phone|slice:"-4:" }}</span>
-                </div>
-                <div class="flex justify-between py-2 border-b border-gray-100">
-                    <span class="font-medium text-gray-600 flex items-center gap-2">
-                        Education
-                    </span>
-                    <span class="text-gray-800">{{ user.get_education_display }}</span>
-                </div>
-                <div class="flex justify-between py-2 border-b border-gray-100">
-                    <span class="font-medium text-gray-600 flex items-center gap-2">
-                        University
-                    </span>
-                    <span class="text-gray-800">{{ user.university|default:"-" }}</span>
-                </div>
+        <div class="p-6 text-sm space-y-5">
+          <!-- Personal Info -->
+          <div id="personal" class="tab-content">
+            <div class="grid grid-cols-1 gap-4">
+              <div class="flex justify-between"><span class="text-white/80">Full Name</span><span class="font-medium">{{ user.get_full_name|default:user.username }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">Gender</span><span class="font-medium">{{ user.get_gender_display|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">Date of Birth</span><span class="font-medium">{{ user.birth|date:"d M Y"|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">Address</span><span class="font-medium">{{ user.address|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">Country</span><span class="font-medium">{{ user.country|default:"Indonesia" }}</span></div>
             </div>
+          </div>
 
-            <!-- Desktop Table -->
-            <div class="hidden md:block overflow-x-auto">
-                <table class="w-full text-sm">
-                    <tbody class="divide-y divide-gray-200">
-                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600 w-48">Username</th><td class="py-3 px-4">{{ user.username }}</td></tr>
-                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Email</th><td class="py-3 px-4">{{ user.email }}</td></tr>
-                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">First Name</th><td class="py-3 px-4">{{ user.first_name }}</td></tr>
-                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Last Name</th><td class="py-3 px-4">{{ user.last_name }}</td></tr>
-                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Gender</th><td class="py-3 px-4">{{ user.get_gender_display }}</td></tr>
-                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Date of Birth</th><td class="py-3 px-4">{{ user.birth|date:"M d, ****" }}</td></tr>
-                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Address</th><td class="py-3 px-4">{{ user.address|default:"-" }}</td></tr>
-                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Country</th><td class="py-3 px-4">{{ user.country }}</td></tr>
-                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Phone</th><td class="py-3 px-4">********{{ user.phone|slice:"-4:" }}</td></tr>
-                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">Education</th><td class="py-3 px-4">{{ user.get_education_display }}</td></tr>
-                        <tr><th class="py-3 px-4 text-left font-medium text-gray-600">University</th><td class="py-3 px-4">{{ user.university|default:"-" }}</td></tr>
-                    </tbody>
-                </table>
+          <!-- Contact & Education -->
+          <div id="contact" class="tab-content hidden">
+            <div class="grid grid-cols-1 gap-4">
+              <div class="flex justify-between"><span class="text-white/80">Email</span><a href="mailto:{{ user.email }}" class="font-medium underline hover:text-indigo-200 transition">{{ user.email }}</a></div>
+              <div class="flex justify-between"><span class="text-white/80">Phone</span><span class="font-medium">********{{ user.phone|slice:"-4:" }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">Education</span><span class="font-medium">{{ user.get_education_display|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">University</span><span class="font-medium">{{ user.university|default:"-" }}</span></div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- Search Courses -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
-        <form method="GET" class="flex flex-col sm:flex-row gap-3">
-            <input 
-                type="text" 
-                name="search" 
-                placeholder="Search Courses" 
-                value="{{ search_query }}"
-                class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
-            <button type="submit" 
-                    class="px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
-                Search
-            </button>
+      <!-- Back Button -->
+      <a href="{% url 'authentication:all-user' %}" class=" relative z-10 mt-8 px-8 py-3 bg-white/20 backdrop-blur hover:bg-white/30 rounded-xl font-medium transition-all duration-300 flex items-center gap-2">
+        ← Back to Users
+      </a>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="flex-1 p-6 lg:p-10 space-y-8">
+
+      <!-- Search Bar – lebih modern -->
+      <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 border border-indigo-100">
+        <form method="GET" class="flex flex-col sm:flex-row gap-4">
+          <input type="text" name="search" placeholder="Search courses..." value="{{ search_query }}"
+                 class="flex-1 px-6 py-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-4 focus:ring-indigo-300 transition-shadow text-gray-800 placeholder-gray-500">
+          <button type="submit" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-xl hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+            Search
+          </button>
         </form>
-    </div>
+      </div>
 
-    <!-- Enrolled Courses -->
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-5">
-            <h5 class="text-xl font-bold">Enrolled Courses</h5>
-        </div>
-        <div class="p-6">
+      <!-- Enrolled Courses -->
+      <div class="space-y-8">
+        <h2 class="text-3xl font-bold text-gray-800 flex items-center gap-3">
+          <span class="text-indigo-600">Enrolled Courses</span>
+          <span class="text-sm font-normal text-gray-500">({{ course_details.paginator.count }})</span>
+        </h2>
 
-            <!-- Desktop Table -->
-            <div class="hidden md:block overflow-x-auto">
-                <table class="w-full text-sm">
-                    <thead class="bg-gray-50 border-b border-gray-200">
-                        <tr>
-                            <th class="py-3 px-4 text-left font-medium text-gray-700">Course Title</th>
-                            <th class="py-3 px-4 text-left font-medium text-gray-700">Threshold</th>
-                            <th class="py-3 px-4 text-left font-medium text-gray-700">Total Score</th>
-                            <th class="py-3 px-4 text-left font-medium text-gray-700">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        {% for course in course_details %}
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="py-3 px-4">{{ course.course_name }}</td>
-                            <td class="py-3 px-4">{{ course.passing_threshold }}</td>
-                            <td class="py-3 px-4">{{ course.total_score|floatformat:2 }} / {{ course.total_max_score }}</td>
-                            <td class="py-3 px-4">
-                                <span class="inline-flex px-3 py-1 rounded-full text-xs font-medium
-                                    {% if course.status == 'Pass' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
-                                    {{ course.status }}
-                                </span>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan="4" class="py-8 text-center text-gray-500">No courses found.</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+        <div class="grid gap-8 md:grid-cols-1">
+          {% for course in course_details %}
+            <div class="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1">
+              <h3 class="text-2xl font-bold text-gray-800 mb-3">{{ course.course_name }}</h3>
+              
+              <div class="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
+                <span>Threshold: <strong class="text-indigo-600">{{ course.passing_threshold }}</strong></span>
+                <span>•</span>
+                <span>Score: <strong class="text-purple-600">{{ course.total_score|floatformat:1 }} / {{ course.total_max_score }}</strong></span>
+              </div>
 
-            <!-- Mobile Cards -->
-            <div class="grid gap-4 md:hidden">
-                {% for course in course_details %}
-                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 hover:shadow-md transition">
-                    <h6 class="font-semibold text-gray-800 mb-2">{{ course.course_name }}</h6>
-                    <p class="text-sm text-gray-600 mb-1">
-                        Score: <strong>{{ course.total_score|floatformat:2 }} / {{ course.total_max_score }}</strong>
-                    </p>
-                    <p class="text-sm">
-                        Status:
-                        <span class="inline-flex px-2 py-1 rounded-full text-xs font-medium ml-1
-                            {% if course.status == 'Pass' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
-                            {{ course.status }}
-                        </span>
-                    </p>
+              <!-- Progress Bar – super smooth -->
+              <div class="relative w-full bg-gray-200 rounded-full h-12 overflow-hidden shadow-inner mb-4">
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine"></div>
+                <div class="h-full rounded-full flex items-center justify-end px-6 text-white font-bold text-lg transition-all duration-1000 ease-out relative overflow-hidden"
+                     style="width: {{ course.percentage|floatformat:0 }}%;
+                            background: linear-gradient(90deg, 
+                              {% if course.status == 'Pass' %}#10b981, #059669{% else %}#ef4444, #dc2626{% endif %});">
+                  <span class="relative z-10 drop-shadow-lg">{{ course.percentage|floatformat:0 }}%</span>
                 </div>
-                {% empty %}
-                <p class="text-center text-gray-500 py-6">No courses found.</p>
-                {% endfor %}
+              </div>
+
+              <div class="flex justify-between items-center">
+                <p class="text-2xl font-bold {% if course.status == 'Pass' %}text-green-600{% else %}text-red-600{% endif %}">
+                  {{ course.status }}
+                </p>
+                {% if course.status == 'Pass' %}
+                  <span class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium animate-pulse">Passed</span>
+                {% endif %}
+              </div>
             </div>
-
-            <!-- Pagination -->
-            {% if course_details.has_other_pages %}
-            <nav class="flex justify-center mt-6 space-x-1">
-                {% if course_details.has_previous %}
-                <a href="?page={{ course_details.previous_page_number }}&search={{ search_query }}"
-                   class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 transition">
-                    Previous
-                </a>
-                {% else %}
-                <span class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 text-gray-400">Previous</span>
-                {% endif %}
-
-                {% for num in course_details.paginator.page_range %}
-                <a href="?page={{ num }}&search={{ search_query }}"
-                   class="w-10 h-10 flex items-center justify-center rounded-full text-sm font-medium transition
-                   {% if course_details.number == num %}bg-blue-600 text-white{% else %}border border-gray-300 hover:bg-gray-100{% endif %}">
-                    {{ num }}
-                </a>
-                {% endfor %}
-
-                {% if course_details.has_next %}
-                <a href="?page={{ course_details.next_page_number }}&search={{ search_query }}"
-                   class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 transition">
-                    Next
-                </a>
-                {% else %}
-                <span class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 text-gray-400">Next</span>
-                {% endif %}
-            </nav>
-            {% endif %}
+          {% empty %}
+            <div class="text-center py-20">
+              <p class="text-xl text-gray-500">No courses enrolled yet.</p>
+            </div>
+          {% endfor %}
         </div>
-    </div>
 
-    <!-- Back Button -->
-    <div class="text-center">
-        <a href="{% url 'authentication:all-user' %}" 
-           class="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition">
-            Back to Users List
-        </a>
-    </div>
+        <!-- Pagination – lebih elegan -->
+        {% if course_details.has_other_pages %}
+        <div class="flex justify-center items-center gap-3 mt-10">
+          {% if course_details.has_previous %}
+            <a href="?page={{ course_details.previous_page_number }}&search={{ search_query }}" class="px-6 py-3 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition">Previous</a>
+          {% endif %}
+
+          {% for num in course_details.paginator.page_range %}
+            {% if course_details.number == num %}
+              <span class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold shadow-lg">{{ num }}</span>
+            {% else %}
+              <a href="?page={{ num }}&search={{ search_query }}" class="px-6 py-3 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition">{{ num }}</a>
+            {% endif %}
+          {% endfor %}
+
+          {% if course_details.has_next %}
+            <a href="?page={{ course_details.next_page_number }}&search={{ search_query }}" class="px-6 py-3 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition">Next</a>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+
+    </main>
+  </div>
 </section>
+
+<!-- Enhanced Smooth Tab + Shine Animation -->
+<style>
+  .animate-shine {
+    animation: shine 3s infinite linear;
+  }
+  @keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  .tab-btn.active {
+    background: rgba(255,255,255,0.2);
+    border-bottom-color: white !important;
+  }
+</style>
+
+<script>
+function openTab(evt, tabName) {
+  document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  document.getElementById(tabName).classList.remove('hidden');
+  evt.currentTarget.classList.add('active');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('.tab-btn').click();
+});
+</script>
 
 {% endblock %}

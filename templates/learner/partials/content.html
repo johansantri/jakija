@@ -127,7 +127,7 @@
                             
                             <video id="myVideo" data-id="{{ video.id }}" data-assessment="{{ assessment.id }}" class="w-full" controls preload="auto">
                                 <source src="{{ video.file.url }}" type="video/mp4">
-                                Browser tidak mendukung video.
+                                browser not suport.
                             </video>
 
                             <div class="absolute top-4 left-4 bg-black/70 backdrop-blur px-5 py-3 rounded-full flex items-center gap-3 z-50">
@@ -141,7 +141,7 @@
                                     <div id="optionsContainer" class="space-y-4 mb-6"></div>
                                     <div id="explanation" class="p-4 bg-green-100 rounded-xl text-green-800 font-medium hidden"></div>
                                     <button id="nextButton" class="w-full mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-5 rounded-full text-lg shadow-lg transition transform hover:scale-105">
-                                        Lanjutkan Video
+                                        Continue Video
                                     </button>
                                 </div>
                             </div>
@@ -243,9 +243,9 @@
                                         optionsContainer.appendChild(b);
                                     });
                                 } else if(q.type === "true-false"){
-                                    ["Salah","Benar"].forEach(label=>{
+                                    ["incorrect","correct"].forEach(label=>{
                                         const btn = document.createElement('button');
-                                        btn.className = `w-full p-6 text-2xl font-bold rounded-xl ${label==="Benar"?"bg-green-500 hover:bg-green-600":"bg-red-500 hover:bg-red-600"} text-white`;
+                                        btn.className = `w-full p-6 text-2xl font-bold rounded-xl ${label==="correct"?"bg-green-500 hover:bg-green-600":"bg-red-500 hover:bg-red-600"} text-white`;
                                         btn.textContent = label;
                                         btn.disabled = true;
                                         if(alreadyAnswered.userAnswer === label && !alreadyAnswered.correct){
@@ -264,7 +264,7 @@
                                 } else if(q.type==="drag-and-drop"){
                                     const drop = document.createElement('div');
                                     drop.className = "border-4 border-dashed border-green-500 rounded-2xl h-32 mb-6 flex items-center justify-center text-lg font-bold";
-                                    drop.textContent = alreadyAnswered.userAnswer || "Jawaban: " + q.correct;
+                                    drop.textContent = alreadyAnswered.userAnswer || "Answer: " + q.correct;
                                     optionsContainer.appendChild(drop);
                                 }
 
@@ -300,13 +300,13 @@
                             } else if(q.type === "true-false"){
                                 const trueButton = document.createElement('button');
                                 trueButton.className = "w-full p-6 text-2xl font-bold rounded-xl bg-red-500 hover:bg-red-600 text-white";
-                                trueButton.textContent="Salah";
+                                trueButton.textContent="incorrect";
 
                                 const falseButton = document.createElement('button');
                                 falseButton.className = "w-full p-6 text-2xl font-bold rounded-xl bg-green-500 hover:bg-green-600 text-white";
-                                falseButton.textContent="Benar";
+                                falseButton.textContent="correct";
 
-                                const correctAnswer = String(q.correct).toLowerCase() === "true" || String(q.correct).toLowerCase() === "benar";
+                                const correctAnswer = String(q.correct).toLowerCase() === "true" || String(q.correct).toLowerCase() === "correct";
                                 trueButton.onclick = () => handleAnswer(correctAnswer === true, trueButton);
                                 falseButton.onclick = () => handleAnswer(correctAnswer === false, falseButton);
 
@@ -314,7 +314,7 @@
                                 optionsContainer.appendChild(falseButton);
                             } else if(q.type==="fill-blank" || q.type==="es"){
                                 const input = document.createElement('input');
-                                input.type="text"; input.autofocus=true; input.placeholder="Ketik jawaban...";
+                                input.type="text"; input.autofocus=true; input.placeholder="Type your answer...";
                                 input.className = "w-full p-5 text-xl text-center border-4 border-gray-300 rounded-xl focus:border-emerald-500 outline-none";
                                 const sub = document.createElement('button');
                                 sub.textContent="Submit"; sub.className = "mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-full";
@@ -325,7 +325,7 @@
                             } else if(q.type==="drag-and-drop"){
                                 const drop=document.createElement('div');
                                 drop.className="border-4 border-dashed border-green-500 rounded-2xl h-32 mb-6 flex items-center justify-center text-lg font-bold";
-                                drop.textContent="Lepas di sini";
+                                drop.textContent="Drop here";
                                 drop.ondragover=e=>e.preventDefault();
                                 drop.ondrop=e=>{ e.preventDefault(); handleAnswer(e.dataTransfer.getData("text")===q.correct,drop); };
                                 optionsContainer.appendChild(drop);
@@ -409,9 +409,9 @@
                         quizCard.innerHTML = `
                             <div class="text-center py-12">
                                 <i class="fas fa-trophy text-8xl text-yellow-400 mb-6"></i>
-                                <h2 class="text-4xl font-bold mb-4">Kuis Selesai!</h2>
+                                <h2 class="text-4xl font-bold mb-4">Done !</h2>
                                 <p class="text-6xl font-black text-green-400">${score}/${quizzes.length}</p>
-                                <button onclick="continueWatching()" class="mt-8 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-5 rounded-full text-xl">Lanjut Menonton Sampai Selesai</button>
+                                <button onclick="continueWatching()" class="mt-8 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-5 rounded-full text-xl">Continue Watching Until Finished</button>
                             </div>`;
                         }
 
