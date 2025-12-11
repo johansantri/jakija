@@ -1,7 +1,7 @@
 from decimal import Decimal, ROUND_HALF_UP
 from courses.models import (
     Assessment, QuestionAnswer, GradeRange,
-    LTIResult, CourseProgress
+    LTIResult, CourseProgress, Quiz, QuizResult,Submission, AssessmentScore
 )
 from django.core.cache import cache
 import datetime
@@ -28,36 +28,84 @@ def calculate_course_status(user, course):
         is_submitted = True
         weight = Decimal(assessment.weight)
 
-        # --- Coba ambil skor LTI ---
+        # === CASE 1: LTI RESULT ===
         lti_result = LTIResult.objects.filter(user=user, assessment=assessment).first()
         if lti_result and lti_result.score is not None:
             lti_score = Decimal(lti_result.score)
             if lti_score > 1:
-                lti_score = lti_score / 100  # normalisasi
+                lti_score = lti_score / 100  # Normalisasi jika skor 0–100
             score_value = lti_score * weight
+
         else:
-            # --- Skor dari soal multiple choice ---
-            total_questions = assessment.questions.count()
-            if total_questions > 0:
-                total_correct = 0
-                answers_exist = False
-                for q in assessment.questions.all():
-                    answers = QuestionAnswer.objects.filter(question=q, user=user)
-                    if answers.exists():
-                        answers_exist = True
-                    total_correct += answers.filter(choice__is_correct=True).count()
-                if not answers_exist:
+            # === CASE 2: IN-VIDEO QUIZ ===
+            invideo_quizzes = Quiz.objects.filter(assessment=assessment)
+
+            if invideo_quizzes.exists():
+                quiz_result = QuizResult.objects.filter(
+                    user=user,
+                    assessment=assessment
+                ).first()
+
+                if quiz_result:
+                    if quiz_result.total_questions > 0:
+                        raw_percentage = Decimal(quiz_result.score) / Decimal(quiz_result.total_questions)
+                        score_value = raw_percentage * weight
+                    else:
+                        score_value = Decimal('0')
+                else:
                     is_submitted = False
                     all_assessments_submitted = False
-                score_value = (Decimal(total_correct) / Decimal(total_questions)) * weight
-            else:
-                is_submitted = False
-                all_assessments_submitted = False
 
-        # Batasi skor agar tidak lebih dari bobot
+            else:
+                # === CASE 3: OLD QUESTION MODEL (Multiple Choice) ===
+                total_questions = assessment.questions.count()
+
+                if total_questions > 0:
+                    total_correct = 0
+                    answers_exist = False
+
+                    for q in assessment.questions.all():
+                        answers = QuestionAnswer.objects.filter(question=q, user=user)
+                        if answers.exists():
+                            answers_exist = True
+                        total_correct += answers.filter(choice__is_correct=True).count()
+
+                    if not answers_exist:
+                        is_submitted = False
+                        all_assessments_submitted = False
+
+                    score_value = (
+                        (Decimal(total_correct) / Decimal(total_questions)) * weight
+                    )
+
+                else:
+                    # === CASE 4: ASKORA ===
+                    askora_submissions = Submission.objects.filter(
+                        askora__assessment=assessment,
+                        user=user
+                    )
+
+                    if not askora_submissions.exists():
+                        is_submitted = False
+                        all_assessments_submitted = False
+                    else:
+                        latest_submission = askora_submissions.order_by('-submitted_at').first()
+                        assessment_score = AssessmentScore.objects.filter(
+                            submission=latest_submission
+                        ).first()
+
+                        if assessment_score:
+                            score_value = Decimal(assessment_score.final_score)
+                        else:
+                            is_submitted = False
+                            all_assessments_submitted = False
+
+        # Batas nilai ke bobot
         score_value = min(score_value, weight)
+
         total_score += score_value
         total_max_score += weight
+
 
     # Normalisasi total skor
     total_score = min(total_score, total_max_score)

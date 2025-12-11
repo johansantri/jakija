@@ -35695,3 +35695,28 @@ NameError: name 'completed_courses' is not defined. Did you mean: 'completed_cou
 [DEBUG] 2025-12-10 13:22:14,153 [PIL.PngImagePlugin] STREAM b'IDAT' 41 1057
 [DEBUG] 2025-12-10 13:22:15,059 [PIL.PngImagePlugin] STREAM b'IHDR' 16 13
 [DEBUG] 2025-12-10 13:22:15,060 [PIL.PngImagePlugin] STREAM b'IDAT' 41 2391
+[INFO] 2025-12-11 08:10:20,053 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-11 08:10:20,843 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-11 08:10:20,854 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-11 08:10:28,024 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-12-11 08:10:54,458 [authentication.views] [MYCOURSE] Course 2: progress=0%, last_access_material=None, last_access_assessment=None
+[DEBUG] 2025-12-11 08:10:54,459 [authentication.views] [MYCOURSE] User 1 viewed mycourse — 1 enrollments, 0 last accesses
+[INFO] 2025-12-11 08:15:04,861 [django.utils.autoreload] /home/x/app/mysite/authentication/utils.py changed, reloading.
+[INFO] 2025-12-11 08:15:05,955 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-11 08:15:05,965 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-11 08:15:46,210 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-11 08:15:47,008 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-11 08:15:47,018 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-11 08:18:56,098 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-11 08:20:22,200 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-11 08:20:23,827 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-11 08:20:27,961 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-11 08:20:32,054 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-11 08:20:34,270 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-11 08:20:36,959 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-11 08:20:39,038 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-11 08:20:40,651 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-11 08:20:43,935 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[DEBUG] 2025-12-11 08:20:55,552 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[INFO] 2025-12-11 08:20:55,555 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2025-12-11 00:20:55.552307+00:00
+[INFO] 2025-12-11 08:20:55,556 [axes.handlers.database] AXES: Successful logout by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36", path_info: "/logout/"}.
