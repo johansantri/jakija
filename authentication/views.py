@@ -327,10 +327,7 @@ def mycourse(request):
     last_access_list = LastAccessCourse.objects.filter(user=user).select_related('material', 'assessment', 'course')
     last_access_map = {la.course_id: la for la in last_access_list}
 
-    logger.debug(
-        f"[MYCOURSE] User {user.id} viewed mycourse — {total_enrollments} enrollments, "
-        f"{len(last_access_list)} last accesses"
-    )
+    
 
     # LICENSE
     today = timezone.now().date()

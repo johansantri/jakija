@@ -5808,6 +5808,7 @@ def course_profile(request, id):
             form.save()  # Save the updated course data
             
             #print(reverse('course_profile', kwargs={'id': course.id}))
+            messages.success(request, "Course profile updated successfully!")
             return redirect('courses:course_profile', id=course.id)  # Redirect back to the updated course profile
     else:
         form = ProfilForm(instance=course)  # For GET requests, display the form with existing course data
