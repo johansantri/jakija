@@ -41149,3 +41149,219 @@ django.core.exceptions.FieldError: Cannot resolve keyword 'order' into field. Ch
 [DEBUG] 2025-12-11 16:26:47,052 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
 [INFO] 2025-12-11 16:26:47,052 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
 [WARNING] 2025-12-11 16:26:47,096 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-11 16:27:10,933 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:10,935 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:27:10,936 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:27:10,994 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:11,003 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:11,006 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:11,053 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:11,060 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:11,089 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:11,114 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:11,161 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:11,165 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:11,180 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:11,206 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:27:13,762 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:27:13,763 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:27:13,763 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:27:13,764 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:27:13,764 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-11 16:27:20,094 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:27:20,500 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:27:20,501 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:27:20,501 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:27:20,502 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:27:20,502 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-11 16:27:24,498 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:27:24,499 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:27:24,499 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:27:24,500 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:27:24,500 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-11 16:27:32,867 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:27:32,868 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:27:32,869 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:27:32,870 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:27:32,870 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-11 16:27:39,555 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:40,547 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:44,552 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:27:47,121 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:28:02,186 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:28:02,187 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:28:02,188 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:28:02,189 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:28:02,189 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-11 16:28:09,322 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:28:09,323 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:28:09,324 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:28:09,324 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:28:09,325 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-11 16:28:10,932 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:28:10,933 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:28:10,981 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:10,999 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:11,044 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:11,048 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:11,065 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:11,091 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:11,120 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:11,150 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:11,185 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:11,215 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:11,229 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:11,232 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:28:11,275 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:28:11,276 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:28:11,277 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:28:11,278 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:28:11,278 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-11 16:28:13,854 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:28:14,257 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:28:14,258 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:28:14,259 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:28:14,260 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:28:14,260 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-11 16:28:17,968 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:28:17,969 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:28:17,970 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:28:17,971 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:28:17,971 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-11 16:28:19,409 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:28:19,410 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:28:19,411 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:28:19,412 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:28:19,412 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-11 16:28:20,532 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:28:20,533 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:28:20,533 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:28:20,534 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:28:20,534 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-11 16:28:20,570 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:20,682 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:28:21,736 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:28:21,737 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:28:21,738 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:28:21,739 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:28:21,739 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-11 16:28:24,583 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:32,922 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:39,825 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:40,823 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:44,820 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:28:47,104 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:28:50,459 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:28:50,460 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:28:50,460 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:28:50,461 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:28:50,461 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-11 16:29:10,918 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:29:10,920 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:29:10,960 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:11,000 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:11,010 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:11,036 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:11,055 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:11,080 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:11,120 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:11,134 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:11,191 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:11,200 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:11,208 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:11,221 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:21,239 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:40,184 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:41,180 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:45,221 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:29:50,517 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:10,910 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:10,932 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:30:10,954 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:30:10,957 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:10,960 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:10,979 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:11,014 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:11,041 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:11,063 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:11,089 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:11,121 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:11,130 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:11,153 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:11,174 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:30:18,738 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:30:18,739 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:30:18,740 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:30:18,740 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:30:18,741 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-11 16:30:20,900 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:30:20,901 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:30:20,902 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:30:20,904 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:30:20,904 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-11 16:30:21,578 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:30:23,157 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:30:23,158 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:30:23,159 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:30:23,160 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:30:23,160 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-11 16:30:25,853 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:30:25,854 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:30:25,854 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:30:25,855 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:30:25,855 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-11 16:30:40,808 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:41,774 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:45,962 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:30:50,544 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:10,891 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:31:10,891 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:31:10,954 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:10,965 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:10,985 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:10,988 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:11,014 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:11,053 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:11,077 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:11,122 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:11,130 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:11,139 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:11,175 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:11,185 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:18,799 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:20,982 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:22,370 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:23,236 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:31:25,825 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:31:25,826 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:31:25,826 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:31:25,827 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:31:25,827 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-11 16:31:28,194 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:31:28,195 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:31:28,195 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:31:28,196 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:31:28,196 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-11 16:31:33,552 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:31:33,554 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:31:33,554 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:31:33,555 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:31:33,555 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-11 16:31:34,274 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:31:34,275 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:31:34,275 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:31:34,276 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:31:34,276 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-11 16:31:34,412 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:31:34,413 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:31:34,413 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:31:34,414 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:31:34,414 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-11 16:31:40,986 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:31:40,990 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:31:40,991 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:31:40,992 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:31:40,993 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:31:40,993 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-11 16:31:42,306 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:31:46,445 [django.request] Not Found: /partner/ping-session/
