@@ -39,32 +39,223 @@
             </div>
             {% else %}
 
-                {% if ask_oras %}
-                <div class="bg-white rounded-2xl shadow-xl p-6 lg:p-10">
-                    <h4 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-10 text-indigo-700">Open Response Assessment</h4>
+              
+
+            {% if ask_oras %}
+                <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-12 mb-12">
+                    <h4 class="text-3xl font-bold text-indigo-700 mb-4">Open Response Assessment</h4>
+                    <p class="text-lg text-gray-600 mb-10">Kerjakan tugas di bawah ini dan tunggu peer review dari teman sekelas Anda.</p>
+
                     {% for ask_ora in ask_oras %}
-                    <div class="border border-gray-200 rounded-xl p-6 lg:p-8 mb-8 bg-gray-50">
-                        <h5 class="text-xl lg:text-2xl font-semibold text-gray-800">{{ ask_ora.title }}</h5>
-                        <div class="my-5 prose prose-indigo">{{ ask_ora.question_text|safe }}</div>
-                        <p class="text-sm lg:text-base text-gray-600 mb-5">Deadline: {{ ask_ora.response_deadline|date:"d M Y H:i" }}</p>
-                        {% if askora_can_submit|dict_get:ask_ora.id %}
-                        <form method="POST" hx-post="{% url 'learner:submit_answer_askora_new' ask_ora.id %}" hx-target="#content-area" hx-swap="innerHTML" enctype="multipart/form-data" class="space-y-6">
-                            {% csrf_token %}
-                            <textarea name="answer_text" rows="8" required class="w-full border border-gray-300 rounded-lg p-4 text-base lg:text-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Tulis jawaban Anda di sini..."></textarea>
-                            <input type="file" name="answer_file" class="block w-full text-sm lg:text-base">
-                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg shadow transition text-base lg:text-lg">
-                                Submit Answer
-                            </button>
-                        </form>
-                        {% else %}
-                        <div class="bg-red-100 border border-red-300 text-red-700 px-6 py-4 rounded-lg font-medium text-base lg:text-lg">
-                            Submission period has closed.
+                    <div class="border border-gray-200 rounded-2xl p-8 mb-12 bg-gradient-to-br from-gray-50 to-white">
+                        
+                        <h5 class="text-2xl font-bold text-gray-800 mb-4">{{ ask_ora.title|default:"Tugas Essay" }}</h5>
+                        <div class="prose prose-lg mb-6 text-gray-700">{{ ask_ora.question_text|safe }}</div>
+
+                        <div class="flex items-center gap-3 text-gray-600 mb-8">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span class="font-semibold">Deadline:</span>
+                            <span class="font-bold text-red-600">{{ ask_ora.response_deadline|date:"d M Y H:i" }}</span>
                         </div>
+
+                        {# 1. BELUM SUBMIT & MASIH BOLEH SUBMIT #}
+                        {% if askora_can_submit|dict_get:ask_ora.id %}
+                            <div class="bg-blue-50 border-2 border-blue-300 rounded-2xl p-8">
+                                <h6 class="text-xl font-bold text-blue-900 mb-6">Kirim Jawaban Anda</h6>
+                                <form method="POST"
+                                    hx-post="{% url 'learner:submit_answer_askora_new' ask_ora.id %}"
+                                    hx-target="#content-area"
+                                    hx-swap="innerHTML"
+                                    enctype="multipart/form-data"
+                                    class="space-y-6">
+                                    {% csrf_token %}
+                                    <textarea name="answer_text" rows="8" required
+                                            class="w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500"
+                                            placeholder="Tulis jawaban Anda di sini..."></textarea>
+                                    <input type="file" name="answer_file"
+                                        class="block w-full text-sm file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-700">
+                                    <button type="submit"
+                                            class="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xl rounded-xl shadow-lg transform hover:scale-105 transition">
+                                        Kirim Jawaban Sekarang
+                                    </button>
+                                </form>
+                            </div>
+
+                        {# 2. SUDAH SUBMIT → Tampilkan bukti jawaban #}
+                        {% elif user_submissions %}
+                            {% with submission=user_submissions|first %}
+                                {% if submission.askora.id == ask_ora.id %}
+                                <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400 rounded-2xl p-8 mb-8">
+                                    <div class="flex items-center gap-5 mb-4">
+                                        <svg class="w-12 h-12 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        <div>
+                                            <p class="text-2xl font-bold text-green-800">Jawaban berhasil dikirim!</p>
+                                            <p class="text-lg">Tidak bisa diubah lagi.</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-green-700 mt-4">
+                                        Dikirim pada: <strong>{{ submission.submitted_at|date:"d M Y H:i" }}</strong>
+                                    </p>
+
+                                    {% if submission.answer_text %}
+                                    <div class="bg-white rounded-xl p-6 mt-6 border">
+                                        <p class="font-bold text-gray-700 mb-3">Jawaban Anda:</p>
+                                        <div class="prose text-gray-700">{{ submission.answer_text|linebreaks }}</div>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if submission.answer_file %}
+                                    <a href="{{ submission.answer_file.url }}" target="_blank"
+                                    class="inline-flex items-center gap-3 mt-6 px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg transition">
+                                        Download File Lampiran
+                                    </a>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                            {% endwith %}
+
+                        {# 3. DEADLINE LEWAT & BELUM SUBMIT #}
+                        {% else %}
+                            <div class="bg-red-50 border-2 border-red-400 rounded-2xl p-8">
+                                <div class="flex items-center gap-5">
+                                    <svg class="w-12 h-12 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <div>
+                                        <p class="text-2xl font-bold text-red-800">Pengumpulan telah ditutup</p>
+                                        <p class="text-lg">Anda tidak mengumpulkan tugas tepat waktu.</p>
+                                    </div>
+                                </div>
+                            </div>
                         {% endif %}
+
                     </div>
                     {% endfor %}
                 </div>
-                {% endif %}
+            {% endif %}
+
+
+            {# ==================== STATUS PEER REVIEW (Hanya muncul jika sudah submit) ==================== #}
+            {% if user_submissions %}
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl shadow-xl p-8 lg:p-12 mb-12">
+                    <h4 class="text-3xl font-bold text-purple-700 mb-8 flex items-center gap-4">
+                        <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17 9V7a5 5 0 00-10 0v2H5a2 2 0 00-2 2v6a2 2 0 002 2h14a2 2 0 002-2v-6a2 2 0 00-2-2h-2zM9 7a3 3 0 016 0v2H9V7z"></path>
+                        </svg>
+                        Status Peer Review
+                    </h4>
+
+                    <div class="grid md:grid-cols-3 gap-8 mb-10">
+                        <div class="bg-white rounded-xl p-6 text-center shadow">
+                            <p class="text-5xl font-black text-purple-600">{{ peer_review_stats.distinct_reviewers|default:0 }}</p>
+                            <p class="text-lg font-semibold text-gray-700 mt-2">Sudah Mereview Jawaban Anda</p>
+                        </div>
+                        <div class="bg-white rounded-xl p-6 text-center shadow">
+                            <p class="text-5xl font-black text-blue-600">{{ submissions|length }}</p>
+                            <p class="text-lg font-semibold text-gray-700 mt-2">Jawaban Teman yang Harus Anda Review</p>
+                        </div>
+                        <div class="bg-white rounded-xl p-6 text-center shadow">
+                            <p class="text-5xl font-black {% if peer_review_stats.avg_score >= 4 %}text-green-600{% else %}text-orange-600{% endif %}">
+                                {{ peer_review_stats.avg_score|default:"-" }}/5
+                            </p>
+                            <p class="text-lg font-semibold text-gray-700 mt-2">Rata-rata Nilai dari Teman</p>
+                        </div>
+                    </div>
+
+                    {# Jika masih ada yang harus direview #}
+                    {% if can_review and submissions %}
+                        <div class="bg-yellow-50 border-2 border-yellow-400 rounded-2xl p-8 mb-8">
+                            <p class="text-xl font-bold text-yellow-900 flex items-center gap-3">
+                                Ada {{ submissions|length }} jawaban teman yang belum Anda review!
+                            </p>
+                            <p class="text-yellow-800 mt-2">Silakan review di bawah ini agar nilai Anda juga bisa keluar.</p>
+                        </div>
+                    {% endif %}
+
+                    {# Jika sudah review semua #}
+                    {% if not can_review and peer_review_stats.distinct_reviewers > 0 %}
+                        <div class="bg-green-50 border-2 border-green-400 rounded-2xl p-8">
+                            <p class="text-xl font-bold text-green-900 flex items-center gap-3">
+                                Anda sudah mereview semua jawaban yang tersedia!
+                            </p>
+                            <p class="text-green-800 mt-2">Sekarang menunggu teman lain mereview jawaban Anda.</p>
+                        </div>
+                    {% endif %}
+
+                    {# Jika belum ada yang review (masih awal) #}
+                    {% if peer_review_stats.distinct_reviewers == 0 %}
+                        <div class="bg-orange-50 border-2 border-orange-400 rounded-2xl p-8">
+                            <p class="text-xl font-bold text-orange-900">Menunggu review dari teman...</p>
+                            <p class="text-orange-800 mt-2">Nilai akhir akan muncul setelah ada minimal 1 review.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+
+            {# ==================== BAGIAN REVIEW JAWABAN TEMAN ==================== #}
+            {% if can_review and submissions %}
+                <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-12">
+                    <h4 class="text-3xl font-bold text-purple-700 mb-8">Review Jawaban Teman ({{ submissions|length }})</h4>
+
+                    {% for submission in submissions %}
+                    <div class="border border-purple-200 rounded-2xl p-8 mb-10 bg-purple-50">
+                        <div class="flex justify-between items-start mb-6">
+                            <h5 class="text-2xl font-bold text-purple-800">{{ submission.askora.title }}</h5>
+                            <span class="text-purple-600 font-medium">
+                                oleh {{ submission.user.get_full_name|default:submission.user.username }}
+                            </span>
+                        </div>
+
+                        {% if submission.answer_text %}
+                        <div class="bg-white rounded-xl p-6 mb-6 border">{{ submission.answer_text|linebreaks }}</div>
+                        {% endif %}
+
+                        {% if submission.answer_file %}
+                        <a href="{{ submission.answer_file.url }}" target="_blank" class="text-purple-600 hover:underline mb-6 inline-block">
+                            Download Lampiran
+                        </a>
+                        {% endif %}
+
+                        <form method="POST"
+                            hx-post="{% url 'learner:submit_peer_review_new' submission.id %}"
+                            hx-target="#content-area"
+                            hx-swap="innerHTML"
+                            class="space-y-6 mt-8">
+                            {% csrf_token %}
+
+                            <div>
+                                <label class="block text-xl font-bold text-gray-800 mb-4">Beri Nilai (1-5)</label>
+                                <select name="score" required class="w-full px-6 py-4 text-lg border-2 border-purple-300 rounded-xl focus:ring-4 focus:ring-purple-200">
+                                    <option value="">Pilih nilai...</option>
+                                    <option value="5">5 - Sangat Baik</option>
+                                    <option value="4">4 - Baik</option>
+                                    <option value="3">3 - Cukup</option>
+                                    <option value="2">2 - Kurang</option>
+                                    <option value="1">1 - Sangat Kurang</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xl font-bold text-gray-800 mb-4">Komentar (Opsional)</label>
+                                <textarea name="comment" rows="4"
+                                        class="w-full px-6 py-4 border-2 border-purple-300 rounded-xl focus:ring-4 focus:ring-purple-200"
+                                        placeholder="Beri masukan yang membangun..."></textarea>
+                            </div>
+
+                            <button type="submit"
+                                    class="inline-flex items-center gap-3 mt-6 px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg transition">
+                                Kirim Review Ini
+                            </button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
                 <!-- IN-VIDEO QUIZ: VERSI ULTIMATE (Video.js + GSAP + Sound + Score + Super Cantik) -->
                  {% if is_video_quiz and video %}
@@ -477,8 +668,8 @@
                             {% endfor %}
 
                             <div class="text-center mt-16">
-                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold text-xl sm:text-2xl lg:text-3xl px-12 lg:px-20 py-5 lg:py-7 rounded-xl shadow-2xl transition transform hover:scale-105">
-                                    Submit All Answers
+                                <button type="submit" class="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 text-white font-medium text-sm rounded-lg hover:bg-indigo-700 transition shadow-sm">
+                                    Submit All Answersx
                                 </button>
                             </div>
                         </form>
@@ -515,7 +706,7 @@
                     <h4 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-gray-800">{{ lti_tool.tool_name }}</h4>
                     <p class="text-lg lg:text-xl text-gray-600 mb-12 max-w-2xl mx-auto">Klik tombol di bawah untuk membuka alat eksternal.</p>
                     <form action="{% url 'learner:lti_consume_course' assessment.id %}" method="get" target="_blank">
-                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-2xl lg:text-4xl px-20 lg:px-32 py-8 lg:py-12 rounded-xl shadow-2xl transition transform hover:scale-105">
+                        <button type="submit" class="w-full mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-5 rounded-full text-lg shadow-lg transition transform hover:scale-105">
                             Launch LTI Tool
                         </button>
                     </form>
@@ -523,16 +714,40 @@
                 {% endif %}
 
                 {% if is_quiz and not is_started and not assessment_locked %}
-                <div class="text-center py-32 lg:py-40 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-3xl">
-                    <h3 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-10 text-gray-800">{{ assessment.title|safe }}</h3>
-                    <p class="text-xl lg:text-2xl text-gray-600 mb-16">Siap untuk memulai kuis?</p>
-                    <form method="POST" hx-post="{% url 'learner:start_assessment' assessment.id %}" hx-target="#content-area" hx-swap="innerHTML">
+                <div class="max-w-4xl mx-auto text-center 
+                            p-6 sm:p-10 md:p-14 lg:p-20 
+                            bg-white rounded-3xl shadow-xl border border-gray-200">
+
+                    <h3 class="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold 
+                            mb-4 sm:mb-6 md:mb-8 text-gray-800">
+                        {{ assessment.title|safe }}
+                    </h3>
+
+                    <p class="text-base sm:text-lg md:text-xl lg:text-2xl 
+                            text-gray-600 mb-8 md:mb-12">
+                        are you ready to start the quiz?
+                    </p>
+
+                    <form method="POST"
+                        hx-post="{% url 'learner:start_assessment' assessment.id %}"
+                        hx-target="#content-area"
+                        hx-swap="innerHTML">
                         {% csrf_token %}
-                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold text-3xl lg:text-5xl px-20 lg:px-32 py-10 lg:py-16 rounded-xl shadow-2xl transition transform hover:scale-110">
+                        
+                        <button type="submit"
+                                class="w-full sm:w-auto 
+                                    px-6 py-3 sm:px-10 sm:py-5 md:px-14 md:py-6 lg:px-20 lg:py-10
+                                    bg-green-600 hover:bg-green-700 
+                                    text-lg sm:text-xl md:text-2xl lg:text-4xl 
+                                    font-semibold text-white 
+                                    rounded-xl shadow-md transition">
                             Start Quiz Now
                         </button>
+
                     </form>
                 </div>
+
+
                 {% endif %}
 
             {% endif %}

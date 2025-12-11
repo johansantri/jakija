@@ -1237,102 +1237,73 @@ def my_course(request, username, id, slug):
 @login_required
 def load_content(request, username, id, slug, content_type, content_id):
     if request.user.username != username:
-        logger.warning(f"Upaya akses tidak sah oleh {request.user.username} untuk {username}")
         return HttpResponse(status=403)
-        # Reset kuis kalau ada ?reset=1
+
+    # Reset video quiz kalau ada parameter ?reset=1
     if request.GET.get('reset') == '1':
         QuizResult.objects.filter(user=request.user, assessment_id=content_id).delete()
+
     course = get_object_or_404(Course, id=id, slug=slug)
     if not Enrollment.objects.filter(user=request.user, course=course).exists():
-        logger.warning(f"Pengguna {request.user.username} tidak terdaftar di kursus {slug}")
         return HttpResponse(status=403)
 
-    # Ambil informasi user_agent dan ip_address
+    # ==================== LOGGING SESSION & IP ====================
     user_agent = request.META.get('HTTP_USER_AGENT', '')
-    ip_address = request.META.get('REMOTE_ADDR')
+    ip = request.META.get('REMOTE_ADDR', '')
     if 'HTTP_X_FORWARDED_FOR' in request.META:
-        ip_address = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0].strip()
+        ip = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0].strip()
 
-    location_country = None
-    location_city = None
     try:
-        geoip_reader = GeoIP2Reader('/path/to/GeoLite2-City.mmdb')
-        geo_response = geoip_reader.city(ip_address)
-        location_country = geo_response.country.name
-        location_city = geo_response.city.name
-    except (geoip2.errors.AddressNotFoundError, FileNotFoundError, Exception) as e:
-        logger.warning(f"Gagal mendapatkan lokasi untuk IP {ip_address}: {str(e)}")
+        from geoip2.database import Reader
+        reader = Reader('/path/to/GeoLite2-City.mmdb')
+        response = reader.city(ip)
+        country = response.country.name
+        city = response.city.name
+    except Exception:
+        country = city = None
 
-    last_session = CourseSessionLog.objects.filter(
-        user=request.user,
-        course=course,
-        ended_at__isnull=True
-    ).order_by('-started_at').first()
-    if last_session:
-        last_session.ended_at = timezone.now()
-        last_session.save()
-        logger.debug(f"Closed previous CourseSessionLog for user {request.user.id}, course {course.id}")
-
-    session_log = CourseSessionLog.objects.create(
-        user=request.user,
-        course=course,
-        started_at=timezone.now(),
-        user_agent=user_agent,
-        ip_address=ip_address,
-        location_country=location_country,
-        location_city=location_city
+    # Tutup session lama, buat baru
+    CourseSessionLog.objects.filter(user=request.user, course=course, ended_at__isnull=True).update(ended_at=timezone.now())
+    CourseSessionLog.objects.create(
+        user=request.user, course=course, started_at=timezone.now(),
+        user_agent=user_agent, ip_address=ip,
+        location_country=country, location_city=city
     )
-    logger.debug(f"Created CourseSessionLog for user {request.user.id}, course {course.id}, {content_type} {content_id}")
 
-    last_access, created = LastAccessCourse.objects.get_or_create(
-        user=request.user,
-        course=course,
+    # ==================== LAST ACCESS & PROGRESS ====================
+    LastAccessCourse.objects.update_or_create(
+        user=request.user, course=course,
         defaults={
-            'material': Material.objects.filter(id=content_id).first() if content_type == 'material' else None,
-            'assessment': Assessment.objects.filter(id=content_id).first() if content_type == 'assessment' else None,
+            'material_id': content_id if content_type == 'material' else None,
+            'assessment_id': content_id if content_type == 'assessment' else None,
             'last_viewed_at': timezone.now()
         }
     )
-    if not created:
-        last_access.material = Material.objects.filter(id=content_id).first() if content_type == 'material' else None
-        last_access.assessment = Assessment.objects.filter(id=content_id).first() if content_type == 'assessment' else None
-        last_access.last_viewed_at = timezone.now()
-        last_access.save()
-    logger.debug(f"Updated LastAccessCourse for user {request.user.id}, course {course.id}, {content_type} {content_id}")
 
+    # Progress saat klik "Next"
+    if request.GET.get('from_next') == '1':
+        prev_type = request.session.get('prev_content_type')
+        prev_id = request.session.get('prev_content_id')
+        if prev_type == 'material' and prev_id:
+            MaterialRead.objects.get_or_create(user=request.user, material_id=prev_id)
+        elif prev_type == 'assessment' and prev_id:
+            AssessmentRead.objects.get_or_create(user=request.user, assessment_id=prev_id)
+
+        prog, _ = CourseProgress.objects.get_or_create(user=request.user, course=course)
+        prog.progress_percentage = calculate_course_progress(request.user, course)
+        prog.save()
+
+    request.session['prev_content_type'] = content_type
+    request.session['prev_content_id'] = content_id
+
+    # ==================== BASE CONTEXT ====================
     sections = Section.objects.filter(courses=course).prefetch_related(
-        Prefetch('materials', queryset=Material.objects.all()),
-        Prefetch('assessments', queryset=Assessment.objects.all())
+        Prefetch('materials'), Prefetch('assessments')
     ).order_by('order')
-
     combined_content = _build_combined_content(sections)
-    current_index = 0
-    user_progress, _ = CourseProgress.objects.get_or_create(user=request.user, course=course, defaults={'progress_percentage': 0})
-
-    # Periksa apakah permintaan berasal dari klik tombol "next"
-    from_next = request.GET.get('from_next', '0') == '1'
-    if from_next:
-        prev_content_type = request.session.get('prev_content_type')
-        prev_content_id = request.session.get('prev_content_id')
-        if prev_content_type and prev_content_id:
-            if prev_content_type == 'material':
-                material = get_object_or_404(Material, id=prev_content_id)
-                MaterialRead.objects.get_or_create(user=request.user, material=material)
-            elif prev_content_type == 'assessment':
-                assessment = get_object_or_404(Assessment, id=prev_content_id)
-                AssessmentRead.objects.get_or_create(user=request.user, assessment=assessment)
-            # Hitung ulang progress
-            user_progress.progress_percentage = calculate_course_progress(request.user, course)
-            user_progress.save()
-            logger.info(f"Progress updated for user {request.user.username} on course {course.course_name}: {user_progress.progress_percentage}%")
-
-        # Simpan konten saat ini ke sesi untuk digunakan saat klik "next" berikutnya
-        request.session['prev_content_type'] = content_type
-        request.session['prev_content_id'] = content_id
 
     context = {
         'course': course,
-        'course_name': course.course_name,
         'username': username,
         'slug': slug,
         'sections': sections,
@@ -1342,174 +1313,206 @@ def load_content(request, username, id, slug, content_type, content_id):
         'comments': None,
         'assessment_locked': False,
         'payment_required_url': None,
-        'is_started': False,
-        'is_expired': False,
-        'remaining_time': 0,
-        'answered_questions': {},
-        'course_progress': user_progress.progress_percentage,
+        'is_quiz': False,
+        'is_video_quiz': False,
+        'is_lti': False,
+        'lti_tool': None,
+        'video': None,
+        'quizzes_json': '[]',
+        'result_json': None,
+        'ask_oras': [],
+        'askora_can_submit': {},  # {askora_id: True/False}
+        'course_progress': CourseProgress.objects.get_or_create(user=request.user, course=course)[0].progress_percentage,
         'previous_url': None,
         'next_url': None,
-        'ask_oras': [],
-        'user_submissions': Submission.objects.none(),
-        'askora_submit_status': {},
-        'askora_can_submit': {},
-        'peer_review_stats': None,
-        'submissions': [],
-        'can_submit': False,
-        'can_review': False,
-        'is_quiz': False,
-        'is_lti': False,
-        'show_timer': False,
-        'lti_tool': None,
-        # Tambahan untuk in-video quiz
-        'video': None,
-        'quizzes_data': [],
-        'quiz_result': None,
-        'is_video_quiz': False,
     }
 
+    current_index = 0
+
+    # ===================================================================
+   
+    # ===================================================================
     if content_type == 'material':
         material = get_object_or_404(Material, id=content_id)
         MaterialRead.objects.get_or_create(user=request.user, material=material)
-        context['material'] = material
-        context['current_content'] = ('material', material, next((s for s in sections if material in s.materials.all()), None))
-        context['comments'] = Comment.objects.filter(material=material, parent=None).select_related('user', 'parent').prefetch_related('children').order_by('-created_at')
-        current_index = next((i for i, c in enumerate(combined_content) if c[0] == 'material' and c[1].id == material.id), 0)
 
+        context.update({
+            'material': material,
+            'current_content': ('material', material, next((s for s in sections if material in s.materials.all()), None)),
+            'comments': Comment.objects.filter(material=material, parent=None)
+                              .select_related('user').prefetch_related('children').order_by('-created_at'),
+        })
+        current_index = next((i for i, (t, obj, _) in enumerate(combined_content)
+                             if t == 'material' and obj.id == content_id), 0)
+
+    # ===================================================================
+    #    ASSESSMENT – DETEKSI TIPE DENGAN TEPAT
+    # ===================================================================
     elif content_type == 'assessment':
-        assessment = get_object_or_404(Assessment.objects.select_related('section__courses'), id=content_id)
+        assessment = get_object_or_404(Assessment, id=content_id)
         context['assessment'] = assessment
         context['current_content'] = ('assessment', assessment, next((s for s in sections if assessment in s.assessments.all()), None))
-        current_index = next((i for i, c in enumerate(combined_content) if c[0] == 'assessment' and c[1].id == assessment.id), 0)
+        current_index = next((i for i, (t, obj, _) in enumerate(combined_content)
+                             if t == 'assessment' and obj.id == content_id), 0)
 
         # LTI Tool
-        lti_tool = getattr(assessment, 'lti_tool', None)
-        context['lti_tool'] = lti_tool
-        context['is_lti'] = bool(lti_tool)
+        context['lti_tool'] = getattr(assessment, 'lti_tool', None)
+        context['is_lti'] = bool(context['lti_tool'])
 
-        # Payment check (buy_take_exam) — tetap sama persis
+        # Payment lock (buy_take_exam)
         if course.payment_model and course.payment_model.code == 'buy_take_exam':
-            payment = Payment.objects.filter(
-                user=request.user, course=course, status='completed', payment_model='buy_take_exam'
-            ).first()
-            if not payment:
+            if not Payment.objects.filter(user=request.user, course=course,
+                                          status='completed', payment_model='buy_take_exam').exists():
                 context['assessment_locked'] = True
                 context['payment_required_url'] = reverse('payments:process_payment', kwargs={
-                    'course_id': course.id,
-                    'payment_type': 'exam'
+                    'course_id': course.id, 'payment_type': 'exam'
                 })
-                logger.info(f"Pembayaran diperlukan untuk penilaian {content_id} di kursus {course.id} untuk pengguna {request.user.username}")
 
-        # =================================================================
-        # PENTING: Default anggap ini KUIS BIASA (yang pakai Question/Choice)
-        # =================================================================
-        # Kenapa? Karena selama ini kalau ada video quiz, is_quiz jadi False
-        # dan kuis biasa ga pernah muncul.
-        # =================================================================
-        context['is_quiz'] = True
-        context['is_video_quiz'] = False
+        # Kalau terkunci, skip semua logika di bawah
+        if context['assessment_locked']:
+            pass
+        else:
+            # 1. IN-VIDEO QUIZ (prioritas tertinggi)
+            if assessment.quizzes.exists():
+                context['is_video_quiz'] = True
 
-        # Logic kuis biasa (timer, session, jawaban, dll) — JALANKAN DULU
-        session = AssessmentSession.objects.filter(user=request.user, assessment=assessment).first()
-        if session:
-            context['is_started'] = True
-            if session.end_time:
-                context['remaining_time'] = max(0, int((session.end_time - timezone.now()).total_seconds()))
-                context['is_expired'] = context['remaining_time'] <= 0
-                context['show_timer'] = context['remaining_time'] > 0
-            context['answered_questions'] = {
-                answer.question.id: answer for answer in QuestionAnswer.objects.filter(
-                    user=request.user, question__assessment=assessment
-                ).select_related('question', 'choice')
-            }
-            context.update(_build_assessment_context(assessment, request.user))
+                video = assessment.quizzes.first().video
+                result = QuizResult.objects.filter(user=request.user, video=video, assessment=assessment).first()
+                if result:
+                    AssessmentRead.objects.get_or_create(user=request.user, assessment=assessment)
 
-       
-        # =================================================================
-        # VIDEO QUIZ → hanya jika ada assessment.quizzes
-        # =================================================================
-        if assessment.quizzes.exists():
-            context['is_video_quiz'] = True
-            context['is_quiz'] = False  # matikan kuis biasa
+                quizzes_data = []
+                for q in assessment.quizzes.all().order_by('time_in_video'):
+                    d = {
+                        "time": float(q.time_in_video),
+                        "question": q.question,
+                        "explanation": q.explanation or "",
+                    }
+                    if q.question_type == "MC":
+                        d["type"] = "multiple-choice"
+                        d["options"] = [o.text for o in q.options.all()]
+                        d["correct"] = next((i for i, o in enumerate(q.options.all()) if o.is_correct), 0)
+                    elif q.question_type == "TF":
+                        d["type"] = "true-false"
+                        d["correct"] = str(q.correct_answer_text or "").strip().lower() in ["true", "benar", "1", "yes"]
+                    elif q.question_type in ["FB", "ES"]:
+                        d["type"] = "fill-blank"
+                        d["correct"] = (q.correct_answer_text or "").strip()
+                    elif q.question_type == "DD":
+                        d["type"] = "drag-and-drop"
+                        d["items"] = [o.text for o in q.options.all()]
+                        d["correct"] = q.correct_answer_text or ""
+                    quizzes_data.append(d)
 
-            # Ambil video (pasti ada karena quizzes exists)
-            video = assessment.quizzes.first().video  # semua quiz pakai video yang sama
+                result_json = None
+                if result:
+                    result_json = {
+                        "score": result.score,
+                        "total_questions": result.total_questions,
+                        "answers": result.answers or {}
+                    }
 
-            # Cek apakah user sudah pernah selesai mengerjakan video quiz ini
-            result = QuizResult.objects.filter(
-                user=request.user,
-                video=video,
-                assessment=assessment
-            ).first()
+                context.update({
+                    'video': video,
+                    'quizzes_json': json.dumps(quizzes_data, ensure_ascii=False),
+                    'result_json': json.dumps(result_json, ensure_ascii=False) if result_json else None,
+                })
 
-            # INI YANG PALING PENTING: Jika sudah ada hasil → anggap assessment selesai!
-            if result:
-                AssessmentRead.objects.get_or_create(
-                    user=request.user,
-                    assessment=assessment
-                )
+            # 2. OPEN RESPONSE ASSESSMENT (ORA)
+            elif AskOra.objects.filter(assessment=assessment).exists():
+                ask_oras = AskOra.objects.filter(assessment=assessment).order_by('created_at')
 
-            # Build data kuis untuk JavaScript
-            quizzes_data = []
-            for q in assessment.quizzes.all().order_by('time_in_video'):
-                quiz_dict = {
-                    "time": float(q.time_in_video),
-                    "question": q.question,
-                    "explanation": q.explanation or ""
+                can_submit_dict = {}
+                user_submissions_dict = {}
+
+                for ao in ask_oras:
+                    submission = Submission.objects.filter(user=request.user, askora=ao).first()
+
+                    if submission:
+                        # SUDAH SUBMIT → tidak bisa submit lagi
+                        can_submit_dict[ao.id] = False
+                        user_submissions_dict[ao.id] = submission
+                    else:
+                        # BELUM SUBMIT → cek deadline
+                        is_still_open = timezone.now() <= ao.response_deadline
+                        can_submit_dict[ao.id] = is_still_open
+                        user_submissions_dict[ao.id] = None  # tidak ada submission
+
+                # Peer review logic (sama seperti sebelumnya)
+                user_has_submitted = any(user_submissions_dict.values())
+                submissions_to_review = []
+                peer_review_stats = {
+                    'total_participants': 0,
+                    'distinct_reviewers': 0,
+                    'avg_score': None,
                 }
 
-                if q.question_type == "MC":
-                    quiz_dict["type"] = "multiple-choice"
-                    quiz_dict["options"] = [opt.text for opt in q.options.all()]
-                    correct_opt = q.options.filter(is_correct=True).first()
-                    quiz_dict["correct"] = list(q.options.all()).index(correct_opt) if correct_opt else 0
+                if user_has_submitted:
+                    all_submissions = Submission.objects.filter(askora__assessment=assessment).exclude(user=request.user)
+                    total_enrolled = Enrollment.objects.filter(course=course).count()
+                    peer_review_stats['total_participants'] = max(1, total_enrolled - 1)
 
-                elif q.question_type == "TF":
-                    quiz_dict["type"] = "true-false"
-                    correct_val = (q.correct_answer_text or "").lower().strip()
-                    quiz_dict["correct"] = correct_val in ["true", "benar", "1", "yes"]
+                    for subm in all_submissions:
+                        if not PeerReview.objects.filter(submission=subm, reviewer=request.user).exists():
+                            submissions_to_review.append(subm)
 
-                elif q.question_type in ["FB", "ES"]:
-                    quiz_dict["type"] = "fill-blank"
-                    quiz_dict["correct"] = (q.correct_answer_text or "").strip()
+                    user_reviews = PeerReview.objects.filter(
+                        submission__user=request.user,
+                        submission__askora__assessment=assessment
+                    )
+                    distinct = user_reviews.values('reviewer').distinct().count()
+                    avg = user_reviews.aggregate(Avg('score'))['score__avg']
 
-                elif q.question_type == "DD":
-                    quiz_dict["type"] = "drag-and-drop"
-                    quiz_dict["items"] = [opt.text for opt in q.options.all()]
-                    quiz_dict["correct"] = q.correct_answer_text or ""
+                    peer_review_stats.update({
+                        'distinct_reviewers': distinct,
+                        'avg_score': round(avg, 2) if avg else None,
+                    })
 
-                quizzes_data.append(quiz_dict)
+                context.update({
+                    'ask_oras': ask_oras,
+                    'askora_can_submit': can_submit_dict,
+                    'user_submissions': [s for s in user_submissions_dict.values() if s],  # hanya yang ada submission
+                    'submissions': submissions_to_review,
+                    'can_review': len(submissions_to_review) > 0 and user_has_submitted,
+                    'peer_review_stats': peer_review_stats,
+                    'has_other_submissions': Submission.objects.filter(askora__assessment=assessment).exclude(user=request.user).exists(),
+                })
 
-            # Siapkan result_json untuk JS (biar tahu sudah dijawab sebelumnya)
-            result_json = None
-            if result:
-                result_json = {
-                    "score": result.score,
-                    "total_questions": result.total_questions,
-                    "answers": result.answers or {}
-                }
+            # 3. KUIS PILIHAN GANDA BIASA (fallback)
+            else:
+                context['is_quiz'] = True
 
-            # Masukkan ke context
-            context.update({
-                'video': video,
-                'quizzes_data': quizzes_data,
-                'quiz_result': result_json,
-                'quizzes_json': json.dumps(quizzes_data, ensure_ascii=False),
-                'result_json': json.dumps(result_json, ensure_ascii=False) if result_json else None,
-            })
+                session = AssessmentSession.objects.filter(user=request.user, assessment=assessment).first()
+                if session:
+                    context['is_started'] = True
+                    if session.end_time:
+                        remaining = int((session.end_time - timezone.now()).total_seconds())
+                        context['remaining_time'] = max(0, remaining)
+                        context['is_expired'] = remaining <= 0
+                        context['show_timer'] = remaining > 0
 
-        # ==================== AKHIR TAMBAHAN IN-VIDEO QUIZ ====================
+                    context['answered_questions'] = {
+                        ans.question.id: ans for ans in QuestionAnswer.objects.filter(
+                            user=request.user, question__assessment=assessment
+                        ).select_related('question', 'choice')
+                    }
 
-    context['previous_url'], context['next_url'] = _get_navigation_urls(username, id, slug, combined_content, current_index)
-    template = 'learner/partials/content.html' if request.headers.get('HX-Request') == 'true' else 'learner/my_course.html'
-    logger.info(f"load_content: Rendering {template} untuk pengguna {username}, {content_type} {content_id}")
+                context.update(_build_assessment_context(assessment, request.user))
+
+    # ===================================================================
+    # NAVIGASI PREV / NEXT
+    # ===================================================================
+    context['previous_url'], context['next_url'] = _get_navigation_urls(
+        username, id, slug, combined_content, current_index
+    )
+
+    # ===================================================================
+  
+    # ===================================================================
+    template = 'learner/partials/content.html' if request.headers.get('HX-Request') else 'learner/my_course.html'
     response = render(request, template, context)
     response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-    
     return response
-
-
-
 
 @login_required
 def save_invideo_quiz(request, video_id, assessment_id):
