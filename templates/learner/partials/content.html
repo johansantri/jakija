@@ -44,12 +44,12 @@
             {% if ask_oras %}
                 <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-12 mb-12">
                     <h4 class="text-3xl font-bold text-indigo-700 mb-4">Open Response Assessment</h4>
-                    <p class="text-lg text-gray-600 mb-10">Kerjakan tugas di bawah ini dan tunggu peer review dari teman sekelas Anda.</p>
+                    <p class="text-lg text-gray-600 mb-10">Work on the task below and wait for a peer review from your classmates.</p>
 
                     {% for ask_ora in ask_oras %}
                     <div class="border border-gray-200 rounded-2xl p-8 mb-12 bg-gradient-to-br from-gray-50 to-white">
                         
-                        <h5 class="text-2xl font-bold text-gray-800 mb-4">{{ ask_ora.title|default:"Tugas Essay" }}</h5>
+                        <h5 class="text-2xl font-bold text-gray-800 mb-4">{{ ask_ora.title|default:"Essay Assignment" }}</h5>
                         <div class="prose prose-lg mb-6 text-gray-700">{{ ask_ora.question_text|safe }}</div>
 
                         <div class="flex items-center gap-3 text-gray-600 mb-8">
@@ -63,7 +63,7 @@
                         {# 1. BELUM SUBMIT & MASIH BOLEH SUBMIT #}
                         {% if askora_can_submit|dict_get:ask_ora.id %}
                             <div class="bg-blue-50 border-2 border-blue-300 rounded-2xl p-8">
-                                <h6 class="text-xl font-bold text-blue-900 mb-6">Kirim Jawaban Anda</h6>
+                                <h6 class="text-xl font-bold text-blue-900 mb-6">Submit Your Answer</h6>
                                 <form method="POST"
                                     hx-post="{% url 'learner:submit_answer_askora_new' ask_ora.id %}"
                                     hx-target="#content-area"
@@ -78,7 +78,7 @@
                                         class="block w-full text-sm file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-700">
                                     <button type="submit"
                                             class="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xl rounded-xl shadow-lg transform hover:scale-105 transition">
-                                        Kirim Jawaban Sekarang
+                                        Submit Answer Now
                                     </button>
                                 </form>
                             </div>
@@ -87,36 +87,46 @@
                         {% elif user_submissions %}
                             {% with submission=user_submissions|first %}
                                 {% if submission.askora.id == ask_ora.id %}
-                                <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400 rounded-2xl p-8 mb-8">
-                                    <div class="flex items-center gap-5 mb-4">
-                                        <svg class="w-12 h-12 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400 rounded-2xl p-6 md:p-8 mb-8 w-full max-w-full">
+
+                                    <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5 mb-4">
+                                        <svg class="w-10 h-10 sm:w-12 sm:h-12 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                clip-rule="evenodd"></path>
                                         </svg>
-                                        <div>
-                                            <p class="text-2xl font-bold text-green-800">Jawaban berhasil dikirim!</p>
-                                            <p class="text-lg">Tidak bisa diubah lagi.</p>
+
+                                        <div class="w-full break-words">
+                                            <p class="text-xl sm:text-2xl font-bold text-green-800">answer successfully sent!</p>
+                                            <p class="text-base sm:text-lg">do not change it anymore.</p>
                                         </div>
                                     </div>
-                                    <p class="text-green-700 mt-4">
-                                        Dikirim pada: <strong>{{ submission.submitted_at|date:"d M Y H:i" }}</strong>
+
+                                    <p class="text-green-700 mt-2 sm:mt-4 text-sm sm:text-base break-words">
+                                        Submitted on:
+                                        <strong>{{ submission.submitted_at|date:"d M Y H:i" }}</strong>
                                     </p>
 
                                     {% if submission.answer_text %}
-                                    <div class="bg-white rounded-xl p-6 mt-6 border">
-                                        <p class="font-bold text-gray-700 mb-3">Jawaban Anda:</p>
-                                        <div class="prose text-gray-700">{{ submission.answer_text|linebreaks }}</div>
+                                    <div class="bg-white rounded-xl p-4 sm:p-6 mt-4 sm:mt-6 border overflow-x-auto break-words">
+                                        <p class="font-bold text-gray-700 mb-3">your answer:</p>
+                                        <div class="prose text-gray-700 max-w-full break-words">
+                                            {{ submission.answer_text|linebreaks }}
+                                        </div>
                                     </div>
                                     {% endif %}
 
                                     {% if submission.answer_file %}
                                     <a href="{{ submission.answer_file.url }}" target="_blank"
-                                    class="inline-flex items-center gap-3 mt-6 px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg transition">
-                                        Download File Lampiran
+                                        class="inline-flex items-center justify-center gap-3 mt-6 px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg transition">
+                                        Download 
                                     </a>
                                     {% endif %}
+
                                 </div>
                                 {% endif %}
                             {% endwith %}
+
 
                         {# 3. DEADLINE LEWAT & BELUM SUBMIT #}
                         {% else %}
@@ -126,8 +136,8 @@
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
                                     </svg>
                                     <div>
-                                        <p class="text-2xl font-bold text-red-800">Pengumpulan telah ditutup</p>
-                                        <p class="text-lg">Anda tidak mengumpulkan tugas tepat waktu.</p>
+                                        <p class="text-2xl font-bold text-red-800">Submission has been closed</p>
+                                        <p class="text-lg">You did not submit the assignment on time.</p>
                                     </div>
                                 </div>
                             </div>
@@ -146,23 +156,23 @@
                         <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M17 9V7a5 5 0 00-10 0v2H5a2 2 0 00-2 2v6a2 2 0 002 2h14a2 2 0 002-2v-6a2 2 0 00-2-2h-2zM9 7a3 3 0 016 0v2H9V7z"></path>
                         </svg>
-                        Status Peer Review
+                        Peer Review Status
                     </h4>
 
                     <div class="grid md:grid-cols-3 gap-8 mb-10">
                         <div class="bg-white rounded-xl p-6 text-center shadow">
                             <p class="text-5xl font-black text-purple-600">{{ peer_review_stats.distinct_reviewers|default:0 }}</p>
-                            <p class="text-lg font-semibold text-gray-700 mt-2">Sudah Mereview Jawaban Anda</p>
+                            <p class="text-lg font-semibold text-gray-700 mt-2">Your Answer Has Been Reviewed</p>
                         </div>
                         <div class="bg-white rounded-xl p-6 text-center shadow">
                             <p class="text-5xl font-black text-blue-600">{{ submissions|length }}</p>
-                            <p class="text-lg font-semibold text-gray-700 mt-2">Jawaban Teman yang Harus Anda Review</p>
+                            <p class="text-lg font-semibold text-gray-700 mt-2">Answers You Need to Review</p>
                         </div>
                         <div class="bg-white rounded-xl p-6 text-center shadow">
                             <p class="text-5xl font-black {% if peer_review_stats.avg_score >= 4 %}text-green-600{% else %}text-orange-600{% endif %}">
                                 {{ peer_review_stats.avg_score|default:"-" }}/5
                             </p>
-                            <p class="text-lg font-semibold text-gray-700 mt-2">Rata-rata Nilai dari Teman</p>
+                            <p class="text-lg font-semibold text-gray-700 mt-2">Average Score from Peers</p>
                         </div>
                     </div>
 
@@ -170,9 +180,9 @@
                     {% if can_review and submissions %}
                         <div class="bg-yellow-50 border-2 border-yellow-400 rounded-2xl p-8 mb-8">
                             <p class="text-xl font-bold text-yellow-900 flex items-center gap-3">
-                                Ada {{ submissions|length }} jawaban teman yang belum Anda review!
+                                There are {{ submissions|length }} answers from friends that you have not reviewed!
                             </p>
-                            <p class="text-yellow-800 mt-2">Silakan review di bawah ini agar nilai Anda juga bisa keluar.</p>
+                            <p class="text-yellow-800 mt-2">Please review below so your score can also be released.</p>
                         </div>
                     {% endif %}
 
@@ -180,17 +190,17 @@
                     {% if not can_review and peer_review_stats.distinct_reviewers > 0 %}
                         <div class="bg-green-50 border-2 border-green-400 rounded-2xl p-8">
                             <p class="text-xl font-bold text-green-900 flex items-center gap-3">
-                                Anda sudah mereview semua jawaban yang tersedia!
+                                You have reviewed all available answers!
                             </p>
-                            <p class="text-green-800 mt-2">Sekarang menunggu teman lain mereview jawaban Anda.</p>
+                            <p class="text-green-800 mt-2">Now waiting for others to review your answers.</p>
                         </div>
                     {% endif %}
 
                     {# Jika belum ada yang review (masih awal) #}
                     {% if peer_review_stats.distinct_reviewers == 0 %}
                         <div class="bg-orange-50 border-2 border-orange-400 rounded-2xl p-8">
-                            <p class="text-xl font-bold text-orange-900">Menunggu review dari teman...</p>
-                            <p class="text-orange-800 mt-2">Nilai akhir akan muncul setelah ada minimal 1 review.</p>
+                            <p class="text-xl font-bold text-orange-900">Waiting for review from friends...</p>
+                            <p class="text-orange-800 mt-2">Final score will appear after there is at least 1 review.</p>
                         </div>
                     {% endif %}
                 </div>

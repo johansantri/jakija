@@ -40804,3 +40804,348 @@ django.core.exceptions.FieldError: Cannot resolve keyword 'order' into field. Ch
 [WARNING] 2025-12-11 16:13:52,299 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-11 16:13:55,470 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-11 16:13:56,506 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:13:58,586 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:13:59,681 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:00,726 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:03,923 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:10,898 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:14:10,899 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:14:10,931 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:10,953 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:11,012 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:11,017 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:11,026 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:11,054 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:11,073 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:14,936 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:16,383 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:17,649 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:19,455 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:20,185 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:21,272 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:22,298 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:23,369 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:23,954 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:25,203 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:27,331 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:32,257 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:34,356 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:36,527 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:38,920 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:41,027 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:44,639 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:44,651 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:45,887 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:49,020 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:49,823 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:53,098 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:56,146 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:57,152 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:58,676 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:14:59,783 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:00,826 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:03,925 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:10,923 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:10,923 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:15:10,943 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:10,963 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:10,983 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:10,984 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:15:11,006 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:11,030 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:11,062 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:15,022 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:16,381 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:17,818 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:19,459 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:20,212 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:21,321 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:22,345 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:23,374 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:23,948 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:25,223 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:27,313 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:32,275 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:34,610 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:36,570 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:39,584 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:41,059 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:44,733 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:44,755 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:45,945 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:48,997 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:49,822 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:53,132 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:56,143 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:57,162 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:58,672 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:15:59,884 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:00,779 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:04,094 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:06,473 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:10,925 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:10,946 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:10,968 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:11,000 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:11,010 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:11,012 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:16:11,014 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:16:11,034 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:15,413 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:16,899 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:18,326 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:19,937 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:20,204 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:22,328 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:22,349 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:23,375 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:24,913 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:25,231 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:27,367 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:32,905 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:34,610 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:36,936 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:39,591 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:41,069 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:41,613 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:44,722 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:45,695 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:46,761 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:48,989 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:49,970 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:53,128 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:56,898 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:57,850 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:58,866 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:16:59,952 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:00,955 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:04,952 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:10,898 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:17:10,900 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:17:10,932 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:10,961 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:10,976 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:10,997 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:11,021 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:11,040 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:15,611 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:16,930 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:18,353 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:19,934 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:20,415 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:22,451 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:22,471 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:24,534 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:24,901 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:25,497 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:27,353 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:17:29,454 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:17:29,454 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-11 16:17:29,456 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-11 16:17:29,456 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-11 16:17:29,457 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=100.00%
+[WARNING] 2025-12-11 16:17:29,774 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-11 16:17:32,931 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:35,246 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:36,934 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:39,604 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:41,657 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:17:49,919 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:17:54,310 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:17:54,311 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-11 16:17:54,312 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-11 16:17:54,313 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-11 16:17:54,313 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=100.00%
+[WARNING] 2025-12-11 16:17:54,496 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-11 16:18:10,926 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:10,953 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:10,974 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:18:10,979 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:10,996 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:18:11,000 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:11,029 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:11,048 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:15,688 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:16,934 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:19,913 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:24,909 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:32,929 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:36,012 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:36,944 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:18:38,135 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:18:38,135 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-11 16:18:38,137 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-11 16:18:38,138 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-11 16:18:38,138 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=100.00%
+[WARNING] 2025-12-11 16:18:38,378 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-11 16:18:40,071 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:41,632 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:18:49,936 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:10,901 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:19:10,904 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:19:10,924 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:10,944 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:10,967 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:10,995 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:11,027 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:11,041 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:15,710 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:16,934 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:19,921 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:24,935 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:32,899 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:36,938 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:37,021 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:38,389 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:41,123 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:19:41,613 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:20:08,139 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:20:08,140 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-11 16:20:08,141 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-11 16:20:08,142 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-11 16:20:08,142 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=100.00%
+[WARNING] 2025-12-11 16:20:08,317 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-11 16:20:10,963 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:20:10,971 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:20:10,974 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:20:10,999 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:20:11,023 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:20:11,052 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:20:11,067 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:20:11,105 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:20:11,113 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:20:16,538 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:20:36,165 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:20:36,166 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-11 16:20:36,167 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-11 16:20:36,168 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-11 16:20:36,168 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=100.00%
+[WARNING] 2025-12-11 16:20:36,350 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-11 16:20:37,757 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:20:41,614 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:20:41,759 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:10,915 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:21:10,916 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:21:10,971 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:10,991 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:11,013 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:11,039 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:11,054 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:11,076 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:11,121 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:11,141 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:11,149 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:11,175 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:11,200 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:11,213 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:16,990 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:36,476 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:38,240 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:41,614 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:21:42,216 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:10,891 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:22:10,892 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:22:10,951 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:10,954 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:10,980 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:10,984 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:11,010 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:11,039 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:11,065 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:11,084 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:11,107 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:11,142 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:11,145 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:11,167 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:17,506 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:36,477 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:38,972 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:41,620 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:22:43,022 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:10,924 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:10,948 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:23:10,957 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:10,967 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:23:10,983 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:10,986 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:11,028 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:11,061 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:11,072 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:11,094 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:11,116 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:11,135 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:11,159 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:11,180 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:18,390 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:36,919 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:39,928 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:41,618 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:23:43,885 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:10,891 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:24:10,891 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:24:10,920 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:10,952 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:10,989 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:11,003 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:11,006 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:11,048 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:11,076 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:11,112 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:11,116 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:11,161 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:11,164 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:11,186 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:18,616 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:37,238 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:40,206 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:41,619 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:24:44,156 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:10,890 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:25:10,891 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:25:10,938 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:10,964 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:10,969 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:10,997 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:11,040 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:11,052 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:11,072 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:11,102 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:11,142 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:11,146 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:11,167 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:11,189 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:18,594 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:38,214 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:40,156 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:41,620 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:25:44,183 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:10,922 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:26:10,922 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:26:10,981 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:10,985 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:11,010 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:11,033 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:11,052 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:11,105 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:11,108 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:11,128 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:11,155 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:11,176 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:11,202 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:11,223 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:26:11,299 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:26:11,301 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:26:11,302 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:26:11,303 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:26:11,303 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-11 16:26:11,424 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-11 16:26:19,389 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:38,798 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:40,158 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:26:44,182 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-11 16:26:47,048 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-11 16:26:47,050 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-11 16:26:47,051 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-11 16:26:47,052 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-11 16:26:47,052 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-11 16:26:47,096 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
