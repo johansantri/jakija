@@ -91,7 +91,7 @@ from .models import (
     AskOra, PeerReview, AssessmentScore, Submission, CourseStatus, AssessmentSession,
     CourseComment, Comment, Choice, Score, CoursePrice, AssessmentRead, QuestionAnswer,
     Enrollment, PricingType, Partner, CourseProgress, MaterialRead, GradeRange, Category,
-    Section, Instructor, TeamMember, Material, Question, Assessment,LTIResult,CourseTeam,Quiz,QuizResult,
+    Section, Instructor, TeamMember, Material, Question, Assessment,LTIResult,CourseTeam,Quiz,QuizResult,Video,Option
 )
 
 # Project-level apps
@@ -2831,6 +2831,140 @@ def delete_askora(request, idcourse, idaskora, idsection, idassessment):
     return redirect("/login/?next=%s" % request.path)
 
 
+#add_ivq
+def add_ivq(request, idcourse, idsection, idassessment):
+    if not request.user.is_authenticated:
+        return redirect("/login/?next=%s" % request.path)
+
+    user = request.user
+    course = None
+
+    # =============  VALIDASI AKSES (punya kamu): tidak diubah  =============
+    if user.is_superuser or user.is_curation:
+        course = get_object_or_404(Course, id=idcourse)
+
+    if not course and user.is_partner:
+        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=user.id)
+
+    if not course and user.is_instructor:
+        course = get_object_or_404(Course, id=idcourse, instructor__user_id=user.id)
+
+    if not course:
+        team = CourseTeam.objects.filter(course_id=idcourse, user=user).first()
+        if team:
+            course = team.course
+        else:
+            messages.error(request, "You do not have permission.")
+            return redirect('authentication:home')
+
+    section = get_object_or_404(Section, id=idsection, courses=course)
+    assessment = get_object_or_404(Assessment, id=idassessment, section=section)
+    # ================================================================
+
+    # Jika submit form → Add Video
+    if request.method == "POST":
+        video_title = request.POST.get("title")
+        video_file = request.FILES.get("file")
+
+        if not video_title or not video_file:
+            messages.error(request, "Please fill all fields.")
+            return redirect(request.path)
+
+        # 1️⃣ Save Video
+        video = Video.objects.create(
+            title=video_title,
+            file=video_file
+        )
+
+        # 2️⃣ Redirect otomatis ke halaman tambah soal
+        return redirect(
+            "courses:create_ivq_question",
+            idcourse=idcourse,
+            idsection=idsection,
+            idassessment=idassessment,
+            idvideo=video.id
+        )
+
+    return render(request, "courses/add_ivq.html", {
+        "course": course,
+        "section": section,
+        "assessment": assessment,
+    })
+
+#add question ivq
+def create_ivq_question(request, idcourse, idsection, idassessment, idvideo):
+    # Pastikan akses user valid
+    if not request.user.is_authenticated:
+        return redirect("/login/?next=%s" % request.path)
+
+    # Ambil object terkait
+    course = get_object_or_404(Course, id=idcourse)
+    section = get_object_or_404(Section, id=idsection, courses=course)
+    assessment = get_object_or_404(Assessment, id=idassessment, section=section)
+    video = get_object_or_404(Video, id=idvideo)
+
+    if request.method == "POST":
+        question = request.POST.get("question")
+        time_in_video = request.POST.get("time_in_video")
+        qtype = request.POST.get("question_type")
+        correct_text = request.POST.get("correct_answer_text")
+
+        # Validasi sederhana
+        if not question or not time_in_video or not qtype:
+            messages.error(request, "Please fill all required fields.")
+            return redirect(request.path)
+
+        # 1️⃣ Create quiz
+        quiz = Quiz.objects.create(
+            assessment=assessment,
+            video=video,
+            time_in_video=float(time_in_video),
+            question_type=qtype,
+            question=question,
+            correct_answer_text=correct_text if qtype != "MC" else None,
+        )
+
+        # 2️⃣ Jika pertanyaan MC → buat options
+        if qtype == "MC":
+            options = request.POST.getlist("option_text")
+            correct_index = request.POST.get("correct_option")
+
+            for idx, opt_text in enumerate(options):
+                Option.objects.create(
+                    quiz=quiz,
+                    text=opt_text,
+                    is_correct=str(idx) == correct_index
+                )
+
+        elif qtype == "DD":
+            quiz.correct_answer_text = request.POST.get("correct_answer_text", "")
+
+            quiz.save()
+
+            # Simpan opsi drag drop
+            dd_options = [v for k, v in request.POST.items() if k.startswith("dd_option_")]
+
+            for opt in dd_options:
+                Option.objects.create(
+                    quiz=quiz,
+                    text=opt,
+                    is_correct=(opt == quiz.correct_answer_text)
+                )
+
+        messages.success(request, "Question added successfully!")
+
+        # Tetap di halaman add question agar bisa tambah pertanyaan berikutnya
+        return redirect(request.path)
+
+    return render(request, "courses/create_ivq_question.html", {
+        "course": course,
+        "section": section,
+        "assessment": assessment,
+        "video": video,
+    })
+
+
+
 #add coment matrial course
 def is_bot(request):
     """
@@ -5401,22 +5535,25 @@ def question_view(request, idcourse, idsection, idassessment):
     # 6️⃣ Ambil assessment dan prefetch related untuk performance
     assessment = get_object_or_404(
         Assessment.objects
-        .select_related('lti_tool')
-        .prefetch_related(
-            'questions__choices',
-            'ask_oras',
-            'quizzes',              # <--- Tambahkan ini
-            'quizzes__options'      # <--- Penting kalau quiz MCQ
-        ),
+            .select_related('lti_tool')
+            .prefetch_related(
+                'questions__choices',
+                'ask_oras',
+                'quizzes',
+                'quizzes__video',
+                'quizzes__options',
+            ),
         id=idassessment,
         section=section
     )
 
+    videos = Video.objects.filter(quizzes__assessment=assessment).distinct()
 
     return render(request, 'courses/view_question.html', {
         'course': course,
         'section': section,
         'assessment': assessment,
+        'videos': videos,
         'user_role': getattr(team_member, 'role', None)  # bisa dipakai di template
     })
 

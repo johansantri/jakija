@@ -80,6 +80,10 @@ urlpatterns = [
     path('add-comment/<int:material_id>/', views.add_comment, name='add_comment'),
     path('add-comment-course/<int:course_id>/', views.add_comment_course, name='add_comment_course'),  # Add this line
     path('course/<int:idcourse>/section/<int:idsection>/assessment/<int:idassessment>/create/', views.create_askora, name='create_askora'),
+    #add video quiz
+    path('course/<int:idcourse>/section/<int:idsection>/assessment/<int:idassessment>/ivq/', views.add_ivq, name='add_ivq'),
+    path('course/<int:idcourse>/section/<int:idsection>/assessment/<int:idassessment>/ivq/<int:idvideo>/add-question/',views.create_ivq_question,name='create_ivq_question'),
+
     #add lti 1.1
     path('course/<int:idcourse>/section/<int:idsection>/lti/<int:idlti>/create/', views.create_lti, name='create_lti'),
     path('course/<int:idcourse>/section/<int:idsection>/lti/<int:idlti>/edit/<int:id_lti_tool>/', views.edit_lti, name='edit_lti'),

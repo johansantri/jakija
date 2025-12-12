@@ -41602,3 +41602,301 @@ Traceback (most recent call last):
   File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
     raise NoReverseMatch(msg)
 django.urls.exceptions.NoReverseMatch: Reverse for 'delete_ivq' not found. 'delete_ivq' is not a valid view function or pattern name.
+[INFO] 2025-12-12 08:58:06,489 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 08:58:07,626 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 08:58:07,637 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-12-12 08:59:16,112 [django.request] Internal Server Error: /questions/view/2/106/12/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5418, in question_view
+    return render(request, 'courses/view_question.html', {
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 489, in parse
+    raise self.error(token, e)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 710, in __init__
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: '(assessment=assessment).count' from 'video.quizzes.filter(assessment=assessment).count'
+[INFO] 2025-12-12 09:08:58,230 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:08:59,373 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:08:59,385 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:11:31,773 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:11:32,923 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:11:32,937 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:11:38,663 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:11:39,708 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:11:39,719 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:11:43,296 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:11:44,356 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:11:44,367 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:12:37,136 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:12:38,202 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:12:38,213 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:12:56,694 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:12:57,797 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:12:57,810 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:24:58,583 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-12-12 09:24:59,640 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:24:59,651 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:25:02,148 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-12-12 09:25:03,171 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:25:03,182 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:25:08,903 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-12-12 09:25:09,942 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:25:09,952 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:25:16,835 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-12-12 09:25:17,878 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:25:17,889 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:25:33,906 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-12-12 09:25:34,944 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:25:34,955 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:25:53,056 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-12-12 09:25:54,183 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:25:54,193 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:25:59,511 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-12-12 09:26:00,530 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:26:00,540 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:34:23,308 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:34:24,402 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:34:24,414 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:34:26,474 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:34:27,489 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:34:27,499 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:34:29,694 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:34:30,781 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:34:30,792 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:34:32,987 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:34:33,978 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:34:33,989 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-12-12 09:46:16,448 [django.request] Internal Server Error: /course/2/section/105/assessment/13/ivq/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 2880, in add_ivq
+    return redirect(
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'create_ivq_question' not found. 'create_ivq_question' is not a valid view function or pattern name.
+[INFO] 2025-12-12 09:46:56,288 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-12-12 09:46:57,361 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:46:57,373 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:47:09,426 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-12-12 09:47:10,380 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:47:10,390 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:47:18,154 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-12-12 09:47:19,078 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:47:19,089 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:47:25,853 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-12-12 09:47:26,855 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:47:26,866 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:47:33,299 [django.utils.autoreload] /home/x/app/mysite/courses/urls.py changed, reloading.
+[INFO] 2025-12-12 09:47:34,290 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:47:34,300 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:48:18,577 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:48:19,675 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:48:19,687 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:48:21,760 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:48:22,782 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:48:22,793 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:48:25,045 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:48:26,076 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:48:26,088 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 09:48:53,834 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 09:48:54,906 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 09:48:54,916 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 10:06:02,772 [learner.views] Redirecting to load_content: /learn/2/public-speaking-for-beginners-speak-with-confidence/assessment/13/
+[DEBUG] 2025-12-12 10:06:02,855 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:06:02,856 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:06:02,857 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:06:02,858 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:06:02,858 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:06:09,389 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:06:09,389 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:06:09,390 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:06:09,391 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:06:09,392 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:06:11,541 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:06:11,541 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:06:11,542 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:06:11,544 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:06:11,544 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:06:12,961 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:06:12,961 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:06:12,963 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:06:12,964 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:06:12,964 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:06:15,572 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:06:15,572 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:06:15,573 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:06:15,574 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:06:15,575 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=87.50%
+[WARNING] 2025-12-12 10:06:20,027 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-12 10:07:03,026 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:07:10,294 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:07:11,632 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:07:13,732 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:07:15,693 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:08:03,520 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:08:10,643 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:08:11,703 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:08:14,597 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:08:15,683 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:09:03,513 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:09:10,656 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:09:11,704 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:09:14,627 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:09:15,693 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:10:03,671 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:10:10,660 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:10:12,661 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:10:14,653 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:10:16,715 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:11:03,715 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:11:10,739 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:11:12,717 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:11:14,780 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:11:16,822 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-12 10:11:56,492 [learner.views] Redirecting to load_content: /learn/2/public-speaking-for-beginners-speak-with-confidence/assessment/13/
+[DEBUG] 2025-12-12 10:11:56,561 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:11:56,561 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:11:56,563 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:11:56,565 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:11:56,565 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=87.50%
+[WARNING] 2025-12-12 10:12:03,700 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:12:10,842 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:12:12,739 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:12:14,800 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:12:16,841 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-12 10:12:41,211 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:12:41,211 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:12:41,213 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:12:41,214 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:12:41,214 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:12:57,528 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:12:57,528 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:12:57,530 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:12:57,531 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:12:57,531 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:13:09,365 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:13:09,365 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:13:09,367 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:13:09,368 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:13:09,368 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:13:59,130 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:13:59,130 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:13:59,131 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:13:59,132 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:13:59,133 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:14:10,868 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:14:10,868 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:14:10,870 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:14:10,871 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:14:10,871 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:14:15,768 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:14:15,769 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:14:15,770 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:14:15,771 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:14:15,771 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=50.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:14:43,101 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:14:43,101 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:14:43,103 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:14:43,104 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:14:43,104 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=87.50%
+[WARNING] 2025-12-12 10:15:43,223 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:16:43,223 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:17:43,191 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:18:43,227 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:19:43,202 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:20:43,194 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:21:43,221 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:22:43,220 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:23:43,223 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-12 10:23:48,738 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:23:48,738 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:23:48,740 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:23:48,741 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:23:48,742 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=87.50%
+[WARNING] 2025-12-12 10:24:48,890 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:25:48,865 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:26:48,868 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:27:48,890 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-12 10:28:24,787 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 10:28:25,886 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 10:28:25,897 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 10:28:30,543 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 10:28:31,513 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 10:28:31,524 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 10:28:47,048 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 10:28:48,133 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 10:28:48,143 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 10:29:06,284 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 10:29:07,348 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 10:29:07,360 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 10:29:20,895 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 10:29:21,896 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 10:29:21,906 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-12 10:29:49,078 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:30:49,075 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-12 10:30:51,574 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:30:51,575 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:30:51,576 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:30:51,577 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:30:51,578 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:31:15,624 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:31:15,624 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:31:15,626 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:31:15,627 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:31:15,627 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=87.50%
+[WARNING] 2025-12-12 10:32:15,711 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:33:15,726 [django.request] Not Found: /partner/ping-session/
