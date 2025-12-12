@@ -8,9 +8,11 @@
     {% if current_content.0 == 'material' %}
         {% with material=current_content.1 %}
         <article class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-            <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-gray-800 leading-tight">
-                {{ material.title }}
-            </h3>
+            
+             <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+                <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ material.title }} </h3>
+                
+            </div>
             <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-12 prose prose-lg lg:prose-xl max-w-none text-gray-700">
                 {{ material.description|make_iframes_responsive|safe }}
             </div>
@@ -269,8 +271,12 @@
             {% endif %}
 
                 <!-- IN-VIDEO QUIZ: VERSI ULTIMATE (Video.js + GSAP + Sound + Score + Super Cantik) -->
-                 {% if is_video_quiz and video %}
-                 <h1 class="sr-only">{{ video.title }}</h1>
+                {% if is_video_quiz and video %}
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+                        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ video.title }} </h3>
+                        
+                    </div>
+                 
                         <style>
                             .quiz-overlay{
                                 position:fixed; inset:0;
@@ -635,240 +641,247 @@
                             <!-- endvideo quiz -->
 
                             
-                        {% endif %}
+                {% endif %}
 
 
 
                             <!-- AKHIR IN-VIDEO QUIZ ULTIMATE -->
 
-                        {% if is_quiz %}
-                            {% if is_started %}
+                {% if is_quiz %}
+                    {% if is_started %}
 
-                                {% if is_expired %}
+                        {% if is_expired %}
 
-                                    <!-- ALERT - Assessment Period Ended -->
-                                    <div class="bg-red-100 text-red-700 border border-red-300 px-4 py-3 rounded-xl mb-6">
-                                        The assessment period has ended.
-                                    </div>
+                            <!-- ALERT - Assessment Period Ended -->
+                            
 
-                                    <!-- REVIEW MODE -->
-                                    {% for question in assessment.questions.all %}
-                                        {% with answer=answered_questions|get_question_answer:question.id %}
+                                <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+                                <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">The assessment period has ended. </h3>
+                                
+                            </div>
+                            
+                            <!-- REVIEW MODE -->
+                            {% for question in assessment.questions.all %}
+                                {% with answer=answered_questions|get_question_answer:question.id %}
 
-                                            <div class="p-6 mb-6 rounded-2xl shadow-lg border 
-                                                {% if answer and answer.choice.is_correct %}
-                                                    border-green-500
-                                                {% else %}
-                                                    border-red-500
-                                                {% endif %}
-                                            ">
+                                    <div class="p-6 mb-6 rounded-2xl shadow-lg border 
+                                        {% if answer and answer.choice.is_correct %}
+                                            border-green-500
+                                        {% else %}
+                                            border-red-500
+                                        {% endif %}
+                                    ">
 
-                                                <h3 class="text-xl font-semibold mb-4 text-gray-800">
-                                                    {{ question.text|safe }}
-                                                </h3>
+                                        <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                                            {{ question.text|safe }}
+                                        </h3>
 
-                                                <ul class="space-y-3">
+                                        <ul class="space-y-3">
 
-                                                    {% for choice in question.choices.all %}
+                                            {% for choice in question.choices.all %}
 
-                                                        <li class="p-4 rounded-xl border 
+                                                <li class="p-4 rounded-xl border 
+                                                    {% if choice.is_correct %}
+                                                        bg-green-100 border-green-300
+                                                    {% elif answer and answer.choice.id == choice.id %}
+                                                        bg-red-100 border-red-300
+                                                    {% else %}
+                                                        bg-gray-50 border-gray-200
+                                                    {% endif %}
+                                                ">
+
+                                                    <div class="flex items-center justify-between">
+                                                        <span class="text-gray-700">{{ choice.text|safe }}</span>
+
+                                                        <div class="flex space-x-2">
+
                                                             {% if choice.is_correct %}
-                                                                bg-green-100 border-green-300
-                                                            {% elif answer and answer.choice.id == choice.id %}
-                                                                bg-red-100 border-red-300
-                                                            {% else %}
-                                                                bg-gray-50 border-gray-200
+                                                                <span class="px-2 py-1 text-xs font-semibold bg-green-600 text-white rounded-full">
+                                                                    Correct
+                                                                </span>
                                                             {% endif %}
-                                                        ">
 
-                                                            <div class="flex items-center justify-between">
-                                                                <span class="text-gray-700">{{ choice.text|safe }}</span>
+                                                            {% if answer and answer.choice.id == choice.id %}
+                                                                <span class="px-2 py-1 text-xs font-semibold bg-blue-600 text-white rounded-full">
+                                                                    Your Response
+                                                                </span>
+                                                            {% endif %}
 
-                                                                <div class="flex space-x-2">
+                                                        </div>
+                                                    </div>
 
-                                                                    {% if choice.is_correct %}
-                                                                        <span class="px-2 py-1 text-xs font-semibold bg-green-600 text-white rounded-full">
-                                                                            Correct
-                                                                        </span>
-                                                                    {% endif %}
+                                                </li>
 
-                                                                    {% if answer and answer.choice.id == choice.id %}
-                                                                        <span class="px-2 py-1 text-xs font-semibold bg-blue-600 text-white rounded-full">
-                                                                            Your Response
-                                                                        </span>
-                                                                    {% endif %}
-
-                                                                </div>
-                                                            </div>
-
-                                                        </li>
-
-                                                    {% endfor %}
-                                                </ul>
-                                            </div>
-
-                                        {% endwith %}
-                                    {% endfor %}
-
-                                {% else %}
-
-                                    <!-- TIMER SECTION -->
-                                    <div class="sticky top-0 bg-white shadow-xl z-40 p-4 mb-6 rounded-2xl border border-gray-200">
-
-                                        <div class="flex justify-between items-center mb-3">
-                                            <span class="text-gray-700 font-medium">
-                                                Remaining Time:
-                                                <span id="timer-countdown"
-                                                    class="text-3xl font-bold text-red-600">
-                                                    {{ remaining_time }}
-                                                </span>s
-                                            </span>
-
-                                            <span id="progress-percent"
-                                                class="text-gray-500 font-medium">
-                                                100%
-                                            </span>
-                                        </div>
-
-                                        <div class="w-full bg-gray-200 h-5 rounded-full overflow-hidden">
-                                            <div id="timer-progress"
-                                                class="h-full bg-blue-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full"
-                                                style="width: 100%;">
-                                                100%
-                                            </div>
-                                        </div>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
 
-                                    <!-- QUIZ FORM -->
-                                    <form id="quiz-form"
-                                        hx-post="{% url 'learner:submit_assessment_new' assessment.id %}"
-                                        hx-target="#content-area"
-                                        hx-swap="innerHTML"
-                                        method="POST"
-                                        class="space-y-8">
+                                {% endwith %}
+                            {% endfor %}
 
-                                        {% csrf_token %}
+                        {% else %}
 
-                                        {% for question in assessment.questions.all|shuffled %}
-                                            <div class="p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+                            <!-- TIMER SECTION -->
+                            <div class="sticky top-0 bg-white shadow-xl z-40 p-4 mb-6 rounded-2xl border border-gray-200">
 
-                                                <h3 class="text-xl font-semibold text-gray-800 mb-5">
-                                                    {{ question.text|safe }}
-                                                </h3>
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-gray-700 font-medium">
+                                        Remaining Time:
+                                        <span id="timer-countdown"
+                                            class="text-3xl font-bold text-red-600">
+                                            {{ remaining_time }}
+                                        </span>s
+                                    </span>
 
-                                                <div class="space-y-3">
-                                                    {% for choice in question.choices.all|shuffled %}
-                                                        {% with answer=answered_questions|get_question_answer:question.id %}
-
-                                                            <label class="flex items-start gap-4 cursor-pointer p-4 border border-gray-300 rounded-xl hover:bg-gray-50 transition">
-
-                                                                <input type="radio"
-                                                                    name="answers_{{ question.id }}"
-                                                                    value="{{ choice.id }}"
-                                                                    class="mt-1 h-5 w-5 text-indigo-600"
-                                                                    {% if answer and answer.choice.id == choice.id %}checked{% endif %}>
-
-                                                                <span class="text-gray-700">{{ choice.text|safe }}</span>
-
-                                                            </label>
-
-                                                        {% endwith %}
-                                                    {% endfor %}
-                                                </div>
-
-                                            </div>
-                                        {% endfor %}
-
-                                        <div class="text-center">
-                                            <button type="submit"
-                                                    class="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 shadow">
-                                                Submit All Responses
-                                            </button>
-                                        </div>
-                                    </form>
-
-                                    <!-- TIMER SCRIPT -->
-                                    <script>
-                                    (function () {
-                                        const timerEl = document.getElementById("timer-countdown");
-                                        const progress = document.getElementById("timer-progress");
-                                        const percentEl = document.getElementById("progress-percent");
-
-                                        if (!timerEl) return;
-
-                                        let total = parseInt(timerEl.textContent);
-                                        let left = total;
-
-                                        const iv = setInterval(() => {
-                                            left--;
-                                            const pct = Math.max(0, Math.round((left / total) * 100));
-
-                                            timerEl.textContent = left;
-                                            progress.style.width = pct + "%";
-                                            progress.textContent = pct + "%";
-                                            percentEl.textContent = pct + "%";
-
-                                            if (pct <= 25) {
-                                                progress.className = "h-full bg-red-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
-                                            } else if (pct <= 50) {
-                                                progress.className = "h-full bg-yellow-500 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
-                                            } else {
-                                                progress.className = "h-full bg-blue-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
-                                            }
-
-                                            if (left <= 0) {
-                                                clearInterval(iv);
-                                                htmx.trigger("#quiz-form", "submit");
-                                            }
-
-                                        }, 1000);
-                                    })();
-                                    </script>
-
-                                {% endif %}
-
-                            {% else %}
-
-                                <!-- START EXAM PROMPT -->
-                                <div class="flex justify-center items-center min-h-screen bg-gray-50">
-                                    <div class="bg-white rounded-2xl shadow-xl p-10 max-w-lg text-center">
-
-                                        <div class="text-red-600 text-5xl mb-4">
-                                            📝
-                                        </div>
-
-                                        <h2 class="text-2xl font-bold mb-3">Are You Ready to Begin the Test?</h2>
-
-                                        <p class="text-gray-500 mb-6">
-                                            You will have <strong>{{ assessment.duration_in_minutes }} minutes</strong> to complete this assessment.
-                                        </p>
-
-                                        <form hx-post="{% url 'learner:start_assessment' assessment.id %}"
-                                            hx-target="#content-area"
-                                            hx-swap="innerHTML"
-                                            hx-push-url="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}">
-                                            <button class="px-6 py-3 border border-red-500 text-red-600 rounded-xl hover:bg-red-500 hover:text-white transition">
-                                                Start Assessment
-                                            </button>
-                                        </form>
-
-                                    </div>
+                                    <span id="progress-percent"
+                                        class="text-gray-500 font-medium">
+                                        100%
+                                    </span>
                                 </div>
 
-                            {% endif %}
+                                <div class="w-full bg-gray-200 h-5 rounded-full overflow-hidden">
+                                    <div id="timer-progress"
+                                        class="h-full bg-blue-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full"
+                                        style="width: 100%;">
+                                        100%
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- QUIZ FORM -->
+                            <form id="quiz-form"
+                                hx-post="{% url 'learner:submit_assessment_new' assessment.id %}"
+                                hx-target="#content-area"
+                                hx-swap="innerHTML"
+                                method="POST"
+                                class="space-y-8">
+
+                                {% csrf_token %}
+
+                                {% for question in assessment.questions.all|shuffled %}
+                                    <div class="p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+
+                                        <h3 class="text-xl font-semibold text-gray-800 mb-5">
+                                            {{ question.text|safe }}
+                                        </h3>
+
+                                        <div class="space-y-3">
+                                            {% for choice in question.choices.all|shuffled %}
+                                                {% with answer=answered_questions|get_question_answer:question.id %}
+
+                                                    <label class="flex items-start gap-4 cursor-pointer p-4 border border-gray-300 rounded-xl hover:bg-gray-50 transition">
+
+                                                        <input type="radio"
+                                                            name="answers_{{ question.id }}"
+                                                            value="{{ choice.id }}"
+                                                            class="mt-1 h-5 w-5 text-indigo-600"
+                                                            {% if answer and answer.choice.id == choice.id %}checked{% endif %}>
+
+                                                        <span class="text-gray-700">{{ choice.text|safe }}</span>
+
+                                                    </label>
+
+                                                {% endwith %}
+                                            {% endfor %}
+                                        </div>
+
+                                    </div>
+                                {% endfor %}
+
+                                <div class="text-center">
+                                    <button type="submit"
+                                            class="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 shadow">
+                                        Submit All Responses
+                                    </button>
+                                </div>
+                            </form>
+
+                            <!-- TIMER SCRIPT -->
+                            <script>
+                            (function () {
+                                const timerEl = document.getElementById("timer-countdown");
+                                const progress = document.getElementById("timer-progress");
+                                const percentEl = document.getElementById("progress-percent");
+
+                                if (!timerEl) return;
+
+                                let total = parseInt(timerEl.textContent);
+                                let left = total;
+
+                                const iv = setInterval(() => {
+                                    left--;
+                                    const pct = Math.max(0, Math.round((left / total) * 100));
+
+                                    timerEl.textContent = left;
+                                    progress.style.width = pct + "%";
+                                    progress.textContent = pct + "%";
+                                    percentEl.textContent = pct + "%";
+
+                                    if (pct <= 25) {
+                                        progress.className = "h-full bg-red-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
+                                    } else if (pct <= 50) {
+                                        progress.className = "h-full bg-yellow-500 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
+                                    } else {
+                                        progress.className = "h-full bg-blue-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
+                                    }
+
+                                    if (left <= 0) {
+                                        clearInterval(iv);
+                                        htmx.trigger("#quiz-form", "submit");
+                                    }
+
+                                }, 1000);
+                            })();
+                            </script>
+
                         {% endif %}
+
+                    {% else %}
+
+                        <!-- START EXAM PROMPT -->
+                        <div class="flex justify-center items-center min-h-screen bg-gray-50">
+                            <div class="bg-white rounded-2xl shadow-xl p-10 max-w-lg text-center">
+
+                                <div class="text-red-600 text-5xl mb-4">
+                                    📝
+                                </div>
+
+                                <h2 class="text-2xl font-bold mb-3">Are You Ready to Begin the Test?</h2>
+
+                                <p class="text-gray-500 mb-6">
+                                    You will have <strong>{{ assessment.duration_in_minutes }} minutes</strong> to complete this assessment.
+                                </p>
+
+                                <form hx-post="{% url 'learner:start_assessment' assessment.id %}"
+                                    hx-target="#content-area"
+                                    hx-swap="innerHTML"
+                                    hx-push-url="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}">
+                                    <button class="px-6 py-3 border border-red-500 text-red-600 rounded-xl hover:bg-red-500 hover:text-white transition">
+                                        Start Assessment
+                                    </button>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    {% endif %}
+                {% endif %}
 
 
                 {% if is_lti and lti_tool %}
-                <div class="text-center py-24 lg:py-32 bg-gradient-to-b from-indigo-50 to-white rounded-3xl">
-                    <h4 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-gray-800">{{ lti_tool.tool_name }}</h4>
-                    <p class="text-lg lg:text-xl text-gray-600 mb-12 max-w-2xl mx-auto">Klik tombol di bawah untuk membuka alat eksternal.</p>
-                    <form action="{% url 'learner:lti_consume_course' assessment.id %}" method="get" target="_blank">
-                        <button type="submit" class="w-full mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-5 rounded-full text-lg shadow-lg transition transform hover:scale-105">
-                            Launch LTI Tool
-                        </button>
-                    </form>
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+                    <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">external link assessment. </h3>
+                                        
                 </div>
+                    <div class="text-center py-24 lg:py-32 bg-gradient-to-b from-indigo-50 to-white rounded-3xl">
+                        <h4 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-gray-800">{{ lti_tool.tool_name }}</h4>
+                        <p class="text-lg lg:text-xl text-gray-600 mb-12 max-w-2xl mx-auto">Klik tombol di bawah untuk membuka alat eksternal.</p>
+                        <form action="{% url 'learner:lti_consume_course' assessment.id %}" method="get" target="_blank">
+                            <button type="submit" class="inline-flex items-center px-8 py-3 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition">
+                                Launch LTI Tool
+                            </button>
+                        </form>
+                    </div>
                 {% endif %}
 
                 
