@@ -42037,3 +42037,278 @@ django.urls.exceptions.NoReverseMatch: Reverse for 'create_ivq_question' not fou
 [DEBUG] 2025-12-12 10:58:44,249 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
 [DEBUG] 2025-12-12 10:58:44,250 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
 [INFO] 2025-12-12 10:58:44,250 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[INFO] 2025-12-12 10:59:18,197 [learner.views] Redirecting to load_content: /admin/2/public-speaking-for-beginners-speak-with-confidence/assessment/13/
+[DEBUG] 2025-12-12 10:59:18,262 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:59:18,263 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-12 10:59:18,263 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-12 10:59:18,264 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-12 10:59:18,264 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:59:21,557 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:59:21,558 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-12 10:59:21,558 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-12 10:59:21,559 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-12 10:59:21,559 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=87.50%
+[WARNING] 2025-12-12 10:59:25,423 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-12 10:59:26,622 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 10:59:26,623 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-12 10:59:26,624 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-12 10:59:26,625 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-12 10:59:26,625 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=87.50%
+[WARNING] 2025-12-12 10:59:38,658 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:59:40,603 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:59:42,599 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:59:44,318 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:00:25,385 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:00:26,730 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:00:38,918 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:00:40,604 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:00:42,591 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:00:44,355 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-12 11:00:59,975 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 11:00:59,976 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-12 11:00:59,977 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-12 11:00:59,978 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-12 11:00:59,979 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=87.50%
+[WARNING] 2025-12-12 11:01:25,420 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:01:39,142 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:01:40,606 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:01:42,556 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:01:44,333 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:02:00,757 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:02:25,493 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:02:39,089 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:02:40,603 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:02:42,560 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:02:44,356 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:03:00,022 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:03:25,507 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-12 11:03:27,790 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 11:03:27,791 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-12 11:03:27,792 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-12 11:03:27,794 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-12 11:03:27,794 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 11:03:29,883 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 11:03:29,885 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-12 11:03:29,886 [learner.templatetags.learner_tags] No QuestionAnswer for assessment 10, user 1
+[DEBUG] 2025-12-12 11:03:29,887 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-12 11:03:29,887 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-12 11:03:39,128 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:03:40,613 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:03:42,557 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:03:44,352 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-12 11:03:50,861 [learner.views] Assessment submitted for user admin, assessment 10
+[INFO] 2025-12-12 11:03:50,876 [learner.views] submit_assessment_new: Rendering HTMX for user admin, assessment 10
+[DEBUG] 2025-12-12 11:03:50,888 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 11:03:50,889 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-12 11:03:50,891 [learner.templatetags.learner_tags] MCQ used: 4/5 -> 20.000
+[DEBUG] 2025-12-12 11:03:50,892 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-12 11:03:50,892 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=2/4, overall=30.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-12 11:04:02,841 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 11:04:02,841 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-12 11:04:02,843 [learner.templatetags.learner_tags] MCQ used: 4/5 -> 20.000
+[DEBUG] 2025-12-12 11:04:02,845 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-12 11:04:02,845 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=2/4, overall=30.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-12 11:04:02,888 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-12 11:04:02,889 [django.request] Bad Request: /mark-progress/
+[DEBUG] 2025-12-12 11:04:04,172 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 11:04:04,173 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-12 11:04:04,175 [learner.templatetags.learner_tags] MCQ used: 4/5 -> 20.000
+[DEBUG] 2025-12-12 11:04:04,176 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-12 11:04:04,177 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=2/4, overall=30.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-12 11:04:16,147 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 11:04:16,148 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-12 11:04:16,150 [learner.templatetags.learner_tags] MCQ used: 4/5 -> 20.000
+[DEBUG] 2025-12-12 11:04:16,151 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-12 11:04:16,151 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=2/4, overall=30.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-12 11:04:18,771 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 11:04:18,772 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-12 11:04:18,774 [learner.templatetags.learner_tags] MCQ used: 4/5 -> 20.000
+[DEBUG] 2025-12-12 11:04:18,775 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-12 11:04:18,775 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=2/4, overall=30.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-12 11:04:25,475 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-12 11:04:31,938 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 11:04:31,938 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-12 11:04:31,940 [learner.templatetags.learner_tags] MCQ used: 4/5 -> 20.000
+[DEBUG] 2025-12-12 11:04:31,941 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-12 11:04:31,941 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=2/4, overall=30.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-12 11:04:39,102 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:04:40,591 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:04:42,833 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:04:44,339 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:05:25,696 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:05:32,761 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:05:39,738 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:05:40,770 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:05:42,904 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:05:44,320 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:06:25,728 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:06:32,759 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:06:40,104 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:06:41,110 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:06:42,907 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:06:44,961 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:07:26,084 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:07:32,753 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:07:40,140 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:07:42,203 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:07:43,199 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:07:44,964 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:08:27,133 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:08:32,730 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:08:40,256 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:08:43,478 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:08:43,479 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:08:44,954 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:09:27,761 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:09:32,757 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:09:40,842 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:09:44,180 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:09:44,180 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:09:45,073 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:10:28,313 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:10:32,761 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:10:41,390 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:10:44,401 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:10:44,402 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:10:45,462 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:11:28,796 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-12 11:11:35,705 [django.utils.autoreload] /home/x/app/mysite/learner/views.py changed, reloading.
+[INFO] 2025-12-12 11:11:36,789 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 11:11:36,799 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 11:11:42,030 [django.utils.autoreload] /home/x/app/mysite/learner/views.py changed, reloading.
+[INFO] 2025-12-12 11:11:43,093 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 11:11:43,103 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-12 11:11:45,033 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:11:45,042 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:11:45,787 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-12 11:12:08,251 [django.utils.autoreload] /home/x/app/mysite/learner/views.py changed, reloading.
+[INFO] 2025-12-12 11:12:09,284 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 11:12:09,294 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 11:12:12,321 [django.utils.autoreload] /home/x/app/mysite/learner/views.py changed, reloading.
+[INFO] 2025-12-12 11:12:13,320 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 11:12:13,330 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-12 11:12:19,823 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:12:28,760 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:12:32,010 [django.request] Not Found: /partner/ping-session/
+[ERROR] 2025-12-12 11:12:33,598 [django.request] Internal Server Error: /admin/2/public-speaking-for-beginners-speak-with-confidence/assessment/10/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/learner/views.py", line 1524, in load_content
+    response = render(request, template, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'course_lms_detail' with arguments '('', '')' not found. 1 pattern(s) tried: ['course\\-detail/(?P<id>[0-9]+)/(?P<slug>[-a-zA-Z0-9_]+)/\\Z']
+[WARNING] 2025-12-12 11:12:41,394 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:12:44,797 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:12:44,816 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:12:45,855 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:13:28,796 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-12 11:13:35,828 [learner.views] Redirecting to load_content: /admin/2/public-speaking-for-beginners-speak-with-confidence/assessment/10/
+[ERROR] 2025-12-12 11:13:35,953 [django.request] Internal Server Error: /admin/2/public-speaking-for-beginners-speak-with-confidence/assessment/10/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/x/app/mysite/learner/views.py", line 1524, in load_content
+    response = render(request, template, context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'course_lms_detail' with arguments '('', '')' not found. 1 pattern(s) tried: ['course\\-detail/(?P<id>[0-9]+)/(?P<slug>[-a-zA-Z0-9_]+)/\\Z']
+[WARNING] 2025-12-12 11:13:41,356 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:13:44,802 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:13:44,811 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:13:45,904 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-12 11:13:58,306 [django.utils.autoreload] /home/x/app/mysite/learner/views.py changed, reloading.
+[INFO] 2025-12-12 11:13:59,373 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 11:13:59,383 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2025-12-12 11:14:03,206 [learner.templatetags.learner_tags] ORA used: final_score=40.00 -> score_value=10.0000
+[DEBUG] 2025-12-12 11:14:03,207 [learner.templatetags.learner_tags] No submission for assessment 12, user 1
+[DEBUG] 2025-12-12 11:14:03,208 [learner.templatetags.learner_tags] MCQ used: 4/5 -> 20.000
+[DEBUG] 2025-12-12 11:14:03,210 [learner.templatetags.learner_tags] No submission for assessment 14, user 1
+[INFO] 2025-12-12 11:14:03,210 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=2/4, overall=30.00%, threshold=51.00, progress=87.50%
+[WARNING] 2025-12-12 11:14:29,430 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:14:41,595 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:14:45,594 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:14:45,613 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:14:46,611 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:15:03,799 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:15:30,054 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:15:42,240 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:15:46,410 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:15:46,412 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:15:47,307 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:16:03,761 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:16:30,800 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:16:42,905 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:16:46,924 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:16:46,945 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:16:47,922 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 11:17:03,748 [django.request] Not Found: /partner/ping-session/

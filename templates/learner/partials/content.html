@@ -871,42 +871,7 @@
                 </div>
                 {% endif %}
 
-                {% if is_quiz and not is_started and not assessment_locked %}
-                <div class="max-w-4xl mx-auto text-center 
-                            p-6 sm:p-10 md:p-14 lg:p-20 
-                            bg-white rounded-3xl shadow-xl border border-gray-200">
-
-                    <h3 class="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold 
-                            mb-4 sm:mb-6 md:mb-8 text-gray-800">
-                        {{ assessment.title|safe }}
-                    </h3>
-
-                    <p class="text-base sm:text-lg md:text-xl lg:text-2xl 
-                            text-gray-600 mb-8 md:mb-12">
-                        are you ready to start the quiz?
-                    </p>
-
-                    <form method="POST"
-                        hx-post="{% url 'learner:start_assessment' assessment.id %}"
-                        hx-target="#content-area"
-                        hx-swap="innerHTML">
-                        {% csrf_token %}
-                        
-                        <button type="submit"
-                                class="w-full sm:w-auto 
-                                    px-6 py-3 sm:px-10 sm:py-5 md:px-14 md:py-6 lg:px-20 lg:py-10
-                                    bg-green-600 hover:bg-green-700 
-                                    text-lg sm:text-xl md:text-2xl lg:text-4xl 
-                                    font-semibold text-white 
-                                    rounded-xl shadow-md transition">
-                            Start Quiz Now
-                        </button>
-
-                    </form>
-                </div>
-
-
-                {% endif %}
+                
 
             {% endif %}
         </div>
