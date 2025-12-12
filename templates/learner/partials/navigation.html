@@ -197,18 +197,21 @@ document.addEventListener('click', e => {
 });
 </script>
 
-<!-- Confetti Effect (hanya saat lulus & bukan halaman terakhir) -->
 <script src="https://cdn.jsdelivr.net/npm/js-confetti@0.11.0/dist/js-confetti.browser.js"></script>
 <script>
 {% if completion_status.is_completed and not next_url %}
-  const jsConfetti = new JSConfetti();
-  jsConfetti.addConfetti({
+  // Only create jsConfetti if it doesn't exist yet
+  if (!window.jsConfetti) {
+    window.jsConfetti = new JSConfetti();
+  }
+
+  window.jsConfetti.addConfetti({
     confettiNumber: 300,
     confettiRadius: 8,
     confettiColors: ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#00d4ff', '#00b7eb', '#ffd700'],
   }).then(() => {
     setTimeout(() => {
-      jsConfetti.addConfetti({
+      window.jsConfetti.addConfetti({
         confettiNumber: 200,
         confettiColors: ['#ff0a54', '#ff477e', '#00d4ff', '#ffd700']
       });
@@ -216,6 +219,7 @@ document.addEventListener('click', e => {
   });
 {% endif %}
 </script>
+
 
 <!-- Content Loaded Event (untuk keperluan lain) -->
 <script>
