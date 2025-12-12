@@ -345,5 +345,33 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="{% static 'js/main.js' %}?v=1"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    const toggleButton = document.getElementById('navbarToggle');
+    const mobileMenu = document.getElementById('navbarNavMobile');
+    const closeButton = document.getElementById('closeMenu');
+    const overlay = document.getElementById('overlay');
+
+    // Awalnya sembunyikan mobile menu
+    mobileMenu.classList.add('hidden');
+    overlay.classList.add('hidden');
+
+    // Fungsi untuk membuka menu
+    function openMenu() {
+        mobileMenu.classList.remove('hidden');
+        overlay.classList.remove('hidden');
+    }
+
+    // Fungsi untuk menutup menu
+    function closeMenuFunc() {
+        mobileMenu.classList.add('hidden');
+        overlay.classList.add('hidden');
+    }
+
+    toggleButton.addEventListener('click', openMenu);
+    closeButton.addEventListener('click', closeMenuFunc);
+    overlay.addEventListener('click', closeMenuFunc);
+});
+    </script>
 </body>
 </html>
