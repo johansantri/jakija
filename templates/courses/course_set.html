@@ -6,12 +6,12 @@
     <!-- JUDUL + ELLIPSIS -->
     <h1 class="flex items-center justify-between sm:justify-start gap-3 w-full">
       
-      <!-- Judul Course — Super Responsive Text -->
-      <span class="font-bold  leading-tight truncate">
-        <span class="text-lg xs:text-xl sm:text-2xl lg:text-3xl xl:text-3xl">
-          <a href="{% url 'courses:studio' course.id %}">{{ course.course_name }}</a>
-        </span>
-      </span>
+     
+
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2"> <a href="{% url 'courses:studio' course.id %}">{{ course.course_name }}</a></h3>
+        
+      </div>
 
       <!-- Tombol Ellipsis — Selalu ada & nyaman diketuk di semua device -->
       <div class="relative">

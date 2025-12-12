@@ -5400,11 +5400,18 @@ def question_view(request, idcourse, idsection, idassessment):
 
     # 6️⃣ Ambil assessment dan prefetch related untuk performance
     assessment = get_object_or_404(
-        Assessment.objects.select_related('lti_tool')
-        .prefetch_related('questions__choices', 'ask_oras'),
+        Assessment.objects
+        .select_related('lti_tool')
+        .prefetch_related(
+            'questions__choices',
+            'ask_oras',
+            'quizzes',              # <--- Tambahkan ini
+            'quizzes__options'      # <--- Penting kalau quiz MCQ
+        ),
         id=idassessment,
         section=section
     )
+
 
     return render(request, 'courses/view_question.html', {
         'course': course,

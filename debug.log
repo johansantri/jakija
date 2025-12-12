@@ -41365,3 +41365,240 @@ django.core.exceptions.FieldError: Cannot resolve keyword 'order' into field. Ch
 [INFO] 2025-12-11 16:31:40,993 [learner.templatetags.learner_tags] Completion for user 1, course 2: is_completed=False, assessments=1/4, overall=10.00%, threshold=51.00, progress=88.00%
 [WARNING] 2025-12-11 16:31:42,306 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-11 16:31:46,445 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:10,891 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:32:10,892 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:32:10,924 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:10,974 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:10,977 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:10,993 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:11,025 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:11,047 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:11,085 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:11,103 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:11,112 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:11,136 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:11,157 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:11,180 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:22,531 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:34,512 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:41,049 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:41,214 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:42,337 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:32:46,445 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:10,888 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:33:10,889 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:33:10,923 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:10,966 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:10,976 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:10,985 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:11,010 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:11,041 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:11,068 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:11,110 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:11,119 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:11,164 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:11,168 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:11,170 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:22,532 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:34,544 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:41,077 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:41,528 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:42,538 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:33:46,572 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:10,918 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:34:10,920 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:34:10,968 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:11,010 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:11,021 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:11,045 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:11,075 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:11,113 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:11,155 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:11,166 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:11,181 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:11,223 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:11,243 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:11,246 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:22,941 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:34,503 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:41,058 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:42,028 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:43,039 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:34:47,086 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:10,923 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:35:10,924 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:35:10,961 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:11,009 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:11,013 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:11,042 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:11,056 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:11,086 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:11,120 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:11,149 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:11,164 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:11,195 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:11,223 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:11,233 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:23,823 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:34,930 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:41,916 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:42,809 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:43,811 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:35:47,781 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:10,922 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:10,944 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:10,973 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:10,975 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:36:10,995 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:10,996 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:36:11,026 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:11,052 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:11,075 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:11,095 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:11,117 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:11,139 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:11,161 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:11,183 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:24,543 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:34,937 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:41,904 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:43,716 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:44,714 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:36:48,678 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:37:10,890 [learner.views] Unauthorized access attempt by admin for learn
+[WARNING] 2025-12-11 16:37:10,890 [django.request] Forbidden: /learn/public-speaking-for-beginners-speak-with-confidence/progress/
+[WARNING] 2025-12-11 16:37:10,926 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:37:10,954 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:37:10,987 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:37:10,998 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:37:11,022 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:37:11,060 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:37:11,093 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:37:11,109 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:37:11,146 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:37:11,166 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:37:11,181 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-11 16:37:11,219 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-12 07:52:48,476 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 07:52:49,285 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 07:52:49,295 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-12 07:53:03,601 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-12 07:57:53,718 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-12 07:58:09,920 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-12 08:01:43,612 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[WARNING] 2025-12-12 08:04:17,240 [django.request] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[INFO] 2025-12-12 08:20:32,308 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 08:20:33,490 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 08:20:33,502 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 08:20:38,196 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 08:20:39,227 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 08:20:39,237 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-12-12 08:20:45,919 [django.utils.autoreload] /home/x/app/mysite/courses/views.py changed, reloading.
+[INFO] 2025-12-12 08:20:46,947 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 08:20:46,959 [django.utils.autoreload] Watching for file changes with StatReloader
+[ERROR] 2025-12-12 08:23:15,490 [django.request] Internal Server Error: /questions/view/2/106/12/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5416, in question_view
+    return render(request, 'courses/view_question.html', {
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'edit_ivq' not found. 'edit_ivq' is not a valid view function or pattern name.
+[ERROR] 2025-12-12 08:23:38,425 [django.request] Internal Server Error: /questions/view/2/106/12/
+Traceback (most recent call last):
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/x/app/mysite/courses/views.py", line 5416, in question_view
+    return render(request, 'courses/view_question.html', {
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/x/app/mysite/.venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'delete_ivq' not found. 'delete_ivq' is not a valid view function or pattern name.

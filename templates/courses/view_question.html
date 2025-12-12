@@ -27,17 +27,22 @@
   <div class="flex flex-wrap gap-2 mb-6">
     <a href="{% url "courses:create_question" course.id section.id assessment.id %}"
        class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
-      <i class="fas fa-plus"></i> MCQ
+      <i class="fas fa-list-ul"></i> MCQ
     </a>
 
     <a href="{% url 'courses:create_askora' idcourse=course.id idsection=section.id idassessment=assessment.id %}"
        class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
-      <i class="fas fa-comment-dots"></i> Open
+      <i class="fas fa-comment-dots"></i> ORA
     </a>
 
     <a href="{% url 'courses:create_lti' idcourse=course.id idsection=section.id idlti=assessment.id %}"
        class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
       <i class="fas fa-puzzle-piece"></i> LTI
+    </a>
+
+    <a href="{% url 'courses:create_lti' idcourse=course.id idsection=section.id idlti=assessment.id %}"
+       class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
+      <i class="fas fa-question-circle"></i> IVQ
     </a>
   </div>
 
@@ -125,6 +130,48 @@
             </td>
           </tr>
         {% endif %}
+
+        <!-- IVQ -->
+        {% for ivq in assessment.quizzes.all %}
+          <tr class="hover:bg-gray-50 transition">
+              <!-- Nomor: sesuaikan urutannya -->
+              <td class="px-3 py-2 text-gray-700">
+                  {{ forloop.counter }}
+              </td>
+
+              <!-- Link edit -->
+              <td class="px-3 py-2">
+                  <a href="#"
+                    class="text-indigo-600 hover:text-indigo-800 flex items-center gap-1 truncate max-w-xl">
+
+                      <!-- Tampilkan waktu IVQ -->
+                      <span class="text-sm text-gray-500">[{{ ivq.time_in_video }}s] </span>
+
+                      <!-- Tampilkan pertanyaan -->
+                      <span>{{ ivq.question|truncatechars:80|safe }}</span>
+
+                      <!-- Ikon IVQ (video + quiz) -->
+                      <i class="fas fa-video text-gray-400 hover:text-indigo-600"></i>
+                      <i class="fas fa-question-circle text-gray-400 hover:text-indigo-600"></i>
+                  </a>
+              </td>
+
+              <!-- Tombol delete -->
+              <td class="px-3 py-2 text-center">
+                  <form method="POST"
+                        action=""
+                        class="inline"
+                        onsubmit="return confirm('Yakin hapus IVQ ini?')">
+                      {% csrf_token %}
+                      <button type="submit" class="text-red-600 hover:text-red-800 p-2 rounded transition">
+                          <i class="fas fa-trash-alt"></i>
+                      </button>
+                  </form>
+              </td>
+          </tr>
+          {% endfor %}
+
+        <!--and ivq-->
 
       </tbody>
     </table>
