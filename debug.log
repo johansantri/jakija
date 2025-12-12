@@ -41900,3 +41900,140 @@ django.urls.exceptions.NoReverseMatch: Reverse for 'create_ivq_question' not fou
 [INFO] 2025-12-12 10:31:15,627 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=87.50%
 [WARNING] 2025-12-12 10:32:15,711 [django.request] Not Found: /partner/ping-session/
 [WARNING] 2025-12-12 10:33:15,726 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:34:15,696 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:35:15,728 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:36:15,701 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:37:15,696 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:38:15,962 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:39:16,192 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:40:16,379 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:41:16,541 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:42:16,889 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-12 10:42:28,022 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:42:28,022 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:42:28,023 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:42:28,024 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:42:28,025 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:42:30,057 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:42:30,057 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:42:30,059 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:42:30,060 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:42:30,060 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=87.50%
+[DEBUG] 2025-12-12 10:42:32,127 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:42:32,127 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:42:32,129 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:42:32,130 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:42:32,130 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=88.00%
+[DEBUG] 2025-12-12 10:42:45,374 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:42:45,374 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:42:45,375 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:42:45,376 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:42:45,376 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=88.00%
+[WARNING] 2025-12-12 10:42:45,427 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-12 10:42:45,428 [django.request] Bad Request: /mark-progress/
+[DEBUG] 2025-12-12 10:42:48,104 [learner.views] Base URL: https://moodle.icei.ac.id/enrol/lti/tool.php
+[DEBUG] 2025-12-12 10:42:48,104 [learner.views] Base String: POST&https%3A%2F%2Fmoodle.icei.ac.id%2Fenrol%2Flti%2Ftool.php&context_id%3Dcourse-14%26context_title%3DCourse%26id%3D8%26launch_presentation_document_target%3Diframe%26launch_presentation_locale%3Den-US%26lis_outcome_service_url%3Dhttp%253A%252F%252F127.0.0.1%253A8000%252Flti%252Fgrade-callback%26lis_person_contact_email_primary%3Dlearn%2540learn.com%26lis_person_name_full%3Dmr%2520learn%26lis_result_sourcedid%3Dlti-14-5%26lti_message_type%3Dbasic-lti-launch-request%26lti_version%3DLTI-1p0%26oauth_consumer_key%3D123%26oauth_nonce%3Dd481891b8d1440c390b86db52d0d3d2c%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1765510968%26oauth_version%3D1.0%26resource_link_id%3Dres-14%26roles%3DLearner%26tool_consumer_info_product_family_code%3Ddjango-lms%26tool_consumer_info_version%3D1.0%26user_id%3D5
+[DEBUG] 2025-12-12 10:42:48,105 [learner.views] Signing Key: Y9KczXcAmfgPJcHjwE7gmrRE25AE2i9W&
+[DEBUG] 2025-12-12 10:42:48,105 [learner.views] OAuth Signature: FhA+TlbHcNCDd3/lkevxjuacHTo=
+[DEBUG] 2025-12-12 10:42:48,105 [learner.views] Sending LTI Launch to https://moodle.icei.ac.id/enrol/lti/tool.php?id=8 with params: {'oauth_consumer_key': '123', 'oauth_signature_method': 'HMAC-SHA1', 'oauth_version': '1.0', 'oauth_nonce': 'd481891b8d1440c390b86db52d0d3d2c', 'oauth_timestamp': '1765510968', 'resource_link_id': 'res-14', 'user_id': '5', 'roles': 'Learner', 'lis_person_name_full': 'mr learn', 'lis_person_contact_email_primary': 'learn@learn.com', 'context_id': 'course-14', 'context_title': 'Course', 'launch_presentation_locale': 'en-US', 'lti_version': 'LTI-1p0', 'lti_message_type': 'basic-lti-launch-request', 'tool_consumer_info_product_family_code': 'django-lms', 'tool_consumer_info_version': '1.0', 'launch_presentation_document_target': 'iframe', 'lis_outcome_service_url': 'http://127.0.0.1:8000/lti/grade-callback', 'lis_result_sourcedid': 'lti-14-5', 'oauth_signature': 'FhA+TlbHcNCDd3/lkevxjuacHTo='}
+[INFO] 2025-12-12 10:42:48,114 [learner.views] Initialized LTIResult for user 5, assessment 14
+[DEBUG] 2025-12-12 10:42:55,880 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:42:55,880 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:42:55,881 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:42:55,882 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:42:55,882 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[WARNING] 2025-12-12 10:42:55,950 [learner.views] Invalid JSON in mark_progress: Expecting value: line 1 column 1 (char 0)
+[WARNING] 2025-12-12 10:42:55,951 [django.request] Bad Request: /mark-progress/
+[DEBUG] 2025-12-12 10:42:59,140 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:42:59,140 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:42:59,142 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:42:59,143 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:42:59,143 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[WARNING] 2025-12-12 10:43:55,976 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:43:59,195 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:44:55,944 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:44:59,197 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:45:55,977 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:45:59,317 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:46:55,979 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:46:59,550 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:47:56,066 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:48:00,181 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:48:56,457 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:49:00,496 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:49:56,608 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:50:00,631 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:50:57,158 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:51:01,225 [django.request] Not Found: /partner/ping-session/
+[INFO] 2025-12-12 10:51:41,713 [django.utils.autoreload] /home/x/app/mysite/learner/views.py changed, reloading.
+[INFO] 2025-12-12 10:51:42,798 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2025-12-12 10:51:42,809 [django.utils.autoreload] Watching for file changes with StatReloader
+[WARNING] 2025-12-12 10:51:57,426 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:52:01,352 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-12 10:52:30,668 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:52:30,668 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:52:30,670 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:52:30,671 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:52:30,671 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[WARNING] 2025-12-12 10:52:30,767 [django.request] Not Found: /favicon.ico
+[DEBUG] 2025-12-12 10:53:05,302 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:53:05,303 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:53:05,304 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:53:05,305 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:53:05,305 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[DEBUG] 2025-12-12 10:53:06,766 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:53:06,766 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:53:06,768 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:53:06,769 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:53:06,769 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[DEBUG] 2025-12-12 10:53:07,919 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:53:07,919 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:53:07,921 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:53:07,922 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:53:07,922 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[DEBUG] 2025-12-12 10:53:08,790 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:53:08,790 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:53:08,792 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:53:08,793 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:53:08,793 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[DEBUG] 2025-12-12 10:53:10,039 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:53:10,039 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:53:10,041 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:53:10,042 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:53:10,042 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[WARNING] 2025-12-12 10:53:10,123 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-12 10:54:10,123 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:55:10,101 [django.request] Not Found: /partner/ping-session/
+[WARNING] 2025-12-12 10:56:10,102 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-12 10:56:59,813 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:56:59,813 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:56:59,815 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:56:59,816 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:56:59,816 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[WARNING] 2025-12-12 10:56:59,929 [django.request] Not Found: /favicon.ico
+[WARNING] 2025-12-12 10:58:00,300 [django.request] Not Found: /partner/ping-session/
+[DEBUG] 2025-12-12 10:58:25,339 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:58:25,339 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:58:25,341 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:58:25,342 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:58:25,342 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[DEBUG] 2025-12-12 10:58:38,575 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:58:38,575 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:58:38,577 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:58:38,578 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:58:38,578 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[DEBUG] 2025-12-12 10:58:40,275 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:58:40,276 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:58:40,277 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:58:40,278 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:58:40,278 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[DEBUG] 2025-12-12 10:58:42,495 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:58:42,495 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:58:42,497 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:58:42,498 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:58:42,498 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%
+[DEBUG] 2025-12-12 10:58:44,247 [learner.templatetags.learner_tags] QuizResult used: score=1/1, score_value=25.00
+[DEBUG] 2025-12-12 10:58:44,247 [learner.templatetags.learner_tags] QuizResult used: score=4/4, score_value=25.00
+[DEBUG] 2025-12-12 10:58:44,249 [learner.templatetags.learner_tags] MCQ used: 3/5 -> 15.000
+[DEBUG] 2025-12-12 10:58:44,250 [learner.templatetags.learner_tags] No submission for assessment 14, user 5
+[INFO] 2025-12-12 10:58:44,250 [learner.templatetags.learner_tags] Completion for user 5, course 2: is_completed=False, assessments=3/4, overall=65.00%, threshold=51.00, progress=100.00%

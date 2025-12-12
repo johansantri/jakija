@@ -1490,6 +1490,7 @@ def load_content(request, username, id, slug, content_type, content_id):
                         context['remaining_time'] = max(0, remaining)
                         context['is_expired'] = remaining <= 0
                         context['show_timer'] = remaining > 0
+                        context['is_readonly'] = remaining <= 0
 
                     context['answered_questions'] = {
                         ans.question.id: ans for ans in QuestionAnswer.objects.filter(
