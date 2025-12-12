@@ -167,69 +167,60 @@
 
    
 
-<section class="py-12 sm:py-16 lg:py-20 bg-gray-50 relative overflow-hidden" aria-labelledby="micro-courses-heading">
-  <div class="absolute inset-0 bg-gradient-to-br from-red-50 to-gray-100 opacity-50"></div>
+<!-- MICRO CREDENTIALS SECTION -->
+<section class="py-16 lg:py-24 bg-gradient-to-br from-red-50 via-white to-gray-50 relative overflow-hidden" aria-labelledby="micro-courses-heading">
+  <div class="absolute inset-0 bg-gradient-to-br from-red-100/30 to-transparent"></div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <!-- Title & Description -->
-    <div class="text-center mb-10 sm:mb-12 lg:mb-16">
-      <h2 id="micro-courses-heading" class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
-        Master Skills with Microcredentials
+    <div class="text-center mb-12 lg:mb-16">
+      <h2 id="micro-courses-heading" class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight">
+        Master Skills with <span class="text-red-600">Microcredentials</span>
       </h2>
-      <p class="text-gray-600 text-base sm:text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
-        Our microcredential courses are crafted for professionals seeking practical expertise without long-term commitments.
+      <p class="mt-6 text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        Kursus singkat, praktis, dan langsung bisa dipakai di dunia kerja — tanpa komitmen panjang.
       </p>
     </div>
 
-    <!-- List microcredentials -->
-    <div class="flex flex-col space-y-10">
+    <div class="grid gap-8 lg:gap-12">
       {% for microcredential in popular_microcredentials|slice:":3" %}
         <a href="{% url 'courses:micro_detail' microcredential.id microcredential.slug %}"
-           class="flex flex-col sm:flex-row items-center bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-transform duration-300 ease-in-out p-6 group"
-           aria-label="Explore {{ microcredential.title|truncatechars_safe:50 }} microcredential on JakIja">
-           
-          <!-- Image on left -->
-          <div class="flex-shrink-0 w-50 h-50 sm:w-40 sm:h-40 rounded-lg overflow-hidden ring-2 ring-gray-200 group-hover:ring-red-400 transition-all duration-300">
-            <img
-              src="{{ microcredential.image.url|default:'/static/images/micro-200.webp' }}"
-              alt="{{ microcredential.title|truncatechars_safe:50 }} - JakIja Microcredential"
-              class="w-full h-full object-contain"
-              loading="lazy"
-              width="160" height="160"
-            >
+           class="group flex flex-col md:flex-row items-center bg-white rounded-2xl shadow-md hover:shadow-2xl border border-gray-100 hover:border-red-200 transition-all duration-500 overflow-hidden">
+          
+          <div class="p-6 md:p-8 flex-shrink-0">
+            <div class="w-40 h-40 lg:w-48 lg:h-48 rounded-2xl overflow-hidden ring-4 ring-white shadow-lg group-hover:ring-red-400 group-hover:scale-105 transition-all duration-500">
+              <img src="{{ microcredential.image.url|default:'/static/images/micro-200.webp' }}"
+                   alt="{{ microcredential.title }}"
+                   class="w-full h-full object-cover"
+                   loading="lazy">
+            </div>
           </div>
 
-          <!-- Text on right -->
-          <div class="mt-4 sm:mt-0 sm:ml-6 flex flex-col justify-between flex-grow min-w-0 w-full">
-            <h3 class="text-lg font-semibold text-gray-900 group-hover:text-red-600 transition-colors duration-200 line-clamp-2 break-words">
-              {{ microcredential.title|truncatechars_safe:50 }}
+          <div class="p-6 md:p-8 flex-1">
+            <h3 class="text-2xl font-bold text-gray-900 group-hover:text-red-600 transition-colors duration-300 line-clamp-2">
+              {{ microcredential.title|truncatechars_safe:60 }}
             </h3>
-            <p class="text-sm text-gray-600 mt-2 line-clamp-4 break-words">
-              {{ microcredential.description|safe|truncatechars_safe:200 }}
+            <p class="mt-4 text-gray-600 leading-relaxed line-clamp-3">
+              {{ microcredential.description|safe|truncatechars_safe:180 }}
             </p>
-            &nbsp;
-            <span class="text-sm bg-gray-200 text-blue-800 px-3 py-1 rounded-full">
-              {{ microcredential.category|default:"Microcredential" }}
-            </span>
+            <div class="mt-6 flex items-center gap-3">
+              <span class="px-4 py-2 bg-red-100 text-red-700 text-sm font-semibold rounded-full">
+                {{ microcredential.category|default:"Microcredential" }}
+              </span>
+              <span class="text-sm text-gray-500">→ Lihat Detail</span>
+            </div>
           </div>
         </a>
-        <br>
-        &nbsp;
-        &nbsp;
       {% empty %}
-        <p class="text-center text-gray-500 text-base sm:text-lg py-8">
-          No microcredentials available at the moment. Check back soon!
-        </p>
+        <p class="text-center text-gray-500 py-12 text-lg">Belum ada microcredential tersedia. Segera hadir!</p>
       {% endfor %}
     </div>
 
-    <!-- CTA Button -->
     {% if popular_microcredentials|length > 3 %}
       <div class="text-center mt-12">
         <a href="{% url 'courses:micro_list' %}"
-           class="inline-block bg-red-600 text-white px-8 py-3 rounded-lg font-semibold text-base sm:text-lg hover:bg-red-700 hover:shadow-xl focus:ring-4 focus:ring-red-300 focus:ring-offset-2 transition-all duration-300 shadow-md"
-           aria-label="Explore all microcredentials on JakIja">
-          Discover All Microcredentials
+           class="inline-flex items-center gap-3 bg-red-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-red-700 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+          Jelajahi Semua Microcredential
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </a>
       </div>
     {% endif %}
@@ -237,82 +228,62 @@
 </section>
 
 
+<!-- WHY JAKIJA SECTION -->
+<section class="py-16 lg:py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-center text-4xl sm:text-5xl font-black text-gray-900 mb-16">
+      Kenapa Belajar di <span class="text-red-600">JakIja</span>?
+    </h2>
 
-
-
-
-
-<section class="py-14 bg-white">
-  <div class="mx-auto px-4 md:px-8 max-w-7xl">
-    <h2 class="text-3xl font-extrabold mb-10 text-center text-black">Why Learn with JakIja?</h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-      
-      <!-- Courses -->
-      <div class="bg-gray-100 p-6 rounded-xl">
-        <i class="fas fa-book text-red-500 text-3xl mb-3"></i>
-        <p class="font-bold text-black text-xl">{{ total_courses }}</p>
-        <p class="text-sm text-gray-600">Expert-Curated Courses</p>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="text-center group">
+        <div class="bg-gradient-to-br from-red-100 to-red-50 p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
+          <i class="fas fa-book text-5xl text-red-600 mb-4"></i>
+          <p class="text-4xl font-black text-gray-900">{{ total_courses }}+</p>
+          <p class="text-gray-600 mt-2">Kursus Berkualitas</p>
+        </div>
       </div>
-
-      <!-- Learners -->
-      <div class="bg-gray-100 p-6 rounded-xl">
-        <i class="fas fa-users text-red-500 text-3xl mb-3"></i>
-        <p class="font-bold text-black text-xl">{{ total_users }}</p>
-        <p class="text-sm text-gray-600">Global Learners</p>
+      <div class="text-center group">
+        <div class="bg-gradient-to-br from-red-100 to-red-50 p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
+          <i class="fas fa-users text-5xl text-red-600 mb-4"></i>
+          <p class="text-4xl font-black text-gray-900">{{ total_users }}+</p>
+          <p class="text-gray-600 mt-2">Peserta Global</p>
+        </div>
       </div>
-
-      <!-- Instructors -->
-      <div class="bg-gray-100 p-6 rounded-xl">
-        <i class="fas fa-chalkboard-teacher text-red-500 text-3xl mb-3"></i>
-        <p class="font-bold text-black text-xl">{{ total_instructors }}</p>
-        <p class="text-sm text-gray-600">Top Instructors</p>
+      <div class="text-center group">
+        <div class="bg-gradient-to-br from-red-100 to-red-50 p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
+          <i class="fas fa-chalkboard-teacher text-5xl text-red-600 mb-4"></i>
+          <p class="text-4xl font-black text-gray-900">{{ total_instructors }}+</p>
+          <p class="text-gray-600 mt-2">Pengajar Ahli</p>
+        </div>
       </div>
-
-      <!-- Certificates -->
-      <div class="bg-gray-100 p-6 rounded-xl">
-        <i class="fas fa-certificate text-red-500 text-3xl mb-3"></i>
-        <p class="font-bold text-black text-xl">{{ total_certificates }}</p>
-        <p class="text-sm text-gray-600">Certificates Earned</p>
+      <div class="text-center group">
+        <div class="bg-gradient-to-br from-red-100 to-red-50 p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
+          <i class="fas fa-certificate text-5xl text-red-600 mb-4"></i>
+          <p class="text-4xl font-black text-gray-900">{{ total_certificates }}+</p>
+          <p class="text-gray-600 mt-2">Sertifikat Diterbitkan</p>
+        </div>
       </div>
-
     </div>
   </div>
 </section>
 
 
+<!-- POPULAR CATEGORIES -->
+<section class="py-16 lg:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-4xl sm:text-5xl font-black text-gray-900 mb-6">Kategori Pilihan</h2>
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
+      Temukan jalur belajar yang sesuai dengan passion dan tujuan karirmu.
+    </p>
 
-
-
-
-
-<!-- Popular Categories Section -->
-<section class="py-14 sm:py-20 bg-gray-50" aria-labelledby="categories-heading">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Section Header -->
-    <div class="text-center mb-10">
-      <h2 id="categories-heading" class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4 hover:text-red-500 transition">
-        Explore Top Categories
-      </h2>
-      <p class="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
-        Find the right learning path for you—whether it's data science, creative design, business strategy, or personal development. Start where your curiosity leads.
-      </p>
-    </div>
-
-    <!-- Categories as Tag List -->
-    <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
+    <div class="flex flex-wrap justify-center gap-4">
       {% for category in popular_categories|slice:":12" %}
         <a href="{% url 'courses:category_list' category.slug %}"
-           class="inline-flex items-center px-4 py-2 rounded-full bg-white text-sm sm:text-base font-medium text-gray-700 border border-gray-200 hover:bg-red-50 hover:text-red-600 hover:border-red-400 transition-all duration-200 shadow-sm group"
-           aria-label="Explore {{ category.name }} courses">
-
-          <span class="truncate max-w-[140px] sm:max-w-[180px] group-hover:text-red-600">
-            {{ category.name }}
-          </span>
-
+           class="group px-6 py-3 bg-white border-2 border-gray-200 rounded-full text-gray-700 font-medium hover:border-red-500 hover:bg-red-50 hover:text-red-600 transition-all duration-300 shadow-sm hover:shadow-md">
+          <span>{{ category.name }}</span>
           {% if category.num_courses %}
-            <span class="ml-2 text-xs text-gray-500 group-hover:text-red-400 whitespace-nowrap">
-              ({{ category.num_courses }})
-            </span>
+            <span class="ml-2 text-gray-500 group-hover:text-red-500">({{ category.num_courses }})</span>
           {% endif %}
         </a>
       {% endfor %}
@@ -321,86 +292,54 @@
 </section>
 
 
-
-<!-- Popular Courses Section -->
-<!-- Popular Courses Section -->
-<!-- Top Courses Section -->
-<section class="py-14 sm:py-20 bg-gray-50 relative overflow-hidden" aria-labelledby="courses-heading">
-  <!-- Background Skew -->
-  <div class="absolute inset-0 bg-gradient-to-br from-black to-gray-700 opacity-10 transform -skew-y-6"></div>
-  
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-    <!-- Heading -->
-    <div class="text-center mb-10">
-      <h2 id="courses-heading" class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-3 hover:text-red-500 transition">
-        Top Courses to Transform Your Skills
-      </h2>
-      <p class="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
-        Whether you're looking to switch careers, level up in your profession, or just learn something new, these handpicked courses are designed to help you grow—quickly and effectively.
+<!-- TOP COURSES (JS injected) -->
+<section class="py-16 lg:py-24 bg-gray-50 relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-red-600/5 via-transparent to-gray-900/5"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl sm:text-5xl font-black text-gray-900">Kursus Terpopuler Saat Ini</h2>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+        Kursus terbaik yang sedang banyak dipelajari ribuan peserta.
       </p>
     </div>
 
-    <!-- Course Grid (populated via JS) -->
-    <div id="courses-list" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-    
-      <!-- JS Injected Courses -->
+    <div id="courses-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <!-- JS akan inject card di sini -->
     </div>
 
-    <!-- CTA -->
-    <div class="text-center mt-10">
-      <a href="{% url 'authentication:course_list' %}"
-         class="inline-block bg-black text-white font-semibold px-6 py-3 rounded-lg hover:bg-gray-800 hover:text-red-500 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition text-sm sm:text-base">
-        Explore All Courses
+    <div class="text-center mt-12">
+      <a href="{% url 'authentication:course_list' %}" 
+         class="inline-flex items-center gap-3 bg-black text-white px-8 py-4 rounded-xl font-bold hover:bg-gray-800 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+        Lihat Semua Kursus
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
       </a>
     </div>
-
   </div>
 </section>
 
 
+<!-- PARTNERS / TRUST -->
+<section class="py-16 lg:py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-4xl sm:text-5xl font-black text-gray-900 mb-6">
+      Dipercaya Institusi & Perusahaan Global
+    </h2>
+    <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-16">
+      Ribuan peserta dari 40+ negara mempercayakan JakIja untuk pengembangan diri & tim.
+    </p>
 
-<!-- Global Trust Section -->
-<!-- Global Trust Section -->
-<section class="py-12 bg-gray-50 relative overflow-hidden" aria-labelledby="global-trust-heading">
-  <!-- Background Guardian: Gradient Merah-Putih Diagonal -->
-  <div class="absolute inset-0 bg-gradient-to-tl from-red-600 via-red-200 to-white opacity-8 transition-opacity duration-1000 ease-in-out"></div>
-  <!-- Pola Garis Melengkung -->
-  <div class="absolute inset-0 bg-[url('{% static 'assets/img/patterns/trust-wave-pattern.svg' %}')] bg-cover bg-center opacity-10 pointer-events-none animate-pulse"></div>
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="text-center mb-12">
-      <h2 id="global-trust-heading" class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 tracking-tight animate-fade-in">
-        Trusted by Learners & Institutions Across the Globe
-      </h2>
-      <p class="text-gray-600 text-sm sm:text-base md:text-lg max-w-xl mx-auto leading-relaxed animate-fade-in animation-delay-200">
-        Join thousands of users from over 40 countries who trust JakIja for personal and professional growth.
-      </p>
-    </div>
-
-    <!-- Partner Logos Grid -->
-    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-6 justify-items-center text-gray-400 text-3xl sm:text-4xl">
+    <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-8 items-center opacity-70">
       {% for partner in partners|slice:":14" %}
-        {% if partner.name and partner.name.slug %}
-          <a href="{% url 'courses:org_partner' partner.name.slug %}"
-             class="flex flex-col items-center group transition animate-fade-in animation-delay-{% cycle '200' '400' '600' '800' '1000' '1200' '1400' %}"
-             aria-label="View {{ partner.name }} partnership with JakIja">
+        {% if partner.name %}
+          <div class="group transition-all duration-500 hover:opacity-100 hover:scale-110">
             {% if partner.icon_class %}
-              <!-- Font Awesome Icon -->
-              <i class="{{ partner.icon_class }} group-hover:text-red-600 transition-colors duration-300"
-                 title="{{ partner.name }}"></i>
+              <i class="{{ partner.icon_class }} text-4xl lg:text-6xl text-gray-600 group-hover:text-red-600 transition"></i>
             {% else %}
-              <!-- Image Logo Fallback -->
               <img src="{% if partner.logo %}{{ partner.logo.url }}{% else %}/static/images/partner-100.webp{% endif %}"
-                   alt="{{ partner.name }} - JakIja Partner"
-                   class="w-16 h-16 sm:w-20 sm:h-20 object-contain grayscale group-hover:grayscale-0 group-hover:ring-1 group-hover:ring-red-400 transition-all duration-300 rounded"
-                   loading="lazy">
+                   alt="{{ partner.name }}"
+                   class="h-12 lg:h-16 object-contain grayscale group-hover:grayscale-0 transition-all duration-500">
             {% endif %}
-            <!-- Partner Name on hover -->
-            <span class="text-xs text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition duration-300">
-              {{ partner.name }}
-            </span>
-          </a>
+          </div>
         {% endif %}
       {% endfor %}
     </div>
@@ -408,152 +347,114 @@
 </section>
 
 
-
-
-
-<!-- Blog Section -->
-<!-- Blog Section -->
-<section class="py-14 bg-white relative overflow-hidden" aria-labelledby="blog-heading">
-  <!-- Background Guardian: Gradient Merah-Putih Diagonal -->
-  <div class="absolute inset-0 bg-gradient-to-tl from-red-600 to-white opacity-10 transition-opacity duration-1000 ease-in-out"></div>
-  <!-- Pola Garis Melengkung -->
-  <div class="absolute inset-0 bg-[url('{% static 'assets/img/patterns/blog-pattern.svg' %}')] bg-cover bg-center opacity-8 pointer-events-none"></div>
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <!-- Heading & Narasi -->
-    <div class="text-center mb-10">
-      <h2 id="blog-heading" class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight animate-fade-in">
-        Stay Inspired with Our Blog
-      </h2>
-      <p class="text-gray-600 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed animate-fade-in animation-delay-200">
-        Get tips, insights, and inspiring stories from the world of online education and professional development.
+<!-- BLOG SECTION -->
+<section class="py-16 lg:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl sm:text-5xl font-black text-gray-900">Blog & Inspirasi</h2>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+        Tips karir, tren teknologi, dan kisah sukses dari komunitas JakIja.
       </p>
     </div>
 
-    <!-- Blog Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {% for article in latest_articles|slice:":3" %}
-        <article class="bg-gray-50 hover:bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 animate-fade-in animation-delay-{% cycle '200' '400' '600' %}">
-          <a href="{% url 'blog:blog-detail' slug=article.slug %}" class="block p-5" aria-label="Read article: {{ article.title }}">
-            <!-- Image -->
+        <article class="bg-white rounded-2xl shadow-md hover:shadow-2xl overflow-hidden transition-all duration-500 group">
+          <a href="{% url 'blog:blog-detail' slug=article.slug %}" class="block">
             {% if article.image %}
-              <img src="{{ article.image.url }}" alt="{{ article.title }} - JakIja Blog" class="rounded mb-4 w-full h-48 object-cover" loading="lazy">
+              <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500">
             {% endif %}
-            <!-- Title -->
-            <h3 class="text-base sm:text-lg font-semibold text-gray-900 hover:text-red-600 line-clamp-2 mb-2 transition-colors duration-300">
-              {{ article.title }}
-            </h3>
-            <!-- Excerpt -->
-            <p class="text-sm text-gray-600 line-clamp-3">
-              {{ article.excerpt|truncatewords:20 }}
-            </p>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-900 group-hover:text-red-600 transition line-clamp-2">
+                {{ article.title }}
+              </h3>
+              <p class="mt-3 text-gray-600 line-clamp-3">
+                {{ article.excerpt|truncatewords:25 }}
+              </p>
+              <span class="mt-4 inline-block text-red-600 font-medium text-sm group-hover:underline">
+                Baca selengkapnya →
+              </span>
+            </div>
           </a>
         </article>
       {% empty %}
-        <p class="text-center text-gray-500 text-sm sm:text-base col-span-full">
-          No blog articles available at the moment.
-        </p>
+        <p class="col-span-full text-center text-gray-500 py-12">Artikel akan segera hadir!</p>
       {% endfor %}
     </div>
 
-    <!-- CTA -->
     {% if latest_articles|length > 3 %}
-    <div class="text-center mt-10 animate-fade-in animation-delay-800">
-      <a href="{% url 'blog:blog-list' %}"
-         class="inline-block bg-red-600 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-semibold hover:bg-red-700 hover:shadow-lg focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-300 text-base sm:text-lg shadow-md"
-         aria-label="Read all blog articles on JakIja">
-        Read All Articles
-      </a>
-    </div>
+      <div class="text-center mt-12">
+        <a href="{% url 'blog:blog-list' %}" class="inline-block bg-red-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-red-700 transition">
+          Baca Semua Artikel
+        </a>
+      </div>
     {% endif %}
   </div>
 </section>
 
-<!-- Instructors Section -->
-<section class="py-14 bg-gray-50 relative overflow-hidden" aria-labelledby="instructors-heading">
-  <div class="absolute inset-0 bg-gradient-to-br from-black to-gray-700 opacity-10 transform -skew-y-6"></div>
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <!-- Title & Intro -->
-    <div class="text-center mb-10">
-      <h2 id="instructors-heading" class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-3">
-        Learn from World-Class Instructors
-      </h2>
-      <p class="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
-        Our top-rated experts bring real-world knowledge and passion for teaching to help you succeed—no matter where you start.
+<!-- INSTRUCTORS -->
+<section class="py-16 lg:py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl sm:text-5xl font-black text-gray-900">Belajar dari Pengajar Kelas Dunia</h2>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+        Pengajar berpengalaman dengan rekam jejak nyata di industri.
       </p>
     </div>
 
-    <!-- Instructor Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {% for instructor in instructors|slice:":4" %}
-        <div class="bg-white rounded-2xl shadow hover:shadow-lg transition-all duration-300 overflow-hidden group text-center p-6 relative">
-          <!-- Avatar -->
-          <div class="w-24 h-24 mx-auto mb-4 relative">
-            <img 
-              src="{{ instructor.user.photo.url|default:'/static/images/default-128.webp' }}" 
-              srcset="{{ instructor.user.photo.url|default:'/static/images/default-64.webp' }} 64w, {{ instructor.user.photo.url|default:'/static/images/default-128.webp' }} 128w" 
-              sizes="(max-width: 600px) 64px, 128px" 
-              alt="{{ instructor.user.get_full_name }}" 
-              class="w-24 h-24 rounded-full object-cover border-4 border-gray-200 group-hover:border-red-500 transition">
+        <div class="group text-center">
+          <div class="relative">
+            <img src="{{ instructor.user.photo.url|default:'/static/images/default-128.webp' }}"
+                 alt="{{ instructor.user.get_full_name }}"
+                 class="w-32 h-32 mx-auto rounded-full object-cover ring-4 ring-gray-100 group-hover:ring-red-500 transition-all duration-500">
+            {% if instructor.is_top_rated %}
+              <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                Top Rated
+              </span>
+            {% endif %}
           </div>
-
-          <!-- Name -->
-          <h3 class="text-sm sm:text-base font-bold text-gray-900 group-hover:text-red-600 transition-colors">
-            {{ instructor.user.first_name }} {{ instructor.user.last_name }}
+          <h3 class="mt-6 text-lg font-bold text-gray-900 group-hover:text-red-600 transition">
+            {{ instructor.user.get_full_name }}
           </h3>
-
-          <!-- Hobby / Title -->
-          <p class="text-xs text-gray-600 group-hover:text-red-500 transition mb-2">
-            {{ instructor.user.hobby|default:"Expert Instructor" }}
-          </p>
-
-          <!-- CTA -->
+          <p class="text-sm text-gray-600">{{ instructor.user.hobby|default:"Expert Instructor" }}</p>
           <a href="{% url 'courses:instructor_profile' username=instructor.user.username %}"
-             class="inline-block mt-2 bg-black text-white text-xs sm:text-sm font-medium px-4 py-2 rounded-md hover:bg-gray-800 hover:text-red-500 transition-all focus:outline-none focus:ring-2 focus:ring-red-500">
-            View Profile
+             class="mt-4 inline-block text-sm font-semibold text-red-600 hover:underline">
+            Lihat Profil →
           </a>
-
-          <!-- Top Instructor Badge -->
-          {% if instructor.is_top_rated %}
-            <span class="absolute top-3 right-3 bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded shadow">
-              Top Rated
-            </span>
-          {% endif %}
         </div>
       {% endfor %}
     </div>
-
-   
-
-    <!-- Empty Case -->
-    {% if instructors|length == 0 %}
-    <p class="text-center text-gray-600 mt-8">No instructors available at the moment.</p>
-    {% endif %}
-
   </div>
 </section>
 
+
+<!-- CTA FINAL -->
 {% if request.user.is_authenticated %}
-<!-- Call to Action Section -->
-<section class="py-12 sm:py-16 bg-gray-900 text-white text-center relative overflow-hidden" aria-labelledby="cta-heading">
-  <div class="absolute inset-0 bg-gradient-to-br from-black to-gray-700 opacity-50"></div>
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl relative z-10">
-    <h2 id="cta-heading" class="text-xl sm:text-2xl md:text-3xl font-extrabold mb-6 hover:text-red-500 transition-colors duration-300">Ready to Unleash Your Potential?</h2>
-    <p class="text-sm sm:text-base mdlg mb-8 text-gray-200 hover:text-red-500 transition-colors duration-300">Join {{ total_users }}+ learners and start your journey with JakIja today!</p>
-    <a href="{% url 'authentication:course_list' %}" class="inline-block bg-white text-black font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-gray-200 hover:text-red-500 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors duration-300 text-sm sm:text-base">Get Started Now</a>
+<section class="py-20 bg-gradient-to-r from-black via-gray-900 to-black text-white text-center">
+  <div class="max-w-4xl mx-auto px-6">
+    <h2 class="text-4xl sm:text-5xl font-black mb-6">Siap Mengupgrade Skillmu?</h2>
+    <p class="text-xl text-gray-300 mb-10">Bergabung bersama {{ total_users|add:1 }}+ pembelajar lainnya sekarang!</p>
+    <a href="{% url 'authentication:course_list' %}" 
+       class="inline-flex items-center gap-4 bg-white text-black px-10 py-5 rounded-full font-bold text-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-2xl">
+      Mulai Belajar Sekarang
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+    </a>
   </div>
 </section>
 {% else %}
-<!-- Call to Action Section for Non-Authenticated Users -->
-<section class="py-12 sm:py-16 bg-gray-900 text-white text-center relative overflow-hidden" aria-labelledby="cta-heading">
-  <div class="absolute inset-0 bg-gradient-to-br from-black to-gray-700 opacity-50"></div>
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl relative z-10">
-    <h2 id="cta-heading" class="text-xl sm:text-2xl md:text-3xl font-extrabold mb-6 hover:text-red-500 transition-colors duration-300">Join the JakIja Community!</h2>
-    <p class="text-sm sm:text-base md:text-lg mb-8 text-gray-200 hover:text-red-500 transition-colors duration-300">Sign up now to explore {{ total_courses }}+ courses and start learning with expert instructors.</p>
-    <a href="{% url 'authentication:register' %}" class="inline-block bg-white text-black font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-gray-200 hover:text-red-500 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors duration-300 text-sm sm:text-base">Create Your Account</a>
+<section class="py-20 bg-gradient-to-r from-red-600 to-pink-600 text-white text-center">
+  <div class="max-w-4xl mx-auto px-6">
+    <h2 class="text-4xl sm:text-5xl font-black mb-6">Gabung Komunitas JakIja Sekarang!</h2>
+    <p class="text-xl mb-10">Akses {{ total_courses }}+ kursus premium & mulai belajar hari ini — gratis!</p>
+    <a href="{% url 'authentication:register' %}" 
+       class="inline-flex items-center gap-4 bg-white text-red-600 px-10 py-5 rounded-full font-bold text-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-2xl">
+      Daftar Gratis Sekarang
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+    </a>
   </div>
-</section>      
+</section>
 {% endif %}
 {% endblock %}
