@@ -869,19 +869,27 @@
 
 
                 {% if is_lti and lti_tool %}
-                <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
-                    <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">external link assessment. </h3>
-                                        
-                </div>
-                    <div class="text-center py-24 lg:py-32 bg-gradient-to-b from-indigo-50 to-white rounded-3xl">
-                        <h4 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-gray-800">{{ lti_tool.tool_name }}</h4>
-                        <p class="text-lg lg:text-xl text-gray-600 mb-12 max-w-2xl mx-auto">Klik tombol di bawah untuk membuka alat eksternal.</p>
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-6 gap-4">
+                        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-400 pl-3">
+                            External Link Assessment
+                        </h3>
+                    </div>
+
+                    <div class="text-center py-24 lg:py-32 bg-gradient-to-b from-indigo-50 to-white rounded-3xl shadow-lg">
+                        <h4 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 text-gray-800">
+                            {{ lti_tool.tool_name }}
+                        </h4>
+                        <p class="text-lg lg:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+                            Access this external tool to enhance your learning experience. Click the button below to launch it in a new window and explore the resources prepared just for you.
+                        </p>
                         <form action="{% url 'learner:lti_consume_course' assessment.id %}" method="get" target="_blank">
-                            <button type="submit" class="inline-flex items-center px-8 py-3 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition">
+                            <button type="submit" class="inline-flex items-center justify-center px-8 py-3 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition duration-300">
                                 Launch LTI Tool
                             </button>
                         </form>
                     </div>
+
+
                 {% endif %}
 
                 
