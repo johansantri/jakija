@@ -83,6 +83,12 @@ urlpatterns = [
     #add video quiz
     path('course/<int:idcourse>/section/<int:idsection>/assessment/<int:idassessment>/ivq/', views.add_ivq, name='add_ivq'),
     path('course/<int:idcourse>/section/<int:idsection>/assessment/<int:idassessment>/ivq/<int:idvideo>/add-question/',views.create_ivq_question,name='create_ivq_question'),
+    path(
+        'course/<int:idcourse>/section/<int:idsection>/assessment/<int:idassessment>/ivq/<int:idvideo>/question/<int:idquiz>/delete/',
+        views.delete_ivq_question,
+        name='delete_ivq_question'
+    ),
+
 
     #add lti 1.1
     path('course/<int:idcourse>/section/<int:idsection>/lti/<int:idlti>/create/', views.create_lti, name='create_lti'),

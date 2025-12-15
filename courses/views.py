@@ -2955,13 +2955,48 @@ def create_ivq_question(request, idcourse, idsection, idassessment, idvideo):
 
         # Tetap di halaman add question agar bisa tambah pertanyaan berikutnya
         return redirect(request.path)
-
+    quizzes = Quiz.objects.filter(
+        assessment=assessment,
+        video=video
+    ).order_by("time_in_video")
     return render(request, "courses/create_ivq_question.html", {
         "course": course,
         "section": section,
         "assessment": assessment,
         "video": video,
+        "quizzes": quizzes,
     })
+
+
+#delete ivq question
+@require_POST
+def delete_ivq_question(request, idcourse, idsection, idassessment, idvideo, idquiz):
+    if not request.user.is_authenticated:
+        return redirect("/login/")
+
+    course = get_object_or_404(Course, id=idcourse)
+    section = get_object_or_404(Section, id=idsection, courses=course)
+    assessment = get_object_or_404(Assessment, id=idassessment, section=section)
+    video = get_object_or_404(Video, id=idvideo)
+
+    quiz = get_object_or_404(
+        Quiz,
+        id=idquiz,
+        assessment=assessment,
+        video=video
+    )
+
+    quiz.delete()
+    messages.success(request, "Question deleted successfully.")
+
+    # balik ke halaman add question
+    return redirect(
+        "courses:create_ivq_question",
+        idcourse=idcourse,
+        idsection=idsection,
+        idassessment=idassessment,
+        idvideo=idvideo,
+    )
 
 
 
