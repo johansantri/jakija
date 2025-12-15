@@ -2989,7 +2989,9 @@ def delete_ivq(request, idcourse, idsection, idassessment, idvideo):
     video = get_object_or_404(Video, id=idvideo)
 
     # Hapus video dan semua quiz terkait
-    video.quiz_set.all().delete()
+    video.quizzes.all().delete()
+    if video.file:
+        video.file.delete(save=False)
     video.delete()
 
     messages.success(request, "Video deleted successfully.")

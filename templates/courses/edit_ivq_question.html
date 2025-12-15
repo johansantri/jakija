@@ -5,7 +5,27 @@
 <section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
 
 
-<h2 class="text-xl font-semibold mb-4">Edit Question</h2>
+ <nav class="text-sm mb-4" aria-label="Breadcrumb">
+    <ol class="list-reset flex text-gray-500">
+        <li>
+        <a href="{% url 'authentication:home' %}" class="hover:underline text-gray-600">Home</a>
+        <span class="mx-2">/</span>
+        </li>
+        <li>
+        <a href="{% url 'courses:studio' course.id %}" class="hover:underline text-gray-600">{{ course.course_name }} <span class="mx-2"> -> {{ section.title }}</a>
+        </span>
+        <span class="mx-2">/</span>
+        </li>
+        
+        <li>
+        <a href="{% url 'courses:view-question' idcourse=course.id idsection=section.id idassessment=assessment.id %}" class="hover:underline text-gray-600">{{ assessment.name }}</a>
+        <span class="mx-2">/</span>
+        </li>
+        <li class="text-gray-800 font-semibold">
+        Edit Question
+        </li>
+    </ol>
+    </nav>
 
 <form method="post">
     {% csrf_token %}
