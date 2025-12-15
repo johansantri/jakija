@@ -7,25 +7,38 @@
 
     
     <nav class="text-sm mb-4" aria-label="Breadcrumb">
-    <ol class="list-reset flex text-gray-500">
-        <li>
-        <a href="{% url 'courses:course_view' %}" class="hover:underline text-gray-600">Home</a>
-        <span class="mx-2">/</span>
-        </li>
-        <li>
-        <a href="{% url 'courses:studio' course.id %}" class="hover:underline text-gray-600">{{ course.course_name }} <span class="mx-2"> -> {{ section.title }}</a>
-        </span>
-        <span class="mx-2">/</span>
-        </li>
-        
-        <li>
-        <a href="{% url 'courses:view-question' idcourse=course.id idsection=section.id idassessment=assessment.id %}" class="hover:underline text-gray-600">{{ assessment.name }}</a>
-        <span class="mx-2">/</span>
-        </li>
-        <li class="text-gray-800 font-semibold">
-        Add Question
-        </li>
-    </ol>
+        <ol class="flex flex-wrap items-center text-gray-500 gap-y-1">
+            
+            <li class="flex items-center">
+            <a href="{% url 'courses:course_view' %}" class="hover:underline text-gray-600">
+                Home
+            </a>
+            <span class="mx-2">/</span>
+            </li>
+
+            <li class="flex items-center max-w-full">
+            <a href="{% url 'courses:studio' course.id %}"
+                class="hover:underline text-gray-600 truncate max-w-[200px] sm:max-w-none">
+                {{ course.course_name }} → {{ section.title }}
+            </a>
+            <span class="mx-2">/</span>
+            </li>
+
+            <li class="flex items-center max-w-full">
+            <a href="{% url 'courses:view-question' idcourse=course.id idsection=section.id idassessment=assessment.id %}"
+                class="hover:underline text-gray-600 truncate max-w-[160px] sm:max-w-none">
+                {{ assessment.name }}
+            </a>
+            <span class="mx-2">/</span>
+            </li>
+
+            <li class="text-gray-800 font-semibold whitespace-nowrap">
+            Create Question
+            </li>
+
+        </ol>
+        </nav>
+
     </nav>
     <div class="flex flex-col md:flex-row gap-6">
     <!-- LEFT: FORM -->
