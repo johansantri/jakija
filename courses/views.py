@@ -2870,13 +2870,18 @@ def add_ivq(request, idcourse, idsection, idassessment):
             messages.error(request, "Please fill all fields.")
             return redirect(request.path)
 
-        # 1️⃣ Save Video
-        video = Video.objects.create(
-            title=video_title,
-            file=video_file
-        )
+        try:
+            video = Video(
+                title=video_title,
+                file=video_file
+            )
+            video.full_clean()  # 🔥 INI WAJIB
+            video.save()
 
-        # 2️⃣ Redirect otomatis ke halaman tambah soal
+        except ValidationError as e:
+            messages.error(request, e.message_dict.get('__all__', e.messages)[0])
+            return redirect(request.path)
+
         return redirect(
             "courses:create_ivq_question",
             idcourse=idcourse,

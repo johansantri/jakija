@@ -1564,10 +1564,12 @@ class LTIResult(models.Model):
 
 class Video(models.Model):
     title = models.CharField(max_length=255)
-    file = models.FileField(upload_to="videos/")
+    file = models.FileField(upload_to='videos/')
 
-    def __str__(self):
-        return self.title
+    def clean(self):
+        if self.file:
+            if not self.file.name.lower().endswith(('.mp4', '.mov', '.avi')):
+                raise ValidationError('Hanya file video yang diperbolehkan')
 
 class Quiz(models.Model):
     QUESTION_TYPES = [
