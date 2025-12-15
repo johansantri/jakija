@@ -146,8 +146,11 @@
                   <div class="flex items-center gap-2">
                       <i class="fas fa-video text-blue-500"></i>
                       <span class="font-medium text-gray-800">
-                          {{ video.title|truncatechars:60 }}
-                      </span>
+                        <a href="{% url 'courses:create_ivq_question' idcourse=course.id idsection=section.id idassessment=assessment.id idvideo=video.id %}"
+                          class="hover:underline text-blue-600">
+                            {{ video.title|truncatechars:60 }}
+                        </a>
+                    </span>
                        <span class="bg-gray-200 text-gray-700 text-xs font-semibold px-2 py-1 rounded">
                           {{ video.quizzes.count }} Questions
                       </span>
