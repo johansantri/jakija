@@ -78,13 +78,13 @@
             <button type="submit"
                     class="inline-flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg transition transform hover:scale-105 duration-200">
               <i class="fas fa-save text-lg"></i>
-              Simpan Perubahan
+              Save Changes
             </button>
 
             <a href="{% url 'courses:view-question' course.id section.id assessment.id %}"
                class="inline-flex items-center justify-center gap-3 bg-gray-600 hover:bg-gray-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg transition transform hover:scale-105 duration-200">
               <i class="fas fa-arrow-left text-lg"></i>
-              Batal
+              Cancel
             </a>
           </div>
         </form>
@@ -95,7 +95,7 @@
     {% if team_members %}
       <div class="mt-12 bg-white rounded-2xl shadow-xl border border-gray-200">
         <div class="bg-gray-50 px-8 py-5 border-b border-gray-200">
-          <h3 class="text-xl font-bold text-gray-800">Tim Pengajar</h3>
+          <h3 class="text-xl font-bold text-gray-800">Instructor Team</h3>
         </div>
         <div class="p-6">
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
