@@ -1,134 +1,101 @@
 {% load static %}
 
 <section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+  <div class="flex items-center justify-between">
 
-    <!-- JUDUL + ELLIPSIS -->
-    <h1 class="flex items-center justify-between sm:justify-start gap-3 w-full">
-      
-     
+    <!-- JUDUL -->
+    <h3 class="text-base sm:text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-3 truncate">
+      <a href="{% url 'courses:studio' course.id %}" class="hover:text-red-600">
+        {{ course.course_name }}
+      </a>
+    </h3>
 
-      <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
-        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2"> <a href="{% url 'courses:studio' course.id %}">{{ course.course_name }}</a></h3>
-        
-      </div>
+    <!-- ELLIPSIS -->
+    <div class="relative">
+      <button 
+        id="more-options"
+        class="p-3 rounded-xl hover:bg-red-50 hover:text-red-700 focus:outline-none focus:ring-4 focus:ring-red-100 transition">
+        <i class="fas fa-ellipsis-h text-lg sm:text-xl"></i>
+      </button>
 
-      <!-- Tombol Ellipsis — Selalu ada & nyaman diketuk di semua device -->
-      <div class="relative">
-        <button 
-          id="more-options"
-          class=" hover:text-red-700 active:scale-95 p-3 rounded-xl hover:bg-red-50 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200">
-          <i class="fas fa-ellipsis-h text-lg sm:text-xl lg:text-2xl"></i>
-        </button>
+      <!-- DROPDOWN -->
+      <div
+        id="dropdown-menu"
+        class="
+          hidden absolute z-50 mt-2
+          w-[85vw] max-w-[300px]
+          right-0
+          bg-white border border-gray-200
+          rounded-xl shadow-xl
+          sm:w-64
+        "
+      >
+        <div class="py-2 text-sm">
 
-        <!-- DROPDOWN — LEBAR & POSISI SEMPURNA DI SEMUA LAYAR -->
-        <div id="dropdown-menu" 
-             class="absolute right-0 mt-3 w-[90vw] max-w-[320px] sm:w-64 lg:w-72 bg-white border border-gray-200 rounded-2xl shadow-2xl overflow-hidden z-50 hidden">
-          <div class="py-3">
-            <a href="{% url 'courses:studio' course.id %}" class="dropdown-item">Outline</a>
-            <a href="{% url 'instructor:studios' course.id %}" class="dropdown-item">Curation</a>
-            <a href="{% url 'courses:course_profile' course.id %}" class="dropdown-item">Schedule</a>
-            <a href="{% url 'courses:course_grade' course.id %}" class="dropdown-item">Grading</a>
-            <a href="{% url 'courses:course_team' course.id %}" class="dropdown-item">Team</a>
-            {% if request.user.is_superuser or request.user.is_partner %}
-            <a href="{% url 'courses:course_instructor' course.id %}" class="dropdown-item">Instructor</a>
-            {% endif %}
-            <a href="{% url 'courses:add_course_price' course.id %}" class="dropdown-item">Price</a>
-          </div>
+          <a href="{% url 'courses:studio' course.id %}" class="dropdown-item">
+            <i class="fas fa-list-ul w-5 text-center"></i>
+            <span>Outline</span>
+          </a>
+
+          <a href="{% url 'instructor:studios' course.id %}" class="dropdown-item">
+            <i class="fas fa-check-circle w-5 text-center"></i>
+            <span>Curation</span>
+          </a>
+
+          <a href="{% url 'courses:course_profile' course.id %}" class="dropdown-item">
+            <i class="fas fa-calendar-alt w-5 text-center"></i>
+            <span>Schedule</span>
+          </a>
+
+          <a href="{% url 'courses:course_grade' course.id %}" class="dropdown-item">
+            <i class="fas fa-chart-line w-5 text-center"></i>
+            <span>Grading</span>
+          </a>
+
+          <a href="{% url 'courses:course_team' course.id %}" class="dropdown-item">
+            <i class="fas fa-users w-5 text-center"></i>
+            <span>Team</span>
+          </a>
+
+          {% if request.user.is_superuser or request.user.is_partner %}
+          <a href="{% url 'courses:course_instructor' course.id %}" class="dropdown-item">
+            <i class="fas fa-chalkboard-teacher w-5 text-center"></i>
+            <span>Instructor</span>
+          </a>
+          {% endif %}
+
+          <a href="{% url 'courses:add_course_price' course.id %}" class="dropdown-item">
+            <i class="fas fa-tag w-5 text-center"></i>
+            <span>Price</span>
+          </a>
+
         </div>
       </div>
-    </h1>
+    </div>
   </div>
 </section>
 
-<!-- CSS RESPONSIVE + HOVER EFEK PREMIUM (SUDAH DI-TEST DI 5 DEVICE) -->
+<!-- STYLE -->
 <style>
-  .dropdown-item {
-    display: block;
-    padding: 16px 24px;
-    font-size: 15px;
-    font-weight: 500;
-    color: #374151;
-    position: relative;
-    transition: all 0.25s ease;
-    overflow: hidden;
-  }
-
-  .dropdown-item:hover {
-    background: linear-gradient(90deg, #fef2f2 0%, #ffffff 30%);
-    color: #dc2626 !important;
-    padding-left: 40px !important;
-    font-weight: 600;
-  }
-
-  /* Panah kecil muncul saat hover */
-  .dropdown-item::before {
-    content: "›";
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
-    color: #dc2626;
-    font-weight: bold;
-    opacity: 0;
-    transition: all 0.25s ease;
-  }
-
-  .dropdown-item:hover::before {
-    opacity: 1;
-    left: 16px;
-  }
-
-  /* Garis merah di kiri saat hover */
-  .dropdown-item::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    background: #dc2626;
-    transform: scaleY(0);
-    transition: transform 0.3s ease;
-  }
-
-  .dropdown-item:hover::after {
-    transform: scaleY(1);
-  }
-
-  /* MOBILE & TABLET — TOUCH TARGET BESAR & LEBIH NYAMAN */
-  @media (max-width: 768px) {
-    .dropdown-item {
-      padding: 18px 28px;
-      font-size: 16px;
-      min-height: 56px; /* Touch target minimal 48px + padding */
-    }
-    .dropdown-item:hover {
-      padding-left: 44px !important;
-    }
-    #dropdown-menu {
-      margin-top: 8px;
-      border-radius: 16px;
-    }
-  }
-
-  /* TABLET & DESKTOP KECIL */
-  @media (min-width: 640px) and (max-width: 1024px) {
-    .dropdown-item {
-      padding: 16px 28px;
-      font-size: 15.5px;
-    }
-  }
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1.25rem;
+  color: #374151;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.dropdown-item:hover {
+  background-color: #fef2f2;
+  color: #b91c1c;
+}
 </style>
 
-<!-- JavaScript — CLEAN & AMAN -->
+<!-- SCRIPT -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const btn = document.getElementById('more-options');
   const menu = document.getElementById('dropdown-menu');
-
-  if (!btn || !menu) return;
 
   btn.addEventListener('click', function (e) {
     e.stopPropagation();
@@ -136,13 +103,13 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.addEventListener('click', function (e) {
-    if (!btn.contains(e.target) && !menu.contains(e.target)) {
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
       menu.classList.add('hidden');
     }
   });
 
-  menu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => menu.classList.add('hidden'));
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => menu.classList.add('hidden'));
   });
 });
 </script>
