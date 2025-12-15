@@ -82,12 +82,30 @@ urlpatterns = [
     path('course/<int:idcourse>/section/<int:idsection>/assessment/<int:idassessment>/create/', views.create_askora, name='create_askora'),
     #add video quiz
     path('course/<int:idcourse>/section/<int:idsection>/assessment/<int:idassessment>/ivq/', views.add_ivq, name='add_ivq'),
+    path(
+        'course/<int:idcourse>/section/<int:idsection>/assessment/<int:idassessment>/ivq/<int:idvideo>/edit/',
+        views.edit_ivq,
+        name='edit_ivq'
+    ),
+    path(
+        'course/<int:idcourse>/section/<int:idsection>/assessment/<int:idassessment>/ivq/<int:idvideo>/delete/',
+        views.delete_ivq,
+        name='delete_ivq'
+    ),
+
+
     path('course/<int:idcourse>/section/<int:idsection>/assessment/<int:idassessment>/ivq/<int:idvideo>/add-question/',views.create_ivq_question,name='create_ivq_question'),
     path(
         'course/<int:idcourse>/section/<int:idsection>/assessment/<int:idassessment>/ivq/<int:idvideo>/question/<int:idquiz>/delete/',
         views.delete_ivq_question,
         name='delete_ivq_question'
     ),
+    path(
+        'course/<int:idcourse>/section/<int:idsection>/assessment/<int:idassessment>/ivq/<int:idvideo>/question/<int:idquiz>/edit/',
+        views.edit_ivq_question,
+        name='edit_ivq_question'
+    ),
+
 
 
     #add lti 1.1

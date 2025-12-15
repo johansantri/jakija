@@ -2891,6 +2891,117 @@ def add_ivq(request, idcourse, idsection, idassessment):
         "assessment": assessment,
     })
 
+
+#edit ivq
+def edit_ivq(request, idcourse, idsection, idassessment, idvideo):
+    if not request.user.is_authenticated:
+        return redirect("/login/?next=%s" % request.path)
+
+    user = request.user
+    course = None
+
+    # ================= VALIDASI AKSES =================
+    if user.is_superuser or user.is_curation:
+        course = get_object_or_404(Course, id=idcourse)
+
+    if not course and user.is_partner:
+        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=user.id)
+
+    if not course and user.is_instructor:
+        course = get_object_or_404(Course, id=idcourse, instructor__user_id=user.id)
+
+    if not course:
+        team = CourseTeam.objects.filter(course_id=idcourse, user=user).first()
+        if team:
+            course = team.course
+        else:
+            messages.error(request, "You do not have permission.")
+            return redirect('authentication:home')
+    # ===================================================
+
+    section = get_object_or_404(Section, id=idsection, courses=course)
+    assessment = get_object_or_404(Assessment, id=idassessment, section=section)
+    video = get_object_or_404(Video, id=idvideo)
+
+    if request.method == "POST":
+        video_title = request.POST.get("title")
+        video_file = request.FILES.get("file")
+
+        if not video_title:
+            messages.error(request, "Title cannot be empty.")
+            return redirect(request.path)
+
+        video.title = video_title
+
+        # Kalau user upload file baru → replace
+        if video_file:
+            video.file = video_file
+
+        video.save()
+        messages.success(request, "Video updated successfully.")
+
+        # Redirect ke halaman add question IVQ
+        return redirect(
+            "courses:create_ivq_question",
+            idcourse=idcourse,
+            idsection=idsection,
+            idassessment=idassessment,
+            idvideo=video.id
+        )
+
+    return render(request, "courses/edit_ivq.html", {
+        "course": course,
+        "section": section,
+        "assessment": assessment,
+        "video": video,
+    })
+
+#delete ivq
+@require_POST
+def delete_ivq(request, idcourse, idsection, idassessment, idvideo):
+    if not request.user.is_authenticated:
+        return redirect("/login/")
+
+    user = request.user
+    course = None
+
+    # ================= VALIDASI AKSES =================
+    if user.is_superuser or user.is_curation:
+        course = get_object_or_404(Course, id=idcourse)
+
+    if not course and user.is_partner:
+        course = get_object_or_404(Course, id=idcourse, org_partner__user_id=user.id)
+
+    if not course and user.is_instructor:
+        course = get_object_or_404(Course, id=idcourse, instructor__user_id=user.id)
+
+    if not course:
+        team = CourseTeam.objects.filter(course_id=idcourse, user=user).first()
+        if team:
+            course = team.course
+        else:
+            messages.error(request, "You do not have permission.")
+            return redirect('authentication:home')
+    # ===================================================
+
+    section = get_object_or_404(Section, id=idsection, courses=course)
+    assessment = get_object_or_404(Assessment, id=idassessment, section=section)
+    video = get_object_or_404(Video, id=idvideo)
+
+    # Hapus video dan semua quiz terkait
+    video.quiz_set.all().delete()
+    video.delete()
+
+    messages.success(request, "Video deleted successfully.")
+
+    return redirect(
+        "courses:add_ivq",
+        idcourse=idcourse,
+        idsection=idsection,
+        idassessment=idassessment
+    )
+
+
 #add question ivq
 def create_ivq_question(request, idcourse, idsection, idassessment, idvideo):
     # Pastikan akses user valid
@@ -2965,6 +3076,73 @@ def create_ivq_question(request, idcourse, idsection, idassessment, idvideo):
         "assessment": assessment,
         "video": video,
         "quizzes": quizzes,
+    })
+
+
+#edit ivq question
+def edit_ivq_question(request, idcourse, idsection, idassessment, idvideo, idquiz):
+    if not request.user.is_authenticated:
+        return redirect("/login/")
+
+    course = get_object_or_404(Course, id=idcourse)
+    section = get_object_or_404(Section, id=idsection, courses=course)
+    assessment = get_object_or_404(Assessment, id=idassessment, section=section)
+    video = get_object_or_404(Video, id=idvideo)
+
+    quiz = get_object_or_404(
+        Quiz,
+        id=idquiz,
+        assessment=assessment,
+        video=video
+    )
+
+    if request.method == "POST":
+        quiz.question = request.POST.get("question")
+        quiz.time_in_video = float(request.POST.get("time_in_video"))
+        quiz.question_type = request.POST.get("question_type")
+        quiz.correct_answer_text = request.POST.get("correct_answer_text")
+
+        quiz.save()
+
+        # RESET OPTIONS
+        quiz.option_set.all().delete()
+
+        if quiz.question_type == "MC":
+            options = request.POST.getlist("option_text")
+            correct_index = request.POST.get("correct_option")
+
+            for idx, opt_text in enumerate(options):
+                Option.objects.create(
+                    quiz=quiz,
+                    text=opt_text,
+                    is_correct=str(idx) == correct_index
+                )
+
+        elif quiz.question_type == "DD":
+            dd_options = [v for k, v in request.POST.items() if k.startswith("dd_option_")]
+            for opt in dd_options:
+                Option.objects.create(
+                    quiz=quiz,
+                    text=opt,
+                    is_correct=(opt == quiz.correct_answer_text)
+                )
+
+        messages.success(request, "Question updated successfully.")
+
+        return redirect(
+            "courses:create_ivq_question",
+            idcourse=idcourse,
+            idsection=idsection,
+            idassessment=idassessment,
+            idvideo=idvideo,
+        )
+
+    return render(request, "courses/edit_ivq_question.html", {
+        "course": course,
+        "section": section,
+        "assessment": assessment,
+        "video": video,
+        "quiz": quiz,
     })
 
 

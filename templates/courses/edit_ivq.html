@@ -1,0 +1,29 @@
+{% extends 'home/tes.html' %}
+{% block content %}
+
+{% include "courses/course_set.html" %}
+<section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
+
+
+    <h2 class="text-xl font-semibold mb-4">Edit Video</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label class="block mb-2">Title</label>
+        <input type="text" name="title"
+            value="{{ video.title }}"
+            class="w-full border rounded p-2">
+
+        <label class="block mt-4">Upload New File (optional)</label>
+        <input type="file" name="file" class="w-full border rounded p-2">
+
+        <button type="submit" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded">
+            Save Changes
+        </button>
+    </form>
+
+
+
+</section>
+{% endblock %}

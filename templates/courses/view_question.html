@@ -146,14 +146,18 @@
                   <div class="flex items-center gap-2">
                       <i class="fas fa-video text-blue-500"></i>
                       <span class="font-medium text-gray-800">
-                        <a href="{% url 'courses:create_ivq_question' idcourse=course.id idsection=section.id idassessment=assessment.id idvideo=video.id %}"
+                        <a href="{% url 'courses:edit_ivq' idcourse=course.id idsection=section.id idassessment=assessment.id idvideo=video.id %}"
                           class="hover:underline text-blue-600">
-                            {{ video.title|truncatechars:60 }}
+                            {{ video.title|truncatechars:60 }} 
+                            <i class="fas fa-edit text-gray-400 hover:text-indigo-600"></i>
                         </a>
                     </span>
-                       <span class="bg-gray-200 text-gray-700 text-xs font-semibold px-2 py-1 rounded">
-                          {{ video.quizzes.count }} Questions
-                      </span>
+                        <a href="{% url 'courses:create_ivq_question' idcourse=course.id idsection=section.id idassessment=assessment.id idvideo=video.id %}"
+                          class="hover:underline text-blue-600">
+                            {{ video.quizzes.count }} Questions 
+                            <i class="fas fa-edit text-gray-400 hover:text-indigo-600"></i>
+                        </a>
+                       
                   </div>
                  
               </td>
@@ -162,10 +166,22 @@
 
               <!-- View Button -->
               <td class="px-3 py-2 text-center">
-                  <button type="submit" class="text-red-600 hover:text-red-800 p-2 rounded transition">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </td>
+                <div class="flex justify-center items-center gap-2">
+                   
+
+                    <!-- Delete Button -->
+                    <form method="post"
+                          action="{% url 'courses:delete_ivq' idcourse=course.id idsection=section.id idassessment=assessment.id idvideo=video.id %}"
+                          onsubmit="return confirm('Are you sure you want to delete this video and all its questions?');">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="text-xs text-red-600 hover:underline">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </form>
+                </div>
+            </td>
+
           </tr>
           {% endfor %}
       {% else %}

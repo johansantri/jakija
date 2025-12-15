@@ -90,6 +90,7 @@
             {% for quiz in quizzes %}
                 <div class="border rounded p-4 bg-gray-50">
                     <div class="flex justify-between items-start">
+                        <!-- LEFT: QUESTION -->
                         <div>
                             <p class="font-medium text-gray-800">
                                 {{ forloop.counter }}. {{ quiz.question }}
@@ -100,18 +101,28 @@
                             </p>
                         </div>
 
-                        <!-- DELETE BUTTON -->
-                        <form method="post"
-                            action="{% url 'courses:delete_ivq_question' idcourse=course.id idsection=section.id idassessment=assessment.id idvideo=video.id idquiz=quiz.id %}"
-                            onsubmit="return confirm('Are you sure you want to delete this question?');">
+                        <!-- RIGHT: ACTIONS -->
+                        <div class="flex items-center gap-3">
+                            <!-- EDIT -->
+                            <a href="{% url 'courses:edit_ivq_question' idcourse=course.id idsection=section.id idassessment=assessment.id idvideo=video.id idquiz=quiz.id %}"
+                            class="text-xs text-blue-600 hover:underline">
+                                ✏️ Edit
+                            </a>
 
-                            {% csrf_token %}
-                            <button type="submit"
-                                    class="text-xs text-red-600 hover:underline">
-                                🗑 Delete
-                            </button>
-                        </form>
+                            <!-- DELETE -->
+                            <form method="post"
+                                action="{% url 'courses:delete_ivq_question' idcourse=course.id idsection=section.id idassessment=assessment.id idvideo=video.id idquiz=quiz.id %}"
+                                onsubmit="return confirm('Are you sure you want to delete this question?');">
+
+                                {% csrf_token %}
+                                <button type="submit"
+                                        class="text-xs text-red-600 hover:underline">
+                                    🗑 Delete
+                                </button>
+                            </form>
+                        </div>
                     </div>
+
 
 
                     <!-- OPTIONS -->
