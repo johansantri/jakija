@@ -40,7 +40,8 @@
       <i class="fas fa-puzzle-piece"></i> LTI
     </a>
 
-    <a href="{% url 'courses:create_lti' idcourse=course.id idsection=section.id idlti=assessment.id %}"
+    <a href="{% url 'courses:add_ivq' idcourse=course.id idsection=section.id idassessment=assessment.id %}"
+   
        class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
       <i class="fas fa-question-circle"></i> IVQ
     </a>
