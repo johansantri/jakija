@@ -121,7 +121,7 @@ function renderAnsweredView(q, index, answeredData) {
             btn.disabled = true;
             if (i === q.correct) btn.classList.add("bg-green-500", "text-white");
             if (i === answeredData.userAnswer && !answeredData.correct) btn.classList.add("bg-red-500", "text-white");
-            else btn.classList.add("bg-gray-100");
+            else btn.classList.add("bg-blue-100");
             quizState.optionsContainer.appendChild(btn);
         });
     } else if (q.type === "true-false") {
@@ -200,7 +200,7 @@ function renderFreshQuiz(q, index) {
         input.type = "text";
         input.autofocus = true;
         input.placeholder = "Type your answer...";
-        input.className = "w-full p-5 text-xl text-center border-4 border-gray-300 rounded-xl focus:border-emerald-500 outline-none";
+        input.className = "w-full p-5 text-xl text-center border-4 border-blue-300 rounded-xl focus:border-emerald-500 outline-none";
 
         const submit = document.createElement('button');
         submit.textContent = "Submit";
