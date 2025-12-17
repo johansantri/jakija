@@ -422,15 +422,14 @@
                                                             <div class="flex space-x-2">
 
                                                                 {% if choice.is_correct %}
-                                                                    <span class="px-2 py-1 text-xs font-semibold bg-green-600 text-white rounded-full">
-                                                                        Correct
-                                                                    </span>
+                                                                    <i class="fas fa-check text-green-600 text-sm"></i>
+
                                                                 {% endif %}
 
                                                                 {% if answer and answer.choice.id == choice.id %}
-                                                                    <span class="px-2 py-1 text-xs font-semibold bg-blue-600 text-white rounded-full">
-                                                                        Your Response
-                                                                    </span>
+                                                                    <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-300 text-white text-xs font-bold">👤</span>
+
+
                                                                 {% endif %}
 
                                                             </div>
