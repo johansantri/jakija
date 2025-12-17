@@ -8,76 +8,113 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 ## Key Features
 <details>
-<summary> (click to expand)</summary>
+<summary>Click to expand</summary>
 
 ### **User Management**
 - **Secure Login & Logout** – Sistem autentikasi aman untuk semua pengguna.  
-- **Role-based Access** – Admin, mitra, instruktur dan peserta memiliki hak akses berbeda.  
+- **Role-based Access** – Admin, Mitra, Instruktur, dan Peserta memiliki hak akses berbeda.  
 - **Profile Management** – Edit profil, upload foto, dan kelola preferensi.  
 - **Password Recovery** – Reset password melalui email.  
 - **Two-factor Authentication (2FA)** – Keamanan tambahan untuk login.  
 
+### **Dashboard / Role-specific Features**
+
+#### **Admin Dashboard**
+- User & Role Management  
+- Course Management global  
+- Subscription & Payment management  
+- Analytics & Custom Reports  
+- Content Approval  
+- System Settings & Backup  
+
+#### **Mitra Dashboard**
+- Manage Courses & Modules  
+- Assign Instructors  
+- Revenue & Payment Tracking  
+- Reports & Analytics per Mitra  
+- Messaging & Notifications  
+
+#### **Instruktur Dashboard**
+- Create/Edit Courses  
+- Upload Materials (PDF, Video, Audio, Interactive Content)  
+- Quizzes, Assignments, and Gradebook  
+- Progress Tracking per Peserta  
+- Discussion & Messaging with Peserta  
+
+#### **Peserta Dashboard**
+- My Courses & Progress Tracking  
+- Quizzes & Assignments  
+- Certificates & Badges  
+- Discussion & Messaging  
+- Notifications & Reminders  
+
+#### **Subscription / Membership Dashboard**
+- Subscription Plans overview  
+- Payment History & Renewal  
+- Upgrade / Promo & Discounts  
+- Notifications for renewal & payment  
+
 ### **Course Management**
-- **Create, Edit, Delete Courses** – Kelola kursus dan modul dengan mudah.  
-- **Upload Materials** – Mendukung PDF, video, audio, gambar, dan dokumen lainnya.  
-- **Course Categories & Tags** – Organisasi kursus berdasarkan topik dan kata kunci.  
-- **Course Scheduling** – lengkap dengan detailnya, kapan mulai kelas kapan dibuka kelas sampai berakhir  
-- **Course Prerequisites** – Atur syarat peserta bisa mengikuti kursus tertentu.  
+- Create, Edit, Delete Courses  
+- Upload Materials (PDF, video, audio, gambar)  
+- Course Categories & Tags  
+- Course Scheduling (jadwal mulai, kelas dibuka, hingga berakhir)  
+- Course Prerequisites  
 
 ### **Assessment & Progress**
-- **Quizzes & Assignments** – Berbagai tipe soal: pilihan ganda, esay atau tugas antar peserta, video quiz interaktif, lti jika ada dari external lms.  
-- **Automatic Grading** – Penilaian otomatis untuk semua soal.   
-- **Progress Tracking** – Pantau progres peserta secara real-time.  
-- **Completion Certificates & Badges** – Sertifikat dan badge sebagai reward.  
-- **Gradebook** – Rekap nilai per peserta dan kursus.  
+- Quizzes & Assignments (termasuk video quiz, LTI)  
+- Automatic Grading  
+- Progress Tracking  
+- Completion Certificates & Badges  
+- Gradebook  
 
 ### **Communication & Collaboration**
-- **Announcements** – Informasi penting untuk peserta langsung terlihat.  
-- **Discussion Forums / Boards** – Forum diskusi per materi atau kursus.  
-- **Direct Messaging / Chat** – Pesan antar guru dan peserta.  
-
+- Announcements  
+- Discussion Forums / Boards  
+- Direct Messaging / Chat  
 
 ### **Notifications & Alerts**
-- **Email Notifications** – Untuk tugas, kuis, pengumuman, dan pesan.    
-- **Reminders & Deadlines** – Pengingat otomatis untuk tugas dan ujian.  
+- Email Notifications  
+- Reminders & Deadlines  
 
 ### **Analytics & Reporting**
-- **Course Analytics** – Statistik progress, dan engagement peserta.  
-- **User Reports** – Laporan performa peserta, aktivitas instruktur, dan interaksi.  
-- **Export Data** – Ekspor data ke CSV, Excel.  
-- **Custom Reports** – Buat laporan sesuai kebutuhan admin, mitra dan instruktur.  
+- Course Analytics  
+- User Reports  
+- Export Data  
+- Custom Reports  
 
 ### **Content & Multimedia**
-- **Video & Audio Streaming** – Integrasi untuk video pembelajaran.  
-- **Interactive Content** – Konten interaktif seperti simulasi dan kuis inline.  
-- **Document Versioning** – Versi terbaru materi selalu tersedia.  
+- Video & Audio Streaming  
+- Interactive Content  
+- Document Versioning  
 
 ### **Integration & Extensibility**
-- **Third-party Integration** – Payment gateway seperti tripay tersedia  
-- **API Access** – Untuk integrasi dengan sistem lain.  
-
+- Third-party Integration (Payment gateway Tripay)  
+- API Access  
 
 ### **Accessibility & UX**
-- **Responsive Design** – Optimal untuk desktop, tablet, dan mobile.    
-- **Light Mode** – tampilan yang lembut.  
-
+- Responsive Design  
+- Light Mode  
 
 ### **Security & Compliance**
-- **Data Encryption** – Semua data sensitif terenkripsi.  
-- **Role-based Permissions** – Kontrol ketat untuk setiap level pengguna.  
-- **GDPR / Local Compliance** – Sesuai regulasi perlindungan data.  
-- **Audit Logs** – Rekam semua aktivitas penting pengguna.  
+- Data Encryption  
+- Role-based Permissions  
+- GDPR / Local Compliance  
+- Audit Logs  
 
 ### **Gamification & Engagement**
-- **Points & Badges** – Motivasi peserta melalui reward sistem.  
-- **Leaderboard** – Kompetisi sehat antar peserta berdasarkan progress.  
-- **Achievement Unlocks** – Fitur gamifikasi untuk pencapaian tertentu.  
+- Points & Badges  
+- Leaderboard  
+- Achievement Unlocks  
 
 ### **Additional Features**
-- **Offline Access** – Materi bisa diunduh untuk belajar offline (opsional).  
-- **Search & Filter** – Cari kursus, materi, atau pengguna dengan mudah.  
-- **Customizable Themes** – Kustomisasi tampilan LMS sesuai branding.  
-- **Backup & Restore** – Sistem backup otomatis untuk keamanan data.  
+- Offline Access  
+- Search & Filter  
+- Customizable Themes  
+- Backup & Restore  
+
+### **SEO**
+- Grade A
 
 </details>
 
