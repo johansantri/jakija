@@ -764,42 +764,68 @@ def subscription_management(request):
     if not request.user.is_superuser:
         return redirect('licensing:participant_dashboard')
 
-    # Update otomatis status expired
-    License.objects.filter(expiry_date__lt=timezone.now().date(), status=True).update(status=False)
+    today = timezone.now().date()
+    week_later = today + timedelta(days=7)
 
-    q = request.GET.get("q", "")
+    # Parameter filter
+    q = request.GET.get("q", "").strip()
     status_filter = request.GET.get("status", "")
 
-    filtered_licenses = License.objects.annotate(num_users=Count('users'))
+    # Query dasar
+    base_qs = License.objects.annotate(num_users=Count('users'))
 
     if q:
-        filtered_licenses = filtered_licenses.filter(
+        base_qs = base_qs.filter(
             Q(name__icontains=q) | Q(university__name__icontains=q)
         )
 
     if status_filter == "active":
-        filtered_licenses = filtered_licenses.filter(status=True)
+        base_qs = base_qs.filter(status=True)
     elif status_filter == "inactive":
-        filtered_licenses = filtered_licenses.filter(status=False)
+        base_qs = base_qs.filter(status=False)
 
-    # Sisanya tetap
-    active_licenses = License.objects.filter(status=True).annotate(num_users=Count("users"))
-    expired_licenses = License.objects.filter(status=False)
-    licenses_with_space = active_licenses.filter(num_users__lt=F('max_users'))
-    approaching_expiry_licenses = active_licenses.filter(
-        expiry_date__lte=timezone.now().date() + timedelta(days=7)
-    )
+    # Ambil semua data sekaligus dengan relasi yang diperlukan
+    licenses_qs = base_qs.select_related('university', 'owner').prefetch_related('users')
+
+    # Konversi ke list dan tambahkan data kalkulasi tanpa ubah objek model
+    licenses_data = []
+    active_licenses = []
+    expired_licenses = []
+    licenses_with_space = []
+    approaching_expiry_licenses = []
+
+    for license in licenses_qs:
+        remaining_slots = license.max_users - license.num_users
+        is_approaching = license.status and license.expiry_date <= week_later
+
+        # Buat dict yang berisi semua data yang dibutuhkan template
+        license_data = {
+            'obj': license,                    # objek asli untuk akses field normal
+            'num_users': license.num_users,
+            'remaining_slots': remaining_slots,
+            'approaching_expiry': is_approaching,
+        }
+
+        licenses_data.append(license_data)
+
+        if license.status:
+            active_licenses.append(license_data)
+            if remaining_slots > 0:
+                licenses_with_space.append(license_data)
+            if is_approaching:
+                approaching_expiry_licenses.append(license_data)
+        else:
+            expired_licenses.append(license_data)
 
     context = {
-        "filtered_licenses": filtered_licenses,
-        "active_licenses": active_licenses,
-        "expired_licenses": expired_licenses,
-        "licenses_with_space": licenses_with_space,
-        "approaching_expiry_licenses": approaching_expiry_licenses,
-        "total_licenses": active_licenses.count(),
-        "total_expired_licenses": expired_licenses.count(),
-        "total_approaching_expiry": approaching_expiry_licenses.count(),
-        'today': timezone.now().date(),
+        'licenses_data': licenses_data,  # ini yang dipakai di table
+        'total_licenses': len(active_licenses),
+        'total_expired_licenses': len(expired_licenses),
+        'total_licenses_with_space': len(licenses_with_space),
+        'total_approaching_expiry': len(approaching_expiry_licenses),
+        'today': today,
+        'q': q,
+        'status_filter': status_filter,
     }
 
     return render(request, "licensing/subscription_management.html", context)
