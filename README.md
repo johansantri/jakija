@@ -12,7 +12,7 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 ### **User Management**
 - **Secure Login & Logout** – Sistem autentikasi aman untuk semua pengguna.  
-- **Role-based Access** – Admin, guru, dan siswa memiliki hak akses berbeda.  
+- **Role-based Access** – Admin, mitra, instruktur dan peserta memiliki hak akses berbeda.  
 - **Profile Management** – Edit profil, upload foto, dan kelola preferensi.  
 - **Password Recovery** – Reset password melalui email.  
 - **Two-factor Authentication (2FA)** – Keamanan tambahan untuk login.  
@@ -21,33 +21,31 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 - **Create, Edit, Delete Courses** – Kelola kursus dan modul dengan mudah.  
 - **Upload Materials** – Mendukung PDF, video, audio, gambar, dan dokumen lainnya.  
 - **Course Categories & Tags** – Organisasi kursus berdasarkan topik dan kata kunci.  
-- **Course Scheduling** – Jadwal kelas, sesi live, atau webinar.  
-- **Course Prerequisites** – Atur syarat agar siswa bisa mengikuti kursus tertentu.  
+- **Course Scheduling** – lengkap dengan detailnya, kapan mulai kelas kapan dibuka kelas sampai berakhir  
+- **Course Prerequisites** – Atur syarat peserta bisa mengikuti kursus tertentu.  
 
 ### **Assessment & Progress**
-- **Quizzes & Assignments** – Berbagai tipe soal: pilihan ganda, essay, coding, dll.  
-- **Automatic Grading** – Penilaian otomatis untuk soal objektif.  
-- **Manual Grading** – Guru bisa menilai tugas/essay secara manual.  
-- **Progress Tracking** – Pantau progres siswa secara real-time.  
+- **Quizzes & Assignments** – Berbagai tipe soal: pilihan ganda, esay atau tugas antar peserta, video quiz interaktif, lti jika ada dari external lms.  
+- **Automatic Grading** – Penilaian otomatis untuk semua soal.   
+- **Progress Tracking** – Pantau progres peserta secara real-time.  
 - **Completion Certificates & Badges** – Sertifikat dan badge sebagai reward.  
-- **Gradebook** – Rekap nilai per siswa dan kursus.  
+- **Gradebook** – Rekap nilai per peserta dan kursus.  
 
 ### **Communication & Collaboration**
-- **Announcements** – Informasi penting untuk siswa langsung terlihat.  
-- **Discussion Forums / Boards** – Forum diskusi per kelas atau kursus.  
-- **Direct Messaging / Chat** – Pesan antar guru dan siswa.  
-- **Group Projects** – Fitur kerja kelompok dan kolaborasi antar siswa.  
+- **Announcements** – Informasi penting untuk peserta langsung terlihat.  
+- **Discussion Forums / Boards** – Forum diskusi per materi atau kursus.  
+- **Direct Messaging / Chat** – Pesan antar guru dan peserta.  
+
 
 ### **Notifications & Alerts**
-- **Email Notifications** – Untuk tugas, kuis, pengumuman, dan pesan.  
-- **Push Notifications** – Notifikasi real-time di aplikasi mobile/web.  
+- **Email Notifications** – Untuk tugas, kuis, pengumuman, dan pesan.    
 - **Reminders & Deadlines** – Pengingat otomatis untuk tugas dan ujian.  
 
 ### **Analytics & Reporting**
-- **Course Analytics** – Statistik kehadiran, progress, dan engagement siswa.  
-- **User Reports** – Laporan performa siswa, aktivitas guru, dan interaksi.  
-- **Export Data** – Ekspor data ke CSV, Excel, atau PDF.  
-- **Custom Reports** – Buat laporan sesuai kebutuhan admin atau guru.  
+- **Course Analytics** – Statistik progress, dan engagement peserta.  
+- **User Reports** – Laporan performa peserta, aktivitas instruktur, dan interaksi.  
+- **Export Data** – Ekspor data ke CSV, Excel.  
+- **Custom Reports** – Buat laporan sesuai kebutuhan admin, mitra dan instruktur.  
 
 ### **Content & Multimedia**
 - **Video & Audio Streaming** – Integrasi untuk video pembelajaran.  
@@ -55,15 +53,14 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 - **Document Versioning** – Versi terbaru materi selalu tersedia.  
 
 ### **Integration & Extensibility**
-- **Third-party Integration** – Payment gateway, Zoom, Google Drive, dsb.  
+- **Third-party Integration** – Payment gateway seperti tripay tersedia  
 - **API Access** – Untuk integrasi dengan sistem lain.  
-- **Plugin / Module Support** – Tambahkan fitur tambahan tanpa mengubah inti sistem.  
+
 
 ### **Accessibility & UX**
-- **Responsive Design** – Optimal untuk desktop, tablet, dan mobile.  
-- **Multi-language Support** – Dukungan berbagai bahasa.  
-- **Dark Mode / Light Mode** – Pilihan tampilan sesuai preferensi.  
-- **Keyboard Navigation & Screen Reader Support** – Aksesibilitas bagi penyandang disabilitas.  
+- **Responsive Design** – Optimal untuk desktop, tablet, dan mobile.    
+- **Light Mode** – tampilan yang lembut.  
+
 
 ### **Security & Compliance**
 - **Data Encryption** – Semua data sensitif terenkripsi.  
@@ -72,8 +69,8 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 - **Audit Logs** – Rekam semua aktivitas penting pengguna.  
 
 ### **Gamification & Engagement**
-- **Points & Badges** – Motivasi siswa melalui reward sistem.  
-- **Leaderboard** – Kompetisi sehat antar siswa berdasarkan progress.  
+- **Points & Badges** – Motivasi peserta melalui reward sistem.  
+- **Leaderboard** – Kompetisi sehat antar peserta berdasarkan progress.  
 - **Achievement Unlocks** – Fitur gamifikasi untuk pencapaian tertentu.  
 
 ### **Additional Features**
