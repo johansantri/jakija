@@ -20,6 +20,7 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 ### **Dashboard / Role-specific Features**
 
 #### **Admin Dashboard**
+![Dashboard Admin](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-27-07%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 - User & Role Management  
 - Course Management global  
 - Subscription & Payment management  
