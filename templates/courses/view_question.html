@@ -24,28 +24,32 @@
   </div>
 
   <!-- Tombol Tambah Soal -->
+  <p class="text-sm text-gray-500 mb-2">
+    Only one assessment type can be selected as the primary one. Selecting one (e.g., Multiple Choice) may hide or disable the others.
+  </p>
+
   <div class="flex flex-wrap gap-2 mb-6">
-    <a href="{% url "courses:create_question" course.id section.id assessment.id %}"
-       class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
-      <i class="fas fa-list-ul"></i> MCQ
-    </a>
+      <a href="{% url "courses:create_question" course.id section.id assessment.id %}"
+        class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
+        <i class="fas fa-list-ul"></i> MCQ
+      </a>
 
-    <a href="{% url 'courses:create_askora' idcourse=course.id idsection=section.id idassessment=assessment.id %}"
-       class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
-      <i class="fas fa-comment-dots"></i> ORA
-    </a>
+      <a href="{% url 'courses:create_askora' idcourse=course.id idsection=section.id idassessment=assessment.id %}"
+        class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
+        <i class="fas fa-comment-dots"></i> ORA
+      </a>
 
-    <a href="{% url 'courses:create_lti' idcourse=course.id idsection=section.id idlti=assessment.id %}"
-       class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
-      <i class="fas fa-puzzle-piece"></i> LTI
-    </a>
+      <a href="{% url 'courses:create_lti' idcourse=course.id idsection=section.id idlti=assessment.id %}"
+        class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
+        <i class="fas fa-puzzle-piece"></i> LTI
+      </a>
 
-    <a href="{% url 'courses:add_ivq' idcourse=course.id idsection=section.id idassessment=assessment.id %}"
-   
-       class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
-      <i class="fas fa-question-circle"></i> IVQ
-    </a>
+      <a href="{% url 'courses:add_ivq' idcourse=course.id idsection=section.id idassessment=assessment.id %}"
+        class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition">
+        <i class="fas fa-question-circle"></i> IVQ
+      </a>
   </div>
+
 
   <!-- Tabel Soal Compact -->
   <div class="bg-white rounded-xl shadow border border-gray-200 overflow-x-auto">
