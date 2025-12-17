@@ -6,8 +6,9 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 - Original repo: https://github.com/johansantri/mysite  
 - Goal: lightweight, team‑oriented online learning platform
 
+## Key Features
 <details>
-<summary>Key Features (click to expand)</summary>
+<summary> (click to expand)</summary>
 
 ### **User Management**
 - **Secure Login & Logout** – Sistem autentikasi aman untuk semua pengguna.  
