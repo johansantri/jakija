@@ -3,185 +3,184 @@
 
 {% block extra_head %}
 <meta name="robots" content="noindex, nofollow">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    line-height: 1.6;
-  }
-  .list-section {
-    padding: 2rem 1rem;
-    background: #f8f9fa;
-    min-height: 100vh;
-  }
-  .list-card {
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    padding: 2rem;
-    background: #fff;
-    margin: 0 auto;
-    width: 100%;
-  }
-  .list-card h1 {
-    color: #b02a37;
-    font-weight: 700;
-  }
-  .table {
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .btn-primary {
-    background-color: #b02a37;
-    border-color: #b02a37;
-    border-radius: 8px;
-  }
-  .btn-primary:hover {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-  }
-  .btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
-    border-radius: 8px;
-  }
-  .btn-danger:hover {
-    background-color: #b02a37;
-    border-color: #b02a37;
-  }
-  .pagination .page-link {
-    border-radius: 8px;
-  }
-  .pagination .page-item.active .page-link {
-    background-color: #b02a37;
-    border-color: #b02a37;
-  }
-  .filter-form .form-control, .filter-form .form-select {
-    border-radius: 8px;
-  }
-  @media (max-width: 576px) {
-    .list-section {
-      padding: 1rem 0.5rem;
-    }
-    .list-card {
-      padding: 1.5rem;
-    }
-    .list-card h1 {
-      font-size: 1.75rem;
-    }
-    .table {
-      font-size: 0.875rem;
-    }
-  }
-</style>
 {% endblock %}
 
 {% block content %}
-<section class="list-section">
-  <div class="list-card card border-0 shadow-sm">
-    <div class="card-body">
-      <h1 class="display-5 fw-bold text-danger mb-4">{{ title }}</h1>
-      <hr>
+<section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
+  <div class="bg-white rounded-lg shadow-sm">
+    <div class="p-6">
+
+      <h1 class="text-4xl font-bold text-red-600 mb-4">
+        {{ title }}
+      </h1>
+
+      <hr class="mb-4">
+
       {% if messages %}
         {% for message in messages %}
-          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          <div class="mb-4 flex items-center justify-between rounded-lg px-4 py-3
+            {% if message.tags == 'success' %}bg-green-100 text-green-800
+            {% elif message.tags == 'error' %}bg-red-100 text-red-800
+            {% else %}bg-blue-100 text-blue-800{% endif %}">
+            <span>{{ message }}</span>
+            <button type="button" onclick="this.parentElement.remove()" class="font-bold">×</button>
           </div>
         {% endfor %}
       {% endif %}
 
       <!-- Form Pencarian dan Filter -->
-      <form method="GET" class="filter-form mb-4">
-        <div class="row g-3">
-          <div class="col-md-4">
-            <input type="text" name="q" class="form-control" placeholder="Search by title or content" value="{{ search_query }}">
+      <form method="GET" class="mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+
+          <div class="md:col-span-4">
+            <input
+              type="text"
+              name="q"
+              value="{{ search_query }}"
+              placeholder="Search by title or content"
+              class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+            >
           </div>
-          <div class="col-md-2">
-            <select name="status" class="form-select" onchange="this.form.submit()">
+
+          <div class="md:col-span-2">
+            <select name="status" onchange="this.form.submit()"
+              class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
               <option value="">All Status</option>
               {% for status_value, status_label in status_choices %}
-                <option value="{{ status_value }}" {% if selected_status == status_value %}selected{% endif %}>{{ status_label }}</option>
+                <option value="{{ status_value }}" {% if selected_status == status_value %}selected{% endif %}>
+                  {{ status_label }}
+                </option>
               {% endfor %}
             </select>
           </div>
-          <div class="col-md-3">
-            <select name="category" class="form-select" onchange="this.form.submit()">
+
+          <div class="md:col-span-3">
+            <select name="category" onchange="this.form.submit()"
+              class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
               <option value="">All Categories</option>
               {% for category in categories %}
-                <option value="{{ category.id }}" {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
+                <option value="{{ category.id }}"
+                  {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>
+                  {{ category.name }}
+                </option>
               {% endfor %}
             </select>
           </div>
-          <div class="col-md-3">
-            <select name="tag" class="form-select" onchange="this.form.submit()">
+
+          <div class="md:col-span-3">
+            <select name="tag" onchange="this.form.submit()"
+              class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
               <option value="">All Tags</option>
               {% for tag in tags %}
-                <option value="{{ tag.id }}" {% if selected_tag == tag.id|stringformat:"s" %}selected{% endif %}>{{ tag.name }}</option>
+                <option value="{{ tag.id }}"
+                  {% if selected_tag == tag.id|stringformat:"s" %}selected{% endif %}>
+                  {{ tag.name }}
+                </option>
               {% endfor %}
             </select>
           </div>
+
         </div>
       </form>
 
-      <a href="{% url 'blog:blog-create' %}" class="btn btn-primary mb-3">Create New Post</a>
+      <a href="{% url 'blog:blog-create' %}"
+         class="inline-block mb-4 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+        Create New Post
+      </a>
+
       {% if posts %}
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Title</th>
-              <th scope="col">Status</th>
-              <th scope="col">Category</th>
-              <th scope="col">Tags</th>
-              <th scope="col">Date Posted</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for post in posts %}
+        <div class="overflow-x-auto">
+          <table class="min-w-full border border-gray-200 rounded-lg">
+            <thead class="bg-gray-100">
               <tr>
-                <td>{{ post.title }}</td>
-                <td>{{ post.status|title }}</td>
-                <td>{% if post.category %}{{ post.category.name }}{% else %}No Category{% endif %}</td>
-                <td>
-                  {% for tag in post.tags.all %}
-                    {{ tag.name }}{% if not forloop.last %}, {% endif %}
-                  {% empty %}
-                    No Tags
-                  {% endfor %}
-                </td>
-                <td>{{ post.date_posted|date:"F d, Y" }}</td>
-                <td>
-                  <a href="{% url 'blog:blog-update' post.pk %}" class="btn btn-sm btn-primary">Edit</a>
-                  <a href="{% url 'blog:blog-delete' post.pk %}" class="btn btn-sm btn-danger">Delete</a>
-                </td>
+                <th class="px-4 py-2 text-left">Title</th>
+                <th class="px-4 py-2 text-left">Status</th>
+                <th class="px-4 py-2 text-left">Category</th>
+                <th class="px-4 py-2 text-left">Tags</th>
+                <th class="px-4 py-2 text-left">Date Posted</th>
+                <th class="px-4 py-2 text-left">Actions</th>
               </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        {% if is_paginated %}
-          <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-              {% if page_obj.has_previous %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}" aria-label="Previous">«</a>
-                </li>
-              {% endif %}
-              {% for num in page_obj.paginator.page_range %}
-                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-                  <a class="page-link" href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}">{{ num }}</a>
-                </li>
+            </thead>
+            <tbody>
+              {% for post in posts %}
+                <tr class="border-t hover:bg-gray-50">
+                  <td class="px-4 py-2">{{ post.title }}</td>
+                  <td class="px-4 py-2">{{ post.status|title }}</td>
+                  <td class="px-4 py-2">
+                    {% if post.category %}
+                      {{ post.category.name }}
+                    {% else %}
+                      No Category
+                    {% endif %}
+                  </td>
+                  <td class="px-4 py-2">
+                    {% for tag in post.tags.all %}
+                      {{ tag.name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                      No Tags
+                    {% endfor %}
+                  </td>
+                  <td class="px-4 py-2">
+                    {{ post.date_posted|date:"F d, Y" }}
+                  </td>
+                  <td class="px-4 py-2 space-x-2">
+                    <a href="{% url 'blog:blog-update' post.pk %}"
+                       class="rounded bg-blue-500 px-3 py-1 text-sm text-white hover:bg-blue-600">
+                      Edit
+                    </a>
+                    <a href="{% url 'blog:blog-delete' post.pk %}"
+                       class="rounded bg-red-500 px-3 py-1 text-sm text-white hover:bg-red-600">
+                      Delete
+                    </a>
+                  </td>
+                </tr>
               {% endfor %}
-              {% if page_obj.has_next %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}" aria-label="Next">»</a>
-                </li>
+            </tbody>
+          </table>
+        </div>
+
+        {% if is_paginated %}
+          <div class="mt-6 flex justify-center">
+            <nav class="flex space-x-1">
+
+              {% if page_obj.has_previous %}
+                <a class="px-3 py-1 border rounded hover:bg-gray-100"
+                   href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}">
+                  «
+                </a>
               {% endif %}
-            </ul>
-          </nav>
+
+              {% for num in page_obj.paginator.page_range %}
+                <a class="px-3 py-1 border rounded
+                  {% if page_obj.number == num %}
+                    bg-blue-600 text-white
+                  {% else %}
+                    hover:bg-gray-100
+                  {% endif %}"
+                  href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}">
+                  {{ num }}
+                </a>
+              {% endfor %}
+
+              {% if page_obj.has_next %}
+                <a class="px-3 py-1 border rounded hover:bg-gray-100"
+                   href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}">
+                  »
+                </a>
+              {% endif %}
+
+            </nav>
+          </div>
         {% endif %}
       {% else %}
-        <p>No posts available. <a href="{% url 'blog:blog-create' %}">Create your first post</a>.</p>
+        <p class="text-gray-600">
+          No posts available.
+          <a href="{% url 'blog:blog-create' %}" class="text-blue-600 hover:underline">
+            Create your first post
+          </a>.
+        </p>
       {% endif %}
+
     </div>
   </div>
 </section>

@@ -349,6 +349,19 @@
 
         <!-- Logout -->
         <div class="border-t border-gray-200 px-4 py-4">
+            <button onclick="window.location.href='{% url 'blog:blog-list-admin' %}'" 
+                    class="mt-3 flex items-center space-x-3 px-4 py-2 w-full bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-medium">
+                <i class="fas fa-newspaper"></i>
+                <span>Blog</span>
+            </button>
+
+            <button onclick="window.location.href='{% url 'courses:create_and_list_sos_posts' %}'" 
+                    class="mt-3 flex items-center space-x-3 px-4 py-2 w-full bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-medium">
+                <i class="fas fa-user-circle"></i>
+                <span>Sosial</span>
+            </button>
+
+
             <button onclick="window.location.href='/'" 
                     class="mt-3 flex items-center space-x-3 px-4 py-2 w-full bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-medium">
                 <i class="fas fa-home"></i>

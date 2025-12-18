@@ -20,14 +20,30 @@ class BlogPostForm(forms.ModelForm):
         fields = ['title', 'content', 'image', 'category', 'tags', 'status']
 
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter post title'}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 8, 'placeholder': 'Write your content here'}),
-            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
-            'category': forms.Select(attrs={'class': 'form-select'}),
-            'tags': forms.SelectMultiple(attrs={'class': 'form-select', 'multiple': 'multiple'}),
-            
-            'status': forms.Select(attrs={'class': 'form-select'}),
-        }
+                'title': forms.TextInput(attrs={
+                    'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                    'placeholder': 'Enter post title'
+                }),
+                'content': forms.Textarea(attrs={
+                    'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                    'rows': 8,
+                    'placeholder': 'Write your content here'
+                }),
+                'image': forms.ClearableFileInput(attrs={
+                    'class': 'w-full text-gray-700'
+                }),
+                'category': forms.Select(attrs={
+                    'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+                }),
+                'tags': forms.SelectMultiple(attrs={
+                    'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                    'multiple': 'multiple'
+                }),
+                'status': forms.Select(attrs={
+                    'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+                }),
+            }
+
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)

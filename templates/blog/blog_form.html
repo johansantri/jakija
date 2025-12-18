@@ -3,91 +3,42 @@
 
 {% block extra_head %}
 <meta name="robots" content="noindex, nofollow">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    line-height: 1.6;
-  }
-  .form-section {
-    padding: 2rem 1rem; /* Kurangi padding vertikal, tambah padding horizontal kecil */
-    background: #f8f9fa;
-    min-height: 100vh; /* Pastikan section memenuhi tinggi layar */
-  }
-  .form-card {
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    padding: 2rem; /* Padding di dalam kartu */
-    background: #fff;
-    margin: 0 auto; /* Pusatkan kartu jika diperlukan */
-    width: 100%; /* Pastikan kartu full-width */
-  }
-  .form-card h1 {
-    color: #b02a37;
-    font-weight: 700;
-  }
-  .form-control, .form-select {
-    border-radius: 8px;
-  }
-  .btn-primary {
-    background-color: #b02a37;
-    border-color: #b02a37;
-    border-radius: 8px;
-  }
-  .btn-primary:hover {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-  }
-  .invalid-feedback {
-    display: block;
-    color: #dc3545;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-  }
-  .form-control.is-invalid, .form-select.is-invalid {
-    border-color: #dc3545;
-  }
-  @media (max-width: 576px) {
-    .form-section {
-      padding: 1rem 0.5rem; /* Kurangi padding di layar kecil */
-    }
-    .form-card {
-      padding: 1.5rem; /* Kurangi padding kartu di layar kecil */
-    }
-    .form-card h1 {
-      font-size: 1.75rem;
-    }
-  }
-</style>
 {% endblock %}
 
 {% block content %}
-<section class="form-section">
-  <div class="form-card card border-0 shadow-sm">
-    <div class="card-body">
-      <h1 class="fw-bold mb-4">
+<section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
+  <div class="bg-white rounded-lg shadow-sm">
+    <div class="p-6">
+
+      <h1 class="text-3xl font-bold mb-6">
         {% if form.instance.pk %}
           Edit Blog Post
         {% else %}
           Create New Blog Post
         {% endif %}
       </h1>
+
       {% if messages %}
         {% for message in messages %}
-          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          <div class="mb-4 flex items-center justify-between rounded-lg px-4 py-3
+            {% if message.tags == 'success' %}bg-green-100 text-green-800
+            {% elif message.tags == 'error' %}bg-red-100 text-red-800
+            {% else %}bg-blue-100 text-blue-800{% endif %}">
+            <span>{{ message }}</span>
+            <button type="button" onclick="this.parentElement.remove()" class="font-bold">×</button>
           </div>
         {% endfor %}
       {% endif %}
-      <form method="POST" enctype="multipart/form-data">
+
+      <form method="POST" enctype="multipart/form-data" class="space-y-5">
         {% csrf_token %}
+
         {% if form.errors %}
-          <div class="alert alert-danger">
-            <ul>
+          <div class="rounded-lg bg-red-100 p-4 text-red-800">
+            <ul class="list-disc pl-5">
               {% for field in form %}
                 {% for error in field.errors %}
-                  <li>{{ field.label }}: {{ error }}</li>
+                  <li><strong>{{ field.label }}:</strong> {{ error }}</li>
                 {% endfor %}
               {% endfor %}
               {% for error in form.non_field_errors %}
@@ -96,89 +47,118 @@
             </ul>
           </div>
         {% endif %}
-        <div class="mb-3">
-          <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+
+        <!-- Title -->
+        <div>
+          <label for="{{ form.title.id_for_label }}" class="block font-medium mb-1">
+            Title
+          </label>
           {{ form.title }}
           {% if form.title.errors %}
-            <div class="invalid-feedback">
-              {% for error in form.title.errors %}
-                {{ error }}
-              {% endfor %}
-            </div>
+            <p class="mt-1 text-sm text-red-600">
+              {% for error in form.title.errors %}{{ error }}{% endfor %}
+            </p>
           {% endif %}
         </div>
-        <div class="mb-3">
-          <label for="{{ form.content.id_for_label }}" class="form-label">Content</label>
+
+        <!-- Content -->
+        <div>
+          <label for="{{ form.content.id_for_label }}" class="block font-medium mb-1">
+            Content
+          </label>
           {{ form.content }}
-          
           {% if form.content.errors %}
-            <div class="invalid-feedback">
-              {% for error in form.content.errors %}
-                {{ error }}
-              {% endfor %}
-            </div>
+            <p class="mt-1 text-sm text-red-600">
+              {% for error in form.content.errors %}{{ error }}{% endfor %}
+            </p>
           {% endif %}
         </div>
-        <div class="mb-3">
-          <label for="{{ form.image.id_for_label }}" class="form-label">Image</label>
+
+        <!-- Image -->
+        <div>
+          <label for="{{ form.image.id_for_label }}" class="block font-medium mb-1">
+            Image
+          </label>
           {{ form.image }}
           {% if form.image.errors %}
-            <div class="invalid-feedback">
-              {% for error in form.image.errors %}
-                {{ error }}
-              {% endfor %}
-            </div>
+            <p class="mt-1 text-sm text-red-600">
+              {% for error in form.image.errors %}{{ error }}{% endfor %}
+            </p>
           {% endif %}
         </div>
-        <div class="mb-3">
-          <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+
+        <!-- Category -->
+        <div>
+          <label for="{{ form.category.id_for_label }}" class="block font-medium mb-1">
+            Category
+          </label>
           {{ form.category }}
           {% if form.category.errors %}
-            <div class="invalid-feedback">
-              {% for error in form.category.errors %}
-                {{ error }}
-              {% endfor %}
-            </div>
+            <p class="mt-1 text-sm text-red-600">
+              {% for error in form.category.errors %}{{ error }}{% endfor %}
+            </p>
           {% endif %}
         </div>
-        <div class="mb-3">
-          <label for="{{ form.tags.id_for_label }}" class="form-label">Tags</label>
+
+        <!-- Tags -->
+        <div>
+          <label for="{{ form.tags.id_for_label }}" class="block font-medium mb-1">
+            Tags
+          </label>
           {{ form.tags }}
-          <small class="form-text text-muted">Hold Ctrl (or Cmd) to select multiple tags.</small>
+          <p class="mt-1 text-sm text-gray-500">
+            Hold Ctrl (or Cmd) to select multiple tags.
+          </p>
           {% if form.tags.errors %}
-            <div class="invalid-feedback">
-              {% for error in form.tags.errors %}
-                {{ error }}
-              {% endfor %}
-            </div>
+            <p class="mt-1 text-sm text-red-600">
+              {% for error in form.tags.errors %}{{ error }}{% endfor %}
+            </p>
           {% endif %}
         </div>
-        <div class="mb-3">
-          <label for="{{ form.related_courses.id_for_label }}" class="form-label">Related Courses</label>
+
+        <!-- Related Courses -->
+        <div>
+          <label for="{{ form.related_courses.id_for_label }}" class="block font-medium mb-1">
+            Related Courses
+          </label>
           {{ form.related_courses }}
-          <small class="form-text text-muted">Hold Ctrl (or Cmd) to select multiple courses.</small>
+          <p class="mt-1 text-sm text-gray-500">
+            Hold Ctrl (or Cmd) to select multiple courses.
+          </p>
           {% if form.related_courses.errors %}
-            <div class="invalid-feedback">
-              {% for error in form.related_courses.errors %}
-                {{ error }}
-              {% endfor %}
-            </div>
+            <p class="mt-1 text-sm text-red-600">
+              {% for error in form.related_courses.errors %}{{ error }}{% endfor %}
+            </p>
           {% endif %}
         </div>
-        <div class="mb-3">
-          <label for="{{ form.status.id_for_label }}" class="form-label">Status</label>
+
+        <!-- Status -->
+        <div>
+          <label for="{{ form.status.id_for_label }}" class="block font-medium mb-1">
+            Status
+          </label>
           {{ form.status }}
           {% if form.status.errors %}
-            <div class="invalid-feedback">
-              {% for error in form.status.errors %}
-                {{ error }}
-              {% endfor %}
-            </div>
+            <p class="mt-1 text-sm text-red-600">
+              {% for error in form.status.errors %}{{ error }}{% endfor %}
+            </p>
           {% endif %}
         </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a href="{% url 'blog:blog-list-admin' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-3 pt-4">
+          <button type="submit"
+            class="rounded-lg bg-blue-600 px-6 py-2 text-white hover:bg-blue-700">
+            Save
+          </button>
+          <a href="{% url 'blog:blog-list-admin' %}"
+            class="rounded-lg border border-gray-300 px-6 py-2 text-gray-700 hover:bg-gray-100">
+            Cancel
+          </a>
+        </div>
+
       </form>
+
     </div>
   </div>
 </section>
