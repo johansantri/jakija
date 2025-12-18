@@ -24,6 +24,18 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 ![Dashboard Admin](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-29-10%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
+![Dashboard Admin](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-30-35%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Admin](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-31-29%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Admin](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-32-09%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Admin](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-32-42%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Admin](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-32-57%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Admin](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-33-24%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
 - User & Role Management  
 - Course Management global  
 - Subscription  
