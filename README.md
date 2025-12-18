@@ -11,11 +11,11 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 <summary>Click to expand</summary>
 
 ### **User Management**
-- **Secure Login & Logout** – Sistem autentikasi aman untuk semua pengguna.  
-- **Role-based Access** – Admin, Mitra, Instruktur, dan Peserta memiliki hak akses berbeda.  
-- **Profile Management** – Edit profil, upload foto, dan kelola preferensi.  
-- **Password Recovery** – Reset password melalui email.  
-- **Two-factor Authentication (2FA)** – Keamanan tambahan untuk login.  
+- **Secure Login & Logout** 
+- **Role-based Access**  
+- **Profile Management** 
+- **Password Recovery** 
+- **Two-factor Authentication (2FA)**  
 
 ### **Dashboard / Role-specific Features**
 
@@ -232,40 +232,7 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 
 
-### **Assessment & Progress**
-- Quizzes & Assignments (termasuk video quiz, LTI)  
-- Automatic Grading  
-- Progress Tracking  
-- Completion Certificates & Badges  
-- Gradebook  
 
-### **Communication & Collaboration**
-- Announcements  
-- Discussion Forums / Boards  
-- Direct Messaging / Chat  
-
-### **Notifications & Alerts**
-- Email Notifications  
-- Reminders & Deadlines  
-
-### **Analytics & Reporting**
-- Course Analytics  
-- User Reports  
-- Export Data  
-- Custom Reports  
-
-### **Content & Multimedia**
-- Video & Audio Streaming  
-- Interactive Content  
-- Document Versioning  
-
-### **Integration & Extensibility**
-- Third-party Integration (Payment gateway Tripay)  
-- API Access  
-
-### **Accessibility & UX**
-- Responsive Design  
-- Light Mode  
 
 ### **Security & Compliance**
 - Data Encryption  
@@ -297,6 +264,8 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 ## Requirements
 - Python 3.8+ (recommended)  
 - Django 5.1
+- HTMX
+- Talwin
 
 ## Quick install (Linux)
 1. git clone https://github.com/johansantri/mysite.git  
