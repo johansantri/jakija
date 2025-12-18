@@ -179,12 +179,43 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 - Upgrade / Promo & Discounts  
 - Notifications for renewal & payment  
 
-### **Course Management**
-- Create, Edit, Delete Courses  
-- Upload Materials (PDF, video, audio, gambar)  
+### **Curation Management**
+
+![Dashboard Curations](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-10-50%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Curations](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-10-56%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Curations](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-11-08%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Curations](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-12-06%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Curations](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-12-33%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Curations](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-12-42%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+
+![Dashboard Curations](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-12-48%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+- Main Dashbord 
+- Course View
+- Course Rating
+- Course Comment
+- Microcredential
+- Partner Analitics
+
+
+### **Course Management Studio**
+- Create Courses  
+- Matrial Upload Materials (PDF, video, audio, image)  
+- Assessment (Multiple Choice, Open Response Assessment, Interactive Video, LTI)
 - Course Categories & Tags  
-- Course Scheduling (jadwal mulai, kelas dibuka, hingga berakhir)  
-- Course Prerequisites  
+- Course Scheduling  
+- Course Pricing (Free, Buy Before Enrollment, Buy to Take Exam, Buy for Certificate)
+- Course Team
+- Course Curation
+- Course Grading
+
+
 
 ### **Assessment & Progress**
 - Quizzes & Assignments (termasuk video quiz, LTI)  
