@@ -1,73 +1,137 @@
 {% extends 'home/tes.html' %}
 {% load static %}
 {% block content %}
-<div class="container mt-5">
-    <h2> {{ course.course_name }}</h2>
-    <p>Current Status: {{ course.status_course.get_status_display }}</p>
-    <p>Latest Message: {{ course.status_course.manual_message|default:"No message" }}</p>
 
-    <h4>Status History</h4>
+<div class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
+    <h2 class="text-2xl font-bold mb-2">{{ course.course_name }}</h2>
+
+    <p class="mb-1">
+        <span class="font-semibold">Current Status:</span>
+        {{ course.status_course.get_status_display }}
+    </p>
+    <p class="mb-6">
+        <span class="font-semibold">Latest Message:</span>
+        {{ course.status_course.manual_message|default:"No message" }}
+    </p>
+
+    <h4 class="text-xl font-semibold mb-3">Status History</h4>
+
     {% if history %}
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Status</th>
-                <th>Action</th>
-                <th>Message</th>
-                <th>Changed By</th>
-                <th>Changed At</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for entry in history %}
-            <tr {% if entry.status == 'draft' and entry.changed_by.is_partner %}class="table-danger"{% elif entry.status == 'curation' and entry.changed_by.is_superuser %}class="table-danger"{% elif entry.status == 'published' and entry.changed_by.is_superuser %}class="table-success"{% elif entry.status == 'archived' %}class="table-secondary"{% endif %}>
-                <td>{{ entry.get_status_display }}</td>
-                <td>
-                    {% if entry.status == 'curation' and entry.changed_by.is_instructor %}
-                        Submitted for Curation
-                    {% elif entry.status == 'curation' and entry.changed_by.is_partner %}
-                        Accepted by Partner
-                    {% elif entry.status == 'draft' and entry.changed_by.is_partner %}
-                        Rejected by Partner
-                    {% elif entry.status == 'published' and entry.changed_by.is_superuser %}
-                        Published by Superuser
+    <div class="overflow-x-auto">
+        <table class="min-w-full border border-gray-300 text-sm">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="border px-3 py-2 text-left">Status</th>
+                    <th class="border px-3 py-2 text-left">Action</th>
+                    <th class="border px-3 py-2 text-left">Message</th>
+                    <th class="border px-3 py-2 text-left">Changed By</th>
+                    <th class="border px-3 py-2 text-left">Changed At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in history %}
+                <tr
+                    class="
+                    {% if entry.status == 'draft' and entry.changed_by.is_partner %}
+                        bg-red-100
                     {% elif entry.status == 'curation' and entry.changed_by.is_superuser %}
-                        Rejected by Superuser
-                    {% elif entry.status == 'archived' and entry.changed_by.is_superuser %}
-                        Archived by Superuser
+                        bg-red-100
+                    {% elif entry.status == 'published' and entry.changed_by.is_superuser %}
+                        bg-green-100
                     {% elif entry.status == 'archived' %}
-                        Archived Automatically
-                    {% elif entry.status == 'draft' and entry.changed_by.is_superuser %}
-                        Rejected to Draft by Superuser
-                    {% else %}
-                        Updated
+                        bg-gray-200
                     {% endif %}
-                </td>
-                <td>{{ entry.manual_message|default:"No message" }}</td>
-                <td>{{ entry.changed_by.username }}</td>
-                <td>{{ entry.changed_at|date:"Y-m-d H:i:s" }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    "
+                >
+                    <td class="border px-3 py-2">
+                        {{ entry.get_status_display }}
+                    </td>
+                    <td class="border px-3 py-2">
+                        {% if entry.status == 'curation' and entry.changed_by.is_instructor %}
+                            Submitted for Curation
+                        {% elif entry.status == 'curation' and entry.changed_by.is_partner %}
+                            Accepted by Partner
+                        {% elif entry.status == 'draft' and entry.changed_by.is_partner %}
+                            Rejected by Partner
+                        {% elif entry.status == 'published' and entry.changed_by.is_superuser %}
+                            Published by Superuser
+                        {% elif entry.status == 'curation' and entry.changed_by.is_superuser %}
+                            Rejected by Superuser
+                        {% elif entry.status == 'archived' and entry.changed_by.is_superuser %}
+                            Archived by Superuser
+                        {% elif entry.status == 'archived' %}
+                            Archived Automatically
+                        {% elif entry.status == 'draft' and entry.changed_by.is_superuser %}
+                            Rejected to Draft by Superuser
+                        {% else %}
+                            Updated
+                        {% endif %}
+                    </td>
+                    <td class="border px-3 py-2">
+                        {{ entry.manual_message|default:"No message" }}
+                    </td>
+                    <td class="border px-3 py-2">
+                        {{ entry.changed_by.username }}
+                    </td>
+                    <td class="border px-3 py-2">
+                        {{ entry.changed_at|date:"Y-m-d H:i:s" }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% else %}
-    <p>No status history available.</p>
+        <p class="text-gray-500">No status history available.</p>
     {% endif %}
 
-    <h4>Review Course</h4>
-    <form method="post">
+    <h4 class="text-xl font-semibold mt-8 mb-4">Review Course</h4>
+
+    <form method="post" class="space-y-4">
         {% csrf_token %}
-        <div class="form-group">
-            <label for="message">Review Message:</label>
-            <textarea name="message" id="message" class="form-control" rows="5" required></textarea>
+
+        <div>
+            <label for="message" class="block font-medium mb-1">
+                Review Message:
+            </label>
+            <textarea
+                name="message"
+                id="message"
+                rows="5"
+                required
+                class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            ></textarea>
         </div>
-        <!-- Tombol untuk mengajukan ke curation (hanya jika status 'curation') -->
-        {% if can_submit_to_curation %}
-        <button type="submit" name="action" value="accept" class="btn btn-success">Accept and Submit to Superuser</button>
-        {% endif %}
-        <!-- Tombol untuk menolak ke draft (selalu ditampilkan) -->
-        <button type="submit" name="action" value="reject" class="btn btn-danger">Reject and Return to Instructor</button>
-        <a href="{% url 'courses:studio' id=course.id %}" class="btn btn-secondary">Cancel</a>
+
+        <div class="flex flex-wrap gap-3">
+            {% if can_submit_to_curation %}
+            <button
+                type="submit"
+                name="action"
+                value="accept"
+                class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md"
+            >
+                Accept and Submit to Superuser
+            </button>
+            {% endif %}
+
+            <button
+                type="submit"
+                name="action"
+                value="reject"
+                class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
+            >
+                Reject and Return to Instructor
+            </button>
+
+            <a
+                href="{% url 'courses:studio' id=course.id %}"
+                class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md inline-flex items-center"
+            >
+                Cancel
+            </a>
+        </div>
     </form>
 </div>
+
 {% endblock %}
