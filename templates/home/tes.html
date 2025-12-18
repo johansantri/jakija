@@ -125,7 +125,7 @@
             {% if user.is_superuser %}
                 <a href="{% url 'authentication:dasbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'dasbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
-                    <i class="fas fa-home w-5"></i><span>Dashboard Utama</span>
+                    <i class="fas fa-home w-5"></i><span>Main Dashboard</span>
                 </a>
                 <a href="{% url 'courses:partner_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'partner_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
@@ -145,7 +145,7 @@
                 </a>
                 <a href="{% url 'authentication:comments-dashboard' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'comments-dashboard' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
-                    <i class="fas fa-comments w-5"></i><span>Comments Dashboard</span>
+                    <i class="fas fa-comments w-5"></i><span>Comments View</span>
                 </a>
                 <a href="{% url 'partner:partner_course_ratings' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'partner_course_ratings' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
@@ -169,7 +169,7 @@
                 </a>
                 <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
-                    <i class="fas fa-tachometer-alt w-5"></i><span>Dashboard Secondary</span>
+                    <i class="fas fa-tachometer-alt w-5"></i><span>My Courses</span>
                 </a>
 
             {% elif user.is_curation %}
