@@ -116,6 +116,43 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 #### **learners Dashboard**
 
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-45-18%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-45-38%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+
+
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-45-54%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+
+
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-46-06%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+
+
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-46-44%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+
+
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-46-53%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+
+
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-47-28%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+
+
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-47-46%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+
+
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-47-55%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-48-06%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence%20-%20JakIja.png)
+
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-48-25%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-49-23%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-49-32%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard learner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-51-34%20Certificate%20of%20Achievement%20-%20certificate_public-speaking-for-beginners-speak-with-confidence.pdf.png)
+
+
 - My Courses & Progress Tracking  
 - Quizzes & Assignments  
 - Certificates & Badges  
