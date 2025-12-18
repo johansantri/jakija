@@ -1530,12 +1530,12 @@ def submit_rating(request, id, slug):
 
     # Cek apakah user sudah lulus
     if not user_has_passed_course(request.user, course):
-        messages.error(request, "Kamu hanya bisa memberi rating setelah lulus dari course ini.")
+        messages.error(request, "You can only give a rating after completing this course")
         return redirect('courses:course_lms_detail', id=course.id, slug=course.slug)
 
     # Cek apakah user sudah memberi rating sebelumnya
     if CourseRating.objects.filter(user=request.user, course=course).exists():
-        messages.info(request, "Kamu sudah memberikan rating untuk course ini.")
+        messages.info(request, "You have already given a rating for this course.")
         return redirect('courses:course_lms_detail', id=course.id, slug=course.slug)
 
     if request.method == 'POST':
@@ -1543,7 +1543,7 @@ def submit_rating(request, id, slug):
 
         # Deteksi aktivitas mencurigakan
         if is_suspicious(request):
-            messages.warning(request, "Aktivitas mencurigakan terdeteksi. Rating tidak disimpan.")
+            messages.warning(request, "Suspicious activity detected. Rating not saved.")
             return redirect('courses:course_lms_detail', id=course.id, slug=course.slug)
 
         if form.is_valid():
@@ -1553,19 +1553,19 @@ def submit_rating(request, id, slug):
             # Validasi isi komentar
             blacklisted = check_for_blacklisted_keywords(comment)
             if blacklisted:
-                messages.warning(request, f"Komentarmu mengandung kata yang dilarang: '{blacklisted}'")
+                messages.warning(request, f"Your comment contains blacklisted words: '{blacklisted}'")
                 return redirect('courses:course_lms_detail', id=course.id, slug=course.slug)
 
             # Cek spam (opsional)
             if hasattr(rating, 'is_spam') and rating.is_spam():
-                messages.warning(request, "Terlalu sering mengirim rating. Coba lagi nanti.")
+                messages.warning(request, "Too many ratings sent. Please try again later.")
                 return redirect('courses:course_lms_detail', id=course.id, slug=course.slug)
 
             rating.user = request.user
             rating.course = course
             rating.save()
 
-            messages.success(request, "Terima kasih! Rating kamu sudah disimpan.")
+            messages.success(request, "Thank you! Your rating has been saved.")
             return redirect('courses:course_lms_detail', id=course.id, slug=course.slug)
     else:
         form = CourseRatingForm()
@@ -1580,7 +1580,7 @@ def category_course_list(request, slug):
     # Mendapatkan status 'published'
     published_status = CourseStatus.objects.filter(status='published').first()
     if not published_status:
-        return HttpResponseNotFound("Status 'published' tidak ditemukan")
+        return HttpResponseNotFound("Status 'published' not found")
 
     # Ambil courses yang terkait dengan kategori tersebut dan status 'published'
     courses = Course.objects.filter(
@@ -1680,7 +1680,7 @@ def search_posts(request):
     
     user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
     if 'bot' in user_agent or 'crawler' in user_agent:
-        return HttpResponse(render_to_string('messages.html', {'message': "Akses diblokir. Terdeteksi bot!", 'type': 'error'}))
+        return HttpResponse(render_to_string('messages.html', {'message': "Access blocked. Bot detected.!", 'type': 'error'}))
 
     user_profile, _ = UserProfile.objects.get_or_create(user=request.user)
     if user_profile.is_blocked():
@@ -1690,7 +1690,7 @@ def search_posts(request):
     if was_limited:
         user_profile.blocked_until = timezone.now() + timedelta(days=1)
         user_profile.save()
-        return HttpResponse(render_to_string('messages.html', {'message': "Diblokir 1 hari karena melanggar batas!", 'type': 'error'}))
+        return HttpResponse(render_to_string('messages.html', {'message': "Blocked for 1 day due to exceeding limits!", 'type': 'error'}))
     
     query = request.GET.get('q', '').strip()
     posts = SosPost.objects.filter(
@@ -1716,7 +1716,7 @@ def posts_by_hashtag(request, hashtag):
     
     user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
     if 'bot' in user_agent or 'crawler' in user_agent:
-        return HttpResponse(render_to_string('messages.html', {'message': "Akses diblokir. Terdeteksi bot!", 'type': 'error'}))
+        return HttpResponse(render_to_string('messages.html', {'message': "Access blocked. Bot detected.!", 'type': 'error'}))
 
     user_profile, _ = UserProfile.objects.get_or_create(user=request.user)
     if user_profile.is_blocked():
@@ -1726,7 +1726,7 @@ def posts_by_hashtag(request, hashtag):
     if was_limited:
         user_profile.blocked_until = timezone.now() + timedelta(days=1)
         user_profile.save()
-        return HttpResponse(render_to_string('messages.html', {'message': "Diblokir 1 hari karena melanggar batas!", 'type': 'error'}))
+        return HttpResponse(render_to_string('messages.html', {'message': "Blocked for 1 day due to exceeding limits!", 'type': 'error'}))
     
     posts = SosPost.objects.filter(
         deleted=False,
@@ -1802,7 +1802,7 @@ def load_more_posts(request):
     
     user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
     if 'bot' in user_agent or 'crawler' in user_agent:
-        return HttpResponse(render_to_string('messages.html', {'message': "Akses diblokir. Terdeteksi bot!", 'type': 'error'}))
+        return HttpResponse(render_to_string('messages.html', {'message': "Access blocked. Bot detected.!", 'type': 'error'}))
 
     user_profile, _ = UserProfile.objects.get_or_create(user=request.user)
     if user_profile.is_blocked():
@@ -1812,7 +1812,7 @@ def load_more_posts(request):
     if was_limited:
         user_profile.blocked_until = timezone.now() + timedelta(days=1)
         user_profile.save()
-        return HttpResponse(render_to_string('messages.html', {'message': "Diblokir 1 hari karena melanggar batas!", 'type': 'error'}))
+        return HttpResponse(render_to_string('messages.html', {'message': "Blocked for 1 day due to exceeding limits!", 'type': 'error'}))
     
     if request.method == 'GET':
         offset = int(request.GET.get('offset', 0))
@@ -1844,7 +1844,7 @@ def create_post(request):
 
     user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
     if 'bot' in user_agent or 'crawler' in user_agent:
-        return HttpResponse(render_to_string('messages.html', {'message': "Akses diblokir. Terdeteksi bot!", 'type': 'error'}))
+        return HttpResponse(render_to_string('messages.html', {'message': "Access blocked. Bot detected.!", 'type': 'error'}))
 
     user_profile, _ = UserProfile.objects.get_or_create(user=request.user)
     if user_profile.is_blocked():
@@ -1854,7 +1854,7 @@ def create_post(request):
     if was_limited:
         user_profile.blocked_until = timezone.now() + timedelta(days=1)
         user_profile.save()
-        return HttpResponse(render_to_string('messages.html', {'message': "Diblokir 1 hari karena melanggar batas!", 'type': 'error'}))
+        return HttpResponse(render_to_string('messages.html', {'message': "Blocked for 1 day due to exceeding limits!", 'type': 'error'}))
 
     if request.method == 'POST':
         form = SosPostForm(request.POST)
@@ -1873,7 +1873,7 @@ def create_post(request):
             })
             return HttpResponse(html, headers={'HX-Trigger': 'clearForm'})
         else:
-            return HttpResponse(render_to_string('messages.html', {'message': "Form tidak valid!", 'type': 'error'}))
+            return HttpResponse(render_to_string('messages.html', {'message': "Form is not valid!", 'type': 'error'}))
     return HttpResponse(status=400)
 @csrf_protect
 @require_POST
@@ -1903,7 +1903,7 @@ def like_post(request, post_id):
             return HttpResponse(html)
 
         except SosPost.DoesNotExist:
-            return HttpResponse(render_to_string('messages.html', {'message': "Postingan tidak ditemukan!", 'type': 'error'}))
+            return HttpResponse(render_to_string('messages.html', {'message': "Post not found!", 'type': 'error'}))
         except Exception:
             return HttpResponse(status=500)
 
@@ -1919,7 +1919,7 @@ def reply_post(request, post_id):
         
         user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
         if 'bot' in user_agent or 'crawler' in user_agent:
-            return HttpResponse(render_to_string('messages.html', {'message': "Akses diblokir. Terdeteksi bot!", 'type': 'error'}))
+            return HttpResponse(render_to_string('messages.html', {'message': "Access blocked. Bot detected.!", 'type': 'error'}))
 
         user_profile, _ = UserProfile.objects.get_or_create(user=request.user)
         if user_profile.is_blocked():
@@ -1929,7 +1929,7 @@ def reply_post(request, post_id):
         if was_limited:
             user_profile.blocked_until = timezone.now() + timedelta(days=1)
             user_profile.save()
-            return HttpResponse(render_to_string('messages.html', {'message': "Diblokir 1 hari karena melanggar batas!", 'type': 'error'}))
+            return HttpResponse(render_to_string('messages.html', {'message': "Blocked for 1 day due to exceeding limits!", 'type': 'error'}))
         
         if request.method == 'POST':
             form = SosPostForm(request.POST)
@@ -1942,10 +1942,10 @@ def reply_post(request, post_id):
                 reply.like_count = Like.objects.filter(post=reply).count()
                 html = render_to_string('home/post_item.html', {'post': reply})
                 return HttpResponse(html, headers={'HX-Trigger': 'clearForm'})
-            return HttpResponse(render_to_string('messages.html', {'message': "Form tidak valid!", 'type': 'error'}))
+            return HttpResponse(render_to_string('messages.html', {'message': "Form is not valid!", 'type': 'error'}))
         return HttpResponse(status=400)
     except SosPost.DoesNotExist:
-        return HttpResponse(render_to_string('messages.html', {'message': "Post tidak ditemukan!", 'type': 'error'}))
+        return HttpResponse(render_to_string('messages.html', {'message': "Post not found!", 'type': 'error'}))
     except Exception:
         return HttpResponse(status=500)
     
@@ -1955,7 +1955,7 @@ def reply_form(request, post_id):
         html = render_to_string('home/reply_form.html', {'post_id': post_id})
         return HttpResponse(html)
     except SosPost.DoesNotExist:
-        return HttpResponse(render_to_string('messages.html', {'message': "Post tidak ditemukan!", 'type': 'error'}))
+        return HttpResponse(render_to_string('messages.html', {'message': "Post not found!", 'type': 'error'}))
 
 def micro_detail(request, id, slug):
     # Ambil data MicroCredential
@@ -3480,7 +3480,7 @@ def submit_assessment(request, assessment_id):
             session.delete()
             logger.debug(f"Deleted session for user {request.user.username}, assessment {assessment_id}")
 
-        messages.success(request, "Jawaban Anda telah berhasil disubmit. Terima kasih!")
+        messages.success(request, "Your answer has been successfully submitted. Thank you.!")
         return redirect(reverse('courses:course_learn', kwargs={'username': request.user.username, 'slug': course.slug}) + f"?assessment_id={assessment.id}")
 
     logger.debug(f"Rendering submit_assessment.html for assessment {assessment_id}, user {request.user.username}")
@@ -4596,11 +4596,11 @@ def add_course_price(request, id):
             course_price.course = course
             course_price.partner = partner
             course_price.save()
-            messages.success(request, "✅ Harga kursus berhasil disimpan!")
+            messages.success(request, "✅ Course price has been successfully saved!")
             # Redirect ke detail kursus atau halaman lain yang sesuai
             return redirect(reverse('courses:studio', args=[course.id]))
         else:
-            messages.error(request, "Terdapat kesalahan pada form, silakan cek kembali.")
+            messages.error(request, "There are errors in the form, please check again.")
     else:
         form = CoursePriceForm(user=request.user, instance=existing_price)
 
@@ -4717,10 +4717,10 @@ def instructor_profile(request, username):
 
     except CourseStatus.DoesNotExist:
         logger.error("Published status not found")
-        return HttpResponseNotFound("Status 'published' tidak ditemukan")
+        return HttpResponseNotFound("Status 'published' not found.")
     except Exception as e:
         logger.exception(f"Unexpected error in instructor_profile: {str(e)}")
-        return HttpResponseServerError("Terjadi kesalahan yang tidak terduga.")
+        return HttpResponseServerError("An unexpected error occurred.")
 
 logger = logging.getLogger(__name__)
 
@@ -4746,10 +4746,10 @@ def enroll_course(request, course_id):
 
     # Jika kursus berbayar dan user tidak punya lisensi aktif
     if not is_course_free and not has_active_license:
-        logger.warning(f"[Enroll Blocked] {user.email} tidak punya lisensi aktif untuk course {course.course_name} yang berbayar")
+        logger.warning(f"[Enroll Blocked] {user.email} You do not have an active license for this course {course.course_name} Paid")
         
         if course.payment_model == 'buy first':
-            messages.info(request, "Anda perlu membayar untuk mengikuti kursus ini.")
+            messages.info(request, "You need to pay to follow this course.")
             return redirect('payments:process_payment', course_id=course.id)
 
         # pay for exam atau pay for certificate: boleh lanjut, bayar nanti
@@ -4768,7 +4768,7 @@ def enroll_course(request, course_id):
         logger.info(f"[Enroll] Price type found: {price_type.name}")
     except PricingType.DoesNotExist:
         logger.error(f"[Enroll Error] Price type not found for {payment_model_name}")
-        messages.error(request, f"Tipe harga untuk model {course.payment_model} tidak ditemukan.")
+        messages.error(request, f"Price type for model {course.payment_model} not found.")
         return redirect('courses:course_lms_detail', id=course_id, slug=course.slug)
 
 
@@ -4824,7 +4824,7 @@ def draft_lms(request, id):
         if team_member:
             course = team_member.course
         else:
-            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            messages.error(request, "You do not have access to this course.")
             return redirect('authentication:home')
 
     # If the course is found, render the course page
@@ -4841,7 +4841,7 @@ def get_client_ip(request):
 #@ratelimit(key='ip', rate='30/h', method='GET', block=True)
 def course_lms_detail(request, id, slug):
     if getattr(request, 'limited', False):
-        return HttpResponse("Terlalu banyak permintaan. Coba lagi nanti.", status=429)
+        return HttpResponse("Too many requests. Please try again later.", status=429)
     
     course = get_object_or_404(
         Course.objects.select_related('category', 'instructor__user', 'status_course')
@@ -5092,7 +5092,7 @@ def course_grade(request, id):
         if team_member:
             course = team_member.course
         else:
-            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            messages.error(request, "You do not have access to this course.")
             return redirect('authentication:home')
     
     course = get_object_or_404(Course, id=id)
@@ -5173,7 +5173,7 @@ def update_grade_range(request, id):
         if team_member:
             course = team_member.course
         else:
-            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            messages.error(request, "You do not have access to this course.")
             return redirect('authentication:home')
 
 
@@ -5250,7 +5250,7 @@ def create_assessment(request, idcourse, idsection):
         if team_member:
             course = team_member.course
         else:
-            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            messages.error(request, "You do not have access to this course.")
             return redirect('authentication:home')
 
     # Ensure the section belongs to the course
@@ -5266,7 +5266,7 @@ def create_assessment(request, idcourse, idsection):
             total_weight = total_weight if total_weight is not None else Decimal('0')
 
             if total_weight + new_weight > Decimal('100'):
-                messages.error(request, "Total bobot untuk penilaian dalam course ini tidak boleh melebihi 100")
+                messages.error(request, "Total weight for assessments in this course cannot exceed 100")
                 return render(request, 'courses/course_assessement.html', {'form': form, 'course': course, 'section': section})
 
             # Create the assessment instance but don't save it yet
@@ -5322,7 +5322,7 @@ def edit_assessment(request, idcourse, idsection, idassessment):
         if team_member:
             course = team_member.course
         else:
-            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            messages.error(request, "You do not have access to this course.")
             return redirect('authentication:home')
 
     # Ensure the section belongs to the course
@@ -5340,7 +5340,7 @@ def edit_assessment(request, idcourse, idsection, idassessment):
             # Check total weight
             total_weight = Assessment.objects.filter(section=section).exclude(id=idassessment).aggregate(Sum('weight'))['weight__sum'] or Decimal('0')
             if total_weight + Decimal(form.cleaned_data['weight']) > Decimal('100'):
-                messages.error(request, "Total bobot untuk penilaian dalam section ini tidak boleh melebihi 100")
+                messages.error(request, "Total weight for assessments in this section cannot exceed 100")
                 return render(request, 'courses/course_assessement_edit.html', {
                     'form': form,
                     'course': course,
@@ -5403,7 +5403,7 @@ def delete_assessment(request, idcourse, idsection, idassessment):
         if team_member:
             course = team_member.course
         else:
-            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            messages.error(request, "You do not have access to this course.")
             return redirect('authentication:home')
 
     # Ensure the section belongs to the course
@@ -5463,7 +5463,7 @@ def edit_question(request, idcourse, idsection, idassessment, idquestion):
         if team_member:
             course = team_member.course
         else:
-            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            messages.error(request, "You do not have access to this course.")
             return redirect('authentication:home')
 
     section = get_object_or_404(Section, id=idsection, courses=course)
@@ -5501,7 +5501,7 @@ def edit_question(request, idcourse, idsection, idassessment, idquestion):
             choice_formset.instance = question
             choice_formset.save()
 
-            messages.success(request, "Soal berhasil diperbarui!")
+            messages.success(request, "Question has been successfully updated!")
 
             return redirect('courses:view-question',
                             idcourse=course.id,
@@ -5522,7 +5522,7 @@ def edit_question(request, idcourse, idsection, idassessment, idquestion):
                 print("Non-field:", f.non_field_errors())
             print("=========================================================\n")
 
-            messages.error(request, "Terdapat kesalahan. Periksa kembali isian Anda.")
+            messages.error(request, "There are errors. Please check your input.")
 
 
     # ==================== CONTEXT ====================
@@ -5577,7 +5577,7 @@ def delete_question(request, idcourse, idquestion, idsection, idassessment):
         if team_member:
             course = team_member.course
         else:
-            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            messages.error(request, "You do not have access to this course.")
             return redirect('authentication:home')
 
     # Ensure the section belongs to the course
@@ -5643,7 +5643,7 @@ def create_question_view(request, idcourse, idsection, idassessment):
         if team_member:
             course = team_member.course
         else:
-            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            messages.error(request, "You do not have access to this course.")
             return redirect('authentication:home')
 
     # ==================== VALIDATE SECTION & ASSESSMENT ====================
@@ -5686,7 +5686,7 @@ def create_question_view(request, idcourse, idsection, idassessment):
             choice_formset.instance = question
             choice_formset.save()
 
-            messages.success(request, "Soal dan pilihan jawaban berhasil dibuat!")
+            messages.success(request, "Question and answer choices have been successfully created!")
 
             # Save & Add Another
             if 'save_and_add_another' in request.POST:
@@ -5702,7 +5702,7 @@ def create_question_view(request, idcourse, idsection, idassessment):
                             idassessment=assessment.id)
 
         else:
-            messages.error(request, "Terdapat kesalahan. Silakan periksa kembali isian Anda.")
+            messages.error(request, "There are errors. Please check your input.")
 
     # ==================== CONTEXT ====================
     context = {
@@ -6162,7 +6162,7 @@ def course_profile(request, id):
         if team_member:
             course = team_member.course
         else:
-            messages.error(request, "Anda tidak memiliki akses ke kursus ini.")
+            messages.error(request, "You do not have access to this course.")
             return redirect('authentication:home')
 
     # Handle POST request to update course data
@@ -6301,7 +6301,7 @@ def add_matrial(request, idcourse, idsection):
     elif request.user.is_instructor:
         course = get_object_or_404(Course, id=idcourse, instructor__user_id=request.user.id, instructor__status='Approved')
     else:
-        messages.error(request, "Kamu tidak punya akses ke course ini.")
+        messages.error(request, "You do not have access to this course.")
         return redirect('courses:home')
 
     # Ambil section (pastikan milik course ini)
@@ -6314,10 +6314,10 @@ def add_matrial(request, idcourse, idsection):
             material.section = section
             material.courses = course
             material.save()
-            messages.success(request, "Material berhasil ditambahkan!")
+            messages.success(request, "Material successfully added!")
             return redirect('courses:studio', id=course.id)
         else:
-            messages.error(request, "Form tidak valid.")
+            messages.error(request, "Form is not valid.")
     else:
         form = MatrialForm()
 
