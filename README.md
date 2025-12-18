@@ -230,7 +230,15 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 - Course Curation
 - Course Grading
 
+### **Finance Dashbord**
 
+![Finance Dashbord](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/i/Screenshot%202025-12-18%20at%2010-36-07%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+- Paymant Dasbord  
+- Partner Courses  
+- Invoice & Receipt
+- Partner Commission  
+- Partner Analitics
 
 
 
