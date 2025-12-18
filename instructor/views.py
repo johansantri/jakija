@@ -9,7 +9,7 @@ import csv
 from django.core.mail import send_mail
 from decimal import Decimal
 from django.contrib import messages
-from courses.models import QuizResult,LTIResult,InstructorCertificate,Course,CoursePrice,PricingType, Enrollment,Section,GradeRange,CourseStatusHistory,QuestionAnswer, CourseProgress, PeerReview,MaterialRead, AssessmentRead, AssessmentScore,Material,Assessment, Submission, CustomUser, Instructor
+from courses.models import Quiz,QuizResult,LTIResult,InstructorCertificate,Course,CoursePrice,PricingType, Enrollment,Section,GradeRange,CourseStatusHistory,QuestionAnswer, CourseProgress, PeerReview,MaterialRead, AssessmentRead, AssessmentScore,Material,Assessment, Submission, CustomUser, Instructor
 from authentication.models import CustomUser, Universiti
 # Create your views here.
 from django.template.loader import render_to_string
@@ -709,41 +709,71 @@ def instructor_learning_report(request):
 
             for assessment in assessments:
                 score_value = Decimal('0')
-                all_submitted = False
+                is_submitted = True
 
-                # 1️⃣ QuestionAnswer
-                qas = question_by_user_assessment.get((learner.id, assessment.id), [])
-                if qas:
-                    all_submitted = True
-                    correct = sum(1 for qa in qas if qa.choice.is_correct)
-                    total_questions = assessment.questions.count()
-                    if total_questions:
-                        score_value += Decimal(correct) / Decimal(total_questions) * Decimal(assessment.weight)
+                # 1️⃣ LTI Result
+                lti_result = LTIResult.objects.filter(user=learner, assessment=assessment).first()
+                if lti_result and lti_result.score is not None:
+                    lti_score = Decimal(lti_result.score)
+                    if lti_score > 1.0:
+                        lti_score /= 100
+                    score_value = lti_score * Decimal(assessment.weight)
 
-                # 2️⃣ QuizResult
-                qrs = quiz_by_user_assessment.get((learner.id, assessment.id), [])
-                if qrs:
-                    all_submitted = True
-                    for qr in qrs:
-                        score_value += Decimal(qr.score) / Decimal(qr.total_questions) * Decimal(assessment.weight)
+                else:
+                    # 2️⃣ In-video quizzes
+                    invideo_quizzes = Quiz.objects.filter(assessment=assessment)
+                    if invideo_quizzes.exists():
+                        quiz_result = QuizResult.objects.filter(user=learner, assessment=assessment).first()
+                        if quiz_result and quiz_result.total_questions > 0:
+                            score_value = (Decimal(quiz_result.score) / Decimal(quiz_result.total_questions)) * Decimal(assessment.weight)
+                        else:
+                            is_submitted = False
+                            score_value = Decimal('0')
 
-                # 3️⃣ LTIResult
-                lrs = lti_by_user_assessment.get((learner.id, assessment.id), [])
-                if lrs:
-                    all_submitted = True
-                    for lr in lrs:
-                        score_value += Decimal(lr.score) / Decimal(lr.total_questions) * Decimal(assessment.weight)
+                    else:
+                        # 3️⃣ Old question model
+                        total_questions = assessment.questions.count()
+                        if total_questions > 0:
+                            total_correct = sum(
+                                QuestionAnswer.objects.filter(question=q, user=learner, choice__is_correct=True).count()
+                                for q in assessment.questions.all()
+                            )
+                            answers_exist = QuestionAnswer.objects.filter(question__in=assessment.questions.all(), user=learner).exists()
+                            if not answers_exist:
+                                is_submitted = False
+                            score_value = (Decimal(total_correct) / Decimal(total_questions)) * Decimal(assessment.weight)
 
+                        else:
+                            # 4️⃣ Askora submissions
+                            askora_submissions = Submission.objects.filter(askora__assessment=assessment, user=learner)
+                            if not askora_submissions.exists():
+                                is_submitted = False
+                                score_value = Decimal('0')
+                            else:
+                                latest_submission = askora_submissions.order_by('-submitted_at').first()
+                                assessment_score = AssessmentScore.objects.filter(submission=latest_submission).first()
+                                if assessment_score:
+                                    score_value = Decimal(assessment_score.final_score)
+                                else:
+                                    is_submitted = False
+                                    score_value = Decimal('0')
+
+                # Clamp score
                 score_value = min(score_value, Decimal(assessment.weight))
+
+                # Tambahkan ke list assessment_scores
                 assessment_scores.append({
                     'name': assessment.name,
                     'weight': assessment.weight,
                     'score': score_value,
+                    'submitted': is_submitted
                 })
 
+                # Update total_score
                 total_score += score_value
-                if not all_submitted:
+                if not is_submitted:
                     all_assessments_submitted = False
+
 
             overall_percentage = (total_score / total_max_score * 100) if total_max_score else 0
             passing_criteria_met = overall_percentage >= passing_threshold

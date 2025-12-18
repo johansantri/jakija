@@ -94,6 +94,20 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 - Messaging   
 
 #### **Instructor Dashboard**
+
+![Dashboard Instructor](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/z/Screenshot%202025-12-18%20at%2009-30-13%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Instructor](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/z/Screenshot%202025-12-18%20at%2009-30-21%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Instructor](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/z/Screenshot%202025-12-18%20at%2009-30-58%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+
+![Dashboard Instructor](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/z/Screenshot%202025-12-18%20at%2009-31-04%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Instructor](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/z/Screenshot%202025-12-18%20at%2009-31-14%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+
+
 - Create/Edit Courses  
 - Upload Materials (PDF, Video, Audio, Interactive Content)  
 - Quizzes, Assignments, and Gradebook  
