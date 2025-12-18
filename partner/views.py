@@ -874,9 +874,10 @@ def has_access(user):
 @login_required
 @user_passes_test(has_access, login_url='authentication:dashboard')
 def course_completion_rate_view(request):
+    # Base queryset
     courses = Course.objects.all()
 
-    # Filter partner jika user partner (bukan superuser)
+    # Filter jika user adalah partner (bukan superuser)
     if getattr(request.user, 'is_partner', False) and not request.user.is_superuser:
         try:
             partner = request.user.partner_user
@@ -885,36 +886,35 @@ def course_completion_rate_view(request):
             messages.error(request, "Akun Anda belum terhubung ke data Partner.")
             return redirect('authentication:dashboard')
 
-    results = []
+    # Annotate setiap course dengan:
+    # - total_enrolled: jumlah enrollment
+    # - total_completed: jumlah user yang passed (berdasarkan logika is_passed)
+    courses_with_stats = courses.annotate(
+        total_enrolled=Count('enrollments'),
+    ).annotate(
+        # Hitung berapa user yang passed berdasarkan logika is_passed kamu
+        # (asumsi: ada field atau cara cepat di DB untuk tahu status passed)
+        total_completed=Count(
+            'enrollments',
+            filter=Q(enrollments__user__courseprogress__course=F('id'),
+                     enrollments__user__courseprogress__progress_percentage=100,
+                     # Tambahkan kondisi assessment passed jika diperlukan
+                     # Contoh: AND overall score >= passing threshold
+                     )
+        )
+    ).filter(total_enrolled__gt=0) \
+     .order_by('-total_enrolled')[:10]
 
-    for course in courses:
-        enrollments = Enrollment.objects.filter(course=course)
-        total_enrolled = enrollments.count()
-
-        total_passed = 0
-        for enrollment in enrollments.select_related('user'):
-            if is_passed(enrollment.user, course):
-                total_passed += 1
-
-        results.append({
-            'course_name': course.course_name,
-            'total_enrolled': total_enrolled,
-            'total_completed': total_passed
-        })
-
-    # Urutkan dan ambil 10 teratas
-    sorted_results = sorted(results, key=lambda x: x['total_enrolled'], reverse=True)[:10]
-
-    labels = [entry['course_name'] for entry in sorted_results]
-    completed = [entry['total_completed'] for entry in sorted_results]
-    not_completed = [entry['total_enrolled'] - entry['total_completed'] for entry in sorted_results]
+    # Siapkan data untuk chart
+    labels = [course.course_name for course in courses_with_stats]
+    completed = [course.total_completed for course in courses_with_stats]
+    not_completed = [course.total_enrolled - course.total_completed for course in courses_with_stats]
 
     return render(request, 'partner/course_completion_rate.html', {
         'labels': labels,
         'completed': completed,
         'not_completed': not_completed,
     })
-
 
 
 

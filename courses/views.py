@@ -45,8 +45,9 @@ from django.urls import reverse
 from django.db import DatabaseError, IntegrityError
 from django.db.models import (
     Q, F, Sum, Count, Avg,
-    OuterRef, Subquery, IntegerField, Prefetch
+    OuterRef, Subquery, IntegerField, Prefetch,When, Case,Prefetch, DecimalField, IntegerField,Value
 )
+from django.db.models.functions import Coalesce, Cast
 from django.db.models.functions import Round
 from django.core.cache import cache
 from django.core.files.base import ContentFile
@@ -4834,29 +4835,52 @@ def draft_lms(request, id):
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
-        return x_forwarded_for.split(',')[0]
-    return request.META.get('REMOTE_ADDR')
+        return x_forwarded_for.split(',')[0].strip()
+    return request.META.get('REMOTE_ADDR', '')
 
-
-#@ratelimit(key='ip', rate='30/h', method='GET', block=True)
+@cache_page(60 * 5)  # cache 5 menit
+@ratelimit(key='ip', rate='30/h', method='GET', block=True)
 def course_lms_detail(request, id, slug):
     if getattr(request, 'limited', False):
         return HttpResponse("Too many requests. Please try again later.", status=429)
-    
-    course = get_object_or_404(
-        Course.objects.select_related('category', 'instructor__user', 'status_course')
-        .prefetch_related('enrollments', 'ratings'),
-        id=id, slug=slug
-    )
+
+    today = timezone.now().date()
 
     try:
         published_status = CourseStatus.objects.get(status='published')
     except CourseStatus.DoesNotExist:
         return redirect('/')
 
-    today = timezone.now().date()
-    is_enrolled = request.user.is_authenticated and course.enrollments.filter(user=request.user).exists()
+    # Query course utama
+    course = get_object_or_404(
+        Course.objects
+        .select_related('category', 'instructor__user', 'status_course')
+        .prefetch_related(
+            'enrollments',
+            'ratings',
+            Prefetch(
+                'sections',
+                queryset=Section.objects.filter(parent=None)
+                                .prefetch_related('materials')
+                                .order_by('order'),
+                to_attr='root_sections'
+            )
+        )
+        .annotate(
+            # Hitung total student untuk course ini
+            total_students=Coalesce(Count('enrollments', distinct=True), 0),
+            # Hindari bentrok dengan property average_rating
+            avg_rating_db=Coalesce(
+                Avg('ratings__rating'),
+                Value(Decimal('0.00')),
+                output_field=DecimalField(max_digits=4, decimal_places=2)
+            )
+        ),
+        id=id,
+        slug=slug
+    )
 
+    is_enrolled = request.user.is_authenticated and course.enrollments.filter(user=request.user).exists()
     if not is_enrolled and (course.status_course != published_status or course.end_enrol < today):
         return redirect('/')
 
@@ -4864,56 +4888,21 @@ def course_lms_detail(request, id, slug):
     user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
     if 'bot' not in user_agent:
         ip = get_client_ip(request)
-        if not CourseViewIP.objects.filter(course=course, ip_address=ip).exists():
-            CourseViewIP.objects.create(course=course, ip_address=ip)
+        ip_created = CourseViewIP.objects.get_or_create(course=course, ip_address=ip)[1]
+        
+        if ip_created:
+            # Increment view_count utama
             Course.objects.filter(id=course.id).update(view_count=F('view_count') + 1)
-
-        view_log, created = CourseViewLog.objects.get_or_create(course=course, date=today)
-        if not created:
-            CourseViewLog.objects.filter(pk=view_log.pk).update(count=F('count') + 1)
-
-    # Course status (get_started, resume, completed)
-    course_status = None
-    if is_enrolled:
-        user = request.user
-        has_accessed = LastAccessCourse.objects.filter(user=user, course=course).exists()
-        course_progress = CourseProgress.objects.filter(user=user, course=course).first()
-        progress = course_progress.progress_percentage if course_progress else 0
-        grade_range = GradeRange.objects.filter(course=course, name='Pass').first()
-        passing_threshold = grade_range.min_grade if grade_range else Decimal('52.00')
-
-        total_score = Decimal('0')
-        total_max_score = Decimal('0')
-
-        assessments = Assessment.objects.filter(section__courses=course).distinct()
-        for assessment in assessments:
-            score_value = Decimal('0')
-            total_questions = assessment.questions.count()
-            if total_questions > 0:
-                total_correct = QuestionAnswer.objects.filter(
-                    question__assessment=assessment,
-                    user=user,
-                    choice__is_correct=True
-                ).count()
-                score_value = (Decimal(total_correct) / Decimal(total_questions)) * Decimal(assessment.weight)
-            else:
-                submissions = Submission.objects.filter(askora__assessment=assessment, user=user)
-                if submissions.exists():
-                    latest = submissions.order_by('-submitted_at').first()
-                    score_obj = AssessmentScore.objects.filter(submission=latest).first()
-                    if score_obj:
-                        score_value = Decimal(score_obj.final_score)
-            total_score += score_value
-            total_max_score += Decimal(assessment.weight)
-
-        overall_percentage = (total_score / total_max_score * Decimal('100')) if total_max_score > 0 else Decimal('0')
-
-        if progress >= 100 and overall_percentage >= passing_threshold:
-            course_status = 'completed'
-        elif has_accessed:
-            course_status = 'resume'
-        else:
-            course_status = 'get_started'
+            
+            # === PERBAIKAN UTAMA: Ganti update_or_create yang bermasalah ===
+            view_log, created = CourseViewLog.objects.get_or_create(
+                course=course,
+                date=today,
+                defaults={'count': 1}  # kalau baru dibuat, mulai dari 1
+            )
+            if not created:
+                # kalau sudah ada, baru kita increment
+                CourseViewLog.objects.filter(pk=view_log.pk).update(count=F('count') + 1)
 
     # Similar courses
     similar_courses = Course.objects.filter(
@@ -4922,83 +4911,147 @@ def course_lms_detail(request, id, slug):
         end_enrol__gte=today
     ).exclude(id=course.id)[:5]
 
-    # Comments dan replies
-    comments = CourseComment.objects.filter(course=course, parent=None).order_by('-created_at')
-    for comment in comments:
-        for reply in comment.replies.all().order_by('-created_at'):
-            reply.sub_replies = reply.replies.all().order_by('-created_at')
+    # Course progress & status
+    course_status = None
+    overall_percentage = Decimal('0')
+    passing_threshold = Decimal('52.00')
 
-    section_data = Section.objects.filter(parent=None, courses=course).prefetch_related('materials')
-    total_sections = section_data.count()
+    if is_enrolled:
+        user = request.user
+        has_accessed = LastAccessCourse.objects.filter(user=user, course=course).exists()
+        progress_obj = CourseProgress.objects.filter(user=user, course=course).first()
+        progress = progress_obj.progress_percentage if progress_obj else 0
+
+        grade_range = GradeRange.objects.filter(course=course, name='Pass').first()
+        if grade_range:
+            passing_threshold = grade_range.min_grade
+
+        total_score = Decimal('0')
+        total_max_score = Decimal('0')
+        for assessment in Assessment.objects.filter(section__courses=course).distinct():
+            weight = Decimal(assessment.weight or 0)
+            total_max_score += weight
+
+            if assessment.questions.exists():
+                correct = QuestionAnswer.objects.filter(
+                    question__assessment=assessment,
+                    user=user,
+                    choice__is_correct=True
+                ).count()
+                total_questions = assessment.questions.count()
+                score_value = (Decimal(correct) / Decimal(total_questions)) * weight
+            else:
+                latest = Submission.objects.filter(askora__assessment=assessment, user=user) \
+                                         .order_by('-submitted_at').first()
+                score_value = Decimal('0')
+                if latest:
+                    score_obj = AssessmentScore.objects.filter(submission=latest).first()
+                    if score_obj and score_obj.final_score is not None:
+                        score_value = Decimal(score_obj.final_score)
+
+            total_score += score_value
+
+        if total_max_score > 0:
+            overall_percentage = (total_score / total_max_score) * Decimal('100')
+
+        if progress >= 100 and overall_percentage >= passing_threshold:
+            course_status = 'completed'
+        elif has_accessed:
+            course_status = 'resume'
+        else:
+            course_status = 'get_started'
+
+    # Sections
+    section_data = getattr(course, 'root_sections', [])
+    total_sections = len(section_data)
     total_materials = sum(section.materials.count() for section in section_data)
-    total_students = course.enrollments.count()
-    total_effort_hours = course.hour if course.hour else "N/A"
+    total_effort_hours = course.hour or "N/A"
 
-    instructor = course.instructor
-    instructor_courses = Course.objects.filter(
-        instructor=instructor,
+    # === INSTRUCTOR STATS — DIPERBAIKI: gunakan Count('enrollments') bukan 'total_students' ===
+    instructor_stats = Course.objects.filter(
+        instructor=course.instructor,
         status_course=published_status,
         end_enrol__gte=today
+    ).aggregate(
+        total_courses=Count('id'),
+        # Hitung total student dari semua course instructor
+        total_students=Coalesce(Count('enrollments', distinct=True), 0),
+        total_effort_hours=Coalesce(
+            Sum(Cast('hour', output_field=DecimalField(max_digits=10, decimal_places=2))),
+            Value(Decimal('0.00'), output_field=DecimalField(max_digits=10, decimal_places=2)),
+            output_field=DecimalField(max_digits=10, decimal_places=2)
+        )
     )
-    instructor_total_courses = instructor_courses.count()
-    instructor_total_students = sum(c.enrollments.count() for c in instructor_courses)
-    instructor_total_effort_hours = sum(int(c.hour) for c in instructor_courses if c.hour and str(c.hour).isdigit())
-    instructor_sections = Section.objects.filter(courses__in=instructor_courses, parent=None).prefetch_related('materials')
-    instructor_total_sections = instructor_sections.count()
-    instructor_total_materials = sum(s.materials.count() for s in instructor_sections)
+
+    instructor_sections_stats = Section.objects.filter(
+        courses__instructor=course.instructor,
+        courses__status_course=published_status,
+        courses__end_enrol__gte=today,
+        parent=None
+    ).annotate(materials_count=Count('materials')).aggregate(
+        total_sections=Count('id'),
+        total_materials=Coalesce(Sum('materials_count'), Value(0), output_field=IntegerField())
+    )
+
+    # Comments
+    comments = CourseComment.objects.filter(course=course, parent=None) \
+        .prefetch_related(
+            Prefetch('replies', queryset=CourseComment.objects.order_by('-created_at')),
+            Prefetch('replies__replies', queryset=CourseComment.objects.order_by('-created_at'), to_attr='sub_replies')
+        ).order_by('-created_at')
 
     # Reviews
-    reviews = CourseRating.objects.filter(course=course).order_by('-created_at')
-    total_reviews = reviews.count()
-    paginator = Paginator(reviews, 5)
+    reviews_qs = CourseRating.objects.filter(course=course).order_by('-created_at')
+    total_reviews = reviews_qs.count()
+    paginator = Paginator(reviews_qs, 5)
     page_obj = paginator.get_page(request.GET.get('page'))
     user_has_rated = request.user.is_authenticated and CourseRating.objects.filter(user=request.user, course=course).exists()
 
-    average_rating = course.average_rating
+    # Ambil rating dari annotate
+    average_rating = getattr(course, 'avg_rating_db', Decimal('0.00'))
     full_stars = int(average_rating)
-    half_star = (average_rating % 1) >= 0.5
-    empty_stars = 5 - (full_stars + (1 if half_star else 0))
+    half_star = (average_rating - full_stars) >= Decimal('0.5')
+    empty_stars = 5 - full_stars - (1 if half_star else 0)
 
-    # --- DYNAMIC PRICING PART ---
-    partner = None
-    if request.user.is_authenticated:
-        partner = getattr(request.user, 'partner', None)  # Sesuaikan jika kamu punya cara lain
-
-    course_prices_qs = CoursePrice.objects.filter(course=course)
-    if partner:
-        course_prices_qs = course_prices_qs.filter(partner=partner)
-
+    # Dynamic pricing
     course_prices = {}
-    for cp in course_prices_qs.select_related('price_type'):
-        course_prices[cp.price_type.name] = cp
+    if request.user.is_authenticated:
+        partner = getattr(request.user, 'partner', None)
+        qs = CoursePrice.objects.filter(course=course).select_related('price_type')
+        if partner:
+            qs = qs.filter(partner=partner)
+        for cp in qs:
+            course_prices[cp.price_type.name] = cp
 
     return render(request, 'home/course_detail.html', {
         'course': course,
         'is_enrolled': is_enrolled,
+        'course_status': course_status,
         'similar_courses': similar_courses,
         'comments': comments,
         'section_data': section_data,
         'total_sections': total_sections,
         'total_materials': total_materials,
-        'total_students': total_students,
+        'total_students': course.total_students,  # dari annotate di course utama
         'total_effort_hours': total_effort_hours,
-        'instructor': instructor,
-        'instructor_total_courses': instructor_total_courses,
-        'instructor_total_students': instructor_total_students,
-        'instructor_total_effort_hours': instructor_total_effort_hours,
-        'instructor_total_sections': instructor_total_sections,
-        'instructor_total_materials': instructor_total_materials,
+        'instructor': course.instructor,
+        'instructor_total_courses': instructor_stats.get('total_courses', 0),
+        'instructor_total_students': instructor_stats.get('total_students', 0),
+        'instructor_total_effort_hours': instructor_stats.get('total_effort_hours', Decimal('0.00')),
+        'instructor_total_sections': instructor_sections_stats.get('total_sections', 0),
+        'instructor_total_materials': instructor_sections_stats.get('total_materials', 0),
         'reviews': page_obj,
+        'total_reviews': total_reviews,
         'user_has_rated': user_has_rated,
-        'range': range(1, 6),
         'full_star_range': range(full_stars),
         'half_star': half_star,
         'empty_star_range': range(empty_stars),
         'average_rating': average_rating,
-        'course_prices': course_prices,  # <-- di sini
-        'total_reviews': total_reviews,
-        'course_status': course_status,
+        'course_prices': course_prices,
     })
+
+
+
 
 @login_required
 def course_instructor(request, id):

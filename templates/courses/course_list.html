@@ -154,36 +154,75 @@
         </div>
 
         <!-- Pagination -->
-        {% if courses.has_other_pages %}
-            <nav aria-label="Page navigation" class="mt-8">
-                <ul class="flex justify-center gap-2">
-                    {% if courses.has_previous %}
-                        <li>
-                            <a class="px-3 py-1 rounded-md text-red-600 hover:bg-red-600 hover:text-white transition-colors duration-300" 
-                               href="?page={{ courses.previous_page_number }}" 
-                               aria-label="Previous">
-                                <span aria-hidden="true">«</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                    {% for num in courses.paginator.page_range %}
-                        <li>
-                            <a class="px-3 py-1 rounded-md {% if courses.number == num %}bg-red-600 text-white{% else %}text-red-600 hover:bg-red-600 hover:text-white{% endif %} transition-colors duration-300" 
-                               href="?page={{ num }}">{{ num }}</a>
-                        </li>
-                    {% endfor %}
-                    {% if courses.has_next %}
-                        <li>
-                            <a class="px-3 py-1 rounded-md text-red-600 hover:bg-red-600 hover:text-white transition-colors duration-300" 
-                               href="?page={{ courses.next_page_number }}" 
-                               aria-label="Next">
-                                <span aria-hidden="true">»</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
-        {% endif %}
+        <!-- Pagination -->
+            {% if page_obj.has_other_pages %}
+                <nav aria-label="Page navigation" class="mt-8">
+                    <ul class="flex flex-wrap justify-center items-center gap-2">
+                        <!-- Previous -->
+                        {% if page_obj.has_previous %}
+                            <li>
+                                <a href="?page={{ page_obj.previous_page_number }}"
+                                class="px-4 py-2 rounded-md text-red-600 hover:bg-red-600 hover:text-white transition-colors duration-300">
+                                    « Previous
+                                </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <span class="px-4 py-2 text-gray-400 cursor-not-allowed">« Previous</span>
+                            </li>
+                        {% endif %}
+
+                        <!-- First page + ellipsis -->
+                        {% if page_obj.number > 3 %}
+                            <li><a href="?page=1" class="px-4 py-2 rounded-md text-red-600 hover:bg-red-600 hover:text-white transition">1</a></li>
+                            {% if page_obj.number > 4 %}
+                                <li><span class="px-2 text-gray-600">...</span></li>
+                            {% endif %}
+                        {% endif %}
+
+                        <!-- Pages around current page (±2) -->
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if num >= page_obj.number|add:"-2" and num <= page_obj.number|add:"2" %}
+                                <li>
+                                    {% if page_obj.number == num %}
+                                        <span class="px-4 py-2 rounded-md bg-red-600 text-white font-medium">{{ num }}</span>
+                                    {% else %}
+                                        <a href="?page={{ num }}"
+                                        class="px-4 py-2 rounded-md text-red-600 hover:bg-red-600 hover:text-white transition">{{ num }}</a>
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        <!-- Last page + ellipsis -->
+                        {% if page_obj.number < page_obj.paginator.num_pages|add:"-2" %}
+                            {% if page_obj.number < page_obj.paginator.num_pages|add:"-3" %}
+                                <li><span class="px-2 text-gray-600">...</span></li>
+                            {% endif %}
+                            <li>
+                                <a href="?page={{ page_obj.paginator.num_pages }}"
+                                class="px-4 py-2 rounded-md text-red-600 hover:bg-red-600 hover:text-white transition">
+                                    {{ page_obj.paginator.num_pages }}
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        <!-- Next -->
+                        {% if page_obj.has_next %}
+                            <li>
+                                <a href="?page={{ page_obj.next_page_number }}"
+                                class="px-4 py-2 rounded-md text-red-600 hover:bg-red-600 hover:text-white transition-colors duration-300">
+                                    Next »
+                                </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <span class="px-4 py-2 text-gray-400 cursor-not-allowed">Next »</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
     </div>
 </section>
 

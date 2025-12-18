@@ -70,50 +70,86 @@
 </table></div>
 
 {# Pagination controls #}
-{% if course_rating_data.has_other_pages %}<nav aria-label="Page navigation" class="mt-4">
-    <ul class="flex justify-center space-x-0.5">
+{% if course_rating_data.has_other_pages %}
+<nav aria-label="Page navigation" class="mt-6">
+    <ul class="flex flex-wrap justify-center items-center gap-2">
+        <!-- Previous -->
         {% if course_rating_data.has_previous %}
-        <li>
-            <a class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
-               href="?page={{ course_rating_data.previous_page_number }}" 
-               aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
+            <li>
+                <a href="?page={{ course_rating_data.previous_page_number }}"
+                   class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    « Previous
+                </a>
+            </li>
         {% else %}
-        <li>
-            <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-200 rounded-md cursor-not-allowed">«</span>
-        </li>
+            <li>
+                <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-400 bg-gray-100 border border-gray-200 rounded-md cursor-not-allowed">
+                    « Previous
+                </span>
+            </li>
         {% endif %}
 
-    {# Show page numbers (simple version) #}
-    {% for num in course_rating_data.paginator.page_range %}
-      {% if num == course_rating_data.number %}
-      <li>
-        <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-md"> {{ num }} </span>
-      </li>
-      {% else %}
-      <li>
-        <a class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
-           href="?page={{ num }}"> {{ num }} </a>
-      </li>
-      {% endif %}
-    {% endfor %}
+        <!-- First page + ellipsis -->
+        {% if course_rating_data.number > 3 %}
+            <li>
+                <a href="?page=1"
+                   class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 transition">
+                    1
+                </a>
+            </li>
+            {% if course_rating_data.number > 4 %}
+                <li><span class="px-2 text-gray-600">...</span></li>
+            {% endif %}
+        {% endif %}
 
-    {% if course_rating_data.has_next %}
-    <li>
-        <a class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-150" 
-           href="?page={{ course_rating_data.next_page_number }}" 
-           aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-        </a>
-    </li>
-    {% else %}
-    <li>
-        <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-200 rounded-md cursor-not-allowed">»</span>
-    </li>
-    {% endif %}
-</ul></nav>
+        <!-- Pages around current (±2) -->
+        {% for num in course_rating_data.paginator.page_range %}
+            {% if num >= course_rating_data.number|add:"-2" and num <= course_rating_data.number|add:"2" %}
+                <li>
+                    {% if course_rating_data.number == num %}
+                        <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-md">
+                            {{ num }}
+                        </span>
+                    {% else %}
+                        <a href="?page={{ num }}"
+                           class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 transition">
+                            {{ num }}
+                        </a>
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Last page + ellipsis -->
+        {% if course_rating_data.number < course_rating_data.paginator.num_pages|add:"-2" %}
+            {% if course_rating_data.number < course_rating_data.paginator.num_pages|add:"-3" %}
+                <li><span class="px-2 text-gray-600">...</span></li>
+            {% endif %}
+            <li>
+                <a href="?page={{ course_rating_data.paginator.num_pages }}"
+                   class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 transition">
+                    {{ course_rating_data.paginator.num_pages }}
+                </a>
+            </li>
+        {% endif %}
+
+        <!-- Next -->
+        {% if course_rating_data.has_next %}
+            <li>
+                <a href="?page={{ course_rating_data.next_page_number }}"
+                   class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    Next »
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-400 bg-gray-100 border border-gray-200 rounded-md cursor-not-allowed">
+                    Next »
+                </span>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
 {% endif %}
 </section>
 {% endblock %}
