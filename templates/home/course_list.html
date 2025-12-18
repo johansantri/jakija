@@ -194,45 +194,53 @@
 
 
                 <!-- Pagination -->
-                <nav aria-label="Course pagination" role="navigation" class="mt-6">
-                    <ul class="flex justify-center gap-2">
+                <nav aria-label="Course pagination" class="mt-6">
+                    <ul class="flex flex-wrap justify-center gap-2 max-w-full">
+
+                        {# PREVIOUS #}
                         <li class="{% if not page_obj.has_previous %}opacity-50 pointer-events-none{% endif %}">
-                            {% if page_obj.has_previous %}
-                                <a class="inline-flex px-3 py-1 rounded-lg text-red-600 border border-gray-200 hover:bg-red-600 hover:text-white transition-colors"
-                                   href="?page={{ page_obj.previous_page_number }}{% for cat in category_filter %}&category={{ cat }}{% endfor %}{% if language_filter %}&language={{ language_filter }}{% endif %}{% if level_filter %}&level={{ level_filter }}{% endif %}{% if price_filter %}&price={{ price_filter }}{% endif %}" 
-                                   aria-label="Previous page">
-                                    <i class="fas fa-angle-left"></i>
-                                </a>
-                            {% else %}
-                                <span class="inline-flex px-3 py-1 rounded-lg text-gray-400 border border-gray-200">
-                                    <i class="fas fa-angle-left"></i>
-                                </span>
-                            {% endif %}
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}"
+                            class="inline-flex px-3 py-1 rounded-lg border text-red-600 hover:bg-red-600 hover:text-white">
+                            ‹
+                            </a>
+                        {% else %}
+                            <span class="inline-flex px-3 py-1 rounded-lg border text-gray-400">‹</span>
+                        {% endif %}
                         </li>
-                        {% for page_num in page_obj.paginator.page_range %}
+
+                        {# PAGE NUMBERS (LIMITED) #}
+                        {% for num in page_obj.paginator.page_range %}
+                        {% if num >= page_obj.number|add:-2 and num <= page_obj.number|add:2 %}
                             <li>
-                                <a class="inline-flex px-3 py-1 rounded-lg border border-gray-200 transition-colors {% if page_obj.number == page_num %}bg-red-600 text-white{% else %}text-red-600 hover:bg-red-600 hover:text-white{% endif %}"
-                                   href="?page={{ page_num }}{% for cat in category_filter %}&category={{ cat }}{% endfor %}{% if language_filter %}&language={{ language_filter }}{% endif %}{% if level_filter %}&level={{ level_filter }}{% endif %}{% if price_filter %}&price={{ price_filter }}{% endif %}" 
-                                   {% if page_obj.number == page_num %}aria-current="page"{% endif %}>
-                                    {{ page_num }}
-                                </a>
+                            <a href="?page={{ num }}"
+                                class="inline-flex px-3 py-1 rounded-lg border
+                                {% if page_obj.number == num %}
+                                bg-red-600 text-white
+                                {% else %}
+                                text-red-600 hover:bg-red-600 hover:text-white
+                                {% endif %}">
+                                {{ num }}
+                            </a>
                             </li>
+                        {% endif %}
                         {% endfor %}
+
+                        {# NEXT #}
                         <li class="{% if not page_obj.has_next %}opacity-50 pointer-events-none{% endif %}">
-                            {% if page_obj.has_next %}
-                                <a class="inline-flex px-3 py-1 rounded-lg text-red-600 border border-gray-200 hover:bg-red-600 hover:text-white transition-colors"
-                                   href="?page={{ page_obj.next_page_number }}{% for cat in category_filter %}&category={{ cat }}{% endfor %}{% if language_filter %}&language={{ language_filter }}{% endif %}{% if level_filter %}&level={{ level_filter }}{% endif %}{% if price_filter %}&price={{ price_filter }}{% endif %}" 
-                                   aria-label="Next page">
-                                    <i class="fas fa-angle-right"></i>
-                                </a>
-                            {% else %}
-                                <span class="inline-flex px-3 py-1 rounded-lg text-gray-400 border border-gray-200">
-                                    <i class="fas fa-angle-right"></i>
-                                </span>
-                            {% endif %}
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}"
+                            class="inline-flex px-3 py-1 rounded-lg border text-red-600 hover:bg-red-600 hover:text-white">
+                            ›
+                            </a>
+                        {% else %}
+                            <span class="inline-flex px-3 py-1 rounded-lg border text-gray-400">›</span>
+                        {% endif %}
                         </li>
+
                     </ul>
-                </nav>
+                    </nav>
+
             </div>
 
             <!-- Sidebar -->
