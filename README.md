@@ -48,7 +48,10 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 - Instructor management
 - Learner Management
 - Curation Management
-- Comemment Management  
+- Comemment Management
+- Rating Course management  
+- Microcredential course
+- 
 
 #### **Partner Dashboard**
 - Manage Courses & Modules  
