@@ -21,28 +21,38 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 #### **Admin Dashboard**
 ![Dashboard Admin](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-27-07%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Admin] (https://github.com/johansantri/mysite/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-29-10%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
 - User & Role Management  
 - Course Management global  
-- Subscription & Payment management  
+- Subscription  
+- Payment management  
 - Analytics & Custom Reports  
 - Content Approval  
-- System Settings & Backup  
+- System Settings 
+- Blog content
+- Partner Management
+- Instructor management
+- Learner Management
+- Curation Management
+- Comemment Management  
 
-#### **Mitra Dashboard**
+#### **Partner Dashboard**
 - Manage Courses & Modules  
 - Assign Instructors  
 - Revenue & Payment Tracking  
-- Reports & Analytics per Mitra  
-- Messaging & Notifications  
+- Reports & Analytics course, instructor, learner  
+- Messaging   
 
-#### **Instruktur Dashboard**
+#### **Instructor Dashboard**
 - Create/Edit Courses  
 - Upload Materials (PDF, Video, Audio, Interactive Content)  
 - Quizzes, Assignments, and Gradebook  
-- Progress Tracking per Peserta  
-- Discussion & Messaging with Peserta  
+- Progress Tracking per learners  
+- Discussion & Messaging with learners  
 
-#### **Peserta Dashboard**
+#### **learners Dashboard**
 - My Courses & Progress Tracking  
 - Quizzes & Assignments  
 - Certificates & Badges  
