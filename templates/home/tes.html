@@ -176,7 +176,7 @@
                 <!-- Sama seperti superuser, tapi lebih sedikit -->
                 <a href="{% url 'authentication:dasbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'dasbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
-                    <i class="fas fa-home w-5"></i><span>Dashboard Utama</span>
+                    <i class="fas fa-home w-5"></i><span>Main Dashboard</span>
                 </a>
                 <a href="{% url 'courses:course_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'course_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">

@@ -160,6 +160,20 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 - Notifications & Reminders  
 
 #### **Subscription / Membership Dashboard**
+
+![Dashboard Subscribtions](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/u/Screenshot%202025-12-18%20at%2010-02-00%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Subscribtions](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/u/Screenshot%202025-12-18%20at%2010-02-07%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Subscribtions](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/u/Screenshot%202025-12-18%20at%2010-02-15%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Subscribtions](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/u/Screenshot%202025-12-18%20at%2010-02-26%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Subscribtions](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/u/Screenshot%202025-12-18%20at%2010-02-44%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Subscribtions](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/u/Screenshot%202025-12-18%20at%2010-02-51%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+
 - Subscription Plans overview  
 - Payment History & Renewal  
 - Upgrade / Promo & Discounts  
