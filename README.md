@@ -64,6 +64,33 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 
 #### **Partner Dashboard**
+
+![Dashboard Partner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2008-34-09%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Partner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2008-34-26%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Partner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2008-34-32%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Partner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2008-34-41%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Partner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2008-34-48%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Partner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2008-34-56%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Partner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2008-35-03%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Partner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2008-35-09%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Partner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2008-35-18%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Partner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2008-35-44%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Partner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2008-39-45%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Dashboard Partner](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2008-40-13%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+
+
 - Manage Courses & Modules  
 - Assign Instructors  
 - Revenue & Payment Tracking  
