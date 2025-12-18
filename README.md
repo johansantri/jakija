@@ -205,6 +205,21 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 
 ### **Course Management Studio**
+
+![Studio Courses](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-26-34%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Studio Courses](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-27-02%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Studio Courses](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-27-38%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Studio Courses](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-27-57%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Studio Courses](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-28-13%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Studio Courses](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-28-34%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
+![Studio Courses](https://github.com/johansantri/mysite/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-28-49%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+
 - Create Courses  
 - Matrial Upload Materials (PDF, video, audio, image)  
 - Assessment (Multiple Choice, Open Response Assessment, Interactive Video, LTI)
