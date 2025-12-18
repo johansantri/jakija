@@ -115,6 +115,7 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 - Discussion & Messaging with learners  
 
 #### **learners Dashboard**
+
 - My Courses & Progress Tracking  
 - Quizzes & Assignments  
 - Certificates & Badges  
