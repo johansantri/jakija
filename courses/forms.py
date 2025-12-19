@@ -534,48 +534,50 @@ class ProfilForm(forms.ModelForm):
         widgets = {
             'sort_description': forms.TextInput(attrs={
                 'placeholder': 'Enter short description here',
-                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500'
+                'class': 'mt-2 block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
             }),
-            "description": CKEditor5Widget(attrs={
-                "class": "django_ckeditor_5 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            'description': CKEditor5Widget(attrs={
+                'class': 'django_ckeditor_5 mt-2 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
             }, config_name="extends"),
             'image': forms.ClearableFileInput(attrs={
-                'class': 'form-file mt-1 block w-full text-gray-500 file:border file:border-gray-300 file:rounded-lg file:px-4 file:py-2 file:text-sm file:font-medium file:bg-blue-50 hover:file:bg-blue-100'
+                'class': 'mt-2 block w-full text-gray-600 file:border file:border-gray-300 file:rounded-lg file:px-4 file:py-2 file:text-sm file:font-medium file:bg-blue-50 hover:file:bg-blue-100'
             }),
             'link_video': forms.URLInput(attrs={
                 'placeholder': 'Enter video URL here',
-                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500'
+                'class': 'mt-2 block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
             }),
             'hour': forms.NumberInput(attrs={
-                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500'
+                'placeholder': 'Hours',
+                'class': 'mt-2 block w-1/4 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
             }),
             'language': forms.Select(attrs={
-                'class': 'form-select mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500'
+                'class': 'mt-2 block w-1/3 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
             }),
             'level': forms.Select(choices=[
                 ('beginner', 'Beginner'),
                 ('intermediate', 'Intermediate'),
                 ('advanced', 'Advanced')
             ], attrs={
-                'class': 'form-select mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500'
+                'class': 'mt-2 block w-1/3 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
             }),
             'start_date': forms.DateInput(attrs={
-                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500',
-                'type': 'date'
+                'type': 'date',
+                'class': 'mt-2 block w-1/4 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
             }),
             'end_date': forms.DateInput(attrs={
-                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500',
-                'type': 'date'
+                'type': 'date',
+                'class': 'mt-2 block w-1/4 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
             }),
             'start_enrol': forms.DateInput(attrs={
-                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500',
-                'type': 'date'
+                'type': 'date',
+                'class': 'mt-2 block w-1/4 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
             }),
             'end_enrol': forms.DateInput(attrs={
-                'class': 'form-input mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500',
-                'type': 'date'
+                'type': 'date',
+                'class': 'mt-2 block w-1/4 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
             }),
         }
+
 
 
     def __init__(self, *args, **kwargs):
@@ -711,16 +713,17 @@ class CategoryForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={
                 'placeholder': 'Enter category name here',
-                'class': 'form-control w-50',  # setengah lebar form
-                'maxlength': '100',  # batasi maksimal 100 karakter
+                'class': 'w-1/2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500',
+                'maxlength': '100',
             }),
         }
+
 
     def clean_name(self):
         name = self.cleaned_data.get('name', '').strip()
         # validasi tambahan: pastikan tidak lebih dari 100 karakter
         if len(name) > 100:
-            raise forms.ValidationError("Nama kategori tidak boleh lebih dari 100 karakter.")
+            raise forms.ValidationError("Category name cannot exceed 100 characters.")
         return name
 
     def save(self, commit=True):

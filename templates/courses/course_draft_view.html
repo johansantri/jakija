@@ -65,11 +65,19 @@
             "name": "JakIja",
             "sameAs": "{{ request.scheme }}://{{ request.get_host }}"
         },
+        {% if course.instructor %}
         "instructor": {
             "@type": "Person",
             "name": "{{ course.instructor.user.get_full_name|default:'JakIja Instructor'|safe }}",
             "url": "{% url 'courses:instructor_profile' course.instructor.user.username %}"
         },
+        {% else %}
+        "instructor": {
+            "@type": "Person",
+            "name": "JakIja Instructor",
+            "url": "{{ request.scheme }}://{{ request.get_host }}"
+        },
+        {% endif %}
         "courseCode": "{{ course.course_number|safe }}",
         "educationalLevel": "{{ course.level|safe }}",
         "inLanguage": "{{ course.get_language_display|safe }}",
@@ -140,55 +148,80 @@
                 <!-- Overview -->
                 <div class="bg-white rounded-xl shadow-md p-6">
                     <!-- Inner Banner -->
-                    <div class="bg-gray-100 border border-gray-200 rounded-xl p-6 mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-3">{{ course.course_name }}</h2>
-                        <a href="{% url 'courses:category_list' course.category.slug %}" class="inline-block">
-                            <span class="inline-block bg-red-500 text-white text-sm font-medium px-3 py-1 rounded-md mb-3">{{ course.category }}</span>
-                        </a>
-                        <p class="text-gray-600 mb-4">{{ course.sort_description }}</p>
-                        <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm flex flex-wrap gap-4">
-                            <div class="flex items-center">
-                                <i class="fas fa-book text-red-500 mr-2"></i>
-                                <span class="font-medium">{{ total_sections }} Lessons</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-clock text-red-500 mr-2"></i>
-                                <span class="font-medium">{{ total_effort_hours }}hr</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-users text-red-500 mr-2"></i>
-                                <span class="font-medium">{{ total_students }} Students </span>
-                               
+                    <!-- Inner Banner -->
+                        <div class="bg-gray-100 border border-gray-200 rounded-xl p-6 mb-6">
+                            <!-- Header: Course Name & Status -->
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-3 gap-2">
+                                <h2 class="text-2xl font-bold text-gray-900">{{ course.course_name }}</h2>
+                                <span class="text-sm font-medium px-3 py-1 rounded-full 
+                                            {% if course.status_course.status == 'draft' %}bg-gray-200 text-gray-800
+                                            {% elif course.status_course.status == 'curation' %}bg-yellow-200 text-yellow-800
+                                            {% elif course.status_course.status == 'published' %}bg-green-200 text-green-800
+                                            {% elif course.status_course.status == 'archived' %}bg-red-200 text-red-800
+                                            {% endif %}">
+                                    {{ course.status_course.get_status_display }}
+                                </span>
                             </div>
 
-                           <div class="flex items-center">
-                                <svg class="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" stroke-width="1.5"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7
-                                            -1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                </svg>
-                                <span class="font-medium">{{ course.view_count }}</span>
-                            </div>
+                            <!-- Category -->
+                            <a href="{% url 'courses:category_list' course.category.slug %}" class="inline-block mb-3">
+                                <span class="inline-block bg-red-500 text-white text-sm font-medium px-3 py-1 rounded-md">{{ course.category }}</span>
+                            </a>
 
-                            <div class="flex items-center">
-                                <div class="flex">
-                                    {% for i in full_star_range %}
-                                        <i class="fas fa-star text-yellow-400"></i>
-                                    {% endfor %}
-                                    {% if half_star %}
-                                        <i class="fas fa-star-half-alt text-yellow-400"></i>
-                                    {% endif %}
-                                    {% for i in empty_star_range %}
-                                        <i class="far fa-star text-gray-400"></i>
-                                    {% endfor %}
+                            <!-- Short Description -->
+                            <p class="text-gray-600 mb-4">{{ course.sort_description }}</p>
+
+                            <!-- Stats -->
+                            <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm flex flex-wrap gap-4">
+                                <!-- Lessons -->
+                                <div class="flex items-center">
+                                    <i class="fas fa-book text-red-500 mr-2"></i>
+                                    <span class="font-medium">{{ total_sections }} Lessons</span>
                                 </div>
-                                <span class="font-medium ml-2">{{ average_rating }} Rating</span>
+
+                                <!-- Effort Hours -->
+                                <div class="flex items-center">
+                                    <i class="fas fa-clock text-red-500 mr-2"></i>
+                                    <span class="font-medium">{{ total_effort_hours }} hr</span>
+                                </div>
+
+                                <!-- Students -->
+                                <div class="flex items-center">
+                                    <i class="fas fa-users text-red-500 mr-2"></i>
+                                    <span class="font-medium">{{ total_students }} Students</span>
+                                </div>
+
+                                <!-- Views -->
+                                <div class="flex items-center">
+                                    <svg class="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" stroke-width="1.5"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7
+                                                -1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                    <span class="font-medium">{{ course.view_count }}</span>
+                                </div>
+
+                                <!-- Rating -->
+                                <div class="flex items-center">
+                                    <div class="flex">
+                                        {% for i in full_star_range %}
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                        {% endfor %}
+                                        {% if half_star %}
+                                            <i class="fas fa-star-half-alt text-yellow-400"></i>
+                                        {% endif %}
+                                        {% for i in empty_star_range %}
+                                            <i class="far fa-star text-gray-400"></i>
+                                        {% endfor %}
+                                    </div>
+                                    <span class="font-medium ml-2">{{ average_rating }} Rating</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+
                     <h5 class="text-lg font-bold text-gray-900 mb-3">Overview</h5>
                     
 
@@ -346,17 +379,30 @@
                                         <img src="{{ course.instructor.user.photo.url }}" alt="Instructor" class="w-16 h-16 object-cover rounded-full border">
                                     </a>
                                 {% else %}
-                                    <a href="{% url 'courses:instructor_profile' course.instructor.user.username %}">
-                                        <img src="{% static 'assets/img/user/user1.jpg' %}" alt="Instructor" class="w-16 h-16 object-cover rounded-full border">
+                                    <a href="#">
+                                        <img src="{% static 'assets/img/user/user1.jpg' %}" alt="Instructor not set" class="w-16 h-16 object-cover rounded-full border">
                                     </a>
                                 {% endif %}
                             </div>
-                            <div>
-                                <h5 class="text-md font-bold">
-                                    <a href="{% url 'courses:instructor_profile' course.instructor.user.username %}" class="text-gray-900 hover:text-red-500 transition-colors">{{ course.instructor.user.first_name }} {{ course.instructor.user.last_name }}</a>
-                                </h5>
-                                <p class="text-gray-600 mb-0">{{ course.instructor.user.hobby }}</p>
+                           <div>
+                                {% if course.instructor %}
+                                    <h5 class="text-md font-bold">
+                                        <a href="{% url 'courses:instructor_profile' course.instructor.user.username %}" 
+                                        class="text-gray-900 hover:text-red-500 transition-colors">
+                                            {{ course.instructor.user.first_name }} {{ course.instructor.user.last_name }}
+                                        </a>
+                                    </h5>
+                                    <p class="text-gray-600 mb-0">
+                                        {{ course.instructor.user.hobby|default:"Instructor hobby not available" }}
+                                    </p>
+                                {% else %}
+                                    <h5 class="text-md font-bold">
+                                        <span class="text-gray-900">JakIja Instructor</span>
+                                    </h5>
+                                    <p class="text-gray-600 mb-0">Instructor hobby not available</p>
+                                {% endif %}
                             </div>
+
                         </div>
                        <div class="ml-auto flex items-center">
                             <div class="flex">
@@ -487,177 +533,7 @@
                     </ul>
                 </div>
 
-                <!-- Comment Section -->
-                <div class="bg-white rounded-xl shadow-md p-6 mt-6">
-                    <h5 class="text-lg font-bold text-gray-900 mb-4">Post a Comment</h5>
-                    <form method="POST" action="{% url 'courses:add_comment_course' course_id=course.id %}">
-                        {% csrf_token %}
-                        
-                        <div class="mb-3">
-                            <textarea name="content" rows="4" class="w-full border border-gray-200 rounded-xl shadow-sm p-3 focus:border-red-500 focus:ring focus:ring-red-100 transition-colors" placeholder="Your Comments" required></textarea>
-                        </div>
-                        <input type="hidden" name="parent_id" value="">
-                        <button type="submit" class="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">Submit</button>
-                    </form>
-                </div>
-
-                <!-- Comments -->
-              <!-- Comments Section -->
-                <div class="mt-6 space-y-4">
-                    {% for comment in comments %}
-                        <!-- Komentar Utama -->
-                        <div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-lg transition-all duration-200 flex gap-4 items-start">
-                            <!-- Foto User -->
-                            <img src="{{ comment.user.photo.url }}" alt="{{ comment.user.username }}"
-                                class="w-12 h-12 rounded-full object-cover border-2 border-gray-200 flex-shrink-0"
-                                onerror="this.src='/static/images/default-avatar.png'">
-
-                            <!-- Isi Komentar -->
-                            <div class="flex-1 min-w-0">
-                                <div class="flex flex-col">
-                                    <p class="mb-2">
-                                        <strong class="text-gray-900 font-semibold text-base">{{ comment.user.username }}</strong>
-                                        <small class="text-gray-500 block mt-1">{{ comment.created_at|date:"F j, Y, g:i a" }}</small>
-                                    </p>
-                                    <p class="text-gray-700 mb-3 leading-relaxed">{{ comment.content }}</p>
-
-                                    <!-- Reply Button -->
-                                    <button class="text-red-500 hover:text-red-600 font-medium text-sm flex items-center gap-1 self-end transition-colors"
-                                            onclick="toggleReplyForm('comment-reply-form-{{ comment.id }}')">
-                                        <i class="bi bi-reply-fill"></i>Reply
-                                    </button>
-
-                                    <!-- Form Balasan -->
-                                    <div id="comment-reply-form-{{ comment.id }}" class="hidden mt-4 animate-fade-in">
-                                        <form method="POST" action="{% url 'courses:add_comment_course' course_id=course.id %}" class="space-y-2">
-                                            {% csrf_token %}
-                                            <div class="flex flex-col sm:flex-row gap-2">
-                                                <textarea name="content" class="flex-1 border border-gray-300 rounded-xl shadow-sm p-3 focus:border-red-500 focus:ring-2 focus:ring-red-100 focus:outline-none transition-all resize-none" rows="2" placeholder="Reply to this comment..." required></textarea>
-                                                <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                                                <button type="submit" class="bg-red-500 text-white px-6 py-2 rounded-xl hover:bg-red-600 transition-all font-medium whitespace-nowrap">Reply</button>
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                    <!-- Replies Container -->
-                                    <div class="ml-0 sm:ml-16 mt-4 space-y-3 border-l-2 border-gray-200 pl-4 sm:pl-6 -mx-4 sm:mx-0"> <!-- Tambah -mx-4 di mobile untuk kompensasi indent -->
-                                        {% for reply in comment.replies.all %}
-                                            <!-- Reply Level -->
-                                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 sm:p-4 shadow-sm flex gap-3 sm:gap-4 items-start relative">
-                                                <!-- Avatar -->
-                                                <img src="{{ reply.user.photo.url }}" alt="{{ reply.user.username }}"
-                                                    class="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover border border-gray-300 flex-shrink-0"
-                                                    onerror="this.src='/static/images/default-avatar.png'">
-
-                                                <div class="flex-1 min-w-0">
-                                                    <div class="flex flex-col">
-                                                        <p class="mb-1.5 sm:mb-2">
-                                                            <strong class="text-gray-900 font-medium text-sm sm:text-base">{{ reply.user.username }}</strong>
-                                                            <small class="text-gray-500 block mt-0.5 sm:mt-1 text-xs">{{ reply.created_at|date:"F j, Y, g:i a" }}</small>
-                                                        </p>
-                                                        <p class="text-gray-700 mb-2.5 sm:mb-3 leading-relaxed text-sm sm:text-base whitespace-pre-wrap">{{ reply.content }}</p>
-
-                                                        <!-- Sub-Reply Button -->
-                                                        <button class="text-red-500 hover:text-red-600 font-medium text-xs sm:text-sm flex items-center gap-1 self-end transition-colors"
-                                                                onclick="toggleReplyForm('reply-form-{{ reply.id }}')">
-                                                            <i class="bi bi-reply-fill"></i>Reply
-                                                        </button>
-
-                                                        <!-- Form Balas Sub-Reply -->
-                                                        <div id="reply-form-{{ reply.id }}" class="hidden mt-3 animate-fade-in max-w-full -mx-3 sm:mx-0"> <!-- Tambah -mx-3 di mobile -->
-                                                            <form method="POST" action="{% url 'courses:add_comment_course' course_id=course.id %}" class="space-y-2">
-                                                                {% csrf_token %}
-                                                                <div class="flex flex-col sm:flex-row gap-2">
-                                                                    <textarea name="content" rows="2" required
-                                                                        placeholder="Reply to this reply..."
-                                                                        class="flex-1 border border-gray-300 rounded-xl shadow-sm p-3 focus:border-red-500 focus:ring-2 focus:ring-red-100 focus:outline-none transition-all resize-none text-sm w-full"></textarea>
-                                                                    <input type="hidden" name="parent_id" value="{{ reply.id }}">
-                                                                    <button type="submit"
-                                                                        class="bg-red-500 text-white px-4 sm:px-6 py-2 rounded-xl hover:bg-red-600 transition-all font-medium whitespace-nowrap">
-                                                                        Reply
-                                                                    </button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-
-                                                        <!-- Sub-Replies Container -->
-                                                        <div class="ml-0 sm:ml-12 mt-3 space-y-2 border-l-2 border-gray-300 pl-3 sm:pl-4 -mx-3 sm:mx-0"> <!-- Tambah -mx-3 di mobile -->
-                                                            {% for sub_reply in reply.replies.all %}
-                                                                <!-- Sub-Reply Level -->
-                                                                <div class="bg-gray-100 border border-gray-200 rounded-lg p-3 shadow-sm flex gap-3 items-start relative">
-                                                                    <!-- Avatar Sub-Reply -->
-                                                                    <img src="{{ sub_reply.user.photo.url }}" alt="{{ sub_reply.user.username }}"
-                                                                        class="w-9 h-9 rounded-full object-cover border border-gray-300 flex-shrink-0"
-                                                                        onerror="this.src='/static/images/default-avatar.png'">
-
-                                                                    <div class="flex-1 min-w-0">
-                                                                        <div class="flex flex-col">
-                                                                            <p class="mb-1">
-                                                                                <strong class="text-gray-900 font-medium text-sm">{{ sub_reply.user.username }}</strong>
-                                                                                <small class="text-gray-500 block mt-0.5 text-xs">{{ sub_reply.created_at|date:"F j, Y, g:i a" }}</small>
-                                                                            </p>
-                                                                            <p class="text-gray-700 mb-2 leading-relaxed text-sm whitespace-pre-wrap">{{ sub_reply.content }}</p>
-
-                                                                            <!-- Sub-Sub-Reply Button -->
-                                                                            <button class="text-red-500 hover:text-red-600 font-medium text-xs flex items-center gap-1 self-end transition-colors"
-                                                                                    onclick="toggleReplyForm('sub-reply-form-{{ sub_reply.id }}')">
-                                                                                <i class="bi bi-reply-fill"></i>Reply
-                                                                            </button>
-
-                                                                            <!-- Form Sub-Sub-Reply -->
-                                                                            <div id="sub-reply-form-{{ sub_reply.id }}" class="hidden mt-2 animate-fade-in max-w-full -mx-3 sm:mx-0"> <!-- Tambah -mx-3 di mobile untuk mencegah overflow -->
-                                                                                <form method="POST" action="{% url 'courses:add_comment_course' course_id=course.id %}" class="space-y-2">
-                                                                                    {% csrf_token %}
-                                                                                    <div class="flex flex-col sm:flex-row gap-2">
-                                                                                        <textarea name="content" rows="2" required
-                                                                                            placeholder="Reply to this sub-reply..."
-                                                                                            class="flex-1 border border-gray-300 rounded-xl shadow-sm p-3 focus:border-red-500 focus:ring-2 focus:ring-red-100 focus:outline-none transition-all resize-none text-sm w-full"></textarea>
-                                                                                        <input type="hidden" name="parent_id" value="{{ sub_reply.id }}">
-                                                                                        <button type="submit"
-                                                                                            class="bg-red-500 text-white px-4 sm:px-6 py-2 rounded-xl hover:bg-red-600 transition-all font-medium whitespace-nowrap">
-                                                                                            Reply
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            {% endfor %}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% empty %}
-                        <div class="bg-white border border-gray-200 rounded-2xl p-6 text-center text-gray-600">
-                            No comments yet. Be the first to comment!
-                        </div>
-                    {% endfor %}
-                </div>
-
-                <style>
-                    @keyframes fade-in {
-                        from { opacity: 0; transform: translateY(10px); }
-                        to { opacity: 1; transform: translateY(0); }
-                    }
-                    .animate-fade-in {
-                        animation: fade-in 0.3s ease-out;
-                    }
-                </style>
-
-                <script>
-                    function toggleReplyForm(formId) {
-                        const form = document.getElementById(formId);
-                        if (form) {
-                            form.classList.toggle('hidden');
-                        }
-                    }
-                </script>
+                
 
             </div>
 
@@ -899,6 +775,11 @@
                             <li class="flex justify-between items-center py-2">
                                 <span class="font-medium text-gray-900">Level:</span>
                                 <span class="text-gray-600">{{ course.level }}</span>
+                            </li>
+                            <li class="flex justify-between items-center py-2">
+                                <span class="font-medium text-gray-900">Status:</span>
+                                <span class="text-gray-600">{{ course.status_course.get_status_display }}</span>
+
                             </li>
                         </ul>
                     </div>
