@@ -4840,7 +4840,8 @@ def get_client_ip(request):
     return request.META.get('REMOTE_ADDR', '')
 
 #@cache_page(60 * 5)  # cache 5 menit
-#@ratelimit(key='ip', rate='30/h', method='GET', block=True)
+@ratelimit(key='ip', rate='30/h', method='GET', block=True)
+@custom_ratelimit
 def course_lms_detail(request, id, slug):
     if getattr(request, 'limited', False):
         return HttpResponse("Too many requests. Please try again later.", status=429)
