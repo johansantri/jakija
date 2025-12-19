@@ -7022,63 +7022,83 @@ def update_partner(request, partner_id):
 #partner view
 #@cache_page(60 * 5)  # Aktifkan cache kalau sudah siap
 
+@login_required
 def partnerView(request):
-    if not request.user.is_authenticated:
-        return redirect(f"/login/?next={request.path}")
-
     query = request.GET.get('q', '')
+    page_number = request.GET.get('page', 1)
 
-    # Filter partners by user role
-    # Filter partners by user role
-    if request.user.is_superuser or getattr(request.user, 'is_finance', False):
-        partners = Partner.objects.all()
-    else:
-        partners = Partner.objects.filter(user_id=request.user.id)
+    partners_qs = Partner.objects.all()
 
-    # Filter berdasarkan query pencarian
+    if not (request.user.is_superuser or getattr(request.user, 'is_finance', False)):
+        partners_qs = partners_qs.filter(user=request.user)
+
     if query:
-        partners = partners.filter(
-            Q(name__name__icontains=query) |  # ✅ name__name: akses nama universitas dari FK
+        partners_qs = partners_qs.filter(
+            Q(name__name__icontains=query) |
             Q(user__email__icontains=query) |
             Q(phone__icontains=query)
         )
 
-    # Subquery untuk hitung total saldo partner dari payment yang completed
-    payments_subquery = Payment.objects.filter(
-        course__org_partner=OuterRef('pk'),  # Pastikan field relasi ini benar sesuai model kamu
-        status='completed'
-    ).values('course__org_partner').annotate(
-        total_earning=Sum('snapshot_partner_earning')
-    ).values('total_earning')
+    partners_qs = partners_qs.select_related(
+        'user', 'name'
+    ).only(
+        'id',
+        'phone',
+        'is_pkp',
+        'is_verified',
+        'business_type',
+        'balance',
+        'created_ad',
+        'user__email',
+        'name__name',
+    ).order_by('-id')
 
-    # Annotate partner dengan data statistik dan saldo
-    partners = partners.annotate(
-        total_courses=Count('courses', distinct=True),
-        total_learners=Count('courses__enrollments__user', distinct=True),
-        average_rating=Round(Avg('courses__ratings__rating'), 2),
-        total_instructors=Count('instructors', distinct=True),
-        balance_computed=Coalesce(
-            Subquery(payments_subquery, output_field=DecimalField()),
-            V(0),
-            output_field=DecimalField()
-        )
+    paginator = Paginator(partners_qs, 10)
+    page_obj = paginator.get_page(page_number)
+
+    partners = list(page_obj.object_list)
+    partner_ids = [p.id for p in partners]
+
+    # ===== batch aggregation (SAMA SEPERTI SEBELUMNYA) =====
+    courses_map = dict(
+        Course.objects.filter(org_partner_id__in=partner_ids)
+        .values('org_partner_id')
+        .annotate(total=Count('id'))
+        .values_list('org_partner_id', 'total')
     )
 
-    # Optimasi query relasi yang mungkin akan digunakan di template
-    partners = partners.select_related('user').prefetch_related('courses', 'instructors')
+    learners_map = dict(
+        Course.objects.filter(org_partner_id__in=partner_ids)
+        .values('org_partner_id')
+        .annotate(total=Count('enrollments__user', distinct=True))
+        .values_list('org_partner_id', 'total')
+    )
 
-    # Pagination
-    paginator = Paginator(partners, 10)
-    page_number = request.GET.get('page')
-    page = paginator.get_page(page_number)
+    instructors_map = dict(
+        Partner.objects.filter(id__in=partner_ids)
+        .values('id')
+        .annotate(total=Count('instructors', distinct=True))
+        .values_list('id', 'total')
+    )
 
-    context = {
-        'count': partners.count(),
-        'page': page,
-        'query': query
-    }
+    rating_map = dict(
+        Course.objects.filter(org_partner_id__in=partner_ids)
+        .values('org_partner_id')
+        .annotate(avg=Round(Avg('ratings__rating'), 2))
+        .values_list('org_partner_id', 'avg')
+    )
 
-    return render(request, 'partner/partner_view.html', context)
+    for p in partners:
+        p.total_courses = courses_map.get(p.id, 0)
+        p.total_learners = learners_map.get(p.id, 0)
+        p.total_instructors = instructors_map.get(p.id, 0)
+        p.average_rating = rating_map.get(p.id, 0)
+
+    return render(request, 'partner/partner_view.html', {
+        'partners': partners,
+        'page_obj': page_obj,
+        'query': query,
+    })
 
 
 
