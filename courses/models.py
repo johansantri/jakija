@@ -848,7 +848,7 @@ class Material(models.Model):
         verbose_name_plural = "materials"
 
 class GradeRange(models.Model):
-    name = models.CharField(max_length=255)  # Nama rentang nilai (misalnya "A", "B+")
+    name = models.CharField(max_length=255)  
     min_grade = models.DecimalField(max_digits=5, decimal_places=2)  # Nilai minimum untuk rentang
     max_grade = models.DecimalField(max_digits=5, decimal_places=2)  # Nilai maksimum untuk rentang
     course = models.ForeignKey(Course, related_name='grade_ranges', on_delete=models.CASCADE)  # Menghubungkan rentang nilai dengan mata pelajaran

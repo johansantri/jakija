@@ -4838,7 +4838,7 @@ def get_client_ip(request):
         return x_forwarded_for.split(',')[0].strip()
     return request.META.get('REMOTE_ADDR', '')
 
-@cache_page(60 * 5)  # cache 5 menit
+#@cache_page(60 * 5)  # cache 5 menit
 @ratelimit(key='ip', rate='30/h', method='GET', block=True)
 def course_lms_detail(request, id, slug):
     if getattr(request, 'limited', False):
