@@ -268,11 +268,19 @@ class CalculateAdminPriceAdmin(admin.ModelAdmin):
     list_per_page = 10
 
 admin.site.register(models.Section)
+@admin.register(Partner)
 class PartnerAdmin(admin.ModelAdmin):
-    autocomplete_fields = ['user','author']  # This will apply autocomplete to the 'user' ForeignKey field
-    search_fields = ['name', 'abbreviation', 'user__username']
-    list_per_page = 10
-admin.site.register(Partner, PartnerAdmin)
+    autocomplete_fields = ['user', 'name', 'author', 'updated_by']  # FK fields
+    search_fields = [
+        'user__email',      # Cari berdasarkan email user
+        'name__name',       # Cari berdasarkan nama universitas
+        'author__email',    # Cari berdasarkan email author
+        'partner_code'      # Cari berdasarkan kode partner
+    ]
+    list_per_page = 50
+    list_display = ('user__email', 'name__name')
+    #list_filter = ('created_at', 'updated_at')  
+
 
 class CategoryAdmin(admin.ModelAdmin):
     # Mengatur jumlah item yang ditampilkan per halaman (pagination)
