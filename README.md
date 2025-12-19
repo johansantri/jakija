@@ -280,11 +280,13 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 2. cd jakija  
 3. python3 -m venv .venv  
 4. source .venv/bin/activate  
-5. python3 -m pip install -r requirements.txt  
-6. python manage.py makemigrations  
-7. python manage.py migrate  
-8. python manage.py createsuperuser  
-9. python manage.py runserver
+5. python3 -m pip install -r requirements.txt
+6. python manage.py check
+7. pip freeze > requirements.txt  
+8. python manage.py makemigrations  
+9. python manage.py migrate  
+10. python manage.py createsuperuser  
+11. python manage.py runserver
 
 ## Demo / Video
  
