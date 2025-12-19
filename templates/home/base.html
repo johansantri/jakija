@@ -89,7 +89,7 @@
                     </a>
 
                     {% else %}
-                    <a href="{% url 'authentication:login' %}" class="px-4 py-2 border border-red-600 rounded text-red-600 hover:bg-red-600 hover:text-white whitespace-nowrap">
+                    <a href="{% url 'authentication:login' %}?next={{ request.path }}" class="px-4 py-2 border border-red-600 rounded text-red-600 hover:bg-red-600 hover:text-white whitespace-nowrap">
                     Login
                     </a>
                     {% endif %}

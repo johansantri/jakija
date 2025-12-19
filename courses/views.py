@@ -20,6 +20,7 @@ from decimal import Decimal, ROUND_DOWN
 from urllib.parse import quote, urlparse, parse_qs, urlencode
 from django.template.loader import get_template
 from .utils import generate_oauth_signature  # pastikan ada util ini
+from datetime import date
 # Third-party packages
 import pytz
 import qrcode
@@ -4839,7 +4840,7 @@ def get_client_ip(request):
     return request.META.get('REMOTE_ADDR', '')
 
 #@cache_page(60 * 5)  # cache 5 menit
-@ratelimit(key='ip', rate='30/h', method='GET', block=True)
+#@ratelimit(key='ip', rate='30/h', method='GET', block=True)
 def course_lms_detail(request, id, slug):
     if getattr(request, 'limited', False):
         return HttpResponse("Too many requests. Please try again later.", status=429)
@@ -4881,7 +4882,7 @@ def course_lms_detail(request, id, slug):
     )
 
     is_enrolled = request.user.is_authenticated and course.enrollments.filter(user=request.user).exists()
-    if not is_enrolled and (course.status_course != published_status or course.end_enrol < today):
+    if not is_enrolled and (course.status_course != published_status or course.end_date < today):
         return redirect('/')
 
     # View counter
@@ -5048,6 +5049,7 @@ def course_lms_detail(request, id, slug):
         'empty_star_range': range(empty_stars),
         'average_rating': average_rating,
         'course_prices': course_prices,
+        
     })
 
 

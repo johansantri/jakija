@@ -437,11 +437,16 @@
                                     </div>
                                 </div>
                                 <div class="ml-auto flex items-center">
-                                    {% for i in range %}
-                                        <i class="fas fa-star {% if i <= review.rating %}text-yellow-400{% else %}text-gray-400{% endif %}"></i>
+                                    {% for i in "12345"|make_list %}
+                                        {% if forloop.counter <= review.rating %}
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                        {% else %}
+                                            <i class="far fa-star text-gray-400"></i>
+                                        {% endif %}
                                     {% endfor %}
                                     <span class="font-bold ml-1">{{ review.rating }}</span>
                                 </div>
+
                             </div>
                             <!-- Comment always below -->
                             <p class="text-gray-600">“{{ review.comment }}”</p>
@@ -797,73 +802,106 @@
 
 
                               {% with today=now|date:"Y-m-d" %}
-                                {% if request.user.is_authenticated %}
-                                    
-                                    {% if is_enrolled %}
-                                        {# ✅ USER SUDAH TERDAFTAR — tampilkan tombol Resume/Get Started/Completed #}
-                                        {% if course_status == 'completed' %}
-                                            <button onclick="window.location.href='{% url 'courses:generate_certificate' course_id=course.id %}'" 
-                                                    class="block w-full border border-green-500 text-green-600 px-4 py-2 rounded-lg 
-                                                        hover:bg-green-100 transition-colors text-center"
-                                                    aria-label="Download certificate for completed course">
-                                                ✅ Completed
-                                            </button>
+                                    {% now "Y-m-d" as today %}
+
+                                    {% if course.status_course.status == 'published' %}
+
+                                        {# 🟡 COMING SOON #}
+                                        {% if course.start_enrol and course.start_enrol|date:"Y-m-d" > today %}
+                                            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-lg mb-4">
+                                                <strong>Enrollment for this course is coming soon!</strong><br>
+                                                Enrollment opens on
+                                                <span class="font-medium">{{ course.start_enrol|date:"F d, Y" }}</span>
+                                            </div>
+
+                                        {# 🟢 OPEN #}
+                                        {% elif course.start_enrol and course.end_enrol and course.start_enrol|date:"Y-m-d" <= today and course.end_enrol|date:"Y-m-d" >= today %}
+                                            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg mb-4">
+                                                <strong>Enrollment is now open!</strong><br>
+                                                Enroll before
+                                                <span class="font-medium">{{ course.end_enrol|date:"F d, Y" }}</span>
+                                            </div>
+
+                                        {# ⚪ CLOSED #}
+                                        {% elif course.end_enrol and course.end_enrol|date:"Y-m-d" < today %}
+                                            <div class="bg-gray-100 border-l-4 border-gray-400 text-gray-700 p-4 rounded-lg mb-4">
+                                                <strong>Enrollment for this course has ended.</strong><br>
+                                                
+                                                <span class="font-medium">{{ course.end_enrol|date:"F d, Y" }}</span>
+                                            </div>
+                                        {% endif %}
+
+                                    {% endif %}
 
 
-                                        {% elif course_status == 'resume' %}
-                                            <a href="{% url 'learner:course_learn' request.user.username course.id course.slug %}"
-                                            class="flex justify-center items-center w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">
-                                            ▶️ Resume Course
-                                            </a>
 
-                                        {% elif course_status == 'get_started' %}
-                                            <a href="{% url 'learner:course_learn' request.user.username course.id course.slug %}"
-                                            class="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-center">
-                                            🚀 Get Started
-                                            </a>
+                                    {% if request.user.is_authenticated %}
+                                        
+                                        {% if is_enrolled %}
+                                            {# ✅ USER SUDAH TERDAFTAR — tampilkan tombol Resume/Get Started/Completed #}
+                                            {% if course_status == 'completed' %}
+                                                <button onclick="window.location.href='{% url 'courses:generate_certificate' course_id=course.id %}'" 
+                                                        class="block w-full border border-green-500 text-green-600 px-4 py-2 rounded-lg 
+                                                            hover:bg-green-100 transition-colors text-center"
+                                                        aria-label="Download certificate for completed course">
+                                                    ✅ Completed
+                                                </button>
 
+
+                                            {% elif course_status == 'resume' %}
+                                                <a href="{% url 'learner:course_learn' request.user.username course.id course.slug %}"
+                                                class="flex justify-center items-center w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">
+                                                ▶️ Resume Course
+                                                </a>
+
+                                            {% elif course_status == 'get_started' %}
+                                                <a href="{% url 'learner:course_learn' request.user.username course.id course.slug %}"
+                                                class="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-center">
+                                                🚀 Get Started
+                                                </a>
+
+                                            {% endif %}
+
+                                        {% else %}
+                                            {# ✅ USER BELUM TERDAFTAR — cek apakah enrollment masih dibuka dan tampilkan Enroll Now/Add to Cart #}
+                                            {% if course.end_enrol and course.end_enrol|stringformat:"Y-m-d" < today %}
+                                                <button class="block w-full bg-gray-400 text-white px-4 py-2 rounded-lg cursor-not-allowed" disabled>
+                                                    Enrollment Closed
+                                                </button>
+                                            {% else %}
+                                                {% with course_prices=course.get_course_price %}
+                                                    {% if course.payment_model and course.payment_model.code != 'buy_first' %}
+                                                        <form id="enrollForm" method="POST" action="{% url 'courses:enroll' course.id %}">
+                                                            {% csrf_token %}
+                                                            <button type="submit" class="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">
+                                                                Enroll Now
+                                                            </button>
+                                                        </form>
+                                                    {% elif course.payment_model and course.payment_model.code == 'buy_first' %}
+                                                        {% if course_prices %}
+                                                            <form method="POST" action="{% url 'payments:add_to_cart' course.id %}">
+                                                                {% csrf_token %}
+                                                                <button type="submit" class="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">
+                                                                    Add to Cart
+                                                                </button>
+                                                            </form>
+                                                        {% else %}
+                                                            <p class="text-gray-500 text-sm italic text-center">Harga belum tersedia</p>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <p class="text-gray-500 text-sm italic text-center">Tipe pembayaran belum disetel</p>
+                                                    {% endif %}
+                                                {% endwith %}
+                                            {% endif %}
                                         {% endif %}
 
                                     {% else %}
-                                        {# ✅ USER BELUM TERDAFTAR — cek apakah enrollment masih dibuka dan tampilkan Enroll Now/Add to Cart #}
-                                        {% if course.end_enrol and course.end_enrol|stringformat:"Y-m-d" < today %}
-                                            <button class="block w-full bg-gray-400 text-white px-4 py-2 rounded-lg cursor-not-allowed" disabled>
-                                                Enrollment Closed
-                                            </button>
-                                        {% else %}
-                                            {% with course_prices=course.get_course_price %}
-                                                {% if course.payment_model and course.payment_model.code != 'buy_first' %}
-                                                    <form id="enrollForm" method="POST" action="{% url 'courses:enroll' course.id %}">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">
-                                                            Enroll Now
-                                                        </button>
-                                                    </form>
-                                                {% elif course.payment_model and course.payment_model.code == 'buy_first' %}
-                                                    {% if course_prices %}
-                                                        <form method="POST" action="{% url 'payments:add_to_cart' course.id %}">
-                                                            {% csrf_token %}
-                                                            <button type="submit" class="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">
-                                                                Add to Cart
-                                                            </button>
-                                                        </form>
-                                                    {% else %}
-                                                        <p class="text-gray-500 text-sm italic text-center">Harga belum tersedia</p>
-                                                    {% endif %}
-                                                {% else %}
-                                                    <p class="text-gray-500 text-sm italic text-center">Tipe pembayaran belum disetel</p>
-                                                {% endif %}
-                                            {% endwith %}
-                                        {% endif %}
+                                        {# ✅ USER BELUM LOGIN — tampilkan tombol Join Now #}
+                                        <a href="{% url 'authentication:register' %}?next={% url 'courses:course_lms_detail' id=course.id slug=course.slug %}" 
+                                        class="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-center">
+                                            Join Now
+                                        </a>
                                     {% endif %}
-
-                                {% else %}
-                                    {# ✅ USER BELUM LOGIN — tampilkan tombol Join Now #}
-                                    <a href="{% url 'authentication:register' %}?next={% url 'courses:course_lms_detail' id=course.id slug=course.slug %}" 
-                                    class="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-center">
-                                        Join Now
-                                    </a>
-                                {% endif %}
                             {% endwith %}
 
 

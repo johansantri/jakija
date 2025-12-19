@@ -26,6 +26,7 @@ from django_select2.forms import ModelSelect2MultipleWidget
 from dal import autocomplete
 from decimal import Decimal
 from django.utils.safestring import mark_safe
+from datetime import date, timedelta
 logger = logging.getLogger(__name__)
 
 
@@ -578,7 +579,30 @@ class ProfilForm(forms.ModelForm):
             }),
         }
 
+    def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get('start_date')
+        end_date = cleaned_data.get('end_date')
+        start_enrol = cleaned_data.get('start_enrol')
+        end_enrol = cleaned_data.get('end_enrol')
+        today = date.today()
 
+        # 1️⃣ start_date minimal hari ini
+        if start_date and start_date < today:
+            self.add_error('start_date', "Start date cannot be earlier than today.")
+
+        # 2️⃣ start_enrol minimal 3 hari setelah start_date
+        if start_enrol and start_date:
+            min_start_enrol = start_date + timedelta(days=3)
+            if start_enrol < min_start_enrol:
+                self.add_error('start_enrol', f"Enrollment start date must be at least 3 days after course start date ({min_start_enrol}).")
+
+        # 3️⃣ end_enrol tidak boleh lebih dari end_date
+        if end_enrol and end_date:
+            if end_enrol > end_date:
+                self.add_error('end_enrol', "Enrollment end date cannot be after course end date.")
+
+        return cleaned_data
 
     def __init__(self, *args, **kwargs):
         super(ProfilForm, self).__init__(*args, **kwargs)

@@ -21,7 +21,17 @@
             <form method="POST" enctype="multipart/form-data" class="space-y-6">
                 {% csrf_token %}
                 
-                {{ form }}
+                {% for field in form %}
+                    <div class="mb-4">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
 
                 <div class="tile-footer mt-6">
                     <button type="submit" class="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition duration-200">Save <i class="fa fa-save"></i></button>

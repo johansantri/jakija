@@ -508,7 +508,7 @@ def course_list(request):
         # Query courses
         courses = Course.objects.filter(
             status_course=published_status,
-            end_enrol__gte=timezone.now()
+            end_date__gte=timezone.now()
         ).select_related(
             'category', 'instructor__user', 'org_partner'
         ).prefetch_related('enrollments', 'prices')
@@ -1626,7 +1626,7 @@ def home(request):
         total_users = CustomUser.objects.count()
         total_courses = Course.objects.filter(
             status_course=published_status,
-            end_enrol__gte=timezone.now()
+            end_date__gte=timezone.now()
         ).count()
 
         latest_articles = BlogPost.objects.filter(
@@ -1770,6 +1770,7 @@ def search(request):
 
 
 # Logout view
+@custom_ratelimit
 def logout_view(request):
     logout(request)
     messages.error(request, 'You have been logged out.')
