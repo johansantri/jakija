@@ -1588,7 +1588,7 @@ def category_course_list(request, slug):
     courses = Course.objects.filter(
         category=category,
         status_course=published_status,
-        end_enrol__gte=timezone.now()
+        end_date__gte=timezone.now()
     ).select_related(
         'category', 'instructor__user', 'org_partner'
     ).prefetch_related('enrollments', 'prices')
