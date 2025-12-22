@@ -657,13 +657,12 @@ class CourseForm(forms.ModelForm):
         
         widgets = {
             "course_name": forms.TextInput(attrs={
+                "id": "id_title",
                 "placeholder": "Full Stack Development",
-                "class": "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition",
-                "oninput": "listingslug(this.value)"
+                "class": "w-full px-4 py-2.5 border border-gray-300 rounded-lg rounded-lg focus:ring-2 focus:ring-blue-400",
             }),
             "slug": forms.HiddenInput(attrs={
-                "class": "w-full px-4 py-2.5 border border-gray-300 rounded-lg",
-                "maxlength": "200"
+                "id": "id_slug"
             }),
             "course_number": forms.TextInput(attrs={
                 "placeholder": "CS201",
@@ -728,7 +727,16 @@ class CourseForm(forms.ModelForm):
                 # Optionally handle other user types or set a default queryset
 
                 self.fields['org_partner'].queryset = Partner.objects.none()  # No options for other users
-                
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+
+        if not instance.slug:
+            from django.utils.text import slugify
+            instance.slug = slugify(instance.course_name)
+
+        if commit:
+            instance.save()
+        return instance 
 
 class CategoryForm(forms.ModelForm):
     class Meta:

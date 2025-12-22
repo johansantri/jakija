@@ -77,24 +77,20 @@ function slugify(text) {
         .replace(/\-\-+/g, '-');
 }
 
-function listingslug(text) {
-    const slugField = document.getElementById("id_slug");
-    if (slugField) {
-        slugField.value = slugify(text);
-    }
-}
-
-// Auto-slug dari field title (asumsi id="id_title")
 document.addEventListener('DOMContentLoaded', function () {
     const titleField = document.getElementById("id_title");
-    if (titleField) {
-        titleField.addEventListener('input', function () {
-            listingslug(this.value);
-        });
-        // Set awal
-        listingslug(titleField.value);
+    const slugField  = document.getElementById("id_slug");
+
+    if (titleField && slugField) {
+        const updateSlug = () => {
+            slugField.value = slugify(titleField.value);
+        };
+
+        titleField.addEventListener('input', updateSlug);
+        updateSlug();
     }
 });
 </script>
+
 </section>
 {% endblock %}
