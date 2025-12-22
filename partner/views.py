@@ -358,20 +358,24 @@ def partner_analytics_admin(request):
 def partner_list_view(request):
     try:
         published_status = CourseStatus.objects.get(status='published')
-        partners = Partner.objects.annotate(
-            published_course_count=Count('courses', filter=Q(courses__status_course=published_status))
-        ).filter(published_course_count__gt=0).order_by('id')
+
+        partners = (
+            Partner.objects
+            .annotate(
+                published_course_count=Count(
+                    'courses',
+                    filter=Q(courses__status_course=published_status),
+                    distinct=True
+                )
+            )
+            .order_by('id')
+        )
+
     except CourseStatus.DoesNotExist:
-        # kalau status "published" belum ada, tampilkan list kosong
         partners = Partner.objects.none()
 
-    # kalau tidak ada partner pun tidak masalah
-    page_number = request.GET.get('page', '1')
-    if not str(page_number).isdigit():
-        page_number = '1'
-
     paginator = Paginator(partners, 12)
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator.get_page(request.GET.get('page', 1))
 
     return render(request, 'partner/partner_list.html', {
         'partners': page_obj,

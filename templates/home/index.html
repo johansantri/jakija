@@ -407,9 +407,16 @@
       {% for instructor in instructors|slice:":4" %}
         <div class="group text-center">
           <div class="relative">
-            <img src="{{ instructor.user.photo.url|default:'/static/images/default-128.webp' }}"
-                 alt="{{ instructor.user.get_full_name }}"
-                 class="w-32 h-32 mx-auto rounded-full object-cover ring-4 ring-gray-100 group-hover:ring-red-500 transition-all duration-500">
+            {% if instructor.user.photo %}
+                <img src="{{ instructor.user.photo.url }}"
+                    alt="{{ instructor.user.get_full_name }}"
+                    class="w-32 h-32 mx-auto rounded-full object-cover ring-4 ring-gray-100 group-hover:ring-red-500 transition-all duration-500">
+            {% else %}
+                <img src="{% static 'images/default-128.webp' %}"
+                    alt="{{ instructor.user.get_full_name }}"
+                    class="w-32 h-32 mx-auto rounded-full object-cover ring-4 ring-gray-100 group-hover:ring-red-500 transition-all duration-500">
+            {% endif %}
+
             {% if instructor.is_top_rated %}
               <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
                 Top Rated

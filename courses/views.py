@@ -5976,68 +5976,99 @@ def instructor_detail(request, id):
 #view instructor
 #@login_required
 
+@ratelimit(key='ip', rate='100/h')
+@login_required
 def instructor_view(request):
-    # Check if the user is authenticated
-    if not request.user.is_authenticated:
-        return redirect("/login/?next=%s" % request.path)
     user = request.user
-    required_fields = {
-        'first_name': 'First Name',
-        'last_name': 'Last Name',
-        'email': 'Email',
-        'phone': 'Phone Number',
-        'gender': 'Gender',
-        'birth': 'Date of Birth',
 
-    }
-    missing_fields = [label for field, label in required_fields.items() if not getattr(user, field)]
-
-    if missing_fields:
-        messages.warning(request, f"Please complete the following information: {', '.join(missing_fields)}")
+    # =====================================
+    # 1️⃣ VALIDASI PROFIL (NO QUERY)
+    # =====================================
+    required_fields = ['first_name', 'last_name', 'email', 'phone', 'gender', 'birth']
+    if any(not getattr(user, f, None) for f in required_fields):
+        messages.warning(request, "Please complete your profile.")
         return redirect('authentication:edit-profile', pk=user.pk)
-    # Get search query from GET parameters
+
+    # =====================================
+    # 2️⃣ PARAMS
+    # =====================================
     search_query = request.GET.get('q', '').strip()
-    
-    # Define base queryset based on user role
-    if request.user.is_superuser:
-        # Admin sees all instructors
-        instructors = Instructor.objects.all().annotate(num_courses=Count('courses'))
-    elif request.user.is_partner:
-        # Partner sees instructors linked to their provider
-        instructors = Instructor.objects.filter(provider__user=request.user).annotate(num_courses=Count('courses'))
-    elif request.user.is_instructor:
-        messages.error(request, "You do not have permission to view this instructor list.")
-        return render(request, 'instructor/instructor_list.html', {'instructors': []})
-    else:
-        messages.error(request, "You do not have permission to view this instructor list.")
+    gender_filter = request.GET.get('gender')
+    status_filter = request.GET.get('status')
+
+    # =====================================
+    # 3️⃣ BASE QUERY (MINIMAL FIELD)
+    # =====================================
+    instructors = (
+        Instructor.objects
+        .select_related('user', 'provider')
+        .only(
+            'id', 'status', 'experience_years',
+            'user__id', 'user__email', 'user__gender',
+            'user__last_login',
+            'provider__id'
+        )
+    )
+
+    if user.is_partner:
+        instructors = instructors.filter(provider__user=user)
+
+    elif not user.is_superuser:
+        messages.error(request, "Access denied.")
         return render(request, 'instructor/instructor_list.html', {'instructors': []})
 
-    # Apply search filter if query exists
-    if search_query:
+    # =====================================
+    # 4️⃣ SEARCH (INDEX FRIENDLY)
+    # =====================================
+    if search_query and len(search_query) >= 3:
         instructors = instructors.filter(
-            Q(user__username__icontains=search_query) | Q(user__email__icontains=search_query)
-        )  # Pencarian berdasarkan username atau email dari model User
+            user__email__startswith=search_query
+        )
 
-    # Pagination
-    items_per_page = 10  # Jumlah item per halaman
-    paginator = Paginator(instructors, items_per_page)
-    page_number = request.GET.get('page')
+    # =====================================
+    # 5️⃣ FILTER
+    # =====================================
+    if gender_filter:
+        instructors = instructors.filter(user__gender=gender_filter)
 
-    try:
-        instructors_page = paginator.page(page_number)
-    except PageNotAnInteger:
-        instructors_page = paginator.page(1)
-    except EmptyPage:
-        instructors_page = paginator.page(paginator.num_pages)
+    if status_filter:
+        instructors = instructors.filter(status=status_filter)
 
-    # Context untuk template
-    context = {
-        'instructors': instructors_page,
+    # =====================================
+    # 6️⃣ COUNT COURSE (SUBQUERY — CEPAT)
+    # =====================================
+    course_count_subquery = (
+        Course.objects
+        .filter(instructor_id=OuterRef('pk'))
+        .values('instructor')
+        .annotate(c=Count('id'))
+        .values('c')
+    )
+
+    instructors = instructors.annotate(
+        num_courses=Coalesce(
+            Subquery(course_count_subquery, output_field=IntegerField()),
+            0
+        )
+    )
+
+    # =====================================
+    # 7️⃣ ORDER (INDEX)
+    # =====================================
+    instructors = instructors.order_by('-id')
+
+    # =====================================
+    # 8️⃣ PAGINATION
+    # =====================================
+    paginator = Paginator(instructors, 10)
+    page_obj = paginator.get_page(request.GET.get('page', 1))
+
+    return render(request, 'instructor/instructor_list.html', {
+        'instructors': page_obj,
         'search_query': search_query,
-        'paginator': paginator,
-    }
-
-    return render(request, 'instructor/instructor_list.html', context)
+        'gender_filter': gender_filter,
+        'status_filter': status_filter,
+    })
 
 #delete instructor
 #@login_required

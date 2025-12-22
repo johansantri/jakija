@@ -6,11 +6,36 @@
 
     <!-- Form Pencarian -->
     <form method="GET" action="" class="mb-4 flex flex-col sm:flex-row items-center gap-2">
-        <div class="flex flex-grow">
-            <input type="text" name="q" class="form-control w-full sm:w-1/3 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Search by name or email" value="{{ search_query }}">
-        </div>
-        <button type="submit" class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-red-600 hover:text-white transition">Search</button>
+        <!-- Search -->
+        <input type="text"
+            name="q"
+            class="w-full sm:w-1/4 p-3 border rounded-lg"
+            placeholder="Search by name or email"
+            value="{{ search_query }}">
+
+        <!-- Gender Filter -->
+        <select name="gender"
+                class="p-3 border rounded-lg">
+            <option value="">All Gender</option>
+            <option value="male" {% if request.GET.gender == "male" %}selected{% endif %}>Male</option>
+            <option value="female" {% if request.GET.gender == "female" %}selected{% endif %}>Female</option>
+        </select>
+
+        <!-- Status Filter -->
+        <select name="status"
+                class="p-3 border rounded-lg">
+            <option value="">All Status</option>
+            <option value="Pending" {% if request.GET.status == "Pending" %}selected{% endif %}>Pending</option>
+            <option value="Approved" {% if request.GET.status == "Approved" %}selected{% endif %}>Approved</option>
+            <option value="Rejected" {% if request.GET.status == "Rejected" %}selected{% endif %}>Rejected</option>
+        </select>
+
+        <button type="submit"
+                class="bg-gray-800 text-white px-4 py-2 rounded-lg">
+            Filter
+        </button>
     </form>
+
     <!-- End Form Pencarian -->
 
     <!-- Daftar Instructor -->
@@ -88,7 +113,25 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <br>
+            <p class="text-sm text-gray-600">
+                Showing
+                <span class="font-semibold text-gray-800">
+                    {{ instructors.start_index }}–{{ instructors.end_index }}
+                </span>
+                of
+                <span class="font-semibold text-gray-800">
+                    {{ instructors.paginator.count }}
+                </span>
+                instructors
+            </p>
         </div>
+
+       
+
+            
+       
+
 
         <!-- Pagination -->
         {% if instructors.has_other_pages %}
