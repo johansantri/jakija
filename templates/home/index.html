@@ -2,10 +2,10 @@
 {% load extra_filters %}
 {% load static %}
 {% block meta %}
-  <title>JakIja - Learn New Skills with Expert-Led Online Courses</title>
+  <title>JakIja - Level Up Your Skills with Expert-Led Online Courses</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Join {{ total_users|default:'thousands of' }} learners in exploring {{ total_courses|default:'hundreds of' }} online courses with certifications from {{ total_instructors|default:'expert' }} instructors. Start learning today!">
+  <meta name="description" content="Join {{ total_users|default:'thousands of' }} learners grinding through {{ total_courses|default:'hundreds of' }} fire online courses with certs from top-tier instructors. Start stacking skills today!">
   <meta name="keywords" content="online learning, e-learning, JakIja, education, certifications{% if popular_categories %}, {{ popular_categories|join:', ' }}{% endif %}, expert instructors">
   <meta name="robots" content="index, follow">
   <meta name="googlebot" content="index, follow">
@@ -20,14 +20,14 @@
   <!-- Open Graph (Optimized for WhatsApp and Facebook) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="JakIja">
-  <meta property="og:title" content="JakIja - Learn New Skills with Expert-Led Online Courses">
-  <meta property="og:description" content="Explore {{ total_courses|default:'hundreds of' }}+ expert-led courses and earn certifications anytime, anywhere.">
+  <meta property="og:title" content="JakIja - Level Up Your Skills with Expert-Led Online Courses">
+  <meta property="og:description" content="Unlock {{ total_courses|default:'hundreds of' }}+ expert-led courses and snag certs whenever, wherever. No cap.">
   <meta property="og:image" content="{% static 'assets/img/logo/logo-five.png' %}"> <!-- Hardcode untuk WhatsApp -->
   <meta property="og:image:secure_url" content="{% static 'assets/img/logo/logo-five.png' %}"> <!-- HTTPS untuk WhatsApp -->
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Logo JakIja - Platform Pembelajaran Online">
+  <meta property="og:image:alt" content="JakIja Logo - Your Go-To Online Learning Platform">
   <meta property="og:url" content="{{ base_url }}{{ request.path }}">
   <meta property="og:locale" content="en_US">
 
@@ -36,9 +36,9 @@
   <meta name="twitter:site" content="@JakIja">
   <meta name="twitter:creator" content="@JakIja">
   <meta name="twitter:title" content="JakIja - Learn Anytime, Anywhere">
-  <meta name="twitter:description" content="Join {{ total_users|default:'thousands of' }} learners taking {{ total_courses|default:'hundreds of' }} online courses with JakIja.">
+  <meta name="twitter:description" content="Join {{ total_users|default:'thousands of' }} learners stacking {{ total_courses|default:'hundreds of' }} courses with JakIja. Let's go!">
   <meta name="twitter:image" content="{% static 'assets/img/logo/logo-five.png' %}"> <!-- Hardcode untuk konsistensi -->
-  <meta name="twitter:image:alt" content="Logo JakIja - Platform Pembelajaran Online">
+  <meta name="twitter:image:alt" content="JakIja Logo - Your Go-To Online Learning Platform">
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -47,7 +47,7 @@
     "@type": "WebSite",
     "name": "JakIja",
     "url": "{{ base_url }}",
-    "description": "JakIja offers {{ total_courses|default:'hundreds of' }}+ online courses and certifications to support your learning journey.",
+    "description": "JakIja drops {{ total_courses|default:'hundreds of' }}+ online courses and certs to help you level up your game.",
     "publisher": {
       "@type": "Organization",
       "name": "JakIja",
@@ -79,7 +79,7 @@
   <div class="relative z-10 mx-auto px-6 md:px-8 max-w-7xl text-center">
     <!-- Main Heading -->
    <h1 id="hero-heading" class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-snug mb-6">
-    Learn. Grow. Achieve.  
+    Unlock. Grind. Win.  
     <br>
     <span class="text-red-600" id="typed-text"></span>
     <span class="text-red-600 animate-pulse">|</span>
@@ -88,8 +88,8 @@
 
     <!-- Subtitle -->
     <p class="text-base sm:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-      Discover flexible, expert-led online courses from JakIja.  
-      Build real-world skills, earn recognized certificates, and boost your career with confidence.
+      Dive into flexible, expert-led online courses on JakIja.  
+      Stack real-world skills, grab legit certs, and level up your career — no cap.
     </p>
 
     <!-- CTA Buttons -->
@@ -108,12 +108,12 @@
 
     <!-- Tagline -->
     <p class="mt-10 text-sm text-gray-500 tracking-wide">
-      Trusted by learners and educators across Indonesia 🇮🇩
+      Trusted by learners & creators across Indonesia 🇮🇩
     </p>
 
     <!-- Hidden SEO text -->
     <p class="sr-only">
-      JakIja offers online learning, expert-curated courses, and microcredentials for Indonesian learners to build career-ready skills and earn certificates anytime, anywhere.
+      JakIja drops online courses, expert-curated content, and microcredentials for Indonesian learners to build career-ready skills and earn certs anytime, anywhere.
     </p>
   </div>
 </section>
@@ -123,10 +123,10 @@
   document.addEventListener('DOMContentLoaded', () => {
     const element = document.getElementById('typed-text');
     const phrases = [
-      "Empower Your Future with JakIja.",
-      "Upskill Anytime, Anywhere.",
-      "Learn with Top Experts.",
-      "Build Skills that Matter."
+      "Level Up Your Future with JakIja.",
+      "Skill Up Anytime, Anywhere.",
+      "Learn from the GOATs.",
+      "Build Skills That Actually Slap."
     ];
     let phraseIndex = 0;
     let letterIndex = 0;
@@ -160,13 +160,6 @@
   });
 </script>
 
-
-
-
-
-
-   
-
 <!-- MICRO CREDENTIALS SECTION -->
 <section class="py-16 lg:py-24 bg-gradient-to-br from-red-50 via-white to-gray-50 relative overflow-hidden" aria-labelledby="micro-courses-heading">
   <div class="absolute inset-0 bg-gradient-to-br from-red-100/30 to-transparent"></div>
@@ -177,7 +170,7 @@
         Master Skills with <span class="text-red-600">Microcredentials</span>
       </h2>
       <p class="mt-6 text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-        Kursus singkat, praktis, dan langsung bisa dipakai di dunia kerja — tanpa komitmen panjang.
+        Short, practical courses you can actually use in the real world — no long commitment needed.
       </p>
     </div>
 
@@ -206,12 +199,12 @@
               <span class="px-4 py-2 bg-red-100 text-red-700 text-sm font-semibold rounded-full">
                 {{ microcredential.category|default:"Microcredential" }}
               </span>
-              <span class="text-sm text-gray-500">→ Lihat Detail</span>
+              <span class="text-sm text-gray-500">→ Check It Out</span>
             </div>
           </div>
         </a>
       {% empty %}
-        <p class="text-center text-gray-500 py-12 text-lg">Belum ada microcredential tersedia. Segera hadir!</p>
+        <p class="text-center text-gray-500 py-12 text-lg">No microcredentials yet — stay tuned!</p>
       {% endfor %}
     </div>
 
@@ -219,7 +212,7 @@
       <div class="text-center mt-12">
         <a href="{% url 'courses:micro_list' %}"
            class="inline-flex items-center gap-3 bg-red-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-red-700 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
-          Jelajahi Semua Microcredential
+          Explore All Microcredentials
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </a>
       </div>
@@ -229,41 +222,53 @@
 
 
 <!-- WHY JAKIJA SECTION -->
-<section class="py-16 lg:py-20 bg-white">
+<section class="py-16 sm:py-20 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-center text-4xl sm:text-5xl font-black text-gray-900 mb-16">
-      Kenapa Belajar di <span class="text-red-600">JakIja</span>?
+    
+    <!-- Section Header -->
+    <h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-12 sm:mb-16">
+      Why Grind on <span class="text-red-600">JakIja</span>?
     </h2>
 
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+    <!-- Features Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+      
+      <!-- Feature 1 -->
       <div class="text-center group">
-        <div class="bg-gradient-to-br from-red-100 to-red-50 p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
-          <i class="fas fa-book text-5xl text-red-600 mb-4"></i>
-          <p class="text-4xl font-black text-gray-900">{{ total_courses }}+</p>
-          <p class="text-gray-600 mt-2">Kursus Berkualitas</p>
+        <div class="bg-gradient-to-br from-red-100 to-red-50 p-6 sm:p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
+          <i class="fas fa-book text-4xl sm:text-5xl text-red-600 mb-3 sm:mb-4" aria-hidden="true"></i>
+          <p class="text-3xl sm:text-4xl font-black text-gray-900">{{ total_courses }}+</p>
+          <p class="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Fire Courses</p>
         </div>
       </div>
+
+      <!-- Feature 2 -->
       <div class="text-center group">
-        <div class="bg-gradient-to-br from-red-100 to-red-50 p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
-          <i class="fas fa-users text-5xl text-red-600 mb-4"></i>
-          <p class="text-4xl font-black text-gray-900">{{ total_users }}+</p>
-          <p class="text-gray-600 mt-2">Peserta Global</p>
+        <div class="bg-gradient-to-br from-red-100 to-red-50 p-6 sm:p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
+          <i class="fas fa-users text-4xl sm:text-5xl text-red-600 mb-3 sm:mb-4" aria-hidden="true"></i>
+          <p class="text-3xl sm:text-4xl font-black text-gray-900">{{ total_users }}+</p>
+          <p class="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Global Learners</p>
         </div>
       </div>
+
+      <!-- Feature 3 -->
       <div class="text-center group">
-        <div class="bg-gradient-to-br from-red-100 to-red-50 p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
-          <i class="fas fa-chalkboard-teacher text-5xl text-red-600 mb-4"></i>
-          <p class="text-4xl font-black text-gray-900">{{ total_instructors }}+</p>
-          <p class="text-gray-600 mt-2">Pengajar Ahli</p>
+        <div class="bg-gradient-to-br from-red-100 to-red-50 p-6 sm:p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
+          <i class="fas fa-chalkboard-teacher text-4xl sm:text-5xl text-red-600 mb-3 sm:mb-4" aria-hidden="true"></i>
+          <p class="text-3xl sm:text-4xl font-black text-gray-900">{{ total_instructors }}+</p>
+          <p class="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Elite Instructors</p>
         </div>
       </div>
+
+      <!-- Feature 4 -->
       <div class="text-center group">
-        <div class="bg-gradient-to-br from-red-100 to-red-50 p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
-          <i class="fas fa-certificate text-5xl text-red-600 mb-4"></i>
-          <p class="text-4xl font-black text-gray-900">{{ total_certificates }}+</p>
-          <p class="text-gray-600 mt-2">Sertifikat Diterbitkan</p>
+        <div class="bg-gradient-to-br from-red-100 to-red-50 p-6 sm:p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
+          <i class="fas fa-certificate text-4xl sm:text-5xl text-red-600 mb-3 sm:mb-4" aria-hidden="true"></i>
+          <p class="text-3xl sm:text-4xl font-black text-gray-900">{{ total_certificates }}+</p>
+          <p class="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Certs Dropped</p>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -272,18 +277,19 @@
 <!-- POPULAR CATEGORIES -->
 <section class="py-16 lg:py-24 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-4xl sm:text-5xl font-black text-gray-900 mb-6">Kategori Pilihan</h2>
-    <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
-      Temukan jalur belajar yang sesuai dengan passion dan tujuan karirmu.
+    <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">What Categories Are Poppin' on <span class="text-red-600">JakIja</span>?</h2>
+    <p class="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-12">
+      Find your vibe and career path. Pick the categories that hit different.
     </p>
 
-    <div class="flex flex-wrap justify-center gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 justify-items-center">
       {% for category in popular_categories|slice:":12" %}
-        <a href="{% url 'courses:category_list' category.slug %}"
-           class="group px-6 py-3 bg-white border-2 border-gray-200 rounded-full text-gray-700 font-medium hover:border-red-500 hover:bg-red-50 hover:text-red-600 transition-all duration-300 shadow-sm hover:shadow-md">
-          <span>{{ category.name }}</span>
+        <a href="{% url 'courses:category_list' category.slug %}" 
+           aria-label="View courses in {{ category.name }} category"
+           class="w-full sm:w-auto group flex flex-col items-center px-6 py-4 bg-white border-2 border-gray-200 rounded-full text-gray-700 font-medium hover:border-red-500 hover:bg-red-50 hover:text-red-600 transition-transform duration-300 transform hover:scale-105 shadow-sm hover:shadow-lg">
+          <span class="text-center">{{ category.name }}</span>
           {% if category.num_courses %}
-            <span class="ml-2 text-gray-500 group-hover:text-red-500">({{ category.num_courses }})</span>
+            <span class="mt-1 text-sm text-gray-500 group-hover:text-red-500">({{ category.num_courses }})</span>
           {% endif %}
         </a>
       {% endfor %}
@@ -292,25 +298,26 @@
 </section>
 
 
+
 <!-- TOP COURSES (JS injected) -->
 <section class="py-16 lg:py-24 bg-gray-50 relative overflow-hidden">
   <div class="absolute inset-0 bg-gradient-to-br from-red-600/5 via-transparent to-gray-900/5"></div>
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
-      <h2 class="text-4xl sm:text-5xl font-black text-gray-900">Kursus Terpopuler Saat Ini</h2>
+      <h2 class="text-4xl sm:text-5xl font-black text-gray-900">Trending Courses on <span class="text-red-600">JakIja</span> Right Now</h2>
       <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-        Kursus terbaik yang sedang banyak dipelajari ribuan peserta.
+        The ones thousands of people are currently grinding.
       </p>
     </div>
 
     <div id="courses-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-      <!-- JS akan inject card di sini -->
+      <!-- JS will inject cards here -->
     </div>
 
     <div class="text-center mt-12">
       <a href="{% url 'authentication:course_list' %}" 
          class="inline-flex items-center gap-3 bg-black text-white px-8 py-4 rounded-xl font-bold hover:bg-gray-800 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
-        Lihat Semua Kursus
+        See All Courses
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
       </a>
     </div>
@@ -319,26 +326,32 @@
 
 
 <!-- PARTNERS / TRUST -->
-<section class="py-16 lg:py-24 bg-white">
+<section class="py-20 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-4xl sm:text-5xl font-black text-gray-900 mb-6">
-      Dipercaya Institusi & Perusahaan Global
+    <!-- Header -->
+    <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6">
+      <span class="text-red-600">JakIja</span> Trusted by Global Brands & Institutions
     </h2>
     <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-16">
-      Ribuan peserta dari 40+ negara mempercayakan JakIja untuk pengembangan diri & tim.
+      Thousands of learners from 40+ countries trust JakIja for personal & team growth.
     </p>
 
-    <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-8 items-center opacity-70">
+    <!-- Partners Grid -->
+    <div class="flex flex-wrap justify-center items-center gap-8">
       {% for partner in partners|slice:":14" %}
         {% if partner.name %}
-          <div class="group transition-all duration-500 hover:opacity-100 hover:scale-110">
+          <div class="group transition-transform duration-500 hover:scale-110 hover:opacity-100">
+            
             {% if partner.icon_class %}
-              <i class="{{ partner.icon_class }} text-4xl lg:text-6xl text-gray-600 group-hover:text-red-600 transition"></i>
+              <i class="{{ partner.icon_class }} text-4xl lg:text-6xl text-gray-500 group-hover:text-red-600 transition-colors duration-300"
+                 aria-hidden="true"></i>
+              <span class="sr-only">{{ partner.name }}</span>
             {% else %}
               <img src="{% if partner.logo %}{{ partner.logo.url }}{% else %}/static/images/partner-100.webp{% endif %}"
                    alt="{{ partner.name }}"
                    class="h-12 lg:h-16 object-contain grayscale group-hover:grayscale-0 transition-all duration-500">
             {% endif %}
+
           </div>
         {% endif %}
       {% endfor %}
@@ -351,9 +364,9 @@
 <section class="py-16 lg:py-24 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
-      <h2 class="text-4xl sm:text-5xl font-black text-gray-900">Blog & Inspirasi</h2>
+      <h2 class="text-4xl sm:text-5xl font-black text-gray-900">Blog & Inspiration <span class="text-red-600">JakIja</span></h2>
       <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-        Tips karir, tren teknologi, dan kisah sukses dari komunitas JakIja.
+        Career tips, tech trends, and success stories from the JakIja community.
       </p>
     </div>
 
@@ -372,20 +385,20 @@
                 {{ article.excerpt|truncatewords:25 }}
               </p>
               <span class="mt-4 inline-block text-red-600 font-medium text-sm group-hover:underline">
-                Baca selengkapnya →
+                Read More →
               </span>
             </div>
           </a>
         </article>
       {% empty %}
-        <p class="col-span-full text-center text-gray-500 py-12">Artikel akan segera hadir!</p>
+        <p class="col-span-full text-center text-gray-500 py-12">Articles coming soon!</p>
       {% endfor %}
     </div>
 
     {% if latest_articles|length > 3 %}
       <div class="text-center mt-12">
         <a href="{% url 'blog:blog-list' %}" class="inline-block bg-red-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-red-700 transition">
-          Baca Semua Artikel
+          Read All Articles
         </a>
       </div>
     {% endif %}
@@ -394,44 +407,53 @@
 
 
 <!-- INSTRUCTORS -->
-<section class="py-16 lg:py-24 bg-white">
+<section class="py-16 sm:py-20 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl sm:text-5xl font-black text-gray-900">Belajar dari Pengajar Kelas Dunia</h2>
-      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-        Pengajar berpengalaman dengan rekam jejak nyata di industri.
+    
+    <!-- Section Header -->
+    <div class="text-center mb-12 sm:mb-16">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900">
+        Learn from World-Class Instructors
+      </h2>
+      <p class="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+        Real pros with legit industry experience.
       </p>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-      {% for instructor in instructors|slice:":4" %}
-        <div class="group text-center">
-          <div class="relative">
-            {% if instructor.user.photo %}
-                <img src="{{ instructor.user.photo.url }}"
-                    alt="{{ instructor.user.get_full_name }}"
-                    class="w-32 h-32 mx-auto rounded-full object-cover ring-4 ring-gray-100 group-hover:ring-red-500 transition-all duration-500">
-            {% else %}
-                <img src="{% static 'images/default-128.webp' %}"
-                    alt="{{ instructor.user.get_full_name }}"
-                    class="w-32 h-32 mx-auto rounded-full object-cover ring-4 ring-gray-100 group-hover:ring-red-500 transition-all duration-500">
-            {% endif %}
+    <!-- Instructors Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-10">
+      {% for instructor in instructors|slice:":8" %}
+      <div class="group text-center bg-white p-4 sm:p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-500">
+        
+        <div class="relative w-24 h-24 sm:w-32 sm:h-32 mx-auto">
+          {% if instructor.user.photo %}
+            <img src="{{ instructor.user.photo.url }}"
+                 alt="{{ instructor.user.get_full_name }} - Instructor"
+                 class="w-full h-full rounded-full object-cover ring-4 ring-gray-100 group-hover:ring-red-500 transition-all duration-500">
+          {% else %}
+            <img src="{% static 'images/default-128.webp' %}"
+                 alt="{{ instructor.user.get_full_name }} - Instructor"
+                 class="w-full h-full rounded-full object-cover ring-4 ring-gray-100 group-hover:ring-red-500 transition-all duration-500">
+          {% endif %}
 
-            {% if instructor.is_top_rated %}
-              <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                Top Rated
-              </span>
-            {% endif %}
-          </div>
-          <h3 class="mt-6 text-lg font-bold text-gray-900 group-hover:text-red-600 transition">
-            {{ instructor.user.get_full_name }}
-          </h3>
-          <p class="text-sm text-gray-600">{{ instructor.user.hobby|default:"Expert Instructor" }}</p>
-          <a href="{% url 'courses:instructor_profile' username=instructor.user.username %}"
-             class="mt-4 inline-block text-sm font-semibold text-red-600 hover:underline">
-            Lihat Profil →
-          </a>
+          {% if instructor.is_top_rated %}
+            <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+              Top Rated
+            </span>
+          {% endif %}
         </div>
+
+        <h3 class="mt-4 sm:mt-6 text-lg font-bold text-gray-900 group-hover:text-red-600 transition-colors duration-300">
+          {{ instructor.user.get_full_name }}
+        </h3>
+        <p class="mt-2 text-sm text-gray-500">
+          {{ instructor.user.hobby|default:"Expert Instructor" }}
+        </p>
+        <a href="{% url 'courses:instructor_profile' username=instructor.user.username %}"
+           class="mt-4 inline-block text-sm font-semibold text-red-600 hover:text-red-800 hover:underline transition-colors duration-300">
+          View Profile →
+        </a>
+      </div>
       {% endfor %}
     </div>
   </div>
@@ -442,11 +464,11 @@
 {% if request.user.is_authenticated %}
 <section class="py-20 bg-gradient-to-r from-black via-gray-900 to-black text-white text-center">
   <div class="max-w-4xl mx-auto px-6">
-    <h2 class="text-4xl sm:text-5xl font-black mb-6">Siap Mengupgrade Skillmu?</h2>
-    <p class="text-xl text-gray-300 mb-10">Bergabung bersama {{ total_users|add:1 }}+ pembelajar lainnya sekarang!</p>
+    <h2 class="text-4xl sm:text-5xl font-black mb-6">Ready to Level Up Your Skills?</h2>
+    <p class="text-xl text-gray-300 mb-10">Join the JakIja squad with {{ total_users|add:1 }}+ other learners now!</p>
     <a href="{% url 'authentication:course_list' %}" 
        class="inline-flex items-center gap-4 bg-white text-black px-10 py-5 rounded-full font-bold text-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-2xl">
-      Mulai Belajar Sekarang
+      Start Learning Now
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
     </a>
   </div>
@@ -454,11 +476,11 @@
 {% else %}
 <section class="py-20 bg-gradient-to-r from-red-600 to-pink-600 text-white text-center">
   <div class="max-w-4xl mx-auto px-6">
-    <h2 class="text-4xl sm:text-5xl font-black mb-6">Gabung Komunitas JakIja Sekarang!</h2>
-    <p class="text-xl mb-10">Akses {{ total_courses }}+ kursus premium & mulai belajar hari ini — gratis!</p>
+    <h2 class="text-4xl sm:text-5xl font-black mb-6">Join the JakIja Squad Now!</h2>
+    <p class="text-xl mb-10">Unlock {{ total_courses }}+ premium courses & start grinding today — for free!</p>
     <a href="{% url 'authentication:register' %}" 
        class="inline-flex items-center gap-4 bg-white text-red-600 px-10 py-5 rounded-full font-bold text-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-2xl">
-      Daftar Gratis Sekarang
+      Sign Up Free
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
     </a>
   </div>
