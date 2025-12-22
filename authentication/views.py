@@ -1626,7 +1626,7 @@ def home(request):
                 'courses',
                 filter=Q(
                     courses__status_course=published_status,
-                    courses__end_enrol__gte=now_time
+                    courses__end_date__gte=now_time
                 )
             )
         ).filter(active_courses__gt=0).order_by('id')
