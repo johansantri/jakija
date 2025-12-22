@@ -106,148 +106,126 @@
       </div>
 
       <div class="overflow-x-auto">
-        <table class="min-w-full table-auto bg-white shadow-md rounded-lg">
-            <thead class="bg-gray-800 text-white text-center">
-            <tr>
-                <th class="px-4 py-2">Email</th>
-                <th class="px-4 py-2">Gender</th>
-                <th class="px-4 py-2">Organization</th>
-                <th class="px-4 py-2">Enrolled</th>
-                <th class="px-4 py-2">Joined & Last Login</th>
-                {% if request.user.is_superuser %}
-                <th class="px-4 py-2 sm:hidden">Admin</th> <!-- Sembunyikan kolom di perangkat kecil -->
-                <th class="px-4 py-2 sm:hidden">Staff</th> <!-- Sembunyikan kolom di perangkat kecil -->
-                <th class="px-4 py-2 sm:hidden">Partner</th> <!-- Sembunyikan kolom di perangkat kecil -->
-                <th class="px-4 py-2 sm:hidden">Instructor</th> <!-- Sembunyikan kolom di perangkat kecil -->
-                <th class="px-4 py-2 sm:hidden">Subscription</th> <!-- Sembunyikan kolom di perangkat kecil -->
-                {% endif %}
-                <th class="px-4 py-2">Status</th>
-            </tr>
+        <table class="min-w-full table-auto bg-white shadow-md rounded-lg overflow-hidden">
+            <thead class="bg-gray-800 text-white text-center text-sm">
+                <tr>
+                    <th class="px-4 py-3">Email</th>
+                    <th class="px-4 py-3">Gender</th>
+                    <th class="px-4 py-3">Organization</th>
+                    <th class="px-4 py-3">Enrolled</th>
+                    <th class="px-4 py-3">Joined & Last Login</th>
+                    <th class="px-4 py-3">Roles</th>
+                    <th class="px-4 py-3">Status</th>
+                </tr>
             </thead>
-            <tbody>
+
+            <tbody class="text-sm">
             {% for user in users %}
-                <tr class="text-center border-t">
-                <td class="px-4 py-2">
-                    <a href="{% url 'authentication:user_detail' user.id %}" class="text-blue-600 hover:text-blue-800">
-                    {{ user.email|default:"-" }}
-                    </a>
-                </td>
-                <td class="px-4 py-2">{{ user.gender|default:"-" }}</td>
-                <td class="px-4 py-2">{{ user.university__name|default:"-" }}</td>
-                <td class="px-4 py-2">{{ user.total_courses|default:0 }}</td>
-                <td class="px-4 py-2">
-                    {{ user.date_joined|date:"Y-m-d " }}
-                    <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">
-                    {{ user.last_login|date:"Y-m-d H:i:s"|default:"-" }}
-                    </span>
-                </td>
-                {% if request.user.is_superuser %}
-                <!-- Superuser -->
-                <td class="px-4 py-2">
-                    <span class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full 
-                                {% if user.is_superuser %}bg-green-100 text-green-700 border-2 border-green-700{% else %}bg-red-100 text-red-700 border-2 border-red-700{% endif %}">
-                        <!-- Ikon cek untuk superuser -->
-                        {% if user.is_superuser %}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        {% else %}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        {% endif %}
-                        <span class="ml-2">{{ user.is_superuser|yesno:"Yes,No" }}</span>
-                    </span>
-                </td>
+                <tr class="border-t hover:bg-gray-50 transition text-center">
 
-                <!-- Staff -->
-                <td class="px-4 py-2">
-                    <span class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full 
-                                {% if user.is_staff %}bg-green-100 text-green-700 border-2 border-green-700{% else %}bg-red-100 text-red-700 border-2 border-red-700{% endif %}">
-                        <!-- Ikon cek untuk staff -->
-                        {% if user.is_staff %}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        {% else %}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        {% endif %}
-                        <span class="ml-2">{{ user.is_staff|yesno:"Yes,No" }}</span>
-                    </span>
-                </td>
+                    <!-- EMAIL -->
+                    <td class="px-4 py-2 text-left">
+                        <a href="{% url 'authentication:user_detail' user.id %}"
+                        class="text-blue-600 hover:text-blue-800 font-medium">
+                            {{ user.email|default:"-" }}
+                        </a>
+                    </td>
 
-                <!-- Partner -->
-                <td class="px-4 py-2">
-                    <span class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full 
-                                {% if user.is_partner %}bg-green-100 text-green-700 border-2 border-green-700{% else %}bg-red-100 text-red-700 border-2 border-red-700{% endif %}">
-                        <!-- Ikon cek untuk partner -->
-                        {% if user.is_partner %}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        {% else %}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        {% endif %}
-                        <span class="ml-2">{{ user.is_partner|yesno:"Yes,No" }}</span>
-                    </span>
-                </td>
+                    <!-- GENDER -->
+                    <td class="px-4 py-2 capitalize">
+                        {{ user.gender|default:"-" }}
+                    </td>
 
-                <!-- Instructor -->
-                <td class="px-4 py-2">
-                    <span class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full 
-                                {% if user.is_instructor %}bg-green-100 text-green-700 border-2 border-green-700{% else %}bg-red-100 text-red-700 border-2 border-red-700{% endif %}">
-                        <!-- Ikon cek untuk instructor -->
-                        {% if user.is_instructor %}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        {% else %}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        {% endif %}
-                        <span class="ml-2">{{ user.is_instructor|yesno:"Yes,No" }}</span>
-                    </span>
-                </td>
+                    <!-- ORGANIZATION -->
+                    <td class="px-4 py-2">
+                        {{ user.university.name|default:"-" }}
+                    </td>
 
-                <!-- Subscription -->
-                <td class="px-4 py-2">
-                    <span class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full 
-                                {% if user.is_subscription %}bg-green-100 text-green-700 border-2 border-green-700{% else %}bg-red-100 text-red-700 border-2 border-red-700{% endif %}">
-                        <!-- Ikon cek untuk subscription -->
-                        {% if user.is_subscription %}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        {% else %}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        {% endif %}
-                        <span class="ml-2">{{ user.is_subscription|yesno:"Yes,No" }}</span>
-                    </span>
-                </td>
-            {% endif %}
+                    <!-- ENROLLED -->
+                    <td class="px-4 py-2 font-semibold text-gray-700">
+                        {{ user.total_courses|default:0 }}
+                    </td>
 
-                <td class="px-4 py-2">
-                    <span class="badge {% if user.is_active %}bg-blue-500{% else %}bg-yellow-400 text-black{% endif %} px-2 py-1 rounded">
-                    {{ user.is_active|yesno:"Active,Inactive" }}
-                    </span>
-                </td>
+                    <!-- JOINED & LAST LOGIN -->
+                    <td class="px-4 py-2 text-left">
+                        <div class="text-gray-800">
+                            Joined: {{ user.date_joined|date:"Y-m-d" }}
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            Last login: {{ user.last_login|date:"Y-m-d H:i"|default:"-" }}
+                        </div>
+                    </td>
+
+                    <!-- ROLES (DIGABUNG, TIDAK NO NO NO) -->
+                    <td class="px-4 py-2">
+                        <div class="flex flex-wrap gap-1 justify-center">
+
+                            {% if user.is_superuser %}
+                            <span class="px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-700 border border-purple-400">
+                                Admin
+                            </span>
+                            {% endif %}
+
+                            {% if user.is_staff %}
+                            <span class="px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-700 border border-blue-400">
+                                Staff
+                            </span>
+                            {% endif %}
+
+                            {% if user.is_partner %}
+                            <span class="px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-700 border border-green-400">
+                                Partner
+                            </span>
+                            {% endif %}
+
+                            {% if user.is_instructor %}
+                            <span class="px-2 py-0.5 text-xs rounded-full bg-yellow-100 text-yellow-700 border border-yellow-400">
+                                Instructor
+                            </span>
+                            {% endif %}
+
+                            {% if user.is_subscription %}
+                            <span class="px-2 py-0.5 text-xs rounded-full bg-pink-100 text-pink-700 border border-pink-400">
+                                Subscription
+                            </span>
+                            {% endif %}
+
+                            {% if not user.is_superuser and not user.is_staff and not user.is_partner and not user.is_instructor %}
+                            <span class="px-2 py-0.5 text-xs rounded-full bg-gray-100 text-gray-700 border border-gray-300">
+                                Learner
+                            </span>
+                            {% endif %}
+                        </div>
+                    </td>
+
+                    <!-- STATUS -->
+                    <td class="px-4 py-2">
+                        {% if user.is_active %}
+                            <span class="inline-flex items-center gap-1 px-2 py-1 text-xs rounded-full
+                                        bg-green-100 text-green-700 border border-green-400">
+                                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                Active
+                            </span>
+                        {% else %}
+                            <span class="inline-flex items-center gap-1 px-2 py-1 text-xs rounded-full
+                                        bg-red-100 text-red-700 border border-red-400">
+                                <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                                Inactive
+                            </span>
+                        {% endif %}
+                    </td>
+
                 </tr>
             {% empty %}
                 <tr>
-                <td colspan="{% if request.user.is_superuser %}12{% else %}7{% endif %}" class="text-center text-gray-500 py-3">
-                    <i class="bi bi-info-circle mr-2"></i> Tidak ada pengguna yang ditemukan.
-                </td>
+                    <td colspan="7" class="py-6 text-center text-gray-500">
+                        Tidak ada pengguna ditemukan
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+
     </div>
 
     <nav aria-label="Page navigation" class="mt-4">
