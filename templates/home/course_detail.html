@@ -137,6 +137,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Main Content -->
             <div class="lg:col-span-2">
+                
                 <!-- Overview -->
                 <div class="bg-white rounded-xl shadow-md p-6">
                     <!-- Inner Banner -->
@@ -187,9 +188,16 @@
                                     {% endfor %}
                                 </div>
                                 <span class="font-medium ml-2">{{ average_rating }} Rating</span>
+                                
                             </div>
+                          
+                              
+                               
+                            
                         </div>
+                        
                     </div>
+                    
                     <h5 class="text-lg font-bold text-gray-900 mb-3">Overview</h5>
                     
 
@@ -212,10 +220,10 @@
                                 class="mt-3 text-sm font-medium text-red-600 hover:underline focus:outline-none"
                                 x-text="expanded ? 'Show less' : 'Read more'"
                             ></button>
-                        </div>
-
+                    </div>
+                    
                 </div>
-
+                
                 <!-- Course Content -->
                 <div class="bg-white rounded-xl shadow-md mt-6 p-6">
                     <div class="flex flex-col md:flex-row justify-between items-center mb-6">
@@ -691,14 +699,14 @@
                                         {% else %}
                                             <img src="{% static 'assets/img/user/logo.5272a797c07c.png' %}" alt="Default Image" class="w-full h-52 object-cover rounded-xl hover:scale-105 transition-transform">
                                         {% endif %}
-                                        <div class="absolute inset-0 flex items-center justify-center bg-red-500 bg-opacity-75 rounded-full w-16 h-16 transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+                                        <div class="absolute inset-0 flex items-center justify-center bg-red-500 bg-opacity-30 rounded-full w-10 h-10 transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
                                             <i class="fas fa-play text-white text-2xl"></i>
                                         </div>
                                     </a>
                                 {% else %}
                                     <a href="https://www.youtube.com/watch?v=nc6m9WM3Gyw&t=1s" class="block" data-fancybox="video-gallery">
                                         <img src="{% static 'assets/img/user/logo.5272a797c07c.png' %}" alt="Default Image" class="w-full h-52 object-cover rounded-xl hover:scale-105 transition-transform">
-                                        <div class="absolute inset-0 flex items-center justify-center bg-red-500 bg-opacity-75 rounded-full w-16 h-16 transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+                                        <div class="absolute inset-0 flex items-center justify-center bg-red-400 bg-opacity-30 rounded-full w-10 h-10 transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
                                             <i class="fas fa-play text-white text-2xl"></i>
                                         </div>
                                     </a>
@@ -736,69 +744,9 @@
 
                             <br>
 
-                               <div class="grid grid-cols-3 gap-2 sm:gap-3 mb-4">
-                                <!-- Wishlist -->
-                                <a href="#" 
-                                class="flex items-center justify-center border border-red-500 text-red-500 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-red-500 hover:text-white transition-colors"
-                                aria-label="Add to Wishlist">
-                                    <i class="fas fa-heart text-sm sm:text-base mr-1"></i>
-                                    <span class="text-xs sm:text-sm"></span>
-                                </a>
-                                <!-- WhatsApp Share -->
-                                <a href="https://api.whatsapp.com/send?text={{ course.course_name|urlencode }}%0A{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja!'|truncatechars:200|urlencode }}%0A{{ request.build_absolute_uri|urlencode }}"
-                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Share on WhatsApp">
-                                    <i class="fab fa-whatsapp text-green-500 text-sm sm:text-base mr-1"></i>
-                                    <span class="text-xs sm:text-sm"></span>
-                                </a>
-                                <!-- Facebook Share -->
-                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
-                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Share on Facebook">
-                                    <i class="fab fa-facebook-f text-blue-600 text-sm sm:text-base mr-1"></i>
-                                    <span class="text-xs sm:text-sm"></span>
-                                </a>
-                                <!-- LinkedIn Share -->
-                                <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode }}&title={{ course.course_name|urlencode }}&summary={{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja untuk meningkatkan keterampilan Anda dengan panduan dari instruktur ahli.'|truncatechars:256|urlencode }}&source={{ request.scheme }}://{{ request.get_host }}"
-                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Share on LinkedIn">
-                                    <i class="fab fa-linkedin-in text-blue-700 text-sm sm:text-base mr-1"></i>
-                                    <span class="text-xs sm:text-sm"></span>
-                                </a>
-                                <!-- X Share -->
-                                <a href="https://x.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ course.course_name|urlencode }}%20-%20{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja!'|truncatechars:200|urlencode }}"
-                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Share on X">
-                                    <i class="fab fa-x-twitter text-black text-sm sm:text-base mr-1"></i>
-                                    <span class="text-xs sm:text-sm"></span>
-                                </a>
-                                <!-- Instagram Share -->
-                                <button onclick="copyToClipboard('{{ request.build_absolute_uri }}')"
-                                        class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
-                                        aria-label="Copy link for your share">
-                                    <i class="fas fa-share-alt text-gray-600 text-sm sm:text-base mr-1"></i>
-                                    <span class="text-xs sm:text-sm"></span>
-                                </button>
+                               
                             </div>
-                            </div>
-                            <script>
-                            function copyToClipboard(url) {
-                                navigator.clipboard.writeText(url).then(() => {
-                                    alert('Link copied to clipboard! Paste it anywhere to share.');
-                                }).catch(err => {
-                                    console.error('Failed to copy: ', err);
-                                    alert('Failed to copy link. Please copy the URL manually.');
-                                });
-                            }
-                            </script>
+                           
                              
 
 
@@ -939,6 +887,66 @@
                         <a href="{% url 'courses:category_list' course.category.slug %}" class="inline-block">
                             <span class="inline-block bg-red-500 text-white text-sm font-medium px-3 py-1 rounded-md mb-3">{{ course.category }}</span>
                         </a>
+                        <hr>
+
+                        <br>
+                        <div class="flex space-x-4">
+                              
+                                <!-- WhatsApp Share -->
+                                <a href="https://api.whatsapp.com/send?text={{ course.course_name|urlencode }}%0A{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja!'|truncatechars:200|urlencode }}%0A{{ request.build_absolute_uri|urlencode }}"
+                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Share on WhatsApp">
+                                    <i class="fab fa-whatsapp text-green-500 text-sm sm:text-base mr-1"></i>
+                                    <span class="text-xs sm:text-sm"></span>
+                                </a>
+                                <!-- Facebook Share -->
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
+                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Share on Facebook">
+                                    <i class="fab fa-facebook-f text-blue-600 text-sm sm:text-base mr-1"></i>
+                                    <span class="text-xs sm:text-sm"></span>
+                                </a>
+                                <!-- LinkedIn Share -->
+                                <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode }}&title={{ course.course_name|urlencode }}&summary={{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja untuk meningkatkan keterampilan Anda dengan panduan dari instruktur ahli.'|truncatechars:256|urlencode }}&source={{ request.scheme }}://{{ request.get_host }}"
+                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Share on LinkedIn">
+                                    <i class="fab fa-linkedin-in text-blue-700 text-sm sm:text-base mr-1"></i>
+                                    <span class="text-xs sm:text-sm"></span>
+                                </a>
+                                <!-- X Share -->
+                                <a href="https://x.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ course.course_name|urlencode }}%20-%20{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja!'|truncatechars:200|urlencode }}"
+                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Share on X">
+                                    <i class="fab fa-x-twitter text-black text-sm sm:text-base mr-1"></i>
+                                    <span class="text-xs sm:text-sm"></span>
+                                </a>
+                                <!-- Instagram Share -->
+                                <button onclick="copyToClipboard('{{ request.build_absolute_uri }}')"
+                                        class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                        aria-label="Copy link for your share">
+                                    <i class="fas fa-share-alt text-gray-600 text-sm sm:text-base mr-1"></i>
+                                    <span class="text-xs sm:text-sm"></span>
+                                </button>
+
+                                 <script>
+                                    function copyToClipboard(url) {
+                                        navigator.clipboard.writeText(url).then(() => {
+                                            alert('Link copied to clipboard! Paste it anywhere to share.');
+                                        }).catch(err => {
+                                            console.error('Failed to copy: ', err);
+                                            alert('Failed to copy link. Please copy the URL manually.');
+                                        });
+                                    }
+                                 </script>
+                            </div>
                     </div>
                     
                 </div>
