@@ -126,11 +126,11 @@
                   <td class="px-4 py-2 space-x-2">
                     <a href="{% url 'blog:blog-update' post.pk %}"
                        class="rounded bg-blue-500 px-3 py-1 text-sm text-white hover:bg-blue-600">
-                      Edit
+                     <i class="fas fa-edit"></i>
                     </a>
                     <a href="{% url 'blog:blog-delete' post.pk %}"
                        class="rounded bg-red-500 px-3 py-1 text-sm text-white hover:bg-red-600">
-                      Delete
+                     <i class="fas fa-trash"></i>
                     </a>
                   </td>
                 </tr>
@@ -140,38 +140,108 @@
         </div>
 
         {% if is_paginated %}
-          <div class="mt-6 flex justify-center">
-            <nav class="flex space-x-1">
+          <div class="mt-8 flex justify-center">
+            <nav aria-label="Page navigation" class="inline-flex items-center rounded-xl shadow-lg bg-white border border-gray-200 overflow-hidden">
+              <ul class="flex items-center -space-x-px">
 
-              {% if page_obj.has_previous %}
-                <a class="px-3 py-1 border rounded hover:bg-gray-100"
-                   href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}">
-                  «
-                </a>
-              {% endif %}
+                <!-- First Page -->
+                {% if page_obj.has_previous %}
+                  <li>
+                    <a href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}"
+                      class="px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                      aria-label="First page">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+                      </svg>
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="px-4 py-3 text-gray-400 cursor-not-allowed">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+                    </svg>
+                  </li>
+                {% endif %}
 
-              {% for num in page_obj.paginator.page_range %}
-                <a class="px-3 py-1 border rounded
-                  {% if page_obj.number == num %}
-                    bg-blue-600 text-white
-                  {% else %}
-                    hover:bg-gray-100
-                  {% endif %}"
-                  href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}">
-                  {{ num }}
-                </a>
-              {% endfor %}
+                <!-- Previous -->
+                {% if page_obj.has_previous %}
+                  <li>
+                    <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}"
+                      class="px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition rounded-l-xl"
+                      aria-label="Previous">
+                      Previous
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="px-4 py-3 text-gray-400 bg-gray-50 cursor-not-allowed rounded-l-xl">
+                    Previous
+                  </li>
+                {% endif %}
 
-              {% if page_obj.has_next %}
-                <a class="px-3 py-1 border rounded hover:bg-gray-100"
-                   href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}">
-                  »
-                </a>
-              {% endif %}
+                <!-- Page Numbers (Smart Window: ±3 dari current) -->
+                {% for num in page_obj.paginator.page_range %}
+                  {% if num > page_obj.number|add:-4 and num < page_obj.number|add:4 %}
+                    {% if page_obj.number == num %}
+                      <li>
+                        <span class="px-5 py-3 text-sm font-bold text-white bg-blue-600 border-blue-600">
+                          {{ num }}
+                        </span>
+                      </li>
+                    {% else %}
+                      <li>
+                        <a href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}"
+                          class="px-5 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition border-t border-b border-gray-200">
+                          {{ num }}
+                        </a>
+                      </li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
 
+                <!-- Next -->
+                {% if page_obj.has_next %}
+                  <li>
+                    <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}"
+                      class="px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                      aria-label="Next">
+                      Next
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="px-4 py-3 text-gray-400 bg-gray-50 cursor-not-allowed">
+                    Next
+                  </li>
+                {% endif %}
+
+                <!-- Last Page -->
+                {% if page_obj.has_next %}
+                  <li>
+                    <a href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_tag %}&tag={{ selected_tag }}{% endif %}"
+                      class="px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition rounded-r-xl"
+                      aria-label="Last page">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+                      </svg>
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="px-4 py-3 text-gray-400 cursor-not-allowed rounded-r-xl">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+                    </svg>
+                  </li>
+                {% endif %}
+
+              </ul>
             </nav>
           </div>
-        {% endif %}
+
+          <!-- Info halaman (opsional, bagus untuk UX) -->
+          <div class="mt-4 text-center text-sm text-gray-600">
+            Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} 
+            ({{ page_obj.paginator.count }} total entries)
+          </div>
+          {% endif %}
       {% else %}
         <p class="text-gray-600">
           No posts available.
