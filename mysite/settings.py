@@ -75,6 +75,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',  # Google provider
+    'allauth.socialaccount.providers.facebook',  # Facebook provider
+    'allauth.socialaccount.providers.microsoft',
     'csp',
     'mathfilters',
     'blog',
@@ -217,8 +219,8 @@ SITE_ID = 1
 SOCIALACCOUNT_PROVIDERS = {
     'google':{
         'APP':{
-            'client_id':'your-client-id.apps.googleusercontent.com',
-            'secret':'your-client-secret',
+            'client_id':'xxxxxxxxxxxxxxxxxxxxxxx',
+            'secret':'xxxxxxxxxxxxx',
             'key':''
         },
         'SCOPE': [
@@ -226,10 +228,41 @@ SOCIALACCOUNT_PROVIDERS = {
             'email',
         ],
 
+    },
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'FIELDS': [
+            'id', 'email', 'name', 'first_name', 'last_name', 'picture'
+        ],
+        'EXCHANGE_TOKEN': True,
+        'VERSION': 'v17.0', # Gunakan versi terbaru yang tersedia
+        'APP': {
+            'client_id': 'xxxxxxxxxxxxxxxxxx',
+            'secret': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        }
+    },
+
+    'microsoft': {
+        'APP': {
+            'client_id': 'MICROSOFT_CLIENT_ID',
+            'secret': 'MICROSOFT_CLIENT_SECRET',
+            'key': ''
+        },
+        'SCOPE': [
+            'openid',
+            'email',
+            'profile',
+            'User.Read',
+        ],
+        'AUTH_PARAMS': {
+            'prompt': 'select_account'
+        }
     }
 }
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'your-google-oauth2-key'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'your-google-oauth2-secret'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 SOCIALACCOUNT_LOGIN_ON_GET=True
@@ -276,11 +309,11 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # Alamat email dan password aplikasi Gmail
-EMAIL_HOST_USER = ''  # Ganti dengan alamat email Anda
-EMAIL_HOST_PASSWORD = ''  # Ganti dengan password aplikasi Gmail Anda
+EMAIL_HOST_USER = 'xxxxxxxxxxxxxx'  # Ganti dengan alamat email Anda
+EMAIL_HOST_PASSWORD = 'xxxxxxxxxxxxxxxxxxxxx'  # Ganti dengan password aplikasi Gmail Anda
 
 # Email pengirim default untuk email otomatis
-DEFAULT_FROM_EMAIL = 'Informasi dari LMSku'
+DEFAULT_FROM_EMAIL = 'Informasi dari Jakija'
 
 
 

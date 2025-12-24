@@ -66,7 +66,11 @@
                 <tbody>
                     {% for detail in enrollments %}
                     <tr class="border-b hover:bg-gray-50 transition">
-                        <td class="py-2 px-2 font-medium">{{ detail.first_name }} {{ detail.last_name }}</td>
+                        <td class="py-2 px-2 font-medium">
+                            <a href="{% url 'instructor:instructor_learner_detail_report' %}?learner_id={{ detail.user.id }}" class="text-blue-600 hover:underline">
+                                {{ detail.first_name }} {{ detail.last_name }} 
+                            </a>
+                        </td>
                         <td class="py-2 px-2">{{ detail.email|default:"-" }}</td>
                         <td class="py-2 px-2">{{ detail.gender|default:"-" }}</td>
                         <td class="py-2 px-2">{{ detail.birth|date:"d M, Y"|default:"-" }}</td>
