@@ -95,6 +95,12 @@
             </a>
           </div>
 
+          <div class="mt-6 text-center">
+            <a href="{% provider_login_url 'facebook' %}" class="w-full inline-flex items-center justify-center border border-blue-500 text-blue-600 hover:bg-blue-100 font-medium py-2 px-4 rounded-md transition duration-200">
+              <i class="fab fa-facebook mr-2"></i> Sign In with Facebook
+            </a>
+          </div>
+
           <div class="mt-4 text-center text-sm text-gray-600">
             <p class="mb-2">New User? <a href="{% url 'authentication:register' %}" class="text-blue-600 hover:underline font-medium">Create an Account</a></p>
             <p>Forgot Password? <a href="{% url 'authentication:password_reset' %}" class="text-blue-600 hover:underline font-medium">Reset Password</a></p>
