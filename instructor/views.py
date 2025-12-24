@@ -9,7 +9,7 @@ import csv
 from django.core.mail import send_mail
 from decimal import Decimal
 from django.contrib import messages
-from courses.models import Quiz,QuizResult,LTIResult,InstructorCertificate,Course,CoursePrice,PricingType, Enrollment,Section,GradeRange,CourseStatusHistory,QuestionAnswer, CourseProgress, PeerReview,MaterialRead, AssessmentRead, AssessmentScore,Material,Assessment, Submission, CustomUser, Instructor
+from courses.models import Partner,Quiz,QuizResult,LTIResult,InstructorCertificate,Course,CoursePrice,PricingType, Enrollment,Section,GradeRange,CourseStatusHistory,QuestionAnswer, CourseProgress, PeerReview,MaterialRead, AssessmentRead, AssessmentScore,Material,Assessment, Submission, CustomUser, Instructor
 from authentication.models import CustomUser, Universiti
 # Create your views here.
 from django.template.loader import render_to_string
@@ -581,266 +581,75 @@ def export_learning_report_csv(report_data):
     return response
 
 
-@login_required
-def instructor_learning_report(request):
-    if not request.user.is_instructor:
-        raise PermissionDenied("You do not have permission to access this report.")
 
-    try:
-        instructor = Instructor.objects.get(user=request.user)
-    except Instructor.DoesNotExist:
-        raise PermissionDenied("Instructor profile not found.")
-
-    course_id = request.GET.get('course_id')
-    learner_id = request.GET.get('learner_id')
-
-    # Ambil semua courses untuk instructor
-    courses = Course.objects.filter(instructor=instructor).select_related('instructor')
-    if course_id:
-        courses = courses.filter(id=course_id)
-
-    # Semua learners untuk instructor/course
-    all_learners = CustomUser.objects.filter(
-        id__in=Enrollment.objects.filter(course__instructor=instructor).values_list('user_id', flat=True)
-    ).select_related('university').distinct()
-    if learner_id:
-        all_learners = all_learners.filter(id=learner_id)
-
-    report_data = []
-
-    # Ambil grade range "Pass" untuk semua course
-    grade_ranges = GradeRange.objects.filter(course__in=courses, name='Pass')
-    grade_range_dict = {gr.course_id: gr.min_grade for gr in grade_ranges}
-
-    for course in courses:
-        enrollments = Enrollment.objects.filter(course=course).select_related('user', 'user__university')
-        if learner_id:
-            enrollments = enrollments.filter(user_id=learner_id)
-
-        learner_ids = [e.user_id for e in enrollments]
-
-        # Ambil sections, materials, assessments
-        sections = Section.objects.filter(courses=course).prefetch_related(
-            Prefetch('materials', queryset=Material.objects.all()),
-            Prefetch('assessments', queryset=Assessment.objects.all().prefetch_related('questions'))
-        )
-        materials = Material.objects.filter(section__in=sections)
-        assessments = Assessment.objects.filter(section__in=sections).prefetch_related('questions')
-        total_materials = materials.count()
-        total_assessments = assessments.count()
-
-        passing_threshold = grade_range_dict.get(course.id, Decimal('52.00'))
-
-        # Ambil semua activity sekaligus
-        material_reads = MaterialRead.objects.filter(
-            user__id__in=learner_ids, material__in=materials
-        ).select_related('material', 'user').order_by('read_at')
-
-        assessment_reads = AssessmentRead.objects.filter(
-            user__id__in=learner_ids, assessment__in=assessments
-        ).select_related('assessment', 'user').order_by('completed_at')
-
-        question_answers = QuestionAnswer.objects.filter(
-            user__id__in=learner_ids, question__assessment__in=assessments
-        ).select_related('question', 'user', 'choice').order_by('answered_at')
-
-        quiz_results = QuizResult.objects.filter(
-            user__id__in=learner_ids, assessment__in=assessments
-        )
-
-        lti_results = LTIResult.objects.filter(
-            user__id__in=learner_ids, assessment__in=assessments
-        )
-
-        # Buat dictionary lookup cepat
-        material_by_user = {}
-        for mr in material_reads:
-            material_by_user.setdefault(mr.user_id, []).append(mr)
-
-        assessment_by_user = {}
-        for ar in assessment_reads:
-            assessment_by_user.setdefault(ar.user_id, []).append(ar)
-
-        question_by_user_assessment = {}
-        for qa in question_answers:
-            key = (qa.user_id, qa.question.assessment_id)
-            question_by_user_assessment.setdefault(key, []).append(qa)
-
-        quiz_by_user_assessment = {}
-        for qr in quiz_results:
-            quiz_by_user_assessment.setdefault((qr.user_id, qr.assessment_id), []).append(qr)
-
-        lti_by_user_assessment = {}
-        for lr in lti_results:
-            lti_by_user_assessment.setdefault((lr.user_id, lr.assessment_id), []).append(lr)
-
-        # Loop per learner
-        for enrollment in enrollments:
-            learner = enrollment.user
-
-            # Progress
-            user_progress, _ = CourseProgress.objects.get_or_create(user=learner, course=course)
-            progress_percentage = user_progress.progress_percentage
-
-            # Materials
-            materials_read = material_by_user.get(learner.id, [])
-            materials_read_percentage = (len(materials_read) / total_materials * 100) if total_materials else 0
-
-            material_access_details = []
-            sorted_activities = sorted(materials_read, key=lambda x: x.read_at)
-            for i, mr in enumerate(sorted_activities):
-                duration = None
-                if i + 1 < len(sorted_activities):
-                    duration = (sorted_activities[i + 1].read_at - mr.read_at).total_seconds() / 60
-                material_access_details.append({
-                    'material_name': mr.material.title,
-                    'access_time': mr.read_at,
-                    'duration': duration,
-                })
-
-            # Assessments
-            assessments_completed = len(assessment_by_user.get(learner.id, []))
-            assessments_completed_percentage = (assessments_completed / total_assessments * 100) if total_assessments else 0
-
-            assessment_scores = []
-            total_score = Decimal('0')
-            total_max_score = sum([a.weight for a in assessments])
-            all_assessments_submitted = True
-
-            for assessment in assessments:
-                score_value = Decimal('0')
-                is_submitted = True
-
-                # 1️⃣ LTI Result
-                lti_result = LTIResult.objects.filter(user=learner, assessment=assessment).first()
-                if lti_result and lti_result.score is not None:
-                    lti_score = Decimal(lti_result.score)
-                    if lti_score > 1.0:
-                        lti_score /= 100
-                    score_value = lti_score * Decimal(assessment.weight)
-
-                else:
-                    # 2️⃣ In-video quizzes
-                    invideo_quizzes = Quiz.objects.filter(assessment=assessment)
-                    if invideo_quizzes.exists():
-                        quiz_result = QuizResult.objects.filter(user=learner, assessment=assessment).first()
-                        if quiz_result and quiz_result.total_questions > 0:
-                            score_value = (Decimal(quiz_result.score) / Decimal(quiz_result.total_questions)) * Decimal(assessment.weight)
-                        else:
-                            is_submitted = False
-                            score_value = Decimal('0')
-
-                    else:
-                        # 3️⃣ Old question model
-                        total_questions = assessment.questions.count()
-                        if total_questions > 0:
-                            total_correct = sum(
-                                QuestionAnswer.objects.filter(question=q, user=learner, choice__is_correct=True).count()
-                                for q in assessment.questions.all()
-                            )
-                            answers_exist = QuestionAnswer.objects.filter(question__in=assessment.questions.all(), user=learner).exists()
-                            if not answers_exist:
-                                is_submitted = False
-                            score_value = (Decimal(total_correct) / Decimal(total_questions)) * Decimal(assessment.weight)
-
-                        else:
-                            # 4️⃣ Askora submissions
-                            askora_submissions = Submission.objects.filter(askora__assessment=assessment, user=learner)
-                            if not askora_submissions.exists():
-                                is_submitted = False
-                                score_value = Decimal('0')
-                            else:
-                                latest_submission = askora_submissions.order_by('-submitted_at').first()
-                                assessment_score = AssessmentScore.objects.filter(submission=latest_submission).first()
-                                if assessment_score:
-                                    score_value = Decimal(assessment_score.final_score)
-                                else:
-                                    is_submitted = False
-                                    score_value = Decimal('0')
-
-                # Clamp score
-                score_value = min(score_value, Decimal(assessment.weight))
-
-                # Tambahkan ke list assessment_scores
-                assessment_scores.append({
-                    'name': assessment.name,
-                    'weight': assessment.weight,
-                    'score': score_value,
-                    'submitted': is_submitted
-                })
-
-                # Update total_score
-                total_score += score_value
-                if not is_submitted:
-                    all_assessments_submitted = False
-
-
-            overall_percentage = (total_score / total_max_score * 100) if total_max_score else 0
-            passing_criteria_met = overall_percentage >= passing_threshold
-            status = "Pass" if all_assessments_submitted and passing_criteria_met else "Fail"
-
-            assessment_scores.append({'name': 'Total', 'weight': total_max_score, 'score': total_score})
-
-            report_data.append({
-                'learner': learner,
-                'learner_full_name': learner.username,
-                'learner_email': learner.email,
-                'learner_university': learner.university.name if learner.university else 'N/A',
-                'learner_gender': learner.gender or 'N/A',
-                'course': course,
-                'progress_percentage': progress_percentage,
-                'materials_read': len(materials_read),
-                'total_materials': total_materials,
-                'materials_read_percentage': materials_read_percentage,
-                'material_access_details': material_access_details,
-                'assessments_completed': assessments_completed,
-                'total_assessments': total_assessments,
-                'assessments_completed_percentage': assessments_completed_percentage,
-                'total_score': total_score,
-                'threshold': passing_threshold,
-                'assessment_details': assessment_scores,
-                'status': status,
-                'last_login': learner.last_login,
-            })
-
-    # Paginasi
-    paginator = Paginator(report_data, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    context = {
-        'report_data': page_obj,
-        'instructor': instructor,
-        'courses': courses,
-        'all_learners': all_learners,
-        'selected_course': course_id,
-        'selected_learner': learner_id,
-        'page_obj': page_obj,
-    }
-
-    # Export CSV sama logikanya seperti sebelumnya
-    if 'export' in request.GET:
-        return export_learning_report_csv(report_data)
-
-    return render(request, 'instructor/learning_report.html', context)
 
 
 @login_required
 def instructor_learner_detail_report(request):
-    if not request.user.is_instructor:
-        raise PermissionDenied("You do not have permission to access this report.")
-
-    try:
-        instructor = Instructor.objects.get(user=request.user)
-    except Instructor.DoesNotExist:
-        raise PermissionDenied("Instructor profile not found.")
-
+    user = request.user
     learner_id = request.GET.get('learner_id')
+<<<<<<< HEAD
     if not learner_id:
         return redirect('instructor:instructor_learning_report')
+=======
+>>>>>>> 657d9327 (ok update role)
 
-    learner = get_object_or_404(CustomUser.objects.select_related('university'), id=learner_id)
-    courses = Course.objects.filter(instructor=instructor, enrollments__user=learner).select_related('instructor')
+    if not learner_id:
+        raise PermissionDenied("Learner ID is required.")
+
+    learner = get_object_or_404(
+        CustomUser.objects.select_related('university'),
+        id=learner_id
+    )
+
+    # ======================
+    # SUPERUSER
+    # ======================
+    if user.is_superuser:
+        courses = Course.objects.filter(
+            enrollments__user=learner
+        ).select_related('org_partner', 'instructor').distinct()
+
+    # ======================
+    # PARTNER
+    # ======================
+    elif user.is_partner:
+        try:
+            partner = user.partner_user
+        except Partner.DoesNotExist:
+            raise PermissionDenied("Partner profile not found.")
+
+        courses = Course.objects.filter(
+            org_partner=partner,
+            enrollments__user=learner
+        ).select_related('org_partner', 'instructor').distinct()
+
+        if not courses.exists():
+            raise PermissionDenied("Learner not in your partner scope.")
+
+    # ======================
+    # INSTRUCTOR
+    # ======================
+    elif user.is_instructor:
+        instructor = Instructor.objects.filter(
+            user=user,
+            status='Approved'
+        ).select_related('provider').first()
+
+        if not instructor:
+            raise PermissionDenied("Instructor profile not found or not approved.")
+
+        courses = Course.objects.filter(
+            instructor=instructor,
+            org_partner=instructor.provider,
+            enrollments__user=learner
+        ).select_related('org_partner', 'instructor').distinct()
+
+        if not courses.exists():
+            raise PermissionDenied("Learner not in your course scope.")
+
+    else:
+        raise PermissionDenied("You do not have permission.")
 
     report_data = []
 
