@@ -588,11 +588,6 @@ def export_learning_report_csv(report_data):
 def instructor_learner_detail_report(request):
     user = request.user
     learner_id = request.GET.get('learner_id')
-<<<<<<< HEAD
-    if not learner_id:
-        return redirect('instructor:instructor_learning_report')
-=======
->>>>>>> 657d9327 (ok update role)
 
     if not learner_id:
         raise PermissionDenied("Learner ID is required.")

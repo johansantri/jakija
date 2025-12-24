@@ -2,11 +2,10 @@
 {% load static %}
 {% block content %}
 <div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-    <div class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
+    <div class="max-w-5xl mx-auto">
         <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
             Learner Detail Report: <span class="text-blue-600">{{ learner.username }}</span>
         </h2>
-<<<<<<< HEAD
 
         <!-- Learner Info Card -->
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-10">
@@ -37,9 +36,9 @@
                             </span>
                         </div>
                         <div><strong class="text-gray-600">Last Login:</strong>
-                            {% if learner.last_login %}
+                            {% if last_login %}
                                 <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-green-100 text-green-800">
-                                    {{ learner.last_login|date:"Y-m-d H:i:s" }}
+                                    {{ last_login|date:"Y-m-d H:i:s" }}
                                 </span>
                             {% else %}
                                 <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-yellow-100 text-yellow-800">
@@ -56,203 +55,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        {% if report_data %}
-            {% for data in report_data %}
-                <!-- Course Accordion -->
-                <details class="bg-white rounded-2xl shadow-lg overflow-hidden mb-6 open:ring-2 open:ring-blue-400">
-                    <summary class="bg-gray-100 px-6 py-4 cursor-pointer flex justify-between items-center hover:bg-gray-200 transition">
-                        <h4 class="text-lg font-semibold text-gray-800">
-                            Course: {{ data.course.course_name }}
-                        </h4>
-                        <i class="bi bi-chevron-down text-xl transition-transform duration-300 [&[open]_&]:rotate-180"></i>
-                    </summary>
-
-                    <div class="p-6 lg:p-8 border-t border-gray-200">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                            <div><strong>Progress:</strong> <span class="font-bold text-blue-600">{{ data.progress_percentage|floatformat:2 }}%</span></div>
-                            <div><strong>Materials Read:</strong> {{ data.materials_read }}/{{ data.total_materials }} ({{ data.materials_read_percentage|floatformat:2 }}%)</div>
-                            <div><strong>Assessments Completed:</strong> {{ data.assessments_completed }}/{{ data.total_assessments }} ({{ data.assessments_completed_percentage|floatformat:2 }}%)</div>
-                            <div>
-                                <strong>Status:</strong>
-                                {% if data.status == "Pass" %}
-                                    <span class="text-green-600 font-bold">🎉 Pass</span>
-                                {% else %}
-                                    <span class="text-red-600 font-bold">Needs Improvement</span>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="text-sm text-gray-600 mb-4">
-                            <strong>Threshold:</strong> {{ data.threshold|floatformat:2 }} |
-                            <strong>Total Score:</strong> {{ data.total_score|floatformat:2 }}
-                        </div>
-
-                        <!-- Material Access Details Table -->
-                        <h5 class="text-lg font-semibold mt-8 mb-3">Material Access Details</h5>
-                        {% if data.material_access_details %}
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-sm text-left border border-gray-300 rounded-lg overflow-hidden">
-                                    <thead class="bg-gray-800 text-white">
-                                        <tr>
-                                            <th class="px-4 py-3">Material</th>
-                                            <th class="px-4 py-3">Access Time</th>
-                                            <th class="px-4 py-3">Estimated Duration (Minutes)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-                                        {% for material in data.material_access_details %}
-                                            <tr class="hover:bg-gray-50 transition">
-                                                <td class="px-4 py-3">{{ material.material_name }}</td>
-                                                <td class="px-4 py-3">{{ material.access_time|date:"Y-m-d H:i:s" }}</td>
-                                                <td class="px-4 py-3">{% if material.duration %}{{ material.duration|floatformat:2 }}{% else %}N/A{% endif %}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        {% else %}
-                            <p class="text-gray-500">No materials accessed yet.</p>
-                        {% endif %}
-
-                        <!-- Assessment Breakdown Table -->
-                        <h5 class="text-lg font-semibold mt-8 mb-3">Assessment Breakdown</h5>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-sm text-left border border-gray-300 rounded-lg overflow-hidden">
-                                <thead class="bg-gray-800 text-white">
-                                    <tr>
-                                        <th class="px-4 py-3">Assessment</th>
-                                        <th class="px-4 py-3">Weight</th>
-                                        <th class="px-4 py-3">Score</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    {% for assessment in data.assessment_details %}
-                                        <tr class="{% if assessment.name == 'Total' %}font-bold bg-gray-100{% else %}hover:bg-gray-50 transition{% endif %}">
-                                            <td class="px-4 py-3">{{ assessment.name }}</td>
-                                            <td class="px-4 py-3">{{ assessment.weight|floatformat:2 }}</td>
-                                            <td class="px-4 py-3">{{ assessment.score|floatformat:2 }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- AskOra Submissions -->
-                        <h5 class="text-lg font-semibold mt-8 mb-3">AskOra Submissions</h5>
-                        {% if data.askora_submissions_details %}
-                            {% for askora in data.askora_submissions_details %}
-                                <div class="bg-gray-50 rounded-xl p-5 mb-4 border border-gray-200">
-                                    <h6 class="font-semibold text-gray-800 mb-3">{{ askora.assessment_name }}</h6>
-                                    <p class="mb-2"><strong>Submission Content:</strong> {{ askora.submission.answer_text|safe }}</p>
-                                    {% if askora.submission.answer_file %}
-                                        <p class="mb-2"><strong>Submitted File:</strong> <a href="{{ askora.submission.answer_file.url }}" target="_blank" class="text-blue-600 hover:underline">Download</a></p>
-                                    {% endif %}
-                                    <p class="mb-2"><strong>Submitted At:</strong> {{ askora.submitted_at|date:"Y-m-d H:i:s" }}</p>
-                                    <p class="mb-4"><strong>Final Score:</strong> 
-                                        {% if askora.final_score %}<span class="font-bold">{{ askora.final_score|floatformat:2 }}</span>{% else %}Not scored yet{% endif %}
-                                    </p>
-
-                                    <!-- Peer Reviews -->
-                                    <h6 class="font-medium mb-2">Peer Reviews</h6>
-                                    {% if askora.peer_reviews %}
-                                        <div class="overflow-x-auto">
-                                            <table class="w-full text-sm border border-gray-300 rounded-lg">
-                                                <thead class="bg-gray-700 text-white">
-                                                    <tr>
-                                                        <th class="px-3 py-2">Reviewer</th>
-                                                        <th class="px-3 py-2">Score</th>
-                                                        <th class="px-3 py-2">Weight</th>
-                                                        <th class="px-3 py-2">Comment</th>
-                                                        <th class="px-3 py-2">Reviewed At</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="divide-y divide-gray-200">
-                                                    {% for review in askora.peer_reviews %}
-                                                        <tr class="hover:bg-gray-100 transition">
-                                                            <td class="px-3 py-2">{{ review.reviewer }}</td>
-                                                            <td class="px-3 py-2">{{ review.score|floatformat:2 }}</td>
-                                                            <td class="px-3 py-2">{{ review.weight|floatformat:2 }}</td>
-                                                            <td class="px-3 py-2">{{ review.comment|default:"No comment" }}</td>
-                                                            <td class="px-3 py-2">{{ review.reviewed_at|date:"Y-m-d H:i:s" }}</td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    {% else %}
-                                        <p class="text-gray-500">No peer reviews yet.</p>
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
-                        {% else %}
-                            <p class="text-gray-500">No AskOra submissions for this course.</p>
-                        {% endif %}
-                    </div>
-                </details>
-            {% endfor %}
-        {% else %}
-            <div class="bg-blue-50 border border-blue-200 text-blue-800 px-6 py-4 rounded-xl text-center">
-                This learner is not enrolled in any of your courses, or there is no progress data available.
-=======
-
-        <!-- Learner Info Card -->
-        <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-10">
-            <div class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white p-6">
-                <h5 class="text-xl font-semibold">Learner Information</h5>
-            </div>
-            <div class="p-6 lg:p-8">
-                <div class="flex flex-col lg:flex-row items-center gap-8">
-                    <!-- Photo -->
-                    <div class="text-center">
-                        {% if learner.photo %}
-                            <img src="{{ learner.photo.url }}" alt="Profile Picture"
-                                 class="w-40 h-40 rounded-full border-4 border-white shadow-md object-cover transition-transform duration-300 hover:scale-110">
-                        {% else %}
-                            <img src="{% static 'default_profile.png' %}" alt="Default Profile Picture"
-                                 class="w-40 h-40 rounded-full border-4 border-white shadow-md object-cover transition-transform duration-300 hover:scale-110">
-                        {% endif %}
-                    </div>
-
-                    <!-- Info -->
-                    <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                        <div><strong class="text-gray-600">Full Name:</strong> {{ learner.get_full_name|default:"Not Available" }}</div>
-                        <div><strong class="text-gray-600">Email:</strong> {{ learner.email|default:"Not Available" }}</div>
-                        <div><strong class="text-gray-600">University:</strong> {{ learner.university|default:"Not Available" }}</div>
-                        <div><strong class="text-gray-600">Gender:</strong>
-                            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-blue-100 text-blue-800">
-                                {{ learner.gender|title|default:"Not Available" }}
-                            </span>
-                        </div>
-                        <div><strong class="text-gray-600">Last Login:</strong>
-                            {% if learner.last_login %}
-                                <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-green-100 text-green-800">
-                                    {{ learner.last_login|date:"Y-m-d H:i:s" }}
-                                </span>
-                            {% else %}
-                                <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-yellow-100 text-yellow-800">
-                                    Never logged in
-                                </span>
-                            {% endif %}
-                        </div>
-                        <div>
-                            <a href="?export=true&learner_id={{ learner.id }}"
-                               class="w-full inline-block text-center bg-green-600 hover:bg-green-700 text-white font-medium py-3 rounded-lg transition">
-                                Export to CSV
-                            </a>
-                        </div>
-                    </div>
-                </div>
->>>>>>> 21ce05c7 (ok update new)
-            </div>
-        {% endif %}
-
-        <div class="text-center mt-10">
-            <a href="{% url 'instructor:instructor_learning_report' %}"
-               class="inline-block px-8 py-3 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition">
-                Back to Main Report
-            </a>
         </div>
 
         {% if report_data %}
@@ -404,9 +206,4 @@
         
     </div>
 </div>
-<<<<<<< HEAD
 {% endblock %}
-=======
-{% endblock %}
-
->>>>>>> 21ce05c7 (ok update new)

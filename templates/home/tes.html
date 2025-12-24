@@ -293,15 +293,8 @@
                 <a href="{% url 'courses:course_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'course_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-book w-5"></i><span>Course</span>
-<<<<<<< HEAD
                 </a>
-                <a href="{% url 'instructor:instructor_learning_report' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
-                    {% if request.resolver_match.url_name == 'instructor_learning_report' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
-                    <i class="fas fa-chart-bar w-5"></i><span>Learning Report</span>
-=======
->>>>>>> 21ce05c7 (ok update new)
-                </a>
-               
+                
                 <a href="{% url 'authentication:comments-dashboard' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'comments-dashboard' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-comments w-5"></i><span>Comments</span>
