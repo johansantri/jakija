@@ -8,6 +8,7 @@ from django.http import HttpResponseForbidden
 from courses.models import Course, Material,CourseStatus,GradeRange,MaterialRead,Question,AssessmentRead,Submission,QuestionAnswer,AssessmentScore,Section,Assessment, Enrollment,CourseRating,CourseComment,CourseViewLog,UserActivityLog,CourseSessionLog,Certificate
 from payments.models import Payment
 from authentication.models import CustomUser
+from django.db.models import Avg, Count, Subquery, OuterRef, FloatField
 from collections import defaultdict
 from django.db.models import Avg, Count, Q,F,FloatField, ExpressionWrapper,DecimalField
 from django.contrib import messages
@@ -1484,31 +1485,41 @@ def partner_course_ratings(request):
     else:
         courses = Course.objects.filter(org_partner__user=user)
 
-    # Annotate rating info
+    # Filter rating
+    min_rating = request.GET.get('min_rating')
+    max_rating = request.GET.get('max_rating')
+
     courses = courses.annotate(
         avg_rating=Avg('ratings__rating'),
         rating_count=Count('ratings')
-    ).order_by('-avg_rating')
+    )
 
-    # Pagination, 10 course per page
+    if min_rating:
+        courses = courses.filter(avg_rating__gte=float(min_rating))
+    if max_rating:
+        courses = courses.filter(avg_rating__lte=float(max_rating))
+
+    courses = courses.order_by('-avg_rating', 'id')
+
+    # Pagination
     paginator = Paginator(courses, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    # Ambil course IDs yang ada di halaman sekarang
+    # Ambil rating untuk halaman ini
     course_ids = [course.id for course in page_obj.object_list]
-
-    # Ambil semua rating terkait course di halaman ini sekaligus (prefetch_related juga bisa)
-    ratings_qs = CourseRating.objects.filter(course_id__in=course_ids).select_related('user')
-
-    # Group rating per course ID
+    ratings_qs = CourseRating.objects.filter(course_id__in=course_ids)\
+                                      .select_related('user')\
+                                      .order_by('-created_at')
     ratings_by_course = defaultdict(list)
     for rating in ratings_qs:
         ratings_by_course[rating.course_id].append(rating)
 
     context = {
-        'course_rating_data': page_obj,  # ini sudah paginated
+        'course_rating_data': page_obj,
         'course_ratings_details': ratings_by_course,
+        'min_rating': min_rating,
+        'max_rating': max_rating,
     }
 
     return render(request, 'partner/partner_course_ratings.html', context)

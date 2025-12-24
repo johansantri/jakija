@@ -43,3 +43,10 @@ def pluck(value, key):
 @register.filter
 def zip_lists(a, b):
     return zip(a, b)
+
+
+@register.filter
+def dict_get_safe(dict_obj, key):
+    if dict_obj and key in dict_obj:
+        return dict_obj[key]
+    return []
