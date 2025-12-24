@@ -246,8 +246,7 @@ class UserProfileForm(forms.ModelForm):
             }),
             'email': forms.EmailInput(attrs={
                 'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
-                'required': True,
-                'readonly': True,
+                'required': True
             }),
             'phone': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
