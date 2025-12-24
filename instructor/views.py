@@ -837,7 +837,7 @@ def instructor_learner_detail_report(request):
 
     learner_id = request.GET.get('learner_id')
     if not learner_id:
-        return redirect('instructor_learning_report')
+        return redirect('instructor:instructor_learning_report')
 
     learner = get_object_or_404(CustomUser.objects.select_related('university'), id=learner_id)
     courses = Course.objects.filter(instructor=instructor, enrollments__user=learner).select_related('instructor')
@@ -903,69 +903,118 @@ def instructor_learner_detail_report(request):
         askora_details = []
         total_max_score = Decimal('0')
         total_score = Decimal('0')
-        all_submitted = True
+        all_assessments_submitted = True  # rename biar jelas
 
         for assessment in assessments:
             score_value = Decimal('0')
-            total_questions = assessment.questions.count()
+            is_submitted = True  # default: anggap submitted sampai terbukti sebaliknya
 
-            if total_questions > 0:
-                # Quiz / regular assessment
-                total_correct = 0
-                answers_exist = False
-                for question in assessment.questions.all():
-                    answers = [qa for qa in question_answers if qa.question_id == question.id]
-                    if answers:
-                        answers_exist = True
-                    total_correct += sum(1 for qa in answers if qa.choice.is_correct)
-                if not answers_exist:
-                    all_submitted = False
-                if total_questions:
-                    score_value = (Decimal(total_correct) / Decimal(total_questions)) * Decimal(assessment.weight)
+            # 1. Prioritas tertinggi: LTI Result
+            lti_result = LTIResult.objects.filter(user=learner, assessment=assessment).first()
+            if lti_result and lti_result.score is not None:
+                lti_score = Decimal(lti_result.score)
+                if lti_score > 1.0:  # kadang datang dalam bentuk 0-100
+                    lti_score /= 100
+                score_value = lti_score * Decimal(assessment.weight)
+
             else:
-                # AskOra submissions
-                submissions = Submission.objects.filter(
-                    askora__assessment=assessment,
-                    user=learner
-                ).select_related('askora').prefetch_related(
-                    Prefetch('peer_reviews', queryset=PeerReview.objects.select_related('reviewer'))
-                )
-                if not submissions.exists():
-                    all_submitted = False
+                # 2. In-video Quiz
+                invideo_quizzes = Quiz.objects.filter(assessment=assessment)
+                if invideo_quizzes.exists():
+                    quiz_result = QuizResult.objects.filter(user=learner, assessment=assessment).first()
+                    if quiz_result and quiz_result.total_questions > 0:
+                        score_value = (Decimal(quiz_result.score) / Decimal(quiz_result.total_questions)) * Decimal(assessment.weight)
+                    else:
+                        is_submitted = False
+                        score_value = Decimal('0')
+
                 else:
-                    latest = submissions.order_by('-submitted_at').first()
-                    assessment_score = AssessmentScore.objects.filter(submission=latest).first()
-                    if assessment_score:
-                        score_value = Decimal(assessment_score.final_score)
+                    # 3. Regular Quiz (old question model)
+                    total_questions = assessment.questions.count()
+                    if total_questions > 0:
+                        total_correct = sum(
+                            QuestionAnswer.objects.filter(question=q, user=learner, choice__is_correct=True).count()
+                            for q in assessment.questions.all()
+                        )
+                        answers_exist = QuestionAnswer.objects.filter(
+                            question__in=assessment.questions.all(), user=learner
+                        ).exists()
 
-                    peer_reviews_data = [
-                        {
-                            'reviewer': pr.reviewer.username,
-                            'score': pr.score,
-                            'weight': pr.weight,
-                            'comment': pr.comment,
-                            'reviewed_at': pr.created_at
-                        } for pr in latest.peer_reviews.all()
-                    ]
-                    askora_details.append({
-                        'assessment_name': assessment.name,
-                        'submission': latest,
-                        'submitted_at': latest.submitted_at,
-                        'final_score': assessment_score.final_score if assessment_score else None,
-                        'peer_reviews': peer_reviews_data
-                    })
+                        if not answers_exist:
+                            is_submitted = False
 
+                        score_value = (Decimal(total_correct) / Decimal(total_questions)) * Decimal(assessment.weight) if total_questions else Decimal('0')
+
+                    else:
+                        # 4. AskOra Submission
+                        submissions = Submission.objects.filter(
+                            askora__assessment=assessment,
+                            user=learner
+                        ).select_related('askora').prefetch_related(
+                            Prefetch('peer_reviews', queryset=PeerReview.objects.select_related('reviewer'))
+                        )
+
+                        if not submissions.exists():
+                            is_submitted = False
+                            score_value = Decimal('0')
+                        else:
+                            latest = submissions.order_by('-submitted_at').first()
+                            assessment_score = AssessmentScore.objects.filter(submission=latest).first()
+
+                            if assessment_score and assessment_score.final_score is not None:
+                                score_value = Decimal(assessment_score.final_score)
+                            else:
+                                is_submitted = False  # belum dinilai = belum complete
+                                score_value = Decimal('0')
+
+                            # Kumpulkan detail AskOra
+                            peer_reviews_data = [
+                                {
+                                    'reviewer': pr.reviewer.get_full_name() or pr.reviewer.username,
+                                    'score': pr.score,
+                                    'weight': pr.weight,
+                                    'comment': pr.comment or "No comment",
+                                    'reviewed_at': pr.created_at
+                                } for pr in latest.peer_reviews.all()
+                            ]
+
+                            askora_details.append({
+                                'assessment_name': assessment.name,
+                                'submission': latest,
+                                'submitted_at': latest.submitted_at,
+                                'final_score': assessment_score.final_score if assessment_score else None,
+                                'peer_reviews': peer_reviews_data
+                            })
+
+            # Clamp score agar tidak melebihi bobot
             score_value = min(score_value, Decimal(assessment.weight))
-            assessment_scores.append({'name': assessment.name, 'weight': assessment.weight, 'score': score_value})
-            total_max_score += Decimal(assessment.weight)
+
+            # Tambah ke breakdown
+            assessment_scores.append({
+                'name': assessment.name,
+                'weight': float(assessment.weight),
+                'score': score_value
+            })
+
             total_score += score_value
+            total_max_score += Decimal(assessment.weight)
 
-        total_score = min(total_score, total_max_score)
-        overall_percentage = (total_score / total_max_score * 100) if total_max_score else 0
+            if not is_submitted:
+                all_assessments_submitted = False
+
+        # Total row
+        assessment_scores.append({
+            'name': 'Total',
+            'weight': float(total_max_score),
+            'score': total_score
+        })
+
+        # Hitung overall percentage dan status
+        overall_percentage = (total_score / total_max_score * 100) if total_max_score > 0 else 0
         threshold = grade_range_dict.get(course.id, Decimal('52.00'))
-        status = "Pass" if all_submitted and overall_percentage >= threshold else "Fail"
+        status = "Pass" if all_assessments_submitted and overall_percentage >= threshold else "Fail"
 
-        assessment_scores.append({'name': 'Total', 'weight': total_max_score, 'score': total_score})
+        #assessment_scores.append({'name': 'Total', 'weight': total_max_score, 'score': total_score})
 
         report_data.append({
             'course': course,

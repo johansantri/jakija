@@ -1,207 +1,207 @@
 {% extends 'home/tes.html' %}
 {% load static %}
 {% block content %}
-<div class="row justify-content-center">
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <h2 class="mb-4 text-center">Learner Detail Report: <span class="text-primary">{{ learner.username }}</span></h2>
-                
-                <!-- Learner Info Card -->
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header text-white" style="background: linear-gradient(90deg, #007bff, #00c6ff);">
-                        <h5 class="mb-0">Learner Information</h5>
+<div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
+        <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
+            Learner Detail Report: <span class="text-blue-600">{{ learner.username }}</span>
+        </h2>
+
+        <!-- Learner Info Card -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-10">
+            <div class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white p-6">
+                <h5 class="text-xl font-semibold">Learner Information</h5>
+            </div>
+            <div class="p-6 lg:p-8">
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                    <!-- Photo -->
+                    <div class="text-center">
+                        {% if learner.photo %}
+                            <img src="{{ learner.photo.url }}" alt="Profile Picture"
+                                 class="w-40 h-40 rounded-full border-4 border-white shadow-md object-cover transition-transform duration-300 hover:scale-110">
+                        {% else %}
+                            <img src="{% static 'default_profile.png' %}" alt="Default Profile Picture"
+                                 class="w-40 h-40 rounded-full border-4 border-white shadow-md object-cover transition-transform duration-300 hover:scale-110">
+                        {% endif %}
                     </div>
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <!-- Photo -->
-                            <div class="col-md-3 text-center mb-3">
-                                {% if learner.photo %}
-                                    <img src="{{ learner.photo.url }}" class="img-fluid rounded-circle border" 
-                                         style="transition: transform 0.3s;" 
-                                         onmouseover="this.style.transform='scale(1.1)';" 
-                                         onmouseout="this.style.transform='scale(1)';" 
-                                         alt="Profile Picture">
-                                {% else %}
-                                    <img src="{% static 'default_profile.png' %}" class="img-fluid rounded-circle border" 
-                                         style="transition: transform 0.3s;" 
-                                         onmouseover="this.style.transform='scale(1.1)';" 
-                                         onmouseout="this.style.transform='scale(1)';" 
-                                         alt="Default Profile Picture">
-                                {% endif %}
-                            </div>
-                            
-                            <!-- Info -->
-                            <div class="col-md-9">
-                                <div class="row">
-                                    <div class="col-md-6 mb-2">
-                                        <strong>Full Name:</strong> {{ learner.get_full_name|default:"Not Available" }}
-                                    </div>
-                                    <div class="col-md-6 mb-2">
-                                        <strong>Email:</strong> {{ learner.email|default:"Not Available" }}
-                                    </div>
-                                    <div class="col-md-6 mb-2">
-                                        <strong>University:</strong> {{ learner.university|default:"Not Available" }}
-                                    </div>
-                                    <div class="col-md-6 mb-2">
-                                        <strong>Gender:</strong> 
-                                        <span class="badge bg-info text-dark">{{ learner.gender|title|default:"Not Available" }}</span>
-                                    </div>
-                                    <div class="col-md-6 mb-2">
-                                        <strong>Last Login:</strong> 
-                                        {% if last_login %}
-                                            <span class="badge bg-success">{{ last_login|date:"Y-m-d H:i:s" }}</span>
-                                        {% else %}
-                                            <span class="badge bg-warning text-dark">Never logged in</span>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-md-6 mb-2">
-                                        <a href="?export=true&learner_id={{ learner.id }}" class="btn btn-success w-100">Export to CSV</a>
-                                    </div>
-                                </div>
-                            </div>
+
+                    <!-- Info -->
+                    <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                        <div><strong class="text-gray-600">Full Name:</strong> {{ learner.get_full_name|default:"Not Available" }}</div>
+                        <div><strong class="text-gray-600">Email:</strong> {{ learner.email|default:"Not Available" }}</div>
+                        <div><strong class="text-gray-600">University:</strong> {{ learner.university|default:"Not Available" }}</div>
+                        <div><strong class="text-gray-600">Gender:</strong>
+                            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-blue-100 text-blue-800">
+                                {{ learner.gender|title|default:"Not Available" }}
+                            </span>
+                        </div>
+                        <div><strong class="text-gray-600">Last Login:</strong>
+                            {% if learner.last_login %}
+                                <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-green-100 text-green-800">
+                                    {{ learner.last_login|date:"Y-m-d H:i:s" }}
+                                </span>
+                            {% else %}
+                                <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-yellow-100 text-yellow-800">
+                                    Never logged in
+                                </span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <a href="?export=true&learner_id={{ learner.id }}"
+                               class="w-full inline-block text-center bg-green-600 hover:bg-green-700 text-white font-medium py-3 rounded-lg transition">
+                                Export to CSV
+                            </a>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                {% if report_data %}
-                {% for data in report_data %}
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header bg-light">
-                        <!-- Judul course sebagai tombol collapse -->
-                        <h4>
-                            <a class="text-dark d-flex justify-content-between align-items-center" 
-                               data-bs-toggle="collapse" href="#course-{{ data.course.id }}" 
-                               role="button" aria-expanded="false" aria-controls="course-{{ data.course.id }}">
-                                Course: {{ data.course.course_name }}
-                                <i class="bi bi-chevron-down"></i>
-                            </a>
+        {% if report_data %}
+            {% for data in report_data %}
+                <!-- Course Accordion -->
+                <details class="bg-white rounded-2xl shadow-lg overflow-hidden mb-6 open:ring-2 open:ring-blue-400">
+                    <summary class="bg-gray-100 px-6 py-4 cursor-pointer flex justify-between items-center hover:bg-gray-200 transition">
+                        <h4 class="text-lg font-semibold text-gray-800">
+                            Course: {{ data.course.course_name }}
                         </h4>
-                    </div>
+                        <i class="bi bi-chevron-down text-xl transition-transform duration-300 [&[open]_&]:rotate-180"></i>
+                    </summary>
 
-                    <!-- Konten collapsible -->
-                    <div class="collapse" id="course-{{ data.course.id }}">
-                        <div class="card-body">
-                            <p><strong>Progress:</strong> {{ data.progress_percentage|floatformat:2 }}%</p>
-                            <p><strong>Materials Read:</strong> {{ data.materials_read }}/{{ data.total_materials }} ({{ data.materials_read_percentage|floatformat:2 }}%)</p>
-                            <p><strong>Assessments Completed:</strong> {{ data.assessments_completed }}/{{ data.total_assessments }} ({{ data.assessments_completed_percentage|floatformat:2 }}%)</p>
-                            <p>
-                                <strong>Threshold:</strong> {{ data.threshold|floatformat:2 }} 
-                                <strong>Total Score:</strong> {{ data.total_score|floatformat:2 }}
-                                <strong>Status:</strong> {{ data.status }}
+                    <div class="p-6 lg:p-8 border-t border-gray-200">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                            <div><strong>Progress:</strong> <span class="font-bold text-blue-600">{{ data.progress_percentage|floatformat:2 }}%</span></div>
+                            <div><strong>Materials Read:</strong> {{ data.materials_read }}/{{ data.total_materials }} ({{ data.materials_read_percentage|floatformat:2 }}%)</div>
+                            <div><strong>Assessments Completed:</strong> {{ data.assessments_completed }}/{{ data.total_assessments }} ({{ data.assessments_completed_percentage|floatformat:2 }}%)</div>
+                            <div>
+                                <strong>Status:</strong>
                                 {% if data.status == "Pass" %}
-                                    <span class="text-success">🎉 Congratulations!</span>
+                                    <span class="text-green-600 font-bold">🎉 Pass</span>
                                 {% else %}
-                                    <span class="text-danger">Needs Improvement</span>
+                                    <span class="text-red-600 font-bold">Needs Improvement</span>
                                 {% endif %}
-                            </p>
+                            </div>
+                        </div>
 
-                            <!-- Material Access Details Table -->
-                            <h5>Material Access Details</h5>
-                            {% if data.material_access_details %}
-                            <table class="table table-striped table-bordered mt-3 table-hover">
-                                <thead class="table-dark">
+                        <div class="text-sm text-gray-600 mb-4">
+                            <strong>Threshold:</strong> {{ data.threshold|floatformat:2 }} |
+                            <strong>Total Score:</strong> {{ data.total_score|floatformat:2 }}
+                        </div>
+
+                        <!-- Material Access Details Table -->
+                        <h5 class="text-lg font-semibold mt-8 mb-3">Material Access Details</h5>
+                        {% if data.material_access_details %}
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left border border-gray-300 rounded-lg overflow-hidden">
+                                    <thead class="bg-gray-800 text-white">
+                                        <tr>
+                                            <th class="px-4 py-3">Material</th>
+                                            <th class="px-4 py-3">Access Time</th>
+                                            <th class="px-4 py-3">Estimated Duration (Minutes)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        {% for material in data.material_access_details %}
+                                            <tr class="hover:bg-gray-50 transition">
+                                                <td class="px-4 py-3">{{ material.material_name }}</td>
+                                                <td class="px-4 py-3">{{ material.access_time|date:"Y-m-d H:i:s" }}</td>
+                                                <td class="px-4 py-3">{% if material.duration %}{{ material.duration|floatformat:2 }}{% else %}N/A{% endif %}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p class="text-gray-500">No materials accessed yet.</p>
+                        {% endif %}
+
+                        <!-- Assessment Breakdown Table -->
+                        <h5 class="text-lg font-semibold mt-8 mb-3">Assessment Breakdown</h5>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left border border-gray-300 rounded-lg overflow-hidden">
+                                <thead class="bg-gray-800 text-white">
                                     <tr>
-                                        <th>Material</th>
-                                        <th>Access Time</th>
-                                        <th>Estimated Duration (Minutes)</th>
+                                        <th class="px-4 py-3">Assessment</th>
+                                        <th class="px-4 py-3">Weight</th>
+                                        <th class="px-4 py-3">Score</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {% for material in data.material_access_details %}
-                                    <tr>
-                                        <td>{{ material.material_name }}</td>
-                                        <td>{{ material.access_time|date:"Y-m-d H:i:s" }}</td>
-                                        <td>{% if material.duration %}{{ material.duration|floatformat:2 }}{% else %}N/A{% endif %}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            {% else %}
-                            <p>No materials accessed yet.</p>
-                            {% endif %}
-
-                            <!-- Assessment Breakdown Table -->
-                            <h5>Assessment Breakdown</h5>
-                            <table class="table table-striped table-bordered mt-3 table-hover">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th>Assessment</th>
-                                        <th>Weight</th>
-                                        <th>Score</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                <tbody class="bg-white divide-y divide-gray-200">
                                     {% for assessment in data.assessment_details %}
-                                    <tr {% if assessment.name == 'Total' %}class="fw-bold"{% endif %}>
-                                        <td>{{ assessment.name }}</td>
-                                        <td>{{ assessment.weight|floatformat:2 }}</td>
-                                        <td>{{ assessment.score|floatformat:2 }}</td>
-                                    </tr>
+                                        <tr class="{% if assessment.name == 'Total' %}font-bold bg-gray-100{% else %}hover:bg-gray-50 transition{% endif %}">
+                                            <td class="px-4 py-3">{{ assessment.name }}</td>
+                                            <td class="px-4 py-3">{{ assessment.weight|floatformat:2 }}</td>
+                                            <td class="px-4 py-3">{{ assessment.score|floatformat:2 }}</td>
+                                        </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
+                        </div>
 
-                            <!-- AskOra Submissions -->
-                            <h5>AskOra Submissions</h5>
-                            {% if data.askora_submissions_details %}
+                        <!-- AskOra Submissions -->
+                        <h5 class="text-lg font-semibold mt-8 mb-3">AskOra Submissions</h5>
+                        {% if data.askora_submissions_details %}
                             {% for askora in data.askora_submissions_details %}
-                            <div class="card mb-3">
-                                <div class="card-header bg-secondary text-white">
-                                    <h6>{{ askora.assessment_name }}</h6>
-                                </div>
-                                <div class="card-body">
-                                    <p><strong>Submission Content:</strong> {{ askora.submission.answer_text|safe }}</p>
+                                <div class="bg-gray-50 rounded-xl p-5 mb-4 border border-gray-200">
+                                    <h6 class="font-semibold text-gray-800 mb-3">{{ askora.assessment_name }}</h6>
+                                    <p class="mb-2"><strong>Submission Content:</strong> {{ askora.submission.answer_text|safe }}</p>
                                     {% if askora.submission.answer_file %}
-                                    <p><strong>Submitted File:</strong> <a href="{{ askora.submission.answer_file.url }}" target="_blank">Download</a></p>
+                                        <p class="mb-2"><strong>Submitted File:</strong> <a href="{{ askora.submission.answer_file.url }}" target="_blank" class="text-blue-600 hover:underline">Download</a></p>
                                     {% endif %}
-                                    <p><strong>Submitted At:</strong> {{ askora.submitted_at|date:"Y-m-d H:i:s" }}</p>
-                                    <p><strong>Final Score:</strong> {% if askora.final_score %}{{ askora.final_score|floatformat:2 }}{% else %}Not scored yet{% endif %}</p>
+                                    <p class="mb-2"><strong>Submitted At:</strong> {{ askora.submitted_at|date:"Y-m-d H:i:s" }}</p>
+                                    <p class="mb-4"><strong>Final Score:</strong> 
+                                        {% if askora.final_score %}<span class="font-bold">{{ askora.final_score|floatformat:2 }}</span>{% else %}Not scored yet{% endif %}
+                                    </p>
 
                                     <!-- Peer Reviews -->
-                                    <h6>Peer Reviews</h6>
+                                    <h6 class="font-medium mb-2">Peer Reviews</h6>
                                     {% if askora.peer_reviews %}
-                                    <table class="table table-bordered table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Reviewer</th>
-                                                <th>Score</th>
-                                                <th>Weight</th>
-                                                <th>Comment</th>
-                                                <th>Reviewed At</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for review in askora.peer_reviews %}
-                                            <tr>
-                                                <td>{{ review.reviewer }}</td>
-                                                <td>{{ review.score|floatformat:2 }}</td>
-                                                <td>{{ review.weight|floatformat:2 }}</td>
-                                                <td>{{ review.comment|default:"No comment" }}</td>
-                                                <td>{{ review.reviewed_at|date:"Y-m-d H:i:s" }}</td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
+                                        <div class="overflow-x-auto">
+                                            <table class="w-full text-sm border border-gray-300 rounded-lg">
+                                                <thead class="bg-gray-700 text-white">
+                                                    <tr>
+                                                        <th class="px-3 py-2">Reviewer</th>
+                                                        <th class="px-3 py-2">Score</th>
+                                                        <th class="px-3 py-2">Weight</th>
+                                                        <th class="px-3 py-2">Comment</th>
+                                                        <th class="px-3 py-2">Reviewed At</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="divide-y divide-gray-200">
+                                                    {% for review in askora.peer_reviews %}
+                                                        <tr class="hover:bg-gray-100 transition">
+                                                            <td class="px-3 py-2">{{ review.reviewer }}</td>
+                                                            <td class="px-3 py-2">{{ review.score|floatformat:2 }}</td>
+                                                            <td class="px-3 py-2">{{ review.weight|floatformat:2 }}</td>
+                                                            <td class="px-3 py-2">{{ review.comment|default:"No comment" }}</td>
+                                                            <td class="px-3 py-2">{{ review.reviewed_at|date:"Y-m-d H:i:s" }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     {% else %}
-                                    <p>No peer reviews yet.</p>
+                                        <p class="text-gray-500">No peer reviews yet.</p>
                                     {% endif %}
                                 </div>
-                            </div>
                             {% endfor %}
-                            {% else %}
-                            <p>No AskOra submissions for this course.</p>
-                            {% endif %}
-                        </div>
+                        {% else %}
+                            <p class="text-gray-500">No AskOra submissions for this course.</p>
+                        {% endif %}
                     </div>
-                </div>
-                {% endfor %}
-                {% else %}
-                <p class="alert alert-info">This learner is not enrolled in any of your courses, or there is no progress data available.</p>
-                {% endif %}
-
-                <a href="{% url 'instructor:instructor_learning_report' %}" class="btn btn-secondary mt-3">Back to Main Report</a>
+                </details>
+            {% endfor %}
+        {% else %}
+            <div class="bg-blue-50 border border-blue-200 text-blue-800 px-6 py-4 rounded-xl text-center">
+                This learner is not enrolled in any of your courses, or there is no progress data available.
             </div>
+        {% endif %}
+
+        <div class="text-center mt-10">
+            <a href="{% url 'instructor:instructor_learning_report' %}"
+               class="inline-block px-8 py-3 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition">
+                Back to Main Report
+            </a>
         </div>
     </div>
 </div>
