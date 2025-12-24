@@ -12,8 +12,8 @@
 
       <!-- Avatar -->
       <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-full ring-4 ring-white/30 shadow-2xl overflow-hidden mb-4 -mt-12">
-        {% if user.photo %}
-          <img src="{{ user.photo.url }}" alt="Profile" class="w-full h-full object-cover">
+        {% if target_user.photo %}
+          <img src="{{ target_user.photo.url }}" alt="Profile" class="w-full h-full object-cover">
         {% else %}
           <img src="{% static 'images/default-avatar.png' %}" alt="Profile" class="w-full h-full object-cover">
         {% endif %}
@@ -21,8 +21,8 @@
 
       <!-- Name & Email -->
       <div class="text-center mb-6">
-        <h1 class="text-xl sm:text-2xl font-bold">{{ user.get_full_name|default:user.username }}</h1>
-        <p class="text-white/80 text-sm sm:text-base">{{ user.email }}</p>
+        <h1 class="text-xl sm:text-2xl font-bold">{{ target_user.get_full_name|default:target_user.username }}</h1>
+        <p class="text-white/80 text-sm sm:text-base">{{ target_user.email }}</p>
       </div>
 
       <!-- Tabs -->
@@ -35,20 +35,20 @@
           <!-- Personal -->
           <div id="personal" class="tab-content">
             <div class="grid gap-2">
-              <div class="flex justify-between"><span class="text-white/80">Full Name</span><span class="font-medium">{{ user.get_full_name|default:user.username }}</span></div>
-              <div class="flex justify-between"><span class="text-white/80">Gender</span><span class="font-medium">{{ user.get_gender_display|default:"-" }}</span></div>
-              <div class="flex justify-between"><span class="text-white/80">Birth Date</span><span class="font-medium">{{ user.birth|date:"d M Y"|default:"-" }}</span></div>
-              <div class="flex justify-between"><span class="text-white/80">Address</span><span class="font-medium">{{ user.address|default:"-" }}</span></div>
-              <div class="flex justify-between"><span class="text-white/80">Country</span><span class="font-medium">{{ user.country|default:"Indonesia" }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">Full Name</span><span class="font-medium">{{ target_user.get_full_name|default:target_user.username }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">Gender</span><span class="font-medium">{{ target_user.get_gender_display|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">Birth Date</span><span class="font-medium">{{ target_user.birth|date:"d M Y"|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">Address</span><span class="font-medium">{{ target_user.address|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">Country</span><span class="font-medium">{{ target_user.country|default:"Indonesia" }}</span></div>
             </div>
           </div>
           <!-- Contact & Education -->
           <div id="contact" class="tab-content hidden">
             <div class="grid gap-2">
-              <div class="flex justify-between"><span class="text-white/80">Email</span><a href="mailto:{{ user.email }}" class="font-medium underline hover:text-indigo-200 transition">{{ user.email }}</a></div>
-              <div class="flex justify-between"><span class="text-white/80">Phone</span><span class="font-medium">********{{ user.phone|slice:"-4:" }}</span></div>
-              <div class="flex justify-between"><span class="text-white/80">Education</span><span class="font-medium">{{ user.get_education_display|default:"-" }}</span></div>
-              <div class="flex justify-between"><span class="text-white/80">University</span><span class="font-medium">{{ user.university|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">Email</span><a href="mailto:{{ target_user.email }}" class="font-medium underline hover:text-indigo-200 transition">{{ target_user.email }}</a></div>
+              <div class="flex justify-between"><span class="text-white/80">Phone</span><span class="font-medium">********{{ target_user.phone|slice:"-4:" }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">Education</span><span class="font-medium">{{ target_user.get_education_display|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-white/80">University</span><span class="font-medium">{{ target_user.university|default:"-" }}</span></div>
             </div>
           </div>
         </div>

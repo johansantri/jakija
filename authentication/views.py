@@ -726,7 +726,7 @@ def user_detail(request, user_id):
     page_obj = paginator.get_page(request.GET.get('page'))
 
     context = {
-        'user': target_user,
+        'target_user': target_user,
         'course_details': page_obj,
         'search_query': search_query,
     }
