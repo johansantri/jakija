@@ -11,9 +11,10 @@
     <div class="flex flex-wrap gap-4 items-center">
       <span class="font-medium">Quick Filter:</span>
 
-      <!-- Interaktif Bintang -->
+      <!-- Bintang 5–1 -->
       <template x-for="i in [5,4,3,2,1]" :key="i">
         <button @click="filterStars(i)" 
+                :class="selectedStar==i ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700'"
                 class="flex gap-1 px-2 py-1 border rounded hover:bg-indigo-100 transition">
           <template x-for="j in [1,2,3,4,5]" :key="j">
             <span :class="j <= i ? 'text-yellow-400' : 'text-gray-300'">★</span>
@@ -41,7 +42,7 @@
       <tbody class="bg-white divide-y divide-gray-200">
         {% for course in course_rating_data %}
         <tr class="hover:bg-indigo-50 transition">
-          <td class="px-6 py-4 whitespace-nowrap text-gray-800 font-medium">{{ course.course_name }}</td>
+          <td class="px-6 py-4 whitespace-nowrap font-medium">{{ course.course_name }}</td>
           <td class="px-6 py-4 whitespace-nowrap">
             {% if course.avg_rating %}
               {{ course.avg_rating|floatformat:1 }} / 5
@@ -73,7 +74,6 @@
                 </thead>
                 <tbody>
                   {% for rating in course_ratings_details|dict_get_safe:course.id %}
-
                   <tr class="hover:bg-indigo-200 transition">
                     <td class="px-4 py-2">{{ rating.user.get_full_name|default:rating.user.username }}</td>
                     <td class="px-4 py-2">{{ rating.rating }}/5</td>
@@ -103,7 +103,7 @@
   {% if course_rating_data.has_other_pages %}
   <div class="flex justify-center gap-2 mt-6 flex-wrap">
     {% if course_rating_data.has_previous %}
-    <a href="?page={{ course_rating_data.previous_page_number }}" 
+    <a href="?page={{ course_rating_data.previous_page_number }}{% if selected_star %}&star={{ selected_star }}{% endif %}" 
        class="px-4 py-2 bg-white border rounded-lg hover:bg-gray-100 transition">Previous</a>
     {% endif %}
 
@@ -111,13 +111,13 @@
       {% if course_rating_data.number == num %}
         <span class="px-4 py-2 bg-indigo-600 text-white rounded-lg">{{ num }}</span>
       {% else %}
-        <a href="?page={{ num }}" 
+        <a href="?page={{ num }}{% if selected_star %}&star={{ selected_star }}{% endif %}" 
            class="px-4 py-2 bg-white border rounded-lg hover:bg-gray-100 transition">{{ num }}</a>
       {% endif %}
     {% endfor %}
 
     {% if course_rating_data.has_next %}
-    <a href="?page={{ course_rating_data.next_page_number }}" 
+    <a href="?page={{ course_rating_data.next_page_number }}{% if selected_star %}&star={{ selected_star }}{% endif %}" 
        class="px-4 py-2 bg-white border rounded-lg hover:bg-gray-100 transition">Next</a>
     {% endif %}
   </div>
@@ -129,23 +129,19 @@
 <script>
 function courseRatings() {
   return {
-    filterValue: null,
+    selectedStar: {{ selected_star|default:'null' }},
     toggleDetails(id) {
       const el = document.getElementById('details-' + id);
       el.classList.toggle('hidden');
     },
     filterStars(stars) {
-      this.filterValue = stars;
       const params = new URLSearchParams(window.location.search);
-      params.set('min_rating', stars);
-      params.set('max_rating', 5);
+      params.set('star', stars);
       window.location.search = params.toString();
     },
     resetFilter() {
-      this.filterValue = null;
       const params = new URLSearchParams(window.location.search);
-      params.delete('min_rating');
-      params.delete('max_rating');
+      params.delete('star');
       window.location.search = params.toString();
     }
   }

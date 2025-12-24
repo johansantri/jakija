@@ -1477,40 +1477,49 @@ def post_comment_reply(request, course_id, comment_id=None):
 def partner_course_ratings(request):
     user = request.user
 
+    # === Hak akses ===
     if not (user.is_partner or user.is_curation or user.is_superuser):
         return HttpResponseForbidden("You are not authorized to view this page.")
 
+    # === Filter dasar course ===
     if user.is_curation or user.is_superuser:
         courses = Course.objects.all()
     else:
         courses = Course.objects.filter(org_partner__user=user)
 
-    # Filter rating
+    # === Filter rating ===
+    star = request.GET.get('star')  # klik bintang 1-5
     min_rating = request.GET.get('min_rating')
     max_rating = request.GET.get('max_rating')
 
+    # Annotate rata-rata rating & jumlah rating
     courses = courses.annotate(
         avg_rating=Avg('ratings__rating'),
         rating_count=Count('ratings')
     )
 
-    if min_rating:
-        courses = courses.filter(avg_rating__gte=float(min_rating))
-    if max_rating:
-        courses = courses.filter(avg_rating__lte=float(max_rating))
+    # Exact rating filter dulu (star) jika ada
+    if star:
+        courses = courses.filter(ratings__rating=int(star)).distinct()
+    else:
+        if min_rating:
+            courses = courses.filter(avg_rating__gte=float(min_rating))
+        if max_rating:
+            courses = courses.filter(avg_rating__lte=float(max_rating))
 
     courses = courses.order_by('-avg_rating', 'id')
 
-    # Pagination
+    # === Pagination ===
     paginator = Paginator(courses, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    # Ambil rating untuk halaman ini
+    # Ambil rating untuk course di halaman ini saja
     course_ids = [course.id for course in page_obj.object_list]
     ratings_qs = CourseRating.objects.filter(course_id__in=course_ids)\
-                                      .select_related('user')\
-                                      .order_by('-created_at')
+                                     .select_related('user')\
+                                     .order_by('-created_at')
+
     ratings_by_course = defaultdict(list)
     for rating in ratings_qs:
         ratings_by_course[rating.course_id].append(rating)
@@ -1518,6 +1527,7 @@ def partner_course_ratings(request):
     context = {
         'course_rating_data': page_obj,
         'course_ratings_details': ratings_by_course,
+        'selected_star': star,
         'min_rating': min_rating,
         'max_rating': max_rating,
     }
