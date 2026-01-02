@@ -277,25 +277,43 @@
 <!-- POPULAR CATEGORIES -->
 <section class="py-16 lg:py-24 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">What Categories Are Poppin' on <span class="text-red-600">JakIja</span>?</h2>
-    <p class="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-12">
+    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
+      What Categories Are Poppin' on <span class="text-red-600">JakIja</span>?
+    </h2>
+    <p class="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto mb-12">
       Find your vibe and career path. Pick the categories that hit different.
     </p>
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 justify-items-center">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
       {% for category in popular_categories|slice:":12" %}
-        <a href="{% url 'courses:category_list' category.slug %}" 
+        <a href="{% url 'courses:category_list' category.slug %}"
            aria-label="View courses in {{ category.name }} category"
-           class="w-full sm:w-auto group flex flex-col items-center px-6 py-4 bg-white border-2 border-gray-200 rounded-full text-gray-700 font-medium hover:border-red-500 hover:bg-red-50 hover:text-red-600 transition-transform duration-300 transform hover:scale-105 shadow-sm hover:shadow-lg">
-          <span class="text-center">{{ category.name }}</span>
+           class="group flex flex-col items-center justify-center p-4 bg-white border border-gray-200 rounded-lg
+                  hover:border-red-500 hover:bg-red-50 transition-transform duration-200 transform hover:scale-105 shadow-sm">
+          
+          <!-- Optional: emoji/icon -->
+          <span class="text-3xl mb-2">
+            {% if category.icon %}{{ category.icon }}{% else %}📚{% endif %}
+          </span>
+
+          <!-- Category Name -->
+          <span class="text-sm sm:text-base font-semibold text-gray-800 group-hover:text-red-600 text-center break-words">
+            {{ category.name }}
+          </span>
+
+          <!-- Number of courses -->
           {% if category.num_courses %}
-            <span class="mt-1 text-sm text-gray-500 group-hover:text-red-500">({{ category.num_courses }})</span>
+            <span class="mt-1 text-xs text-gray-500 group-hover:text-red-500">
+              ({{ category.num_courses }})
+            </span>
           {% endif %}
         </a>
       {% endfor %}
     </div>
   </div>
 </section>
+
+
 
 
 
