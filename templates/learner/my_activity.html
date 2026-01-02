@@ -4,7 +4,7 @@
 {% block content %}
 <section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
 
-    <h2 class="text-2xl font-bold mb-6">Aktivitas Saya</h2>
+    <h2 class="text-2xl font-bold mb-6">My Activity</h2>
 
     {% if page_obj %}
         <ul class="space-y-6">
@@ -18,13 +18,13 @@
 
                     <!-- Object -->
                     <div class="text-gray-700 text-sm mb-1">
-                        <strong>Objek:</strong> {{ log.content_type.model|capfirst }} | ID: {{ log.object_id }}
+                        <strong>Object:</strong> {{ log.content_type.model|capfirst }} | ID: {{ log.object_id }}
                     </div>
 
                     <!-- Changes -->
                     {% if log.changes %}
                         <div class="text-gray-700 text-sm mb-2">
-                            <strong>Perubahan:</strong>
+                            <strong>Changes:</strong>
                             <ul class="list-disc pl-5">
                                 {% for field, val in log.changes.items %}
                                     {% if val.from is not None or val.to is not None %}
@@ -86,7 +86,7 @@
         </div>
 
     {% else %}
-        <p class="text-gray-500 italic">Belum ada aktivitas.</p>
+        <p class="text-gray-500 italic">No activity yet.</p>
     {% endif %}
 
 </section>
