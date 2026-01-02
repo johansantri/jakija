@@ -38,293 +38,137 @@
 
 {% block content %}
 <section class="py-8 bg-white font-sans">
-    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <!-- Filter Toggle for Mobile -->
-        <div class="lg:hidden text-center mb-6">
-            <input type="checkbox" id="filter-toggle" class="hidden peer">
-            <label for="filter-toggle" 
-                   class="inline-flex items-center px-4 py-2 border border-red-600 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-colors cursor-pointer"
-                   aria-label="Toggle filters">
-                <i class="fas fa-filter mr-2"></i> Show Filters
-            </label>
+  <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <!-- Main Content -->
+      <div class="lg:col-span-9">
+        <!-- COURSE GRID -->
+        <div id="course-list">
+          {% include "home/course_list_partial.html" %}
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <!-- Main Content -->
-            <div class="lg:col-span-9">
-                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 flex-wrap gap-4">
-                    <div class="flex items-center flex-wrap gap-4">
-                        <div class="view-icons">
-                            <a href="{% url 'authentication:course_list' %}" 
-                               class="inline-flex p-2 border border-red-600 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-colors" 
-                               aria-label="Grid view">
-                                <i class="fas fa-th"></i>
-                            </a>
-                        </div>
-                        <div class="show-result">
-                            <h1 class="text-xl font-bold text-gray-900">
-                                Showing {{ start_index }}-{{ end_index }} of {{ total_courses }} results
-                            </h1>
-                        </div>
-                    </div>
-                </div>
+        <!-- Mobile Filter (tampil di bawah konten di mobile) -->
+        <div class="lg:hidden mt-8 p-4 bg-gray-50 rounded-lg shadow-md">
+          <form method="GET"
+                hx-get="{% url 'authentication:course_list' %}"
+                hx-target="#course-list"
+                hx-swap="innerHTML"
+                class="flex flex-col space-y-4">
 
-             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {% for course in courses %}
-                <article class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="relative">
-                        <a href="{% url 'courses:course_lms_detail' course.course_id course.course_slug %}" 
-                        aria-label="View details for {{ course.course_name }}">
-                            <img 
-                                class="w-full h-48 object-cover rounded-t-xl hover:opacity-95 transition-opacity" 
-                                alt="{{ course.course_name }} - {{ course.instructor }} Course" 
-                                src="{{ course.course_image|default:'/media/default.jpg' }}" 
-                                srcset="{{ course.course_image_small|default:course.course_image|default:'/media/default.jpg' }} 480w, 
-                                        {{ course.course_image_medium|default:course.course_image|default:'/media/default.jpg' }} 768w, 
-                                        {{ course.course_image|default:'/media/default.jpg' }} 1200w"
-                                sizes="(max-width: 576px) 480px, (max-width: 768px) 768px, 1200px"
-                                loading="lazy">
-                        </a>
-                    </div>
-                    <div class="p-4 flex flex-col">
-                        <div class="flex items-center mb-3">
-                            <a href="{% url 'courses:org_partner' course.partner_slug %}" 
-                            aria-label="View profile of {{ course.partner }}">
-                                <img 
-                                    src="{{ course.org_logo|default:'/media/default.jpg' }}" 
-                                    alt="partner {{ course.partner }} profile picture" 
-                                    class="w-10 h-10 object-cover rounded-full"
-                                    loading="lazy">
-                            </a>
-                           <div class="ml-2">
-                                <h3 class="text-sm font-semibold text-gray-800">
-                                    {% if course.partner and course.partner_slug %}
-                                        <a href="{% url 'courses:org_partner' course.partner_slug %}" 
-                                        class="hover:text-red-600 transition-colors">
-                                            {{ course.partner|default:"N/A" }}
-                                        </a>
-                                    {% else %}
-                                        {{ course.partner|default:"N/A" }}
-                                    {% endif %}
-                                </h3>
-                                <h3 class="text-sm font-semibold text-gray-800 mt-1">
-                                    <a href="{% url 'courses:instructor_profile' course.instructor_username %}" 
-                                    class="hover:text-red-600 transition-colors">
-                                        {{ course.instructor|default:"Unknown" }}
-                                    </a>
-                                </h3>
-                            </div>
+            <h3 class="font-semibold text-lg mb-2 border-b pb-1">Filter Courses</h3>
 
-
-                        </div>
-
-                        <h3 class="text-lg font-bold text-gray-900 mb-3">
-                            <a href="{% url 'courses:course_lms_detail' course.course_id course.course_slug %}" 
-                            class="text-gray-900 hover:text-red-600 transition-colors">
-                                {{ course.course_name }}
-                            </a>
-                        </h3>
-
-                        <!-- Rating & Language -->
-                        <div class="flex justify-between items-center mb-3 text-sm text-gray-600">
-                            <!-- Rating -->
-                            <div class="flex items-center">
-                                {% for _ in course.full_star_range %}
-                                    <i class="fas fa-star text-yellow-400" aria-hidden="true"></i>
-                                {% endfor %}
-                                {% if course.half_star %}
-                                    <i class="fas fa-star-half-alt text-yellow-400" aria-hidden="true"></i>
-                                {% endif %}
-                                {% for _ in course.empty_star_range %}
-                                    <i class="far fa-star text-gray-400" aria-hidden="true"></i>
-                                {% endfor %}
-                                <small class="text-gray-500 ml-1 text-sm">
-                                    ({{ course.average_rating|floatformat:1 }}) ({{ course.review_count }})
-                                </small>
-                            </div>
-
-                            <!-- Language -->
-                            <div class="flex items-center whitespace-nowrap">
-                                <i class="fas fa-language text-gray-600 mr-2"></i>
-                                <strong>{{ course.language }}</strong>
-                            </div>
-                        </div>
-
-                        <!-- Learners & Duration -->
-                        <div class="flex justify-between items-center mb-3 text-gray-500 text-sm">
-                            <div class="flex items-center">
-                                <i class="fas fa-users mr-1 text-red-600"></i>
-                                <span>{{ course.num_enrollments }} Learners</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-clock mr-1 text-red-600"></i>
-                                <span>{{ course.hour }} hour</span>
-                            </div>
-                        </div>
-
-                        <!-- Harga -->
-                        <div class="text-sm text-gray-600">
-                            {% if course.is_free %}
-                                <span class="bg-green-600 text-white text-sm font-semibold px-3 py-1.5 rounded-md shadow-sm whitespace-nowrap">
-                                    FREE
-                                </span>
-                            {% else %}
-                                <div class="relative text-left">
-                                    <span class="inline-block bg-green-600 text-white text-sm font-semibold px-3 py-1.5 rounded-md shadow-sm hover:bg-green-700 transition-colors duration-200 whitespace-nowrap">
-                                        IDR {{ course.price|intcomma }}
-                                        {% if course.discount_amount > 0 %}
-                                            <span class="line-through text-gray-200 text-xs ml-2">IDR {{ course.normal_price|intcomma }}</span>
-                                        {% endif %}
-                                    </span>
-                                </div>
-                            {% endif %}
-                        </div>
-
-
-                    </div>
-                </article>
-                {% empty %}
-                <div class="col-span-full">
-                    <div class="bg-blue-100 text-blue-800 p-4 rounded-xl text-center">
-                        No courses found.
-                    </div>
-                </div>
+            <div>
+              <label class="block font-medium mb-1">Categories</label>
+              <div class="max-h-40 overflow-y-auto border rounded p-2 bg-white">
+                {% for category in categories %}
+                  <label class="flex items-center space-x-2 mb-1 cursor-pointer">
+                    <input type="checkbox" name="category" value="{{ category.id }}"
+                           {% if category.id|stringformat:"s" in category_filter %}checked{% endif %}
+                           class="form-checkbox text-red-600">
+                    <span class="text-sm">{{ category.name }} ({{ category.course_count }})</span>
+                  </label>
                 {% endfor %}
+              </div>
             </div>
 
-
-                <!-- Pagination -->
-                <nav aria-label="Course pagination" class="mt-6">
-                    <ul class="flex flex-wrap justify-center gap-2 max-w-full">
-
-                        {# PREVIOUS #}
-                        <li class="{% if not page_obj.has_previous %}opacity-50 pointer-events-none{% endif %}">
-                        {% if page_obj.has_previous %}
-                            <a href="?page={{ page_obj.previous_page_number }}"
-                            class="inline-flex px-3 py-1 rounded-lg border text-red-600 hover:bg-red-600 hover:text-white">
-                            ‹
-                            </a>
-                        {% else %}
-                            <span class="inline-flex px-3 py-1 rounded-lg border text-gray-400">‹</span>
-                        {% endif %}
-                        </li>
-
-                        {# PAGE NUMBERS (LIMITED) #}
-                        {% for num in page_obj.paginator.page_range %}
-                        {% if num >= page_obj.number|add:-2 and num <= page_obj.number|add:2 %}
-                            <li>
-                            <a href="?page={{ num }}"
-                                class="inline-flex px-3 py-1 rounded-lg border
-                                {% if page_obj.number == num %}
-                                bg-red-600 text-white
-                                {% else %}
-                                text-red-600 hover:bg-red-600 hover:text-white
-                                {% endif %}">
-                                {{ num }}
-                            </a>
-                            </li>
-                        {% endif %}
-                        {% endfor %}
-
-                        {# NEXT #}
-                        <li class="{% if not page_obj.has_next %}opacity-50 pointer-events-none{% endif %}">
-                        {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}"
-                            class="inline-flex px-3 py-1 rounded-lg border text-red-600 hover:bg-red-600 hover:text-white">
-                            ›
-                            </a>
-                        {% else %}
-                            <span class="inline-flex px-3 py-1 rounded-lg border text-gray-400">›</span>
-                        {% endif %}
-                        </li>
-
-                    </ul>
-                    </nav>
-
+            <div>
+              <label class="block font-medium mb-1" for="language-select">Language</label>
+              <select id="language-select" name="language" class="w-full border rounded px-3 py-2">
+                <option value="">All</option>
+                {% for lang in language_options %}
+                  <option value="{{ lang.code }}" {% if lang.code == language_filter %}selected{% endif %}>{{ lang.name }}</option>
+                {% endfor %}
+              </select>
             </div>
 
-            <!-- Sidebar -->
-            <div 
-                class="hidden peer-checked:block lg:block lg:col-span-3 mt-6 lg:mt-0" 
-                id="filterSidebar">
-                <div class="bg-white rounded-xl shadow-md p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">Filters</h3>
-                    <form method="GET" action="{% url 'authentication:course_list' %}" aria-label="Course filter form">
-                        <h3 class="text-xl font-bold text-gray-900 mb-4">Categories</h3>
-                        <div class="mb-4">
-                            {% for category in categories %}
-                                <div class="flex items-center mb-2">
-                                    <input 
-                                        class="h-4 w-4 text-red-600 border-gray-300 rounded focus:ring-red-600" 
-                                        type="checkbox" 
-                                        name="category" 
-                                        id="category-{{ category.id }}" 
-                                        value="{{ category.id }}" 
-                                        {% if category.id|stringformat:"s" in category_filter|join:"," %}checked{% endif %}>
-                                    <label class="ml-2 text-gray-700 text-sm" for="category-{{ category.id }}">
-                                        {{ category.name }} <span class="text-gray-500">({{ category.course_count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
-                        </div>
-
-                        <hr class="border-gray-300 my-4">
-
-                        <h3 class="text-xl font-bold text-gray-900 mb-4">Languages</h3>
-                        <div class="mb-4">
-                            <select 
-                                name="language" 
-                                class="w-full border border-gray-200 rounded-lg shadow-sm p-3 focus:border-red-600 focus:ring-2 focus:ring-red-100 transition-colors" 
-                                aria-label="Select course language">
-                                <option value="" {% if not language_filter %}selected{% endif %}>Choose Language</option>
-                                {% for lang in language_options %}
-                                    <option value="{{ lang.code }}" {% if lang.code == language_filter %}selected{% endif %}>
-                                        {{ lang.name }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <hr class="border-gray-300 my-4">
-
-                        <h3 class="text-xl font-bold text-gray-900 mb-4">Level</h3>
-                        <div class="mb-4">
-                            <select 
-                                name="level" 
-                                class="w-full border border-gray-200 rounded-lg shadow-sm p-3 focus:border-red-600 focus:ring-2 focus:ring-red-100 transition-colors" 
-                                aria-label="Select course level">
-                                <option value="" {% if not level_filter %}selected{% endif %}>All Levels</option>
-                                <option value="basic" {% if level_filter == 'basic' %}selected{% endif %}>Basic</option>
-                                <option value="middle" {% if level_filter == 'middle' %}selected{% endif %}>Middle</option>
-                                <option value="advanced" {% if level_filter == 'advanced' %}selected{% endif %}>Advanced</option>
-                            </select>
-                        </div>
-
-                        <hr class="border-gray-300 my-4">
-
-                        <h3 class="text-xl font-bold text-gray-900 mb-4">Price</h3>
-                        <div class="mb-4">
-                            <select 
-                                name="price" 
-                                class="w-full border border-gray-200 rounded-lg shadow-sm p-3 focus:border-red-600 focus:ring-2 focus:ring-red-100 transition-colors" 
-                                aria-label="Select course price">
-                                <option value="" {% if not price_filter %}selected{% endif %}>All Prices</option>
-                                <option value="free" {% if price_filter == 'free' %}selected{% endif %}>Free</option>
-                                <option value="paid" {% if price_filter == 'paid' %}selected{% endif %}>Paid</option>
-                            </select>
-                        </div>
-
-                        <button 
-                            type="submit" 
-                            class="w-full bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
-                            Apply Filters
-                        </button>
-                    </form>
-                </div>
+            <div>
+              <label class="block font-medium mb-1" for="level-select">Level</label>
+              <select id="level-select" name="level" class="w-full border rounded px-3 py-2">
+                <option value="">All</option>
+                {% for level in level_options %}
+                  <option value="{{ level.code }}" {% if level.code == level_filter %}selected{% endif %}>{{ level.name }}</option>
+                {% endfor %}
+              </select>
             </div>
+
+            <div>
+              <label class="block font-medium mb-1" for="price-select">Price</label>
+              <select id="price-select" name="price" class="w-full border rounded px-3 py-2">
+                <option value="">All</option>
+                {% for p in price_options %}
+                  <option value="{{ p.code }}" {% if p.code == price_filter %}selected{% endif %}>{{ p.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <button type="submit" class="bg-red-600 text-white font-semibold rounded px-4 py-2 hover:bg-red-700 transition-colors">
+              Apply Filters
+            </button>
+          </form>
         </div>
+      </div>
+
+      <!-- Sidebar Filter Desktop -->
+      <aside class="hidden lg:block lg:col-span-3 bg-gray-50 p-6 rounded-lg shadow-md sticky top-20 h-fit">
+        <form method="GET"
+              hx-get="{% url 'authentication:course_list' %}"
+              hx-target="#course-list"
+              hx-swap="innerHTML"
+              class="flex flex-col space-y-6">
+
+          <h3 class="font-semibold text-xl border-b pb-2">Filter Courses</h3>
+
+          <div>
+            <label class="block font-medium mb-2">Categories</label>
+            {% for category in categories %}
+              <label class="flex items-center space-x-2 mb-2 cursor-pointer">
+                <input type="checkbox" name="category" value="{{ category.id }}"
+                       {% if category.id|stringformat:"s" in category_filter %}checked{% endif %}
+                       class="form-checkbox text-red-600">
+                <span>{{ category.name }} ({{ category.course_count }})</span>
+              </label>
+            {% endfor %}
+          </div>
+
+          <div>
+            <label class="block font-medium mb-2" for="language-select-desktop">Language</label>
+            <select id="language-select-desktop" name="language" class="w-full border rounded px-3 py-2">
+              <option value="">All</option>
+              {% for lang in language_options %}
+                <option value="{{ lang.code }}" {% if lang.code == language_filter %}selected{% endif %}>{{ lang.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-medium mb-2" for="level-select-desktop">Level</label>
+            <select id="level-select-desktop" name="level" class="w-full border rounded px-3 py-2">
+              <option value="">All</option>
+              {% for level in level_options %}
+                <option value="{{ level.code }}" {% if level.code == level_filter %}selected{% endif %}>{{ level.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-medium mb-2" for="price-select-desktop">Price</label>
+            <select id="price-select-desktop" name="price" class="w-full border rounded px-3 py-2">
+              <option value="">All</option>
+              {% for p in price_options %}
+                <option value="{{ p.code }}" {% if p.code == price_filter %}selected{% endif %}>{{ p.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg mt-2 hover:bg-red-700 transition-colors">
+            Apply Filters
+          </button>
+        </form>
+      </aside>
     </div>
+  </div>
 </section>
+
 
 <!-- Schema Markup for SEO -->
 <script type="application/ld+json">

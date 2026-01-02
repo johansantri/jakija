@@ -28,7 +28,7 @@ from django.urls import reverse
 from django.core.mail import send_mail
 from authentication.forms import  UserProfileForm, UserPhoto,PasswordResetForms
 from .models import Profile
-from courses.models import QuizResult,Quiz,LTIResult,Certificate,Comment,LastAccessCourse,UserActivityLog,SearchHistory,Instructor,CourseRating,Partner,Assessment,GradeRange,AssessmentRead,Material, MaterialRead, Submission,AssessmentScore,QuestionAnswer,CourseStatus,Enrollment,MicroCredential, MicroCredentialEnrollment,Course, Enrollment, Category,CourseProgress
+from courses.models import CoursePrice,QuizResult,Quiz,LTIResult,Certificate,Comment,LastAccessCourse,UserActivityLog,SearchHistory,Instructor,CourseRating,Partner,Assessment,GradeRange,AssessmentRead,Material, MaterialRead, Submission,AssessmentScore,QuestionAnswer,CourseStatus,Enrollment,MicroCredential, MicroCredentialEnrollment,Course, Enrollment, Category,CourseProgress
 from .forms import CommentForm
 from django.http import HttpResponse,JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -444,231 +444,148 @@ def validate_level(level):
         return level
     raise ValidationError(f"Invalid level: {level}")
 
-@custom_ratelimit
 def course_list(request):
-    try:
-        if request.method != 'GET':
-            return HttpResponseNotAllowed(['GET'])
+    """
+    View untuk menampilkan list course dengan filter dan pagination.
+    Sidebar filter dinamis: hanya menampilkan opsi yang ada di course queryset.
+    HTMX-ready: jika request HTMX, render partial template.
+    """
 
-        # Get filter parameters
-        raw_category_filter = request.GET.getlist('category')[:10]
-        language_filter = request.GET.get('language', '').strip()
-        level_filter = request.GET.get('level', '').strip()
-        price_filter = request.GET.get('price', '').strip()
+    # ===== Filter Input =====
+    raw_category_filter = request.GET.getlist('category')[:10]
+    language_filter = request.GET.get('language', '').strip() or None
+    level_filter = request.GET.get('level', '').strip() or None
+    price_filter = request.GET.get('price', '').strip() or None
+    page_number = request.GET.get('page', 1)
 
-        # Validate filters
-        category_filter = validate_category_ids(raw_category_filter)
-        if raw_category_filter and not category_filter:
-            logger.warning(f"Invalid category filter: {raw_category_filter}")
-            return HttpResponseBadRequest("Invalid category filter")
+    # ===== Validate Category =====
+    category_filter = [int(c) for c in raw_category_filter if c.isdigit()]
 
-        if language_filter:
-            try:
-                language_filter = validate_language(language_filter)
-            except ValidationError as e:
-                logger.warning(f"Invalid language filter: {language_filter}")
-                return HttpResponseBadRequest(str(e))
-        else:
-            language_filter = None
+    # ===== Published Status =====
+    published_status = CourseStatus.objects.filter(status='published').first()
+    if not published_status:
+        return render(request, "errors/no_published_status.html")
 
-        if level_filter:
-            try:
-                level_filter = validate_level(level_filter)
-            except ValidationError as e:
-                logger.warning(f"Invalid level filter: {level_filter}")
-                return HttpResponseBadRequest(str(e))
-        else:
-            level_filter = None
-
-        if price_filter:
-            try:
-                price_filter = validate_price_filter(price_filter)
-            except ValidationError as e:
-                logger.warning(f"Invalid price filter: {price_filter}")
-                return HttpResponseBadRequest(str(e))
-        else:
-            price_filter = None
-
-        # Validate page number
-        try:
-            page_number = int(request.GET.get('page', 1))
-            if page_number < 1 or page_number > 100:
-                raise ValueError
-        except ValueError:
-            logger.warning(f"Invalid page number: {request.GET.get('page')}")
-            return HttpResponseBadRequest("Invalid page number")
-
-        # Get published status
-        try:
-            published_status = CourseStatus.objects.filter(status='published').first()
-            if not published_status:
-                raise CourseStatus.DoesNotExist
-        except CourseStatus.DoesNotExist:
-            logger.warning("Published status 'published' tidak ditemukan.")
-            messages.error(request, "Status 'published' belum tersedia. Silakan coba lagi nanti.")
-            return redirect('authentication:home')
-
-
-        # Query courses
-        courses = Course.objects.filter(
-            status_course=published_status,
-            end_date__gte=timezone.now()
-        ).select_related(
-            'category', 'instructor__user', 'org_partner'
-        ).prefetch_related('enrollments', 'prices')
-
-        # Apply filters
-        if category_filter:
-            courses = courses.filter(category__id__in=category_filter)
-        if language_filter:
-            courses = courses.filter(language=language_filter)
-        if level_filter:
-            courses = courses.filter(level=level_filter)
-        if price_filter == 'free':
-            courses = courses.filter(prices__portal_price=0)
-        elif price_filter == 'paid':
-            courses = courses.filter(prices__portal_price__gt=0)
-
-        courses = courses.annotate(
-            avg_rating=Avg('ratings__rating', default=0),
-            enrollment_count=Count('enrollments', distinct=True),
-            review_count=Count('ratings', distinct=True),
-            language_display=Case(
-                *[When(language=k, then=Value(v)) for k, v in Course.choice_language],
-                output_field=CharField(),
-                default=Value('Unknown')
-            )
-        ).values(
-            'course_name', 'hour', 'id', 'slug', 'image',
-            'instructor__user__first_name', 'instructor__user__last_name', 'instructor__user__username',
-            'instructor__user__photo', 'org_partner__name__name', 'org_partner__name__slug', 'org_partner__logo',
-            'category__name', 'language', 'level', 'avg_rating', 'enrollment_count', 'review_count', 'language_display'
+    # ===== Query Courses =====
+    courses_qs = Course.objects.filter(
+        status_course=published_status,
+        end_date__gte=timezone.now()
+    ).select_related(
+        'category', 'instructor__user', 'org_partner'
+    ).prefetch_related(
+        'enrollments',
+        'ratings',
+        Prefetch(
+            'prices',
+            queryset=CoursePrice.objects.order_by('id'),  # bisa filter partner/default
+            to_attr='price_list'
         )
-        courses = list(courses)
+    )
 
-        # Get total courses
-        total_courses = len(courses)
+    # ===== Apply Filters =====
+    if category_filter:
+        courses_qs = courses_qs.filter(category__id__in=category_filter)
+    if language_filter:
+        courses_qs = courses_qs.filter(language=language_filter)
+    if level_filter:
+        courses_qs = courses_qs.filter(level=level_filter)
+    if price_filter == 'free':
+        courses_qs = courses_qs.filter(prices__portal_price=0)
+    elif price_filter == 'paid':
+        courses_qs = courses_qs.filter(prices__portal_price__gt=0)
 
-        # Pagination
-        paginator = Paginator(courses, 9)
-        try:
-            page_obj = paginator.get_page(page_number)
-        except (PageNotAnInteger, EmptyPage):
-            page_obj = paginator.get_page(1)
+    # ===== Annotate =====
+    courses_qs = courses_qs.annotate(
+        avg_rating=Avg('ratings__rating'),
+        enrollment_count=Count('enrollments', distinct=True),
+        review_count=Count('ratings', distinct=True),
+    )
 
-        # Get categories
-        categories = Category.objects.filter(
-            category_courses__status_course=published_status,
-            category_courses__end_enrol__gte=timezone.now()
-        ).annotate(course_count=Count('category_courses')).distinct().order_by('name')[:50].values('id', 'name', 'course_count')
-        categories = list(categories)
+    # ===== Pagination =====
+    paginator = Paginator(courses_qs, 9)
+    try:
+        page_obj = paginator.get_page(page_number)
+    except (PageNotAnInteger, EmptyPage):
+        page_obj = paginator.get_page(1)
 
-        # Get language options
-        language_codes = sorted(set(c['language'] for c in courses if c['language']))[:50]
-        all_languages = dict(Course.choice_language)
-        language_options = [{'code': code, 'name': all_languages.get(code, code)} for code in language_codes]
+    # ===== Mapping bahasa untuk template =====
+    LANGUAGES = dict(Course.choice_language)
+    LEVEL_DISPLAY = dict([('basic','Basic'),('middle','Middle'),('advanced','Advanced')])
 
-        # Get level options from model choices
-        LEVEL_CHOICES = [
-            ('basic', 'Basic'),
-            ('middle', 'Middle'),
-            ('advanced', 'Advanced'),
-        ]
-        all_levels = dict(LEVEL_CHOICES)
-        level_options = [{'code': k, 'name': v} for k, v in all_levels.items()]
+    # ===== Prepare Data for template =====
+    courses_data = []
+    for course in page_obj.object_list:
+        price_obj = course.price_list[0] if getattr(course, 'price_list', None) else None
+        price = price_obj.portal_price if price_obj else Decimal('0.00')
+        normal_price = price_obj.normal_price if price_obj else Decimal('0.00')
+        discount_amount = price_obj.discount_amount if price_obj else Decimal('0.00')
+        discount_percent = price_obj.discount_percent if price_obj else Decimal('0.00')
 
-        # Process courses_data with price information
-        courses_data = []
-        for course in page_obj.object_list:
-            try:
-                # Fetch CoursePrice for the course
-                course_obj = Course.objects.filter(id=course['id']).prefetch_related('prices').first()
-                course_price = course_obj.prices.first() if course_obj else None
-                price = course_price.portal_price if course_price else Decimal('0.00')
-                is_free = price == Decimal('0.00')
-                discount_amount = course_price.discount_amount if course_price else Decimal('0.00')
-                normal_price = course_price.normal_price if course_price else Decimal('0.00')
-                discount_percent = course_price.discount_percent if course_price else Decimal('0.00')
+        courses_data.append({
+            'course_name': course.course_name or "Unknown",
+            'hour': course.hour or 0,
+            'course_id': course.id,
+            'course_slug': course.slug,
+            'course_image': course.image.url if course.image else '/media/default.jpg',
+            'instructor': f"{getattr(course.instructor.user, 'first_name', '')} {getattr(course.instructor.user, 'last_name', '')}".strip() or "Unknown",
+            'instructor_username': getattr(course.instructor.user, 'username', ''),
+            'photo': getattr(course.instructor.user, 'photo', '/media/default.jpg') or '/media/default.jpg',
+            'partner': getattr(course.org_partner, 'name', 'N/A'),
+            'partner_slug': getattr(course.org_partner, 'slug', ''),
+            'org_logo': course.org_partner.logo.url if getattr(course.org_partner, 'logo', None) else '/media/default.jpg',
+            'category': course.category.name if course.category else 'Uncategorized',
+            'language': LANGUAGES.get(course.language, course.language),
+            'level': LEVEL_DISPLAY.get(course.level, course.level),
+            'average_rating': round(course.avg_rating or 0, 1),
+            'review_count': course.review_count or 0,
+            'num_enrollments': course.enrollment_count or 0,
+            'full_star_range': range(int(course.avg_rating or 0)),
+            'half_star': (course.avg_rating or 0) % 1 >= 0.5,
+            'empty_star_range': range(5 - int(course.avg_rating or 0) - (1 if (course.avg_rating or 0) % 1 >= 0.5 else 0)),
+            'price': float(price),
+            'normal_price': float(normal_price),
+            'discount_amount': float(discount_amount),
+            'discount_percent': float(discount_percent),
+            'is_free': price == 0,
+        })
 
-                course_data = {
-                    'course_name': course.get('course_name', 'Unknown'),
-                    'hour': course.get('hour', 0),
-                    'course_id': course.get('id'),
-                    'num_enrollments': course.get('enrollment_count', 0),
-                    'course_slug': course.get('slug', ''),
-                    'course_image': f"{settings.MEDIA_URL}{course['image']}" if course.get('image') else '/media/default.jpg',
-                    'instructor': f"{course.get('instructor__user__first_name', '')} {course.get('instructor__user__last_name', '')}".strip() or 'Unknown',
-                    'instructor_username': course.get('instructor__user__username', ''),
-                    'photo': f"{settings.MEDIA_URL}{course['instructor__user__photo']}" if course.get('instructor__user__photo') else '/media/default.jpg',
-                    'partner': course.get('org_partner__name__name'),
-                    'partner_kode': course.get('org_partner__name__kode'),
-                    'partner_slug': course.get('org_partner__name__slug'),
-                    'org_logo': f"{settings.MEDIA_URL}{course['org_partner__logo']}" if course.get('org_partner__logo') else '/media/default.jpg',
-                    'category': course.get('category__name', 'Uncategorized'),
-                    'language': course.get('language_display', 'Unknown'),
-                    'level': course.get('level', 'Unknown'),
-                    'average_rating': round(course.get('avg_rating', 0) or 0, 1),
-                    'review_count': course.get('review_count', 0),
-                    'full_star_range': range(int(course.get('avg_rating', 0) or 0)),
-                    'half_star': (course.get('avg_rating', 0) % 1) >= 0.5 if course.get('avg_rating') else False,
-                    'empty_star_range': range(5 - int(course.get('avg_rating', 0) or 0) - (1 if (course.get('avg_rating', 0) % 1) >= 0.5 else 0)),
-                    'price': float(price),
-                    'is_free': is_free,
-                    'discount_amount': float(discount_amount),
-                    'normal_price': float(normal_price),
-                    'discount_percent': float(discount_percent),
-                }
+    # ===== Sidebar Options (Dinamis) =====
+    categories = Category.objects.filter(category_courses__in=courses_qs).annotate(
+        course_count=Count('category_courses')
+    ).distinct().values('id', 'name', 'course_count')
 
-                if not course_data['partner_slug']:
-                    logger.debug(f"Course {course_data['course_id']} has no partner_slug or partner_kode")
-                courses_data.append(course_data)
-            except Exception as e:
-                logger.error(f"Error processing course {course.get('id', 'unknown')}: {str(e)}")
-                continue
+    language_codes = courses_qs.values_list('language', flat=True).distinct()
+    language_options = [{'code': code, 'name': LANGUAGES.get(code, code)} for code in language_codes]
 
-        total_enrollments = sum(c.get('enrollment_count', 0) for c in page_obj.object_list)
+    level_codes = courses_qs.values_list('level', flat=True).distinct()
+    level_options = [{'code': lvl, 'name': LEVEL_DISPLAY.get(lvl, lvl)} for lvl in level_codes]
 
-        context = {
-            'courses': courses_data,
-            'page_obj': page_obj,
-            'total_courses': total_courses,
-            'total_enrollments': total_enrollments,
-            'total_pages': paginator.num_pages,
-            'current_page': page_obj.number,
-            'start_index': page_obj.start_index(),
-            'end_index': page_obj.end_index(),
-            'category_filter': category_filter,
-            'language_filter': language_filter,
-            'level_filter': level_filter,
-            'price_filter': price_filter,
-            'categories': categories,
-            'language_options': language_options,
-            'level_options': level_options,  # <-- level options here
-        }
+    price_options = []
+    if courses_qs.filter(prices__portal_price=0).exists():
+        price_options.append({'code': 'free', 'name': 'Free'})
+    if courses_qs.filter(prices__portal_price__gt=0).exists():
+        price_options.append({'code': 'paid', 'name': 'Paid'})
 
-        return render(request, 'home/course_list.html', context)
+    # ===== Context =====
+    context = {
+        'courses': courses_data,
+        'page_obj': page_obj,
+        'categories': categories,
+        'language_options': language_options,
+        'level_options': level_options,
+        'price_options': price_options,
+        'category_filter': raw_category_filter,
+        'language_filter': language_filter,
+        'level_filter': level_filter,
+        'price_filter': price_filter,
+        'total_courses': paginator.count,
+    }
 
-    except CourseStatus.DoesNotExist:
-        logger.warning("Published status not found")
-        messages.warning(request, "Status 'published' belum tersedia.")
-        return redirect('authentication:home')
+    # ===== HTMX support =====
+    if request.headers.get('HX-Request') == 'true':
+        return render(request, "home/course_list_partial.html", context)
 
-    except DatabaseError:
-        logger.exception("Database error in partner_list_view")
-        messages.error(request, "Terjadi kesalahan pada server. Silakan coba lagi nanti.")
-        return redirect('authentication:home')
-
-    except KeyError as e:
-        logger.exception(f"KeyError in partner_list_view: {str(e)}")
-        messages.error(request, "Terjadi kesalahan data. Silakan coba lagi nanti.")
-        return redirect('authentication:home')
-
-    except Exception as e:
-        logger.exception(f"Unexpected error in partner_list_view: {str(e)}")
-        messages.error(request, "Terjadi kesalahan yang tidak terduga.")
-        return redirect('authentication:home')
-
-
+    return render(request, "home/course_list.html", context)
 
 @custom_ratelimit
 @login_required
