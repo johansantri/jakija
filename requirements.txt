@@ -24,7 +24,7 @@ cookiecutter==2.6.0
 cryptography==44.0.2
 cssselect2==0.8.0
 diff-match-patch==20241021
-Django==5.2.1
+Django==5.2.9
 django-allauth==65.7.0
 django-appconf==1.1.0
 django-autocomplete-light==3.12.1
@@ -50,6 +50,7 @@ Faker==37.6.0
 fonttools==4.56.0
 frozenlist==1.7.0
 geoip2==5.1.0
+git-filter-repo==2.47.0
 gunicorn==23.0.0
 httplib2==0.22.0
 idna==3.10
