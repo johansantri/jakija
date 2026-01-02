@@ -60,12 +60,28 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_protect
 from decimal import Decimal, ROUND_HALF_UP
+from audit.models import AuditLog
 logger = logging.getLogger(__name__)
 
 
 
 
-logger = logging.getLogger(__name__)
+
+
+@login_required
+def my_activity(request):
+    """
+    Tampilkan semua aktivitas user dengan pagination.
+    """
+    logs = AuditLog.objects.filter(user=request.user).order_by('-timestamp')
+    
+    # Pagination: 20 log per halaman
+    paginator = Paginator(logs, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "learner/my_activity.html", {"page_obj": page_obj})
+
 
 @login_required
 def score_summary_view_detail(request, course_id):
