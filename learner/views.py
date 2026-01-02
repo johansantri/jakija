@@ -1963,87 +1963,79 @@ def is_spam(request, user, content):
 def add_comment(request):
     """
     Add a comment to a material, with spam and security checks.
-    
-    Args:
-        request: HTTP request object.
-    
-    Returns:
-        HttpResponse: Rendered comments partial or redirect.
+    Returns HTMX partial or full redirect depending on request.
     """
-    if request.method != 'POST':
-        logger.warning(f"Invalid request method: {request.method} for add_comment")
+    if request.method != "POST":
+        logger.warning(f"Invalid request method: {request.method}")
+        if request.headers.get("HX-Request") == "true":
+            return HttpResponse("Permintaan tidak valid.", status=400)
         messages.warning(request, "Permintaan tidak valid.")
         return HttpResponse(status=400)
 
-    comment_text = request.POST.get('comment_text')
-    material_id = request.POST.get('material_id')
-    parent_id = request.POST.get('parent_id')
+    comment_text = request.POST.get("comment_text")
+    material_id = request.POST.get("material_id")
+    parent_id = request.POST.get("parent_id")
 
     if not comment_text or not material_id:
         logger.warning(f"Missing fields: comment_text={bool(comment_text)}, material_id={material_id}")
+        if request.headers.get("HX-Request") == "true":
+            return HttpResponse("Komentar dan ID materi diperlukan.", status=400)
         messages.warning(request, "Komentar dan ID materi diperlukan.")
         return HttpResponse(status=400)
 
     material = get_object_or_404(Material, id=material_id)
-    course = material.section.courses  # Fixed: 'course' to 'courses'
+    course = material.section.courses
     parent_comment = get_object_or_404(Comment, id=parent_id, material=material) if parent_id else None
 
-    if is_suspicious(request):
-        logger.warning(f"Suspicious activity detected by {request.user.username}")
-        messages.warning(request, "Aktivitas mencurigakan terdeteksi.")
-        return HttpResponseRedirect(reverse('learner:load_content', kwargs={
-            'username': request.user.username,
-            'slug': course.slug,
-            'content_type': 'material',
-            'content_id': material_id
-        }))
-
-    if is_spam(request, request.user, comment_text):
-        logger.warning(f"Spam comment detected by {request.user.username}: {comment_text}")
-        messages.warning(request, "Komentar Anda terdeteksi sebagai spam!")
-        return HttpResponseRedirect(reverse('learner:load_content', kwargs={
-            'username': request.user.username,
-            'slug': course.slug,
-            'id': course.id,
-            'content_type': 'material',
-            'content_id': material_id
-        }))
-
+    # Cek suspicious / spam / blacklisted keyword
+    message = None
     comment = Comment(user=request.user, material=material, content=comment_text, parent=parent_comment)
-    if comment.contains_blacklisted_keywords():
-        logger.warning(f"Comment by {request.user.username} contains blacklisted keywords: {comment_text}")
-        messages.warning(request, "Komentar mengandung kata-kata yang tidak diizinkan.")
-        return HttpResponseRedirect(reverse('learner:load_content', kwargs={
-            'username': request.user.username,
-            'slug': course.slug,
-            'content_type': 'material',
-            'content_id': material_id
-        }))
 
-    comment.save()
-    logger.debug(f"Comment added by {request.user.username} for material {material_id}, parent_id={parent_id}")
+    if is_suspicious(request):
+        logger.warning(f"Suspicious activity detected: {request.user.username}")
+        message = "Aktivitas mencurigakan terdeteksi."
+    elif is_spam(request, request.user, comment_text):
+        logger.warning(f"Spam comment detected: {request.user.username}")
+        message = "Komentar Anda terdeteksi sebagai spam!"
+    elif comment.contains_blacklisted_keywords():
+        logger.warning(f"Blacklisted keyword detected in comment: {request.user.username}")
+        message = "Komentar mengandung kata-kata yang tidak diizinkan."
+    else:
+        comment.save()
+        logger.debug(f"Comment added by {request.user.username} for material {material_id}, parent_id={parent_id}")
 
-    is_htmx = request.headers.get('HX-Request') == 'true'
-    if is_htmx:
-        context = {
-            'comments': Comment.objects.filter(material=material, parent=None).select_related('user', 'parent').prefetch_related('children'),  # Modified to ensure replies are fetched
-            'material': material,
-            'user_reactions': {
-                r.comment_id: r.reaction_type for r in CommentReaction.objects.filter(
-                    user=request.user, comment__material=material
-                )
-            },
-        }
+    # Context untuk template partial
+    context = {
+        "comments": Comment.objects.filter(material=material, parent=None)
+                                   .select_related("user", "parent")
+                                   .prefetch_related("children"),
+        "material": material,
+        "user_reactions": {
+            r.comment_id: r.reaction_type
+            for r in CommentReaction.objects.filter(user=request.user, comment__material=material)
+        },
+        "message": message,
+    }
+
+    if request.headers.get("HX-Request") == "true":
+        return render(request, "learner/partials/comments.html", context)
+
+    # Non-HTMX fallback
+    if message:
+        messages.warning(request, message)
+    else:
         messages.success(request, "Komentar berhasil diposting!")
-        return render(request, 'learner/partials/comments.html', context)
 
-    messages.success(request, "Komentar berhasil diposting!")
-    return HttpResponseRedirect(reverse('learner:load_content', kwargs={
-        'username': request.user.username,
-        'slug': course.slug,
-        'content_type': 'material',
-        'content_id': material_id
-    }))
+    return HttpResponseRedirect(reverse(
+        "learner:load_content",
+        kwargs={
+            "username": request.user.username,
+            "slug": course.slug,
+            "content_type": "material",
+            "content_id": material_id
+        }
+    ))
+
 
 
 

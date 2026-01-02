@@ -241,7 +241,13 @@ class CourseRatingAdmin(admin.ModelAdmin):
     list_per_page = 20 
 
 admin.site.register(Hashtag)
-admin.site.register(BlacklistedKeyword)
+@admin.register(BlacklistedKeyword)
+class BlacklistedKeywordAdmin(admin.ModelAdmin):
+    list_display = ("keyword",)  # Hanya tampilkan kolom keyword
+    search_fields = ("keyword",) # Bisa dicari
+    ordering = ("keyword",)      # Urut alfabet
+    list_per_page = 50           # Pagination rapi
+
 admin.site.register(UserProfile)
 @admin.register(SosPost)
 class SosPostAdmin(admin.ModelAdmin):

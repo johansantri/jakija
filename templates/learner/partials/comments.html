@@ -4,7 +4,21 @@
     <h5 class="text-xl font-bold text-gray-900 mb-2">Comments</h5>
     <p class="text-sm text-gray-600 mb-6">
         Please keep comments relevant to the discussion topic and avoid content containing hate speech, pornography, or spam.
+        
     </p>
+   {% if message %}
+    <div id="htmx-message" class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded mb-4" role="alert">
+        {{ message }}
+    </div>
+
+    <script>
+        setTimeout(() => {
+            const msg = document.getElementById('htmx-message');
+            if (msg) msg.remove();  // atau bisa pakai fade-out dengan Tailwind + transition
+        }, 5000); // hilang setelah 5 detik
+    </script>
+    {% endif %}
+
 
     <!-- Form Komentar Utama -->
     {% if user.is_authenticated %}
