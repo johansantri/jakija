@@ -1,0 +1,93 @@
+{% extends 'home/tes.html' %}
+{% load static %}
+
+{% block content %}
+<section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
+
+    <h2 class="text-2xl font-bold mb-6">Aktivitas Saya</h2>
+
+    {% if page_obj %}
+        <ul class="space-y-6">
+            {% for log in page_obj %}
+                <li class="border-l-4 border-indigo-500 pl-4 py-3 bg-gray-50 rounded shadow-sm">
+                    <!-- Header: Action & Timestamp -->
+                    <div class="flex justify-between mb-1">
+                        <span class="font-semibold text-gray-800">{{ log.get_action_display }}</span>
+                        <span class="text-sm text-gray-500">{{ log.timestamp|date:"d M Y H:i:s" }}</span>
+                    </div>
+
+                    <!-- Object -->
+                    <div class="text-gray-700 text-sm mb-1">
+                        <strong>Objek:</strong> {{ log.content_type.model|capfirst }} | ID: {{ log.object_id }}
+                    </div>
+
+                    <!-- Changes -->
+                    {% if log.changes %}
+                        <div class="text-gray-700 text-sm mb-2">
+                            <strong>Perubahan:</strong>
+                            <ul class="list-disc pl-5">
+                                {% for field, val in log.changes.items %}
+                                    {% if val.from is not None or val.to is not None %}
+                                        <li>{{ field }}: {{ val.from|default:"→" }} → {{ val.to|default:"→" }}</li>
+                                    {% elif val.id %}
+                                        {# Jika val adalah dict (misal object baru) #}
+                                        <li>{{ field }}:</li>
+                                        <ul class="list-inside list-disc pl-4">
+                                            {% for k,v in val.items %}
+                                                <li>{{ k }}: {{ v }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <li>{{ field }}: {{ val }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    
+                   {% if user.is_superuser %}
+                        <!-- IP / Device / Path (hanya superuser) -->
+                        <div class="flex flex-wrap gap-2 text-xs text-gray-600 mt-1">
+                            {% if log.ip_address %}
+                                <span class="px-2 py-1 bg-gray-200 rounded">{{ log.ip_address }}</span>
+                            {% endif %}
+                            {% if log.device_type %}
+                                <span class="px-2 py-1 bg-gray-200 rounded">{{ log.device_type }}</span>
+                            {% endif %}
+                            {% if log.request_path %}
+                                <span class="px-2 py-1 bg-gray-200 rounded">{{ log.request_path }}</span>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Pagination -->
+        <div class="mt-6 flex justify-between items-center">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" 
+                   class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Previous</a>
+            {% else %}
+                <span class="px-3 py-1 text-gray-400">Previous</span>
+            {% endif %}
+
+            <span class="text-sm text-gray-500">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" 
+                   class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next</a>
+            {% else %}
+                <span class="px-3 py-1 text-gray-400">Next</span>
+            {% endif %}
+        </div>
+
+    {% else %}
+        <p class="text-gray-500 italic">Belum ada aktivitas.</p>
+    {% endif %}
+
+</section>
+{% endblock %}
