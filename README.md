@@ -20,31 +20,31 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 ### **Dashboard / Role-specific Features**
 
 #### **Admin Dashboard**
-![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/Screenshot%202025-12-18%20at%2009-20-07%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_jakija/media/x/Screenshot%202025-12-18%20at%2009-20-07%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-29-10%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_jakija/media/x/Screenshot%202025-12-17%20at%2016-29-10%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-30-35%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_jakija/media/x/Screenshot%202025-12-17%20at%2016-30-35%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-31-29%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_jakija/media/x/Screenshot%202025-12-17%20at%2016-31-29%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-32-09%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_jakija/media/x/Screenshot%202025-12-17%20at%2016-32-09%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-32-42%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_jakija/media/x/Screenshot%202025-12-17%20at%2016-32-42%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-32-57%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_jakija/media/x/Screenshot%202025-12-17%20at%2016-32-57%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/Screenshot%202025-12-17%20at%2016-33-24%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_jakija/media/x/Screenshot%202025-12-17%20at%2016-33-24%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/Screenshot%20from%202025-12-18%2008-21-22.png)
+![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_jakija/media/x/Screenshot%20from%202025-12-18%2008-21-22.png)
 
-![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/Screenshot%20from%202025-12-18%2008-21-35.png)
+![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_jakija/media/x/Screenshot%20from%202025-12-18%2008-21-35.png)
 
-![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/Screenshot%20from%202025-12-18%2008-21-49.png)
+![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_jakija/media/x/Screenshot%20from%202025-12-18%2008-21-49.png)
 
-![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/Screenshot%20from%202025-12-18%2008-22-13.png)
+![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_jakija/media/x/Screenshot%20from%202025-12-18%2008-22-13.png)
 
-![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/Screenshot%20from%202025-12-18%2008-22-29.png)
+![Dashboard Admin](https://github.com/johansantri/jakija/blob/full_jakija/media/x/Screenshot%20from%202025-12-18%2008-22-29.png)
 
 - User & Role Management  
 - Course Management global  
@@ -65,23 +65,23 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 #### **Partner Dashboard**
 
-![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2009-25-10%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/y/Screenshot%202025-12-18%20at%2009-25-10%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2009-25-22%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/y/Screenshot%202025-12-18%20at%2009-25-22%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2009-25-28%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/y/Screenshot%202025-12-18%20at%2009-25-28%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2009-25-35%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/y/Screenshot%202025-12-18%20at%2009-25-35%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2009-25-41%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/y/Screenshot%202025-12-18%20at%2009-25-41%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2009-25-55%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/y/Screenshot%202025-12-18%20at%2009-25-55%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2009-26-05%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/y/Screenshot%202025-12-18%20at%2009-26-05%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2009-26-12%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/y/Screenshot%202025-12-18%20at%2009-26-12%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/y/Screenshot%202025-12-18%20at%2009-26-18%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Partner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/y/Screenshot%202025-12-18%20at%2009-26-18%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
 
 
@@ -95,16 +95,16 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 #### **Instructor Dashboard**
 
-![Dashboard Instructor](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/z/Screenshot%202025-12-18%20at%2009-30-13%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Instructor](https://github.com/johansantri/jakija/blob/full_jakija/media/x/z/Screenshot%202025-12-18%20at%2009-30-13%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Instructor](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/z/Screenshot%202025-12-18%20at%2009-30-21%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Instructor](https://github.com/johansantri/jakija/blob/full_jakija/media/x/z/Screenshot%202025-12-18%20at%2009-30-21%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Instructor](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/z/Screenshot%202025-12-18%20at%2009-30-58%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Instructor](https://github.com/johansantri/jakija/blob/full_jakija/media/x/z/Screenshot%202025-12-18%20at%2009-30-58%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
 
-![Dashboard Instructor](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/z/Screenshot%202025-12-18%20at%2009-31-04%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Instructor](https://github.com/johansantri/jakija/blob/full_jakija/media/x/z/Screenshot%202025-12-18%20at%2009-31-04%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Instructor](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/z/Screenshot%202025-12-18%20at%2009-31-14%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Instructor](https://github.com/johansantri/jakija/blob/full_jakija/media/x/z/Screenshot%202025-12-18%20at%2009-31-14%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
 
 
@@ -116,41 +116,41 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 #### **learners Dashboard**
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-45-18%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-45-18%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-45-38%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-45-38%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
 
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-45-54%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-45-54%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
 
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-46-06%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-46-06%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
 
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-46-44%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-46-44%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
 
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-46-53%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-46-53%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
 
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-47-28%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-47-28%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
 
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-47-46%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-47-46%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence.png)
 
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-47-55%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-47-55%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-48-06%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence%20-%20JakIja.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-48-06%20Public%20Speaking%20for%20Beginners%20Speak%20with%20Confidence%20-%20JakIja.png)
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-48-25%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-48-25%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-49-23%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-49-23%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-49-32%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-49-32%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard learner](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/w/Screenshot%202025-12-18%20at%2009-51-34%20Certificate%20of%20Achievement%20-%20certificate_public-speaking-for-beginners-speak-with-confidence.pdf.png)
+![Dashboard learner](https://github.com/johansantri/jakija/blob/full_jakija/media/x/w/Screenshot%202025-12-18%20at%2009-51-34%20Certificate%20of%20Achievement%20-%20certificate_public-speaking-for-beginners-speak-with-confidence.pdf.png)
 
 
 - My Courses & Progress Tracking  
@@ -161,17 +161,17 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 #### **Subscription / Membership Dashboard**
 
-![Dashboard Subscribtions](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/u/Screenshot%202025-12-18%20at%2010-02-00%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Subscribtions](https://github.com/johansantri/jakija/blob/full_jakija/media/x/u/Screenshot%202025-12-18%20at%2010-02-00%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Subscribtions](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/u/Screenshot%202025-12-18%20at%2010-02-07%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Subscribtions](https://github.com/johansantri/jakija/blob/full_jakija/media/x/u/Screenshot%202025-12-18%20at%2010-02-07%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Subscribtions](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/u/Screenshot%202025-12-18%20at%2010-02-15%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Subscribtions](https://github.com/johansantri/jakija/blob/full_jakija/media/x/u/Screenshot%202025-12-18%20at%2010-02-15%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Subscribtions](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/u/Screenshot%202025-12-18%20at%2010-02-26%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Subscribtions](https://github.com/johansantri/jakija/blob/full_jakija/media/x/u/Screenshot%202025-12-18%20at%2010-02-26%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Subscribtions](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/u/Screenshot%202025-12-18%20at%2010-02-44%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Subscribtions](https://github.com/johansantri/jakija/blob/full_jakija/media/x/u/Screenshot%202025-12-18%20at%2010-02-44%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Subscribtions](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/u/Screenshot%202025-12-18%20at%2010-02-51%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Subscribtions](https://github.com/johansantri/jakija/blob/full_jakija/media/x/u/Screenshot%202025-12-18%20at%2010-02-51%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
 
 - Subscription Plans overview  
@@ -181,20 +181,20 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 ### **Curation Management**
 
-![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-10-50%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_jakija/media/x/g/Screenshot%202025-12-18%20at%2010-10-50%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-10-56%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_jakija/media/x/g/Screenshot%202025-12-18%20at%2010-10-56%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-11-08%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_jakija/media/x/g/Screenshot%202025-12-18%20at%2010-11-08%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-12-06%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_jakija/media/x/g/Screenshot%202025-12-18%20at%2010-12-06%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-12-33%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_jakija/media/x/g/Screenshot%202025-12-18%20at%2010-12-33%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-12-42%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_jakija/media/x/g/Screenshot%202025-12-18%20at%2010-12-42%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
 
-![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/g/Screenshot%202025-12-18%20at%2010-12-48%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Dashboard Curations](https://github.com/johansantri/jakija/blob/full_jakija/media/x/g/Screenshot%202025-12-18%20at%2010-12-48%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
 - Main Dashbord 
 - Course View
@@ -206,19 +206,19 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 ### **Course Management Studio**
 
-![Studio Courses](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-26-34%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Studio Courses](https://github.com/johansantri/jakija/blob/full_jakija/media/x/h/Screenshot%202025-12-18%20at%2010-26-34%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Studio Courses](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-27-02%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Studio Courses](https://github.com/johansantri/jakija/blob/full_jakija/media/x/h/Screenshot%202025-12-18%20at%2010-27-02%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Studio Courses](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-27-38%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Studio Courses](https://github.com/johansantri/jakija/blob/full_jakija/media/x/h/Screenshot%202025-12-18%20at%2010-27-38%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Studio Courses](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-27-57%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Studio Courses](https://github.com/johansantri/jakija/blob/full_jakija/media/x/h/Screenshot%202025-12-18%20at%2010-27-57%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Studio Courses](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-28-13%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Studio Courses](https://github.com/johansantri/jakija/blob/full_jakija/media/x/h/Screenshot%202025-12-18%20at%2010-28-13%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Studio Courses](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-28-34%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Studio Courses](https://github.com/johansantri/jakija/blob/full_jakija/media/x/h/Screenshot%202025-12-18%20at%2010-28-34%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
-![Studio Courses](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/h/Screenshot%202025-12-18%20at%2010-28-49%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Studio Courses](https://github.com/johansantri/jakija/blob/full_jakija/media/x/h/Screenshot%202025-12-18%20at%2010-28-49%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
 - Create Courses  
 - Matrial Upload Materials (PDF, video, audio, image)  
@@ -232,7 +232,7 @@ JakIja is a Learning Management System (LMS) built with Python and Django, desig
 
 ### **Finance Dashbord**
 
-![Finance Dashbord](https://github.com/johansantri/jakija/blob/full_tallwin/media/x/i/Screenshot%202025-12-18%20at%2010-36-07%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
+![Finance Dashbord](https://github.com/johansantri/jakija/blob/full_jakija/media/x/i/Screenshot%202025-12-18%20at%2010-36-07%20Dashboard%20Admin%20-%20Comfort%20Mode.png)
 
 - Paymant Dasbord  
 - Partner Courses  
