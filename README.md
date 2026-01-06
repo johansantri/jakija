@@ -340,5 +340,6 @@ Repository: https://github.com/johansantri/jakija
 - Finances: fin@fin.com | fin
 
 ## Cert
-- Every participant who completes a course will receive an automatic certificate, serving as proof of the skills and competencies they have acquired, and it can be verified instantly via QR code. Instructors who help more than 60% of their participants successfully complete the course will also receive an automatic recognition certificate, highlighting the quality and effectiveness of their teaching, with QR verification as well.
-Additionally, we offer Bundling Courses, where participants who successfully complete all courses in a bundle will earn a professional certificate, recognizing their achievement of a broader and more integrated learning path, also verifiable with a QR code
+- Every participant who completes a course will receive an automatic certificate, serving as proof of the skills and competencies they have acquired, and it can be verified instantly via QR code. 
+- Instructors who help more than 60% of their participants successfully complete the course will also receive an automatic recognition certificate, highlighting the quality and effectiveness of their teaching, with QR verification as well.
+- Additionally, we offer Bundling Courses, where participants who successfully complete all courses in a bundle will earn a professional certificate, recognizing their achievement of a broader and more integrated learning path, also verifiable with a QR code
