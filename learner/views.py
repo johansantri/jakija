@@ -70,12 +70,13 @@ logger = logging.getLogger(__name__)
 
 @login_required
 def my_activity(request):
-    """
-    Tampilkan semua aktivitas user dengan pagination.
-    """
-    logs = AuditLog.objects.filter(user=request.user).order_by('-timestamp')
-    
-    # Pagination: 20 log per halaman
+    # Hanya log model tertentu yang user boleh lihat
+    allowed_models = ['customuser', 'coursesessionlog', 'lastaccesscourse']
+    logs = AuditLog.objects.filter(
+        user=request.user,
+        content_type__model__in=allowed_models
+    ).order_by('-timestamp')
+
     paginator = Paginator(logs, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
