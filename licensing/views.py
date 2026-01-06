@@ -158,7 +158,7 @@ def licens_dashboard(request):
 @login_required
 def licens_learners(request):
     if not request.user.is_subscription:
-        messages.warning(request, "Akses ditolak. Hanya pengguna dengan status langganan yang dapat mengakses dashboard ini.")
+        messages.warning(request, "Access denied. Only users with subscription status can access this dashboard.")
         return redirect('authentication:home')
 
     # Ambil lisensi yang masih aktif dan belum kedaluwarsa
@@ -169,7 +169,7 @@ def licens_learners(request):
     )
 
     if not licenses.exists():
-        messages.warning(request, "Lisensi Anda telah kedaluwarsa atau tidak tersedia. Silakan perpanjang atau beli lisensi baru.")
+        messages.warning(request, "Your license has expired or is unavailable. Please renew it or purchase a new license.")
         return redirect('licensing:licens_dashboard')  # Ganti dengan URL yang sesuai
 
     license_course_data = []
@@ -263,7 +263,7 @@ def licens_learners(request):
 def licens_analytics(request):
     # Pastikan pengguna adalah admin langganan (PT A)
     if not request.user.is_subscription:
-        messages.error(request, "Akses ditolak. Hanya pengguna dengan status langganan yang dapat mengakses dashboard ini.")
+        messages.error(request, "Access denied. Only users with subscription status can access this dashboard.")
         return redirect('authentication:home')
 
     # Ambil undangan
@@ -299,7 +299,7 @@ def licens_analytics(request):
 @login_required
 def course_participants_dashboard(request):
     if not request.user.is_subscription:
-        messages.error(request, "Akses ditolak. Hanya pengguna dengan status langganan yang dapat mengakses dashboard ini.")
+        messages.error(request, "Access denied. Only users with subscription status can access this dashboard.")
         return redirect('authentication:home')
 
     # Ambil lisensi yang terkait dengan pengguna dan statusnya aktif
@@ -351,7 +351,7 @@ def course_participants_dashboard(request):
 @login_required
 def course_detail(request, course_id):
     if not request.user.is_subscription:
-        messages.error(request, "Akses ditolak. Hanya pengguna dengan status langganan yang dapat mengakses dashboard ini.")
+        messages.error(request, "Access denied. Only users with subscription status can access this dashboard.")
         return redirect('authentication:home')
     # Get the course by course_id
     course = get_object_or_404(Course, id=course_id)
@@ -455,7 +455,7 @@ def course_detail(request, course_id):
 @login_required
 def participant_dashboard(request):
     if not request.user.is_subscription:
-        messages.error(request, "Akses ditolak. Hanya pengguna dengan status langganan yang dapat mengakses dashboard ini.")
+        messages.error(request, "Access denied. Only users with subscription status can access this dashboard.")
         return redirect('authentication:home')
     """Menampilkan dashboard khusus untuk peserta."""
     licenses = License.objects.filter(users=request.user)
@@ -468,12 +468,12 @@ def participant_dashboard(request):
 
 def delete_invitation(request, invitation_id):
     if not request.user.is_subscription:
-        messages.error(request, "Akses ditolak. Hanya pengguna dengan status langganan yang dapat mengakses dashboard ini.")
+        messages.error(request, "Access denied. Only users with subscription status can access this dashboard.")
         return redirect('authentication:home')
     try:
         invitation = get_object_or_404(Invitation, id=invitation_id, inviter=request.user)
         invitation.delete()
-        messages.success(request, "Undangan berhasil dihapus.")
+        messages.success(request, "Invitation successfully deleted.")
     except Exception as e:
         logger.error(f"Error saat menghapus undangan ID {invitation_id}: {str(e)}")
         messages.error(request, f"Terjadi kesalahan: {str(e)}")
@@ -483,18 +483,18 @@ def delete_invitation(request, invitation_id):
 @login_required
 def cancel_invitation(request, invitation_id):
     if not request.user.is_subscription:
-        messages.error(request, "Akses ditolak. Hanya pengguna dengan status langganan yang dapat mengakses dashboard ini.")
+        messages.error(request, "Access denied. Only users with subscription status can access this dashboard.")
         return redirect('authentication:home')
     """Menghapus undangan tertentu."""
     invitation = get_object_or_404(Invitation, id=invitation_id, inviter=request.user)
     invitation.delete()
-    messages.success(request, f"Undangan untuk {invitation.invitee_email} telah dibatalkan.")
+    messages.success(request, f"Invitation for {invitation.invitee_email} has been canceled.")
     return redirect('licensing:licens_dashboard')
 
 @login_required
 def resend_invitation(request, invitation_id):
     if not request.user.is_subscription:
-        messages.error(request, "Akses ditolak. Hanya pengguna dengan status langganan yang dapat mengakses dashboard ini.")
+        messages.error(request, "Access denied. Only users with subscription status can access this dashboard.")
         return redirect('authentication:home')
     """Mengirim ulang undangan tertentu."""
     invitation = get_object_or_404(Invitation, id=invitation_id, inviter=request.user)
@@ -514,11 +514,11 @@ def resend_invitation(request, invitation_id):
         'invitation': invitation,
         'accept_url': accept_url,
     })
-    subject = f"Undangan Dikirim Ulang dari {request.user.username}"
+    subject = f"Resent Invitation from {request.user.username}"
     send_mail(subject, '', 'from@example.com', [invitation.invitee_email], html_message=html_message, fail_silently=True)
 
     invitation.save()
-    messages.success(request, f"Undangan untuk {invitation.invitee_email} telah dikirim ulang.")
+    messages.success(request, f"Invitation for {invitation.invitee_email} has been resent.")
     return redirect('licensing:licens_dashboard')
 
 @login_required
@@ -534,24 +534,24 @@ def send_invitation(request):
             email_list = [email.strip() for email in invitee_emails.replace('\n', ',').split(',') if email.strip()]
 
             if not email_list:
-                messages.error(request, "Harap masukkan setidaknya satu email yang valid.")
+                messages.error(request, "Please make sure to enter at least one valid email.")
                 return render(request, 'licensing/send_invitation.html', {'form': form})
 
             license = License.objects.filter(users=request.user, status=True).order_by('-start_date').first()
             if not license:
-                logger.error(f"Tidak ditemukan lisensi aktif untuk pengguna: {request.user.username} (ID: {request.user.id})")
-                messages.error(request, "Tidak ditemukan lisensi aktif untuk akun Anda. Silakan hubungi Super Admin untuk membuat atau mengaktifkan lisensi.")
+                logger.error(f"We couldn’t find an active license for this user: {request.user.username} (ID: {request.user.id})")
+                messages.error(request, "Your account doesn’t have an active license. Please reach out to the Super Admin to create or activate one.")
                 return redirect('licensing:licens_dashboard')
 
             # 🔴 Tambahan: Cek apakah lisensi sudah kedaluwarsa
             if license.expiry_date and license.expiry_date < timezone.now().date():
-                messages.error(request, "Lisensi Anda telah kedaluwarsa. Silakan perpanjang atau beli lisensi baru untuk dapat mengirim undangan.")
+                messages.error(request, "Your license has expired. To send invitations, please renew it or get a new license.")
                 return redirect('licensing:licens_dashboard')  # ganti dengan URL yang sesuai
 
             current_users = license.users.count()
             available_slots = license.max_users - current_users
             if len(email_list) > available_slots:
-                messages.error(request, f"Tidak dapat mengundang {len(email_list)} pengguna. Hanya {available_slots} slot tersedia.")
+                messages.error(request, f"Cannot invite {len(email_list)} users. Only {available_slots} slots available.")
                 return render(request, 'licensing/send_invitation.html', {'form': form})
 
             validator = EmailValidator()

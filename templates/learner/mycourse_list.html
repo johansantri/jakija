@@ -123,13 +123,13 @@
 
                                 {% if data.certificate_eligible  %}
                                     <a href="{% url 'courses:generate_certificate' enrollment.course.id %}" 
-                                        class="bg-green-600 text-white px-2 py-1 rounded text-xs flex items-center hover:bg-green-700"><i class="fas fa-download mr-1"></i>Claim Certificate</a>
+                                        class="bg-green-600 text-white px-2 py-1 rounded text-xs flex items-center hover:bg-green-700" title="Download Certificate"><i class="fas fa-download mr-1"></i>Claim Certificate</a>
                                 {% endif %}
 
                                 {% if data.certificate_eligible %}
                                     {% if data.has_reviewed %}
                                         <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}" 
-                                            class="bg-teal-500 text-white px-2 py-1 rounded text-xs flex items-center hover:bg-teal-600"><i class="fas fa-eye mr-1"></i>View Review</a>
+                                            class="bg-teal-500 text-white px-2 py-1 rounded text-xs flex items-center hover:bg-teal-600" title="View Review"><i class="fas fa-eye mr-1"></i>View Review</a>
                                     {% else %}
                                         <a href="{% url 'courses:submit_rating' enrollment.course.id enrollment.course.slug %}" 
                                             class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-xs flex items-center hover:bg-yellow-500"><i class="fas fa-star mr-1"></i>Submit Review</a>

@@ -3,124 +3,132 @@
 {% load extra_custom_filters %}
 {% block content %}
 
+<h2 class="text-2xl font-semibold mb-6">Comments on Your Courses</h2>
 
-    <h2>Comments on Your Courses</h2>
-    
-    {% for comment in comments %}
-    <div class="card shadow-sm mb-3">
-        <div class="card-body d-flex align-items-start">
-            <div class="me-3" style="width:50px; height:50px;">
-                {% if comment.user.photo %}
-                    <img src="{{ comment.user.photo.url }}" alt="{{ comment.user.username }}'s photo" class="rounded-circle" width="50" height="50">
-                {% else %}
-                    <div class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center" style="width:50px; height:50px; font-weight:bold; font-size:18px;">
-                        {{ comment.user.username|slice:":1"|upper }}
+{% for comment in comments %}
+<div class="bg-white rounded-lg shadow p-5 mb-6">
+    <div class="flex items-start gap-4">
+        
+        <!-- Avatar -->
+        <div class="w-12 h-12">
+            {% if comment.user.photo %}
+                <img src="{{ comment.user.photo.url }}" class="rounded-full w-12 h-12 object-cover">
+            {% else %}
+                <div class="w-12 h-12 rounded-full bg-gray-500 text-white flex items-center justify-center font-bold">
+                    {{ comment.user.username|slice:":1"|upper }}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Content -->
+        <div class="flex-1">
+            <div class="flex justify-between items-center">
+                <p class="text-sm text-gray-600">
+                    <strong class="text-gray-800">{{ comment.user.username }}</strong>
+                    · {{ comment.created_at|date:"d M Y H:i" }}
+                </p>
+
+                <form method="POST" action="{% url 'partner:delete_comment' comment.id %}"
+                      onsubmit="return confirm('Delete this comment?');">
+                    {% csrf_token %}
+                    <button class="text-red-500 hover:text-red-700">
+                        🗑
+                    </button>
+                </form>
+            </div>
+
+            <p class="mt-2 text-sm"><strong>Course:</strong> {{ comment.course.course_name }}</p>
+            <p class="mt-1 text-gray-700">{{ comment.content }}</p>
+
+            <!-- Replies -->
+            <div x-data="{ open:false }" class="mt-4">
+                {% with replies=comment.get_replies|slice:":3" %}
+                {% for reply in replies %}
+                <div class="ml-8 mt-3 bg-gray-50 rounded-lg p-3 flex gap-3">
+                    <div class="w-10 h-10">
+                        {% if reply.user.photo %}
+                            <img src="{{ reply.user.photo.url }}" class="rounded-full w-10 h-10">
+                        {% else %}
+                            <div class="w-10 h-10 rounded-full bg-gray-500 text-white flex items-center justify-center text-sm font-bold">
+                                {{ reply.user.username|slice:":1"|upper }}
+                            </div>
+                        {% endif %}
                     </div>
+
+                    <div class="flex-1">
+                        <div class="flex justify-between">
+                            <p class="text-sm font-semibold">{{ reply.user.username }}</p>
+                            <form method="POST" action="{% url 'partner:delete_comment' reply.id %}"
+                                  onsubmit="return confirm('Delete this reply?');">
+                                {% csrf_token %}
+                                <button class="text-red-500 text-sm">🗑</button>
+                            </form>
+                        </div>
+                        <p class="text-sm text-gray-700">{{ reply.content }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endwith %}
+
+                {% if comment.get_replies|length > 3 %}
+                <button @click="open = !open"
+                        class="text-blue-600 text-sm mt-2 hover:underline">
+                    See more replies
+                </button>
+
+                <div x-show="open" x-transition>
+                    {% for reply in comment.get_replies|slice:"3:" %}
+                    <div class="ml-8 mt-3 bg-gray-50 rounded-lg p-3 flex gap-3">
+                        <div class="w-10 h-10">
+                            {% if reply.user.photo %}
+                                <img src="{{ reply.user.photo.url }}" class="rounded-full w-10 h-10">
+                            {% else %}
+                                <div class="w-10 h-10 rounded-full bg-gray-500 text-white flex items-center justify-center text-sm font-bold">
+                                    {{ reply.user.username|slice:":1"|upper }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <p class="text-sm font-semibold">{{ reply.user.username }}</p>
+                            <p class="text-sm text-gray-700">{{ reply.content }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
                 {% endif %}
             </div>
 
-            <div>
-                <div class="d-flex justify-content-between align-items-center">
-                <p class="mb-0">
-                    <strong>{{ comment.user.username }}</strong> pada <em>{{ comment.created_at|date:"d M Y H:i" }}</em>
-                </p>
-                
-                <form method="POST" action="{% url 'partner:delete_comment' comment.id %}" onsubmit="return confirm('Delete this comment?');">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-link btn-sm text-danger p-0"><i class="bi bi-trash"></i></button>
-                </form>
-                </div>
+            <!-- Reply Form -->
+            <form method="POST" class="mt-4">
+                {% csrf_token %}
+                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                <textarea name="content" rows="2"
+                          class="w-full border rounded-lg p-2 text-sm focus:outline-none focus:ring"
+                          placeholder="Write a reply..." required></textarea>
+                <button class="mt-2 bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 text-sm">
+                    Reply
+                </button>
+            </form>
 
-                <p><strong>Course: </strong>{{ comment.course.course_name }}</p>
-                <p>{{ comment.content }}</p>
-                
-                <!-- Replies -->
-                {% with replies=comment.get_replies|slice:":3" %}
-                    {% for reply in replies %}
-                        <div class="card mt-3 ms-4 d-flex align-items-start">
-                            <div class="card-body d-flex align-items-start">
-                                <div class="me-3" style="width:40px; height:40px;">
-                                    {% if reply.user.photo %}
-                                        <img src="{{ reply.user.photo.url }}" alt="{{ reply.user.username }}'s photo" class="rounded-circle" width="40" height="40">
-                                    {% else %}
-                                        <div class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center" style="width:40px; height:40px; font-weight:bold; font-size:14px;">
-                                            {{ reply.user.username|slice:":1"|upper }}
-                                        </div>
-                                    {% endif %}
-                                </div>
-                                <div>
-                                    <p><strong>{{ reply.user.username }}</strong> reply:</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                    <p class="mb-0">{{ reply.content }}</p>
-                                    <form method="POST" action="{% url 'partner:delete_comment' reply.id %}" onsubmit="return confirm('Delete this reply?');">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-link btn-sm text-danger p-0" title="Delete reply">
-                                        <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                    {% if comment.get_replies|length > 3 %}
-                        <button class="btn btn-link mt-2" data-bs-toggle="collapse" data-bs-target="#replies-{{ comment.id }}" aria-expanded="false" aria-controls="replies-{{ comment.id }}">
-                            See more replies
-                        </button>
-                        <div class="collapse" id="replies-{{ comment.id }}">
-                            {% for reply in comment.get_replies|slice:"3:" %}
-                                <div class="card mt-3 ms-4 d-flex align-items-start">
-                                    <div class="card-body d-flex align-items-start">
-                                        <div class="me-3" style="width:40px; height:40px;">
-                                            {% if reply.user.photo %}
-                                                <img src="{{ reply.user.photo.url }}" alt="{{ reply.user.username }}'s photo" class="rounded-circle" width="40" height="40">
-                                            {% else %}
-                                                <div class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center" style="width:40px; height:40px; font-weight:bold; font-size:14px;">
-                                                    {{ reply.user.username|slice:":1"|upper }}
-                                                </div>
-                                            {% endif %}
-                                        </div>
-                                        <div>
-                                            <p><strong>{{ reply.user.username }}</strong> reply:</p>
-                                            <p>{{ reply.content }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                {% endwith %}
-
-                <!-- Reply form -->
-                <form method="post" class="mt-3">
-                    {% csrf_token %}
-                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                    <div class="mb-3">
-                        <textarea name="content" rows="2" class="form-control" required placeholder="Write a reply..."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-sm">Reply</button>
-                </form>
-            </div>
         </div>
     </div>
+</div>
 {% empty %}
-    <p>No comments for your courses.</p>
+<p class="text-gray-500">No comments for your courses.</p>
 {% endfor %}
 
+<!-- Pagination -->
+<div class="flex justify-center gap-2 mt-6">
+    {% if comments.has_previous %}
+        <a href="?page=1" class="px-3 py-1 border rounded text-sm">First</a>
+        <a href="?page={{ comments.previous_page_number }}" class="px-3 py-1 border rounded text-sm">Previous</a>
+    {% endif %}
 
-    <!-- Pagination for Comments -->
-    <div class="d-flex justify-content-center mt-4">
-        {% if comments.has_previous %}
-            <a href="?page=1" class="btn btn-outline-secondary btn-sm">First</a>
-            <a href="?page={{ comments.previous_page_number }}" class="btn btn-outline-secondary btn-sm ms-2">Previous</a>
-        {% endif %}
-
-        {% if comments.has_next %}
-            <a href="?page={{ comments.next_page_number }}" class="btn btn-outline-secondary btn-sm ms-2">Next</a>
-            <a href="?page={{ comments.paginator.num_pages }}" class="btn btn-outline-secondary btn-sm ms-2">Last</a>
-        {% endif %}
-    </div>
-
+    {% if comments.has_next %}
+        <a href="?page={{ comments.next_page_number }}" class="px-3 py-1 border rounded text-sm">Next</a>
+        <a href="?page={{ comments.paginator.num_pages }}" class="px-3 py-1 border rounded text-sm">Last</a>
+    {% endif %}
+</div>
 
 {% endblock %}
