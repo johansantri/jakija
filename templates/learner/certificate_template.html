@@ -2,480 +2,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate of Achievement</title>
+    <meta charset="UTF-8" />
+    <title>Professional Certificate</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap');
-
-        @page {
-            size: A4;
-            margin: 0;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: #1a1a2e;
-        }
-
+        @page { size: A4 portrait; margin: 20mm; }
+        body { margin: 0; font-family: "Times New Roman", Georgia, serif; background: #f5f5f5; }
+        /* Container */
         .certificate {
             width: 100%;
             max-width: 210mm;
-            min-height: 297mm;
-            background: #ffffff;
-            border-radius: 28px;
-            padding: 40px;
+            background: #fff;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: 6px solid #1e3a8a;
+            margin: auto;
             position: relative;
-            text-align: center;
-            box-shadow: 0 25px 80px rgba(0, 86, 210, 0.15);
             overflow: hidden;
         }
-
-        .certificate::before {
-            content: '';
+        /* Watermark */
+        .watermark {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: linear-gradient(90deg, #0056D2 0%, #00A676 50%, #0056D2 100%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-20deg);
+            font-size: 60px;
+            color: rgba(0,86,210,0.05);
+            font-weight: bold;
+            pointer-events: none;
         }
-
+        /* Header */
         .header {
-            margin: -40px -40px 32px -40px;
-            padding: 32px 40px;
-            background: linear-gradient(135deg, #0056D2 0%, #00A676 100%);
-            color: #ffffff;
-            font-family: 'Montserrat', sans-serif;
-            font-size: clamp(28px, 6vw, 40px);
-            font-weight: 800;
-            letter-spacing: 1.2px;
-            position: relative;
-            border-radius: 24px 24px 0 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-bottom: 20px;
         }
-
-        .header-text {
-            flex: 1;
-            text-align: center;
-        }
-
-        .logo-partner {
-            width: 70px;
-            height: 70px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-image: url('{% if partner_logo_url %}{{ partner_logo_url }}{% else %}{{ base_url }}static/images/default_logo.png{% endif %}');
-            border-radius: 16px;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-            flex-shrink: 0;
-        }
-
-        .title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(32px, 7vw, 48px);
-            font-weight: 700;
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 20px 0;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 2px 4px rgba(0, 86, 210, 0.1);
-        }
-
-        .main-section {
-            margin: 32px auto;
-            padding: 32px;
-            max-width: 85%;
-            border: 2px solid transparent;
-            border-radius: 20px;
-            background: linear-gradient(white, #f8f9ff) padding-box,
-                        linear-gradient(135deg, #0056D2 0%, #00A676 100%) border-box;
-            box-shadow: 0 12px 40px rgba(0, 86, 210, 0.08);
-        }
-
-        .main-section .name {
-            font-family: 'Montserrat', sans-serif;
-            font-size: clamp(28px, 6vw, 36px);
-            font-weight: 800;
-            color: #1a1a2e;
-            margin: 12px 0;
-            letter-spacing: 1px;
-        }
-
-        .main-section .course {
-            font-size: clamp(20px, 4.5vw, 26px);
-            font-weight: 700;
-            color: #0056D2;
-            margin: 12px 0;
-            line-height: 1.3;
-        }
-
-        .content {
-            font-size: clamp(15px, 3.5vw, 18px);
-            line-height: 1.7;
-            color: #374151;
-            margin: 8px 0;
-            max-width: 85%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .content strong {
-            color: #00A676;
-            font-weight: 700;
-        }
-
-        .ornament {
-            position: absolute;
-            top: 50px;
-            right: 50px;
-            width: 56px;
-            height: 56px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2300A676"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>') no-repeat center;
-            background-size: contain;
-            opacity: 0.7;
-        }
-
-        .ornament::after {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: -8px;
-            right: -8px;
-            bottom: -8px;
-            background: linear-gradient(135deg, #0056D2, #00A676);
-            border-radius: 50%;
-            opacity: 0.2;
-            z-index: -1;
-        }
-
-        .transcript {
-            margin-top: 32px;
-            width: 100%;
-            max-width: 85%;
-            margin-left: auto;
-            margin-right: auto;
-            border-collapse: separate;
-            border-spacing: 0;
-            background: #ffffff;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 86, 210, 0.06);
-            border: 1px solid #e5e7eb;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .transcript th, .transcript td {
-            padding: 16px 20px;
-            font-size: 15px;
-            color: #1a1a2e;
-            text-align: left;
-            vertical-align: middle;
-        }
-
-        .transcript th {
-            background: linear-gradient(135deg, #0056D2 0%, #00A676 100%);
-            color: #ffffff;
-            font-weight: 700;
-            font-family: 'Montserrat', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            border-bottom: 2px solid #ffffff;
-        }
-
-        .transcript th:first-child {
-            border-radius: 14px 0 0 0;
-        }
-
-        .transcript th:last-child {
-            border-radius: 0 14px 0 0;
-        }
-
-        .transcript td {
-            border-bottom: 1px solid #e5e7eb;
-            transition: background-color 0.2s ease;
-        }
-
-        .transcript td:first-child {
-            font-weight: 500;
-        }
-
-        .transcript td:nth-child(2),
-        .transcript td:nth-child(3) {
-            text-align: center;
-            font-weight: 600;
-            color: #00A676;
-        }
-
-        .transcript tr:nth-child(even) td {
-            background-color: #f8f9ff;
-        }
-
-        .transcript tr:hover td {
-            background-color: #e3f2fd;
-            transform: scale(1.005);
-            transition: all 0.2s ease;
-        }
-
+        .header img { width: 70px; height: 70px; object-fit: contain; border-radius: 8px; }
+        .header-text { flex: 1; text-align: center; }
+        .header-text h1 { font-size: 28px; letter-spacing: 2px; margin: 0; color: #1e3a8a; }
+        .header-text p { margin: 6px 0 0; font-size: 14px; color: #444; }
+        /* Main Content */
+        .content { text-align: center; margin: 25px 0; }
+        .content .label { font-size: 14px; color: #555; }
+        .content .name { font-size: 26px; font-weight: bold; margin: 10px 0; text-transform: uppercase; color: #1e3a8a; }
+        .content .description { font-size: 15px; line-height: 1.6; margin-top: 10px; }
+        /* Transcript */
+        .transcript { margin-top: 25px; }
+        .transcript h3 { text-align: left; font-size: 16px; margin-bottom: 8px; color: #1e3a8a; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        table th, table td { border: 1px solid #333; padding: 6px 8px; text-align: center; }
+        table th { background: #e5e7eb; }
+        .total { font-weight: bold; background: #f0f0f0; }
+        /* Footer */
         .footer {
-            margin-top: 40px;
-            font-size: clamp(13px, 3vw, 15px);
-            color: #6b7280;
-            border-top: 3px solid transparent;
-            border-image: linear-gradient(90deg, #0056D2 0%, #00A676 100%) 1;
-            padding-top: 24px;
+            margin-top: 30px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
             gap: 20px;
         }
-
-        .footer .issued {
-            text-align: center;
-            margin-bottom: 16px;
-        }
-
-        .footer .issued p {
-            margin: 4px 0;
-            font-weight: 500;
-        }
-
-        .footer .qr-code {
+        .signature { text-align: center; }
+        .signature .line { margin-top: 20px; border-top: 1px solid #000; width: 200px; }
+        .meta { font-size: 12px; text-align: right; color: #555; }
+        .qr-code {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
         }
-
-        .footer .qr-code img {
-            width: 90px;
-            height: 90px;
-            border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0, 86, 210, 0.1);
+        .qr-code img {
+            width: 90px; height: 90px;
+            border-radius: 10px;
             border: 2px solid #e3f2fd;
         }
-
-        .footer .qr-code .verify-text {
-            font-size: 12px;
-            color: #0056D2;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .watermark {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-20deg);
-            font-size: clamp(40px, 10vw, 60px);
-            color: rgba(0, 86, 210, 0.04);
-            pointer-events: none;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            z-index: 0;
-            letter-spacing: 2px;
-        }
-
-        .decor-line {
-            position: absolute;
-            left: 40px;
-            right: 40px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #0056D2, #00A676, transparent);
-            opacity: 0.5;
-        }
-
-        .decor-line.top {
-            top: 40px;
-        }
-
-        .decor-line.bottom {
-            bottom: 40px;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 12px;
-                background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 50%, #e3f2fd 100%);
-            }
-
-            .certificate {
-                padding: 24px;
-                border-radius: 20px;
-                min-height: auto;
-            }
-
-            .header {
-                margin: -24px -24px 24px -24px;
-                padding: 24px;
-                flex-direction: column;
-                gap: 12px;
-                text-align: center;
-            }
-
-            .logo-partner {
-                width: 60px;
-                height: 60px;
-                position: static;
-                margin-bottom: 8px;
-            }
-
-            .ornament {
-                width: 48px;
-                height: 48px;
-                top: 36px;
-                right: 36px;
-            }
-
-            .main-section {
-                padding: 24px;
-                margin: 24px auto;
-                max-width: 95%;
-            }
-
-            .content {
-                max-width: 95%;
-            }
-
-            .transcript {
-                max-width: 95%;
-            }
-
-            .transcript th, .transcript td {
-                padding: 12px 14px;
-                font-size: 14px;
-            }
-
-            .footer {
-                gap: 16px;
-            }
-
-            .footer .qr-code img {
-                width: 80px;
-                height: 80px;
-            }
-
-            .decor-line {
-                left: 24px;
-                right: 24px;
-            }
-
-            .decor-line.top {
-                top: 24px;
-            }
-
-            .decor-line.bottom {
-                bottom: 24px;
-            }
-        }
-
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            .certificate {
-                box-shadow: none;
-                border: 1px solid #ddd;
-                max-width: none;
-                width: 100%;
-                height: 100%;
-                border-radius: 0;
-                padding: 50px;
-            }
-            .certificate::before {
-                display: none;
-            }
-            .transcript tr:hover td {
-                background-color: inherit;
-                transform: none;
-                transition: none;
-            }
-            .header {
-                flex-direction: row;
-            }
-            .logo-partner {
-                position: static;
-            }
-        }
+        /* Avoid page breaks */
+        * { page-break-inside: avoid; }
     </style>
 </head>
 <body>
     <div class="certificate">
+        <!-- Watermark -->
+        <div class="watermark">CERTIFIED</div>
+
+        <!-- Header -->
         <div class="header">
-            <div class="logo-partner"></div>
-            <div class="header-text">Certificate of Achievement</div>
+            <img src="{% if partner_logo_url %}{{ partner_logo_url }}{% else %}{% static 'images/default_logo.png' %}{% endif %}" alt="Logo">
+            <div class="header-text">
+                <h1>PROFESSIONAL CERTIFICATE</h1>
+                <p>Awarded to</p>
+            </div>
+            <div style="width:70px"></div>
         </div>
-        <div class="title">Certificate of Completion</div>
-        
-        <div class="main-section">
-            <div class="content">Awarded to</div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="label">Participant Name</div>
             <div class="name">{{ user.first_name }} {{ user.last_name }}</div>
-            <div class="content">for excellence in</div>
-            <div class="course">{{ course.course_name }}</div>
-            <div class="content">offered by <strong>{% if course.org_partner %}{{ course.org_partner.name }}{% else %}Our Institution{% endif %}</strong></div>
-        </div>
-
-        <div class="content">Total Score: <strong>{{ total_score | floatformat:2 }}</strong></div>
-        <div class="content">Passing Threshold: <strong>{{ passing_threshold | floatformat:2 }}</strong></div>
-        <div class="content">Status: <strong>{{ status }}</strong></div>
-        {% if course.instructor %}
-        <div class="content">Instructed by: <strong>{{ course.instructor.name | default:course.instructor }}</strong></div>
-        {% endif %}
-
-        <div class="ornament"></div>
-        <div class="watermark">Certified</div>
-        
-        <table class="transcript">
-            <thead>
-                <tr>
-                    <th>Assessment</th>
-                    <th>Maximum Score</th>
-                    <th>Score Achieved</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for result in assessment_results %}
-                <tr>
-                    <td>{{ result.name }}</td>
-                    <td>{{ result.max_score | floatformat:2 }}</td>
-                    <td>{{ result.score | floatformat:2 }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="decor-line top"></div>
-        <div class="decor-line bottom"></div>
-
-        <div class="footer">
-            <div class="issued">
-                <p>Issued on: {{ issue_date }}</p>
+            <div class="description">
+                For successfully completing the professional training program<br />
+                <strong>{{ course.course_name }}</strong><br />
                 {% if course.org_partner %}
-                <p>Issued by: {{ course.org_partner.name }}</p>
+                In accordance with professional standards from <strong>{{ course.org_partner.name }}</strong>.
+                {% else %}
+                In accordance with professional standards.
                 {% endif %}
             </div>
-            <div class="qr-code">
-                <img src="{% if qr_code_url %}{{ qr_code_url }}{% else %}{{ base_url }}static/images/default_qr.png{% endif %}" alt="Verification QR Code">
-                <div class="verify-text">Verify Online</div>
+            {% if course.instructor %}
+            <div class="description">Instructor: <strong>{{ course.instructor.name|default:course.instructor }}</strong></div>
+            {% endif %}
+            <div class="description">
+                Total Score: <strong>{{ total_score|floatformat:2 }}</strong> |
+                Passing Threshold: <strong>{{ passing_threshold|floatformat:2 }}</strong> |
+                Status: <strong>{{ status }}</strong>
             </div>
-            <div class="signature"></div>
+        </div>
+
+        <!-- Transcript -->
+        <div class="transcript">
+            <h3>Score Transcript</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Training Module</th>
+                        <th>Weight (Max Score)</th>
+                        <th>Score Achieved</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in assessment_results %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ result.name }}</td>
+                        <td>{{ result.max_score|floatformat:2 }}</td>
+                        <td>{{ result.score|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="total">
+                        <td colspan="3">Final Score</td>
+                        <td>{{ total_score|floatformat:2 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="signature">
+                <div class="line"></div>
+                <div>Program Director</div>
+            </div>
+            {% if qr_code_url %}
+            <div class="qr-code">
+                <img src="{{ qr_code_url }}" alt="QR Code Verification">
+                <div style="font-size:12px; color:#0056D2; font-weight:600; margin-top:4px;">Online Verification</div>
+            </div>
+            {% endif %}
+            <div class="meta">
+                Date Issued: {{ issue_date }}
+            </div>
         </div>
     </div>
 </body>

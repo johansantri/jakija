@@ -623,6 +623,7 @@ CONTENT_SECURITY_POLICY = {
             'https://google.com',
             'https://docs.google.com',
             'https://drive.google.com',
+            'https://www.canva.com',
         ),
 
 
