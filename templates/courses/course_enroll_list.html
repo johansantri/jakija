@@ -28,16 +28,50 @@
     </form>
 
     <!-- Tombol Ekspor & Navigasi -->
-    <div class="flex flex-col sm:flex-row justify-between gap-3 mb-4">
+    <div class="flex flex-col sm:flex-row justify-start gap-3 mb-4">
         <a href="?download=csv{% if search_query %}&search={{ search_query }}{% endif %}" 
-           class="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition shadow-sm flex items-center justify-center gap-1">
+        class="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition shadow-sm flex items-center justify-center gap-1">
             Download CSV
         </a>
+        <button 
+            type="button" 
+            onclick="document.getElementById('inviteModal').classList.remove('hidden')"
+            class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-sm flex items-center gap-1">
+            Invite Learner
+        </button>
         <a href="{% url 'learner:score_summary_detail' course_id=course.id %}" 
-           class="px-4 py-2 bg-white border-2 border-blue-600 text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition shadow-sm flex items-center justify-center gap-1">
+        class="px-4 py-2 bg-white border-2 border-blue-600 text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition shadow-sm flex items-center justify-center gap-1">
             View Score Summary Detail
         </a>
     </div>
+
+
+
+    <!-- Modal -->
+    <div id="inviteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+            <h2 class="text-lg font-semibold mb-4">Invite Learner</h2>
+            <form method="POST" action="{% url 'learner:invite_learner' course_id=course.id %}">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Learner Email</label>
+                   <textarea name="emails" id="emails" rows="4" required
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="user1@example.com, user2@example.com"></textarea>
+                </div>
+                <div class="flex justify-end gap-3">
+                    <button type="button" onclick="document.getElementById('inviteModal').classList.add('hidden')"
+                            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition">Cancel</button>
+                    <button type="submit"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Invite</button>
+                </div>
+            </form>
+            <button onclick="document.getElementById('inviteModal').classList.add('hidden')"
+                    class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+    </div>
+
+
 
     <!-- Tabel Pendaftaran -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">

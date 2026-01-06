@@ -1484,6 +1484,8 @@ def course_list_enroll(request, id):
         'search_query': search_query,
     })
 
+
+
 def download_enrollment_data(course, enrollment_details):
     """
     Export data enrollment ke CSV

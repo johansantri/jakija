@@ -61,11 +61,64 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_protect
 from decimal import Decimal, ROUND_HALF_UP
 from audit.models import AuditLog
+
 logger = logging.getLogger(__name__)
 
+def invite_learner(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
 
+    if request.method == "POST":
+        emails_raw = request.POST.get("emails", "").strip()  # multiple emails
+        if not emails_raw:
+            messages.error(request, "Please provide at least one email.")
+            return redirect(request.META.get('HTTP_REFERER', '/'))
 
+        # Pisahkan email pakai koma atau spasi
+        emails = [e.strip() for e in emails_raw.replace(',', ' ').split() if e.strip()]
+        if not emails:
+            messages.error(request, "No valid emails found.")
+            return redirect(request.META.get('HTTP_REFERER', '/'))
 
+        for email in emails:
+            # Validasi format sederhana
+            if "@" not in email or "." not in email:
+                messages.warning(request, f"{email} is not a valid email. Skipped.")
+                continue
+
+            user = CustomUser.objects.filter(email=email).first()
+            if not user:
+                messages.warning(request, f"{email} not registered. Skipped.")
+                continue
+
+            # Buat enrollment jika belum ada
+            enrollment, created = Enrollment.objects.get_or_create(
+                user=user,
+                course=course
+            )
+
+            if not created:
+                messages.info(request, f"{user.username} is already enrolled. Skipped.")
+                continue
+
+            # Kirim email
+            subject = f"You have been enrolled in {course.course_name}"
+            message = (
+                f"Hello {user.username},\n\n"
+                f"You have been enrolled in the course '{course.course_name}'.\n"
+                f"Please login to access the course.\n\nThanks!"
+            )
+
+            try:
+                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email], fail_silently=False)
+                messages.success(request, f"{user.username} enrolled & email sent.")
+            except (smtplib.SMTPException, BadHeaderError):
+                messages.warning(request,
+                    f"{user.username} enrolled, but email failed. Check settings."
+                )
+
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+
+    return redirect('courses:detail', course_id=course.id)
 
 
 @login_required
