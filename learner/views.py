@@ -5,6 +5,7 @@ except ImportError:
 import csv
 import logging
 from multiprocessing import context
+from urllib import request
 import uuid
 import base64
 import xml.etree.ElementTree as ET
@@ -61,9 +62,37 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_protect
 from decimal import Decimal, ROUND_HALF_UP
 from audit.models import AuditLog
+import smtplib
+from django.core.mail import send_mail, BadHeaderError
 
 logger = logging.getLogger(__name__)
 
+@csrf_exempt
+@login_required
+@require_POST
+def unenroll_learners(request, course_id, user_id):
+    logger.debug("=== UNENROLL DEBUG ===")
+    logger.debug("COOKIES: %s", request.COOKIES)
+    logger.debug("CSRF_COOKIE: %s", request.COOKIES.get('csrftoken'))
+    logger.debug("CSRF_POST: %s", request.POST.get('csrfmiddlewaretoken'))
+    logger.debug("User: %s (is_superuser=%s, is_partner=%s)", request.user.username, request.user.is_superuser, getattr(request.user, 'is_partner', False))
+    logger.debug("Course ID: %s, User ID: %s", course_id, user_id)
+
+   
+
+    course = get_object_or_404(Course, id=course_id)
+    user = get_object_or_404(CustomUser, id=user_id)
+
+    enrollment = Enrollment.objects.filter(user=user, course=course).first()
+    if not enrollment:
+        messages.warning(request, f"{user.username} is not enrolled in {course.course_name}.")
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+
+    enrollment.delete()
+    messages.success(request, f"{user.username} has been unenrolled from {course.course_name}.")
+    return redirect(request.META.get('HTTP_REFERER', '/'))
+
+@login_required
 def invite_learner(request, course_id):
     course = get_object_or_404(Course, id=course_id)
 
