@@ -233,11 +233,11 @@
                                 <i class="bi bi-speedometer me-2"></i> Dashboard
                             </a>
                         {% elif user.is_instructor %}
-                            <a class="btn-sidebar" href="{% url 'authentication:dashbord' %}">
+                            <a class="btn-sidebar" href="{% url 'authentication:mycourse' %}">
                                 <i class="bi bi-speedometer me-2"></i> Dashboard
                             </a>
                         {% else %}
-                            <a class="btn-sidebar" href="{% url 'authentication:dashbord' %}">
+                            <a class="btn-sidebar" href="{% url 'authentication:mycourse' %}">
                                 <i class="bi bi-speedometer me-2"></i> Dashboard
                             </a>
                         {% endif %}

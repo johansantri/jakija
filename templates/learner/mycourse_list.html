@@ -4,7 +4,7 @@
 
 {% block content %}
 <section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
-<div class="max-w-7xl mx-auto mt-8 px-4 sm:px-6 lg:px-8 space-y-10">
+
 
     <!-- ===== BLOK ATAS: Header + Search + Stats ===== -->
     <div class="bg-white shadow rounded-xl p-6 space-y-6">
@@ -66,10 +66,20 @@
                     {% with enrollment=data.enrollment %}
                     <tr class="hover:bg-gray-50 transition-colors">
                         <td class="px-6 py-4">
+                            
+
+                            <a href="{% url 'learner:course_learn' data.enrollment.user.username data.enrollment.course.id data.enrollment.course.slug %}" 
+                                       class="font-semibold inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm no-underline" title="Go to Course">
+                                        
+                                        {{ data.enrollment.course.course_name }}
+                                        
+                                    </a>
+
                             <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}" 
-                                class="text-blue-600 font-medium hover:underline">{{ enrollment.course.course_name }}</a>
+                                class="text-gray-500 text-sm ml-2 hover:underline" title="View Course Details"><i class="fas fa-info-circle"></i>Detail</a>
+
                             <a href="{% url 'learner:score_summary' username=request.user.username course_id=enrollment.course.id %}" 
-                                class="text-gray-500 text-sm ml-2 hover:underline"><i class="bi bi-clipboard-data mr-1"></i>Score</a>
+                                class="text-gray-500 text-sm ml-2 hover:underline" title="View Score Summary"><i class="fas fa-poll"></i> Score</a>
                         </td>
                         <td class="px-6 py-4 text-gray-600">{{ enrollment.enrolled_at|date:"d M Y" }}</td>
                         <td class="px-6 py-4">
@@ -111,7 +121,7 @@
                                         class="bg-blue-600 text-white px-2 py-1 rounded text-xs flex items-center hover:bg-blue-700"><i class="fas fa-rocket mr-1"></i>Get Started</a>
                                 {% endif %}
 
-                                {% if data.certificate_eligible and not data.certificate_issued %}
+                                {% if data.certificate_eligible  %}
                                     <a href="{% url 'courses:generate_certificate' enrollment.course.id %}" 
                                         class="bg-green-600 text-white px-2 py-1 rounded text-xs flex items-center hover:bg-green-700"><i class="fas fa-download mr-1"></i>Claim Certificate</a>
                                 {% endif %}
@@ -178,6 +188,6 @@
         </div>
     {% endif %}
     </div>
-</div>
+
 </section>
 {% endblock %}

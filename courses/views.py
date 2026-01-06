@@ -3381,7 +3381,7 @@ def submit_assessment(request, assessment_id):
     except Exception as e:
         logger.error(f"Error retrieving course for assessment {assessment_id}: {str(e)}")
         messages.error(request, "Course not found for this assessment.")
-        return redirect('authentication:dashbord')
+        return redirect('authentication:mycourse')
 
     # Cek honeypot (bot jika terisi)
     honeypot = request.POST.get('honeypot')
@@ -4047,7 +4047,7 @@ def generate_certificate(request, course_id):
     if not Enrollment.objects.filter(user=request.user, course=course).exists():
         logger.warning(f"User {request.user.username} not enrolled in course {course.id}")
         messages.error(request, "You are not enrolled in this course.")
-        return redirect('authentication:dashbord')
+        return redirect('authentication:mycourse')
 
     # === CEK PEMBAYARAN (JIKA MODELNYA PAY-FOR-CERTIFICATE) ===
     if course.payment_model.code == 'pay_only_certificate':
@@ -4071,13 +4071,13 @@ def generate_certificate(request, course_id):
     if not grade_range.exists():
         logger.error(f"No grade range found for course {course.id}")
         messages.error(request, "Passing grade not found for this course.")
-        return redirect('authentication:dashbord')
+        return redirect('authentication:mycourse')
 
     passing_range = grade_range.filter(name='Pass').first()
     if not passing_range:
         logger.error(f"'Pass' grade range not found for course {course.id}")
         messages.error(request, "No 'Pass' grade range defined for this course.")
-        return redirect('authentication:dashbord')
+        return redirect('authentication:mycourse')
 
     passing_threshold = passing_range.min_grade
     max_grade = passing_range.max_grade
@@ -4273,7 +4273,7 @@ def generate_certificate(request, course_id):
         except Exception as e:
             logger.error(f"Error re-generating PDF: {str(e)}")
             messages.error(request, "Error retrieving certificate.")
-            return redirect('authentication:dashbord')
+            return redirect('authentication:mycourse')
 
     # === JIKA BELUM ADA — BUAT SERTIFIKAT BARU ===
     certificate_id = uuid.uuid4()
@@ -4311,7 +4311,7 @@ def generate_certificate(request, course_id):
     except Exception as e:
         logger.error(f"Error saving certificate or generating VC: {str(e)}")
         messages.error(request, "Error generating certificate.")
-        return redirect('authentication:dashbord')
+        return redirect('authentication:mycourse')
 
     # === GENERATE PDF DAN KIRIM EMAIL ===
     html_content = render_to_string('learner/certificate_template.html', {
@@ -4377,7 +4377,7 @@ def generate_certificate(request, course_id):
     except Exception as e:
         logger.error(f"Error generating PDF or sending email: {str(e)}")
         messages.error(request, "Error generating certificate or sending notification.")
-        return redirect('authentication:dashbord')
+        return redirect('authentication:mycourse')
 
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="certificate_{course.slug}.pdf"'

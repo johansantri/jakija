@@ -167,8 +167,8 @@
                     {% if request.resolver_match.url_name == 'partner_commission' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-money-bill-wave w-5"></i><span>Commission</span>
                 </a>
-                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
-                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                <a href="{% url 'authentication:mycourse' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'mycourse' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-tachometer-alt w-5"></i><span>My Courses</span>
                 </a>
 
@@ -198,8 +198,8 @@
                     {% if request.resolver_match.url_name == 'partner_analytics' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-chart-line w-5"></i><span>Analytics</span>
                 </a>
-                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
-                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                <a href="{% url 'authentication:mycourse' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'mycourse' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-tachometer-alt w-5"></i><span>My Course</span>
                 </a>
 
@@ -224,14 +224,14 @@
                     {% if request.resolver_match.url_name == 'partner_analytics' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-chart-line w-5"></i><span>Analytics</span>
                 </a>
-                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
-                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                <a href="{% url 'authentication:mycourse' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'mycourse' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-home w-5"></i><span>My Course</span>
                 </a>
 
             {% elif user.is_partner %}
-                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
-                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                <a href="{% url 'authentication:mycourse' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'mycourse' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-home w-5"></i><span>Dashboard</span>
                 </a>
                 <a href="{% url 'courses:course_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
@@ -280,8 +280,8 @@
                     {% if request.resolver_match.url_name == 'course_participants_dashboard' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-clipboard-list w-5"></i><span>Participants</span>
                 </a>
-                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
-                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                <a href="{% url 'authentication:mycourse' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'mycourse' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-tachometer-alt w-5"></i><span>My Course</span>
                 </a>
 
@@ -299,16 +299,13 @@
                     {% if request.resolver_match.url_name == 'comments-dashboard' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-comments w-5"></i><span>Comments</span>
                 </a>
-                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
-                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
+                <a href="{% url 'authentication:mycourse' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'mycourse' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-tachometer-alt w-5"></i><span>My Course</span>
                 </a>
 
             {% elif user.is_learner %}
-                <a href="{% url 'authentication:dashbord' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
-                    {% if request.resolver_match.url_name == 'dashbord' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
-                    <i class="fas fa-home w-5"></i><span>Dashboard</span>
-                </a>
+                
                 <a href="{% url 'authentication:mycourse' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'mycourse' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}">
                     <i class="fas fa-book-open w-5"></i><span>My Course</span>

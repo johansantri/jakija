@@ -609,7 +609,7 @@ def user_detail(request, user_id):
                current_user.is_staff or is_partner_same_org)
     if not allowed:
         messages.warning(request, "Access denied.")
-        return redirect('authentication:dashbord')
+        return redirect('authentication:mycourse')
 
     # === Enrollments ===
     enrollments = Enrollment.objects.filter(user=target_user).select_related('course')
@@ -1089,218 +1089,7 @@ def get_recommended_courses(user):
     return recommended_courses
 
 
-@custom_ratelimit
-@login_required
-@ratelimit(key='ip', rate='100/h')
-def dashbord(request):
-    user = request.user
-    required_fields = {
-        'first_name': 'First Name',
-        'last_name': 'Last Name',
-        'email': 'Email',
-        'phone': 'Phone Number',
-        'gender': 'Gender',
-        'birth': 'Date of Birth',
-    }
-    missing_fields = [label for field, label in required_fields.items() if not getattr(user, field)]
 
-    if missing_fields:
-        messages.warning(request, f"Please fill in: {', '.join(missing_fields)}")
-        return redirect('authentication:edit-profile', pk=user.pk)
-
-    search_query = request.GET.get('search', '')
-    enrollments_page = request.GET.get('enrollments_page', 1)
-
-    enrollments = Enrollment.objects.filter(user=user).order_by('-enrolled_at')
-
-    if search_query:
-        enrollments = enrollments.filter(
-            Q(user__username__icontains=search_query) |
-            Q(course__course_name__icontains=search_query)
-        )
-
-    total_enrollments = enrollments.count()
-
-    active_courses = Course.objects.filter(
-        id__in=enrollments.values('course'),
-        status_course__status='published',
-        start_enrol__lte=timezone.now(),
-        end_enrol__gte=timezone.now()
-    )
-
-    completed_courses = CourseProgress.objects.filter(user=user, progress_percentage=100)
-
-    enrollments_data = []
-
-    # ==========================================================
-    # LOOP ENROLLMENT & SCORE PER COURSE
-    # ==========================================================
-    for enrollment in enrollments:
-        course = enrollment.course
-
-        # ---------------------------
-        # MATERIAL PROGRESS
-        # ---------------------------
-        materials = Material.objects.filter(section__courses=course)
-        total_materials = materials.count()
-        materials_read = MaterialRead.objects.filter(user=user, material__in=materials).count()
-
-        materials_read_percentage = (
-            (Decimal(materials_read) / Decimal(total_materials)) * 100
-            if total_materials > 0 else Decimal('0')
-        )
-
-        assessments = Assessment.objects.filter(section__courses=course)
-        total_assessments = assessments.count()
-        assessments_completed = AssessmentRead.objects.filter(
-            user=user, assessment__in=assessments
-        ).count()
-
-        assessments_completed_percentage = (
-            (Decimal(assessments_completed) / Decimal(total_assessments)) * 100
-            if total_assessments > 0 else Decimal('0')
-        )
-
-        progress = (
-            (materials_read_percentage + assessments_completed_percentage) / 2
-            if (total_materials + total_assessments) > 0 else Decimal('0')
-        )
-
-        course_progress, _ = CourseProgress.objects.get_or_create(user=user, course=course)
-        course_progress.progress_percentage = progress
-        course_progress.save()
-
-        # ---------------------------
-        # SCORING (UPDATED VERSION)
-        # ---------------------------
-        total_score = Decimal('0')
-        total_max_score = Decimal('0')
-
-        for assessment in assessments:
-            weight = Decimal(assessment.weight)
-            score_value = Decimal('0')
-
-            # ==========================
-            # CASE 1 — LTI RESULT
-            # ==========================
-            lti_result = LTIResult.objects.filter(user=user, assessment=assessment).first()
-
-            if lti_result and lti_result.score is not None:
-                lti_score = Decimal(lti_result.score)
-                if lti_score > 1:
-                    lti_score = lti_score / 100
-                score_value = lti_score * weight
-
-            else:
-                # ==========================
-                # CASE 2 — IN-VIDEO QUIZ
-                # ==========================
-                invideo_quizzes = Quiz.objects.filter(assessment=assessment)
-
-                if invideo_quizzes.exists():
-                    quiz_result = QuizResult.objects.filter(user=user, assessment=assessment).first()
-
-                    if quiz_result:
-                        if quiz_result.total_questions > 0:
-                            raw_percentage = Decimal(quiz_result.score) / Decimal(quiz_result.total_questions)
-                            score_value = raw_percentage * weight
-                        else:
-                            score_value = Decimal('0')
-                    else:
-                        score_value = Decimal('0')
-
-                else:
-                    # ==========================
-                    # CASE 3 — OLD MCQ MODEL
-                    # ==========================
-                    total_questions = assessment.questions.count()
-
-                    if total_questions > 0:
-                        total_correct = 0
-                        for q in assessment.questions.all():
-                            total_correct += QuestionAnswer.objects.filter(
-                                question=q, user=user, choice__is_correct=True
-                            ).count()
-
-                        score_value = (
-                            (Decimal(total_correct) / Decimal(total_questions)) * weight
-                            if total_questions > 0 else Decimal('0')
-                        )
-                    else:
-                        # ==========================
-                        # CASE 4 — ASKORA
-                        # ==========================
-                        submissions = Submission.objects.filter(askora__assessment=assessment, user=user)
-
-                        if submissions.exists():
-                            latest = submissions.order_by('-submitted_at').first()
-                            score_obj = AssessmentScore.objects.filter(submission=latest).first()
-
-                            if score_obj:
-                                score_value = Decimal(score_obj.final_score)
-                            else:
-                                score_value = Decimal('0')
-                        else:
-                            score_value = Decimal('0')
-
-            # Clamp score ke MAX = weight
-            score_value = min(score_value, weight)
-
-            total_score += score_value
-            total_max_score += weight
-
-        # ---------------------------
-        # FINAL SCORE & CERTIFICATE
-        # ---------------------------
-        overall_percentage = (
-            (total_score / total_max_score) * 100
-            if total_max_score > 0 else Decimal('0')
-        )
-
-        grade_range = GradeRange.objects.filter(course=course, name='Pass').first()
-        passing_threshold = grade_range.min_grade if grade_range else Decimal('52.00')
-
-        certificate_eligible = (
-            progress == Decimal('100') and overall_percentage >= passing_threshold
-        )
-
-        certificate_issued = getattr(enrollment, 'certificate_issued', False)
-
-        has_reviewed = CourseRating.objects.filter(user=user, course=course).exists()
-
-        enrollments_data.append({
-            'enrollment': enrollment,
-            'progress': float(progress),
-            'certificate_eligible': certificate_eligible,
-            'certificate_issued': certificate_issued,
-            'overall_percentage': float(overall_percentage),
-            'passing_threshold': float(passing_threshold),
-            'has_reviewed': has_reviewed,
-        })
-
-    # PAGINATION
-    enrollments_paginator = Paginator(enrollments_data, 5)
-    enrollments_page_obj = enrollments_paginator.get_page(enrollments_page)
-
-    # LICENSES
-    today = timezone.now().date()
-    user_licenses = user.licenses.all()
-    for lic in user_licenses:
-        lic.is_active = lic.start_date <= today <= lic.expiry_date
-
-    recommended_courses = get_recommended_courses(user)
-
-    return render(request, 'learner/dashbord.html', {
-        'enrollments': enrollments_page_obj,
-        'search_query': search_query,
-        'enrollments_page': enrollments_page,
-        'total_enrollments': total_enrollments,
-        'active_courses': active_courses,
-        'completed_courses': completed_courses,
-        'user_licenses': user_licenses,
-        'recommended_courses': recommended_courses,
-        'user': user,
-    })
 
 @custom_ratelimit
 @login_required
@@ -1330,14 +1119,14 @@ def edit_profile(request, pk):
     # Pastikan hanya pemilik profil yang bisa mengedit
     if request.user.pk != pk:
         messages.error(request, "You are not authorized to edit this profile.")
-        return redirect('authentication:dashbord')
+        return redirect('authentication:mycourse')
 
     if request.method == "POST":
         form = UserProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             messages.success(request, "Your profile has been updated.")
-            return redirect('authentication:dashbord')
+            return redirect('authentication:mycourse')
         else:
             messages.error(request, "Please correct the errors below.")
     else:
@@ -1415,14 +1204,14 @@ def edit_profile(request, pk):
     # Pastikan hanya pemilik profil yang bisa mengedit
     if request.user.pk != pk:
         messages.error(request, "Anda tidak memiliki izin untuk mengedit profil ini.")
-        return redirect('authentication:dashbord')
+        return redirect('authentication:mycourse')
 
     if request.method == "POST":
         form = UserProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             messages.success(request, "Profil berhasil diperbarui.")
-            return redirect('authentication:dashbord')
+            return redirect('authentication:mycourse')
         else:
             messages.error(request, "Silakan perbaiki kesalahan di bawah ini.")
     else:

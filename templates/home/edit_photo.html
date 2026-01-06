@@ -47,7 +47,7 @@
           <a class="btn btn-secondary" href="{% if user.is_superuser or user.is_partner %}
                                               {% url 'authentication:dasbord' %}
                                             {% else %}
-                                              {% url 'authentication:dashbord' %}
+                                              {% url 'authentication:mycourse' %}
                                             {% endif %}">
             <i class="bi bi-x-circle-fill me-2"></i>Cancel
           </a>

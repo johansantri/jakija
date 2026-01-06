@@ -36,7 +36,7 @@ urlpatterns = [
     path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
 
     #student
-    path('dashbord/',views.dashbord, name='dashbord'),
+    
 
     path('all-user/',views.all_user,name='all-user'),
     path('user-detail/<int:user_id>/id', views.user_detail, name='user_detail'),  # Add this line
