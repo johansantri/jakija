@@ -222,7 +222,7 @@ Our vision: to create a digital learning system that is not only comprehensive, 
 - Course View
 - Course Rating
 - Course Comment
-- Microcredential
+- Bundling Courses
 - Partner Analitics
 
 
@@ -288,14 +288,14 @@ Our vision: to create a digital learning system that is not only comprehensive, 
 
 
 ## Additional features
-- Payment gateway support: Tripay  
-- Micro‑credentials / professional certificate support
+- Payment gateway support: Tripay  indonesia
+- Bundling Courses Certificate
 
 ## Requirements
 - Python 3.8+ (recommended)  
 - Django 5.1
 - HTMX
-- Talwin
+- Tailwind + Js
 
 ## Quick install (Linux)
 1. git clone https://github.com/johansantri/jakija.git  
@@ -338,3 +338,7 @@ Repository: https://github.com/johansantri/jakija
 - Subscription: sub@sub.com | sub  
 - Curation: curation@curation.com | curation  
 - Finances: fin@fin.com | fin
+
+## Cert
+- Every participant who completes a course will receive an automatic certificate, serving as proof of the skills and competencies they have acquired, and it can be verified instantly via QR code. Instructors who help more than 60% of their participants successfully complete the course will also receive an automatic recognition certificate, highlighting the quality and effectiveness of their teaching, with QR verification as well.
+Additionally, we offer Bundling Courses, where participants who successfully complete all courses in a bundle will earn a professional certificate, recognizing their achievement of a broader and more integrated learning path, also verifiable with a QR code
