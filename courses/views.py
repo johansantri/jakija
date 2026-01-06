@@ -4582,7 +4582,7 @@ def add_course_price(request, id):
         return redirect(f"/login/?next={request.path}")
 
     if not (hasattr(request.user, 'is_partner') and request.user.is_partner):
-        messages.error(request, "Anda tidak memiliki izin untuk menambahkan harga ke kursus ini.")
+        messages.error(request, "You do not have permission to add a price to this course..")
         return redirect('courses:studio', id=id)
 
     course = get_object_or_404(Course, id=id, org_partner__user_id=request.user.id)
@@ -6520,6 +6520,11 @@ def courseView(request):
         return redirect("/login/?next=%s" % request.path)
 
     user = request.user
+    # Check if user has permission to access
+    if not (user.is_superuser or getattr(user, 'is_partner', False) or getattr(user, 'is_instructor', False)):
+        messages.error(request, "You do not have permission to add a price to this course.")
+        return redirect('authentication:mycourse')  # redirect ke halaman yang sesuai, misal home
+    
     required_fields = {
         'first_name': 'First Name',
         'last_name': 'Last Name',
