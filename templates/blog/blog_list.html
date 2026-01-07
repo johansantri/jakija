@@ -73,58 +73,69 @@
           <p class="text-gray-600 mt-2 text-sm sm:text-base">Explore stories, insights, and updates from our team and community.</p>
         </header>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-          {% for post in posts|slice:":4" %}
-          <article class="bg-white rounded-xl shadow-md hover:bg-gray-50 transition-colors duration-300 flex flex-col h-full">
-            {% if post.image %}
-              <a href="{% url 'blog:blog-detail' slug=post.slug %}">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {% for post in posts %}
+          <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden">
+            
+            <!-- Image -->
+            <a href="{% url 'blog:blog-detail' slug=post.slug %}" class="block overflow-hidden">
+              {% if post.image %}
                 <img 
                   src="{{ post.image.url|default:'/static/images/blog-300.webp' }}" 
                   srcset="{{ post.image.url|default:'/static/images/blog-150.webp' }} 150w, {{ post.image.url|default:'/static/images/blog-300.webp' }} 300w" 
-                  sizes="(max-width: 600px) 150px, 300px" 
+                  sizes="(max-width: 640px) 100vw, 300px" 
                   alt="{{ post.title }}" 
-                  class="w-full h-32 sm:h-40 object-contain rounded-t-xl" 
-                  loading="lazy" 
-                  width="300" 
-                  height="150">
-              </a>
-            {% else %}
-              <a href="{% url 'blog:blog-detail' slug=post.slug %}">
+                  class="w-full h-48 sm:h-56 md:h-64 object-cover transform hover:scale-105 transition-transform duration-300" 
+                  loading="lazy">
+              {% else %}
                 <img 
                   src="/static/images/blog-300.webp" 
-                  srcset="/static/images/blog-150.webp 150w, /static/images/blog-300.webp 300w" 
-                  sizes="(max-width: 600px) 150px, 300px" 
                   alt="Default Blog Thumbnail" 
-                  class="w-full h-32 sm:h-40 object-contain rounded-t-xl" 
-                  loading="lazy" 
-                  width="300" 
-                  height="150">
-              </a>
-            {% endif %}
-            <div class="p-4 sm:p-5 flex flex-col flex-1">
-              <h2 class="text-base sm:text-lg font-semibold leading-tight mb-1">
-                <a href="{% url 'blog:blog-detail' slug=post.slug %}" class="text-gray-800 hover:text-red-600 no-underline">
-                  {{ post.title|truncatewords:10 }}
+                  class="w-full h-48 sm:h-56 md:h-64 object-cover">
+              {% endif %}
+            </a>
+
+            <!-- Content -->
+            <div class="p-4 flex flex-col flex-1">
+              <!-- Title -->
+              <h2 class="text-lg sm:text-xl font-semibold mb-2 line-clamp-2">
+                <a href="{% url 'blog:blog-detail' slug=post.slug %}" class="text-gray-900 hover:text-red-600 no-underline">
+                  {{ post.title }}
                 </a>
               </h2>
-              <p class="text-xs sm:text-sm text-gray-500 mb-2">
-                By {{ post.author|default:"Unknown" }} • {{ post.date_posted|date:"M d, Y" }}
-              </p>
-              <p class="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-3">{{ post.content|safe|truncatewords:20 }}</p>
-              <div class="mt-auto">
-                <a href="{% url 'blog:blog-detail' slug=post.slug %}" 
-                   class="inline-block w-full text-center text-xs sm:text-sm text-red-600 border border-red-600 rounded px-3 py-2 hover:bg-red-600 hover:text-white transition-colors">
-                  Read More
+
+              <!-- Meta -->
+              <div class="text-xs sm:text-sm text-gray-500 mb-3 flex flex-wrap items-center gap-1">
+                <span>By {{ post.author|default:"Unknown" }}</span>
+                <span>•</span>
+                <span>{{ post.date_posted|date:"F d, Y" }}</span>
+                <span>•</span>
+                <a href="{{ post.category.get_absolute_url }}" class="text-red-600 hover:text-red-500 font-medium">
+                  {{ post.category|default:"Uncategorized" }}
                 </a>
+                <span>•</span>
+                <span>{{ post.views }} View{{ post.views|pluralize }}</span>
+                <span>•</span>
+                <span>{{ post.number_of_comments }} Comment{{ post.number_of_comments|pluralize }}</span>
               </div>
+
+              <!-- Excerpt -->
+              <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{ post.content|truncatewords:25 }}</p>
+
+              <!-- Read More Button -->
+              <a href="{% url 'blog:blog-detail' slug=post.slug %}" 
+                class="mt-auto inline-block text-center w-full bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300">
+                Read More
+              </a>
             </div>
           </article>
           {% empty %}
-          <div class="col-span-full text-center text-gray-600 bg-yellow-50 border border-yellow-200 p-4 sm:p-6 rounded-xl">
+          <div class="col-span-full text-center text-gray-600 bg-yellow-50 border border-yellow-200 p-6 rounded-xl">
             <p class="text-sm sm:text-base">No blog posts found in this section.</p>
           </div>
           {% endfor %}
         </div>
+
 
         <!-- Pagination -->
         {% if is_paginated %}
