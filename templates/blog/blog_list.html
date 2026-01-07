@@ -109,18 +109,12 @@
                 <span>By {{ post.author|default:"Unknown" }}</span>
                 <span>•</span>
                 <span>{{ post.date_posted|date:"F d, Y" }}</span>
-                <span>•</span>
-                <a href="{{ post.category.get_absolute_url }}" class="text-red-600 hover:text-red-500 font-medium">
-                  {{ post.category|default:"Uncategorized" }}
-                </a>
-                <span>•</span>
-                <span>{{ post.views }} View{{ post.views|pluralize }}</span>
-                <span>•</span>
-                <span>{{ post.number_of_comments }} Comment{{ post.number_of_comments|pluralize }}</span>
+               
+                
               </div>
 
               <!-- Excerpt -->
-              <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{ post.content|truncatewords:25 }}</p>
+              <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{ post.content|striptags|truncatewords:10 }}</p>
 
               <!-- Read More Button -->
               <a href="{% url 'blog:blog-detail' slug=post.slug %}" 
