@@ -6461,7 +6461,7 @@ def courseView(request):
 
     user = request.user
     # Check if user has permission to access
-    if not (user.is_superuser or getattr(user, 'is_partner', False) or getattr(user, 'is_instructor', False)):
+    if not (user.is_superuser or getattr(user, 'is_partner', False) or getattr(user, 'is_instructor', False)or getattr(user, 'is_curation', False)):
         messages.error(request, "You do not have permission to add a price to this course.")
         return redirect('authentication:mycourse')  # redirect ke halaman yang sesuai, misal home
     

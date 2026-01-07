@@ -180,7 +180,7 @@
                 </a>
                 <a href="{% url 'courses:course_view' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'course_view' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}" title="Course">
-                    <i class="fas fa-book w-5"></i><span>Course</span>
+                    <i class="fas fa-book w-5"></i><span>Studio</span>
                 </a>
                 <a href="{% url 'partner:partner_course_ratings' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
                     {% if request.resolver_match.url_name == 'partner_course_ratings' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}" title="Course Ratings">
