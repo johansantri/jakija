@@ -1,10 +1,10 @@
 {% load static %}
 
-<section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
+<section class="bg-white border border-gray-200 p-3 sm:p-4 lg:p-5 rounded-xl shadow-sm mt-4 mx-2 sm:mx-0">
   <div class="flex items-center justify-between">
 
     <!-- JUDUL -->
-    <h3 class="text-base sm:text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-3 truncate">
+    <h3 class="text-sm sm:text-base font-semibold text-gray-800 border-l-4 border-red-300 pl-2 truncate">
       <a href="{% url 'courses:studio' course.id %}" class="hover:text-red-600">
         {{ course.course_name }}
       </a>
@@ -14,58 +14,58 @@
     <div class="relative">
       <button 
         id="more-options"
-        class="p-3 rounded-xl hover:bg-red-50 hover:text-red-700 focus:outline-none focus:ring-4 focus:ring-red-100 transition">
-        <i class="fas fa-ellipsis-h text-lg sm:text-xl"></i>
+        class="p-2 sm:p-2.5 rounded-lg hover:bg-red-50 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-200 transition">
+        <i class="fas fa-ellipsis-h text-base sm:text-lg"></i>
       </button>
 
       <!-- DROPDOWN -->
       <div
         id="dropdown-menu"
         class="
-          hidden absolute z-50 mt-2
-          w-[85vw] max-w-[300px]
+          hidden absolute z-50 mt-1
+          w-[85vw] max-w-[260px]
           right-0
           bg-white border border-gray-200
-          rounded-xl shadow-xl
-          sm:w-64
+          rounded-lg shadow-lg
+          sm:w-56
         "
       >
-        <div class="py-2 text-sm">
+        <div class="py-1 text-sm">
 
           <a href="{% url 'courses:studio' course.id %}" class="dropdown-item">
-            <i class="fas fa-list-ul w-5 text-center"></i>
+            <i class="fas fa-list-ul w-4 text-center"></i>
             <span>Outline</span>
           </a>
 
           <a href="{% url 'instructor:studios' course.id %}" class="dropdown-item">
-            <i class="fas fa-check-circle w-5 text-center"></i>
+            <i class="fas fa-check-circle w-4 text-center"></i>
             <span>Curation</span>
           </a>
 
           <a href="{% url 'courses:course_profile' course.id %}" class="dropdown-item">
-            <i class="fas fa-calendar-alt w-5 text-center"></i>
+            <i class="fas fa-calendar-alt w-4 text-center"></i>
             <span>Schedule</span>
           </a>
 
           <a href="{% url 'courses:course_grade' course.id %}" class="dropdown-item">
-            <i class="fas fa-chart-line w-5 text-center"></i>
+            <i class="fas fa-chart-line w-4 text-center"></i>
             <span>Grading</span>
           </a>
 
           <a href="{% url 'courses:course_team' course.id %}" class="dropdown-item">
-            <i class="fas fa-users w-5 text-center"></i>
+            <i class="fas fa-users w-4 text-center"></i>
             <span>Team</span>
           </a>
 
           {% if request.user.is_superuser or request.user.is_partner %}
           <a href="{% url 'courses:course_instructor' course.id %}" class="dropdown-item">
-            <i class="fas fa-chalkboard-teacher w-5 text-center"></i>
+            <i class="fas fa-chalkboard-teacher w-4 text-center"></i>
             <span>Instructor</span>
           </a>
           {% endif %}
 
           <a href="{% url 'courses:add_course_price' course.id %}" class="dropdown-item">
-            <i class="fas fa-tag w-5 text-center"></i>
+            <i class="fas fa-tag w-4 text-center"></i>
             <span>Price</span>
           </a>
 
@@ -80,9 +80,10 @@
 .dropdown-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.65rem 1.25rem;
+  gap: 0.5rem;          /* lebih rapat */
+  padding: 0.5rem 1rem; /* lebih kompak */
   color: #374151;
+  font-size: 0.875rem;  /* text-sm */
   transition: background 0.15s ease, color 0.15s ease;
 }
 .dropdown-item:hover {

@@ -5,13 +5,13 @@
 
 <section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
 
-  <div class="flex flex-col lg:flex-row gap-6 lg:gap-8 p-4 sm:p-6 lg:p-8">
+  <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
 
     <!-- ==================== SIDEBAR / USER INFO (4/12) ==================== -->
-    <aside class="w-full lg:w-1/3 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white rounded-2xl p-6 sm:p-8 relative overflow-hidden flex flex-col items-center">
+    <aside class="w-full lg:w-1/3 bg-gray-50 rounded-2xl p-6 sm:p-8 flex flex-col items-center">
 
       <!-- Avatar -->
-      <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-full ring-4 ring-white/30 shadow-2xl overflow-hidden mb-4 -mt-12">
+      <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden mb-4">
         {% if target_user.photo %}
           <img src="{{ target_user.photo.url }}" alt="Profile" class="w-full h-full object-cover">
         {% else %}
@@ -21,41 +21,41 @@
 
       <!-- Name & Email -->
       <div class="text-center mb-6">
-        <h1 class="text-xl sm:text-2xl font-bold">{{ target_user.get_full_name|default:target_user.username }}</h1>
-        <p class="text-white/80 text-sm sm:text-base">{{ target_user.email }}</p>
+        <h1 class="text-xl sm:text-2xl font-bold text-gray-900">{{ target_user.get_full_name|default:target_user.username }}</h1>
+        <p class="text-gray-600 text-sm sm:text-base">{{ target_user.email }}</p>
       </div>
 
       <!-- Tabs -->
-      <div class="w-full bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/20">
-        <div class="flex">
-          <button onclick="openTab(event,'personal')" class="tab-btn active flex-1 py-3 text-sm sm:text-base font-medium transition-all duration-300">Personal Info</button>
-          <button onclick="openTab(event,'contact')" class="tab-btn flex-1 py-3 text-sm sm:text-base font-medium transition-all duration-300">Contact & Education</button>
+      <div class="w-full bg-white rounded-2xl border border-gray-200 overflow-hidden">
+        <div class="flex border-b border-gray-200">
+          <button onclick="openTab(event,'personal')" class="tab-btn active flex-1 py-3 text-sm sm:text-base font-medium text-gray-700">Personal Info</button>
+          <button onclick="openTab(event,'contact')" class="tab-btn flex-1 py-3 text-sm sm:text-base font-medium text-gray-700">Contact & Education</button>
         </div>
         <div class="p-4 sm:p-6 space-y-3 text-sm sm:text-base">
           <!-- Personal -->
           <div id="personal" class="tab-content">
             <div class="grid gap-2">
-              <div class="flex justify-between"><span class="text-white/80">Full Name</span><span class="font-medium">{{ target_user.get_full_name|default:target_user.username }}</span></div>
-              <div class="flex justify-between"><span class="text-white/80">Gender</span><span class="font-medium">{{ target_user.get_gender_display|default:"-" }}</span></div>
-              <div class="flex justify-between"><span class="text-white/80">Birth Date</span><span class="font-medium">{{ target_user.birth|date:"d M Y"|default:"-" }}</span></div>
-              <div class="flex justify-between"><span class="text-white/80">Address</span><span class="font-medium">{{ target_user.address|default:"-" }}</span></div>
-              <div class="flex justify-between"><span class="text-white/80">Country</span><span class="font-medium">{{ target_user.country|default:"Indonesia" }}</span></div>
+              <div class="flex justify-between"><span class="text-gray-500">Full Name</span><span class="font-medium text-gray-800">{{ target_user.get_full_name|default:target_user.username }}</span></div>
+              <div class="flex justify-between"><span class="text-gray-500">Gender</span><span class="font-medium text-gray-800">{{ target_user.get_gender_display|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-gray-500">Birth Date</span><span class="font-medium text-gray-800">{{ target_user.birth|date:"d M Y"|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-gray-500">Address</span><span class="font-medium text-gray-800">{{ target_user.address|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-gray-500">Country</span><span class="font-medium text-gray-800">{{ target_user.country|default:"Indonesia" }}</span></div>
             </div>
           </div>
           <!-- Contact & Education -->
           <div id="contact" class="tab-content hidden">
             <div class="grid gap-2">
-              <div class="flex justify-between"><span class="text-white/80">Email</span><a href="mailto:{{ target_user.email }}" class="font-medium underline hover:text-indigo-200 transition">{{ target_user.email }}</a></div>
-              <div class="flex justify-between"><span class="text-white/80">Phone</span><span class="font-medium">********{{ target_user.phone|slice:"-4:" }}</span></div>
-              <div class="flex justify-between"><span class="text-white/80">Education</span><span class="font-medium">{{ target_user.get_education_display|default:"-" }}</span></div>
-              <div class="flex justify-between"><span class="text-white/80">University</span><span class="font-medium">{{ target_user.university|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-gray-500">Email</span><a href="mailto:{{ target_user.email }}" class="font-medium text-indigo-600 underline">{{ target_user.email }}</a></div>
+              <div class="flex justify-between"><span class="text-gray-500">Phone</span><span class="font-medium text-gray-800">********{{ target_user.phone|slice:"-4:" }}</span></div>
+              <div class="flex justify-between"><span class="text-gray-500">Education</span><span class="font-medium text-gray-800">{{ target_user.get_education_display|default:"-" }}</span></div>
+              <div class="flex justify-between"><span class="text-gray-500">University</span><span class="font-medium text-gray-800">{{ target_user.university|default:"-" }}</span></div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Back Button -->
-      <a href="{% url 'authentication:all-user' %}" class="mt-6 px-6 py-2 bg-white/20 backdrop-blur hover:bg-white/30 rounded-xl font-medium transition-all duration-300 flex items-center gap-2">
+      <a href="{% url 'authentication:all-user' %}" class="mt-6 px-6 py-2 bg-gray-200 hover:bg-gray-300 rounded-xl font-medium transition-colors">
         ← Back to Users
       </a>
     </aside>
@@ -64,39 +64,34 @@
     <main class="w-full lg:w-2/3 flex flex-col gap-6 sm:gap-8">
 
       <!-- Search -->
-      <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-4 sm:p-6 border border-indigo-100">
+      <div class="bg-white rounded-2xl p-4 sm:p-6 border border-gray-200">
         <form method="GET" class="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <input type="text" name="search" placeholder="Search courses..." value="{{ search_query }}"
-                 class="flex-1 px-4 py-2 sm:px-6 sm:py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-4 focus:ring-indigo-300 transition-shadow text-gray-800 placeholder-gray-500">
-          <button type="submit" class="px-6 py-2 sm:px-8 sm:py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-xl hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300">Search</button>
+                 class="flex-1 px-4 py-2 sm:px-6 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 placeholder-gray-500">
+          <button type="submit" class="px-6 py-2 sm:px-8 sm:py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">Search</button>
         </form>
       </div>
 
       <!-- Courses -->
       <div class="space-y-4 sm:space-y-6">
         {% for course in course_details %}
-          <div class="bg-white border border-gray-200 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1">
-            <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-1">{{ course.course_name }}</h3>
+          <div class="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
+            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-1">{{ course.course_name }}</h3>
             <div class="flex flex-wrap gap-2 text-sm sm:text-base text-gray-600 mb-2">
-              <span>Threshold: <strong class="text-indigo-600">{{ course.passing_threshold }}</strong></span>
+              <span>Threshold: <strong class="text-blue-600">{{ course.passing_threshold }}</strong></span>
               <span>•</span>
               <span>Score: <strong class="text-purple-600">{{ course.total_score|floatformat:1 }} / {{ course.total_max_score }}</strong></span>
             </div>
 
             <!-- Progress Bar -->
-            <div class="relative w-full bg-gray-200 rounded-full h-6 sm:h-8 overflow-hidden shadow-inner mb-2">
-              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine"></div>
-              <div class="h-full rounded-full flex items-center justify-end px-2 sm:px-4 text-white font-bold text-xs sm:text-sm transition-all duration-1000 ease-out relative overflow-hidden"
-                   style="width: {{ course.percentage|floatformat:0 }}%;
-                          background: linear-gradient(90deg, {% if course.status == 'Pass' %}#10b981, #059669{% else %}#ef4444, #dc2626{% endif %});">
-                <span class="relative z-10 drop-shadow-lg">{{ course.percentage|floatformat:0 }}%</span>
-              </div>
+            <div class="relative w-full bg-gray-200 rounded-full h-4 sm:h-6 overflow-hidden mb-2">
+              <div class="h-full rounded-full" style="width: {{ course.percentage|floatformat:0 }}%; background-color: {% if course.status == 'Pass' %}#10b981{% else %}#ef4444{% endif %};"></div>
             </div>
 
             <div class="flex justify-between items-center">
               <p class="text-sm sm:text-base font-bold {% if course.status == 'Pass' %}text-green-600{% else %}text-red-600{% endif %}">{{ course.status }}</p>
               {% if course.status == 'Pass' %}
-                <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs sm:text-sm font-medium animate-pulse">Passed</span>
+                <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs sm:text-sm font-medium">Passed</span>
               {% endif %}
             </div>
           </div>
@@ -109,17 +104,17 @@
       {% if course_details.has_other_pages %}
       <div class="flex flex-wrap justify-center gap-2 mt-4 sm:mt-6">
         {% if course_details.has_previous %}
-          <a href="?page={{ course_details.previous_page_number }}&search={{ search_query }}" class="px-3 py-1 sm:px-4 sm:py-2 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition">Previous</a>
+          <a href="?page={{ course_details.previous_page_number }}&search={{ search_query }}" class="px-3 py-1 sm:px-4 sm:py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">Previous</a>
         {% endif %}
         {% for num in course_details.paginator.page_range %}
           {% if course_details.number == num %}
-            <span class="px-3 py-1 sm:px-4 sm:py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold shadow-lg">{{ num }}</span>
+            <span class="px-3 py-1 sm:px-4 sm:py-2 bg-blue-600 text-white rounded-lg font-semibold">{{ num }}</span>
           {% else %}
-            <a href="?page={{ num }}&search={{ search_query }}" class="px-3 py-1 sm:px-4 sm:py-2 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition">{{ num }}</a>
+            <a href="?page={{ num }}&search={{ search_query }}" class="px-3 py-1 sm:px-4 sm:py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">{{ num }}</a>
           {% endif %}
         {% endfor %}
         {% if course_details.has_next %}
-          <a href="?page={{ course_details.next_page_number }}&search={{ search_query }}" class="px-3 py-1 sm:px-4 sm:py-2 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition">Next</a>
+          <a href="?page={{ course_details.next_page_number }}&search={{ search_query }}" class="px-3 py-1 sm:px-4 sm:py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">Next</a>
         {% endif %}
       </div>
       {% endif %}
@@ -127,12 +122,6 @@
     </main>
   </div>
 </section>
-
-<style>
-  .animate-shine { animation: shine 3s infinite linear; }
-  @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-  .tab-btn.active { background: rgba(255,255,255,0.2); border-bottom-color: white !important; }
-</style>
 
 <script>
 function openTab(evt, tabName) {

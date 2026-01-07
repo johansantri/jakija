@@ -32,19 +32,31 @@
       <form method="GET" class="mb-6">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
 
-          <div class="md:col-span-4">
+          <div class="md:col-span-4 relative">
+            <!-- Icon Search -->
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
+              </svg>
+            </div>
+
+            <!-- Input Field -->
             <input
               type="text"
               name="q"
               value="{{ search_query }}"
               placeholder="Search by title or content"
-              class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             >
           </div>
 
+
           <div class="md:col-span-2">
-            <select name="status" onchange="this.form.submit()"
-              class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+            <select
+              name="status"
+              onchange="this.form.submit()"
+              class="block w-full py-2 px-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            >
               <option value="">All Status</option>
               {% for status_value, status_label in status_choices %}
                 <option value="{{ status_value }}" {% if selected_status == status_value %}selected{% endif %}>
@@ -55,12 +67,14 @@
           </div>
 
           <div class="md:col-span-3">
-            <select name="category" onchange="this.form.submit()"
-              class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+            <select
+              name="category"
+              onchange="this.form.submit()"
+              class="block w-full py-2 px-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            >
               <option value="">All Categories</option>
               {% for category in categories %}
-                <option value="{{ category.id }}"
-                  {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>
+                <option value="{{ category.id }}" {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>
                   {{ category.name }}
                 </option>
               {% endfor %}
@@ -68,17 +82,20 @@
           </div>
 
           <div class="md:col-span-3">
-            <select name="tag" onchange="this.form.submit()"
-              class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+            <select
+              name="tag"
+              onchange="this.form.submit()"
+              class="block w-full py-2 px-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            >
               <option value="">All Tags</option>
               {% for tag in tags %}
-                <option value="{{ tag.id }}"
-                  {% if selected_tag == tag.id|stringformat:"s" %}selected{% endif %}>
+                <option value="{{ tag.id }}" {% if selected_tag == tag.id|stringformat:"s" %}selected{% endif %}>
                   {{ tag.name }}
                 </option>
               {% endfor %}
             </select>
           </div>
+
 
         </div>
       </form>
