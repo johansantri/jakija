@@ -24,8 +24,8 @@ urlpatterns = [
     path('mark-progress/', views.mark_progress, name='mark_progress'),
     path('video/<int:video_id>/save-result/<int:assessment_id>/',views.save_invideo_quiz,name='save_invideo_quiz'),
     path("my-activity/", views.my_activity, name="my_activity"),
-    path('invite-learner/<int:course_id>/', views.invite_learner, name='invite_learner'),
-    path('unenroll-learner/<int:course_id>/<int:user_id>/', views.unenroll_learners, name='unenroll_learners')
+    path('invite-learner/<int:course_id>/', views.invite_learner, name='invite_learner')
+   
 
 
 

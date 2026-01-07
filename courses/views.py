@@ -1467,6 +1467,7 @@ def course_list_enroll(request, id):
             'overall_percentage': overall_percentage,
             'last_accessed_material': last_accessed_material,
             'last_completed_assessment': last_completed_assessment,
+            'certificate_issued': enrollment.certificate_issued,
         })
 
     # === Pagination ===
@@ -1483,6 +1484,24 @@ def course_list_enroll(request, id):
         'enrollments': page_obj,
         'search_query': search_query,
     })
+
+
+def unenroll_courses(request, course_id, user_id):
+    # Pastikan hanya POST yang bisa
+    if request.method != "POST":
+        messages.error(request, "Invalid request method.")
+        return redirect('courses:course_list_enroll', id=course_id)
+
+    enrollment = get_object_or_404(Enrollment, user_id=user_id, course_id=course_id)
+
+    if enrollment.certificate_issued:
+        messages.error(request, "You cannot unenroll because the certificate has already been issued.")
+        return redirect('courses:course_list_enroll', id=course_id)
+
+    enrollment.delete()
+    messages.success(request, f"Successfully unenrolled {enrollment.user.username} from {enrollment.course.course_name}.")
+    return redirect('courses:course_list_enroll', id=course_id)
+
 
 
 

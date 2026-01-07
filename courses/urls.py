@@ -40,6 +40,7 @@ urlpatterns = [
     path('edit-assessment/<int:idcourse>/<int:idsection>/<int:idassessment>/', views.edit_assessment, name='edit_assessment'),
     path('delete-assessment/<int:idcourse>/<int:idsection>/<int:idassessment>/', views.delete_assessment, name='delete_assessment'),
     path('course-list-enroll/<int:id>/', views.course_list_enroll, name='course_list_enroll'),
+    path('unenroll/<int:course_id>/<int:user_id>/', views.unenroll_courses, name='unenroll_courses'),
 
 
 
