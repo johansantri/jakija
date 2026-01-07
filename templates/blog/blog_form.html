@@ -116,21 +116,7 @@
           {% endif %}
         </div>
 
-        <!-- Related Courses -->
-        <div>
-          <label for="{{ form.related_courses.id_for_label }}" class="block font-medium mb-1">
-            Related Courses
-          </label>
-          {{ form.related_courses }}
-          <p class="mt-1 text-sm text-gray-500">
-            Hold Ctrl (or Cmd) to select multiple courses.
-          </p>
-          {% if form.related_courses.errors %}
-            <p class="mt-1 text-sm text-red-600">
-              {% for error in form.related_courses.errors %}{{ error }}{% endfor %}
-            </p>
-          {% endif %}
-        </div>
+        
 
         <!-- Status -->
         <div>

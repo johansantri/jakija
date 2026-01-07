@@ -14,43 +14,43 @@ from django.db.models import Q
 
 class BlogPostForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditor5Widget())
-    
+    related_courses = forms.ModelMultipleChoiceField(
+        queryset=Course.objects.none(),
+        required=False,
+        widget=forms.MultipleHiddenInput  # ❌ User tidak bisa pilih, otomatis
+    )
     class Meta:
         model = BlogPost
         fields = ['title', 'content', 'image', 'category', 'tags', 'status']
 
         widgets = {
-                'title': forms.TextInput(attrs={
-                    'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
-                    'placeholder': 'Enter post title'
-                }),
-                'content': forms.Textarea(attrs={
-                    'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
-                    'rows': 8,
-                    'placeholder': 'Write your content here'
-                }),
-                'image': forms.ClearableFileInput(attrs={
-                    'class': 'w-full text-gray-700'
-                }),
-                'category': forms.Select(attrs={
-                    'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
-                }),
-                'tags': forms.SelectMultiple(attrs={
-                    'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
-                    'multiple': 'multiple'
-                }),
-                'status': forms.Select(attrs={
-                    'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
-                }),
-            }
-
+            'title': forms.TextInput(attrs={
+                'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                'placeholder': 'Enter post title'
+            }),
+            'content': forms.Textarea(attrs={
+                'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                'rows': 8,
+                'placeholder': 'Write your content here'
+            }),
+            'image': forms.ClearableFileInput(attrs={'class': 'w-full text-gray-700'}),
+            'category': forms.Select(attrs={
+                'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+            }),
+            'tags': forms.SelectMultiple(attrs={
+                'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                'multiple': 'multiple'
+            }),
+            'status': forms.Select(attrs={
+                'class': 'w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+            }),
+        }
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         self.fields['category'].queryset = Category.objects.all()
         self.fields['tags'].queryset = Tag.objects.all()
-        
 
     def clean(self):
         cleaned_data = super().clean()
@@ -71,7 +71,6 @@ class BlogPostForm(forms.ModelForm):
             ).exclude(id=self.instance.id if self.instance else None)
             if recent_posts.exists():
                 raise ValidationError("You recently posted an article with the same title. Please use a different title or wait a few minutes.")
-
         return cleaned_data
 
     def clean_content(self):
@@ -80,19 +79,18 @@ class BlogPostForm(forms.ModelForm):
             raise ValidationError("Content cannot be empty.")
         if len(content.strip()) < 10:
             raise ValidationError("Content is too short. Please write at least 10 characters.")
+        
         blacklisted_keywords = BlacklistedKeyword.objects.all()
         content_lower = content.lower()
         for keyword in blacklisted_keywords:
             if keyword.keyword.lower() in content_lower:
-                raise ValidationError(
-                    f"Content contains inappropriate word: '{keyword.keyword}'. Please revise your content."
-                )
+                raise ValidationError(f"Content contains inappropriate word: '{keyword.keyword}'. Please revise your content.")
         return content
 
     def save(self, commit=True):
         blog_post = super().save(commit=False)
 
-        # Penanganan gambar (seperti di kode kamu sebelumnya, tidak diubah)
+        # === Handling gambar ===
         if self.cleaned_data.get('image') and blog_post.pk:
             old_post = BlogPost.objects.get(pk=blog_post.pk)
             if old_post.image and old_post.image != self.cleaned_data['image']:
@@ -101,7 +99,6 @@ class BlogPostForm(forms.ModelForm):
         if self.cleaned_data.get('image'):
             image_file = self.cleaned_data['image']
             image = PILImage.open(image_file)
-
             if image.mode == 'RGBA':
                 image = image.convert('RGB')
             image = image.resize((1200, 628), PILImage.Resampling.LANCZOS)
@@ -110,7 +107,6 @@ class BlogPostForm(forms.ModelForm):
             quality = 85
             image.save(image_io, format='WEBP', quality=quality)
             image_io.seek(0)
-
             while image_io.tell() > 100 * 1024 and quality > 10:
                 image_io = io.BytesIO()
                 quality -= 5
@@ -127,25 +123,33 @@ class BlogPostForm(forms.ModelForm):
             blog_post.slug = self.cleaned_data['slug']
             blog_post.save()
 
-            # === Penentuan Kursus Terkait Secara Otomatis ===
+            # === Smart Related Courses ===
             related_courses_qs = Course.objects.none()
 
-            # Berdasarkan kategori
+            # 1️⃣ Berdasarkan kategori (hanya yang belum diarsip)
             if blog_post.category:
-                related_courses_qs = Course.objects.filter(category=blog_post.category)
+                related_courses_qs |= Course.objects.filter(category=blog_post.category).exclude(
+                    status_course__status='archived'
+                )
 
-            
-
-            # Berdasarkan kecocokan judul/konten artikel dengan nama/deskripsi kursus
             content_text = blog_post.content.lower()
             related_courses_qs |= Course.objects.filter(
                 Q(course_name__icontains=blog_post.title) |
                 Q(description__icontains=blog_post.title) |
                 Q(description__icontains=content_text)
-            )
+            ).exclude(status_course__status='archived')
 
 
-            # Gabungkan hasil pencarian dan buang duplikat
+            # 3️⃣ Berdasarkan tag artikel -> level kursus (misal 'advanced', 'basic', dsb)
+            article_tags = blog_post.tags.all()
+            tag_names = [tag.name.lower() for tag in article_tags]
+            if tag_names:
+                related_courses_qs |= Course.objects.filter(
+                    Q(level__in=tag_names),
+                    ~Q(status_course__status='archived')
+                )
+
+            # 4️⃣ Set ke blog_post dan buang duplikat
             blog_post.related_courses.set(related_courses_qs.distinct())
 
             self.save_m2m()
