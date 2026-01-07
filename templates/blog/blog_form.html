@@ -75,17 +75,30 @@
         </div>
 
         <!-- Image -->
-        <div>
-          <label for="{{ form.image.id_for_label }}" class="block font-medium mb-1">
-            Image
-          </label>
-          {{ form.image }}
-          {% if form.image.errors %}
-            <p class="mt-1 text-sm text-red-600">
-              {% for error in form.image.errors %}{{ error }}{% endfor %}
-            </p>
-          {% endif %}
+        <div class="flex items-start gap-4">
+          <!-- Form input -->
+          <div>
+            <label for="{{ form.image.id_for_label }}" class="block font-medium mb-1">
+              Image
+            </label>
+            {{ form.image }}
+            {% if form.image.errors %}
+              <p class="mt-1 text-sm text-red-600">
+                {% for error in form.image.errors %}{{ error }}{% endfor %}
+              </p>
+            {% endif %}
+          </div>
+
+          <!-- Preview gambar -->
+          <div>
+            {% if form.instance.image %}
+              <img id="imagePreview" src="{{ form.instance.image.url }}" alt="Preview" class="h-32 w-32 object-cover border rounded" />
+            {% else %}
+              <img id="imagePreview" src="#" alt="Preview" class="h-32 w-32 object-cover border rounded hidden" />
+            {% endif %}
+          </div>
         </div>
+
 
         <!-- Category -->
         <div>
