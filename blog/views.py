@@ -410,6 +410,9 @@ class TagPostListView(ListView):
             {'category': cat, 'post_count': cat.blogpost_set.filter(status='published').count()}
             for cat in categories
         ]
-        context['tags'] = Tag.objects.filter(blogpost__status='published').distinct()
+        context['tags'] = [
+            {'tag': tag, 'post_count': tag.blogpost_set.filter(status='published').count()}
+            for tag in Tag.objects.all().distinct()
+        ]
         context['current_tag'] = get_object_or_404(Tag, slug=self.kwargs['slug'])
         return context

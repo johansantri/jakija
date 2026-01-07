@@ -190,12 +190,14 @@
           <div class="flex flex-wrap gap-2">
             {% for tag_data in tags|slice:":6" %}
               <a href="{{ tag_data.tag.get_absolute_url }}"
-                 class="text-xs sm:text-sm bg-gray-700 text-white px-2 sm:px-3 py-1 rounded hover:bg-gray-800 transition-colors">
+                class="text-xs sm:text-sm bg-gray-700 text-white px-2 sm:px-3 py-1 rounded hover:bg-gray-800 transition-colors">
                 #{{ tag_data.tag.name }} ({{ tag_data.post_count }})
               </a>
             {% empty %}
               <span class="text-gray-400 text-sm">No tags available.</span>
             {% endfor %}
+
+
           </div>
         </div>
 

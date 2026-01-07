@@ -95,48 +95,48 @@
                             <span>{{ post.date_posted|date:"F d, Y" }}</span>
                             <span class="hidden sm:inline">•</span>
                             <a href="{{ post.category.get_absolute_url }}" 
-                               class="text-red-600 hover:text-red-500 font-medium transition-colors duration-300" 
-                               rel="canonical">
+                            class="text-red-600 hover:text-red-500 font-medium transition-colors duration-300" 
+                            rel="canonical">
                                 {{ post.category|default:"Uncategorized" }}
                             </a>
                             <span class="hidden sm:inline">•</span>
                             <span>{{ post.views }} View{{ post.views|pluralize }}</span>
                             <span class="hidden sm:inline">•</span>
                             <span>{{ post.number_of_comments }} Comment{{ post.number_of_comments|pluralize }}</span>
+
+                            <!-- Social Share Buttons -->
+                            <div class="flex flex-wrap gap-2 sm:gap-3 ml-auto">
+                                <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title|urlencode }}" 
+                                class="flex items-center gap-2 px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-800 hover:text-red-500 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-300 transform hover:-translate-y-1" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                aria-label="Share on Twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
+                                class="flex items-center gap-2 px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-800 hover:text-red-500 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-300 transform hover:-translate-y-1" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                aria-label="Share on Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ post.title|urlencode }}&summary={{ post.meta_description|default:post.title|truncatewords:20|urlencode }}" 
+                                class="flex items-center gap-2 px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-800 hover:text-red-500 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-300 transform hover:-translate-y-1" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                aria-label="Share on LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
                         </div>
+
 
                         <!-- Content -->
                         <div class="prose prose-gray max-w-none text-gray-800 leading-relaxed mb-6">
                             {{ post.content|safe }}
                         </div>
 
-                        <!-- Share Buttons -->
-                        <div class="flex flex-wrap gap-2 sm:gap-3 justify-center">
-                            <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title|urlencode }}" 
-                               class="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 hover:text-red-500 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-300 transform hover:-translate-y-1" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               aria-label="Share on Twitter">
-                                <i class="fab fa-twitter"></i>
-                                <span class="text-sm font-medium"></span>
-                            </a>
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
-                               class="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 hover:text-red-500 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-300 transform hover:-translate-y-1" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               aria-label="Share on Facebook">
-                                <i class="fab fa-facebook-f"></i>
-                                <span class="text-sm font-medium"></span>
-                            </a>
-                            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ post.title|urlencode }}&summary={{ post.meta_description|default:post.title|truncatewords:20|urlencode }}" 
-                               class="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 hover:text-red-500 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-300 transform hover:-translate-y-1" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               aria-label="Share on LinkedIn">
-                                <i class="fab fa-linkedin-in"></i>
-                                <span class="text-sm font-medium"></span>
-                            </a>
-                        </div>
+                       
                     </div>
                 </div>
 
