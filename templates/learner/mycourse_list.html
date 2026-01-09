@@ -81,7 +81,7 @@
                             <a href="{% url 'learner:score_summary' username=request.user.username course_id=enrollment.course.id %}" 
                                 class="text-gray-500 text-sm ml-2 hover:underline" title="View Score Summary"><i class="fas fa-poll"></i> Score</a>
                         </td>
-                        <td class="px-6 py-4 text-gray-600">{{ enrollment.enrolled_at|date:"d M Y" }}</td>
+                        <td class="px-6 py-4 text-gray-600" title="View Timeline"><a href="{% url 'courses:user_course_timeline'  data.enrollment.course.id  %}"><i class="fas fa-clock"></i> {{ enrollment.enrolled_at|date:"d M Y" }}</a></td>
                         <td class="px-6 py-4">
                             <div class="w-full bg-gray-200 rounded-full h-2.5 mb-1 overflow-hidden">
                                 <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: {{ data.progress }}%"></div>

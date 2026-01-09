@@ -48,7 +48,7 @@ from courses.models import (
     AskOra, Choice, Comment, Course, CourseProgress, CourseStatusHistory,
     Enrollment, GradeRange, Instructor, LTIExternalTool1, Material,
     MaterialRead, Payment, PeerReview, Question, QuestionAnswer,LTIResult,
-    Score, Section, Submission, UserActivityLog, CommentReaction, AttemptedQuestion,LastAccessCourse,CourseSessionLog,QuizResult,Video,Quiz
+    Score, Section, Submission, UserActivityLog,Certificate, CommentReaction, AttemptedQuestion,LastAccessCourse,CourseSessionLog,QuizResult,Video,Quiz
 )
 from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
@@ -64,7 +64,7 @@ from decimal import Decimal, ROUND_HALF_UP
 from audit.models import AuditLog
 import smtplib
 from django.core.mail import send_mail, BadHeaderError
-
+from django.db.models import F, Value
 logger = logging.getLogger(__name__)
 
 

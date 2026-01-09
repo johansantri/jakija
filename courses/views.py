@@ -114,6 +114,97 @@ from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from .serializers import SectionSerializer,MaterialSerializer,AssessmentSerializer
 from django.views.decorators.http import require_http_methods
+from datetime import datetime,time
+
+
+from django.utils import timezone
+
+@login_required(login_url='authentication:login')  # ganti 'login' dengan nama URL pattern login-mu
+def user_course_timeline(request, course_id):
+    user = request.user
+    course = get_object_or_404(Course, id=course_id)
+
+    # ⚡ Cek apakah user sudah enroll di course
+    if not Enrollment.objects.filter(user=user, course=course).exists():
+        messages.error(request, "You are not enrolled in this course.")
+        return redirect('authentication:home')  # ganti 'home' dengan nama url pattern home-mu
+
+    sections = course.sections.all()
+
+    # Activity queries
+    enrollments = Enrollment.objects.filter(user=user, course=course).annotate(
+        timestamp=F('enrolled_at'),
+        activity_type=Value('enrolled'),
+        description=F('course__course_name')
+    ).values('timestamp', 'activity_type', 'description')
+
+    materials = MaterialRead.objects.filter(
+        user=user,
+        material__section__in=sections
+    ).annotate(
+        timestamp=F('read_at'),
+        activity_type=Value('material_read'),
+        description=F('material__title')
+    ).values('timestamp', 'activity_type', 'description')
+
+    assessments = AssessmentRead.objects.filter(
+        user=user,
+        assessment__section__in=sections
+    ).annotate(
+        timestamp=F('completed_at'),
+        activity_type=Value('assessment_completed'),
+        description=F('assessment__name')
+    ).values('timestamp', 'activity_type', 'description')
+
+    certificates = Certificate.objects.filter(
+        user=user,
+        course=course
+    ).annotate(
+        timestamp=F('issue_date'),
+        activity_type=Value('certificate_issued'),
+        description=F('total_score')
+    ).values('timestamp', 'activity_type', 'description')
+
+    reviews = CourseRating.objects.filter(
+        user=user,
+        course=course
+    ).annotate(
+        timestamp=F('created_at'),
+        activity_type=Value('course_review'),
+        description=F('comment')
+    ).values('timestamp', 'activity_type', 'description')
+
+    timeline = list(enrollments) + list(materials) + list(assessments) + list(certificates) + list(reviews)
+
+    # ⚡ Convert all timestamps to aware datetime
+    for activity in timeline:
+        ts = activity['timestamp']
+        if ts:
+            if isinstance(ts, datetime):
+                if timezone.is_naive(ts):
+                    activity['timestamp'] = timezone.make_aware(ts)
+            elif isinstance(ts, date):
+                # Convert date -> datetime at 00:00
+                dt = datetime.combine(ts, datetime.min.time())
+                activity['timestamp'] = timezone.make_aware(dt)
+
+    # Urut timeline
+    timeline.sort(key=lambda x: x['timestamp'])
+    # Ambil semua timestamp dari timeline
+    timestamps = [activity['timestamp'].date() for activity in timeline if activity['timestamp']]
+
+    # Hitung jumlah hari unik
+    total_days = len(set(timestamps))
+    context = {
+        'course': course,
+        'timeline': timeline,
+        'total_days': total_days,  # jumlah hari user aktif
+    }
+    return render(request, 'learner/user_course_timeline.html', context)
+
+
+
+
 
 @csrf_exempt
 @require_POST
