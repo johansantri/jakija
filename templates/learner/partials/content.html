@@ -213,14 +213,14 @@
                     {# ==================== BAGIAN REVIEW JAWABAN TEMAN ==================== #}
                     {% if can_review and submissions %}
                         <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-12">
-                            <h4 class="text-3xl font-bold text-purple-700 mb-8">Review Jawaban Teman ({{ submissions|length }})</h4>
+                            <h4 class="text-3xl font-bold text-purple-700 mb-8">Review a Friend’s Answer ({{ submissions|length }})</h4>
 
                             {% for submission in submissions %}
                             <div class="border border-purple-200 rounded-2xl p-8 mb-10 bg-purple-50">
                                 <div class="flex justify-between items-start mb-6">
                                     <h5 class="text-2xl font-bold text-purple-800">{{ submission.askora.title }}</h5>
                                     <span class="text-purple-600 font-medium">
-                                        oleh {{ submission.user.get_full_name|default:submission.user.username }}
+                                        Written by {{ submission.user.get_full_name|default:submission.user.username }}
                                     </span>
                                 </div>
 
@@ -230,7 +230,7 @@
 
                                 {% if submission.answer_file %}
                                 <a href="{{ submission.answer_file.url }}" target="_blank" class="text-purple-600 hover:underline mb-6 inline-block">
-                                    Download Lampiran
+                                    Download 
                                 </a>
                                 {% endif %}
 
@@ -242,19 +242,20 @@
                                     {% csrf_token %}
 
                                     <div>
-                                        <label class="block text-xl font-bold text-gray-800 mb-4">Beri Nilai (1-5)</label>
+                                        <label class="block text-xl font-bold text-gray-800 mb-4">Give a Rating (1-5)</label>
                                         <select name="score" required class="w-full px-6 py-4 text-lg border-2 border-purple-300 rounded-xl focus:ring-4 focus:ring-purple-200">
-                                            <option value="">Pilih nilai...</option>
-                                            <option value="5">5 - Sangat Baik</option>
-                                            <option value="4">4 - Baik</option>
-                                            <option value="3">3 - Cukup</option>
-                                            <option value="2">2 - Kurang</option>
-                                            <option value="1">1 - Sangat Kurang</option>
+                                            <option value="">Select a rating...</option>
+                                            <option value="5">5 - Excellent</option>
+                                            <option value="4">4 - Good</option>
+                                            <option value="3">3 - Fair</option>
+                                            <option value="2">2 - Poor</option>
+                                            <option value="1">1 - Very Poor</option>
+
                                         </select>
                                     </div>
 
                                     <div>
-                                        <label class="block text-xl font-bold text-gray-800 mb-4">Komentar (Opsional)</label>
+                                        <label class="block text-xl font-bold text-gray-800 mb-4">Comment (Opsional)</label>
                                         <textarea name="comment" rows="4"
                                                 class="w-full px-6 py-4 border-2 border-purple-300 rounded-xl focus:ring-4 focus:ring-purple-200"
                                                 placeholder="Beri masukan yang membangun..."></textarea>
@@ -262,7 +263,7 @@
 
                                     <button type="submit"
                                             class="inline-flex items-center gap-3 mt-6 px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg transition">
-                                        Kirim Review Ini
+                                        Submit This Review
                                     </button>
                                 </form>
                             </div>
@@ -375,7 +376,78 @@
 
                     {% if is_quiz %}
                         {% if is_started %}
+                            <style>
+                                /* Proteksi copy-paste & seleksi teks */
+                                #quiz-form,
+                                #quiz-form h3,
+                                #quiz-form .space-y-3,
+                                #quiz-form label span {
+                                    -webkit-user-select: none !important;
+                                    -moz-user-select: none !important;
+                                    -ms-user-select: none !important;
+                                    user-select: none !important;
+                                }
 
+                                /* Pastikan radio button dan label tetap interaktif */
+                                #quiz-form label {
+                                    pointer-events: auto !important;
+                                    cursor: pointer;
+                                }
+
+                                #quiz-form input[type="radio"] {
+                                    pointer-events: auto !important;
+                                }
+
+                                /* Opsional: agar label terlihat lebih jelas bisa diklik */
+                                #quiz-form label:hover {
+                                    background-color: rgba(99, 102, 241, 0.08); /* indigo tipis */
+                                }
+                            </style>
+
+                            <script>
+                                // Blokir klik kanan
+                                document.addEventListener('contextmenu', function(e) {
+                                    if (e.target.closest('#quiz-form')) {
+                                        e.preventDefault();
+                                        alert('Copying questions is prohibited during the exam, please focus on completing the exam.');
+                                    }
+                                });
+
+                                // Blokir shortcut: Ctrl+C, Ctrl+A, Ctrl+X, Ctrl+V, Cmd+C dll.
+                                document.addEventListener('keydown', function(e) {
+                                    if (e.target.closest('#quiz-form')) {
+                                        if ((e.ctrlKey || e.metaKey) && 
+                                            (e.key === 'c' || e.key === 'a' || e.key === 'x' || e.key === 'v' || e.key === 's' || e.key === 'p')) {
+                                            e.preventDefault();
+                                        }
+                                        // Blokir Print Screen (PrtSc) dan screenshot shortcut umum
+                                        if (e.key === 'PrintScreen' || (e.altKey && e.key === 'PrintScreen')) {
+                                            e.preventDefault();
+                                        }
+                                    }
+                                });
+
+                                // Blokir drag teks
+                                document.addEventListener('dragstart', function(e) {
+                                    if (e.target.closest('#quiz-form')) {
+                                        e.preventDefault();
+                                    }
+                                });
+
+                                // Opsional: Blur window jika user pindah tab (deteksi curang)
+                                let hiddenTime = null;
+                                document.addEventListener('visibilitychange', function() {
+                                    if (document.hidden) {
+                                        hiddenTime = new Date();
+                                        alert('Warning: Do not leave the exam page! Staying on this page is required to maintain exam integrity.');
+                                    } else if (hiddenTime) {
+                                        const timeAway = (new Date() - hiddenTime) / 1000;
+                                        if (timeAway > 10) {
+                                            alert(`You have been away from the exam for ${Math.round(timeAway)} seconds. This may be reported.`);
+                                        }
+                                    }
+                                });
+                            </script>
                             {% if is_expired %}
 
                                 <!-- ALERT - Assessment Period Ended -->
