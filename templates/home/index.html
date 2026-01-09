@@ -179,15 +179,17 @@
         <a href="{% url 'courses:micro_detail' microcredential.id microcredential.slug %}"
            class="group flex flex-col md:flex-row items-center bg-white rounded-2xl shadow-md hover:shadow-2xl border border-gray-100 hover:border-red-200 transition-all duration-500 overflow-hidden">
           
+          <!-- IMAGE -->
           <div class="p-6 md:p-8 flex-shrink-0">
-            <div class="w-40 h-40 lg:w-48 lg:h-48 rounded-2xl overflow-hidden ring-4 ring-white shadow-lg group-hover:ring-red-400 group-hover:scale-105 transition-all duration-500">
+            <div class="w-48 h-48 rounded-2xl overflow-hidden flex items-center justify-center bg-gradient-to-tr from-red-50 via-white to-gray-50">
               <img src="{{ microcredential.image.url|default:'/static/images/micro-200.webp' }}"
                    alt="{{ microcredential.title }}"
-                   class="w-full h-full object-cover"
+                   class="w-full h-full object-contain"
                    loading="lazy">
             </div>
           </div>
 
+          <!-- CONTENT -->
           <div class="p-6 md:p-8 flex-1">
             <h3 class="text-2xl font-bold text-gray-900 group-hover:text-red-600 transition-colors duration-300 line-clamp-2">
               {{ microcredential.title|truncatechars_safe:60 }}
@@ -219,6 +221,7 @@
     {% endif %}
   </div>
 </section>
+
 
 
 <!-- WHY JAKIJA SECTION -->
@@ -277,41 +280,40 @@
 <!-- POPULAR CATEGORIES -->
 <section class="py-16 lg:py-24 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
-      What Categories Are Poppin' on <span class="text-red-600">JakIja</span>?
+    
+    <!-- Heading -->
+    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
+      What Categories Are <span class="text-red-600">Poppin'</span> on JakIja?
     </h2>
-    <p class="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto mb-12">
+    <p class="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed">
       Find your vibe and career path. Pick the categories that hit different.
     </p>
 
+    <!-- Categories Grid -->
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
       {% for category in popular_categories|slice:":12" %}
-        <a href="{% url 'courses:category_list' category.slug %}"
-           aria-label="View courses in {{ category.name }} category"
-           class="group flex flex-col items-center justify-center p-4 bg-white border border-gray-200 rounded-lg
-                  hover:border-red-500 hover:bg-red-50 transition-transform duration-200 transform hover:scale-105 shadow-sm">
-          
-          <!-- Optional: emoji/icon -->
-          <span class="text-3xl mb-2">
-            {% if category.icon %}{{ category.icon }}{% else %}📚{% endif %}
-          </span>
+      <a href="{% url 'courses:category_list' category.slug %}"
+         class="group flex flex-col items-center justify-center p-5 bg-white border border-gray-200 rounded-xl
+                hover:border-red-500 hover:bg-red-50 transition-transform duration-300 transform hover:-translate-y-1
+                shadow-sm hover:shadow-md">
+        
+        <!-- Category Name -->
+        <span class="text-sm sm:text-base font-semibold text-gray-800 group-hover:text-red-600 text-center break-words">
+          {{ category.name }}
+        </span>
 
-          <!-- Category Name -->
-          <span class="text-sm sm:text-base font-semibold text-gray-800 group-hover:text-red-600 text-center break-words">
-            {{ category.name }}
+        <!-- Number of courses -->
+        {% if category.num_courses %}
+          <span class="mt-1 text-xs text-gray-500 group-hover:text-red-500">
+            ({{ category.num_courses }})
           </span>
-
-          <!-- Number of courses -->
-          {% if category.num_courses %}
-            <span class="mt-1 text-xs text-gray-500 group-hover:text-red-500">
-              ({{ category.num_courses }})
-            </span>
-          {% endif %}
-        </a>
+        {% endif %}
+      </a>
       {% endfor %}
     </div>
   </div>
 </section>
+
 
 
 

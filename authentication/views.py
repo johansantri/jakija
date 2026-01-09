@@ -1340,7 +1340,7 @@ def home(request):
                     category_courses__end_enrol__gte=timezone.now()
                 )
             )
-        ).order_by('-num_courses')[:4]
+        ).order_by('-num_courses')[:5]
 
         # Microcredential aktif
         popular_microcredentials = MicroCredential.objects.filter(
