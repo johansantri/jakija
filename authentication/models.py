@@ -274,7 +274,11 @@ class CustomUser(AbstractUser):
     instagram = models.CharField(_("instagram"), max_length=200, blank=True)
     linkedin = models.CharField(_("linkedin"), max_length=200, blank=True)
     twitter = models.CharField(_("twitter"), max_length=200, blank=True)
-
+    interests = models.ManyToManyField(
+        'courses.Category',  
+        blank=True,
+        related_name='users_with_interest'
+    )
     # Status Fields
     is_member = models.BooleanField(_("member status"), default=False, help_text=_("Designates whether the user can log into this admin member."))
     is_subscription = models.BooleanField(_("subscription status"), default=False, help_text=_("Designates whether the user can log into this admin subscription."))

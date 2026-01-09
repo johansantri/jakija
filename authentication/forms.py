@@ -233,7 +233,7 @@ class UserProfileForm(forms.ModelForm):
         fields = [
             'first_name', 'last_name', 'email', 'phone', 'gender', 'birth',
             'country', 'photo', 'address', 'hobby', 'education', 'university',
-            'tiktok', 'youtube', 'facebook', 'instagram', 'linkedin', 'twitter'
+            'tiktok', 'youtube', 'facebook', 'instagram', 'linkedin', 'interests', 'twitter'
         ]
         widgets = {
             'first_name': forms.TextInput(attrs={
@@ -275,6 +275,10 @@ class UserProfileForm(forms.ModelForm):
             'hobby': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition'
             }),
+            'interests': forms.CheckboxSelectMultiple(attrs={
+                'class': 'space-y-2'
+            }),
+
             'education': forms.Select(attrs={
                 'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition'
             }),
@@ -317,6 +321,7 @@ class UserProfileForm(forms.ModelForm):
             'photo': 'Profile Photo',
             'address': 'Address',
             'hobby': 'Hobby',
+            'interests': 'Interests',
             'education': 'Education',
             'university': 'University',
             'tiktok': 'TikTok',
@@ -386,13 +391,20 @@ class UserProfileForm(forms.ModelForm):
 
         return photo
 
+    def clean_interests(self):
+        interests = self.cleaned_data.get('interests')
+        if interests and len(interests) > 5:
+            raise forms.ValidationError("You can select a maximum of 5 interests.")
+        return interests
+    
     def save(self, commit=True):
         user = super().save(commit=False)
         photo = self.cleaned_data.get('photo')
 
-        if photo:
-            # ✅ Hapus foto lama jika diganti
-            if self.old_photo and self.old_photo != photo:
+        # Cek apakah user upload file baru
+        if photo and isinstance(photo, UploadedFile):
+            # Hapus foto lama jika ada dan berbeda
+            if self.old_photo and self.old_photo.name != photo.name:
                 try:
                     old_path = self.old_photo.path
                     if os.path.isfile(old_path):
@@ -400,27 +412,28 @@ class UserProfileForm(forms.ModelForm):
                 except Exception as e:
                     print(f"Gagal menghapus foto lama: {e}")
 
-            # ✅ Proses WebP
+            # Proses WebP
             img = Image.open(photo)
-
-            # Resize jika terlalu besar
             max_size = (300, 300)
             img.thumbnail(max_size)
 
-            # Konversi ke WebP
             output = BytesIO()
             img.convert("RGB").save(output, format="WEBP", quality=85)
             output.seek(0)
 
-            # Simpan file WebP
             filename = f"{photo.name.rsplit('.', 1)[0]}.webp"
             user.photo = InMemoryUploadedFile(
                 output, 'ImageField', filename, 'image/webp',
                 sys.getsizeof(output), None
             )
+        else:
+            # Tidak ada upload baru → biarkan foto lama
+            user.photo = self.old_photo
 
         if commit:
             user.save()
+            self.save_m2m()
+
         return user
 
 

@@ -339,6 +339,26 @@ def mycourse(request):
     for lic in user_licenses:
         lic.is_active = lic.start_date <= today <= lic.expiry_date
 
+
+
+    user_interests = Subquery(user.interests.values('id'))
+
+    enrolled_course_categories = Subquery(
+        Category.objects.filter(
+            category_courses__in=enrollments.values('course')  # ganti courses -> category_courses
+        ).values('id')
+    )
+
+    recommended_courses = Course.objects.filter(
+        status_course__status='published',
+        start_enrol__lte=timezone.now(),
+        end_enrol__gte=timezone.now()
+    ).filter(
+        Q(category__in=user_interests) | Q(category__in=enrolled_course_categories)
+    ).exclude(
+        id__in=Subquery(enrollments.values('course'))
+    ).distinct().order_by('-created_at')[:5]
+
     return render(request, 'learner/mycourse_list.html', {
         'page_obj': enrollments_page_obj,
         'search_query': search_query,
@@ -346,6 +366,7 @@ def mycourse(request):
         'active_courses': active_courses,
         'completed_courses': completed_courses,
         'last_access_map': last_access_map,
+        'recommended_courses': recommended_courses,
     })
 
 @custom_ratelimit

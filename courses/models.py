@@ -617,6 +617,8 @@ class Course(models.Model):
     def has_been_rated_by(self, user):
         return self.ratings.filter(user=user).exists()
 
+
+
 class CourseTeam(models.Model):
     ROLE_CHOICES = [
         ('instructor', 'Instruktur'),
