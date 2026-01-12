@@ -114,7 +114,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from .serializers import SectionSerializer,MaterialSerializer,AssessmentSerializer
 from django.views.decorators.http import require_http_methods
-from datetime import datetime,time
+from datetime import datetime
 
 
 from django.utils import timezone
