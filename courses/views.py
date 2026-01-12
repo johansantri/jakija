@@ -754,31 +754,32 @@ def add_microcredential_review(request, microcredential_id):
     })
 
 
+
 def self_course(request, username, id, slug):
+    # ================== AUTH ==================
     if not request.user.is_authenticated:
         return redirect(f"/login/?next={request.path}")
 
     course = get_object_or_404(Course, id=id, slug=slug)
-
-    # Redirect jika bukan user yang benar
     if request.user.username != username:
         return redirect('authentication:course_list')
 
     is_instructor = course.instructor == request.user
-    course_name = course.course_name
 
-    # Prefetch semua konten yang diperlukan
+    # ================== PREFETCH SECTIONS ==================
     sections = Section.objects.filter(courses=course).prefetch_related(
         Prefetch('materials', queryset=Material.objects.all()),
-        Prefetch('assessments', queryset=Assessment.objects.all().prefetch_related(
-            Prefetch('questions', queryset=Question.objects.all().prefetch_related(
-                Prefetch('choices', queryset=Choice.objects.all())
-            )),
-            Prefetch('ask_oras', queryset=AskOra.objects.all())
-        ))
+        Prefetch(
+            'assessments',
+            queryset=Assessment.objects.all().prefetch_related(
+                'questions__choices',
+                'ask_oras',
+                'quizzes__options'
+            )
+        )
     )
 
-    # Gabungkan material dan assessment jadi satu urutan
+    # ================== COMBINED CONTENT ==================
     combined_content = []
     for section in sections:
         for material in section.materials.all():
@@ -788,11 +789,11 @@ def self_course(request, username, id, slug):
 
     total_content = len(combined_content)
 
-    # Tentukan konten saat ini
+    # ================== CURRENT CONTENT ==================
     material_id = request.GET.get('material_id')
     assessment_id = request.GET.get('assessment_id')
-    current_content = None
 
+    current_content = None
     if not material_id and not assessment_id:
         current_content = combined_content[0] if combined_content else None
     elif material_id:
@@ -804,162 +805,52 @@ def self_course(request, username, id, slug):
         section = next((s for s in sections if assessment in s.assessments.all()), None)
         current_content = ('assessment', assessment, section)
 
-    # Komentar
-    comments = None
+    # ================== COMMENTS ==================
     page_comments = []
     if current_content:
         if current_content[0] == 'material':
-            material = current_content[1]
-            comments = Comment.objects.filter(material=material, parent=None).order_by('-created_at')
-        elif current_content[0] == 'assessment':
-            section = current_content[2]
-            comments = Comment.objects.filter(material__section=section, parent=None).order_by('-created_at')
-
-        if comments:
-            paginator = Paginator(comments, 5)
-            page_number = request.GET.get('page')
-            page_comments = paginator.get_page(page_number)
-
-    # Cek status assessment hanya jika sedang di assessment
-    is_started = False
-    is_expired = False
-    remaining_time = 0
-
-    if not is_instructor and current_content and current_content[0] == 'assessment':
-        assessment = current_content[1]
-        session = AssessmentSession.objects.filter(user=request.user, assessment=assessment).first()
-        if session:
-            is_started = True
-            remaining_time = int((session.end_time - timezone.now()).total_seconds())
-            if remaining_time <= 0:
-                is_expired = True
-                remaining_time = 0
+            comments = Comment.objects.filter(material=current_content[1], parent=None).order_by('-created_at')
         else:
-            is_started = assessment.duration_in_minutes == 0
+            comments = Comment.objects.filter(material__section=current_content[2], parent=None).order_by('-created_at')
+        paginator = Paginator(comments, 5)
+        page_comments = paginator.get_page(request.GET.get('page'))
 
-    # Index konten
-    current_index = -1
-    if current_content:
-        for i, content in enumerate(combined_content):
-            if (content[0] == current_content[0] and
-                content[1].id == current_content[1].id and
-                content[2].id == current_content[2].id):
-                current_index = i
-                break
-
-    # Navigasi
+    # ================== NAVIGATION ==================
+    current_index = next((i for i, c in enumerate(combined_content) if c == current_content), 0)
     previous_content = combined_content[current_index - 1] if current_index > 0 else None
-    next_content = combined_content[current_index + 1] if 0 <= current_index < total_content - 1 else None
-    is_last_content = next_content is None
+    next_content = combined_content[current_index + 1] if current_index < total_content - 1 else None
 
     previous_url = "#" if not previous_content else f"?{previous_content[0]}_id={previous_content[1].id}"
     next_url = "#" if not next_content else f"?{next_content[0]}_id={next_content[1].id}"
 
-    # Progres dan tracking
-    if not is_instructor:
-        if current_content:
-            if current_content[0] == 'material':
-                material = current_content[1]
-                MaterialRead.objects.get_or_create(user=request.user, material=material)
-            elif current_content[0] == 'assessment':
-                assessment = current_content[1]
-                AssessmentRead.objects.get_or_create(user=request.user, assessment=assessment)
-
-        user_progress, _ = CourseProgress.objects.get_or_create(user=request.user, course=course)
-        if current_index + 1 > user_progress.progress_percentage / 100 * total_content:
-            user_progress.progress_percentage = ((current_index + 1) / total_content) * 100
-            user_progress.save()
-
-    # Skor dan penilaian
-    user_grade = None
-    if not is_instructor:
-        score = Score.objects.filter(user=request.user.username, course=course).order_by('-date').first()
-        user_grade = 'Fail'
-        if score and score.total_questions > 0:
-            score_percentage = (score.score / score.total_questions) * 100
-            user_grade = calculate_grade(score_percentage, course)
-
-    assessments = Assessment.objects.filter(section__courses=course)
-    assessment_scores = []
-    total_score = 0
-    total_max_score = 0
-    all_assessments_submitted = True
-
-    grade_range = GradeRange.objects.filter(course=course)
-    if grade_range.exists():
-        pass_grade = grade_range.filter(name='Pass').first()
-        passing_threshold = pass_grade.min_grade if pass_grade else 0
-    else:
-        from django.urls import reverse
-        grade_url = reverse('courses:course_grade', kwargs={'id': course.id})
-        message = f'Grade range not found for this course. <a href="{grade_url}">Click here to add it.</a>'
-        return render(request, 'error.html', {'message': message})
-
-
-    for assessment in assessments:
-        score_value = Decimal(0)
-        total_questions = assessment.questions.count()
-        total_correct = 0
-        answers_exist = False
-
-        if total_questions > 0:
-            for question in assessment.questions.all():
-                answers = QuestionAnswer.objects.filter(question=question, user=request.user)
-                if answers.exists():
-                    answers_exist = True
-                total_correct += answers.filter(choice__is_correct=True).count()
-
-            if not answers_exist:
-                all_assessments_submitted = False
-
-            if total_questions > 0:
-                score_value = (Decimal(total_correct) / Decimal(total_questions)) * Decimal(assessment.weight)
-
-        else:
-            # Handle AskOra
-            askora_submissions = Submission.objects.filter(
-                askora__assessment=assessment, user=request.user
-            )
-            if not askora_submissions.exists():
-                all_assessments_submitted = False
-            else:
-                latest_submission = askora_submissions.order_by('-submitted_at').first()
-                assessment_score = AssessmentScore.objects.filter(submission=latest_submission).first()
-                if assessment_score:
-                    score_value = Decimal(assessment_score.final_score)
-
-        score_value = min(score_value, Decimal(assessment.weight))
-        total_score += score_value
-        total_max_score += assessment.weight
-
-        assessment_scores.append({
-            'assessment': assessment,
-            'score': score_value,
-            'weight': assessment.weight
-        })
+    # ================== VIDEO QUIZZES JSON ==================
+    video_quizzes = []
+    if current_content and current_content[0] == 'assessment':
+        for quiz in current_content[1].quizzes.all():
+            # serialize hanya yang dibutuhkan
+            video_quizzes.append({
+                'id': quiz.id,
+                'video_url': quiz.video.file.url,
+                'time_in_video': quiz.time_in_video,
+                'question_type': quiz.question_type,
+                'question': quiz.question,
+                'options': [{'id': opt.id, 'text': opt.text} for opt in quiz.options.all()],
+            })
 
     context = {
         'course': course,
-        'course_name': course_name,
         'sections': sections,
         'current_content': current_content,
-        'previous_url': previous_url,
-        'next_url': next_url,
-        'course_progress': user_progress.progress_percentage if not is_instructor else None,
-        'user_grade': user_grade if not is_instructor else None,
-        'assessment_results': assessment_scores,
-        'total_score': total_score,
-        'overall_percentage': (total_score / total_max_score * 100) if total_max_score > 0 else 0,
-        'total_weight': total_max_score,
-        'status': 'Pass' if total_score >= passing_threshold else 'Fail',
-        'is_last_content': is_last_content,
-        'comments': page_comments,
         'material': current_content[1] if current_content and current_content[0] == 'material' else None,
         'assessment': current_content[1] if current_content and current_content[0] == 'assessment' else None,
+        'previous_url': previous_url,
+        'next_url': next_url,
+        'comments': page_comments,
+        'is_instructor_preview': is_instructor,
+        'video_quizzes_json': json.dumps(video_quizzes),  # dikirim aman ke JS
     }
 
     return render(request, 'instructor/self_course.html', context)
-
 
 
 

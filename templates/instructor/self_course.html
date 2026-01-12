@@ -1,119 +1,153 @@
 {% extends 'home/tes.html' %}
-{% load static %}
 {% load extra_custom_filters %}
 {% block content %}
 
-  <!-- Main Content -->
- 
-    {% if current_content %}
-      {% if current_content.0 == 'material' %}
-        <!-- Material Content -->
-        <div class="material-item" style="border-bottom: 2px solid rgb(116, 114, 114); padding: 20px; background-color: #f9f9f9;">
-          <h2 class="material-title h4" style="color: rgb(0, 0, 0);">{{ current_content.1.title }}</h2>
-          <p class="material-description" style="font-size: 14px; color: #555;">{{ current_content.1.description |make_iframes_responsive|safe}}</p>
-          <div class="comment-section" style="margin-top: 30px;">
-            <h4>Leave a Comment for discussion</h4>
-            <form method="POST" action="{% url 'courses:add_comment' material_id=current_content.1.id %}">
-              {% csrf_token %}
-              <div class="form-group">
-                <textarea name="content" class="form-control" rows="4" placeholder="Write your comment here..." required></textarea>
-              </div>
-              <br>
-              <button type="submit" class="btn btn-primary">Post Comment</button>
-            </form>
-          </div>
-        </div>
+<div class="course-container">
 
-        <!-- Comments Section -->
-        <div class="material-item border-bottom p-4 bg-light">
-          {% if comments %}
-            <div class="comments-section">
-              <hr>
-              <div class="comments-list mt-4">
-                {% for comment in comments %}
-                  <div class="comment-item border rounded p-3 mb-3 bg-white shadow-sm">
-                    <p>
-                      <span class="fw-bold">{{ comment.user.username }}</span> 
-                      <small class="text-muted">Posted on {{ comment.created_at|date:"F j, Y, g:i a" }}</small>
-                    </p>
-                    <p>{{ comment.content }}</p>
+    <h1 class="text-2xl font-bold">{{ course.course_name }}</h1>
 
-                    <!-- Reply Button -->
-                    <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#replyForm{{ comment.id }}" aria-expanded="false" aria-controls="replyForm{{ comment.id }}">
-                      Reply
-                    </button>
-
-                    <!-- Reply Form (hidden by default) -->
-                    <div class="collapse" id="replyForm{{ comment.id }}">
-                      <form method="POST" action="{% url 'courses:add_comment' material_id=current_content.1.id %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="parent_comment_id" value="{{ comment.id }}">
-                        <div class="form-group">
-                          <textarea name="content" class="form-control" rows="3" placeholder="Write your reply here..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-2">Post Reply</button>
-                      </form>
-                    </div>
-                  </div>
-                {% empty %}
-                  <div class="alert alert-info" role="alert">
-                    No comments yet. Be the first to comment!
-                  </div>
-                {% endfor %}
-              </div>
+    <!-- ================= MATERIAL ================= -->
+    {% if current_content.0 == 'material' %}
+        <div class="material-section mt-4 p-4 border rounded">
+            <h2 class="text-xl font-semibold">{{ material.title }}</h2>
+            <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-12 prose prose-lg lg:prose-xl max-w-none text-gray-700">
+                {{ material.description|make_iframes_responsive|safe }}
             </div>
-          {% endif %}
         </div>
-
-      {% elif current_content.0 == 'assessment' %}
-        <!-- Assessment Content -->
-        {% if current_content.1.questions.exists %}
-        <div class="assessment-item" style="border-bottom: 2px solid rgb(134, 134, 134); padding: 20px; background-color: #f9f9f9;">
-          <h3 class="h5" style="color: rgb(2, 2, 2); font-size: 24px;">Assessment: {{ current_content.1.name }}</h3>
-          
-          <!-- Display time from DB -->
-          <p>Time for this assessment: {{ current_content.1.duration_in_minutes }} minutes</p>
-          
-          <form method="POST" action="{% url 'courses:submit_assessment' assessment_id=current_content.1.id %}">
-            {% csrf_token %}
-            <ul style="list-style: none; padding-left: 0;">
-              {% for question in current_content.1.questions.all|randomize %}
-                <li class="question" style="margin-bottom: 30px;">
-                  <div style="display: inline-block; margin-left: 10px; padding: 10px; background-color: #e9ecef; border-radius: 8px; font-size: 18px; color: #555;">
-                    {{ question.text |safe }}
-                  </div>
-                  <ul style="list-style: none; padding-left: 0; margin-top: 10px;">
-                    {% for choice in question.choices.all|randomize %}
-                      <li style="margin-bottom: 15px;">
-                        <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}" id="choice_{{ choice.id }}">
-                        <label for="choice_{{ choice.id }}" style="cursor: pointer;">{{ choice.text |safe }}</label>
-                      </li>
-                    {% endfor %}
-                  </ul>
-                </li>
-              {% endfor %}
-            </ul>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
-        {% endif %}
-      {% endif %}
-
-      <!-- Navigation buttons -->
-      <div class="d-flex justify-content-between" style="margin-top: 30px;">
-        <a href="{{ previous_url }}" class="btn btn-secondary">Previous</a>
-        {% if is_last_content %}
-          <p class="text-center">You have reached the end of this content. Thank you for participating!</p>
-        {% else %}
-          <a href="{{ next_url }}" class="btn btn-primary">Next</a>
-        {% endif %}
-      </div>
     {% endif %}
- 
 
-  {% block scripts %}
-    <script>
-      // Remove the timer-related logic
-    </script>
-  {% endblock %}
+    <!-- ================= ASSESSMENT ================= -->
+    {% if current_content.0 == 'assessment' %}
+        <div class="assessment-section mt-4 p-4 border rounded">
+            <h2 class="text-xl font-semibold">{{ assessment.title }}</h2>
+                <!-- ===== MCQ ===== -->
+               {% if assessment.questions.exists %}
+                <div class="mcq-section mt-4">
+                    <h3 class="font-semibold mb-2">Pilihan Ganda</h3>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for question in assessment.questions.all %}
+                            <div class="question mb-4 p-3 border rounded">
+                                <p class="font-medium"><strong>{{ question.text|safe }}</strong></p>
+
+                                {% if question.choices.exists %}
+                                    {% for choice in question.choices.all %}
+                                        <div class="flex items-center mb-1">
+                                            <input type="radio"
+                                                  id="q{{ question.id }}_c{{ choice.id }}"
+                                                  name="question_{{ question.id }}"
+                                                  value="{{ choice.id }}"
+                                                  class="mr-2">
+                                            <label for="q{{ question.id }}_c{{ choice.id }}">{{ choice.text|safe }}</label>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="text-sm text-gray-500 italic">Belum ada pilihan.</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                            Submit Jawaban
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+
+
+            <!-- ORA -->
+            {% if assessment.ask_oras.all %}
+                <div class="ora-section mt-2">
+                    <h3 class="font-semibold">Open Response</h3>
+                    {% for ao in assessment.ask_oras.all %}
+                        <div class="ora-item mb-2">
+                            <p class="font-medium">{{ ao.title }}</p>
+                            <p>{{ ao.question_text|safe }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if assessment.quizzes.exists %}
+              <div class="video-quiz-section mt-4">
+                  <h3 class="font-semibold mb-2">{{ assessment.title }} (Video Quiz)</h3>
+
+                  {% with video=assessment.quizzes.first.video %}
+                  <div class="relative w-full overflow-hidden rounded-lg shadow-lg" style="padding-top: 56.25%;">
+                      <video id="videoPlayer" class="absolute inset-0 w-full h-full rounded-lg" controls>
+                          <source src="{{ video.file.url }}" type="video/mp4">
+                          Your browser does not support the video tag.
+                      </video>
+                  </div>
+                  {% endwith %}
+
+                  <div id="quizContainer" class="mt-4"></div>
+              </div>
+
+              <script>
+                  // Pastikan JSON valid
+                  const quizzes = {{ video_quizzes_json|safe }};
+
+                  const video = document.getElementById('videoPlayer');
+                  const container = document.getElementById('quizContainer');
+                  let currentQuizIndex = 0;
+
+                  function showQuiz(quiz) {
+                      container.innerHTML = '';
+                      let html = `<div class="p-4 border rounded bg-gray-50 mb-2">
+                                      <p class="font-medium mb-2">${quiz.question}</p>`;
+                      quiz.options.forEach(opt => {
+                          html += `<div class="flex items-center mb-1">
+                                      <input type="radio" id="quiz${quiz.id}_opt${opt.id}" name="quiz_${quiz.id}" class="mr-2">
+                                      <label for="quiz${quiz.id}_opt${opt.id}">${opt.text}</label>
+                                  </div>`;
+                      });
+                      html += `</div>`;
+                      container.innerHTML = html;
+                  }
+
+                  video.addEventListener('timeupdate', () => {
+                      if (currentQuizIndex >= quizzes.length) return;
+
+                      const quiz = quizzes[currentQuizIndex];
+                      if (video.currentTime >= quiz.time_in_video) {
+                          showQuiz(quiz);
+                          currentQuizIndex++;
+                      }
+                  });
+              </script>
+              {% endif %}
+
+
+            <!-- LTI -->
+            {% if assessment.lti_tool %}
+                <div class="lti-section mt-2">
+                    <h3 class="font-semibold">LTI Tool</h3>
+                    <p>Assessment menggunakan LTI tool.</p>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <!-- ================= COMMENTS ================= -->
+    <div class="comments-section mt-4 p-4 border rounded">
+        <h3 class="font-semibold">Comments</h3>
+        {% for comment in comments %}
+            <div class="comment mb-2 border p-2 rounded">
+                <p><strong>{{ comment.user.username }}</strong>: {{ comment.text }}</p>
+                <small>{{ comment.created_at }}</small>
+            </div>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
+    </div>
+
+    <!-- ================= NAVIGATION ================= -->
+    <div class="navigation mt-4 flex justify-between">
+        <a href="{{ previous_url }}" class="bg-gray-200 px-4 py-2 rounded">Previous</a>
+        <a href="{{ next_url }}" class="bg-gray-200 px-4 py-2 rounded">Next</a>
+    </div>
+
+</div>
+
 {% endblock %}

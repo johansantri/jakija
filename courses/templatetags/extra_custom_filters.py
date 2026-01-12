@@ -7,6 +7,7 @@ from io import BytesIO
 from PIL import Image  # Pastikan ini ada
 import re
 from decimal import Decimal
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -75,12 +76,40 @@ def is_course_cert_eligible(course):
     return passing_ratio >= 0.4
 
 
+
 @register.filter
 def make_iframes_responsive(value):
-    # Tambahkan wrapper div responsive pada semua iframe
-    pattern = r'(<iframe.*?</iframe>)'
-    replacement = r'<div class="ratio ratio-16x9">\1</div>'
-    return re.sub(pattern, replacement, value, flags=re.DOTALL)
+    """
+    Bungkus iframe YouTube/Vimeo saja agar responsive.
+    Canva iframe biarkan asli supaya tidak blank.
+    """
+    if not value:
+        return value
+
+    pattern = r'(<iframe[^>]*>.*?</iframe>)'
+
+    def wrap_iframe(match):
+        iframe_tag = match.group(1)
+
+        # Cek src iframe
+        if 'youtube.com' in iframe_tag or 'youtu.be' in iframe_tag or 'vimeo.com' in iframe_tag:
+            # Tambahkan class & atribut
+            if 'class=' not in iframe_tag:
+                iframe_tag = iframe_tag.replace('<iframe', '<iframe class="absolute inset-0 w-full h-full"')
+            if 'allowfullscreen' not in iframe_tag:
+                iframe_tag = iframe_tag.replace('<iframe', '<iframe allowfullscreen')
+            if 'loading=' not in iframe_tag:
+                iframe_tag = iframe_tag.replace('<iframe', '<iframe loading="lazy"')
+            # Bungkus div responsive
+            return f'<div class="relative w-full overflow-hidden rounded-xl shadow-lg" style="padding-top: 56.25%;">{iframe_tag}</div>'
+        else:
+            # Canva / embed lain → tampilkan apa adanya
+            return iframe_tag
+
+    result = re.sub(pattern, wrap_iframe, value, flags=re.IGNORECASE | re.DOTALL)
+    return mark_safe(result)
+
+
 
 @register.filter
 def get_item(dictionary, key):
