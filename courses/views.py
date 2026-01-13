@@ -825,16 +825,27 @@ def self_course(request, username, id, slug):
 
     # ================== VIDEO QUIZZES JSON ==================
     video_quizzes = []
+
     if current_content and current_content[0] == 'assessment':
-        for quiz in current_content[1].quizzes.all():
-            # serialize hanya yang dibutuhkan
+        quizzes = (
+            current_content[1]
+            .quizzes
+            .select_related('video')
+            .prefetch_related('options')
+            .order_by('time_in_video')
+        )
+
+        for quiz in quizzes:
             video_quizzes.append({
                 'id': quiz.id,
                 'video_url': quiz.video.file.url,
-                'time_in_video': quiz.time_in_video,
-                'question_type': quiz.question_type,
+                'time_in_video': float(quiz.time_in_video),
                 'question': quiz.question,
-                'options': [{'id': opt.id, 'text': opt.text} for opt in quiz.options.all()],
+                'question_type': quiz.question_type,
+                'options': [
+                    {'id': opt.id, 'text': opt.text}
+                    for opt in quiz.options.all()
+                ],
             })
 
     context = {

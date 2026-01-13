@@ -68,55 +68,102 @@
                 </div>
             {% endif %}
 
-            {% if assessment.quizzes.exists %}
-              <div class="video-quiz-section mt-4">
-                  <h3 class="font-semibold mb-2">{{ assessment.title }} (Video Quiz)</h3>
+            {% if assessment and assessment.quizzes.exists %}
+                <div class="video-quiz-section mt-4">
+                    <h3 class="font-semibold mb-2">
+                        {{ assessment.title }} (Video Quiz)
+                    </h3>
 
-                  {% with video=assessment.quizzes.first.video %}
-                  <div class="relative w-full overflow-hidden rounded-lg shadow-lg" style="padding-top: 56.25%;">
-                      <video id="videoPlayer" class="absolute inset-0 w-full h-full rounded-lg" controls>
-                          <source src="{{ video.file.url }}" type="video/mp4">
-                          Your browser does not support the video tag.
-                      </video>
-                  </div>
-                  {% endwith %}
+                    {% with video=assessment.quizzes.first.video %}
+                    <div class="relative w-full overflow-hidden rounded-lg shadow-lg"
+                        style="padding-top:56.25%">
 
-                  <div id="quizContainer" class="mt-4"></div>
-              </div>
+                        <video id="videoPlayer_{{ assessment.id }}"
+                            class="absolute inset-0 w-full h-full rounded-lg"
+                            controls>
+                            <source src="{{ video.file.url }}" type="video/mp4">
+                        </video>
 
-              <script>
-                  // Pastikan JSON valid
-                  const quizzes = {{ video_quizzes_json|safe }};
+                        <!-- 🔥 QUIZ OVERLAY -->
+                        <div id="quizContainer_{{ assessment.id }}"
+                            class="absolute inset-0 hidden z-10
+                                    flex items-center justify-center
+                                    bg-black/60">
+                        </div>
 
-                  const video = document.getElementById('videoPlayer');
-                  const container = document.getElementById('quizContainer');
-                  let currentQuizIndex = 0;
+                    </div>
+                    {% endwith %}
+                </div>
 
-                  function showQuiz(quiz) {
-                      container.innerHTML = '';
-                      let html = `<div class="p-4 border rounded bg-gray-50 mb-2">
-                                      <p class="font-medium mb-2">${quiz.question}</p>`;
-                      quiz.options.forEach(opt => {
-                          html += `<div class="flex items-center mb-1">
-                                      <input type="radio" id="quiz${quiz.id}_opt${opt.id}" name="quiz_${quiz.id}" class="mr-2">
-                                      <label for="quiz${quiz.id}_opt${opt.id}">${opt.text}</label>
-                                  </div>`;
-                      });
-                      html += `</div>`;
-                      container.innerHTML = html;
-                  }
+                <script>
+                (() => {
+                    const allQuizzes = {{ video_quizzes_json|safe }};
+                    const video = document.getElementById('videoPlayer_{{ assessment.id }}');
+                    const container = document.getElementById('quizContainer_{{ assessment.id }}');
 
-                  video.addEventListener('timeupdate', () => {
-                      if (currentQuizIndex >= quizzes.length) return;
+                    if (!video || allQuizzes.length === 0) return;
 
-                      const quiz = quizzes[currentQuizIndex];
-                      if (video.currentTime >= quiz.time_in_video) {
-                          showQuiz(quiz);
-                          currentQuizIndex++;
-                      }
-                  });
-              </script>
-              {% endif %}
+                    const videoSrc = video.querySelector('source').src;
+
+                    const quizzes = allQuizzes
+                        .filter(q => videoSrc.includes(q.video_url))
+                        .sort((a, b) => a.time_in_video - b.time_in_video);
+
+                    let currentQuizIndex = 0;
+                    let quizShown = false;
+
+                    function showQuiz(quiz) {
+                        quizShown = true;
+                        container.classList.remove('hidden');
+                        video.controls = false;
+
+                        container.innerHTML = `
+                            <div class="bg-white rounded-lg p-6 w-11/12 max-w-lg shadow-xl">
+                                <p class="text-lg font-semibold mb-4">
+                                    ${quiz.question}
+                                </p>
+
+                                ${quiz.options.map(opt => `
+                                    <label class="flex items-center mb-2">
+                                        <input type="radio"
+                                            name="quiz_${quiz.id}"
+                                            class="mr-2">
+                                        ${opt.text}
+                                    </label>
+                                `).join('')}
+
+                                <button id="continueBtn"
+                                        class="mt-4 px-4 py-2 bg-blue-600 text-white rounded">
+                                    Lanjutkan Video
+                                </button>
+                            </div>
+                        `;
+
+                        document.getElementById('continueBtn').onclick = () => {
+                            container.classList.add('hidden');
+                            container.innerHTML = '';
+                            quizShown = false;
+                            video.controls = true;
+                            video.play();
+                        };
+                    }
+
+                    video.addEventListener('timeupdate', () => {
+                        if (quizShown) return;
+                        if (currentQuizIndex >= quizzes.length) return;
+
+                        const quiz = quizzes[currentQuizIndex];
+
+                        if (video.currentTime >= quiz.time_in_video) {
+                            video.pause();
+                            showQuiz(quiz);
+                            currentQuizIndex++;
+                        }
+                    });
+                })();
+                </script>
+                {% endif %}
+
 
 
             <!-- LTI -->

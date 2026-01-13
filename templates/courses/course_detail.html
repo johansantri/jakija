@@ -69,6 +69,11 @@
 
 <!-- Sortable -->
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script>
+    const currentUser = "{{ user.username|escapejs }}";
+    const courseId = {{ course.id }};
+    const courseSlug = "{{ course.slug }}";
+</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -247,31 +252,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const asses = (data.assessments || []).map(a => {
             const weightBadge = a.weight ? `<span class="text-xs bg-purple-100 px-2 py-1 rounded ml-2">${a.weight}%</span>` : '';
-            const viewUrl = `/questions/view/${courseId}/${sectionId}/${a.id}/`;
+            const liveUrl = `/self_course/${currentUser}/${courseId}/${courseSlug}/?assessment_id=${a.id}`;
+
             return `
                 <div class="flex flex-col sm:flex-row justify-between items-center py-4 border-b last:border-0 gap-4 hover:bg-purple-50 rounded-lg transition-all group">
-                    <a href="${viewUrl}" class="flex items-center gap-3 text-sm font-medium text-purple-800 hover:text-purple-900 flex-1 truncate">
+                    <a href="${liveUrl}" class="flex items-center gap-3 text-sm font-medium text-purple-800 hover:text-purple-900 flex-1 truncate">
                         <i class="fas fa-clipboard-check text-purple-600"></i>
                         <span class="truncate">${escape(a.name)}</span> ${weightBadge}
                         <i class="fas fa-arrow-right text-xs ml-2 opacity-0 group-hover:opacity-100 transition"></i>
                     </a>
                     <div class="flex items-center gap-5 text-xs font-medium">
-                        <a href="${viewUrl}" class="text-green-600 font-bold hover:text-green-700 hover:underline">View</a>
+                        <a href="${liveUrl}" class="text-green-600 font-bold hover:text-green-700 hover:underline">Live</a>
                         <button type="button" class="edit-assessment text-blue-600 hover:underline" data-id="${a.id}" data-item='${JSON.stringify(a).replace(/'/g,"&#39;")}'>Edit</button>
                         <button type="button" class="delete-assessment text-red-600 hover:underline" data-url="${API.assessments}${a.id}/">Hapus</button>
                     </div>
-                </div>`;
+                </div>
+            `;
         }).join('');
 
-        const mats = (data.materials || []).map(m => `
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 border-b last:border-0 gap-2">
-                <div class="flex items-center gap-2 text-sm"><i class="fas fa-file-alt text-green-600"></i> ${escape(m.title)}</div>
-                <div class="flex gap-3 text-xs">
-                    <button type="button" class="edit-material text-blue-600 hover:underline" data-id="${m.id}" data-item='${JSON.stringify(m).replace(/'/g,"&#39;")}'>Edit</button>
-                    <button type="button" class="delete-material text-red-600 hover:underline" data-url="${API.materials}${m.id}/">Hapus</button>
+
+        const mats = (data.materials || []).map(m => {
+            const liveUrl = `/self_course/${currentUser}/${courseId}/${courseSlug}/?material_id=${m.id}`;
+
+
+            return `
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 border-b last:border-0 gap-2">
+                    <div class="flex items-center gap-2 text-sm"><i class="fas fa-file-alt text-green-600"></i> ${escape(m.title)}</div>
+                    <div class="flex gap-3 text-xs">
+                        <a href="${liveUrl}" class="text-blue-600 font-bold hover:text-blue-700 hover:underline">Live</a>
+                        <button type="button" class="edit-material text-blue-600 hover:underline" data-id="${m.id}" data-item='${JSON.stringify(m).replace(/'/g,"&#39;")}'>Edit</button>
+                        <button type="button" class="delete-material text-red-600 hover:underline" data-url="${API.materials}${m.id}/">Hapus</button>
+                    </div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
+
 
         div.innerHTML = `
             <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-4">
