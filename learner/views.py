@@ -1216,10 +1216,9 @@ def my_course(request, username, id, slug):
     last_access = LastAccessCourse.objects.filter(user=user, course=course).first()
     is_first_access = not last_access
 
-    # Ambil enrollment untuk memeriksa welcome_message_shown (opsional)
-    enrollment = Enrollment.objects.filter(user=user, course=course).first()
+    if is_first_access:
+        request.session['show_welcome_modal'] = True
 
-    
 
     if not last_access and combined_content:
         content_type, content_obj, _ = combined_content[0]
@@ -1258,6 +1257,7 @@ def my_course(request, username, id, slug):
 
     context = {
         'course': course,
+        'is_first_access': is_first_access,
         'course_name': course.course_name,
         'username': username,
         'slug': slug,
@@ -1360,7 +1360,7 @@ def load_content(request, username, id, slug, content_type, content_id):
         Prefetch('materials'), Prefetch('assessments')
     ).order_by('order')
     combined_content = _build_combined_content(sections)
-
+    show_welcome_modal = request.session.pop('show_welcome_modal', False)
     context = {
         'course': course,
         'username': username,
@@ -1384,6 +1384,7 @@ def load_content(request, username, id, slug, content_type, content_id):
         'course_progress': CourseProgress.objects.get_or_create(user=request.user, course=course)[0].progress_percentage,
         'previous_url': None,
         'next_url': None,
+        'show_welcome_modal': show_welcome_modal,
     }
 
     current_index = 0
