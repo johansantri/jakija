@@ -1219,28 +1219,7 @@ def my_course(request, username, id, slug):
     # Ambil enrollment untuk memeriksa welcome_message_shown (opsional)
     enrollment = Enrollment.objects.filter(user=user, course=course).first()
 
-    if is_first_access and enrollment and not getattr(enrollment, 'welcome_message_shown', False):
-        instructor_name = course.instructor.user.get_full_name() if course.instructor else "Instructor"
-      
-
-        welcome_message = (
-            f"<strong>Welcome, {user.get_full_name() or user.username}!</strong><br><br>"
-            f"We’re delighted to have you enrolled in <strong>{course.course_name}</strong>.<br><br>"
-            f"<b>Course Overview:</b><br>"
-            f"- {course.sort_description}<br>"
-            f"- Estimated Time Commitment: {course.hour}<br>"
-           
-            f"We look forward to supporting you on this learning journey.<br><br>"
-            f"Best wishes,<br><strong>{instructor_name}</strong>"
-        )
-
-        messages.error(request, welcome_message)
-        logger.info(f"Menampilkan pesan sapaan untuk pengguna {user.username} pada kursus {course.course_name}")
-
-        # Tandai bahwa pesan sudah ditampilkan (opsional)
-        if hasattr(enrollment, 'welcome_message_shown'):
-            enrollment.welcome_message_shown = True
-            enrollment.save()
+    
 
     if not last_access and combined_content:
         content_type, content_obj, _ = combined_content[0]

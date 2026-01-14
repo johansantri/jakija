@@ -38,29 +38,33 @@ def linepartition(value, separator="="):
 @register.filter
 def make_iframes_responsive(value):
     """
-    Membungkus semua <iframe> (YouTube, Vimeo, dll) dengan div responsive Tailwind
+    Bungkus iframe YouTube/Vimeo saja agar responsive.
+    Canva iframe biarkan asli supaya tidak blank.
     """
     if not value:
         return value
 
-    # Pattern yang lebih kuat & aman
-    pattern = r'(<iframe[^>]*>)(.*?)(</iframe>)'
-    
-    def replace_match(match):
-        iframe_tag = match.group(0)
-        # Tambah atribut yang sering hilang (biar aman)
-        iframe_tag = iframe_tag.replace('<iframe', '<iframe class="w-full h-full" allowfullscreen ')
-        # Bungkus dengan div aspect ratio Tailwind
-        return f'<div class="relative w-full overflow-hidden rounded-lg shadow-lg" style="padding-top: 56.25%;">{iframe_tag}</div><div class="absolute inset-0">{iframe_tag}</div></div>'  # salah, coba yang benar:
+    pattern = r'(<iframe[^>]*>.*?</iframe>)'
 
-    # Cara yang benar & paling simpel (rekomendasi)
-    replacement = (
-        '<div class="relative w-full overflow-hidden rounded-xl shadow-lg" style="padding-top: 56.25%;">'
-        '<iframe class="absolute inset-0 w-full h-full" \\1 allowfullscreen loading="lazy"></iframe>'
-        '</div>'
-    )
-    
-    result = re.sub(pattern, replacement, value, flags=re.IGNORECASE | re.DOTALL)
+    def wrap_iframe(match):
+        iframe_tag = match.group(1)
+
+        # Cek src iframe
+        if 'youtube.com' in iframe_tag or 'youtu.be' in iframe_tag or 'vimeo.com' in iframe_tag:
+            # Tambahkan class & atribut
+            if 'class=' not in iframe_tag:
+                iframe_tag = iframe_tag.replace('<iframe', '<iframe class="absolute inset-0 w-full h-full"')
+            if 'allowfullscreen' not in iframe_tag:
+                iframe_tag = iframe_tag.replace('<iframe', '<iframe allowfullscreen')
+            if 'loading=' not in iframe_tag:
+                iframe_tag = iframe_tag.replace('<iframe', '<iframe loading="lazy"')
+            # Bungkus div responsive
+            return f'<div class="relative w-full overflow-hidden rounded-xl shadow-lg" style="padding-top: 56.25%;">{iframe_tag}</div>'
+        else:
+            # Canva / embed lain → tampilkan apa adanya
+            return iframe_tag
+
+    result = re.sub(pattern, wrap_iframe, value, flags=re.IGNORECASE | re.DOTALL)
     return mark_safe(result)
 
 @register.filter

@@ -1,20 +1,38 @@
 {% extends 'home/tes.html' %}
 {% load extra_custom_filters %}
 {% block content %}
-
+<style>
+    .material-content table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #d1d5db; /* gray-300 */
+    margin-bottom: 1rem;
+}
+.material-content th,
+.material-content td {
+    border: 1px solid #d1d5db; /* gray-300 */
+    padding: 0.5rem 1rem;
+    text-align: left;
+}
+.material-content th {
+    background-color: #f9fafb; /* gray-50 */
+    font-weight: 600;
+}
+</style>
 <div class="course-container">
 
     <h1 class="text-2xl font-bold">{{ course.course_name }}</h1>
 
     <!-- ================= MATERIAL ================= -->
     {% if current_content.0 == 'material' %}
-        <div class="material-section mt-4 p-4 border rounded">
-            <h2 class="text-xl font-semibold">{{ material.title }}</h2>
-            <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-12 prose prose-lg lg:prose-xl max-w-none text-gray-700">
-                {{ material.description|make_iframes_responsive|safe }}
-            </div>
+    <div class="material-section mt-4 p-4 border rounded">
+        <h2 class="text-xl font-semibold mb-2">{{ material.title }}</h2>
+        <div class="material-content bg-white rounded-2xl shadow p-4 prose max-w-none text-gray-700">
+            {{ material.description|make_iframes_responsive|safe }}
         </div>
+    </div>
     {% endif %}
+
 
     <!-- ================= ASSESSMENT ================= -->
     {% if current_content.0 == 'assessment' %}
@@ -23,7 +41,7 @@
                 <!-- ===== MCQ ===== -->
                {% if assessment.questions.exists %}
                 <div class="mcq-section mt-4">
-                    <h3 class="font-semibold mb-2">Pilihan Ganda</h3>
+                    <h3 class="font-semibold mb-2">multiple choice</h3>
                     
                     <form method="post">
                         {% csrf_token %}
@@ -43,13 +61,11 @@
                                         </div>
                                     {% endfor %}
                                 {% else %}
-                                    <p class="text-sm text-gray-500 italic">Belum ada pilihan.</p>
+                                    <p class="text-sm text-gray-500 italic">not choice.</p>
                                 {% endif %}
                             </div>
                         {% endfor %}
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-                            Submit Jawaban
-                        </button>
+                        
                     </form>
                 </div>
                 {% endif %}
