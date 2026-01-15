@@ -291,22 +291,31 @@ document.addEventListener('DOMContentLoaded', function () {
         return div;
     }
 
-    // ====================== CREATE UNIT ======================
+    function escapeHtmlAttr(str){
+        return String(str)
+            .replace(/&/g,"&amp;")
+            .replace(/"/g,"&quot;")
+            .replace(/'/g,"&#39;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;");
+    }
+
     function createUnit(data){
-        const div=document.createElement('div');
-        div.className='bg-gray-50 rounded-xl p-4 border border-gray-200';
-        div.dataset.id=data.id;
+        const div = document.createElement('div');
+        div.className = 'bg-gray-50 rounded-xl p-4 border border-gray-200';
+        div.dataset.id = data.id;
 
         let sectionId = null;
         if(data.assessments?.length>0) sectionId = data.assessments[0].section;
         else if(data.materials?.length>0) sectionId = data.materials[0].section;
 
-        const asses=(data.assessments||[]).map(a=>{
+        // === Assessments ===
+        const asses = (data.assessments || []).map(a=>{
             const weightBadge = a.weight ? `<span class="text-xs bg-purple-100 px-2 py-1 rounded ml-2">${a.weight}%</span>` : '';
             const viewUrl = `/questions/view/${courseId}/${sectionId}/${a.id}/`;
             const liveUrl = `/self_course/${currentUser}/${courseId}/${courseSlug}/?assessment_id=${a.id}`;
-            // ✅ encode JSON sebelum masuk ke data-item
-            const encodedItem = encodeURIComponent(JSON.stringify(a));
+            const encodedItem = escapeHtmlAttr(encodeURIComponent(JSON.stringify(a)));
+
             return `<div class="flex flex-col sm:flex-row justify-between items-center py-4 border-b last:border-0 gap-4 hover:bg-purple-50 rounded-lg transition-all group">
                         <a href="${viewUrl}" class="flex items-center gap-3 text-sm font-medium text-purple-800 hover:text-purple-900 flex-1 truncate">
                             <i class="fas fa-clipboard-check text-purple-600"></i>
@@ -315,26 +324,28 @@ document.addEventListener('DOMContentLoaded', function () {
                         </a>
                         <div class="flex items-center gap-5 text-xs font-medium">
                             <a href="${liveUrl}" class="text-green-600 font-bold hover:text-green-700 hover:underline">live</a>
-                            <button type="button" class="edit-assessment text-blue-600 hover:underline" data-id="${a.id}" data-item='${encodedItem}'>Edit</button>
+                            <button type="button" class="edit-assessment text-blue-600 hover:underline" data-id="${a.id}" data-item="${encodedItem}">Edit</button>
                             <button type="button" class="delete-assessment text-red-600 hover:underline" data-url="${API.assessments}${a.id}/">delete</button>
                         </div>
                     </div>`;
         }).join('');
 
-        const mats=(data.materials||[]).map(m=>{
+        // === Materials ===
+        const mats = (data.materials || []).map(m=>{
             const liveUrl = `/self_course/${currentUser}/${courseId}/${courseSlug}/?material_id=${m.id}`;
-            const encodedItem = encodeURIComponent(JSON.stringify(m)); // ✅ encode JSON
+            const encodedItem = escapeHtmlAttr(encodeURIComponent(JSON.stringify(m)));
+
             return `<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 border-b last:border-0 gap-2">
                         <div class="flex items-center gap-2 text-sm"><i class="fas fa-file-alt text-green-600"></i> ${escape(m.title)}</div>
                         <div class="flex gap-3 text-xs">
                             <a href="${liveUrl}" class="text-blue-600 font-bold hover:text-blue-700 hover:underline">Live</a>
-                            <button type="button" class="edit-material text-blue-600 hover:underline" data-id="${m.id}" data-item='${encodedItem}'>Edit</button>
+                            <button type="button" class="edit-material text-blue-600 hover:underline" data-id="${m.id}" data-item="${encodedItem}">Edit</button>
                             <button type="button" class="delete-material text-red-600 hover:underline" data-url="${API.materials}${m.id}/">delete</button>
                         </div>
                     </div>`;
         }).join('');
 
-        div.innerHTML=`
+        div.innerHTML = `
             <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-4">
                 <div class="flex items-center gap-2 flex-1">
                     <span class="unit-label font-semibold text-gray-900">${escape(data.title)}</span>
@@ -343,29 +354,35 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <button type="button" class="delete-section text-red-600 hover:text-red-800 text-lg"><i class="fas fa-trash"></i></button>
             </div>
-            ${mats?`<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Materials</div>${mats}</div>`:''}
-            ${asses?`<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Assessments</div><div class="space-y-2">${asses}</div></div>`:''}
+            ${mats ? `<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Materials</div>${mats}</div>` : ''}
+            ${asses ? `<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Assessments</div><div class="space-y-2">${asses}</div></div>` : ''}
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
                 <button type="button" class="add-material-btn py-2.5 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 text-sm font-medium">+ Material</button>
                 <button type="button" class="add-assessment-btn py-2.5 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 text-sm font-medium">+ Assessment</button>
             </div>
         `;
 
-        div.querySelectorAll('button').forEach(btn=>btn.addEventListener('click', e=>e.stopPropagation()));
+        div.querySelectorAll('button').forEach(btn => btn.addEventListener('click', e => e.stopPropagation()));
 
-        div.querySelectorAll('.edit-material').forEach(btn=>btn.addEventListener('click', ()=>{
-            const item = JSON.parse(decodeURIComponent(btn.dataset.item)); // ✅ decode JSON
+        // === Event Edit Material ===
+        div.querySelectorAll('.edit-material').forEach(btn => btn.addEventListener('click', ()=>{
+            const item = JSON.parse(decodeURIComponent(btn.dataset.item));
             openModal('material', div, btn.dataset.id, item);
         }));
-        div.querySelectorAll('.delete-material').forEach(btn=>btn.addEventListener('click', ()=>{
+
+        // === Event Delete Material ===
+        div.querySelectorAll('.delete-material').forEach(btn => btn.addEventListener('click', ()=>{
             if(confirm('Hapus material ini?')) deleteItem(btn.dataset.url);
         }));
 
-        div.querySelectorAll('.edit-assessment').forEach(btn=>btn.addEventListener('click', ()=>{
-            const item = JSON.parse(decodeURIComponent(btn.dataset.item)); // ✅ decode JSON
+        // === Event Edit Assessment ===
+        div.querySelectorAll('.edit-assessment').forEach(btn => btn.addEventListener('click', ()=>{
+            const item = JSON.parse(decodeURIComponent(btn.dataset.item));
             openModal('assessment', div, btn.dataset.id, item);
         }));
-        div.querySelectorAll('.delete-assessment').forEach(btn=>btn.addEventListener('click', ()=>{
+
+        // === Event Delete Assessment ===
+        div.querySelectorAll('.delete-assessment').forEach(btn => btn.addEventListener('click', ()=>{
             if(confirm('Hapus assessment ini?')) deleteItem(btn.dataset.url);
         }));
 
@@ -373,10 +390,11 @@ document.addEventListener('DOMContentLoaded', function () {
         div.querySelector('.add-assessment-btn')?.addEventListener('click', ()=>openModal('assessment', div));
         div.querySelector('.delete-section')?.addEventListener('click', ()=>deleteSection(data.id));
 
-        setupInlineEdit(div,'.unit-label');
+        setupInlineEdit(div, '.unit-label');
 
         return div;
     }
+
 
 
     // ====================== FETCH / DELETE ======================
