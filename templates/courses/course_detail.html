@@ -368,6 +368,8 @@ document.addEventListener('DOMContentLoaded', function () {
         div.querySelector('.add-material-btn')?.addEventListener('click', ()=>openModal('material', div));
         div.querySelector('.add-assessment-btn')?.addEventListener('click', ()=>openModal('assessment', div));
         div.querySelector('.delete-section')?.addEventListener('click', ()=>deleteSection(data.id));
+        
+
         setupInlineEdit(div,'.unit-label');
 
         return div;
@@ -421,7 +423,8 @@ document.addEventListener('DOMContentLoaded', function () {
             showToast('Reorder saved!');
         }catch(e){ showToast('Gagal menyimpan reorder', 'error'); console.error(e); }
     }
-
+    document.getElementById('add-section').addEventListener('click', () => openModal('section'));
+    document.getElementById('save-json').addEventListener('click', saveStructure);
     fetchSections();
 });
 </script>
