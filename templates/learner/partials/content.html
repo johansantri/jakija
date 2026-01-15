@@ -1,7 +1,7 @@
 {% load learner_tags %}
 {% load static %}
 
-<main class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0" id="content-area">
+<main class="" id="content-area">
 
 {% if show_welcome_modal %}
     <div
@@ -50,29 +50,32 @@
 
     
 {% if current_content %}
-
+    
     {% if current_content.0 == 'material' %}
         {% with material=current_content.1 %}
+        <!-- material -->
         <article class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
             
              <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
-                <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ material.title }} </h3>
+                <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ material.title }} </h2>
                 
             </div>
-            <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-12 prose prose-lg lg:prose-xl max-w-none text-gray-700">
+            <div class="">
                 {{ material.description|make_iframes_responsive|safe }}
             </div>
             <div class="mt-12 lg:mt-16">
                 {% include 'learner/partials/comments.html' %}
             </div>
         </article>
+           <!--and matrial-->
         {% endwith %}
-
+ 
     {% elif current_content.0 == 'assessment' %}
         {% with assessment=current_content.1 %}
         <div class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
-
+          
             {% if assessment_locked %}
+              <!-- payment -->
                 <div class="bg-yellow-50 border-l-4 border-yellow-400 rounded-2xl p-6 lg:p-10 flex flex-col lg:flex-row items-center justify-between gap-6">
                     <div class="flex items-center gap-5">
                         <i class="bi bi-exclamation-triangle-fill text-5xl lg:text-7xl text-yellow-600"></i>
@@ -85,18 +88,20 @@
                         Checkout Now
                     </a>
                 </div>
+               <!-- end payment --> 
             {% else %}
 
               
 
                     {% if ask_oras %}
-                        <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-12 mb-12">
+                    <!-- ==================== BAGIAN OPEN RESPONSE ASSESSMENT ==================== -->
                         
-                            <h4 class="text-3xl font-bold text-indigo-700 mb-4">Open Response Assessment</h4>
+                        
+                            <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">Open Response Assessment</h2>
                             <p class="text-lg text-gray-600 mb-10">Work on the task below and wait for a peer review from your classmates.</p>
 
                             {% for ask_ora in ask_oras %}
-                            <div class="border border-gray-200 rounded-2xl p-8 mb-12 bg-gradient-to-br from-gray-50 to-white">
+                           
                                 
                                 <h5 class="text-2xl font-bold text-gray-800 mb-4">{{ ask_ora.title|default:"Essay Assignment" }}</h5>
                                 <div class="prose prose-lg mb-6 text-gray-700">{{ ask_ora.question_text|safe }}</div>
@@ -111,7 +116,7 @@
 
                                 {# 1. BELUM SUBMIT & MASIH BOLEH SUBMIT #}
                                 {% if askora_can_submit|dict_get:ask_ora.id %}
-                                    <div class="bg-blue-50 border-2 border-blue-300 rounded-2xl p-8">
+                                   
                                         <h6 class="text-xl font-bold text-blue-900 mb-6">Submit Your Answer</h6>
                                         <form method="POST"
                                             hx-post="{% url 'learner:submit_answer_askora_new' ask_ora.id %}"
@@ -125,12 +130,15 @@
                                                     placeholder="Tulis jawaban Anda di sini..."></textarea>
                                             <input type="file" name="answer_file"
                                                 class="block w-full text-sm file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-700">
-                                            <button type="submit"
-                                                    class="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xl rounded-xl shadow-lg transform hover:scale-105 transition">
-                                                Submit Answer Now
-                                            </button>
+                                                <div class="flex justify-end">
+                                                <button type="submit"
+                                                    class="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xl rounded-xl
+">
+                                                    Submit Answer Now
+                                                </button>
+                                                </div>
                                         </form>
-                                    </div>
+                                    
 
                                 {# 2. SUDAH SUBMIT → Tampilkan bukti jawaban #}
                                 {% elif user_submissions %}
@@ -192,9 +200,9 @@
                                     </div>
                                 {% endif %}
 
-                            </div>
+                            
                             {% endfor %}
-                        </div>
+                        
                     {% endif %}
 
 
@@ -259,7 +267,7 @@
                     {# ==================== BAGIAN REVIEW JAWABAN TEMAN ==================== #}
                     {% if can_review and submissions %}
                         <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-12">
-                            <h4 class="text-3xl font-bold text-purple-700 mb-8">Review a Friend’s Answer ({{ submissions|length }})</h4>
+                            <h2 class="text-base md:text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">Review a Friend’s Answer ({{ submissions|length }})</h2>
 
                             {% for submission in submissions %}
                             <div class="border border-purple-200 rounded-2xl p-8 mb-10 bg-purple-50">
@@ -320,8 +328,9 @@
                     <!-- IN-VIDEO QUIZ: VERSI ULTIMATE (Video.js + GSAP + Sound + Score + Super Cantik) -->
                     {% if is_video_quiz and video %}
                         <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
-                            <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ video.title }} </h3>
-                            
+                            <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">
+                                 {{ video.title }}
+                            </h2>
                         </div>
                         
                             <style>
