@@ -324,7 +324,7 @@ This project is licensed under the MIT License — see `LICENSE` for details.
 Pull requests are welcome. Please include a description of changes and tests when applicable. Consider adding `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md`.
 
 ## Attribution (must appear on the official site footer)
-Creator: Johan Santri  
+Creator: JakIja 
 The official site must display this attribution in the footer (example: `templates/base.html`).
 
 ## Contact
