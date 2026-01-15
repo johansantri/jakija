@@ -1,3 +1,5 @@
+import typography from '@tailwindcss/typography'
+
 export default {
   content: [
     './templates/**/*.html',
@@ -8,6 +10,6 @@ export default {
     extend: {},
   },
   plugins: [
-    (await import('@tailwindcss/typography')).default,
+    typography,
   ],
 }
