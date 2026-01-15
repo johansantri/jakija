@@ -60,9 +60,24 @@
                 <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ material.title }} </h2>
                 
             </div>
-            <div class="">
+            <style>
+                .ck-content table {
+                    @apply table-auto w-full border border-gray-300;
+                    }
+
+                    .ck-content th,
+                    .ck-content td {
+                    @apply border border-gray-300 p-2;
+                    }
+
+                    .ck-content img {
+                    @apply max-w-full h-auto;
+                    }
+            </style>
+            <div class="ck-content prose max-w-full overflow-x-auto">
                 {{ material.description|make_iframes_responsive|safe }}
             </div>
+            
             <div class="mt-12 lg:mt-16">
                 {% include 'learner/partials/comments.html' %}
             </div>
