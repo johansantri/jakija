@@ -61,6 +61,7 @@
             <button id="cancel-modal" class="w-full sm:w-auto px-8 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition">Cancel</button>
         </div>
     </div>
+    
 </div>
 
 
@@ -69,16 +70,14 @@
 
 <!-- Sortable -->
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-<script>
-    const currentUser = "{{ user.username|escapejs }}";
-    const courseId = {{ course.id }};
-    const courseSlug = "{{ course.slug }}";
-</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const courseId = {{ course.id|safe }};
+    const currentUser = "{{ user.username|escapejs }}";
+    const courseSlug = "{{ course.slug }}";
+
     const API = {
         sections: '/sections/',
         materials: '/materials/',
@@ -88,23 +87,50 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let currentAction = null, currentTarget = null, currentEditId = null;
 
+    // ====================== TOAST ======================
+    // ====================== TOAST ======================
+    const toastContainer = document.createElement('div');
+    toastContainer.id = 'toast';
+    toastContainer.className = 'fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-4 px-4 py-2 rounded shadow-lg opacity-0 transition-opacity duration-300 z-[9999]';
+    document.body.appendChild(toastContainer);
+
+    function showToast(message, type='success') {
+        toastContainer.textContent = message;
+
+        // hapus kelas warna sebelumnya
+        toastContainer.classList.remove('bg-green-600', 'bg-red-600', 'text-white');
+
+        // tambahkan warna sesuai tipe
+        toastContainer.classList.add(type === 'success' ? 'bg-green-600' : 'bg-red-600', 'text-white');
+
+        // tampilkan toast
+        toastContainer.classList.add('opacity-100');
+
+        // sembunyikan setelah 2.5 detik
+        setTimeout(() => {
+            toastContainer.classList.remove('opacity-100');
+        }, 2500);
+    }
+
+
+
     // ====================== MODAL ======================
-    function openModal(action, target = null, editId = null, data = {}) {
+    function openModal(action, target=null, editId=null, data={}) {
         currentAction = action; currentTarget = target; currentEditId = editId;
         document.getElementById('input-title').value = data.title || data.name || '';
         document.getElementById('input-weight').value = data.weight || '';
-        document.getElementById('ckeditor-wrapper').classList.toggle('hidden', action !== 'material');
-        document.getElementById('weight-wrapper').classList.toggle('hidden', action !== 'assessment');
+        document.getElementById('ckeditor-wrapper').classList.toggle('hidden', action!=='material');
+        document.getElementById('weight-wrapper').classList.toggle('hidden', action!=='assessment');
 
-        document.getElementById('modal-title').textContent = editId 
+        document.getElementById('modal-title').textContent = editId
             ? `Update ${action.charAt(0).toUpperCase() + action.slice(1)}`
             : `Add ${action === 'unit' ? 'Unit' : action.charAt(0).toUpperCase() + action.slice(1)}`;
 
-        if (action === 'material' && data.description) {
-            setTimeout(() => {
+        if(action==='material' && data.description){
+            setTimeout(()=>{
                 const editor = document.querySelector('.ck-editor__editable');
-                if (editor && editor.ckeditorInstance) editor.ckeditorInstance.setData(data.description);
-            }, 500);
+                if(editor && editor.ckeditorInstance) editor.ckeditorInstance.setData(data.description);
+            },500);
         }
 
         document.getElementById('modal').classList.remove('hidden');
@@ -115,71 +141,96 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('modal').classList.add('hidden');
     }
 
-    document.getElementById('modal').addEventListener('click', e => e.target.id === 'modal' && closeModal());
+    document.getElementById('modal').addEventListener('click', e => e.target.id==='modal' && closeModal());
     document.querySelectorAll('#cancel-modal').forEach(b => b.onclick = closeModal);
 
+    // ====================== SAVE MODAL ======================
     document.getElementById('save-modal').onclick = async () => {
         const title = document.getElementById('input-title').value.trim();
-        if (!title && currentAction !== 'assessment') return alert('Judul wajib diisi!');
+        if(!title && currentAction!=='assessment') return alert('Judul wajib diisi!');
 
         let payload = {}, url, method;
 
-        if (['section','subsection','unit'].includes(currentAction)) {
+        if(['section','subsection','unit'].includes(currentAction)){
             payload = { title, courses: courseId };
-            if (currentAction !== 'section' && currentTarget) payload.parent = currentTarget.dataset.id;
+            if(currentAction!=='section' && currentTarget) payload.parent = currentTarget.dataset.id;
             url = currentEditId ? `${API.sections}${currentEditId}/` : API.sections;
             method = currentEditId ? 'PATCH' : 'POST';
         }
-        if (currentAction === 'material') {
+        if(currentAction==='material'){
             const editor = document.querySelector('.ck-editor__editable');
             const description = editor && editor.ckeditorInstance ? editor.ckeditorInstance.getData() : '';
             payload = { title, description, section: currentTarget.dataset.id };
             url = currentEditId ? `${API.materials}${currentEditId}/` : API.materials;
             method = currentEditId ? 'PATCH' : 'POST';
         }
-        if (currentAction === 'assessment') {
-            payload = { name: title, weight: document.getElementById('input-weight').value || 0, section: currentTarget.dataset.id };
+        if(currentAction==='assessment'){
+            payload = { name: title, weight: document.getElementById('input-weight').value||0, section: currentTarget.dataset.id };
             url = currentEditId ? `${API.assessments}${currentEditId}/` : API.assessments;
             method = currentEditId ? 'PATCH' : 'POST';
         }
 
-        const res = await fetch(url, {
-            method,
-            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
-            body: JSON.stringify(payload)
-        });
-
-        if (res.ok) {
-            closeModal();
-            fetchSections();
-        } else {
-            alert('Gagal menyimpan');
+        try{
+            const res = await fetch(url, {
+                method,
+                headers: {'Content-Type':'application/json','X-CSRFToken':csrftoken},
+                body: JSON.stringify(payload)
+            });
+            if(res.ok){
+                closeModal();
+                await fetchSections();
+                showToast(currentEditId ? `${currentAction} updated!` : `${currentAction} created!`);
+            } else {
+                showToast('Gagal menyimpan', 'error');
+            }
+        } catch(e){
+            showToast('Error jaringan', 'error');
+            console.error(e);
         }
     };
 
-    function escape(str) { return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
+    // ====================== ESCAPE ======================
+    function escape(str){ return String(str)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#39;"); }
 
-    function setupInlineEdit(div, selector) {
+    function setupInlineEdit(div, selector){
         const label = div.querySelector(selector);
         const input = div.querySelector('input[type="text"]');
         const btn = div.querySelector('.edit');
-        if (!label || !input || !btn) return;
-        btn.onclick = () => { label.classList.add('hidden'); input.classList.remove('hidden'); input.focus(); input.select(); };
-        input.onblur = async () => {
-            const v = input.value.trim();
-            if (!v || v === label.textContent.trim()) return label.classList.remove('hidden'), input.classList.add('hidden');
-            label.textContent = v; label.classList.remove('hidden'); input.classList.add('hidden');
-            await fetch(`${API.sections}${div.dataset.id}/`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }, body: JSON.stringify({title: v}) });
+        if(!label || !input || !btn) return;
+        btn.onclick = ()=>{
+            label.classList.add('hidden');
+            input.classList.remove('hidden'); input.focus(); input.select();
         };
-        input.onkeydown = e => { if (e.key === 'Enter') input.blur(); if (e.key === 'Escape') { input.value = label.textContent; input.blur(); } };
+        input.onblur = async ()=>{
+            const v = input.value.trim();
+            if(!v || v===label.textContent.trim()) return label.classList.remove('hidden'), input.classList.add('hidden');
+            label.textContent=v; label.classList.remove('hidden'); input.classList.add('hidden');
+            try{
+                await fetch(`${API.sections}${div.dataset.id}/`,{
+                    method:'PATCH',
+                    headers:{'Content-Type':'application/json','X-CSRFToken':csrftoken},
+                    body:JSON.stringify({title:v})
+                });
+                showToast('Updated!');
+            }catch(e){ showToast('Gagal update', 'error'); }
+        };
+        input.onkeydown = e=>{
+            if(e.key==='Enter') input.blur();
+            if(e.key==='Escape'){ input.value=label.textContent; input.blur(); }
+        };
     }
 
     // ====================== CREATE SECTION ======================
-    function createSection(data) {
-        const div = document.createElement('div');
-        div.className = 'bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden';
-        div.dataset.id = data.id;
-        div.innerHTML = `
+    function createSection(data){
+        const div=document.createElement('div');
+        div.className='bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden';
+        div.dataset.id=data.id;
+        div.innerHTML=`
             <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-100 hover:bg-gray-50 group">
                 <div class="flex items-center gap-3 flex-1 min-w-0">
                     <button class="toggle text-gray-500 hover:text-gray-700"><i class="fas fa-chevron-right text-lg transition"></i></button>
@@ -194,27 +245,27 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
             <div class="subsection-list"></div>
         `;
-        const list = div.querySelector('.subsection-list');
-        data.children?.forEach(c => list.appendChild(createSubsection(c)));
+        const list=div.querySelector('.subsection-list');
+        data.children?.forEach(c=>list.appendChild(createSubsection(c)));
 
-        div.querySelector('.toggle').onclick = () => {
+        div.querySelector('.toggle').onclick=()=>{
             list.classList.toggle('hidden');
             div.querySelector('.toggle i').classList.toggle('fa-chevron-down');
             div.querySelector('.toggle i').classList.toggle('fa-chevron-right');
         };
-        div.querySelector('.add-sub').onclick = () => openModal('subsection', div);
-        div.querySelector('.delete-section').onclick = () => deleteSection(data.id);
-        setupInlineEdit(div, '.section-label');
+        div.querySelector('.add-sub').onclick=()=>openModal('subsection', div);
+        div.querySelector('.delete-section').onclick=()=>deleteSection(data.id);
+        setupInlineEdit(div,'.section-label');
         makeSortable(list);
         return div;
     }
 
     // ====================== CREATE SUBSECTION ======================
-    function createSubsection(data) {
-        const div = document.createElement('div');
-        div.className = 'ml-4 sm:ml-8 my-3 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden';
-        div.dataset.id = data.id;
-        div.innerHTML = `
+    function createSubsection(data){
+        const div=document.createElement('div');
+        div.className='ml-4 sm:ml-8 my-3 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden';
+        div.dataset.id=data.id;
+        div.innerHTML=`
             <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 hover:bg-gray-50 group">
                 <div class="flex items-center gap-3 flex-1">
                     <button class="toggle text-gray-500 hover:text-gray-700"><i class="fas fa-chevron-right"></i></button>
@@ -229,65 +280,58 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
             <div class="unit-list space-y-4 p-4 hidden"></div>
         `;
-        const list = div.querySelector('.unit-list');
-        data.children?.forEach(u => list.appendChild(createUnit(u)));
+        const list=div.querySelector('.unit-list');
+        data.children?.forEach(u=>list.appendChild(createUnit(u)));
 
-        div.querySelector('.toggle').onclick = () => list.classList.toggle('hidden');
-        div.querySelector('.add-unit').onclick = () => openModal('unit', div);
-        div.querySelector('.delete-section').onclick = () => deleteSection(data.id);
-        setupInlineEdit(div, '.sub-label');
+        div.querySelector('.toggle').onclick=()=>list.classList.toggle('hidden');
+        div.querySelector('.add-unit').onclick=()=>openModal('unit', div);
+        div.querySelector('.delete-section').onclick=()=>deleteSection(data.id);
+        setupInlineEdit(div,'.sub-label');
         makeSortable(list);
         return div;
     }
 
-    // ====================== CREATE UNIT (EDIT & HAPUS MATERIAL AKTIF) ======================
-    function createUnit(data) {
-        const div = document.createElement('div');
-        div.className = 'bg-gray-50 rounded-xl p-4 border border-gray-200';
-        div.dataset.id = data.id;
+    // ====================== CREATE UNIT ======================
+    function createUnit(data){
+        const div=document.createElement('div');
+        div.className='bg-gray-50 rounded-xl p-4 border border-gray-200';
+        div.dataset.id=data.id;
 
-        let sectionId = null;
-        if (data.assessments?.length > 0) sectionId = data.assessments[0].section;
-        else if (data.materials?.length > 0) sectionId = data.materials[0].section;
+        let sectionId=null;
+        if(data.assessments?.length>0) sectionId=data.assessments[0].section;
+        else if(data.materials?.length>0) sectionId=data.materials[0].section;
 
-        const asses = (data.assessments || []).map(a => {
-            const weightBadge = a.weight ? `<span class="text-xs bg-purple-100 px-2 py-1 rounded ml-2">${a.weight}%</span>` : '';
-            const viewUrl = `/questions/view/${courseId}/${sectionId}/${a.id}/`;
-            const liveUrl = `/self_course/${currentUser}/${courseId}/${courseSlug}/?assessment_id=${a.id}`;
-            return `
-                <div class="flex flex-col sm:flex-row justify-between items-center py-4 border-b last:border-0 gap-4 hover:bg-purple-50 rounded-lg transition-all group">
-                    <a href="${viewUrl}" class="flex items-center gap-3 text-sm font-medium text-purple-800 hover:text-purple-900 flex-1 truncate">
-                        <i class="fas fa-clipboard-check text-purple-600"></i>
-                        <span class="truncate">${escape(a.name)}</span> ${weightBadge}
-                        <i class="fas fa-arrow-right text-xs ml-2 opacity-0 group-hover:opacity-100 transition"></i>
-                    </a>
-                    <div class="flex items-center gap-5 text-xs font-medium">
-                        
-                        <a href="${liveUrl}" class="text-green-600 font-bold hover:text-green-700 hover:underline">live</a>
-                        <button type="button" class="edit-assessment text-blue-600 hover:underline" data-id="${a.id}" data-item='${JSON.stringify(a).replace(/'/g,"&#39;")}'>Edit</button>
-                        <button type="button" class="delete-assessment text-red-600 hover:underline" data-url="${API.assessments}${a.id}/">delete</button>
-                    </div>
-                </div>`;
+        const asses=(data.assessments||[]).map(a=>{
+            const weightBadge=a.weight?`<span class="text-xs bg-purple-100 px-2 py-1 rounded ml-2">${a.weight}%</span>`:'';
+            const viewUrl=`/questions/view/${courseId}/${sectionId}/${a.id}/`;
+            const liveUrl=`/self_course/${currentUser}/${courseId}/${courseSlug}/?assessment_id=${a.id}`;
+            return `<div class="flex flex-col sm:flex-row justify-between items-center py-4 border-b last:border-0 gap-4 hover:bg-purple-50 rounded-lg transition-all group">
+                        <a href="${viewUrl}" class="flex items-center gap-3 text-sm font-medium text-purple-800 hover:text-purple-900 flex-1 truncate">
+                            <i class="fas fa-clipboard-check text-purple-600"></i>
+                            <span class="truncate">${escape(a.name)}</span> ${weightBadge}
+                            <i class="fas fa-arrow-right text-xs ml-2 opacity-0 group-hover:opacity-100 transition"></i>
+                        </a>
+                        <div class="flex items-center gap-5 text-xs font-medium">
+                            <a href="${liveUrl}" class="text-green-600 font-bold hover:text-green-700 hover:underline">live</a>
+                            <button type="button" class="edit-assessment text-blue-600 hover:underline" data-id="${a.id}" data-item='${JSON.stringify(a).replace(/'/g,"&#39;")}'>Edit</button>
+                            <button type="button" class="delete-assessment text-red-600 hover:underline" data-url="${API.assessments}${a.id}/">delete</button>
+                        </div>
+                    </div>`;
         }).join('');
 
-        const mats = (data.materials || []).map(m => {
-            const liveUrl = `/self_course/${currentUser}/${courseId}/${courseSlug}/?material_id=${m.id}`;
-
-
-            return `
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 border-b last:border-0 gap-2">
-                    <div class="flex items-center gap-2 text-sm"><i class="fas fa-file-alt text-green-600"></i> ${escape(m.title)}</div>
-                    <div class="flex gap-3 text-xs">
-                        <a href="${liveUrl}" class="text-blue-600 font-bold hover:text-blue-700 hover:underline">Live</a>
-                        <button type="button" class="edit-material text-blue-600 hover:underline" data-id="${m.id}" data-item='${JSON.stringify(m).replace(/'/g,"&#39;")}'>Edit</button>
-                        <button type="button" class="delete-material text-red-600 hover:underline" data-url="${API.materials}${m.id}/">delete</button>
-                    </div>
-                </div>
-            `;
+        const mats=(data.materials||[]).map(m=>{
+            const liveUrl=`/self_course/${currentUser}/${courseId}/${courseSlug}/?material_id=${m.id}`;
+            return `<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 border-b last:border-0 gap-2">
+                        <div class="flex items-center gap-2 text-sm"><i class="fas fa-file-alt text-green-600"></i> ${escape(m.title)}</div>
+                        <div class="flex gap-3 text-xs">
+                            <a href="${liveUrl}" class="text-blue-600 font-bold hover:text-blue-700 hover:underline">Live</a>
+                            <button type="button" class="edit-material text-blue-600 hover:underline" data-id="${m.id}" data-item='${JSON.stringify(m).replace(/'/g,"&#39;")}'>Edit</button>
+                            <button type="button" class="delete-material text-red-600 hover:underline" data-url="${API.materials}${m.id}/">delete</button>
+                        </div>
+                    </div>`;
         }).join('');
 
-
-        div.innerHTML = `
+        div.innerHTML=`
             <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-4">
                 <div class="flex items-center gap-2 flex-1">
                     <span class="unit-label font-semibold text-gray-900">${escape(data.title)}</span>
@@ -296,79 +340,97 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <button type="button" class="delete-section text-red-600 hover:text-red-800 text-lg"><i class="fas fa-trash"></i></button>
             </div>
-            ${mats ? `<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Materials</div>${mats}</div>` : ''}
-            ${asses ? `<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Assessments</div><div class="space-y-2">${asses}</div></div>` : ''}
+            ${mats?`<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Materials</div>${mats}</div>`:''}
+            ${asses?`<div class="mb-4"><div class="font-medium text-gray-700 text-sm mb-2">Assessments</div><div class="space-y-2">${asses}</div></div>`:''}
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
                 <button type="button" class="add-material-btn py-2.5 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 text-sm font-medium">+ Material</button>
                 <button type="button" class="add-assessment-btn py-2.5 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 text-sm font-medium">+ Assessment</button>
             </div>
         `;
 
-        div.querySelectorAll('button').forEach(btn => btn.addEventListener('click', e => e.stopPropagation()));
-
-        div.querySelectorAll('.edit-material').forEach(btn => btn.addEventListener('click', () => {
-            const item = JSON.parse(btn.dataset.item.replace(/&#39;/g, "'"));
+        div.querySelectorAll('button').forEach(btn=>btn.addEventListener('click', e=>e.stopPropagation()));
+        div.querySelectorAll('.edit-material').forEach(btn=>btn.addEventListener('click', ()=>{
+            const item=JSON.parse(btn.dataset.item.replace(/&#39;/g,"'"));
             openModal('material', div, btn.dataset.id, item);
         }));
-        div.querySelectorAll('.delete-material').forEach(btn => btn.addEventListener('click', () => confirm('Hapus material ini?') && deleteItem(btn.dataset.url)));
+        div.querySelectorAll('.delete-material').forEach(btn=>btn.addEventListener('click', ()=>{
+            if(confirm('Hapus material ini?')) deleteItem(btn.dataset.url);
+        }));
 
-        div.querySelectorAll('.edit-assessment').forEach(btn => btn.addEventListener('click', () => {
-            const item = JSON.parse(btn.dataset.item.replace(/&#39;/g, "'"));
+        div.querySelectorAll('.edit-assessment').forEach(btn=>btn.addEventListener('click', ()=>{
+            const item=JSON.parse(btn.dataset.item.replace(/&#39;/g,"'"));
             openModal('assessment', div, btn.dataset.id, item);
         }));
-        div.querySelectorAll('.delete-assessment').forEach(btn => btn.addEventListener('click', () => confirm('Hapus assessment ini?') && deleteItem(btn.dataset.url)));
+        div.querySelectorAll('.delete-assessment').forEach(btn=>btn.addEventListener('click', ()=>{
+            if(confirm('Hapus assessment ini?')) deleteItem(btn.dataset.url);
+        }));
 
-        div.querySelector('.add-material-btn')?.addEventListener('click', () => openModal('material', div));
-        div.querySelector('.add-assessment-btn')?.addEventListener('click', () => openModal('assessment', div));
-        div.querySelector('.delete-section')?.addEventListener('click', () => deleteSection(data.id));
-        setupInlineEdit(div, '.unit-label');
+        div.querySelector('.add-material-btn')?.addEventListener('click', ()=>openModal('material', div));
+        div.querySelector('.add-assessment-btn')?.addEventListener('click', ()=>openModal('assessment', div));
+        div.querySelector('.delete-section')?.addEventListener('click', ()=>deleteSection(data.id));
+        setupInlineEdit(div,'.unit-label');
 
         return div;
     }
 
-    // ====================== FETCH, DELETE, SORT ======================
-    async function fetchSections() {
-        const res = await fetch(`${API.sections}?course=${courseId}`);
-        const data = await res.json();
-        const container = document.getElementById('sections');
-        container.innerHTML = '';
-        data.forEach(s => container.appendChild(createSection(s)));
-        makeSortable(container);
-    }
-
-    async function deleteSection(id) {
-        if (confirm('Hapus beserta semua isinya?')) {
-            await fetch(`${API.sections}${id}/`, { method: 'DELETE', headers: { 'X-CSRFToken': csrftoken } });
-            fetchSections();
+    // ====================== FETCH / DELETE ======================
+    async function fetchSections(){
+        try{
+            const res=await fetch(`${API.sections}?course=${courseId}`);
+            const data=await res.json();
+            const container=document.getElementById('sections');
+            container.innerHTML='';
+            data.forEach(s=>container.appendChild(createSection(s)));
+            makeSortable(container);
+        }catch(e){
+            showToast('Error fetching sections', 'error');
+            console.error(e);
         }
     }
 
-    async function deleteItem(url) {
-        if (confirm('Hapus?')) {
-            await fetch(url, { method: 'DELETE', headers: { 'X-CSRFToken': csrftoken } });
-            fetchSections();
+    async function deleteSection(id){
+        if(confirm('Hapus beserta semua isinya?')){
+            await fetch(`${API.sections}${id}/`,{method:'DELETE',headers:{'X-CSRFToken':csrftoken}});
+            await fetchSections();
+            showToast('Section deleted!');
         }
     }
 
-    function makeSortable(el) {
-        if (el) new Sortable(el, { group: 'nested', animation: 150, fallbackOnBody: true, swapThreshold: 0.65, onEnd: saveStructure });
+    async function deleteItem(url){
+        if(confirm('Hapus?')){
+            await fetch(url,{method:'DELETE',headers:{'X-CSRFToken':csrftoken}});
+            await fetchSections();
+            showToast('Deleted successfully!');
+        }
     }
 
-    async function saveStructure() {
-        const getData = el => ({ id: el.dataset.id, children: Array.from(el.children).filter(c => c.dataset?.id).map(getData) });
-        const structure = Array.from(document.querySelectorAll('#sections > div')).map(getData);
-        await fetch(API.reorder, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }, body: JSON.stringify(structure) });
+    function makeSortable(el){
+        if(el) new Sortable(el,{group:'nested',animation:150,fallbackOnBody:true,swapThreshold:0.65,onEnd:saveStructure});
     }
 
-    // ====================== INIT ======================
-    document.getElementById('add-section').onclick = () => openModal('section');
-    document.getElementById('save-json').onclick = saveStructure;
+    async function saveStructure(){
+        const getData=el=>({id:el.dataset.id, children:[...el.querySelectorAll(':scope > .subsection-list > div, :scope > .unit-list > div')].map(getData)});
+        const container=document.getElementById('sections');
+        const payload=[...container.children].map(getData);
+        try{
+            await fetch(API.reorder,{
+                method:'POST',
+                headers:{'Content-Type':'application/json','X-CSRFToken':csrftoken},
+                body:JSON.stringify(payload)
+            });
+            showToast('Reorder saved!');
+        }catch(e){ showToast('Gagal menyimpan reorder', 'error'); console.error(e); }
+    }
+
     fetchSections();
 });
 </script>
+
+
 
 <style>
 .hidden { display: none !important; }
 .ck-editor__editable { min-height: 450px !important; }
 </style>
+
 {% endblock %}
