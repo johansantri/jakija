@@ -199,85 +199,69 @@
 
 
 
-    {% for section in sections %}
-        {% if section.materials.all or section.assessments.all %}
+{% for section in sections %}
+    {% for sub in section.children.all %}
+        {% for unit in sub.children.all %}
 
-            <!-- SECTION -->
-            <button 
-                class="flex items-center space-x-3 px-4 py-2 rounded-lg text-gray-700
-                       hover:bg-red-50 hover:text-red-400 transition font-semibold w-full text-left"
-                data-section="{{ section.id }}"
-                onclick="toggleSection({{ section.id }})">
-
-                <i id="icon-{{ section.id }}" class="fas fa-chevron-down w-5"></i>
-                <span>{{ section.title }}</span>
-            </button>
-
-            <!-- SUB + UNIT WRAPPER -->
-            <div id="section-{{ section.id }}" class="space-y-2 pl-2">
-
-                {% for material in section.materials.all %}
-                    <!-- MATERIAL (Sub-item) -->
-                    <a 
-                        href="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='material' content_id=material.id %}"
-                        hx-get="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='material' content_id=material.id %}"
-                        hx-target="#content-area"
-                        hx-swap="innerHTML"
-                        hx-push-url="true"
-                        hx-on::after-request="document.body.dispatchEvent(new Event('contentLoaded'))"
-                        class="sidebar-item flex items-center space-x-3 px-6 py-2 rounded-lg text-gray-600
-                               hover:bg-red-50 hover:text-red-400 transition
-                               {% if current_content.0 == 'material' and current_content.1.id == material.id %}
-                                   bg-red-100 text-red-600 font-semibold sidebar-item-active
-                               {% endif %}">
-
-                        <i class="fas fa-chevron-right w-5"></i>
-
-                        {% is_content_read 'material' material.id as is_material_read %}
-                        {% if is_material_read %}
-                            <i class="fas fa-check-circle text-green-600"></i>
-                        {% endif %}
-
-                        <span>{{ material.title }}</span>
-                    </a>
-                {% endfor %}
-
-                {% for assessment in section.assessments.all %}
-                    <!-- ASSESSMENT (Sub-item) -->
-                    <a 
-                        href="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}"
-                        hx-get="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}"
-                        hx-target="#content-area"
-                        hx-swap="innerHTML"
-                        hx-push-url="true"
-                        hx-on::after-request="document.body.dispatchEvent(new Event('contentLoaded'))"
-                        class="sidebar-item flex items-center space-x-3 px-6 py-2 rounded-lg text-gray-600
-                               hover:bg-red-50 hover:text-red-400 transition
-                               {% if current_content.0 == 'assessment' and current_content.1.id == assessment.id %}
-                                   bg-red-100 text-red-600 font-semibold sidebar-item-active
-                               {% endif %}">
-
-                        <i class="fas fa-chevron-right w-5"></i>
-
-                        {% is_content_read 'assessment' assessment.id as is_assessment_read %}
-                        {% if is_assessment_read %}
-                            <i class="fas fa-check-circle text-green-600"></i>
-                        {% endif %}
-
-                        <span>{{ assessment.name }}</span>
-
-                        {% if assessment_locked and assessment.id == current_content.1.id %}
-                            <span class="ml-auto bg-yellow-200 text-yellow-900 text-xs px-2 py-1 rounded-full">
-                                Restricted
-                            </span>
-                        {% endif %}
-                    </a>
-                {% endfor %}
-
+            <!-- UNIT TITLE -->
+            <div class="px-4 py-2 mt-3 text-sm font-semibold text-gray-500 uppercase">
+                {{ unit.title }}
             </div>
 
-        {% endif %}
+            <!-- MATERIALS -->
+            {% for material in unit.materials.all %}
+                <a 
+                    href="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='material' content_id=material.id %}"
+                    hx-get="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='material' content_id=material.id %}"
+                    hx-target="#content-area"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                    class="sidebar-item flex items-center space-x-3 px-6 py-2 rounded-lg text-gray-600
+                           hover:bg-red-50 hover:text-red-400 transition
+                           {% if current_content.0 == 'material' and current_content.1.id == material.id %}
+                               bg-red-100 text-red-600 font-semibold
+                           {% endif %}">
+
+                    <i class="fas fa-file-alt w-5"></i>
+
+                    {% is_content_read 'material' material.id as is_material_read %}
+                    {% if is_material_read %}
+                        <i class="fas fa-check-circle text-green-600"></i>
+                    {% endif %}
+
+                    <span>{{ material.title }}</span>
+                </a>
+            {% endfor %}
+
+            <!-- ASSESSMENTS -->
+            {% for assessment in unit.assessments.all %}
+                <a 
+                    href="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}"
+                    hx-get="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}"
+                    hx-target="#content-area"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                    class="sidebar-item flex items-center space-x-3 px-6 py-2 rounded-lg text-gray-600
+                           hover:bg-red-50 hover:text-red-400 transition
+                           {% if current_content.0 == 'assessment' and current_content.1.id == assessment.id %}
+                               bg-red-100 text-red-600 font-semibold
+                           {% endif %}">
+
+                    <i class="fas fa-clipboard-check w-5"></i>
+
+                    {% is_content_read 'assessment' assessment.id as is_assessment_read %}
+                    {% if is_assessment_read %}
+                        <i class="fas fa-check-circle text-green-600"></i>
+                    {% endif %}
+
+                    <span>{{ assessment.name }}</span>
+                </a>
+            {% endfor %}
+
+        {% endfor %}
     {% endfor %}
+{% endfor %}
+
 
 </nav>
 

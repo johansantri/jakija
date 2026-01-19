@@ -1206,11 +1206,24 @@ def my_course(request, username, id, slug):
         logger.warning(f"Pengguna {user.username} tidak terdaftar di kursus {slug}")
         return HttpResponse(status=403)
 
-    sections = Section.objects.filter(courses=course).prefetch_related(
-        Prefetch('materials', queryset=Material.objects.all()),
-        Prefetch('assessments', queryset=Assessment.objects.all())
-    ).order_by('order')
-    combined_content = _build_combined_content(sections)
+    sections = Section.objects.filter(
+        courses=course,
+        parent__isnull=True
+    ).order_by('order').prefetch_related(
+        Prefetch(
+            'children',
+            queryset=Section.objects.order_by('order').prefetch_related(
+                Prefetch(
+                    'children',
+                    queryset=Section.objects.order_by('order').prefetch_related(
+                        'materials',
+                        'assessments'
+                    )
+                )
+            )
+        )
+    )
+
 
     # Periksa apakah ini akses pertama
     last_access = LastAccessCourse.objects.filter(user=user, course=course).first()
