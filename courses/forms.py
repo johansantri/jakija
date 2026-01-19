@@ -863,6 +863,24 @@ class PartnerForm(forms.ModelForm):
             raise forms.ValidationError("This user already exists as a partner. Please choose another.")
         
         return user_value
+    def clean_name(self):
+        name_value = self.cleaned_data.get('name')
+
+        if not name_value:
+            raise forms.ValidationError("Please select a university.")
+
+        qs = Partner.objects.filter(name=name_value)
+
+        # Saat edit, abaikan record sendiri
+        if self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+
+        if qs.exists():
+            raise forms.ValidationError(
+                "This university is already registered as a partner."
+            )
+
+        return name_value
 
     def save(self, commit=True):
         partner = super().save(commit=False)
