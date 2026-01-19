@@ -7317,7 +7317,7 @@ def partner_create_view(request):
             user.is_partner = True
             user.save()
 
-            return redirect('/partner')
+            return redirect('/partner-all')
     else:
         form = PartnerForm()
 
