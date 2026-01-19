@@ -199,68 +199,126 @@
 
 
 
-{% for section in sections %}
-    {% for sub in section.children.all %}
-        {% for unit in sub.children.all %}
 
-            <!-- UNIT TITLE -->
-            <div class="px-4 py-2 mt-3 text-sm font-semibold text-gray-500 uppercase">
-                {{ unit.title }}
-            </div>
+<!-- ===========================
+     SIDEBAR UNIT COLLAPSIBLE
+=========================== -->
+<div id="sidebar" class="space-y-2">
 
-            <!-- MATERIALS -->
-            {% for material in unit.materials.all %}
-                <a 
-                    href="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='material' content_id=material.id %}"
-                    hx-get="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='material' content_id=material.id %}"
-                    hx-target="#content-area"
-                    hx-swap="innerHTML"
-                    hx-push-url="true"
-                    class="sidebar-item flex items-center space-x-3 px-6 py-2 rounded-lg text-gray-600
-                           hover:bg-red-50 hover:text-red-400 transition
-                           {% if current_content.0 == 'material' and current_content.1.id == material.id %}
-                               bg-red-100 text-red-600 font-semibold
-                           {% endif %}">
+    {% for section in sections %}
+        {% for sub in section.children.all %}
+            {% for unit in sub.children.all %}
 
-                    <i class="fas fa-file-alt w-5"></i>
+                <!-- UNIT HEADER (klik untuk toggle) -->
+                <button
+                    onclick="toggleUnit('{{ unit.id }}')"
+                    class="flex items-center w-full px-4 py-2 mt-3 text-left
+                           font-semibold text-gray-700 hover:bg-gray-100 rounded">
 
-                    {% is_content_read 'material' material.id as is_material_read %}
-                    {% if is_material_read %}
-                        <i class="fas fa-check-circle text-green-600"></i>
-                    {% endif %}
+                    <i id="unit-icon-{{ unit.id }}" class="fas fa-chevron-right w-5 mr-2 transition-transform"></i>
+                    <span>{{ unit.title }}</span>
+                </button>
 
-                    <span>{{ material.title }}</span>
-                </a>
+                <!-- UNIT CONTENT (hidden default) -->
+                <div id="unit-content-{{ unit.id }}" class="ml-6 mt-1 space-y-1 hidden">
+
+                    <!-- MATERIALS -->
+                    {% for material in unit.materials.all %}
+                        {% is_content_read 'material' material.id as is_material_read %}
+                        <a 
+                            href="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='material' content_id=material.id %}"
+                            hx-get="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='material' content_id=material.id %}"
+                            hx-target="#content-area"
+                            hx-swap="innerHTML"
+                            hx-push-url="true"
+                            class="sidebar-item flex items-center space-x-3 px-4 py-2 rounded text-gray-600
+                                   hover:bg-red-50 hover:text-red-400 transition
+                                   {% if current_content.0 == 'material' and current_content.1.id == material.id %}
+                                       bg-red-100 text-red-600 font-semibold
+                                   {% endif %}"
+                            data-read-status="{{ is_material_read|yesno:'true,false' }}">
+
+                            <i class="fas fa-file-alt w-5"></i>
+                            <i class="fas fa-check-circle check-icon text-green-600 hidden w-5"></i>
+                            <span>{{ material.title }}</span>
+                        </a>
+                    {% endfor %}
+
+                    <!-- ASSESSMENTS -->
+                    {% for assessment in unit.assessments.all %}
+                        {% is_content_read 'assessment' assessment.id as is_assessment_read %}
+                        <a 
+                            href="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}"
+                            hx-get="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}"
+                            hx-target="#content-area"
+                            hx-swap="innerHTML"
+                            hx-push-url="true"
+                            class="sidebar-item flex items-center space-x-3 px-4 py-2 rounded text-gray-600
+                                   hover:bg-red-50 hover:text-red-400 transition
+                                   {% if current_content.0 == 'assessment' and current_content.1.id == assessment.id %}
+                                       bg-red-100 text-red-600 font-semibold
+                                   {% endif %}"
+                            data-read-status="{{ is_assessment_read|yesno:'true,false' }}">
+
+                            <i class="fas fa-clipboard-check w-5"></i>
+                            <i class="fas fa-check-circle check-icon text-green-600 hidden w-5"></i>
+                            <span>{{ assessment.name }}</span>
+                        </a>
+                    {% endfor %}
+
+                </div>
+
             {% endfor %}
-
-            <!-- ASSESSMENTS -->
-            {% for assessment in unit.assessments.all %}
-                <a 
-                    href="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}"
-                    hx-get="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}"
-                    hx-target="#content-area"
-                    hx-swap="innerHTML"
-                    hx-push-url="true"
-                    class="sidebar-item flex items-center space-x-3 px-6 py-2 rounded-lg text-gray-600
-                           hover:bg-red-50 hover:text-red-400 transition
-                           {% if current_content.0 == 'assessment' and current_content.1.id == assessment.id %}
-                               bg-red-100 text-red-600 font-semibold
-                           {% endif %}">
-
-                    <i class="fas fa-clipboard-check w-5"></i>
-
-                    {% is_content_read 'assessment' assessment.id as is_assessment_read %}
-                    {% if is_assessment_read %}
-                        <i class="fas fa-check-circle text-green-600"></i>
-                    {% endif %}
-
-                    <span>{{ assessment.name }}</span>
-                </a>
-            {% endfor %}
-
         {% endfor %}
     {% endfor %}
-{% endfor %}
+
+</div>
+
+<!-- ===========================
+     JS TOGGLE UNIT
+=========================== -->
+<script>
+function toggleUnit(unitId) {
+    const content = document.getElementById(`unit-content-${unitId}`);
+    const icon = document.getElementById(`unit-icon-${unitId}`);
+    if (!content || !icon) return;
+
+    content.classList.toggle('hidden');         // buka/tutup konten
+    icon.classList.toggle('rotate-90');         // putar ikon
+}
+
+// ===========================
+// INIT SIDEBAR (auto-open + checklist)
+// ===========================
+function initSidebar() {
+    // 1️⃣ buka Unit aktif
+    const currentUnitId = "{{ current_content.1.section_id|default:'' }}";
+    if (currentUnitId) {
+        const content = document.getElementById(`unit-content-${currentUnitId}`);
+        const icon = document.getElementById(`unit-icon-${currentUnitId}`);
+        if (content) content.classList.remove('hidden');
+        if (icon) icon.classList.add('rotate-90');
+    }
+
+    // 2️⃣ tampilkan checklist "sudah dibaca"
+    document.querySelectorAll('[data-read-status]').forEach(el => {
+        if (el.dataset.readStatus === 'true') {
+            const checkIcon = el.querySelector('.check-icon');
+            if (checkIcon) checkIcon.classList.remove('hidden');
+        }
+    });
+}
+
+// Jalankan saat page load awal
+document.addEventListener("DOMContentLoaded", initSidebar);
+
+// Jalankan ulang setiap kali HTMX swap sidebar
+document.body.addEventListener("htmx:afterSwap", function(evt) {
+    if (evt.detail.target.id === "sidebar") {
+        initSidebar();
+    }
+});
+</script>
 
 
 </nav>
