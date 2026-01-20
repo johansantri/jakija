@@ -862,113 +862,114 @@
 
                             </div>
                         </div>
-                    </div>
-                    <!-- Features -->
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <h4 class="text-xl font-bold text-gray-900 mb-3">Includes</h4>
-                        <ul class="list-none">
-                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
-                                <span class="font-medium text-gray-900">Course Number:</span>
-                                <span class="text-gray-600">{{ course.course_number }}</span>
-                            </li>
-                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
-                                <span class="font-medium text-gray-900">Class Run:</span>
-                                <span class="text-gray-600">{{ course.course_run }}</span>
-                            </li>
-                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
-                                <span class="font-medium text-gray-900">Class Start:</span>
-                                <span class="text-gray-600">{{ course.start_date }}</span>
-                            </li>
-                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
-                                <span class="font-medium text-gray-900">Class End:</span>
-                                <span class="text-gray-600">{{ course.end_date }}</span>
-                            </li>
-                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
-                                <span class="font-medium text-gray-900">Enroll Start:</span>
-                                <span class="text-gray-600">{{ course.start_enrol }}</span>
-                            </li>
-                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
-                                <span class="font-medium text-gray-900">Enroll End:</span>
-                                <span class="text-gray-600">{{ course.end_enrol }}</span>
-                            </li>
-                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
-                                <span class="font-medium text-gray-900">Hours Effort:</span>
-                                <span class="text-gray-600">{{ course.hour }}</span>
-                            </li>
-                            <li class="flex justify-between items-center py-2 border-b border-gray-200">
-                                <span class="font-medium text-gray-900">Language:</span>
-                                <span class="text-gray-600">{{ course.get_language_display }}</span>
-                            </li>
-                            <li class="flex justify-between items-center py-2">
-                                <span class="font-medium text-gray-900">Level:</span>
-                                <span class="text-gray-600">{{ course.level }}</span>
-                            </li>
-                        </ul>
-                        <h4 class="text-xl font-bold text-gray-900 mb-3">Category</h4>
-                        <a href="{% url 'courses:category_list' course.category.slug %}" class="inline-block">
-                            <span class="inline-block bg-red-500 text-white text-sm font-medium px-3 py-1 rounded-md mb-3">{{ course.category }}</span>
-                        </a>
-                        <hr>
+                        <!-- Features -->
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <h4 class="text-xl font-bold text-gray-900 mb-3">Includes</h4>
+                            <ul class="list-none">
+                                <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <span class="font-medium text-gray-900">Course Number:</span>
+                                    <span class="text-gray-600">{{ course.course_number }}</span>
+                                </li>
+                                <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <span class="font-medium text-gray-900">Class Run:</span>
+                                    <span class="text-gray-600">{{ course.course_run }}</span>
+                                </li>
+                                <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <span class="font-medium text-gray-900">Class Start:</span>
+                                    <span class="text-gray-600">{{ course.start_date }}</span>
+                                </li>
+                                <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <span class="font-medium text-gray-900">Class End:</span>
+                                    <span class="text-gray-600">{{ course.end_date }}</span>
+                                </li>
+                                <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <span class="font-medium text-gray-900">Enroll Start:</span>
+                                    <span class="text-gray-600">{{ course.start_enrol }}</span>
+                                </li>
+                                <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <span class="font-medium text-gray-900">Enroll End:</span>
+                                    <span class="text-gray-600">{{ course.end_enrol }}</span>
+                                </li>
+                                <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <span class="font-medium text-gray-900">Hours Effort:</span>
+                                    <span class="text-gray-600">{{ course.hour }}</span>
+                                </li>
+                                <li class="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <span class="font-medium text-gray-900">Language:</span>
+                                    <span class="text-gray-600">{{ course.get_language_display }}</span>
+                                </li>
+                                <li class="flex justify-between items-center py-2">
+                                    <span class="font-medium text-gray-900">Level:</span>
+                                    <span class="text-gray-600">{{ course.level }}</span>
+                                </li>
+                            </ul>
+                            <h4 class="text-xl font-bold text-gray-900 mb-3">Category</h4>
+                            <a href="{% url 'courses:category_list' course.category.slug %}" class="inline-block">
+                                <span class="inline-block bg-red-500 text-white text-sm font-medium px-3 py-1 rounded-md mb-3">{{ course.category }}</span>
+                            </a>
+                            <hr>
 
-                        <br>
-                        <div class="flex space-x-4">
-                              
-                                <!-- WhatsApp Share -->
-                                <a href="https://api.whatsapp.com/send?text={{ course.course_name|urlencode }}%0A{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja!'|truncatechars:200|urlencode }}%0A{{ request.build_absolute_uri|urlencode }}"
-                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Share on WhatsApp">
-                                    <i class="fab fa-whatsapp text-green-500 text-sm sm:text-base mr-1"></i>
-                                    <span class="text-xs sm:text-sm"></span>
-                                </a>
-                                <!-- Facebook Share -->
-                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
-                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Share on Facebook">
-                                    <i class="fab fa-facebook-f text-blue-600 text-sm sm:text-base mr-1"></i>
-                                    <span class="text-xs sm:text-sm"></span>
-                                </a>
-                                <!-- LinkedIn Share -->
-                                <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode }}&title={{ course.course_name|urlencode }}&summary={{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja untuk meningkatkan keterampilan Anda dengan panduan dari instruktur ahli.'|truncatechars:256|urlencode }}&source={{ request.scheme }}://{{ request.get_host }}"
-                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Share on LinkedIn">
-                                    <i class="fab fa-linkedin-in text-blue-700 text-sm sm:text-base mr-1"></i>
-                                    <span class="text-xs sm:text-sm"></span>
-                                </a>
-                                <!-- X Share -->
-                                <a href="https://x.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ course.course_name|urlencode }}%20-%20{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja!'|truncatechars:200|urlencode }}"
-                                class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Share on X">
-                                    <i class="fab fa-x-twitter text-black text-sm sm:text-base mr-1"></i>
-                                    <span class="text-xs sm:text-sm"></span>
-                                </a>
-                                <!-- Instagram Share -->
-                                <button onclick="copyToClipboard('{{ request.build_absolute_uri }}')"
-                                        class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
-                                        aria-label="Copy link for your share">
-                                    <i class="fas fa-share-alt text-gray-600 text-sm sm:text-base mr-1"></i>
-                                    <span class="text-xs sm:text-sm"></span>
-                                </button>
+                            <br>
+                            <div class="flex space-x-4">
+                                
+                                    <!-- WhatsApp Share -->
+                                    <a href="https://api.whatsapp.com/send?text={{ course.course_name|urlencode }}%0A{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja!'|truncatechars:200|urlencode }}%0A{{ request.build_absolute_uri|urlencode }}"
+                                    class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Share on WhatsApp">
+                                        <i class="fab fa-whatsapp text-green-500 text-sm sm:text-base mr-1"></i>
+                                        <span class="text-xs sm:text-sm"></span>
+                                    </a>
+                                    <!-- Facebook Share -->
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
+                                    class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Share on Facebook">
+                                        <i class="fab fa-facebook-f text-blue-600 text-sm sm:text-base mr-1"></i>
+                                        <span class="text-xs sm:text-sm"></span>
+                                    </a>
+                                    <!-- LinkedIn Share -->
+                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode }}&title={{ course.course_name|urlencode }}&summary={{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja untuk meningkatkan keterampilan Anda dengan panduan dari instruktur ahli.'|truncatechars:256|urlencode }}&source={{ request.scheme }}://{{ request.get_host }}"
+                                    class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Share on LinkedIn">
+                                        <i class="fab fa-linkedin-in text-blue-700 text-sm sm:text-base mr-1"></i>
+                                        <span class="text-xs sm:text-sm"></span>
+                                    </a>
+                                    <!-- X Share -->
+                                    <a href="https://x.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ course.course_name|urlencode }}%20-%20{{ course.sort_description|default:'Pelajari kursus menarik ini di JakIja!'|truncatechars:200|urlencode }}"
+                                    class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Share on X">
+                                        <i class="fab fa-x-twitter text-black text-sm sm:text-base mr-1"></i>
+                                        <span class="text-xs sm:text-sm"></span>
+                                    </a>
+                                    <!-- Instagram Share -->
+                                    <button onclick="copyToClipboard('{{ request.build_absolute_uri }}')"
+                                            class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                            aria-label="Copy link for your share">
+                                        <i class="fas fa-share-alt text-gray-600 text-sm sm:text-base mr-1"></i>
+                                        <span class="text-xs sm:text-sm"></span>
+                                    </button>
 
-                                 <script>
-                                    function copyToClipboard(url) {
-                                        navigator.clipboard.writeText(url).then(() => {
-                                            alert('Link copied to clipboard! Paste it anywhere to share.');
-                                        }).catch(err => {
-                                            console.error('Failed to copy: ', err);
-                                            alert('Failed to copy link. Please copy the URL manually.');
-                                        });
-                                    }
-                                 </script>
-                            </div>
+                                    <script>
+                                        function copyToClipboard(url) {
+                                            navigator.clipboard.writeText(url).then(() => {
+                                                alert('Link copied to clipboard! Paste it anywhere to share.');
+                                            }).catch(err => {
+                                                console.error('Failed to copy: ', err);
+                                                alert('Failed to copy link. Please copy the URL manually.');
+                                            });
+                                        }
+                                    </script>
+                                </div>
+                        </div>
                     </div>
+                    
                     
                 </div>
             </div>
