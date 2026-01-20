@@ -5,6 +5,8 @@ from import_export.admin import ImportExportModelAdmin
 from django.utils.html import format_html
 from django.utils.text import slugify
 
+from django.utils import timezone
+
 
 class OptionInline(admin.TabularInline):
     model = Option
@@ -248,7 +250,27 @@ class BlacklistedKeywordAdmin(admin.ModelAdmin):
     ordering = ("keyword",)      # Urut alfabet
     list_per_page = 50           # Pagination rapi
 
-admin.site.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('get_username', 'get_email', 'is_blocked')
+
+    # Ambil username dari relasi user
+    def get_username(self, obj):
+        return obj.user.username
+    get_username.short_description = 'Username'
+
+    # Ambil email dari relasi user
+    def get_email(self, obj):
+        return obj.user.email
+    get_email.short_description = 'Email'
+
+    # Menampilkan status blokir
+    def is_blocked(self, obj):
+        return obj.blocked_until and obj.blocked_until > timezone.now()
+    is_blocked.boolean = True
+    is_blocked.short_description = 'Blocked?'
+
+# Register admin
+admin.site.register(UserProfile, UserProfileAdmin)
 @admin.register(SosPost)
 class SosPostAdmin(admin.ModelAdmin):
     list_display = ('user', 'content', 'created_at',  'deleted')

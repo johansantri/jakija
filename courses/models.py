@@ -39,6 +39,8 @@ class UserProfile(models.Model):
     blocked_until = models.DateTimeField(null=True, blank=True)
     def is_blocked(self):
         return self.blocked_until and self.blocked_until > timezone.now()
+    def __str__(self):
+        return f"{self.user.username} ({'Blocked' if self.is_blocked() else 'Active'})"
 
 class BlacklistedKeyword(models.Model):
     keyword = models.CharField(max_length=100, unique=True)
@@ -1572,6 +1574,8 @@ class Video(models.Model):
         if self.file:
             if not self.file.name.lower().endswith(('.mp4', '.mov', '.avi')):
                 raise ValidationError('Hanya file video yang diperbolehkan')
+    def __str__(self):
+        return self.title
 
 class Quiz(models.Model):
     QUESTION_TYPES = [
