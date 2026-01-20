@@ -22,7 +22,7 @@ def send_partner_email_html(request, user, subject, template_name, context):
     missing = [s for s in required_settings if not getattr(settings, s, None)]
 
     if missing:
-        msg = f"Konfigurasi email belum lengkap di settings.py: {', '.join(missing)}"
+        msg = f"Email configuration is incomplete: {', '.join(missing)}"
         logger.warning(msg)
         if request:
             messages.warning(request, msg)
@@ -30,7 +30,7 @@ def send_partner_email_html(request, user, subject, template_name, context):
 
     # 🧩 2. Cek apakah user punya email
     if not getattr(user, 'email', None):
-        msg = f"User '{getattr(user, 'username', 'Tanpa Nama')}' belum memiliki email, email tidak dikirim."
+        msg = f"User '{getattr(user, 'username', 'Tanpa Nama')}' Email not available, so the message was not sent."
         logger.warning(msg)
         if request:
             messages.warning(request, msg)
@@ -47,14 +47,13 @@ def send_partner_email_html(request, user, subject, template_name, context):
         )
         email.content_subtype = "html"
         email.send(fail_silently=False)
-        logger.info(f"Email berhasil dikirim ke {user.email} dengan subjek '{subject}'.")
+        logger.info(f"Email successfully sent to {user.email} with subject '{subject}'.")
         if request:
-            messages.success(request, f"Email berhasil dikirim ke {user.email}.")
+            messages.success(request, f"Email successfully sent to {user.email}.")
     except Exception as e:
-        logger.exception(f"Gagal mengirim email ke {user.email}: {str(e)}")
+        logger.exception(f"Failed to send email to {user.email}: {str(e)}")
         if request:
-            messages.error(request, "Terjadi kesalahan saat mengirim email.")
-
+            messages.error(request, "An error occurred while sending the email.")
 # Simpan status lama sebelum disave
 @receiver(pre_save, sender=Partner)
 def cache_old_status(sender, instance, **kwargs):
@@ -72,7 +71,7 @@ def check_email_settings():
     required_settings = ['EMAIL_HOST', 'EMAIL_PORT', 'DEFAULT_FROM_EMAIL']
     missing = [s for s in required_settings if not getattr(settings, s, None)]
     if missing:
-        msg = f"Konfigurasi email belum lengkap di settings.py: {', '.join(missing)}"
+        msg = f"Email configuration is incomplete: {', '.join(missing)}"
         logger.warning(msg)
         return False, msg
     return True, None

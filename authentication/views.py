@@ -1224,17 +1224,17 @@ def edit_profile(request, pk):
 
     # Pastikan hanya pemilik profil yang bisa mengedit
     if request.user.pk != pk:
-        messages.error(request, "Anda tidak memiliki izin untuk mengedit profil ini.")
+        messages.error(request, "You do not have permission to edit this profile.")
         return redirect('authentication:mycourse')
 
     if request.method == "POST":
         form = UserProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            messages.success(request, "Profil berhasil diperbarui.")
+            messages.success(request, "Profile successfully updated.")
             return redirect('authentication:mycourse')
         else:
-            messages.error(request, "Silakan perbaiki kesalahan di bawah ini.")
+            messages.error(request, "Please correct the errors below.")
     else:
         form = UserProfileForm(instance=profile)
 
@@ -1417,14 +1417,14 @@ def search(request):
     referer = request.headers.get('Referer', '')
     if not referer.startswith(settings.ALLOWED_REFERER):
         logger.warning(f"Invalid referer: {referer} from IP {request.META.get('REMOTE_ADDR')}")
-        return HttpResponseForbidden("Akses ditolak: sumber tidak sah")
+        return HttpResponseForbidden("Access denied: invalid source")
 
     # Handle penghapusan riwayat (POST request)
     if request.method == 'POST' and request.user.is_authenticated:
         if request.POST.get('clear_history') == '1':
             SearchHistory.objects.filter(user=request.user).delete()
             logger.info(f"User {request.user.id} deleted their search history.")
-            messages.success(request, "Riwayat pencarian berhasil dihapus.")
+            messages.success(request, "Search history successfully deleted.")
             return redirect(reverse('authentication:home'))
 
     # Sanitasi dan validasi input
@@ -1691,7 +1691,7 @@ def custom_password_reset(request):
             email.send()
         except Exception as e:
             # Log error jika perlu, tapi tetap tampilkan halaman sukses untuk UX
-            return HttpResponse("Terjadi kesalahan saat mengirim email. Silakan coba lagi nanti.")
+            return HttpResponse("Email could not be sent. Please try again later..")
 
         # Tampilkan halaman konfirmasi
         return render(request, 'authentication/password_reset_done.html')

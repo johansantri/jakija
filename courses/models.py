@@ -862,7 +862,7 @@ class GradeRange(models.Model):
     # Validasi untuk memastikan min_grade selalu kurang dari atau sama dengan max_grade
     def save(self, *args, **kwargs):
         if self.min_grade > self.max_grade:
-            raise ValueError("min_grade tidak bisa lebih besar dari max_grade")
+            raise ValueError("Minimum grade must not exceed maximum grade.")
         super().save(*args, **kwargs)
 
 class MicroCredential(models.Model):
@@ -1255,7 +1255,7 @@ class CourseSessionLog(models.Model):
     started_at = models.DateTimeField(default=timezone.now)
     ended_at = models.DateTimeField(null=True, blank=True)
 
-    duration_seconds = models.PositiveIntegerField(default=0, help_text="Durasi belajar dalam detik.")
+    duration_seconds = models.PositiveIntegerField(default=0, help_text="Duration of learning (seconds).")
 
     user_agent = models.CharField(max_length=255, blank=True, null=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
