@@ -970,23 +970,28 @@ def user_analytics_view(request):
     }
     return render(request, 'learner/analytics.html', context)
 
-def _build_combined_content(sections):
-    """
-    Build a list of combined content (materials and assessments) from sections.
-    
-    Args:
-        sections: QuerySet of Section objects.
-    
-    Returns:
-        List of tuples: (content_type, content_object, section).
-    """
-    combined_content = []
+def _build_combined_content(sections, combined=None):
+    if combined is None:
+        combined = []
+
     for section in sections:
+        # material TANPA order_by
         for material in section.materials.all():
-            combined_content.append(('material', material, section))
+            combined.append(('material', material, section))
+
+        # assessment TANPA order_by
         for assessment in section.assessments.all():
-            combined_content.append(('assessment', assessment, section))
-    return combined_content
+            combined.append(('assessment', assessment, section))
+
+        # children section DIURUTKAN
+        children = section.children.all().order_by('order')
+        if children.exists():
+            _build_combined_content(children, combined)
+
+    return combined
+
+
+
 
 
 
