@@ -229,23 +229,14 @@
 }
 </style>
 
-<!-- Toggle button -->
-<button id="toggle-dark" style="margin-bottom:1rem;">Toggle Dark Mode</button>
+
 
 <!-- CKEditor dynamic content -->
 <div id="editor-content" class="ck-content prose max-w-full overflow-x-auto">
     {{ material.description|make_iframes_responsive|safe }}
 </div>
 
-<script>
-// Toggle dark/light mode
-const btn = document.getElementById('toggle-dark');
-const content = document.getElementById('editor-content');
 
-btn.addEventListener('click', () => {
-    content.classList.toggle('dark');
-});
-</script>
 
 
 
