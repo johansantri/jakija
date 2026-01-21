@@ -836,41 +836,48 @@ btn.addEventListener('click', () => {
 
                                 <!-- TIMER SCRIPT -->
                                 <script>
-                                (function () {
-                                    const timerEl = document.getElementById("timer-countdown");
-                                    const progress = document.getElementById("timer-progress");
-                                    const percentEl = document.getElementById("progress-percent");
+                                    (function () {
+                                        const timerEl = document.getElementById("timer-countdown");
+                                        const progress = document.getElementById("timer-progress");
+                                        const percentEl = document.getElementById("progress-percent");
 
-                                    if (!timerEl) return;
+                                        if (!timerEl) return;
 
-                                    let total = parseInt(timerEl.textContent);
-                                    let left = total;
+                                        const total = parseInt(timerEl.textContent); // ⏱ DETIK dari backend
+                                        let left = total;
 
-                                    const iv = setInterval(() => {
-                                        left--;
-                                        const pct = Math.max(0, Math.round((left / total) * 100));
-
-                                        timerEl.textContent = left;
-                                        progress.style.width = pct + "%";
-                                        progress.textContent = pct + "%";
-                                        percentEl.textContent = pct + "%";
-
-                                        if (pct <= 25) {
-                                            progress.className = "h-full bg-red-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
-                                        } else if (pct <= 50) {
-                                            progress.className = "h-full bg-yellow-500 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
-                                        } else {
-                                            progress.className = "h-full bg-blue-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
+                                        function formatTime(sec) {
+                                            const m = Math.floor(sec / 60);
+                                            const s = sec % 60;
+                                            return `${m}:${s.toString().padStart(2, '0')}`;
                                         }
 
-                                        if (left <= 0) {
-                                            clearInterval(iv);
-                                            htmx.trigger("#quiz-form", "submit");
-                                        }
+                                        const iv = setInterval(() => {
+                                            left--;
 
-                                    }, 1000);
-                                })();
-                                </script>
+                                            const pct = Math.max(0, Math.round((left / total) * 100));
+
+                                            timerEl.textContent = formatTime(left);
+                                            progress.style.width = pct + "%";
+                                            progress.textContent = pct + "%";
+                                            percentEl.textContent = pct + "%";
+
+                                            if (pct <= 25) {
+                                                progress.className = "h-full bg-red-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
+                                            } else if (pct <= 50) {
+                                                progress.className = "h-full bg-yellow-500 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
+                                            } else {
+                                                progress.className = "h-full bg-blue-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
+                                            }
+
+                                            if (left <= 0) {
+                                                clearInterval(iv);
+                                                htmx.trigger("#quiz-form", "submit");
+                                            }
+                                        }, 1000);
+                                    })();
+                                    </script>
+
 
                             {% endif %}
 
