@@ -971,24 +971,23 @@ def user_analytics_view(request):
     return render(request, 'learner/analytics.html', context)
 
 def _build_combined_content(sections, combined=None):
+    """
+    Flatten content in EXACT order as sidebar:
+    section -> sub -> unit -> materials -> assessments
+    """
     if combined is None:
         combined = []
 
     for section in sections:
-        # material TANPA order_by
-        for material in section.materials.all():
-            combined.append(('material', material, section))
-
-        # assessment TANPA order_by
-        for assessment in section.assessments.all():
-            combined.append(('assessment', assessment, section))
-
-        # children section DIURUTKAN
-        children = section.children.all().order_by('order')
-        if children.exists():
-            _build_combined_content(children, combined)
+        for sub in section.children.all():
+            for unit in sub.children.all():
+                for material in unit.materials.all():
+                    combined.append(('material', material, unit))
+                for assessment in unit.assessments.all():
+                    combined.append(('assessment', assessment, unit))
 
     return combined
+
 
 
 
