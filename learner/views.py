@@ -1224,6 +1224,8 @@ def my_course(request, username, id, slug):
         )
     )
 
+    # ✅ FIX: pastikan combined_content selalu terdefinisi
+    combined_content = []
 
     # Periksa apakah ini akses pertama
     last_access = LastAccessCourse.objects.filter(user=user, course=course).first()
@@ -1231,7 +1233,6 @@ def my_course(request, username, id, slug):
 
     if is_first_access:
         request.session['show_welcome_modal'] = True
-
 
     if not last_access and combined_content:
         content_type, content_obj, _ = combined_content[0]
@@ -1244,11 +1245,18 @@ def my_course(request, username, id, slug):
                 'last_viewed_at': timezone.now()
             }
         )
-        logger.debug(f"Created LastAccessCourse for user {user.id}, course {course.id}, {content_type} {content_obj.id}")
+        logger.debug(
+            f"Created LastAccessCourse for user {user.id}, course {course.id}, "
+            f"{content_type} {content_obj.id}"
+        )
 
     if last_access and (last_access.material or last_access.assessment):
         content_type = 'material' if last_access.material else 'assessment'
-        content_id = last_access.material.id if last_access.material else last_access.assessment.id
+        content_id = (
+            last_access.material.id
+            if last_access.material
+            else last_access.assessment.id
+        )
     elif combined_content:
         content_type, content_obj, _ = combined_content[0]
         content_id = content_obj.id
@@ -1266,7 +1274,11 @@ def my_course(request, username, id, slug):
         logger.info(f"Redirecting to load_content: {redirect_url}")
         return HttpResponseRedirect(redirect_url)
 
-    user_progress, _ = CourseProgress.objects.get_or_create(user=user, course=course, defaults={'progress_percentage': 0})
+    user_progress, _ = CourseProgress.objects.get_or_create(
+        user=user,
+        course=course,
+        defaults={'progress_percentage': 0}
+    )
 
     context = {
         'course': course,
@@ -1305,6 +1317,7 @@ def my_course(request, username, id, slug):
     response = render(request, 'learner/my_course.html', context)
     response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     return response
+
 
 @login_required
 def load_content(request, username, id, slug, content_type, content_id):
