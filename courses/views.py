@@ -3130,7 +3130,7 @@ def edit_ivq_question(request, idcourse, idsection, idassessment, idvideo, idqui
         quiz.save()
 
         # RESET OPTIONS
-        quiz.option_set.all().delete()
+        options = quiz.options.all()
 
         if quiz.question_type == "MC":
             options = request.POST.getlist("option_text")
