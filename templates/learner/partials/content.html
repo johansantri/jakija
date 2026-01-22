@@ -575,10 +575,26 @@
                                     Your browser does not support the video tag.
                                 </video>
 
-                                <div class="absolute top-4 left-4 bg-black/70 backdrop-blur px-5 py-3 rounded-full flex items-center gap-3 z-50">
-                                    <i class="fas fa-trophy text-yellow-400 text-xl"></i>
-                                    <span id="scoreDisplay" class="font-bold text-xl">0 / 0</span>
+                                <div class="absolute top-4 left-4 
+                                            bg-gradient-to-r from-black/90 to-black/70
+                                            backdrop-blur-md
+                                            border border-white/20
+                                            px-5 py-3 rounded-full flex items-center gap-3
+                                            shadow-2xl z-50">
+                                    
+                                    <i class="fas fa-trophy 
+                                            text-yellow-400 text-xl
+                                            drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"></i>
+                                            
+                                    <span id="scoreDisplay" 
+                                        class="font-extrabold text-xl text-white
+                                                drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
+                                        0 / 0
+                                    </span>
                                 </div>
+
+
+
 
                                 <div id="quizOverlay" class="quiz-overlay">
                                     <div class="quiz-card">

@@ -1,5 +1,5 @@
 // static/js/in-video-quiz.js
-// Versi FINAL - Fix restore jawaban lama dari DB + tampil otomatis saat timeupdate
+// Versi FINAL - Fix restore jawaban lama dari DB + tampil otomatis saat timeupdate + prevent double submit
 
 const quizState = {
     quizzes: [],
@@ -99,7 +99,6 @@ function showQuiz(index) {
 
     const alreadyAnswered = quizState.answeredQuizzes[index];
 
-    // Kalau sudah dijawab sebelumnya → tampilkan dalam mode "review" (disabled + explanation + continue)
     if (alreadyAnswered && alreadyAnswered.answered) {
         renderAnsweredView(q, index, alreadyAnswered);
         quizState.explanation.textContent = q.explanation || "";
@@ -108,7 +107,6 @@ function showQuiz(index) {
         return;
     }
 
-    // Kalau belum dijawab → tampilkan mode normal dengan input
     renderFreshQuiz(q, index);
 }
 
@@ -132,22 +130,11 @@ function renderAnsweredView(q, index, answeredData) {
             btn.disabled = true;
 
             const isCorrect = label === "correct";
-
-            // Jawaban yang benar selalu hijau
-            if (isCorrect) {
-                btn.classList.add("bg-green-500");
-            }
-
-            // Jika user memilih jawaban ini tapi salah, beri merah
-            if (answeredData.userAnswer === label && !answeredData.correct) {
-                btn.classList.add("bg-red-500");
-            }
-
-            // Jika mau, jawaban yang salah tapi tidak dipilih user bisa tetap default (tidak perlu diubah)
+            if (isCorrect) btn.classList.add("bg-green-500");
+            if (answeredData.userAnswer === label && !answeredData.correct) btn.classList.add("bg-red-500");
 
             quizState.optionsContainer.appendChild(btn);
         });
-
     } else if (q.type === "fill-blank" || q.type === "es") {
         const input = document.createElement('input');
         input.type = "text";
@@ -165,19 +152,31 @@ function renderAnsweredView(q, index, answeredData) {
 }
 
 function renderFreshQuiz(q, index) {
-    const handleAnswer = (correct, element) => {
+    const handleAnswer = (correct, element, userAnswer) => {
+        const answered = quizState.answeredQuizzes[index];
+        if (answered && answered.answered) return; // prevent double submit
+
         quizState.answeredQuizzes[index] = {
             answered: true,
             correct: correct,
-            userAnswer: element ? (element.value || element.textContent || element.dataset?.value) : null,
+            userAnswer: userAnswer !== undefined ? userAnswer : (element?.value || element?.textContent || element?.dataset?.value) || null,
             shown: true
         };
+
         if (correct) quizState.score++;
         playSound(correct);
-        if (element) element.classList.add(correct ? "bg-green-500" : "bg-red-500", "text-white");
+
+        // Update tombol warna dan disable semua tombol/input
+        if (element) {
+            if (correct) element.classList.add("bg-green-500", "text-white");
+            else element.classList.add("bg-red-500", "text-white");
+        }
+        quizState.optionsContainer.querySelectorAll("button, input").forEach(btn => btn.disabled = true);
+
         quizState.explanation.textContent = q.explanation || "";
         quizState.explanation.classList.remove('hidden');
         quizState.nextButton.classList.remove('hidden');
+
         updateScoreDisplay();
     };
 
@@ -186,7 +185,7 @@ function renderFreshQuiz(q, index) {
             const btn = document.createElement('button');
             btn.className = "w-full p-4 text-center bg-blue-100 hover:bg-indigo-200 rounded-xl font-medium transition text-base md:text-lg";
             btn.textContent = opt;
-            btn.onclick = () => handleAnswer(i === q.correct, btn);
+            btn.onclick = () => handleAnswer(i === q.correct, btn, i);
             quizState.optionsContainer.appendChild(btn);
         });
     } else if (q.type === "true-false") {
@@ -195,12 +194,12 @@ function renderFreshQuiz(q, index) {
         const incorrectBtn = document.createElement('button');
         incorrectBtn.className = "w-full p-6 text-2xl font-bold rounded-xl bg-red-500 hover:bg-red-600 text-white mb-4";
         incorrectBtn.textContent = "incorrect";
-        incorrectBtn.onclick = () => handleAnswer(!correctIsTrue, incorrectBtn);
+        incorrectBtn.onclick = () => handleAnswer(!correctIsTrue, incorrectBtn, "incorrect");
 
         const correctBtn = document.createElement('button');
         correctBtn.className = "w-full p-6 text-2xl font-bold rounded-xl bg-green-500 hover:bg-green-600 text-white";
         correctBtn.textContent = "correct";
-        correctBtn.onclick = () => handleAnswer(correctIsTrue, correctBtn);
+        correctBtn.onclick = () => handleAnswer(correctIsTrue, correctBtn, "correct");
 
         quizState.optionsContainer.appendChild(incorrectBtn);
         quizState.optionsContainer.appendChild(correctBtn);
@@ -214,7 +213,7 @@ function renderFreshQuiz(q, index) {
         const submit = document.createElement('button');
         submit.textContent = "Submit";
         submit.className = "mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-full";
-        submit.onclick = () => handleAnswer(input.value.trim().toLowerCase() === q.correct.toLowerCase(), input);
+        submit.onclick = () => handleAnswer(input.value.trim().toLowerCase() === q.correct.toLowerCase(), input, input.value.trim());
 
         input.addEventListener('keydown', e => e.key === 'Enter' && submit.click());
         quizState.optionsContainer.appendChild(input);
@@ -227,7 +226,7 @@ function renderFreshQuiz(q, index) {
         dropZone.ondrop = e => {
             e.preventDefault();
             const text = e.dataTransfer.getData("text");
-            handleAnswer(text === q.correct, dropZone);
+            handleAnswer(text === q.correct, dropZone, text);
         };
         quizState.optionsContainer.appendChild(dropZone);
 
@@ -262,9 +261,7 @@ function setupNextButton() {
 function handleTimeUpdate() {
     quizState.quizzes.forEach((q, index) => {
         const answered = quizState.answeredQuizzes[index];
-        // Hanya tampilkan kalau waktu sudah lewat DAN (belum dijawab ATAU sudah dijawab tapi belum ditampilkan overlay-nya)
         if (quizState.video.currentTime >= q.time && (!answered || !answered.shown)) {
-            // Tandai sebagai sudah ditampilkan di sesi ini
             if (!answered) {
                 quizState.answeredQuizzes[index] = { shown: true };
             } else {
@@ -279,7 +276,6 @@ function initVideoQuiz() {
     const video = document.getElementById('myVideo');
     if (!video) return;
 
-    // Setup elemen DOM
     quizState.video = video;
     quizState.overlay = document.getElementById('quizOverlay');
     quizState.quizCard = document.querySelector('.quiz-card');
@@ -289,12 +285,10 @@ function initVideoQuiz() {
     quizState.explanation = document.getElementById('explanation');
     quizState.scoreDisplay = document.getElementById('scoreDisplay');
 
-    // Load data dari attribute
     quizState.quizzes = JSON.parse(video.dataset.quizzes || '[]');
     const resultJson = video.dataset.resultJson || 'null';
     const result = resultJson !== 'null' ? JSON.parse(resultJson) : null;
 
-    // Reset state
     quizState.score = 0;
     quizState.answeredQuizzes = {};
     quizState.currentQuizIndex = 0;
@@ -307,8 +301,8 @@ function initVideoQuiz() {
                 quizState.answeredQuizzes[key] = {
                     answered: true,
                     correct: saved.correct || false,
-                    userAnswer: saved.userAnswer !== undefined ? saved.userAnswer : null,  // PASTIKAN INI ADA!
-                    //shown: true  // langsung true supaya langsung muncul saat timeupdate
+                    userAnswer: saved.userAnswer !== undefined ? saved.userAnswer : null,
+                    shown: true
                 };
             });
         }
@@ -317,17 +311,14 @@ function initVideoQuiz() {
     updateScoreDisplay();
     setupNextButton();
 
-    // Event listener timeupdate (hapus dulu biar ga duplikat)
     video.removeEventListener('timeupdate', handleTimeUpdate);
     video.addEventListener('timeupdate', handleTimeUpdate);
 }
 
-// HTMX swap handler
 document.body.addEventListener('htmx:afterSwap', (evt) => {
     if (evt.detail.target.id === 'content-area') {
         setTimeout(initVideoQuiz, 100);
     }
 });
 
-// Initial load
 document.addEventListener('DOMContentLoaded', initVideoQuiz);
