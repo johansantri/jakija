@@ -226,12 +226,12 @@
                     <div x-data="{ expanded: false }" class="relative bg-gray-100 rounded-xl p-4 mb-6">
 
                         <!-- PREVIEW -->
-                        <div x-show="!expanded" class="text-gray-600 text-sm sm:text-base leading-relaxed line-clamp-4">
+                        <div x-show="!expanded" class="ck-content text-gray-600 text-sm sm:text-base leading-relaxed line-clamp-4">
                             {{ course.description|striptags|truncatechars:300 }}
                         </div>
 
                         <!-- FULL CONTENT -->
-                        <div x-show="expanded" x-transition class="prose prose-sm sm:prose-base max-w-none text-gray-700 overflow-x-auto">
+                        <div x-show="expanded" x-transition class="ck-content prose prose-sm sm:prose-base max-w-none text-gray-700 overflow-x-auto">
                             {{ course.description|safe }}
                         </div>
 
