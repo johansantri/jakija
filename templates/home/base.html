@@ -117,7 +117,7 @@
                     <form class="flex w-full" role="search" action="{% url 'authentication:search' %}" method="get">
                          {% csrf_token %}
                         <input class="w-full px-3 py-2 border border-gray-300 rounded-l-md text-sm" type="search" name="q" id="search-input" placeholder="Search..." aria-label="Search" autocomplete="off">
-                        <button class="bg-red-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600 min-w-[44px] min-h-[44px] flex items-center justify-center" type="submit" aria-label="Search">
+                        <button class="bg-red-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600 min-w-[44px] min-h-[44px] flex items-center justify-center" type="submit" aria-label="Search" title="Search all courses">
                             <i class="fas fa-search"></i>
                         </button>
                     </form>
@@ -147,7 +147,7 @@
                     </a>
 
                     {% else %}
-                    <a href="{% url 'authentication:login' %}?next={{ request.path }}" class="px-4 py-2 border border-red-600 rounded text-red-600 hover:bg-red-600 hover:text-white whitespace-nowrap">
+                    <a href="{% url 'authentication:login' %}?next={{ request.path }}" title="Log in to continue to this page" class="px-4 py-2 border border-red-600 rounded text-red-600 hover:bg-red-600 hover:text-white whitespace-nowrap">
                     Login
                     </a>
                     {% endif %}
