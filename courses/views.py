@@ -5759,11 +5759,17 @@ def question_view(request, idcourse, idsection, idassessment):
 
     videos = Video.objects.filter(quizzes__assessment=assessment).distinct()
 
+    has_mcq = assessment.questions.exists()  # .questions adalah MCQ
+    timer_is_set = assessment.duration_in_minutes is not None and assessment.duration_in_minutes > 0
+
+    show_timer_warning = has_mcq and not timer_is_set
     return render(request, 'courses/view_question.html', {
         'course': course,
         'section': section,
         'assessment': assessment,
         'videos': videos,
+        'show_timer_warning': show_timer_warning,          # ← tambahkan ini
+        'has_mcq': has_mcq,
         'user_role': getattr(team_member, 'role', None)  # bisa dipakai di template
     })
 

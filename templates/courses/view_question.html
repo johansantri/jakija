@@ -23,6 +23,26 @@
     </div>
   </div>
 
+  {% if show_timer_warning %}
+  <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded-r-xl">
+    <div class="flex items-center">
+      <div class="flex-shrink-0">
+        <i class="fas fa-exclamation-triangle text-yellow-500 text-xl"></i>
+      </div>
+      <div class="ml-3">
+        <p class="text-sm text-yellow-700 font-medium">
+            <strong>Attention:</strong> This assessment contains multiple-choice questions (MCQs).
+            You are <strong>required</strong> to set a time limit (timer) for the assessment to function properly.
+        </p>
+        <p class="text-sm text-yellow-600 mt-1">
+            Please click the <strong>Edit</strong> button above and configure the <strong>Duration (minutes)</strong>.
+        </p>
+
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
   <!-- Tombol Tambah Soal -->
   <p class="text-sm text-gray-500 mb-2">
     Only one assessment type can be selected as the primary one. Selecting one (e.g., Multiple Choice) may hide or disable the others.
