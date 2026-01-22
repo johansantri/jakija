@@ -50,191 +50,206 @@
 
     
 {% if current_content %}
+
+
     
     {% if current_content.0 == 'material' %}
-        {% with material=current_content.1 %}
+        {% with material=current_content.1 section=current_content.2 %}
         <!-- material -->
         <article class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
             
-             <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
-                <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ material.title }} </h2>
-                
-            </div>
-<!-- ===============================
-     CKEditor Content Wrapper with Dark/Light Toggle
-     =============================== -->
-<style>
-/* -------------------------------
-   Reset & Typography
----------------------------------*/
-.ck-content {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    line-height: 1.6;
-    color: #1f2937;
-}
+             <nav class="text-sm text-gray-500 mb-1">
+                <ol class="flex space-x-2">
+                    <li>Home</li>
+                    <li>/</li>
+                    <li class="text-gray-600">
+                        {{ section }} &raquo;
+                        
+                    </li>
 
-/* Headings */
-.ck-content h1, h2, h3, h4, h5, h6 {
-    margin: 1.5rem 0 1rem;
-    font-weight: 600;
-}
+                    
+                </ol>
+            </nav>
 
-/* Paragraph spacing */
-.ck-content p {
-    margin-bottom: 1rem;
-}
-.ck-content p:empty {
-    display: none;
-}
+                            <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">
+                                {{ material.title }}
+                            </h2>
 
-/* Images & Figures */
-.ck-content img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-.ck-content figure {
-    margin: 1rem 0;
-}
-.ck-content figure.image-style-align-left,
-.ck-content figure.image-style-side {
-    float: left;
-    margin: 0.25rem 1rem 0.5rem 0;
-    min-width: 120px;
-}
-.ck-content figure.image-style-align-right {
-    float: right;
-    margin: 0.25rem 0 0.5rem 1rem;
-    min-width: 120px;
-}
-.ck-content figure.image-style-align-center {
-    display: block;
-    margin: 1rem auto;
-    float: none;
-}
-.ck-content::after {
-    content: "";
-    display: block;
-    clear: both;
-}
+        <!-- ===============================
+            CKEditor Content Wrapper with Dark/Light Toggle
+            =============================== -->
+        <style>
+            /* -------------------------------
+            Reset & Typography
+            ---------------------------------*/
+            .ck-content {
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+                line-height: 1.6;
+                color: #1f2937;
+            }
 
-/* Tables */
-.ck-content table {
-    width: 100%;
-    border-collapse: collapse;
-    display: block;
-    overflow-x: auto;
-}
-.ck-content th,
-.ck-content td {
-    border: 1px solid #ccc;
-    padding: 0.5rem;
-    text-align: left;
-}
+            /* Headings */
+            .ck-content h1, h2, h3, h4, h5, h6 {
+                margin: 1.5rem 0 1rem;
+                font-weight: 600;
+            }
 
-/* Lists */
-.ck-content ul, .ck-content ol { margin-left: 1.5em; padding-left: 0; }
-.ck-content li { margin-bottom: 0.25rem; }
+            /* Paragraph spacing */
+            .ck-content p {
+                margin-bottom: 1rem;
+            }
+            .ck-content p:empty {
+                display: none;
+            }
 
-/* Blockquote */
-.ck-content blockquote {
-    border-left: 4px solid #ccc;
-    padding-left: 1rem;
-    color: #555;
-    font-style: italic;
-    margin: 1rem 0;
-}
+            /* Images & Figures */
+            .ck-content img {
+                max-width: 100%;
+                height: auto;
+                display: block;
+            }
+            .ck-content figure {
+                margin: 1rem 0;
+            }
+            .ck-content figure.image-style-align-left,
+            .ck-content figure.image-style-side {
+                float: left;
+                margin: 0.25rem 1rem 0.5rem 0;
+                min-width: 120px;
+            }
+            .ck-content figure.image-style-align-right {
+                float: right;
+                margin: 0.25rem 0 0.5rem 1rem;
+                min-width: 120px;
+            }
+            .ck-content figure.image-style-align-center {
+                display: block;
+                margin: 1rem auto;
+                float: none;
+            }
+            .ck-content::after {
+                content: "";
+                display: block;
+                clear: both;
+            }
 
-/* Inline styles */
-.ck-content mark { background-color: #d9f99d; }
-.ck-content s { text-decoration: line-through; }
-.ck-content i { font-style: italic; }
-.ck-content u { text-decoration: underline; }
-.ck-content strong { font-weight: bold; }
+            /* Tables */
+            .ck-content table {
+                width: 100%;
+                border-collapse: collapse;
+                display: block;
+                overflow-x: auto;
+            }
+            .ck-content th,
+            .ck-content td {
+                border: 1px solid #ccc;
+                padding: 0.5rem;
+                text-align: left;
+            }
 
-/* -------------------------------
-   Code Blocks
----------------------------------*/
-/* Wrapper default: light theme */
-.ck-content pre {
-    background-color: #f5f5f5;
-    color: #1f2937;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    overflow-x: auto;
-    font-family: 'Fira Code', monospace;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    margin: 1rem 0;
-    white-space: pre-wrap;
-    word-break: break-word;
-}
+            /* Lists */
+            .ck-content ul, .ck-content ol { margin-left: 1.5em; padding-left: 0; }
+            .ck-content li { margin-bottom: 0.25rem; }
 
-/* Inline code */
-.ck-content code {
-    font-family: 'Fira Code', monospace;
-    background-color: #e5e7eb;
-    color: #1f2937;
-    padding: 0.1rem 0.3rem;
-    border-radius: 0.25rem;
-}
+            /* Blockquote */
+            .ck-content blockquote {
+                border-left: 4px solid #ccc;
+                padding-left: 1rem;
+                color: #555;
+                font-style: italic;
+                margin: 1rem 0;
+            }
 
-/* Syntax coloring by language */
-.ck-content pre code.language-html { color: #d73a49; }
-.ck-content pre code.language-css  { color: #6f42c1; }
-.ck-content pre code.language-js   { color: #f1e05a; }
-.ck-content pre code.language-python { color: #3572A5; }
-.ck-content pre code.language-php { color: #4F5D95; }
-.ck-content pre code.language-java { color: #b07219; }
-.ck-content pre code.language-cpp  { color: #f34b7d; }
+            /* Inline styles */
+            .ck-content mark { background-color: #d9f99d; }
+            .ck-content s { text-decoration: line-through; }
+            .ck-content i { font-style: italic; }
+            .ck-content u { text-decoration: underline; }
+            .ck-content strong { font-weight: bold; }
 
-/* Dark mode class */
-.ck-content.dark pre {
-    background-color: #1e1e1e;
-    color: #f8f8f2;
-}
-.ck-content.dark code {
-    background-color: #2d2d2d;
-    color: #f8f8f2;
-}
-.ck-content.dark pre code.language-html { color: #f92672; }
-.ck-content.dark pre code.language-css  { color: #66d9ef; }
-.ck-content.dark pre code.language-js   { color: #f8f8f2; }
-.ck-content.dark pre code.language-python { color: #a6e22e; }
-.ck-content.dark pre code.language-php { color: #66d9ef; }
-.ck-content.dark pre code.language-java { color: #fd971f; }
-.ck-content.dark pre code.language-cpp  { color: #fd5ff0; }
+            /* -------------------------------
+            Code Blocks
+            ---------------------------------*/
+            /* Wrapper default: light theme */
+            .ck-content pre {
+                background-color: #f5f5f5;
+                color: #1f2937;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                overflow-x: auto;
+                font-family: 'Fira Code', monospace;
+                font-size: 0.875rem;
+                line-height: 1.5;
+                margin: 1rem 0;
+                white-space: pre-wrap;
+                word-break: break-word;
+            }
 
-/* -------------------------------
-   Responsiveness
----------------------------------*/
-@media (max-width: 640px) {
-    .ck-content figure.image-style-side,
-    .ck-content figure.image-style-align-left,
-    .ck-content figure.image-style-align-right {
-        float: none !important;
-        margin: 1rem auto !important;
-        width: 100% !important;
-    }
-    .ck-content table { display: block; width: 100%; overflow-x: auto; }
-    .ck-content pre { font-size: 0.75rem; padding: 0.75rem; }
-}
+            /* Inline code */
+            .ck-content code {
+                font-family: 'Fira Code', monospace;
+                background-color: #e5e7eb;
+                color: #1f2937;
+                padding: 0.1rem 0.3rem;
+                border-radius: 0.25rem;
+            }
 
-/* -------------------------------
-   Wrapper max-width
----------------------------------*/
-.ck-content.prose {
-    max-width: 100%;
-    overflow-x: auto;
-}
-</style>
+            /* Syntax coloring by language */
+            .ck-content pre code.language-html { color: #d73a49; }
+            .ck-content pre code.language-css  { color: #6f42c1; }
+            .ck-content pre code.language-js   { color: #f1e05a; }
+            .ck-content pre code.language-python { color: #3572A5; }
+            .ck-content pre code.language-php { color: #4F5D95; }
+            .ck-content pre code.language-java { color: #b07219; }
+            .ck-content pre code.language-cpp  { color: #f34b7d; }
+
+            /* Dark mode class */
+            .ck-content.dark pre {
+                background-color: #1e1e1e;
+                color: #f8f8f2;
+            }
+            .ck-content.dark code {
+                background-color: #2d2d2d;
+                color: #f8f8f2;
+            }
+            .ck-content.dark pre code.language-html { color: #f92672; }
+            .ck-content.dark pre code.language-css  { color: #66d9ef; }
+            .ck-content.dark pre code.language-js   { color: #f8f8f2; }
+            .ck-content.dark pre code.language-python { color: #a6e22e; }
+            .ck-content.dark pre code.language-php { color: #66d9ef; }
+            .ck-content.dark pre code.language-java { color: #fd971f; }
+            .ck-content.dark pre code.language-cpp  { color: #fd5ff0; }
+
+            /* -------------------------------
+            Responsiveness
+            ---------------------------------*/
+            @media (max-width: 640px) {
+                .ck-content figure.image-style-side,
+                .ck-content figure.image-style-align-left,
+                .ck-content figure.image-style-align-right {
+                    float: none !important;
+                    margin: 1rem auto !important;
+                    width: 100% !important;
+                }
+                .ck-content table { display: block; width: 100%; overflow-x: auto; }
+                .ck-content pre { font-size: 0.75rem; padding: 0.75rem; }
+            }
+
+            /* -------------------------------
+            Wrapper max-width
+            ---------------------------------*/
+            .ck-content.prose {
+                max-width: 100%;
+                overflow-x: auto;
+            }
+        </style>
 
 
 
-<!-- CKEditor dynamic content -->
-<div id="editor-content" class="ck-content prose max-w-full overflow-x-auto">
-    {{ material.description|make_iframes_responsive|safe }}
-</div>
+        <!-- CKEditor dynamic content -->
+        <div id="editor-content" class="ck-content prose max-w-full overflow-x-auto">
+            {{ material.description|make_iframes_responsive|safe }}
+        </div>
 
 
 
@@ -249,705 +264,750 @@
         {% endwith %}
  
     {% elif current_content.0 == 'assessment' %}
-        {% with assessment=current_content.1 %}
-        <div class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
-          
-            {% if assessment_locked %}
-              <!-- payment -->
-                <div class="bg-yellow-50 border-l-4 border-yellow-400 rounded-2xl p-6 lg:p-10 flex flex-col lg:flex-row items-center justify-between gap-6">
-                    <div class="flex items-center gap-5">
-                        <i class="bi bi-exclamation-triangle-fill text-5xl lg:text-7xl text-yellow-600"></i>
-                        <div>
-                            <h5 class="text-2xl lg:text-3xl font-bold text-gray-800">Payment Required</h5>
-                            <p class="text-lg text-gray-600 mt-2">This exam requires payment before it can be started.</p>
+        
+         {% with assessment=current_content.1 section=current_content.2 %}
+            <div class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
+            
+                {% if assessment_locked %}
+                <!-- payment -->
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 rounded-2xl p-6 lg:p-10 flex flex-col lg:flex-row items-center justify-between gap-6">
+                        <div class="flex items-center gap-5">
+                            <i class="bi bi-exclamation-triangle-fill text-5xl lg:text-7xl text-yellow-600"></i>
+                            <div>
+                                <h5 class="text-2xl lg:text-3xl font-bold text-gray-800">Payment Required</h5>
+                                <p class="text-lg text-gray-600 mt-2">This exam requires payment before it can be started.</p>
+                            </div>
                         </div>
+                        <a href="{{ payment_required_url }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-8 py-4 rounded-xl text-lg lg:text-xl shadow-lg transition whitespace-nowrap">
+                            Checkout Now
+                        </a>
                     </div>
-                    <a href="{{ payment_required_url }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-8 py-4 rounded-xl text-lg lg:text-xl shadow-lg transition whitespace-nowrap">
-                        Checkout Now
-                    </a>
-                </div>
-               <!-- end payment --> 
-            {% else %}
+                <!-- end payment --> 
+                {% else %}
 
-              
+                
 
-                    {% if ask_oras %}
-                    <!-- ==================== BAGIAN OPEN RESPONSE ASSESSMENT ==================== -->
-                        
-                        
-                            <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">Open Response Assessment</h2>
-                            <p class="text-lg text-gray-600 mb-10">Work on the task below and wait for a peer review from your classmates.</p>
+                        {% if ask_oras %}
+                        <!-- ==================== BAGIAN OPEN RESPONSE ASSESSMENT ==================== -->
+                            
+                                <nav class="text-sm text-gray-500 mb-1">
+                                    <ol class="flex space-x-2">
+                                        <li>Home</li>
+                                        <li>/</li>
+                                        <li class="text-gray-600">
+                                            {{ section }} &raquo;
+                                           
+                                        </li>
 
-                            {% for ask_ora in ask_oras %}
-                           
+                                        
+                                    </ol>
+                                </nav>
+                                <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ assessment.name }}</h2>
+                                <p class="text-lg text-gray-600 mb-10">Work on the task below and wait for a peer review from your classmates.</p>
+
+                                {% for ask_ora in ask_oras %}
+                            
+                                    
+                                    <h5 class="text-2xl font-bold text-gray-800 mb-4">{{ ask_ora.title|default:"Essay Assignment" }}</h5>
+                                    <div class="prose prose-lg mb-6 text-gray-700">{{ ask_ora.question_text|safe }}</div>
+
+                                    <div class="flex items-center gap-3 text-gray-600 mb-8">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span class="font-semibold">Deadline:</span>
+                                        <span class="font-bold text-red-600">{{ ask_ora.response_deadline|date:"d M Y H:i" }}</span>
+                                    </div>
+
+                                    {# 1. BELUM SUBMIT & MASIH BOLEH SUBMIT #}
+                                    {% if askora_can_submit|dict_get:ask_ora.id %}
+                                    
+                                            <h6 class="text-xl font-bold text-blue-900 mb-6">Submit Your Answer</h6>
+                                            <form method="POST"
+                                                hx-post="{% url 'learner:submit_answer_askora_new' ask_ora.id %}"
+                                                hx-target="#content-area"
+                                                hx-swap="innerHTML"
+                                                enctype="multipart/form-data"
+                                                class="space-y-6">
+                                                {% csrf_token %}
+                                                <textarea name="answer_text" rows="8" required
+                                                        class="w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500"
+                                                        placeholder="Tulis jawaban Anda di sini..."></textarea>
+                                                <input type="file" name="answer_file"
+                                                    class="block w-full text-sm file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-700">
+                                                    <div class="flex justify-end">
+                                                    <button type="submit"
+                                                        class="px-4 py-2 text-sm md:px-8 md:py-4 md:text-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-xl">
+                                                        Submit Answer Now
+                                                    </button>
+                                                    </div>
+                                            </form>
+                                        
+
+                                    {# 2. SUDAH SUBMIT → Tampilkan bukti jawaban #}
+                                    {% elif user_submissions %}
+                                        {% with submission=user_submissions|first %}
+                                            {% if submission.askora.id == ask_ora.id %}
+                                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400 rounded-2xl p-6 md:p-8 mb-8 w-full max-w-full">
+
+                                                <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5 mb-4">
+                                                    <svg class="w-10 h-10 sm:w-12 sm:h-12 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
+
+                                                    <div class="w-full break-words">
+                                                        <p class="text-xl sm:text-2xl font-bold text-green-800">answer successfully sent!</p>
+                                                        <p class="text-base sm:text-lg">do not change it anymore.</p>
+                                                    </div>
+                                                </div>
+
+                                                <p class="text-green-700 mt-2 sm:mt-4 text-sm sm:text-base break-words">
+                                                    Submitted on:
+                                                    <strong>{{ submission.submitted_at|date:"d M Y H:i" }}</strong>
+                                                </p>
+
+                                                {% if submission.answer_text %}
+                                                <div class="bg-white rounded-xl p-4 sm:p-6 mt-4 sm:mt-6 border overflow-x-auto break-words">
+                                                    <p class="font-bold text-gray-700 mb-3">your answer:</p>
+                                                    <div class="prose text-gray-700 max-w-full break-words">
+                                                        {{ submission.answer_text|linebreaks }}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+
+                                                {% if submission.answer_file %}
+                                                <a href="{{ submission.answer_file.url }}" target="_blank"
+                                                    class="inline-flex items-center justify-center gap-3 mt-6 px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg transition">
+                                                    Download 
+                                                </a>
+                                                {% endif %}
+
+                                            </div>
+                                            {% endif %}
+                                        {% endwith %}
+
+
+                                    {# 3. DEADLINE LEWAT & BELUM SUBMIT #}
+                                    {% else %}
+                                        <div class="bg-red-50 border-2 border-red-400 rounded-2xl p-8">
+                                            <div class="flex items-center gap-5">
+                                                <svg class="w-12 h-12 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                                                </svg>
+                                                <div>
+                                                    <p class="text-2xl font-bold text-red-800">Submission has been closed</p>
+                                                    <p class="text-lg">You did not submit the assignment on time.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
                                 
-                                <h5 class="text-2xl font-bold text-gray-800 mb-4">{{ ask_ora.title|default:"Essay Assignment" }}</h5>
-                                <div class="prose prose-lg mb-6 text-gray-700">{{ ask_ora.question_text|safe }}</div>
+                                {% endfor %}
+                            
+                        {% endif %}
 
-                                <div class="flex items-center gap-3 text-gray-600 mb-8">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+
+                        {# ==================== STATUS PEER REVIEW (Hanya muncul jika sudah submit) ==================== #}
+                        {% if user_submissions %}
+                            <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl shadow-xl p-8 lg:p-12 mb-12">
+                                <h4 class="text-3xl font-bold text-purple-700 mb-8 flex items-center gap-4">
+                                    <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M17 9V7a5 5 0 00-10 0v2H5a2 2 0 00-2 2v6a2 2 0 002 2h14a2 2 0 002-2v-6a2 2 0 00-2-2h-2zM9 7a3 3 0 016 0v2H9V7z"></path>
                                     </svg>
-                                    <span class="font-semibold">Deadline:</span>
-                                    <span class="font-bold text-red-600">{{ ask_ora.response_deadline|date:"d M Y H:i" }}</span>
+                                    Peer Review Status
+                                </h4>
+
+                                <div class="grid md:grid-cols-3 gap-8 mb-10">
+                                    <div class="bg-white rounded-xl p-6 text-center shadow">
+                                        <p class="text-5xl font-black text-purple-600">{{ peer_review_stats.distinct_reviewers|default:0 }}</p>
+                                        <p class="text-lg font-semibold text-gray-700 mt-2">Your Answer Has Been Reviewed</p>
+                                    </div>
+                                    <div class="bg-white rounded-xl p-6 text-center shadow">
+                                        <p class="text-5xl font-black text-blue-600">{{ submissions|length }}</p>
+                                        <p class="text-lg font-semibold text-gray-700 mt-2">Answers You Need to Review</p>
+                                    </div>
+                                    <div class="bg-white rounded-xl p-6 text-center shadow">
+                                        <p class="text-5xl font-black {% if peer_review_stats.avg_score >= 4 %}text-green-600{% else %}text-orange-600{% endif %}">
+                                            {{ peer_review_stats.avg_score|default:"-" }}/5
+                                        </p>
+                                        <p class="text-lg font-semibold text-gray-700 mt-2">Average Score from Peers</p>
+                                    </div>
                                 </div>
 
-                                {# 1. BELUM SUBMIT & MASIH BOLEH SUBMIT #}
-                                {% if askora_can_submit|dict_get:ask_ora.id %}
-                                   
-                                        <h6 class="text-xl font-bold text-blue-900 mb-6">Submit Your Answer</h6>
-                                        <form method="POST"
-                                            hx-post="{% url 'learner:submit_answer_askora_new' ask_ora.id %}"
-                                            hx-target="#content-area"
-                                            hx-swap="innerHTML"
-                                            enctype="multipart/form-data"
-                                            class="space-y-6">
-                                            {% csrf_token %}
-                                            <textarea name="answer_text" rows="8" required
-                                                    class="w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500"
-                                                    placeholder="Tulis jawaban Anda di sini..."></textarea>
-                                            <input type="file" name="answer_file"
-                                                class="block w-full text-sm file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-700">
-                                                <div class="flex justify-end">
-                                                <button type="submit"
-                                                    class="px-4 py-2 text-sm md:px-8 md:py-4 md:text-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-xl">
-                                                    Submit Answer Now
-                                                </button>
-                                                </div>
-                                        </form>
-                                    
-
-                                {# 2. SUDAH SUBMIT → Tampilkan bukti jawaban #}
-                                {% elif user_submissions %}
-                                    {% with submission=user_submissions|first %}
-                                        {% if submission.askora.id == ask_ora.id %}
-                                        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400 rounded-2xl p-6 md:p-8 mb-8 w-full max-w-full">
-
-                                            <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5 mb-4">
-                                                <svg class="w-10 h-10 sm:w-12 sm:h-12 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd"
-                                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-
-                                                <div class="w-full break-words">
-                                                    <p class="text-xl sm:text-2xl font-bold text-green-800">answer successfully sent!</p>
-                                                    <p class="text-base sm:text-lg">do not change it anymore.</p>
-                                                </div>
-                                            </div>
-
-                                            <p class="text-green-700 mt-2 sm:mt-4 text-sm sm:text-base break-words">
-                                                Submitted on:
-                                                <strong>{{ submission.submitted_at|date:"d M Y H:i" }}</strong>
-                                            </p>
-
-                                            {% if submission.answer_text %}
-                                            <div class="bg-white rounded-xl p-4 sm:p-6 mt-4 sm:mt-6 border overflow-x-auto break-words">
-                                                <p class="font-bold text-gray-700 mb-3">your answer:</p>
-                                                <div class="prose text-gray-700 max-w-full break-words">
-                                                    {{ submission.answer_text|linebreaks }}
-                                                </div>
-                                            </div>
-                                            {% endif %}
-
-                                            {% if submission.answer_file %}
-                                            <a href="{{ submission.answer_file.url }}" target="_blank"
-                                                class="inline-flex items-center justify-center gap-3 mt-6 px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg transition">
-                                                Download 
-                                            </a>
-                                            {% endif %}
-
-                                        </div>
-                                        {% endif %}
-                                    {% endwith %}
-
-
-                                {# 3. DEADLINE LEWAT & BELUM SUBMIT #}
-                                {% else %}
-                                    <div class="bg-red-50 border-2 border-red-400 rounded-2xl p-8">
-                                        <div class="flex items-center gap-5">
-                                            <svg class="w-12 h-12 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
-                                            </svg>
-                                            <div>
-                                                <p class="text-2xl font-bold text-red-800">Submission has been closed</p>
-                                                <p class="text-lg">You did not submit the assignment on time.</p>
-                                            </div>
-                                        </div>
+                                {# Jika masih ada yang harus direview #}
+                                {% if can_review and submissions %}
+                                    <div class="bg-yellow-50 border-2 border-yellow-400 rounded-2xl p-8 mb-8">
+                                        <p class="text-xl font-bold text-yellow-900 flex items-center gap-3">
+                                            There are {{ submissions|length }} answers from friends that you have not reviewed!
+                                        </p>
+                                        <p class="text-yellow-800 mt-2">Please review below so your score can also be released.</p>
                                     </div>
                                 {% endif %}
+
+                                {# Jika sudah review semua #}
+                                {% if not can_review and peer_review_stats.distinct_reviewers > 0 %}
+                                    <div class="bg-green-50 border-2 border-green-400 rounded-2xl p-8">
+                                        <p class="text-xl font-bold text-green-900 flex items-center gap-3">
+                                            You have reviewed all available answers!
+                                        </p>
+                                        <p class="text-green-800 mt-2">Now waiting for others to review your answers.</p>
+                                    </div>
+                                {% endif %}
+
+                                {# Jika belum ada yang review (masih awal) #}
+                                {% if peer_review_stats.distinct_reviewers == 0 %}
+                                    <div class="bg-orange-50 border-2 border-orange-400 rounded-2xl p-8">
+                                        <p class="text-xl font-bold text-orange-900">Waiting for review from friends...</p>
+                                        <p class="text-orange-800 mt-2">Final score will appear after there is at least 1 review.</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+
+                        {# ==================== BAGIAN REVIEW JAWABAN TEMAN ==================== #}
+                        {% if can_review and submissions %}
+                            <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-12">
+                                <h2 class="text-base md:text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">Review a Friend’s Answer ({{ submissions|length }})</h2>
+
+                                {% for submission in submissions %}
+                                <div class="border border-purple-200 rounded-2xl p-8 mb-10 bg-purple-50">
+                                    <div class="flex justify-between items-start mb-6">
+                                        <h5 class="text-2xl font-bold text-purple-800">{{ submission.askora.title }}</h5>
+                                        <span class="text-purple-600 font-medium">
+                                            Written by {{ submission.user.get_full_name|default:submission.user.username }}
+                                        </span>
+                                    </div>
+
+                                    {% if submission.answer_text %}
+                                    <div class="bg-white rounded-xl p-6 mb-6 border">{{ submission.answer_text|linebreaks }}</div>
+                                    {% endif %}
+
+                                    {% if submission.answer_file %}
+                                    <a href="{{ submission.answer_file.url }}" target="_blank" class="text-purple-600 hover:underline mb-6 inline-block">
+                                        Download 
+                                    </a>
+                                    {% endif %}
+
+                                    <form method="POST"
+                                        hx-post="{% url 'learner:submit_peer_review_new' submission.id %}"
+                                        hx-target="#content-area"
+                                        hx-swap="innerHTML"
+                                        class="space-y-6 mt-8">
+                                        {% csrf_token %}
+
+                                        <div>
+                                            <label class="block text-xl font-bold text-gray-800 mb-4">Give a Rating (1-5)</label>
+                                            <select name="score" required class="w-full px-6 py-4 text-lg border-2 border-purple-300 rounded-xl focus:ring-4 focus:ring-purple-200">
+                                                <option value="">Select a rating...</option>
+                                                <option value="5">5 - Excellent</option>
+                                                <option value="4">4 - Good</option>
+                                                <option value="3">3 - Fair</option>
+                                                <option value="2">2 - Poor</option>
+                                                <option value="1">1 - Very Poor</option>
+
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-xl font-bold text-gray-800 mb-4">Comment (Opsional)</label>
+                                            <textarea name="comment" rows="4"
+                                                    class="w-full px-6 py-4 border-2 border-purple-300 rounded-xl focus:ring-4 focus:ring-purple-200"
+                                                    placeholder="Beri masukan yang membangun..."></textarea>
+                                        </div>
+
+                                        <button type="submit"
+                                                class="inline-flex items-center gap-3 mt-6 px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg transition">
+                                            Submit This Review
+                                        </button>
+                                    </form>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <!-- IN-VIDEO QUIZ: VERSI ULTIMATE (Video.js + GSAP + Sound + Score + Super Cantik) -->
+                        {% if is_video_quiz and video %}
+                            <nav class="text-sm text-gray-500 mb-1">
+                                <ol class="flex space-x-2">
+                                    <li>Home</li>
+                                    <li>/</li>
+                                    <li class="text-gray-600">
+                                        {{ section }} &raquo;
+                                        
+                                    </li>
+
+                                    
+                                </ol>
+                            </nav>
+
+                            <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">
+                                {{ video.title }}
+                            </h2>
 
                             
-                            {% endfor %}
-                        
-                    {% endif %}
-
-
-                    {# ==================== STATUS PEER REVIEW (Hanya muncul jika sudah submit) ==================== #}
-                    {% if user_submissions %}
-                        <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl shadow-xl p-8 lg:p-12 mb-12">
-                            <h4 class="text-3xl font-bold text-purple-700 mb-8 flex items-center gap-4">
-                                <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M17 9V7a5 5 0 00-10 0v2H5a2 2 0 00-2 2v6a2 2 0 002 2h14a2 2 0 002-2v-6a2 2 0 00-2-2h-2zM9 7a3 3 0 016 0v2H9V7z"></path>
-                                </svg>
-                                Peer Review Status
-                            </h4>
-
-                            <div class="grid md:grid-cols-3 gap-8 mb-10">
-                                <div class="bg-white rounded-xl p-6 text-center shadow">
-                                    <p class="text-5xl font-black text-purple-600">{{ peer_review_stats.distinct_reviewers|default:0 }}</p>
-                                    <p class="text-lg font-semibold text-gray-700 mt-2">Your Answer Has Been Reviewed</p>
-                                </div>
-                                <div class="bg-white rounded-xl p-6 text-center shadow">
-                                    <p class="text-5xl font-black text-blue-600">{{ submissions|length }}</p>
-                                    <p class="text-lg font-semibold text-gray-700 mt-2">Answers You Need to Review</p>
-                                </div>
-                                <div class="bg-white rounded-xl p-6 text-center shadow">
-                                    <p class="text-5xl font-black {% if peer_review_stats.avg_score >= 4 %}text-green-600{% else %}text-orange-600{% endif %}">
-                                        {{ peer_review_stats.avg_score|default:"-" }}/5
-                                    </p>
-                                    <p class="text-lg font-semibold text-gray-700 mt-2">Average Score from Peers</p>
-                                </div>
-                            </div>
-
-                            {# Jika masih ada yang harus direview #}
-                            {% if can_review and submissions %}
-                                <div class="bg-yellow-50 border-2 border-yellow-400 rounded-2xl p-8 mb-8">
-                                    <p class="text-xl font-bold text-yellow-900 flex items-center gap-3">
-                                        There are {{ submissions|length }} answers from friends that you have not reviewed!
-                                    </p>
-                                    <p class="text-yellow-800 mt-2">Please review below so your score can also be released.</p>
-                                </div>
-                            {% endif %}
-
-                            {# Jika sudah review semua #}
-                            {% if not can_review and peer_review_stats.distinct_reviewers > 0 %}
-                                <div class="bg-green-50 border-2 border-green-400 rounded-2xl p-8">
-                                    <p class="text-xl font-bold text-green-900 flex items-center gap-3">
-                                        You have reviewed all available answers!
-                                    </p>
-                                    <p class="text-green-800 mt-2">Now waiting for others to review your answers.</p>
-                                </div>
-                            {% endif %}
-
-                            {# Jika belum ada yang review (masih awal) #}
-                            {% if peer_review_stats.distinct_reviewers == 0 %}
-                                <div class="bg-orange-50 border-2 border-orange-400 rounded-2xl p-8">
-                                    <p class="text-xl font-bold text-orange-900">Waiting for review from friends...</p>
-                                    <p class="text-orange-800 mt-2">Final score will appear after there is at least 1 review.</p>
-                                </div>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-
-
-                    {# ==================== BAGIAN REVIEW JAWABAN TEMAN ==================== #}
-                    {% if can_review and submissions %}
-                        <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-12">
-                            <h2 class="text-base md:text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">Review a Friend’s Answer ({{ submissions|length }})</h2>
-
-                            {% for submission in submissions %}
-                            <div class="border border-purple-200 rounded-2xl p-8 mb-10 bg-purple-50">
-                                <div class="flex justify-between items-start mb-6">
-                                    <h5 class="text-2xl font-bold text-purple-800">{{ submission.askora.title }}</h5>
-                                    <span class="text-purple-600 font-medium">
-                                        Written by {{ submission.user.get_full_name|default:submission.user.username }}
-                                    </span>
-                                </div>
-
-                                {% if submission.answer_text %}
-                                <div class="bg-white rounded-xl p-6 mb-6 border">{{ submission.answer_text|linebreaks }}</div>
-                                {% endif %}
-
-                                {% if submission.answer_file %}
-                                <a href="{{ submission.answer_file.url }}" target="_blank" class="text-purple-600 hover:underline mb-6 inline-block">
-                                    Download 
-                                </a>
-                                {% endif %}
-
-                                <form method="POST"
-                                    hx-post="{% url 'learner:submit_peer_review_new' submission.id %}"
-                                    hx-target="#content-area"
-                                    hx-swap="innerHTML"
-                                    class="space-y-6 mt-8">
-                                    {% csrf_token %}
-
-                                    <div>
-                                        <label class="block text-xl font-bold text-gray-800 mb-4">Give a Rating (1-5)</label>
-                                        <select name="score" required class="w-full px-6 py-4 text-lg border-2 border-purple-300 rounded-xl focus:ring-4 focus:ring-purple-200">
-                                            <option value="">Select a rating...</option>
-                                            <option value="5">5 - Excellent</option>
-                                            <option value="4">4 - Good</option>
-                                            <option value="3">3 - Fair</option>
-                                            <option value="2">2 - Poor</option>
-                                            <option value="1">1 - Very Poor</option>
-
-                                        </select>
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-xl font-bold text-gray-800 mb-4">Comment (Opsional)</label>
-                                        <textarea name="comment" rows="4"
-                                                class="w-full px-6 py-4 border-2 border-purple-300 rounded-xl focus:ring-4 focus:ring-purple-200"
-                                                placeholder="Beri masukan yang membangun..."></textarea>
-                                    </div>
-
-                                    <button type="submit"
-                                            class="inline-flex items-center gap-3 mt-6 px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg transition">
-                                        Submit This Review
-                                    </button>
-                                </form>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-
-                    <!-- IN-VIDEO QUIZ: VERSI ULTIMATE (Video.js + GSAP + Sound + Score + Super Cantik) -->
-                    {% if is_video_quiz and video %}
-                        <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
-                            <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">
-                                 {{ video.title }}
-                            </h2>
-                        </div>
-                        
-                            <style>
-                                .quiz-overlay{
-                                    position:fixed; inset:0;
-                                    background:rgba(0,0,0,0.85);
-                                    backdrop-filter:blur(15px);
-                                    opacity:0; pointer-events:none;
-                                    transition:opacity .35s ease;
-                                    z-index:50;
-                                    display:flex; align-items:center; justify-content:center;
-                                    padding:1.5rem; overflow-y:auto;
-                                }
-                                .quiz-overlay.active{
-                                    opacity:1; pointer-events:all;
-                                }
-
-                                .quiz-card{
-                                    background:rgba(255,255,255,0.96);
-                                    border-radius:1.75rem;
-                                    padding:2rem;
-                                    width:100%; max-width:480px;
-                                    box-shadow:0 25px 60px -12px rgba(0,0,0,0.45);
-                                    transform:scale(.9); opacity:0;
-                                }
-
-                                /* Buttons */
-                                .quiz-option{
-                                    @apply w-full p-4 text-left rounded-xl font-medium transition-all cursor-pointer;
-                                    background:#f8fafc;
-                                    border:2px solid transparent;
-                                }
-                                .quiz-option:hover{
-                                    background:#eef2ff;
-                                    border-color:#c7d2fe;
-                                    transform:translateY(-2px);
-                                    box-shadow:0 6px 16px rgba(0,0,0,0.15);
-                                }
-
-                                .quiz-btn-true{
-                                    @apply w-full p-5 text-2xl font-bold rounded-xl text-white transition;
-                                    background:#10b981;
-                                }
-                                .quiz-btn-true:hover{ background:#059669; }
-
-                                .quiz-btn-false{
-                                    @apply w-full p-5 text-2xl font-bold rounded-xl text-white transition;
-                                    background:#ef4444;
-                                }
-                                .quiz-btn-false:hover{ background:#dc2626; }
-
-                                .finish-card-icon{
-                                    filter: drop-shadow(0px 8px 12px rgba(255,200,0,0.7));
-                                }
-                            </style>
-                        
-                            <div class="relative w-full max-w-10xl shadow-2xl rounded-2xl overflow-hidden bg-black">
-                                <video id="myVideo"
-                                    data-id="{{ video.id }}"
-                                    data-assessment="{{ assessment.id }}"
-                                    data-quizzes="{{ quizzes_json }}"
-                                    data-result-json="{{ result_json|default:'null' }}"
-                                    class="w-full" controls preload="auto">
-                                    <source src="{{ video.file.url }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-
-                                <div class="absolute top-4 left-4 
-                                            bg-gradient-to-r from-black/90 to-black/70
-                                            backdrop-blur-md
-                                            border border-white/20
-                                            px-5 py-3 rounded-full flex items-center gap-3
-                                            shadow-2xl z-50">
-                                    
-                                    <i class="fas fa-trophy 
-                                            text-yellow-400 text-xl
-                                            drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"></i>
-                                            
-                                    <span id="scoreDisplay" 
-                                        class="font-extrabold text-xl text-white
-                                                drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
-                                        0 / 0
-                                    </span>
-                                </div>
-
-
-
-
-                                <div id="quizOverlay" class="quiz-overlay">
-                                    <div class="quiz-card">
-                                        <h2 id="questionText" class="text-xl md:text-2xl font-bold text-center mb-6 leading-relaxed"></h2>
-                                        <div id="optionsContainer" class="space-y-4 mb-6"></div>
-                                        <div id="explanation" class="p-4 bg-green-100 rounded-xl text-green-800 font-medium hidden"></div>
-                                        <button id="nextButton" class="w-full mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-5 rounded-full text-lg shadow-lg transition transform hover:scale-105">
-                                            Continue Video
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <audio id="correctSound">
-                            <source src="{% static 'sounds/correct-156911.mp3' %}" type="audio/mp3">
-                            </audio>
-                            <audio id="wrongSound">
-                            <source src="{% static 'sounds/error-mistake-sound-effect-incorrect-answer-437420.mp3' %}" type="audio/mp3">
-                            </audio>
-                
-                        
-                    {% endif %}
-
-
-
-                    <!-- AKHIR IN-VIDEO QUIZ ULTIMATE -->
-
-                    {% if is_quiz %}
-                        {% if is_started %}
-                            <style>
-                                /* Proteksi copy-paste & seleksi teks */
-                                #quiz-form,
-                                #quiz-form h3,
-                                #quiz-form .space-y-3,
-                                #quiz-form label span {
-                                    -webkit-user-select: none !important;
-                                    -moz-user-select: none !important;
-                                    -ms-user-select: none !important;
-                                    user-select: none !important;
-                                }
-
-                                /* Pastikan radio button dan label tetap interaktif */
-                                #quiz-form label {
-                                    pointer-events: auto !important;
-                                    cursor: pointer;
-                                }
-
-                                #quiz-form input[type="radio"] {
-                                    pointer-events: auto !important;
-                                }
-
-                                /* Opsional: agar label terlihat lebih jelas bisa diklik */
-                                #quiz-form label:hover {
-                                    background-color: rgba(99, 102, 241, 0.08); /* indigo tipis */
-                                }
-                            </style>
-
-                            <script>
-                                // Blokir klik kanan
-                                document.addEventListener('contextmenu', function(e) {
-                                    if (e.target.closest('#quiz-form')) {
-                                        e.preventDefault();
-                                        alert('Copying questions is prohibited during the exam, please focus on completing the exam.');
+                                <style>
+                                    .quiz-overlay{
+                                        position:fixed; inset:0;
+                                        background:rgba(0,0,0,0.85);
+                                        backdrop-filter:blur(15px);
+                                        opacity:0; pointer-events:none;
+                                        transition:opacity .35s ease;
+                                        z-index:50;
+                                        display:flex; align-items:center; justify-content:center;
+                                        padding:1.5rem; overflow-y:auto;
                                     }
-                                });
+                                    .quiz-overlay.active{
+                                        opacity:1; pointer-events:all;
+                                    }
 
-                                // Blokir shortcut: Ctrl+C, Ctrl+A, Ctrl+X, Ctrl+V, Cmd+C dll.
-                                document.addEventListener('keydown', function(e) {
-                                    if (e.target.closest('#quiz-form')) {
-                                        if ((e.ctrlKey || e.metaKey) && 
-                                            (e.key === 'c' || e.key === 'a' || e.key === 'x' || e.key === 'v' || e.key === 's' || e.key === 'p')) {
+                                    .quiz-card{
+                                        background:rgba(255,255,255,0.96);
+                                        border-radius:1.75rem;
+                                        padding:2rem;
+                                        width:100%; max-width:480px;
+                                        box-shadow:0 25px 60px -12px rgba(0,0,0,0.45);
+                                        transform:scale(.9); opacity:0;
+                                    }
+
+                                    /* Buttons */
+                                    .quiz-option{
+                                        @apply w-full p-4 text-left rounded-xl font-medium transition-all cursor-pointer;
+                                        background:#f8fafc;
+                                        border:2px solid transparent;
+                                    }
+                                    .quiz-option:hover{
+                                        background:#eef2ff;
+                                        border-color:#c7d2fe;
+                                        transform:translateY(-2px);
+                                        box-shadow:0 6px 16px rgba(0,0,0,0.15);
+                                    }
+
+                                    .quiz-btn-true{
+                                        @apply w-full p-5 text-2xl font-bold rounded-xl text-white transition;
+                                        background:#10b981;
+                                    }
+                                    .quiz-btn-true:hover{ background:#059669; }
+
+                                    .quiz-btn-false{
+                                        @apply w-full p-5 text-2xl font-bold rounded-xl text-white transition;
+                                        background:#ef4444;
+                                    }
+                                    .quiz-btn-false:hover{ background:#dc2626; }
+
+                                    .finish-card-icon{
+                                        filter: drop-shadow(0px 8px 12px rgba(255,200,0,0.7));
+                                    }
+                                </style>
+                            
+                                <div class="relative w-full max-w-10xl shadow-2xl rounded-2xl overflow-hidden bg-black">
+                                    <video id="myVideo"
+                                        data-id="{{ video.id }}"
+                                        data-assessment="{{ assessment.id }}"
+                                        data-quizzes="{{ quizzes_json }}"
+                                        data-result-json="{{ result_json|default:'null' }}"
+                                        class="w-full" controls preload="auto">
+                                        <source src="{{ video.file.url }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+
+                                    <div class="absolute top-4 left-4 
+                                                bg-gradient-to-r from-black/90 to-black/70
+                                                backdrop-blur-md
+                                                border border-white/20
+                                                px-5 py-3 rounded-full flex items-center gap-3
+                                                shadow-2xl z-50">
+                                        
+                                        <i class="fas fa-trophy 
+                                                text-yellow-400 text-xl
+                                                drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"></i>
+                                                
+                                        <span id="scoreDisplay" 
+                                            class="font-extrabold text-xl text-white
+                                                    drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
+                                            0 / 0
+                                        </span>
+                                    </div>
+
+
+
+
+                                    <div id="quizOverlay" class="quiz-overlay">
+                                        <div class="quiz-card">
+                                            <h2 id="questionText" class="text-xl md:text-2xl font-bold text-center mb-6 leading-relaxed"></h2>
+                                            <div id="optionsContainer" class="space-y-4 mb-6"></div>
+                                            <div id="explanation" class="p-4 bg-green-100 rounded-xl text-green-800 font-medium hidden"></div>
+                                            <button id="nextButton" class="w-full mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-5 rounded-full text-lg shadow-lg transition transform hover:scale-105">
+                                                Continue Video
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <audio id="correctSound">
+                                <source src="{% static 'sounds/correct-156911.mp3' %}" type="audio/mp3">
+                                </audio>
+                                <audio id="wrongSound">
+                                <source src="{% static 'sounds/error-mistake-sound-effect-incorrect-answer-437420.mp3' %}" type="audio/mp3">
+                                </audio>
+                    
+                            
+                        {% endif %}
+
+
+
+                        <!-- AKHIR IN-VIDEO QUIZ ULTIMATE -->
+
+                        {% if is_quiz %}
+                            {% if is_started %}
+                                <style>
+                                    /* Proteksi copy-paste & seleksi teks */
+                                    #quiz-form,
+                                    #quiz-form h3,
+                                    #quiz-form .space-y-3,
+                                    #quiz-form label span {
+                                        -webkit-user-select: none !important;
+                                        -moz-user-select: none !important;
+                                        -ms-user-select: none !important;
+                                        user-select: none !important;
+                                    }
+
+                                    /* Pastikan radio button dan label tetap interaktif */
+                                    #quiz-form label {
+                                        pointer-events: auto !important;
+                                        cursor: pointer;
+                                    }
+
+                                    #quiz-form input[type="radio"] {
+                                        pointer-events: auto !important;
+                                    }
+
+                                    /* Opsional: agar label terlihat lebih jelas bisa diklik */
+                                    #quiz-form label:hover {
+                                        background-color: rgba(99, 102, 241, 0.08); /* indigo tipis */
+                                    }
+                                </style>
+
+                                <script>
+                                    // Blokir klik kanan
+                                    document.addEventListener('contextmenu', function(e) {
+                                        if (e.target.closest('#quiz-form')) {
+                                            e.preventDefault();
+                                            alert('Copying questions is prohibited during the exam, please focus on completing the exam.');
+                                        }
+                                    });
+
+                                    // Blokir shortcut: Ctrl+C, Ctrl+A, Ctrl+X, Ctrl+V, Cmd+C dll.
+                                    document.addEventListener('keydown', function(e) {
+                                        if (e.target.closest('#quiz-form')) {
+                                            if ((e.ctrlKey || e.metaKey) && 
+                                                (e.key === 'c' || e.key === 'a' || e.key === 'x' || e.key === 'v' || e.key === 's' || e.key === 'p')) {
+                                                e.preventDefault();
+                                            }
+                                            // Blokir Print Screen (PrtSc) dan screenshot shortcut umum
+                                            if (e.key === 'PrintScreen' || (e.altKey && e.key === 'PrintScreen')) {
+                                                e.preventDefault();
+                                            }
+                                        }
+                                    });
+
+                                    // Blokir drag teks
+                                    document.addEventListener('dragstart', function(e) {
+                                        if (e.target.closest('#quiz-form')) {
                                             e.preventDefault();
                                         }
-                                        // Blokir Print Screen (PrtSc) dan screenshot shortcut umum
-                                        if (e.key === 'PrintScreen' || (e.altKey && e.key === 'PrintScreen')) {
-                                            e.preventDefault();
+                                    });
+
+                                    // Opsional: Blur window jika user pindah tab (deteksi curang)
+                                    let hiddenTime = null;
+                                    document.addEventListener('visibilitychange', function() {
+                                        if (document.hidden) {
+                                            hiddenTime = new Date();
+                                            alert('Warning: Do not leave the exam page! Staying on this page is required to maintain exam integrity.');
+                                        } else if (hiddenTime) {
+                                            const timeAway = (new Date() - hiddenTime) / 1000;
+                                            if (timeAway > 10) {
+                                                alert(`You have been away from the exam for ${Math.round(timeAway)} seconds. This may be reported.`);
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                                </script>
+                                {% if is_expired %}
 
-                                // Blokir drag teks
-                                document.addEventListener('dragstart', function(e) {
-                                    if (e.target.closest('#quiz-form')) {
-                                        e.preventDefault();
-                                    }
-                                });
-
-                                // Opsional: Blur window jika user pindah tab (deteksi curang)
-                                let hiddenTime = null;
-                                document.addEventListener('visibilitychange', function() {
-                                    if (document.hidden) {
-                                        hiddenTime = new Date();
-                                        alert('Warning: Do not leave the exam page! Staying on this page is required to maintain exam integrity.');
-                                    } else if (hiddenTime) {
-                                        const timeAway = (new Date() - hiddenTime) / 1000;
-                                        if (timeAway > 10) {
-                                            alert(`You have been away from the exam for ${Math.round(timeAway)} seconds. This may be reported.`);
-                                        }
-                                    }
-                                });
-                            </script>
-                            {% if is_expired %}
-
-                                <!-- ALERT - Assessment Period Ended -->
-                                
-
-                                    <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
-                                    <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">The assessment period has ended. </h3>
+                                    <!-- ALERT - Assessment Period Ended -->
                                     
-                                </div>
-                                
-                                <!-- REVIEW MODE -->
-                                {% for question in assessment.questions.all %}
-                                    {% with answer=answered_questions|get_question_answer:question.id %}
 
-                                        <div class="p-6 mb-6 rounded-2xl shadow-lg border 
-                                            {% if answer and answer.choice.is_correct %}
-                                                border-green-500
-                                            {% else %}
-                                                border-red-500
-                                            {% endif %}
-                                        ">
+                                        <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
+                                        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">The assessment period has ended. </h3>
+                                        
+                                    </div>
+                                    
+                                    <!-- REVIEW MODE -->
+                                    {% for question in assessment.questions.all %}
+                                        {% with answer=answered_questions|get_question_answer:question.id %}
 
-                                            <h3 class="text-xl font-semibold mb-4 text-gray-800">
-                                                {{ question.text|safe }}
-                                            </h3>
+                                            <div class="p-6 mb-6 rounded-2xl shadow-lg border 
+                                                {% if answer and answer.choice.is_correct %}
+                                                    border-green-500
+                                                {% else %}
+                                                    border-red-500
+                                                {% endif %}
+                                            ">
 
-                                            <ul class="space-y-3">
+                                                <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                                                    {{ question.text|safe }}
+                                                </h3>
 
-                                                {% for choice in question.choices.all %}
+                                                <ul class="space-y-3">
 
-                                                    <li class="p-4 rounded-xl border 
-                                                        {% if choice.is_correct %}
-                                                            bg-green-100 border-green-300
-                                                        {% elif answer and answer.choice.id == choice.id %}
-                                                            bg-red-100 border-red-300
-                                                        {% else %}
-                                                            bg-gray-50 border-gray-200
-                                                        {% endif %}
-                                                    ">
+                                                    {% for choice in question.choices.all %}
 
-                                                        <div class="flex items-center justify-between">
-                                                            <span class="text-gray-700">{{ choice.text|safe }}</span>
+                                                        <li class="p-4 rounded-xl border 
+                                                            {% if choice.is_correct %}
+                                                                bg-green-100 border-green-300
+                                                            {% elif answer and answer.choice.id == choice.id %}
+                                                                bg-red-100 border-red-300
+                                                            {% else %}
+                                                                bg-gray-50 border-gray-200
+                                                            {% endif %}
+                                                        ">
 
-                                                            <div class="flex space-x-2">
+                                                            <div class="flex items-center justify-between">
+                                                                <span class="text-gray-700">{{ choice.text|safe }}</span>
 
-                                                                {% if choice.is_correct %}
-                                                                    <i class="fas fa-check text-green-600 text-sm"></i>
+                                                                <div class="flex space-x-2">
 
-                                                                {% endif %}
+                                                                    {% if choice.is_correct %}
+                                                                        <i class="fas fa-check text-green-600 text-sm"></i>
 
-                                                                {% if answer and answer.choice.id == choice.id %}
-                                                                    <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-300 text-white text-xs font-bold">👤</span>
+                                                                    {% endif %}
+
+                                                                    {% if answer and answer.choice.id == choice.id %}
+                                                                        <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-300 text-white text-xs font-bold">👤</span>
 
 
-                                                                {% endif %}
+                                                                    {% endif %}
 
+                                                                </div>
                                                             </div>
-                                                        </div>
 
-                                                    </li>
+                                                        </li>
 
-                                                {% endfor %}
-                                            </ul>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+
+                                        {% endwith %}
+                                    {% endfor %}
+
+                                {% else %}
+                                    <nav class="text-sm text-gray-500 mb-1">
+                                    <ol class="flex space-x-2">
+                                        <li>Home</li>
+                                        <li>/</li>
+                                        <li class="text-gray-600">
+                                            {{ section }} &raquo;
+                                           
+                                        </li>
+
+                                        
+                                    </ol>
+                                </nav>
+                                <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ assessment.name }}</h2>
+                                <br>
+                                    <!-- TIMER SECTION -->
+                                    <div class="sticky top-0 bg-white shadow-xl z-40 p-4 mb-6 rounded-2xl border border-gray-200">
+
+                                        <div class="flex justify-between items-center mb-3">
+                                            <span class="text-gray-700 font-medium">
+                                                Remaining Time:
+                                                <span id="timer-countdown"
+                                                    class="text-3xl font-bold text-red-600">
+                                                    {{ remaining_time }}
+                                                </span>s
+                                            </span>
+
+                                            <span id="progress-percent"
+                                                class="text-gray-500 font-medium">
+                                                100%
+                                            </span>
                                         </div>
 
-                                    {% endwith %}
-                                {% endfor %}
+                                        <div class="w-full bg-gray-200 h-5 rounded-full overflow-hidden">
+                                            <div id="timer-progress"
+                                                class="h-full bg-blue-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full"
+                                                style="width: 100%;">
+                                                100%
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- QUIZ FORM -->
+                                    <form id="quiz-form"
+                                        hx-post="{% url 'learner:submit_assessment_new' assessment.id %}"
+                                        hx-target="#content-area"
+                                        hx-swap="innerHTML"
+                                        method="POST"
+                                        class="space-y-8">
+
+                                        {% csrf_token %}
+
+                                        {% for question in assessment.questions.all|shuffled %}
+                                            <div class="p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+
+                                                <h3 class="text-xl font-semibold text-gray-800 mb-5">
+                                                    {{ question.text|safe }}
+                                                </h3>
+
+                                                <div class="space-y-3">
+                                                    {% for choice in question.choices.all|shuffled %}
+                                                        {% with answer=answered_questions|get_question_answer:question.id %}
+
+                                                            <label class="flex items-start gap-4 cursor-pointer p-4 border border-gray-300 rounded-xl hover:bg-gray-50 transition">
+
+                                                                <input type="radio"
+                                                                    name="answers_{{ question.id }}"
+                                                                    value="{{ choice.id }}"
+                                                                    class="mt-1 h-5 w-5 text-indigo-600"
+                                                                    {% if answer and answer.choice.id == choice.id %}checked{% endif %}>
+
+                                                                <span class="text-gray-700">{{ choice.text|safe }}</span>
+
+                                                            </label>
+
+                                                        {% endwith %}
+                                                    {% endfor %}
+                                                </div>
+
+                                            </div>
+                                        {% endfor %}
+
+                                        <div class="text-center">
+                                            <button type="submit"
+                                                    class="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 shadow">
+                                                Submit All Responses
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <!-- TIMER SCRIPT -->
+                                    <script>
+                                        (function () {
+                                            const timerEl = document.getElementById("timer-countdown");
+                                            const progress = document.getElementById("timer-progress");
+                                            const percentEl = document.getElementById("progress-percent");
+
+                                            if (!timerEl) return;
+
+                                            const total = parseInt(timerEl.textContent); // ⏱ DETIK dari backend
+                                            let left = total;
+
+                                            function formatTime(sec) {
+                                                const m = Math.floor(sec / 60);
+                                                const s = sec % 60;
+                                                return `${m}:${s.toString().padStart(2, '0')}`;
+                                            }
+
+                                            const iv = setInterval(() => {
+                                                left--;
+
+                                                const pct = Math.max(0, Math.round((left / total) * 100));
+
+                                                timerEl.textContent = formatTime(left);
+                                                progress.style.width = pct + "%";
+                                                progress.textContent = pct + "%";
+                                                percentEl.textContent = pct + "%";
+
+                                                if (pct <= 25) {
+                                                    progress.className = "h-full bg-red-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
+                                                } else if (pct <= 50) {
+                                                    progress.className = "h-full bg-yellow-500 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
+                                                } else {
+                                                    progress.className = "h-full bg-blue-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
+                                                }
+
+                                                if (left <= 0) {
+                                                    clearInterval(iv);
+                                                    htmx.trigger("#quiz-form", "submit");
+                                                }
+                                            }, 1000);
+                                        })();
+                                        </script>
+
+
+                                {% endif %}
 
                             {% else %}
 
-                                <!-- TIMER SECTION -->
-                                <div class="sticky top-0 bg-white shadow-xl z-40 p-4 mb-6 rounded-2xl border border-gray-200">
+                                <!-- START EXAM PROMPT -->
+                                <div class="flex justify-center items-center min-h-screen bg-gray-50">
+                                    <div class="bg-white rounded-2xl shadow-xl p-10 max-w-lg text-center">
 
-                                    <div class="flex justify-between items-center mb-3">
-                                        <span class="text-gray-700 font-medium">
-                                            Remaining Time:
-                                            <span id="timer-countdown"
-                                                class="text-3xl font-bold text-red-600">
-                                                {{ remaining_time }}
-                                            </span>s
-                                        </span>
-
-                                        <span id="progress-percent"
-                                            class="text-gray-500 font-medium">
-                                            100%
-                                        </span>
-                                    </div>
-
-                                    <div class="w-full bg-gray-200 h-5 rounded-full overflow-hidden">
-                                        <div id="timer-progress"
-                                            class="h-full bg-blue-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full"
-                                            style="width: 100%;">
-                                            100%
+                                        <div class="text-red-600 text-5xl mb-4">
+                                            📝
                                         </div>
+
+                                        <h2 class="text-2xl font-bold mb-3">Are You Ready to Begin the Test?</h2>
+
+                                        <p class="text-gray-500 mb-6">
+                                            You will have <strong>{{ assessment.duration_in_minutes }} minutes</strong> to complete this assessment.
+                                        </p>
+
+                                        <form hx-post="{% url 'learner:start_assessment' assessment.id %}"
+                                            hx-target="#content-area"
+                                            hx-swap="innerHTML"
+                                            hx-push-url="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}">
+                                            <button class="px-6 py-3 border border-red-500 text-red-600 rounded-xl hover:bg-red-500 hover:text-white transition">
+                                                Start Assessment
+                                            </button>
+                                        </form>
+
                                     </div>
                                 </div>
-
-                                <!-- QUIZ FORM -->
-                                <form id="quiz-form"
-                                    hx-post="{% url 'learner:submit_assessment_new' assessment.id %}"
-                                    hx-target="#content-area"
-                                    hx-swap="innerHTML"
-                                    method="POST"
-                                    class="space-y-8">
-
-                                    {% csrf_token %}
-
-                                    {% for question in assessment.questions.all|shuffled %}
-                                        <div class="p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
-
-                                            <h3 class="text-xl font-semibold text-gray-800 mb-5">
-                                                {{ question.text|safe }}
-                                            </h3>
-
-                                            <div class="space-y-3">
-                                                {% for choice in question.choices.all|shuffled %}
-                                                    {% with answer=answered_questions|get_question_answer:question.id %}
-
-                                                        <label class="flex items-start gap-4 cursor-pointer p-4 border border-gray-300 rounded-xl hover:bg-gray-50 transition">
-
-                                                            <input type="radio"
-                                                                name="answers_{{ question.id }}"
-                                                                value="{{ choice.id }}"
-                                                                class="mt-1 h-5 w-5 text-indigo-600"
-                                                                {% if answer and answer.choice.id == choice.id %}checked{% endif %}>
-
-                                                            <span class="text-gray-700">{{ choice.text|safe }}</span>
-
-                                                        </label>
-
-                                                    {% endwith %}
-                                                {% endfor %}
-                                            </div>
-
-                                        </div>
-                                    {% endfor %}
-
-                                    <div class="text-center">
-                                        <button type="submit"
-                                                class="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 shadow">
-                                            Submit All Responses
-                                        </button>
-                                    </div>
-                                </form>
-
-                                <!-- TIMER SCRIPT -->
-                                <script>
-                                    (function () {
-                                        const timerEl = document.getElementById("timer-countdown");
-                                        const progress = document.getElementById("timer-progress");
-                                        const percentEl = document.getElementById("progress-percent");
-
-                                        if (!timerEl) return;
-
-                                        const total = parseInt(timerEl.textContent); // ⏱ DETIK dari backend
-                                        let left = total;
-
-                                        function formatTime(sec) {
-                                            const m = Math.floor(sec / 60);
-                                            const s = sec % 60;
-                                            return `${m}:${s.toString().padStart(2, '0')}`;
-                                        }
-
-                                        const iv = setInterval(() => {
-                                            left--;
-
-                                            const pct = Math.max(0, Math.round((left / total) * 100));
-
-                                            timerEl.textContent = formatTime(left);
-                                            progress.style.width = pct + "%";
-                                            progress.textContent = pct + "%";
-                                            percentEl.textContent = pct + "%";
-
-                                            if (pct <= 25) {
-                                                progress.className = "h-full bg-red-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
-                                            } else if (pct <= 50) {
-                                                progress.className = "h-full bg-yellow-500 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
-                                            } else {
-                                                progress.className = "h-full bg-blue-600 text-white text-xs flex items-center justify-end pr-2 font-bold rounded-full";
-                                            }
-
-                                            if (left <= 0) {
-                                                clearInterval(iv);
-                                                htmx.trigger("#quiz-form", "submit");
-                                            }
-                                        }, 1000);
-                                    })();
-                                    </script>
-
 
                             {% endif %}
+                        {% endif %}
 
-                        {% else %}
 
-                            <!-- START EXAM PROMPT -->
-                            <div class="flex justify-center items-center min-h-screen bg-gray-50">
-                                <div class="bg-white rounded-2xl shadow-xl p-10 max-w-lg text-center">
+                        {% if is_lti and lti_tool %}
+                            <nav class="text-sm text-gray-500 mb-1">
+                                <ol class="flex space-x-2">
+                                    <li>Home</li>
+                                    <li>/</li>
+                                    <li class="text-gray-600">
+                                        {{ section }} &raquo;
+                                    
+                                    </li>
 
-                                    <div class="text-red-600 text-5xl mb-4">
-                                        📝
-                                    </div>
+                                    
+                                </ol>
+                            </nav>
+                            <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ assessment.name }}</h2>
 
-                                    <h2 class="text-2xl font-bold mb-3">Are You Ready to Begin the Test?</h2>
-
-                                    <p class="text-gray-500 mb-6">
-                                        You will have <strong>{{ assessment.duration_in_minutes }} minutes</strong> to complete this assessment.
-                                    </p>
-
-                                    <form hx-post="{% url 'learner:start_assessment' assessment.id %}"
-                                        hx-target="#content-area"
-                                        hx-swap="innerHTML"
-                                        hx-push-url="{% url 'learner:load_content' username=username id=course.id slug=slug content_type='assessment' content_id=assessment.id %}">
-                                        <button class="px-6 py-3 border border-red-500 text-red-600 rounded-xl hover:bg-red-500 hover:text-white transition">
-                                            Start Assessment
-                                        </button>
-                                    </form>
-
-                                </div>
+                            <div class="text-center py-24 lg:py-32 bg-gradient-to-b from-indigo-50 to-white rounded-3xl shadow-lg">
+                                <h4 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 text-gray-800">
+                                    {{ lti_tool.tool_name }}
+                                </h4>
+                                <p class="text-lg lg:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+                                    Access this external tool to enhance your learning experience. Click the button below to launch it in a new window and explore the resources prepared just for you.
+                                </p>
+                                <form action="{% url 'learner:lti_consume_course' assessment.id %}" method="get" target="_blank">
+                                    <button type="submit" class="inline-flex items-center justify-center px-8 py-3 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition duration-300">
+                                        Launch LTI Tool
+                                    </button>
+                                </form>
                             </div>
 
+
                         {% endif %}
-                    {% endif %}
 
+                    
 
-                    {% if is_lti and lti_tool %}
-                        <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-6 gap-4">
-                            <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-400 pl-3">
-                                External Link Assessment
-                            </h3>
-                        </div>
-
-                        <div class="text-center py-24 lg:py-32 bg-gradient-to-b from-indigo-50 to-white rounded-3xl shadow-lg">
-                            <h4 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 text-gray-800">
-                                {{ lti_tool.tool_name }}
-                            </h4>
-                            <p class="text-lg lg:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-                                Access this external tool to enhance your learning experience. Click the button below to launch it in a new window and explore the resources prepared just for you.
-                            </p>
-                            <form action="{% url 'learner:lti_consume_course' assessment.id %}" method="get" target="_blank">
-                                <button type="submit" class="inline-flex items-center justify-center px-8 py-3 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition duration-300">
-                                    Launch LTI Tool
-                                </button>
-                            </form>
-                        </div>
-
-
-                    {% endif %}
-
-                
-
-            {% endif %}
-        </div>
+                {% endif %}
+            </div>
         {% endwith %}
     {% endif %}
 
