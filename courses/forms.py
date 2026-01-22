@@ -428,7 +428,7 @@ class AssessmentForm(forms.ModelForm):
 
         help_texts = {
             'weight': 'Weight in percent (0–100). Example: 30',
-            'duration_in_minutes': 'Duration in minutes. Leave blank if no time limit.',
+            'duration_in_minutes': 'Duration in minutes. Leave blank if there is no time limit.A duration is required for assessments with multiple-choice questions (MCQs)',
             'flag': 'Check if you want to enable rich text editor during input.',
         }
 
