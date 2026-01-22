@@ -1344,7 +1344,7 @@ def load_content(request, username, id, slug, content_type, content_id):
 
     try:
         from geoip2.database import Reader
-        reader = Reader('/path/to/GeoLite2-City.mmdb')
+        reader = Reader('/path/to/GeoLite2-City.mmdb')  # sesuaikan path jika perlu
         response = reader.city(ip)
         country = response.country.name
         city = response.city.name
@@ -1359,7 +1359,7 @@ def load_content(request, username, id, slug, content_type, content_id):
         location_country=country, location_city=city
     )
 
-    # ==================== LAST ACCESS & PROGRESS ====================
+    # ==================== LAST ACCESS ====================
     LastAccessCourse.objects.update_or_create(
         user=request.user, course=course,
         defaults={
@@ -1369,7 +1369,7 @@ def load_content(request, username, id, slug, content_type, content_id):
         }
     )
 
-    # Progress saat klik "Next"
+    # ==================== PENANDAAN "READ" & UPDATE PROGRESS SAAT KLIK NEXT ====================
     if request.GET.get('from_next') == '1':
         prev_type = request.session.get('prev_content_type')
         prev_id = request.session.get('prev_content_id')
@@ -1382,6 +1382,7 @@ def load_content(request, username, id, slug, content_type, content_id):
         prog.progress_percentage = calculate_course_progress(request.user, course)
         prog.save()
 
+    # Simpan konten saat ini untuk next time
     request.session['prev_content_type'] = content_type
     request.session['prev_content_id'] = content_id
 
@@ -1391,6 +1392,7 @@ def load_content(request, username, id, slug, content_type, content_id):
     ).order_by('order')
     combined_content = _build_combined_content(sections)
     show_welcome_modal = request.session.pop('show_welcome_modal', False)
+
     context = {
         'course': course,
         'username': username,
@@ -1420,11 +1422,12 @@ def load_content(request, username, id, slug, content_type, content_id):
     current_index = 0
 
     # ===================================================================
-   
+    # MATERIAL
     # ===================================================================
     if content_type == 'material':
         material = get_object_or_404(Material, id=content_id)
-        MaterialRead.objects.get_or_create(user=request.user, material=material)
+        # !!! TIDAK LAGI OTOMATIS TANDAI READ DI SINI !!!
+        # MaterialRead hanya dibuat saat klik NEXT (lihat di atas)
 
         context.update({
             'material': material,
@@ -1436,7 +1439,7 @@ def load_content(request, username, id, slug, content_type, content_id):
                              if t == 'material' and obj.id == content_id), 0)
 
     # ===================================================================
-    #    ASSESSMENT – DETEKSI TIPE DENGAN TEPAT
+    # ASSESSMENT – DETEKSI TIPE DENGAN TEPAT
     # ===================================================================
     elif content_type == 'assessment':
         assessment = get_object_or_404(Assessment, id=content_id)
@@ -1469,6 +1472,7 @@ def load_content(request, username, id, slug, content_type, content_id):
                 video = assessment.quizzes.first().video
                 result = QuizResult.objects.filter(user=request.user, video=video, assessment=assessment).first()
                 if result:
+                    # Hanya tandai read jika quiz sudah selesai
                     AssessmentRead.objects.get_or_create(user=request.user, assessment=assessment)
 
                 quizzes_data = []
@@ -1519,16 +1523,13 @@ def load_content(request, username, id, slug, content_type, content_id):
                     submission = Submission.objects.filter(user=request.user, askora=ao).first()
 
                     if submission:
-                        # SUDAH SUBMIT → tidak bisa submit lagi
                         can_submit_dict[ao.id] = False
                         user_submissions_dict[ao.id] = submission
                     else:
-                        # BELUM SUBMIT → cek deadline
-                        is_still_open = timezone.now() <= ao.response_deadline
+                        is_still_open = timezone.now() <= ao.response_deadline if ao.response_deadline else True
                         can_submit_dict[ao.id] = is_still_open
-                        user_submissions_dict[ao.id] = None  # tidak ada submission
+                        user_submissions_dict[ao.id] = None
 
-                # Peer review logic (sama seperti sebelumnya)
                 user_has_submitted = any(user_submissions_dict.values())
                 submissions_to_review = []
                 peer_review_stats = {
@@ -1561,7 +1562,7 @@ def load_content(request, username, id, slug, content_type, content_id):
                 context.update({
                     'ask_oras': ask_oras,
                     'askora_can_submit': can_submit_dict,
-                    'user_submissions': [s for s in user_submissions_dict.values() if s],  # hanya yang ada submission
+                    'user_submissions': [s for s in user_submissions_dict.values() if s],
                     'submissions': submissions_to_review,
                     'can_review': len(submissions_to_review) > 0 and user_has_submitted,
                     'peer_review_stats': peer_review_stats,
@@ -1598,7 +1599,7 @@ def load_content(request, username, id, slug, content_type, content_id):
     )
 
     # ===================================================================
-  
+    # RENDER
     # ===================================================================
     template = 'learner/partials/content.html' if request.headers.get('HX-Request') else 'learner/my_course.html'
     response = render(request, template, context)

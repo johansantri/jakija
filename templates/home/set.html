@@ -236,7 +236,7 @@
                                    {% if current_content.0 == 'material' and current_content.1.id == material.id %}
                                        bg-red-100 text-red-600 font-semibold
                                    {% endif %}"
-                            data-read-status="{{ is_material_read|yesno:'true,false' }}">
+                            data-read-status="{% if is_material_read %}true{% else %}false{% endif %}">
 
                             <i class="fas fa-file-alt w-5"></i>
                             <i class="fas fa-check-circle check-icon text-green-600 hidden w-5"></i>
@@ -258,7 +258,7 @@
                                    {% if current_content.0 == 'assessment' and current_content.1.id == assessment.id %}
                                        bg-red-100 text-red-600 font-semibold
                                    {% endif %}"
-                            data-read-status="{{ is_assessment_read|yesno:'true,false' }}">
+                            data-read-status="{% if is_assessment_read %}true{% else %}false{% endif %}">
 
                             <i class="fas fa-clipboard-check w-5"></i>
                             <i class="fas fa-check-circle check-icon text-green-600 hidden w-5"></i>
@@ -278,20 +278,20 @@
      JS TOGGLE UNIT
 =========================== -->
 <script>
+// ===========================
+// JS TOGGLE UNIT + INIT SIDEBAR
+// ===========================
 function toggleUnit(unitId) {
     const content = document.getElementById(`unit-content-${unitId}`);
     const icon = document.getElementById(`unit-icon-${unitId}`);
     if (!content || !icon) return;
 
-    content.classList.toggle('hidden');         // buka/tutup konten
-    icon.classList.toggle('rotate-90');         // putar ikon
+    content.classList.toggle('hidden');
+    icon.classList.toggle('rotate-90');
 }
 
-// ===========================
-// INIT SIDEBAR (auto-open + checklist)
-// ===========================
 function initSidebar() {
-    // 1️⃣ buka Unit aktif
+    // 1️⃣ Buka Unit aktif
     const currentUnitId = "{{ current_content.1.section_id|default:'' }}";
     if (currentUnitId) {
         const content = document.getElementById(`unit-content-${currentUnitId}`);
@@ -300,11 +300,28 @@ function initSidebar() {
         if (icon) icon.classList.add('rotate-90');
     }
 
-    // 2️⃣ tampilkan checklist "sudah dibaca"
+    // 2️⃣ Paksa sembunyikan semua centang dulu
+    document.querySelectorAll('.check-icon').forEach(icon => {
+        icon.classList.add('hidden');
+        icon.style.display = 'none';
+    });
+
+    // 3️⃣ Tampilkan centang hanya jika benar-benar 'true'
     document.querySelectorAll('[data-read-status]').forEach(el => {
-        if (el.dataset.readStatus === 'true') {
-            const checkIcon = el.querySelector('.check-icon');
-            if (checkIcon) checkIcon.classList.remove('hidden');
+        const status = el.dataset.readStatus;
+        const title = el.querySelector('span')?.textContent.trim() || 'Tidak ada judul';
+        const checkIcon = el.querySelector('.check-icon');
+
+        // console.log(`[DEBUG] Item: "${title}" | read-status: "${status}"`); // hapus kalau sudah yakin
+
+        if (status === 'true' && checkIcon) {
+            // console.log(`[CHECKLIST ON] ${title} → centang DITAMPILKAN`);
+            checkIcon.classList.remove('hidden');
+            checkIcon.style.display = 'inline-block';
+        } else if (checkIcon) {
+            // console.log(`[CHECKLIST OFF] ${title} → centang disembunyikan`);
+            checkIcon.classList.add('hidden');
+            checkIcon.style.display = 'none';
         }
     });
 }
@@ -312,12 +329,20 @@ function initSidebar() {
 // Jalankan saat page load awal
 document.addEventListener("DOMContentLoaded", initSidebar);
 
-// Jalankan ulang setiap kali HTMX swap sidebar
+// Jalankan ulang setiap kali HTMX swap KONTEN (bukan sidebar)
+document.body.addEventListener("htmx:afterSwap", function(evt) {
+    if (evt.detail.target.id === "content-area") {
+        initSidebar();  // <--- INI YANG PENTING!
+    }
+});
+
+// Optional: kalau sidebar juga ikut swap (jarang), tambahkan juga ini
 document.body.addEventListener("htmx:afterSwap", function(evt) {
     if (evt.detail.target.id === "sidebar") {
         initSidebar();
     }
 });
+
 </script>
 
 
