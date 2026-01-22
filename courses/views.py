@@ -3153,7 +3153,7 @@ def edit_ivq_question(request, idcourse, idsection, idassessment, idvideo, idqui
                 )
 
         messages.success(request, "Question updated successfully.")
-
+        
         return redirect(
             "courses:create_ivq_question",
             idcourse=idcourse,
@@ -3161,13 +3161,14 @@ def edit_ivq_question(request, idcourse, idsection, idassessment, idvideo, idqui
             idassessment=idassessment,
             idvideo=idvideo,
         )
-
+    options = quiz.options.all()
     return render(request, "courses/edit_ivq_question.html", {
         "course": course,
         "section": section,
         "assessment": assessment,
         "video": video,
         "quiz": quiz,
+        "options": options,
     })
 
 
