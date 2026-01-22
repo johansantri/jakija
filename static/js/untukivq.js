@@ -130,15 +130,24 @@ function renderAnsweredView(q, index, answeredData) {
             btn.className = "w-full p-6 text-2xl font-bold rounded-xl text-white mb-4";
             btn.textContent = label;
             btn.disabled = true;
+
             const isCorrect = label === "correct";
-            if (isCorrect) btn.classList.add("bg-green-500");
-            else btn.classList.add("bg-red-500");
+
+            // Jawaban yang benar selalu hijau
+            if (isCorrect) {
+                btn.classList.add("bg-green-500");
+            }
+
+            // Jika user memilih jawaban ini tapi salah, beri merah
             if (answeredData.userAnswer === label && !answeredData.correct) {
-                btn.classList.remove("bg-green-500");
                 btn.classList.add("bg-red-500");
             }
+
+            // Jika mau, jawaban yang salah tapi tidak dipilih user bisa tetap default (tidak perlu diubah)
+
             quizState.optionsContainer.appendChild(btn);
         });
+
     } else if (q.type === "fill-blank" || q.type === "es") {
         const input = document.createElement('input');
         input.type = "text";
