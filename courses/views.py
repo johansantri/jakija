@@ -5200,9 +5200,9 @@ def update_grade_range(request, id):
     return JsonResponse({"success": False, "message": "Invalid request"})
 
 
-#creat assesment type name
-#@login_required
-#@csrf_protect
+
+@login_required
+
 def create_assessment(request, idcourse, idsection):
     # Check if the user is authenticated
     # Check if the user is authenticated
@@ -5215,26 +5215,26 @@ def create_assessment(request, idcourse, idsection):
 
     # ==================== AUTHORIZATION ====================
 
-    # 1️⃣ Prioritas superuser / curation
+    # 1️⃣ Superuser / curation
     if user.is_superuser or getattr(user, 'is_curation', False):
-        course = get_object_or_404(Course, id=id)
+        course = get_object_or_404(Course, id=idcourse)
 
     # 2️⃣ Partner
     if not course and getattr(user, 'is_partner', False):
         course = get_object_or_404(
-            Course, id=id, org_partner__user_id=user.id
+            Course, id=idcourse, org_partner__user_id=user.id
         )
 
     # 3️⃣ Instructor
     if not course and getattr(user, 'is_instructor', False):
         course = get_object_or_404(
-            Course, id=id, instructor__user_id=user.id
+            Course, id=idcourse, instructor__user_id=user.id
         )
 
-    # 4️⃣ Fallback: CourseTeam
+    # 4️⃣ CourseTeam
     if not course:
         team_member = CourseTeam.objects.filter(
-            course_id=id, user=user
+            course_id=idcourse, user=user
         ).first()
 
         if team_member:
@@ -5243,7 +5243,7 @@ def create_assessment(request, idcourse, idsection):
             messages.error(request, "You do not have access to this course.")
             return redirect('authentication:home')
 
-    # Ensure the section belongs to the course
+    # Ensure section belongs to course
     section = get_object_or_404(Section, id=idsection, courses=course)
 
     if request.method == 'POST':
