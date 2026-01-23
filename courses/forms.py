@@ -29,6 +29,7 @@ from django.utils.safestring import mark_safe
 from datetime import date, timedelta
 logger = logging.getLogger(__name__)
 
+
 class InviteOnlyEmailForm(forms.Form):
     emails = forms.CharField(
         label="Instructor Email",
@@ -50,32 +51,46 @@ class InviteOnlyEmailForm(forms.Form):
                 raise forms.ValidationError(f"Invalid email: {email}")
         return emails
 
+    def generate_unique_username(self, email):
+        """Buat username unik berdasarkan email"""
+        base_username = email.split('@')[0]
+        username = base_username
+        counter = 1
+        while CustomUser.objects.filter(username=username).exists():
+            username = f"{base_username}{counter}"
+            counter += 1
+        return username
+
     def save(self, provider=None):
         emails = self.cleaned_data['emails']
         created_instructors = []
         skipped_emails = []
 
         for email in emails:
-            # Pastikan user ada
-            user, created = CustomUser.objects.get_or_create(
-                email=email,
-                defaults={
-                    'username': email,
-                    'is_instructor': True,  # set flag instructor otomatis
-                }
-            )
+            # cek apakah user sudah ada
+            user = CustomUser.objects.filter(email=email).first()
 
-            # Kalau user sudah ada tapi bukan instructor, set flag is_instructor
-            if not user.is_instructor:
-                user.is_instructor = True
-                user.save(update_fields=['is_instructor'])
+            if not user:
+                # generate username unik
+                username = self.generate_unique_username(email)
+                # buat user baru
+                user = CustomUser.objects.create(
+                    email=email,
+                    username=username,
+                    is_instructor=True,
+                )
+            else:
+                # kalau user sudah ada tapi bukan instructor, set flag
+                if not user.is_instructor:
+                    user.is_instructor = True
+                    user.save(update_fields=['is_instructor'])
 
-            # Cek apakah instructor untuk provider ini sudah ada
+            # cek apakah instructor untuk provider ini sudah ada
             if Instructor.objects.filter(user=user, provider=provider).exists():
                 skipped_emails.append(email)
-                continue  # skip email ini, jangan buat duplikat
+                continue
 
-            # Buat instructor baru
+            # buat instructor baru
             instructor = Instructor.objects.create(
                 user=user,
                 bio='',

@@ -1,0 +1,95 @@
+{% extends 'home/tes.html' %}
+{% block content %}
+
+
+
+<section class="py-6">
+<form method="post" class="space-y-6">
+    {% csrf_token %}
+
+    {# NON FIELD ERRORS #}
+    {% if form.non_field_errors %}
+        <div class="bg-red-100 text-red-700 p-3 rounded">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+
+    {# BIO #}
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+            {{ form.bio.label }}
+        </label>
+        {{ form.bio }}
+        {% if form.bio.errors %}
+            <p class="text-sm text-red-600 mt-1">{{ form.bio.errors.0 }}</p>
+        {% endif %}
+    </div>
+
+    {# EXPERTISE (CKEditor) #}
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+            {{ form.expertise.label }}
+        </label>
+        {{ form.expertise }}
+        {% if form.expertise.errors %}
+            <p class="text-sm text-red-600 mt-1">{{ form.expertise.errors.0 }}</p>
+        {% endif %}
+    </div>
+
+    {# EXPERIENCE YEARS #}
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+            {{ form.experience_years.label }}
+        </label>
+        {{ form.experience_years }}
+        {% if form.experience_years.errors %}
+            <p class="text-sm text-red-600 mt-1">{{ form.experience_years.errors.0 }}</p>
+        {% endif %}
+    </div>
+
+    {# TECH STACK URL #}
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+            {{ form.tech.label }}
+        </label>
+        {{ form.tech }}
+        {% if form.tech.errors %}
+            <p class="text-sm text-red-600 mt-1">{{ form.tech.errors.0 }}</p>
+        {% endif %}
+    </div>
+
+    {# PROVIDER AUTOCOMPLETE #}
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+            {{ form.provider.label }}
+        </label>
+        {{ form.provider }}
+        {% if form.provider.errors %}
+            <p class="text-sm text-red-600 mt-1">{{ form.provider.errors.0 }}</p>
+        {% endif %}
+    </div>
+
+    {# AGREEMENT #}
+    <div class="flex items-center space-x-2">
+        {{ form.agreement }}
+        <label class="text-sm text-gray-700">
+            {{ form.agreement.label }}
+        </label>
+    </div>
+    {% if form.agreement.errors %}
+        <p class="text-sm text-red-600 mt-1">{{ form.agreement.errors.0 }}</p>
+    {% endif %}
+
+    {# SUBMIT #}
+    <div class="pt-4">
+        <button type="submit"
+                class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+            Save Profile
+        </button>
+    </div>
+</form>
+
+
+</section>
+
+{% endblock %}

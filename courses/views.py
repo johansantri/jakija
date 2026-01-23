@@ -119,6 +119,28 @@ from django.forms import modelformset_factory
 
 from django.utils import timezone
 
+def edit_instructor_profile(request):
+    # cek apakah user adalah instructor
+    if not request.user.is_authenticated or not request.user.is_instructor:
+        messages.error(request, "You must be an instructor to edit your profile.")  
+        return redirect('authentication:home')  # atau halaman lain sesuai kebutuhan
+
+    # dapatkan atau buat Instructor profile untuk user ini
+    instructor, created = Instructor.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = InstructorForm(request.POST, instance=instructor)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Instructor profile updated successfully.")
+            return redirect('courses:course_view')  # atau ke dashboard
+    else:
+        form = InstructorForm(instance=instructor)
+
+    return render(request, 'courses/instructor_form.html', {
+        'form': form,
+        'instructor': instructor
+    })
 
 def bulk_add_instructors(request, partner_id):
     partner = get_object_or_404(Partner, id=partner_id)
@@ -6493,10 +6515,46 @@ def courseView(request):
         return redirect("/login/?next=%s" % request.path)
 
     user = request.user
-    # Check if user has permission to access
-    if not (user.is_superuser or getattr(user, 'is_partner', False) or getattr(user, 'is_instructor', False)or getattr(user, 'is_curation', False)):
-        messages.error(request, "You do not have permission to add a price to this course.")
-        return redirect('authentication:mycourse')  # redirect ke halaman yang sesuai, misal home
+
+    if not (
+        user.is_superuser
+        or getattr(user, 'is_partner', False)
+        or getattr(user, 'is_instructor', False)
+        or getattr(user, 'is_curation', False)
+    ):
+        messages.error(request, "You do not have permission to access this page.")
+        return redirect('authentication:mycourse')
+
+    # 🔒 KHUSUS INSTRUCTOR
+    if getattr(user, 'is_instructor', False):
+        # 1️⃣ Cek profil umum user
+        required_fields = ['first_name', 'last_name', 'email', 'phone', 'gender', 'birth']
+        missing_fields = [f for f in required_fields if not getattr(user, f, None)]
+        if missing_fields:
+            messages.warning(
+                request,
+                "Please complete your user profile before accessing courses."
+            )
+            return redirect('authentication:edit-profile', pk=user.pk)
+
+        # 2️⃣ Cek profil instructor
+        try:
+            instructor = Instructor.objects.get(user=user)
+        except Instructor.DoesNotExist:
+            messages.warning(
+                request,
+                "Please complete your instructor profile before accessing courses."
+            )
+            return redirect('courses:edit_instructor_profile')
+
+        if not instructor.is_profile_complete:
+            messages.warning(
+                request,
+                "Please complete your instructor profile before accessing courses."
+            )
+            return redirect('courses:edit_instructor_profile')
+        
+        
     
     required_fields = {
         'first_name': 'First Name',

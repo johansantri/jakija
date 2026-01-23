@@ -1359,7 +1359,24 @@ def home(request):
         ).filter(active_courses__gt=0).order_by('id')
 
         # Instruktur disetujui dengan urutan
-        instructors = Instructor.objects.filter(status='Approved').order_by('id')
+        instructors = (
+            Instructor.objects
+            .filter(
+                status='Approved',
+                agreement=True,
+                bio__isnull=False,
+                tech__isnull=False,
+                expertise__isnull=False,
+            )
+            .exclude(
+                bio='',
+                tech='',
+                expertise='',
+            )
+            .annotate(total_courses=Count('courses'))
+            .filter(total_courses__gt=0)
+            .order_by('id')
+        )
 
         if instructors.exists():
             instructor_paginator = Paginator(instructors, 6)

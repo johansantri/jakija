@@ -204,6 +204,17 @@ class Instructor(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def is_profile_complete(self):
+        return all([
+            self.bio,
+            self.tech,
+            self.expertise,
+            self.experience_years,
+            self.agreement,
+            self.status == 'Approved',
+        ])
+    
     def __str__(self):
         return f"{self.user.email} "
     

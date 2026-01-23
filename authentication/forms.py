@@ -237,11 +237,15 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = [
-            'first_name', 'last_name', 'email', 'phone', 'gender', 'birth',
+            'username','first_name', 'last_name', 'email', 'phone', 'gender', 'birth',
             'country', 'photo', 'address', 'hobby', 'education', 'university',
             'tiktok', 'youtube', 'facebook', 'instagram', 'linkedin', 'interests', 'twitter'
         ]
         widgets = {
+            'username': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
+                'required': True
+            }),
             'first_name': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
                 'required': True
@@ -317,6 +321,7 @@ class UserProfileForm(forms.ModelForm):
             }),
         }
         labels = {
+            'username': 'Username',
             'first_name': 'First Name',
             'last_name': 'Last Name',
             'email': 'Email',
@@ -341,9 +346,22 @@ class UserProfileForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if CustomUser.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+        if not email:
+            return email
+
+        if CustomUser.objects.filter(email__iexact=email).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError("Email ini sudah digunakan.")
         return email
+    
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if not username:
+            return username
+
+        if CustomUser.objects.filter(username__iexact=username).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError("Username ini sudah digunakan.")
+        return username
+
 
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
