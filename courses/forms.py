@@ -31,13 +31,13 @@ logger = logging.getLogger(__name__)
 
 class InviteOnlyEmailForm(forms.Form):
     emails = forms.CharField(
-        label="Email Instruktur",
+        label="Instructor Email",
         widget=forms.Textarea(attrs={
             'class': 'block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500',
             'rows': 4,
-            'placeholder': 'Masukkan email, pisahkan dengan koma atau enter'
+            'placeholder': 'Enter email, separate with comma or enter'
         }),
-        help_text="Contoh: abc@gmail.com, bca@gmail.com, acb@gmail.com"
+        help_text="Example: abc@gmail.com, bca@gmail.com, acb@gmail.com"
     )
 
     def clean_emails(self):
@@ -47,7 +47,7 @@ class InviteOnlyEmailForm(forms.Form):
             try:
                 forms.EmailField().clean(email)
             except forms.ValidationError:
-                raise forms.ValidationError(f"Email tidak valid: {email}")
+                raise forms.ValidationError(f"Invalid email: {email}")
         return emails
 
     def save(self, provider=None):
