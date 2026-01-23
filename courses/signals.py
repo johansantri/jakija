@@ -6,7 +6,8 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.conf import settings
 from courses.models import Partner
-
+from django.db.models.signals import post_migrate
+from django.apps import apps
 from django.contrib import messages
 logger = logging.getLogger(__name__)
 
@@ -120,3 +121,39 @@ def notify_partner_status_change(sender, instance, created, **kwargs):
                 logger.info(f"Email notifikasi: Partner status changed for {instance.user.username}: {instance.status}")
     except Exception as e:
         logger.exception(f"Gagal mengirim email ke {instance.user.username}: {str(e)}")
+
+
+#data permanen disini ya
+@receiver(post_migrate)
+def create_default_pricing_types(sender, **kwargs):
+    # Pastikan hanya dijalankan untuk app ini
+    if sender.name != 'courses':
+        return
+
+    PricingType = apps.get_model('courses', 'PricingType')
+    
+    data = [
+        {
+            "name": "Buy First",
+            "code": "buy_first",
+            "description": "Buy first, before access course material"
+        },
+        {
+            "name": "Free",
+            "code": "free",
+            "description": "Course free access"
+        },
+        {
+            "name": "Free to enroll, pay only when taking the exam",
+            "code": "buy_take_exam",
+            "description": "Free to enroll, pay only when taking the exam"
+        },
+        {
+            "name": "Pay for certificate",
+            "code": "pay_only_certificate",
+            "description": "Enroll & take exam first, pay at certificate claim"
+        }
+    ]
+
+    for item in data:
+        PricingType.objects.get_or_create(code=item["code"], defaults=item)
