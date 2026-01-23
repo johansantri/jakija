@@ -13,5 +13,12 @@ urlpatterns = [
     path('admin/post/create/', views.BlogPostCreateView.as_view(), name='blog-create'),
     path('admin/post/<int:pk>/update/', views.BlogPostUpdateView.as_view(), name='blog-update'),
     path('admin/post/<int:pk>/delete/', views.BlogPostDeleteView.as_view(), name='blog-delete'),
+    path('admin/post/<int:post_id>/comments/', views.BlogPostCommentListView.as_view(), name='blog-comment-list'),
+    # URL reply komentar
+    path('admin/comment/<int:comment_id>/reply/', views.BlogCommentReplyView.as_view(), name='comment-reply'),
+
+    # URL hapus komentar
+    path('admin/comment/<int:comment_id>/delete/', views.BlogCommentDeleteView.as_view(), name='comment-delete')
+    
    
 ]

@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render,get_object_or_404, redirect
-from .models import BlogPost, Tag, BlogComment
+from .models import BlogPost, Tag, BlogComment,Notification
 from .forms import NewCommentForm,BlogPostForm
 from courses.models import Course, Category as CourseCategory
 from django.urls import reverse
@@ -18,7 +18,8 @@ from datetime import timedelta
 from django.db.models import Q
 from django.core.cache import cache
 from django.core.paginator import Paginator
-
+from django.db.models import Count, Q, F
+from django.views import View
 # View baru untuk CRUD
 class BlogPostCreateView(LoginRequiredMixin, CreateView):
     model = BlogPost
@@ -157,7 +158,6 @@ class BlogPostListAdminView(LoginRequiredMixin, ListView):
                 f"Please complete the following information: {', '.join(missing_fields)}"
             )
             return redirect('authentication:edit-profile', pk=user.pk)
-
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -196,8 +196,12 @@ class BlogPostListAdminView(LoginRequiredMixin, ListView):
         if not user.is_superuser:
             queryset = queryset.filter(author=user)
 
-        queryset = queryset.order_by('-date_posted')
+        # Annotate jumlah komentar baru (misal komentar setelah date_updated)
+        queryset = queryset.annotate(
+            new_comments=Count('comments', filter=Q(comments__date_posted__gt=F('date_updated')))
+        )
 
+        queryset = queryset.order_by('-date_posted')
         cache.set(cache_key, queryset, 300)
         return queryset
 
@@ -213,9 +217,106 @@ class BlogPostListAdminView(LoginRequiredMixin, ListView):
             'selected_category': self.request.GET.get('category', ''),
             'selected_tag': self.request.GET.get('tag', ''),
         })
+
+        # Ambil jumlah notifikasi komentar baru untuk setiap post
+        user_notifications = Notification.objects.filter(
+            user=self.request.user, read=False, link__contains='/blog/'
+        )
+        notifications_count = {}
+        for notif in user_notifications:
+            try:
+                post_id = int(notif.link.split('/')[2])
+                notifications_count[post_id] = notifications_count.get(post_id, 0) + 1
+            except:
+                continue
+        context['notifications_count'] = notifications_count
+        return context
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        posts = context['posts']
+        new_comments_count = {}
+
+        for post in posts:
+            # Hitung jumlah komentar baru sejak terakhir dicek
+            if post.author == self.request.user:
+                count = post.comments.filter(date_posted__gt=post.last_comment_checked).count()
+                new_comments_count[post.id] = count
+            else:
+                new_comments_count[post.id] = 0
+
+            # Update last_comment_checked untuk admin / author
+            if self.request.user == post.author or self.request.user.is_staff or self.request.user.is_superuser:
+                post.last_comment_checked = timezone.now()
+                post.save(update_fields=['last_comment_checked'])
+
+        context['new_comments_count'] = new_comments_count
         return context
 
 
+class BlogPostCommentListView(LoginRequiredMixin, ListView):
+    model = BlogComment
+    template_name = 'blog/blog_comment_list_admin.html'
+    context_object_name = 'comments'
+    paginate_by = 20
+
+    def get_queryset(self):
+        post_id = self.kwargs.get('post_id')
+        post = BlogPost.objects.get(id=post_id)
+        # Ambil semua komentar post
+        return BlogComment.objects.filter(blogpost_connected=post).select_related('author').order_by('-date_posted')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post_id = self.kwargs.get('post_id')
+        post = BlogPost.objects.get(id=post_id)
+        context['post'] = post
+
+        # Tandai bahwa user sudah cek komentar terbaru
+        if self.request.user == post.author:
+            post.last_comment_checked = timezone.now()
+            post.save(update_fields=['last_comment_checked'])
+
+        return context
+
+class BlogCommentReplyView(View):
+    def post(self, request, comment_id):
+        parent_comment = get_object_or_404(BlogComment, id=comment_id)
+        content = request.POST.get('content', '').strip()
+        if content:
+            BlogComment.objects.create(
+                blogpost_connected=parent_comment.blogpost_connected,
+                parent=parent_comment,
+                author=request.user,
+                content=content,
+                date_posted=timezone.now()
+            )
+            messages.success(request, 'Reply added successfully.')
+        else:
+            messages.error(request, 'Reply cannot be empty.')
+
+        return redirect('blog:blog-comment-list', post_id=parent_comment.blogpost_connected.id)
+
+class BlogCommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, View):
+    """
+    Hanya admin atau penulis post yang bisa hapus komentar
+    """
+
+    def test_func(self):
+        comment = get_object_or_404(BlogComment, id=self.kwargs['comment_id'])
+        return self.request.user.is_staff or self.request.user.is_superuser or comment.blogpost_connected.author == self.request.user
+
+    def handle_no_permission(self):
+        messages.error(self.request, "You don't have permission to delete this comment.")
+        comment = get_object_or_404(BlogComment, id=self.kwargs['comment_id'])
+        return redirect('blog:blog-comment-list', post_id=comment.blogpost_connected.id)
+
+    def post(self, request, comment_id):
+        comment = get_object_or_404(BlogComment, id=comment_id)
+        post_id = comment.blogpost_connected.id
+        comment.delete()
+        messages.success(request, "Comment deleted successfully.")
+        return redirect('blog:blog-comment-list', post_id=post_id)
 
 class BlogListView(ListView):
     model = BlogPost
@@ -416,3 +517,43 @@ class TagPostListView(ListView):
         ]
         context['current_tag'] = get_object_or_404(Tag, slug=self.kwargs['slug'])
         return context
+    
+
+def add_comment(request, post_id, parent_id=None):
+    post = get_object_or_404(BlogPost, id=post_id)
+    parent_comment = None
+    if parent_id:
+        parent_comment = get_object_or_404(BlogComment, id=parent_id)
+
+    if request.method == 'POST':
+        form = NewCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.blogpost_connected = post
+            comment.author = request.user
+            if parent_comment:
+                comment.parent = parent_comment
+            comment.save()
+
+            # === Notifikasi ke author artikel ===
+            if post.author != request.user:
+                Notification.objects.create(
+                    user=post.author,
+                    message=f"{request.user.username} commented on your post '{post.title}'.",
+                    link=f"/blog/{post.id}/#comment-{comment.id}"
+                )
+
+            # === Notifikasi ke user yang dikomentari (jika reply) ===
+            if parent_comment and parent_comment.author != request.user:
+                Notification.objects.create(
+                    user=parent_comment.author,
+                    message=f"{request.user.username} replied to your comment on '{post.title}'.",
+                    link=f"/blog/{post.id}/#comment-{comment.id}"
+                )
+
+            messages.success(request, "Your comment has been posted!")
+            return redirect(post.get_absolute_url())
+    else:
+        form = NewCommentForm()
+
+    return render(request, 'blog/add_comment.html', {'form': form, 'post': post})

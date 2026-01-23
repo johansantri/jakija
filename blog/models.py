@@ -32,7 +32,7 @@ class BlogPost(models.Model):
     views = models.PositiveIntegerField(default=0)
     date_posted = models.DateTimeField(default=timezone.now)
     date_updated = models.DateTimeField(auto_now=True)
-
+    last_comment_checked = models.DateTimeField(default=timezone.now)  # baru ditambahkan
     def __str__(self):
         return self.title
 
@@ -54,3 +54,10 @@ class BlogComment(models.Model):
 
     def __str__(self):
         return f'Comment by {self.author} on {self.blogpost_connected.title}'
+    
+class Notification(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    message = models.TextField()
+    link = models.CharField(max_length=255, blank=True)
+    read = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)

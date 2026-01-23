@@ -1,4 +1,5 @@
 from django import forms
+import os
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 from .models import BlogPost, Tag, BlogComment
@@ -89,44 +90,53 @@ class BlogPostForm(forms.ModelForm):
 
     def save(self, commit=True):
         blog_post = super().save(commit=False)
+        new_image = self.cleaned_data.get('image')
 
-        # === Handling gambar ===
-        if self.cleaned_data.get('image') and blog_post.pk:
+        old_image_name = None
+        if blog_post.pk:
             old_post = BlogPost.objects.get(pk=blog_post.pk)
-            if old_post.image and old_post.image != self.cleaned_data['image']:
+            old_image_name = old_post.image.name if old_post.image else None
+        else:
+            old_post = None
+
+        # === Hanya proses jika user upload gambar baru ===
+        if new_image and (not old_image_name or new_image != old_post.image):
+            # Hapus gambar lama jika ada
+            if old_image_name:
                 old_post.image.delete(save=False)
 
-        if self.cleaned_data.get('image'):
-            image_file = self.cleaned_data['image']
-            image = PILImage.open(image_file)
+            # Buka gambar dengan PIL
+            image = PILImage.open(new_image)
             if image.mode == 'RGBA':
                 image = image.convert('RGB')
+
+            # Resize
             image = image.resize((1200, 628), PILImage.Resampling.LANCZOS)
 
+            # Simpan ke BytesIO sebagai WEBP
             image_io = io.BytesIO()
             quality = 85
             image.save(image_io, format='WEBP', quality=quality)
             image_io.seek(0)
+
             while image_io.tell() > 100 * 1024 and quality > 10:
                 image_io = io.BytesIO()
                 quality -= 5
                 image.save(image_io, format='WEBP', quality=quality)
                 image_io.seek(0)
 
-            webp_image_file = ContentFile(
-                image_io.read(),
-                name=image_file.name.rsplit('.', 1)[0] + '.webp'
-            )
-            blog_post.image.save(webp_image_file.name, webp_image_file, save=False)
+            # Tentukan nama file (sama dengan sebelumnya kalau ada)
+            filename = os.path.splitext(old_image_name)[0] + '.webp' if old_image_name else os.path.splitext(new_image.name)[0] + '.webp'
+            blog_post.image.save(filename, ContentFile(image_io.read()), save=False)
 
+        # === Simpan instance ===
         if commit:
             blog_post.slug = self.cleaned_data['slug']
             blog_post.save()
 
-            # === Smart Related Courses ===
+            # === Related Courses ===
             related_courses_qs = Course.objects.none()
 
-            # 1️⃣ Berdasarkan kategori (hanya yang belum diarsip)
             if blog_post.category:
                 related_courses_qs |= Course.objects.filter(category=blog_post.category).exclude(
                     status_course__status='archived'
@@ -139,8 +149,6 @@ class BlogPostForm(forms.ModelForm):
                 Q(description__icontains=content_text)
             ).exclude(status_course__status='archived')
 
-
-            # 3️⃣ Berdasarkan tag artikel -> level kursus (misal 'advanced', 'basic', dsb)
             article_tags = blog_post.tags.all()
             tag_names = [tag.name.lower() for tag in article_tags]
             if tag_names:
@@ -149,12 +157,12 @@ class BlogPostForm(forms.ModelForm):
                     ~Q(status_course__status='archived')
                 )
 
-            # 4️⃣ Set ke blog_post dan buang duplikat
             blog_post.related_courses.set(related_courses_qs.distinct())
-
             self.save_m2m()
 
         return blog_post
+
+
 
 # NewCommentForm tetap sama
 class NewCommentForm(forms.ModelForm):
