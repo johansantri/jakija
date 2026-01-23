@@ -485,7 +485,7 @@ def course_list(request):
     # ===== Published Status =====
     published_status = CourseStatus.objects.filter(status='published').first()
     if not published_status:
-        return render(request, "errors/no_published_status.html")
+        return render(request, "home/no_published_status.html")
 
     # ===== Query Courses =====
     courses_qs = Course.objects.filter(
