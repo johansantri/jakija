@@ -128,13 +128,13 @@ def bulk_add_instructors(request, partner_id):
         if form.is_valid():
             created, skipped = form.save(provider=partner)
             if created:
-                messages.success(request, f"{len(created)} instructor berhasil diundang!")
+                messages.success(request, f"{len(created)} Instructor successfully invited!")
             if skipped:
-                messages.warning(request, f"{len(skipped)} email sudah terdaftar: {', '.join(skipped)}")
+                messages.warning(request, f"{len(skipped)} Email is already registered: {', '.join(skipped)}")
             return redirect('courses:instructor_view')
              #return redirect('courses:instructor_view')
         else:
-            messages.error(request, "Terdapat kesalahan pada email. Periksa kembali.")
+            messages.error(request, "There are errors in the email. Please check again.")
 
     else:
         form = InviteOnlyEmailForm()
