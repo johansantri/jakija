@@ -6028,7 +6028,13 @@ def instructor_view(request):
     # =====================================
     paginator = Paginator(instructors, 10)
     page_obj = paginator.get_page(request.GET.get('page', 1))
-    partner = Partner.objects.get(user=request.user)
+    partner = None
+    if user.is_partner:
+        try:
+            partner = Partner.objects.get(user=user)
+        except Partner.DoesNotExist:
+            messages.error(request, "Partner profile not found.")
+            return redirect('authentication:edit-profile', pk=user.pk)
     return render(request, 'instructor/instructor_list.html', {
         'instructors': page_obj,
         'search_query': search_query,
