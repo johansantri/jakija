@@ -29,8 +29,66 @@ from django.utils.safestring import mark_safe
 from datetime import date, timedelta
 logger = logging.getLogger(__name__)
 
+class InviteOnlyEmailForm(forms.Form):
+    emails = forms.CharField(
+        label="Email Instruktur",
+        widget=forms.Textarea(attrs={
+            'class': 'block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500',
+            'rows': 4,
+            'placeholder': 'Masukkan email, pisahkan dengan koma atau enter'
+        }),
+        help_text="Contoh: abc@gmail.com, bca@gmail.com, acb@gmail.com"
+    )
 
+    def clean_emails(self):
+        data = self.cleaned_data['emails']
+        emails = [e.strip() for e in data.replace('\n', ',').split(',') if e.strip()]
+        for email in emails:
+            try:
+                forms.EmailField().clean(email)
+            except forms.ValidationError:
+                raise forms.ValidationError(f"Email tidak valid: {email}")
+        return emails
 
+    def save(self, provider=None):
+        emails = self.cleaned_data['emails']
+        created_instructors = []
+        skipped_emails = []
+
+        for email in emails:
+            # Pastikan user ada
+            user, created = CustomUser.objects.get_or_create(
+                email=email,
+                defaults={
+                    'username': email,
+                    'is_instructor': True,  # set flag instructor otomatis
+                }
+            )
+
+            # Kalau user sudah ada tapi bukan instructor, set flag is_instructor
+            if not user.is_instructor:
+                user.is_instructor = True
+                user.save(update_fields=['is_instructor'])
+
+            # Cek apakah instructor untuk provider ini sudah ada
+            if Instructor.objects.filter(user=user, provider=provider).exists():
+                skipped_emails.append(email)
+                continue  # skip email ini, jangan buat duplikat
+
+            # Buat instructor baru
+            instructor = Instructor.objects.create(
+                user=user,
+                bio='',
+                tech='',
+                expertise='',
+                experience_years=0,
+                status='Approved',
+                agreement=False,
+                provider=provider
+            )
+            created_instructors.append(instructor)
+
+        return created_instructors, skipped_emails
 
 
 class MicroCredentialCommentForm(forms.ModelForm):

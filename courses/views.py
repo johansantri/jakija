@@ -80,7 +80,7 @@ from .forms import (
     CoursePriceForm, CourseRatingForm, SosPostForm, MicroCredentialForm, AskOraForm,
     CourseForm, CourseRerunForm, PartnerForm, PartnerFormUpdate, CourseInstructorForm,
     SectionForm, GradeRangeForm, ProfilForm, InstructorForm, InstructorAddCoruseForm,
-    TeamMemberForm, MatrialForm, QuestionForm, ChoiceFormSet, AssessmentForm,CategoryForm
+    TeamMemberForm, MatrialForm, QuestionForm, ChoiceFormSet, AssessmentForm,CategoryForm,InviteOnlyEmailForm
 )
 
 # Internal imports - utils
@@ -115,9 +115,35 @@ from rest_framework.exceptions import NotFound
 from .serializers import SectionSerializer,MaterialSerializer,AssessmentSerializer
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
-
+from django.forms import modelformset_factory
 
 from django.utils import timezone
+
+
+def bulk_add_instructors(request, partner_id):
+    partner = get_object_or_404(Partner, id=partner_id)
+
+    if request.method == 'POST':
+        form = InviteOnlyEmailForm(request.POST)
+        if form.is_valid():
+            created, skipped = form.save(provider=partner)
+            if created:
+                messages.success(request, f"{len(created)} instructor berhasil diundang!")
+            if skipped:
+                messages.warning(request, f"{len(skipped)} email sudah terdaftar: {', '.join(skipped)}")
+            return redirect('courses:instructor_view')
+             #return redirect('courses:instructor_view')
+        else:
+            messages.error(request, "Terdapat kesalahan pada email. Periksa kembali.")
+
+    else:
+        form = InviteOnlyEmailForm()
+
+    return render(request, 'courses/bulk_add_instructors.html', {
+        'form': form,
+        'partner': partner
+    })
+
 
 @login_required(login_url='authentication:login')  # ganti 'login' dengan nama URL pattern login-mu
 def user_course_timeline(request, course_id):
@@ -6002,12 +6028,13 @@ def instructor_view(request):
     # =====================================
     paginator = Paginator(instructors, 10)
     page_obj = paginator.get_page(request.GET.get('page', 1))
-
+    partner = Partner.objects.get(user=request.user)
     return render(request, 'instructor/instructor_list.html', {
         'instructors': page_obj,
         'search_query': search_query,
         'gender_filter': gender_filter,
         'status_filter': status_filter,
+        'partner': partner,
     })
 
 #delete instructor

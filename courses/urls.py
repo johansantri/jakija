@@ -27,6 +27,7 @@ urlpatterns = [
     path("partner-all/", views.partnerView, name= "partner_view"),
     path('partner/<int:partner_id>/', views.partner_detail, name='partner_detail'),
     path('partner/<int:partner_id>/update/', views.update_partner, name='update_partner'),
+    path('partner/<int:partner_id>/instructors/bulk-add/', views.bulk_add_instructors, name='bulk_add_instructors'),
     path('org-partner/<slug:slug>/',views.org_partner, name='org_partner'),
    
     path("course-add/", views.course_create_view, name= "course_create_view"),
