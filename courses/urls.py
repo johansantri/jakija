@@ -22,11 +22,13 @@ urlpatterns = [
     path('instructor/<int:instructor_id>/delete/', views.delete_instructor, name='delete_instructor'),
     path('instructor/<int:id>/', views.instructor_detail, name='instructor_detail'),
     path('instructor-profile/<slug:username>/', views.instructor_profile, name='instructor_profile'),
+    path('instructor/edit/', views.edit_instructor_profile, name='edit_instructor_profile'),
     path("studio/<str:id>", views.studio, name= "studio"),
     path('reorder-section/', views.reorder_section, name='reorder_section'),
     path("partner-all/", views.partnerView, name= "partner_view"),
     path('partner/<int:partner_id>/', views.partner_detail, name='partner_detail'),
     path('partner/<int:partner_id>/update/', views.update_partner, name='update_partner'),
+    path('partner/<int:partner_id>/instructors/bulk-add/', views.bulk_add_instructors, name='bulk_add_instructors'),
     path('org-partner/<slug:slug>/',views.org_partner, name='org_partner'),
    
     path("course-add/", views.course_create_view, name= "course_create_view"),

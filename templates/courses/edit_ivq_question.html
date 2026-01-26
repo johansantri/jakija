@@ -4,10 +4,8 @@
 {% include "courses/course_set.html" %}
 <section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
 
-
 <nav class="text-sm mb-4" aria-label="Breadcrumb">
   <ol class="flex flex-wrap items-center text-gray-500 gap-y-1">
-    
     <li class="flex items-center">
       <a href="{% url 'courses:course_view' %}" class="hover:underline text-gray-600">
         Home
@@ -17,7 +15,7 @@
 
     <li class="flex items-center max-w-full">
       <a href="{% url 'courses:studio' course.id %}"
-         class="hover:underline text-gray-600 truncate max-w-[200px] sm:max-w-none">
+         class="hover:underline text-gray-600 truncate">
         {{ course.course_name }} → {{ section.title }}
       </a>
       <span class="mx-2">/</span>
@@ -25,52 +23,115 @@
 
     <li class="flex items-center max-w-full">
       <a href="{% url 'courses:view-question' idcourse=course.id idsection=section.id idassessment=assessment.id %}"
-         class="hover:underline text-gray-600 truncate max-w-[160px] sm:max-w-none">
+         class="hover:underline text-gray-600 truncate">
         {{ assessment.name }}
       </a>
       <span class="mx-2">/</span>
     </li>
 
-    <li class="text-gray-800 font-semibold whitespace-nowrap">
+    <li class="text-gray-800 font-semibold">
       Edit Question
     </li>
-
   </ol>
 </nav>
 
-
 <form method="post">
-    {% csrf_token %}
+  {% csrf_token %}
 
-    <label class="block mb-2">Question</label>
-    <textarea name="question" class="w-full border rounded p-2">{{ quiz.question }}</textarea>
+  <!-- QUESTION -->
+  <label class="block mb-2">Question</label>
+  <textarea name="question" class="w-full border rounded p-2" required>{{ quiz.question }}</textarea>
 
-    <label class="block mt-4">Time in Video (seconds)</label>
-    <input type="number" step="0.1" name="time_in_video"
-           value="{{ quiz.time_in_video }}"
-           class="w-full border rounded p-2">
+  <!-- TIME -->
+  <label class="block mt-4">Time in Video (seconds)</label>
+  <input type="number" step="0.1" name="time_in_video"
+         value="{{ quiz.time_in_video }}"
+         class="w-full border rounded p-2"
+         required>
 
-    <label class="block mt-4">Question Type</label>
-    <select name="question_type" class="w-full border rounded p-2">
-        <option value="MC" {% if quiz.question_type == "MC" %}selected{% endif %}>Multiple Choice</option>
-        <option value="DD" {% if quiz.question_type == "DD" %}selected{% endif %}>Drag & Drop</option>
-        <option value="TXT" {% if quiz.question_type == "TXT" %}selected{% endif %}>Text</option>
+  <!-- QUESTION TYPE -->
+  <label class="block mt-4">Question Type</label>
+  <select name="question_type" class="w-full border rounded p-2">
+    <option value="MC" {% if quiz.question_type == "MC" %}selected{% endif %}>Multiple Choice</option>
+    <option value="TF" {% if quiz.question_type == "TF" %}selected{% endif %}>True / False</option>
+    <option value="FB" {% if quiz.question_type == "FB" %}selected{% endif %}>Fill in Blank</option>
+    <option value="ES" {% if quiz.question_type == "ES" %}selected{% endif %}>Essay</option>
+    <option value="DD" {% if quiz.question_type == "DD" %}selected{% endif %}>Drag & Drop</option>
+  </select>
+
+  {# ================= MULTIPLE CHOICE ================= #}
+  {% if quiz.question_type == "MC" %}
+    <label class="block mt-4">Options</label>
+
+    {% for option in options %}
+      <div class="flex items-center gap-2 mt-2">
+        <input type="radio"
+               name="correct_option"
+               value="{{ forloop.counter0 }}"
+               {% if option.is_correct %}checked{% endif %}>
+
+        <input type="text"
+               name="option_text"
+               value="{{ option.text }}"
+               class="flex-1 border rounded p-2"
+               required>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  {# ================= TRUE / FALSE ================= #}
+  {% if quiz.question_type == "TF" %}
+    <label class="block mt-4">Correct Answer</label>
+    <select name="correct_answer_text" class="w-full border rounded p-2">
+      <option value="true" {% if quiz.correct_answer_text == "true" %}selected{% endif %}>True</option>
+      <option value="false" {% if quiz.correct_answer_text == "false" %}selected{% endif %}>False</option>
     </select>
+  {% endif %}
+
+  {# ================= FILL IN BLANK ================= #}
+  {% if quiz.question_type == "FB" %}
+    <label class="block mt-4">Correct Answer</label>
+    <input type="text"
+           name="correct_answer_text"
+           value="{{ quiz.correct_answer_text }}"
+           class="w-full border rounded p-2"
+           required>
+  {% endif %}
+
+  {# ================= ESSAY ================= #}
+  {% if quiz.question_type == "ES" %}
+    <label class="block mt-4">Answer Key / Rubric</label>
+    <textarea name="correct_answer_text"
+              class="w-full border rounded p-2"
+              rows="4">{{ quiz.correct_answer_text }}</textarea>
+  {% endif %}
+
+  {# ================= DRAG & DROP ================= #}
+  {% if quiz.question_type == "DD" %}
+    <label class="block mt-4">Drag Options</label>
+
+    {% for option in options %}
+      <input type="text"
+             name="dd_option_{{ forloop.counter }}"
+             value="{{ option.text }}"
+             class="w-full border rounded p-2 mt-2"
+             required>
+    {% endfor %}
 
     <label class="block mt-4">Correct Answer</label>
-    <input type="text" name="correct_answer_text"
+    <input type="text"
+           name="correct_answer_text"
            value="{{ quiz.correct_answer_text }}"
-           class="w-full border rounded p-2">
+           class="w-full border rounded p-2"
+           required>
+  {% endif %}
 
-    <button type="submit"
-            class="mt-6 bg-blue-600 text-white px-4 py-2 rounded">
-        Save Changes
-    </button>
+  <!-- SUBMIT -->
+  <button type="submit"
+          class="mt-6 bg-blue-600 text-white px-4 py-2 rounded">
+    Save Changes
+  </button>
 </form>
-
-
-
-
 
 </section>
 {% endblock %}

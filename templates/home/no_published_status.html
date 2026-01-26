@@ -1,0 +1,25 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block meta %}
+    <!-- Standard Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Learn more about JakIja, an online learning platform that helps you enhance your skills through expert instructors and high-quality content.">
+    <meta name="keywords" content="About JakIja, online learning platform, e-learning Indonesia, online courses, digital education">
+    <meta name="author" content="JakIja Team">
+    <title>Error JakIja - Online Learning Platform</title>
+{% endblock meta %}
+
+{% block content %}
+<div style="text-align:center; padding: 100px 20px;">
+    
+    <h1 style="font-size:2rem; color:#d9534f;">Oops! No Published Courses Found</h1>
+    <p style="font-size:1.2rem; color:#555;">
+        It seems there are currently no courses available for viewing. Please check back later.
+    </p>
+    <a href="{% url 'authentication:home' %}" style="display:inline-block; margin-top:20px; padding:10px 20px; background-color:#007bff; color:#fff; text-decoration:none; border-radius:5px;">
+        Go Back to Home
+    </a>
+</div>
+{% endblock %}

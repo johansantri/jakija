@@ -12,31 +12,176 @@
     <!-- CSS Utama -->
 
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
-    <style>
-        /* FIX CKEDITOR TABLE IN TAILWIND v4 */
-.prose .TyagGW_tableContainer {
-  width: 100%;
-  overflow-x: auto;
-}
+        <!-- ===============================
+            CKEditor Content Wrapper with Dark/Light Toggle
+            =============================== -->
+        <style>
+            /* -------------------------------
+            Reset & Typography
+            ---------------------------------*/
+            .ck-content {
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+                line-height: 1.6;
+                color: #1f2937;
+            }
 
-.prose .TyagGW_tableWrapper {
-  display: block !important;
-  width: 100% !important;
-}
+            /* Headings */
+            .ck-content h1, h2, h3, h4, h5, h6 {
+                margin: 1.5rem 0 1rem;
+                font-weight: 600;
+            }
 
-.prose table {
-  width: 100% !important;
-  min-width: 100%;
-  border-collapse: collapse;
-}
+            /* Paragraph spacing */
+            .ck-content p {
+                margin-bottom: 1rem;
+            }
+            .ck-content p:empty {
+                display: none;
+            }
 
-.prose th,
-.prose td {
-  border: 1px solid #e5e7eb;
-  padding: 0.5rem;
-  text-align: left;
-}
-</style>
+            /* Images & Figures */
+            .ck-content img {
+                max-width: 100%;
+                height: auto;
+                display: block;
+            }
+            .ck-content figure {
+                margin: 1rem 0;
+            }
+            .ck-content figure.image-style-align-left,
+            .ck-content figure.image-style-side {
+                float: left;
+                margin: 0.25rem 1rem 0.5rem 0;
+                min-width: 120px;
+            }
+            .ck-content figure.image-style-align-right {
+                float: right;
+                margin: 0.25rem 0 0.5rem 1rem;
+                min-width: 120px;
+            }
+            .ck-content figure.image-style-align-center {
+                display: block;
+                margin: 1rem auto;
+                float: none;
+            }
+            .ck-content::after {
+                content: "";
+                display: block;
+                clear: both;
+            }
+
+            /* Tables */
+            .ck-content table {
+                width: 100%;
+                border-collapse: collapse;
+                display: block;
+                overflow-x: auto;
+            }
+            .ck-content th,
+            .ck-content td {
+                border: 1px solid #ccc;
+                padding: 0.5rem;
+                text-align: left;
+            }
+
+            /* Lists */
+            .ck-content ul, .ck-content ol { margin-left: 1.5em; padding-left: 0; }
+            .ck-content li { margin-bottom: 0.25rem; }
+
+            /* Blockquote */
+            .ck-content blockquote {
+                border-left: 4px solid #ccc;
+                padding-left: 1rem;
+                color: #555;
+                font-style: italic;
+                margin: 1rem 0;
+            }
+
+            /* Inline styles */
+            .ck-content mark { background-color: #d9f99d; }
+            .ck-content s { text-decoration: line-through; }
+            .ck-content i { font-style: italic; }
+            .ck-content u { text-decoration: underline; }
+            .ck-content strong { font-weight: bold; }
+
+            /* -------------------------------
+            Code Blocks
+            ---------------------------------*/
+            /* Wrapper default: light theme */
+            .ck-content pre {
+                background-color: #f5f5f5;
+                color: #1f2937;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                overflow-x: auto;
+                font-family: 'Fira Code', monospace;
+                font-size: 0.875rem;
+                line-height: 1.5;
+                margin: 1rem 0;
+                white-space: pre-wrap;
+                word-break: break-word;
+            }
+
+            /* Inline code */
+            .ck-content code {
+                font-family: 'Fira Code', monospace;
+                background-color: #e5e7eb;
+                color: #1f2937;
+                padding: 0.1rem 0.3rem;
+                border-radius: 0.25rem;
+            }
+
+            /* Syntax coloring by language */
+            .ck-content pre code.language-html { color: #d73a49; }
+            .ck-content pre code.language-css  { color: #6f42c1; }
+            .ck-content pre code.language-js   { color: #f1e05a; }
+            .ck-content pre code.language-python { color: #3572A5; }
+            .ck-content pre code.language-php { color: #4F5D95; }
+            .ck-content pre code.language-java { color: #b07219; }
+            .ck-content pre code.language-cpp  { color: #f34b7d; }
+
+            /* Dark mode class */
+            .ck-content.dark pre {
+                background-color: #1e1e1e;
+                color: #f8f8f2;
+            }
+            .ck-content.dark code {
+                background-color: #2d2d2d;
+                color: #f8f8f2;
+            }
+            .ck-content.dark pre code.language-html { color: #f92672; }
+            .ck-content.dark pre code.language-css  { color: #66d9ef; }
+            .ck-content.dark pre code.language-js   { color: #f8f8f2; }
+            .ck-content.dark pre code.language-python { color: #a6e22e; }
+            .ck-content.dark pre code.language-php { color: #66d9ef; }
+            .ck-content.dark pre code.language-java { color: #fd971f; }
+            .ck-content.dark pre code.language-cpp  { color: #fd5ff0; }
+
+            /* -------------------------------
+            Responsiveness
+            ---------------------------------*/
+            @media (max-width: 640px) {
+                .ck-content figure.image-style-side,
+                .ck-content figure.image-style-align-left,
+                .ck-content figure.image-style-align-right {
+                    float: none !important;
+                    margin: 1rem auto !important;
+                    width: 100% !important;
+                }
+                .ck-content table { display: block; width: 100%; overflow-x: auto; }
+                .ck-content pre { font-size: 0.75rem; padding: 0.75rem; }
+            }
+
+            /* -------------------------------
+            Wrapper max-width
+            ---------------------------------*/
+            .ck-content.prose {
+                max-width: 100%;
+                overflow-x: auto;
+            }
+        </style>
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.0.0/video-js.min.css" />
     <!-- Sortable.js -->
@@ -236,7 +381,7 @@
                                    {% if current_content.0 == 'material' and current_content.1.id == material.id %}
                                        bg-red-100 text-red-600 font-semibold
                                    {% endif %}"
-                            data-read-status="{{ is_material_read|yesno:'true,false' }}">
+                            data-read-status="{% if is_material_read %}true{% else %}false{% endif %}">
 
                             <i class="fas fa-file-alt w-5"></i>
                             <i class="fas fa-check-circle check-icon text-green-600 hidden w-5"></i>
@@ -258,7 +403,7 @@
                                    {% if current_content.0 == 'assessment' and current_content.1.id == assessment.id %}
                                        bg-red-100 text-red-600 font-semibold
                                    {% endif %}"
-                            data-read-status="{{ is_assessment_read|yesno:'true,false' }}">
+                            data-read-status="{% if is_assessment_read %}true{% else %}false{% endif %}">
 
                             <i class="fas fa-clipboard-check w-5"></i>
                             <i class="fas fa-check-circle check-icon text-green-600 hidden w-5"></i>
@@ -278,20 +423,20 @@
      JS TOGGLE UNIT
 =========================== -->
 <script>
+// ===========================
+// JS TOGGLE UNIT + INIT SIDEBAR
+// ===========================
 function toggleUnit(unitId) {
     const content = document.getElementById(`unit-content-${unitId}`);
     const icon = document.getElementById(`unit-icon-${unitId}`);
     if (!content || !icon) return;
 
-    content.classList.toggle('hidden');         // buka/tutup konten
-    icon.classList.toggle('rotate-90');         // putar ikon
+    content.classList.toggle('hidden');
+    icon.classList.toggle('rotate-90');
 }
 
-// ===========================
-// INIT SIDEBAR (auto-open + checklist)
-// ===========================
 function initSidebar() {
-    // 1️⃣ buka Unit aktif
+    // 1️⃣ Buka Unit aktif
     const currentUnitId = "{{ current_content.1.section_id|default:'' }}";
     if (currentUnitId) {
         const content = document.getElementById(`unit-content-${currentUnitId}`);
@@ -300,11 +445,28 @@ function initSidebar() {
         if (icon) icon.classList.add('rotate-90');
     }
 
-    // 2️⃣ tampilkan checklist "sudah dibaca"
+    // 2️⃣ Paksa sembunyikan semua centang dulu
+    document.querySelectorAll('.check-icon').forEach(icon => {
+        icon.classList.add('hidden');
+        icon.style.display = 'none';
+    });
+
+    // 3️⃣ Tampilkan centang hanya jika benar-benar 'true'
     document.querySelectorAll('[data-read-status]').forEach(el => {
-        if (el.dataset.readStatus === 'true') {
-            const checkIcon = el.querySelector('.check-icon');
-            if (checkIcon) checkIcon.classList.remove('hidden');
+        const status = el.dataset.readStatus;
+        const title = el.querySelector('span')?.textContent.trim() || 'Tidak ada judul';
+        const checkIcon = el.querySelector('.check-icon');
+
+        // console.log(`[DEBUG] Item: "${title}" | read-status: "${status}"`); // hapus kalau sudah yakin
+
+        if (status === 'true' && checkIcon) {
+            // console.log(`[CHECKLIST ON] ${title} → centang DITAMPILKAN`);
+            checkIcon.classList.remove('hidden');
+            checkIcon.style.display = 'inline-block';
+        } else if (checkIcon) {
+            // console.log(`[CHECKLIST OFF] ${title} → centang disembunyikan`);
+            checkIcon.classList.add('hidden');
+            checkIcon.style.display = 'none';
         }
     });
 }
@@ -312,12 +474,20 @@ function initSidebar() {
 // Jalankan saat page load awal
 document.addEventListener("DOMContentLoaded", initSidebar);
 
-// Jalankan ulang setiap kali HTMX swap sidebar
+// Jalankan ulang setiap kali HTMX swap KONTEN (bukan sidebar)
+document.body.addEventListener("htmx:afterSwap", function(evt) {
+    if (evt.detail.target.id === "content-area") {
+        initSidebar();  // <--- INI YANG PENTING!
+    }
+});
+
+// Optional: kalau sidebar juga ikut swap (jarang), tambahkan juga ini
 document.body.addEventListener("htmx:afterSwap", function(evt) {
     if (evt.detail.target.id === "sidebar") {
         initSidebar();
     }
 });
+
 </script>
 
 

@@ -6,7 +6,8 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.conf import settings
 from courses.models import Partner
-
+from django.db.models.signals import post_migrate
+from django.apps import apps
 from django.contrib import messages
 logger = logging.getLogger(__name__)
 
@@ -22,7 +23,7 @@ def send_partner_email_html(request, user, subject, template_name, context):
     missing = [s for s in required_settings if not getattr(settings, s, None)]
 
     if missing:
-        msg = f"Konfigurasi email belum lengkap di settings.py: {', '.join(missing)}"
+        msg = f"Email configuration is incomplete: {', '.join(missing)}"
         logger.warning(msg)
         if request:
             messages.warning(request, msg)
@@ -30,7 +31,7 @@ def send_partner_email_html(request, user, subject, template_name, context):
 
     # 🧩 2. Cek apakah user punya email
     if not getattr(user, 'email', None):
-        msg = f"User '{getattr(user, 'username', 'Tanpa Nama')}' belum memiliki email, email tidak dikirim."
+        msg = f"User '{getattr(user, 'username', 'Tanpa Nama')}' Email not available, so the message was not sent."
         logger.warning(msg)
         if request:
             messages.warning(request, msg)
@@ -47,14 +48,13 @@ def send_partner_email_html(request, user, subject, template_name, context):
         )
         email.content_subtype = "html"
         email.send(fail_silently=False)
-        logger.info(f"Email berhasil dikirim ke {user.email} dengan subjek '{subject}'.")
+        logger.info(f"Email successfully sent to {user.email} with subject '{subject}'.")
         if request:
-            messages.success(request, f"Email berhasil dikirim ke {user.email}.")
+            messages.success(request, f"Email successfully sent to {user.email}.")
     except Exception as e:
-        logger.exception(f"Gagal mengirim email ke {user.email}: {str(e)}")
+        logger.exception(f"Failed to send email to {user.email}: {str(e)}")
         if request:
-            messages.error(request, "Terjadi kesalahan saat mengirim email.")
-
+            messages.error(request, "An error occurred while sending the email.")
 # Simpan status lama sebelum disave
 @receiver(pre_save, sender=Partner)
 def cache_old_status(sender, instance, **kwargs):
@@ -72,7 +72,7 @@ def check_email_settings():
     required_settings = ['EMAIL_HOST', 'EMAIL_PORT', 'DEFAULT_FROM_EMAIL']
     missing = [s for s in required_settings if not getattr(settings, s, None)]
     if missing:
-        msg = f"Konfigurasi email belum lengkap di settings.py: {', '.join(missing)}"
+        msg = f"Email configuration is incomplete: {', '.join(missing)}"
         logger.warning(msg)
         return False, msg
     return True, None
@@ -121,3 +121,39 @@ def notify_partner_status_change(sender, instance, created, **kwargs):
                 logger.info(f"Email notifikasi: Partner status changed for {instance.user.username}: {instance.status}")
     except Exception as e:
         logger.exception(f"Gagal mengirim email ke {instance.user.username}: {str(e)}")
+
+
+#data permanen disini ya
+@receiver(post_migrate)
+def create_default_pricing_types(sender, **kwargs):
+    # Pastikan hanya dijalankan untuk app ini
+    if sender.name != 'courses':
+        return
+
+    PricingType = apps.get_model('courses', 'PricingType')
+    
+    data = [
+        {
+            "name": "Buy First",
+            "code": "buy_first",
+            "description": "Buy first, before access course material"
+        },
+        {
+            "name": "Free",
+            "code": "free",
+            "description": "Course free access"
+        },
+        {
+            "name": "Free to enroll, pay only when taking the exam",
+            "code": "buy_take_exam",
+            "description": "Free to enroll, pay only when taking the exam"
+        },
+        {
+            "name": "Pay for certificate",
+            "code": "pay_only_certificate",
+            "description": "Enroll & take exam first, pay at certificate claim"
+        }
+    ]
+
+    for item in data:
+        PricingType.objects.get_or_create(code=item["code"], defaults=item)

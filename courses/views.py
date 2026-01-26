@@ -80,7 +80,7 @@ from .forms import (
     CoursePriceForm, CourseRatingForm, SosPostForm, MicroCredentialForm, AskOraForm,
     CourseForm, CourseRerunForm, PartnerForm, PartnerFormUpdate, CourseInstructorForm,
     SectionForm, GradeRangeForm, ProfilForm, InstructorForm, InstructorAddCoruseForm,
-    TeamMemberForm, MatrialForm, QuestionForm, ChoiceFormSet, AssessmentForm,CategoryForm
+    TeamMemberForm, MatrialForm, QuestionForm, ChoiceFormSet, AssessmentForm,CategoryForm,InviteOnlyEmailForm
 )
 
 # Internal imports - utils
@@ -115,9 +115,57 @@ from rest_framework.exceptions import NotFound
 from .serializers import SectionSerializer,MaterialSerializer,AssessmentSerializer
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
-
+from django.forms import modelformset_factory
 
 from django.utils import timezone
+
+def edit_instructor_profile(request):
+    # cek apakah user adalah instructor
+    if not request.user.is_authenticated or not request.user.is_instructor:
+        messages.error(request, "You must be an instructor to edit your profile.")  
+        return redirect('authentication:home')  # atau halaman lain sesuai kebutuhan
+
+    # dapatkan atau buat Instructor profile untuk user ini
+    instructor, created = Instructor.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = InstructorForm(request.POST, instance=instructor)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Instructor profile updated successfully.")
+            return redirect('courses:course_view')  # atau ke dashboard
+    else:
+        form = InstructorForm(instance=instructor)
+
+    return render(request, 'courses/instructor_form.html', {
+        'form': form,
+        'instructor': instructor
+    })
+
+def bulk_add_instructors(request, partner_id):
+    partner = get_object_or_404(Partner, id=partner_id)
+
+    if request.method == 'POST':
+        form = InviteOnlyEmailForm(request.POST)
+        if form.is_valid():
+            created, skipped = form.save(provider=partner)
+            if created:
+                messages.success(request, f"{len(created)} Instructor successfully invited!")
+            if skipped:
+                messages.warning(request, f"{len(skipped)} Email is already registered: {', '.join(skipped)}")
+            return redirect('courses:instructor_view')
+             #return redirect('courses:instructor_view')
+        else:
+            messages.error(request, "There are errors in the email. Please check again.")
+
+    else:
+        form = InviteOnlyEmailForm()
+
+    return render(request, 'courses/bulk_add_instructors.html', {
+        'form': form,
+        'partner': partner
+    })
+
 
 @login_required(login_url='authentication:login')  # ganti 'login' dengan nama URL pattern login-mu
 def user_course_timeline(request, course_id):
@@ -3130,7 +3178,7 @@ def edit_ivq_question(request, idcourse, idsection, idassessment, idvideo, idqui
         quiz.save()
 
         # RESET OPTIONS
-        quiz.option_set.all().delete()
+        options = quiz.options.all()
 
         if quiz.question_type == "MC":
             options = request.POST.getlist("option_text")
@@ -3153,7 +3201,7 @@ def edit_ivq_question(request, idcourse, idsection, idassessment, idvideo, idqui
                 )
 
         messages.success(request, "Question updated successfully.")
-
+        
         return redirect(
             "courses:create_ivq_question",
             idcourse=idcourse,
@@ -3161,13 +3209,14 @@ def edit_ivq_question(request, idcourse, idsection, idassessment, idvideo, idqui
             idassessment=idassessment,
             idvideo=idvideo,
         )
-
+    options = quiz.options.all()
     return render(request, "courses/edit_ivq_question.html", {
         "course": course,
         "section": section,
         "assessment": assessment,
         "video": video,
         "quiz": quiz,
+        "options": options,
     })
 
 
@@ -5199,9 +5248,9 @@ def update_grade_range(request, id):
     return JsonResponse({"success": False, "message": "Invalid request"})
 
 
-#creat assesment type name
-#@login_required
-#@csrf_protect
+
+@login_required
+
 def create_assessment(request, idcourse, idsection):
     # Check if the user is authenticated
     # Check if the user is authenticated
@@ -5214,26 +5263,26 @@ def create_assessment(request, idcourse, idsection):
 
     # ==================== AUTHORIZATION ====================
 
-    # 1️⃣ Prioritas superuser / curation
+    # 1️⃣ Superuser / curation
     if user.is_superuser or getattr(user, 'is_curation', False):
-        course = get_object_or_404(Course, id=id)
+        course = get_object_or_404(Course, id=idcourse)
 
     # 2️⃣ Partner
     if not course and getattr(user, 'is_partner', False):
         course = get_object_or_404(
-            Course, id=id, org_partner__user_id=user.id
+            Course, id=idcourse, org_partner__user_id=user.id
         )
 
     # 3️⃣ Instructor
     if not course and getattr(user, 'is_instructor', False):
         course = get_object_or_404(
-            Course, id=id, instructor__user_id=user.id
+            Course, id=idcourse, instructor__user_id=user.id
         )
 
-    # 4️⃣ Fallback: CourseTeam
+    # 4️⃣ CourseTeam
     if not course:
         team_member = CourseTeam.objects.filter(
-            course_id=id, user=user
+            course_id=idcourse, user=user
         ).first()
 
         if team_member:
@@ -5242,7 +5291,7 @@ def create_assessment(request, idcourse, idsection):
             messages.error(request, "You do not have access to this course.")
             return redirect('authentication:home')
 
-    # Ensure the section belongs to the course
+    # Ensure section belongs to course
     section = get_object_or_404(Section, id=idsection, courses=course)
 
     if request.method == 'POST':
@@ -5758,11 +5807,17 @@ def question_view(request, idcourse, idsection, idassessment):
 
     videos = Video.objects.filter(quizzes__assessment=assessment).distinct()
 
+    has_mcq = assessment.questions.exists()  # .questions adalah MCQ
+    timer_is_set = assessment.duration_in_minutes is not None and assessment.duration_in_minutes > 0
+
+    show_timer_warning = has_mcq and not timer_is_set
     return render(request, 'courses/view_question.html', {
         'course': course,
         'section': section,
         'assessment': assessment,
         'videos': videos,
+        'show_timer_warning': show_timer_warning,          # ← tambahkan ini
+        'has_mcq': has_mcq,
         'user_role': getattr(team_member, 'role', None)  # bisa dipakai di template
     })
 
@@ -5995,12 +6050,19 @@ def instructor_view(request):
     # =====================================
     paginator = Paginator(instructors, 10)
     page_obj = paginator.get_page(request.GET.get('page', 1))
-
+    partner = None
+    if user.is_partner:
+        try:
+            partner = Partner.objects.get(user=user)
+        except Partner.DoesNotExist:
+            messages.error(request, "Partner profile not found.")
+            return redirect('authentication:edit-profile', pk=user.pk)
     return render(request, 'instructor/instructor_list.html', {
         'instructors': page_obj,
         'search_query': search_query,
         'gender_filter': gender_filter,
         'status_filter': status_filter,
+        'partner': partner,
     })
 
 #delete instructor
@@ -6453,10 +6515,46 @@ def courseView(request):
         return redirect("/login/?next=%s" % request.path)
 
     user = request.user
-    # Check if user has permission to access
-    if not (user.is_superuser or getattr(user, 'is_partner', False) or getattr(user, 'is_instructor', False)or getattr(user, 'is_curation', False)):
-        messages.error(request, "You do not have permission to add a price to this course.")
-        return redirect('authentication:mycourse')  # redirect ke halaman yang sesuai, misal home
+
+    if not (
+        user.is_superuser
+        or getattr(user, 'is_partner', False)
+        or getattr(user, 'is_instructor', False)
+        or getattr(user, 'is_curation', False)
+    ):
+        messages.error(request, "You do not have permission to access this page.")
+        return redirect('authentication:mycourse')
+
+    # 🔒 KHUSUS INSTRUCTOR
+    if getattr(user, 'is_instructor', False):
+        # 1️⃣ Cek profil umum user
+        required_fields = ['first_name', 'last_name', 'email', 'phone', 'gender', 'birth']
+        missing_fields = [f for f in required_fields if not getattr(user, f, None)]
+        if missing_fields:
+            messages.warning(
+                request,
+                "Please complete your user profile before accessing courses."
+            )
+            return redirect('authentication:edit-profile', pk=user.pk)
+
+        # 2️⃣ Cek profil instructor
+        try:
+            instructor = Instructor.objects.get(user=user)
+        except Instructor.DoesNotExist:
+            messages.warning(
+                request,
+                "Please complete your instructor profile before accessing courses."
+            )
+            return redirect('courses:edit_instructor_profile')
+
+        if not instructor.is_profile_complete:
+            messages.warning(
+                request,
+                "Please complete your instructor profile before accessing courses."
+            )
+            return redirect('courses:edit_instructor_profile')
+        
+        
     
     required_fields = {
         'first_name': 'First Name',
@@ -7317,7 +7415,7 @@ def partner_create_view(request):
             user.is_partner = True
             user.save()
 
-            return redirect('/partner')
+            return redirect('/partner-all')
     else:
         form = PartnerForm()
 
@@ -7380,6 +7478,9 @@ def course_team(request, course_id):
         return redirect("/login/?next=%s" % request.path)
 
     course = get_object_or_404(Course, id=course_id)
+    if course.instructor is None:
+        messages.error(request, "This course has no instructor assigned.")
+        return redirect('courses:studio', id=str(course.id))
 
     if request.user != course.instructor.user:
         messages.error(request, "You are not authorized to add team members to this course, instructor only.")

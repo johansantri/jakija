@@ -106,7 +106,7 @@ def request_partner(request):
         # Partner sudah disetujui
         if partner.is_verified or partner.status == 'approved':
             logger.info("Partner already approved — redirecting to dashboard")
-            return redirect('authentication:dashboard')
+            return redirect('authentication:dasbord')
 
         # Status pending
         elif partner.status == 'pending':

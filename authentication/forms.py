@@ -38,11 +38,17 @@ class CommentForm(forms.ModelForm):
             'content': forms.Textarea(attrs={
                 'rows': 3,
                 'placeholder': 'Write your reply here...',
-                'class': 'form-control',  # Bootstrap styling misalnya
-                'style': 'resize:none;',   # Non-resizable textarea
-                'maxlength': '500',        # Maksimal karakter (optional)
+                'maxlength': '500',
+                'class': (
+                    'w-full rounded-lg border border-gray-300 '
+                    'px-3 py-2 text-sm text-gray-900 '
+                    'placeholder-gray-400 '
+                    'focus:border-blue-500 focus:ring-2 focus:ring-blue-500 '
+                    'resize-none'
+                ),
             }),
         }
+
 
 def _unicode_ci_compare(s1, s2):
     """
@@ -236,6 +242,7 @@ class UserProfileForm(forms.ModelForm):
             'tiktok', 'youtube', 'facebook', 'instagram', 'linkedin', 'interests', 'twitter'
         ]
         widgets = {
+            
             'first_name': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
                 'required': True
@@ -311,6 +318,7 @@ class UserProfileForm(forms.ModelForm):
             }),
         }
         labels = {
+            
             'first_name': 'First Name',
             'last_name': 'Last Name',
             'email': 'Email',
@@ -335,9 +343,15 @@ class UserProfileForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if CustomUser.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+        if not email:
+            return email
+
+        if CustomUser.objects.filter(email__iexact=email).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError("Email ini sudah digunakan.")
         return email
+    
+    
+
 
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
@@ -454,21 +468,21 @@ class UserPhoto(UserChangeForm):
     def clean_photo(self):
         photo = self.cleaned_data.get('photo')
         if not photo:
-            raise ValidationError("Foto wajib diunggah.")
+            raise ValidationError("Photo is required.")
 
         if photo.size > 100 * 1024:
-            raise ValidationError("Ukuran file tidak boleh lebih dari 100KB.")
+            raise ValidationError("File size must not exceed 100KB.")
 
         # Validasi tipe file
         if not photo.content_type.startswith('image/'):
-            raise ValidationError("Hanya file gambar yang diperbolehkan.")
+            raise ValidationError("Only image files are allowed.")
 
         # Validasi format file (opsional, lebih ketat)
         try:
             img = Image.open(photo)
             if img.format.lower() not in ['jpeg', 'jpg', 'png', 'webp']:
-                raise ValidationError("Format gambar tidak dikenali atau tidak didukung.")
+                raise ValidationError("The image format is invalid or unsupported")
         except Exception:
-            raise ValidationError("File bukan gambar yang valid.")
+            raise ValidationError("File is not a valid image.")
 
         return photo

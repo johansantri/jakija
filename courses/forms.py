@@ -30,7 +30,80 @@ from datetime import date, timedelta
 logger = logging.getLogger(__name__)
 
 
+class InviteOnlyEmailForm(forms.Form):
+    emails = forms.CharField(
+        label="Instructor Email",
+        widget=forms.Textarea(attrs={
+            'class': 'block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500',
+            'rows': 4,
+            'placeholder': 'Enter email, separate with comma or enter'
+        }),
+        help_text="Example: abc@gmail.com, bca@gmail.com, acb@gmail.com"
+    )
 
+    def clean_emails(self):
+        data = self.cleaned_data['emails']
+        emails = [e.strip() for e in data.replace('\n', ',').split(',') if e.strip()]
+        for email in emails:
+            try:
+                forms.EmailField().clean(email)
+            except forms.ValidationError:
+                raise forms.ValidationError(f"Invalid email: {email}")
+        return emails
+
+    def generate_unique_username(self, email):
+        """Buat username unik berdasarkan email"""
+        base_username = email.split('@')[0]
+        username = base_username
+        counter = 1
+        while CustomUser.objects.filter(username=username).exists():
+            username = f"{base_username}{counter}"
+            counter += 1
+        return username
+
+    def save(self, provider=None):
+        emails = self.cleaned_data['emails']
+        created_instructors = []
+        skipped_emails = []
+
+        for email in emails:
+            # cek apakah user sudah ada
+            user = CustomUser.objects.filter(email=email).first()
+
+            if not user:
+                # generate username unik
+                username = self.generate_unique_username(email)
+                # buat user baru
+                user = CustomUser.objects.create(
+                    email=email,
+                    username=username,
+                    is_instructor=True,
+                )
+            else:
+                # kalau user sudah ada tapi bukan instructor, set flag
+                if not user.is_instructor:
+                    user.is_instructor = True
+                    user.save(update_fields=['is_instructor'])
+
+            # cek apakah instructor untuk provider ini sudah ada
+            if Instructor.objects.filter(user=user, provider=provider).exists():
+                skipped_emails.append(email)
+                continue
+
+            # buat instructor baru
+            instructor = Instructor.objects.create(
+                user=user,
+                bio='',
+                tech='',
+                expertise='',
+                experience_years=0,
+                status='Approved',
+                agreement=False,
+                provider=provider
+            )
+            created_instructors.append(instructor)
+
+        return created_instructors, skipped_emails
 
 
 class MicroCredentialCommentForm(forms.ModelForm):
@@ -159,7 +232,7 @@ class SosPostForm(forms.ModelForm):
     def clean_content(self):
         content = self.cleaned_data['content']
         if len(content) > 150:
-            raise forms.ValidationError("Maksimum 150 karakter!")
+            raise forms.ValidationError("Cannot exceed 150 characters!")
         return content
 
 
@@ -272,14 +345,14 @@ class CoursePriceForm(forms.ModelForm):
             'partner_price': forms.NumberInput(attrs={
                 'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg '
                         'focus:outline-none focus:ring-2 focus:ring-blue-500',
-                'placeholder': 'Masukkan harga...',
+                'placeholder': 'Input price…',
                 'min': '0',
                 'step': '0.01',
             }),
             'discount_percent': forms.NumberInput(attrs={
                 'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg '
                         'focus:outline-none focus:ring-2 focus:ring-blue-500',
-                'placeholder': 'Masukkan diskon...',
+                'placeholder': 'Input discount...',
                 'min': '0',
                 'max': '100',
                 'step': '0.01',
@@ -312,12 +385,12 @@ class CoursePriceForm(forms.ModelForm):
             cleaned_data['discount_percent'] = Decimal('0.00')
         else:
             if partner_price is None or partner_price <= 0:
-                self.add_error('partner_price', 'Harga wajib diisi dan harus lebih dari 0 untuk harga non-free.')
+                self.add_error('partner_price', 'Price is required and must be greater than 0 for non-free prices.')
 
             if discount is None:
                 cleaned_data['discount_percent'] = Decimal('0.00')
             elif discount < 0 or discount > 100:
-                self.add_error('discount_percent', 'Diskon harus antara 0 dan 100.')
+                self.add_error('discount_percent', 'Discount must be between 0 and 100.')
 
         return cleaned_data
 
@@ -360,23 +433,36 @@ class GradeRangeForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={
                 'placeholder': 'Enter name of assessment here',
-                'class': 'form-control'
+                'class': (
+                    'w-full rounded-lg border border-gray-300 '
+                    'px-3 py-2 text-sm text-gray-900 placeholder-gray-400 '
+                    'focus:border-blue-500 focus:ring-2 focus:ring-blue-500'
+                ),
             }),
             'min_grade': forms.NumberInput(attrs={
                 'placeholder': '0',
-                'class': 'form-control',
                 'type': 'number',
-                'min': '0',  # Optional: Add minimum value
-                'max': '100',  # Optional: Add maximum value
+                'min': '0',
+                'max': '100',
+                'class': (
+                    'w-full rounded-lg border border-gray-300 '
+                    'px-3 py-2 text-sm text-gray-900 placeholder-gray-400 '
+                    'focus:border-blue-500 focus:ring-2 focus:ring-blue-500'
+                ),
             }),
             'max_grade': forms.NumberInput(attrs={
                 'placeholder': '0',
-                'class': 'form-control',
                 'type': 'number',
-                'min': '0',  # Optional: Add minimum value
-                'max': '100',  # Optional: Add maximum value
+                'min': '0',
+                'max': '100',
+                'class': (
+                    'w-full rounded-lg border border-gray-300 '
+                    'px-3 py-2 text-sm text-gray-900 placeholder-gray-400 '
+                    'focus:border-blue-500 focus:ring-2 focus:ring-blue-500'
+                ),
             }),
         }
+
 
 
 
@@ -397,7 +483,7 @@ class AssessmentForm(forms.ModelForm):
                 'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition',
             }),
             'duration_in_minutes': forms.NumberInput(attrs={
-                'placeholder': 'Contoh: 60',
+                'placeholder': 'e.g. 30 minutes',
                 'min': '0',
                 'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition',
             }),
@@ -415,7 +501,7 @@ class AssessmentForm(forms.ModelForm):
 
         help_texts = {
             'weight': 'Weight in percent (0–100). Example: 30',
-            'duration_in_minutes': 'Duration in minutes. Leave blank if no time limit.',
+            'duration_in_minutes': 'Duration in minutes. Leave blank if there is no time limit.A duration is required for assessments with multiple-choice questions (MCQs)',
             'flag': 'Check if you want to enable rich text editor during input.',
         }
 
@@ -449,7 +535,7 @@ class QuestionForm(forms.ModelForm):
             self.fields['text'].widget = forms.Textarea(attrs={
                 'class': 'w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-xl focus:border-indigo-600 focus:outline-none transition-shadow focus:ring-4 focus:ring-indigo-100',
                 'rows': 6,
-                'placeholder': 'Tulis pertanyaan di sini...',
+                'placeholder': 'Enter your question here…',
                 'style': 'resize: vertical; min-height: 160px;'
             })
 
@@ -486,7 +572,7 @@ class ChoiceForm(forms.ModelForm):
             self.fields['text'].widget = forms.Textarea(attrs={
                 'class': 'w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 transition',
                 'rows': 4,
-                'placeholder': 'Tulis jawaban...'
+                'placeholder': 'Enter your answer here...'
             })
 
         # ⛔ PENTING: biar form baru tidak wajib diisi
@@ -819,7 +905,7 @@ class PartnerForm(forms.ModelForm):
             }),
 
             "iceiprice": forms.NumberInput(attrs={
-                "placeholder": "Ice Price (%)",
+                "placeholder": "admin Price (%)",
                 "class": (
                     "w-full px-3 py-2 text-sm border border-gray-300 rounded-md "
                     "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -863,6 +949,24 @@ class PartnerForm(forms.ModelForm):
             raise forms.ValidationError("This user already exists as a partner. Please choose another.")
         
         return user_value
+    def clean_name(self):
+        name_value = self.cleaned_data.get('name')
+
+        if not name_value:
+            raise forms.ValidationError("Please select a university.")
+
+        qs = Partner.objects.filter(name=name_value)
+
+        # Saat edit, abaikan record sendiri
+        if self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+
+        if qs.exists():
+            raise forms.ValidationError(
+                "This university is already registered as a partner."
+            )
+
+        return name_value
 
     def save(self, commit=True):
         partner = super().save(commit=False)
@@ -925,7 +1029,7 @@ class PartnerFormUpdate(forms.ModelForm):
                 field.widget.attrs.update({'class': self.INPUT_CLASS})
 
         # Placeholder biar lebih user-friendly
-        self.fields['account_number'].widget.attrs.update({'placeholder': 'Contoh: 1234567890'})
+        self.fields['account_number'].widget.attrs.update({'placeholder': 'example: 1234567890'})
         self.fields['phone'].widget.attrs.update({'placeholder': '+628123456789'})
         self.fields['npwp'].widget.attrs.update({'placeholder': '12.345.678.9-012.345'})
         self.fields['tiktok'].widget.attrs.update({'placeholder': 'https://tiktok.com/@namakamu'})
@@ -953,14 +1057,14 @@ class PartnerFormUpdate(forms.ModelForm):
         if value:
             npwp_cleaned = value.replace('.', '').replace('-', '').replace(' ', '')
             if not re.fullmatch(r'\d{15}', npwp_cleaned):
-                raise forms.ValidationError("NPWP harus terdiri dari 15 digit angka.")
+                raise forms.ValidationError("NPWP Must consist of 15 digits..")
         return value
 
     def clean_npwp_file(self):
         file = self.cleaned_data.get('npwp_file')
         if file:
             if file.size > 2 * 1024 * 1024:
-                raise forms.ValidationError("Ukuran file maksimal 2MB.")
+                raise forms.ValidationError("Max file size 2MB.")
             if not file.content_type in ['application/pdf', 'image/jpeg', 'image/png']:
                 raise forms.ValidationError("Format file harus PDF, JPG, atau PNG.")
         return file
@@ -968,7 +1072,7 @@ class PartnerFormUpdate(forms.ModelForm):
     def clean_phone(self):
         value = self.cleaned_data.get('phone')
         if value and not re.match(r'^\+?\d{8,15}$', value):
-            raise forms.ValidationError("Format nomor telepon tidak valid. Gunakan format internasional seperti +628123456789.")
+            raise forms.ValidationError("Invalid phone number. Enter in international format, e.g., +628123456789..")
         return value
 
     def clean_tiktok(self):
@@ -1107,11 +1211,11 @@ class TeamMemberForm(forms.ModelForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if not CustomUser.objects.filter(email__iexact=email).exists():
-            raise forms.ValidationError("Email ini tidak terdaftar di sistem. Pastikan user sudah memiliki akun.")
+            raise forms.ValidationError("This email is not registered in the system. Make sure the user has an account..")
         
         # Cek apakah sudah ada di tim (opsional, biar tidak duplicate)
         if TeamMember.objects.filter(email__iexact=email).exists():
-            raise forms.ValidationError("User dengan email ini sudah tergabung dalam tim.")
+            raise forms.ValidationError("User with this email is already in the team.")
         
         return email
     
@@ -1162,7 +1266,7 @@ class CourseTeamForm(forms.ModelForm):
         if user and self.course:
             # Pakai related_name yang benar: course.teams (bukan .team)
             if self.course.teams.filter(user=user).exists():
-                raise forms.ValidationError("Pengguna ini sudah tergabung dalam tim kursus ini.")
+                raise forms.ValidationError("User is already part of this course team")
         return user
 
     def save(self, commit=True):

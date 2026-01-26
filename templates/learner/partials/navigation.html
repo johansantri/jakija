@@ -190,11 +190,12 @@
 <!-- Open Certificate in New Tab -->
 <script>
 document.addEventListener('click', e => {
-  const btn = e.target.closest('.open-cert-btn');
+  var btn = e.target.closest('.open-cert-btn');
   if (!btn) return;
-  const url = btn.dataset.url;
+  var url = btn.dataset.url;
   if (url) window.open(url, '_blank', 'noopener,noreferrer');
 });
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/js-confetti@0.11.0/dist/js-confetti.browser.js"></script>

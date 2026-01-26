@@ -1,0 +1,68 @@
+{% extends 'home/tes.html' %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Comments for "{{ post.title }}"</h1>
+
+<table class="min-w-full border border-gray-200 rounded-lg">
+    <thead class="bg-gray-100">
+        <tr>
+            <th class="px-4 py-2">Author</th>
+            <th class="px-4 py-2">Comment / Replies</th>
+            <th class="px-4 py-2">Date Posted</th>
+            <th class="px-4 py-2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for comment in comments %}
+    {% if not comment.parent %}
+    <tr class="border-t hover:bg-gray-50 {% if comment.date_posted > post.last_comment_checked %}bg-yellow-50{% endif %}">
+        <td class="px-4 py-2 font-semibold">{{ comment.author.get_full_name }}</td>
+        <td class="px-4 py-2">
+            {{ comment.content }}
+
+            {% for reply in comment.replies.all %}
+            <div class="ml-4 mt-2 p-2 bg-gray-50 rounded border-l-2 border-gray-300 flex justify-between items-start">
+                <div>
+                    <span class="font-semibold">{{ reply.author.get_full_name }} replied:</span>
+                    {{ reply.content }}
+                </div>
+                {% if request.user.is_staff or request.user == post.author %}
+                <div>
+                    <!-- Delete reply -->
+                    <form method="POST" action="{% url 'blog:comment-delete' reply.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Delete</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <!-- Reply form for admin -->
+            {% if request.user.is_staff or request.user == post.author %}
+            <form method="POST" action="{% url 'blog:comment-reply' comment.id %}" class="mt-2 flex space-x-2">
+                {% csrf_token %}
+                <input type="text" name="content" placeholder="Type your reply..." class="flex-1 px-2 py-1 border rounded">
+                <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded text-sm">Reply</button>
+            </form>
+            {% endif %}
+        </td>
+        <td class="px-4 py-2">{{ comment.date_posted|date:"F d, Y H:i" }}</td>
+        <td class="px-4 py-2 space-x-2">
+            <form method="POST" action="{% url 'blog:comment-delete' comment.id %}" class="inline">
+                {% csrf_token %}
+                <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded text-sm">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endif %}
+{% empty %}
+<tr>
+    <td colspan="4" class="px-4 py-2 text-gray-600">No comments yet.</td>
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+{% endblock %}

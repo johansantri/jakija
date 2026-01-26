@@ -314,36 +314,31 @@ def get_course_completion_status(context):
 @register.simple_tag(takes_context=True)
 def is_content_read(context, content_type, content_id):
     """
-    Check if a material or assessment has been read/opened or completed by the user.
-    
-    Args:
-        context: Template context (includes request).
-        content_type: 'material' or 'assessment'.
-        content_id: ID of the material or assessment.
-    
-    Returns:
-        bool: True if content is read/opened or completed, False otherwise.
+    Cek apakah konten sudah dibaca/selesai oleh user.
+    Hanya return True jika ADA bukti nyata di database.
     """
-    user = context['request'].user
-    if not user.is_authenticated:
+    request = context.get('request')
+    if not request or not request.user.is_authenticated:
+        
         return False
+
+    user = request.user
+
     if content_type == 'material':
-        return MaterialRead.objects.filter(user=user, material_id=content_id).exists()
+        exists = MaterialRead.objects.filter(user=user, material_id=content_id).exists()
+       
+        return exists
+
     elif content_type == 'assessment':
-        # Cek LTIResult untuk assessment LTI
-        if LTIResult.objects.filter(user=user, assessment_id=content_id, score__isnull=False).exists():
-            #logger.debug(f"LTIResult found for user {user.id}, assessment {content_id}")
-            return True
-        # Cek QuestionAnswer untuk kuis
-        if QuestionAnswer.objects.filter(user=user, question__assessment_id=content_id).exists():
-            #logger.debug(f"QuestionAnswer found for user {user.id}, assessment {content_id}")
-            return True
-        # Cek Submission untuk ORA
-        if Submission.objects.filter(user=user, askora__assessment_id=content_id).exists():
-            #logger.debug(f"Submission found for user {user.id}, assessment {content_id}")
-            return True
-        # Fallback ke AssessmentRead untuk menandai bahwa assessment telah dibuka
-        assessment_read = AssessmentRead.objects.filter(user=user, assessment_id=content_id).exists()
-        #logger.debug(f"AssessmentRead for user {user.id}, assessment {content_id}: {assessment_read}")
-        return assessment_read
+        # Cek bukti penyelesaian nyata
+        lti_exists = LTIResult.objects.filter(user=user, assessment_id=content_id, score__isnull=False).exists()
+        qa_exists = QuestionAnswer.objects.filter(user=user, question__assessment_id=content_id).exists()
+        sub_exists = Submission.objects.filter(user=user, askora__assessment_id=content_id).exists()
+        ar_exists = AssessmentRead.objects.filter(user=user, assessment_id=content_id).exists()
+
+        
+
+        return lti_exists or qa_exists or sub_exists or ar_exists
+
+    
     return False
