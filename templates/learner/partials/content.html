@@ -60,7 +60,7 @@
             
              <nav class="text-sm text-gray-500 mb-1">
                 <ol class="flex space-x-2">
-                    <li>Home</li>
+                    <li><a href="{% url 'authentication:mycourse' %}" class="hover:text-blue-600">Home</a></li>
                     <li>/</li>
                     <li class="text-gray-600">
                         {{ section }} &raquo;
@@ -292,7 +292,7 @@
                             
                                 <nav class="text-sm text-gray-500 mb-1">
                                     <ol class="flex space-x-2">
-                                        <li>Home</li>
+                                        <li><a href="{% url 'authentication:mycourse' %}" class="hover:text-blue-600">Home</a></li>
                                         <li>/</li>
                                         <li class="text-gray-600">
                                             {{ section }} &raquo;
@@ -533,7 +533,7 @@
                         {% if is_video_quiz and video %}
                             <nav class="text-sm text-gray-500 mb-1">
                                 <ol class="flex space-x-2">
-                                    <li>Home</li>
+                                    <li><a href="{% url 'authentication:mycourse' %}" class="hover:text-blue-600">Home</a></li>
                                     <li>/</li>
                                     <li class="text-gray-600">
                                         {{ section }} &raquo;
@@ -806,7 +806,7 @@
                                 {% else %}
                                     <nav class="text-sm text-gray-500 mb-1">
                                     <ol class="flex space-x-2">
-                                        <li>Home</li>
+                                        <li><a href="{% url 'authentication:mycourse' %}" class="hover:text-blue-600">Home</a></li>
                                         <li>/</li>
                                         <li class="text-gray-600">
                                             {{ section }} &raquo;
@@ -975,7 +975,7 @@
                         {% if is_lti and lti_tool %}
                             <nav class="text-sm text-gray-500 mb-1">
                                 <ol class="flex space-x-2">
-                                    <li>Home</li>
+                                    <li><a href="{% url 'authentication:mycourse' %}" class="hover:text-blue-600">Home</a></li>
                                     <li>/</li>
                                     <li class="text-gray-600">
                                         {{ section }} &raquo;
