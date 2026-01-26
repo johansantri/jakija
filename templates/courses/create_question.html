@@ -23,13 +23,12 @@
             {{ question_form.text }}
         </div>
 
-        <div class="mb-6">
+         <div class="mb-6">
             <label class="font-semibold block mb-2">
                 Answer explanation (shown after submission)
             </label>
             {{ question_form.explanation }}
         </div>
-
 
         <!-- ===================== FORMSET ===================== -->
         <h3 class="font-semibold text-lg mb-3">answer choices</h3>
@@ -114,9 +113,7 @@
         </div>
 
         
-        {% block extra_head %}
-        {{ question_form.media }}
-{% endblock extra_head %} 
+
 
         <!-- Submit -->
         <div class="mt-6 flex gap-3">

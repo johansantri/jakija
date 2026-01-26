@@ -536,7 +536,7 @@ class QuestionForm(forms.ModelForm):
         assessment = kwargs.pop('assessment', None)
         super().__init__(*args, **kwargs)
 
-        # === SOAL ===
+        # ===== Dinamis: CKEditor jika flag True, Textarea biasa jika False =====
         if assessment and getattr(assessment, 'flag', False):
             self.fields['text'].widget = CKEditor5Widget(config_name="extends")
         else:
