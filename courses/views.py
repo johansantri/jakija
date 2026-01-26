@@ -5652,30 +5652,35 @@ def create_question_view(request, idcourse, idsection, idassessment):
 
     user = request.user
     course = None
-    team_member = None  # inisialisasi untuk aman
+    team_member = None
 
     # ==================== AUTHORIZATION ====================
 
-    # 1️⃣ Prioritas superuser / curation
+    # 1️⃣ Superuser / Curation
     if user.is_superuser or getattr(user, 'is_curation', False):
         course = get_object_or_404(Course, id=idcourse)
 
     # 2️⃣ Partner
     if not course and getattr(user, 'is_partner', False):
         course = get_object_or_404(
-            Course, id=idcourse, org_partner__user_id=user.id
+            Course,
+            id=idcourse,
+            org_partner__user_id=user.id
         )
 
     # 3️⃣ Instructor
     if not course and getattr(user, 'is_instructor', False):
         course = get_object_or_404(
-            Course, id=idcourse, instructor__user_id=user.id
+            Course,
+            id=idcourse,
+            instructor__user_id=user.id
         )
 
-    # 4️⃣ Fallback: CourseTeam
+    # 4️⃣ CourseTeam fallback
     if not course:
         team_member = CourseTeam.objects.filter(
-            course_id=idcourse, user=user
+            course_id=idcourse,
+            user=user
         ).first()
 
         if team_member:
@@ -5690,59 +5695,77 @@ def create_question_view(request, idcourse, idsection, idassessment):
     assessment = get_object_or_404(Assessment, id=idassessment, section=section)
 
     # ==================== FORMS ====================
-    question_form = QuestionForm(request.POST or None, assessment=assessment)
+
+    question_form = QuestionForm(
+        request.POST or None,
+        assessment=assessment
+    )
 
     choice_formset = ChoiceFormSet(
         data=request.POST or None,
-        instance=Question(),              # dummy instance
-        prefix='choices',
-        form_kwargs={'assessment': assessment}  # penting!
+        instance=Question(),          # dummy instance
+        prefix='choices'
     )
 
-    # Set widget CKEditor jika flag = True
-    if assessment.flag:
-        question_form.fields['text'].widget = CKEditor5Widget(config_name='extends')
-    else:
-        question_form.fields['text'].widget = forms.Textarea(attrs={
-            'class': 'w-full px-6 py-5 border-2 border-gray-300 rounded-xl focus:border-indigo-500 focus:ring-0',
-            'rows': 8,
-            'placeholder': 'Tulis pertanyaan di sini...',
-            'style': 'resize: vertical; min-height: 180px;'
-        })
-
     # ==================== POST HANDLING ====================
+
     if request.method == 'POST':
+
         if question_form.is_valid() and choice_formset.is_valid():
 
-            # Simpan pertanyaan
-            question = question_form.save(commit=False)
-            question.section = section
-            question.assessment = assessment
-            question.save()
+            # 🔒 VALIDASI: HARUS ADA 1 JAWABAN BENAR
+            correct_count = sum(
+                1 for form in choice_formset
+                if form.cleaned_data.get('is_correct')
+            )
 
-            # Simpan pilihan jawaban
-            choice_formset.instance = question
-            choice_formset.save()
+            if correct_count != 1:
+                messages.error(
+                    request,
+                    "Harus ada tepat 1 jawaban yang ditandai sebagai benar."
+                )
 
-            messages.success(request, "Question and answer choices have been successfully created!")
+            else:
+                # ==================== SAVE QUESTION ====================
+                question = question_form.save(commit=False)
+                question.section = section
+                question.assessment = assessment
+                question.save()
 
-            # Save & Add Another
-            if 'save_and_add_another' in request.POST:
-                return redirect('courses:create_question',
-                                idcourse=course.id,
-                                idsection=section.id,
-                                idassessment=assessment.id)
+                # ==================== SAVE CHOICES ====================
+                choice_formset.instance = question
+                choice_formset.save()
 
-            # Save
-            return redirect('courses:view-question',
-                            idcourse=course.id,
-                            idsection=section.id,
-                            idassessment=assessment.id)
+                messages.success(
+                    request,
+                    "Question and answer choices successfully created!"
+                )
+
+                # Save & Add Another
+                if 'save_and_add_another' in request.POST:
+                    return redirect(
+                        'courses:create_question',
+                        idcourse=course.id,
+                        idsection=section.id,
+                        idassessment=assessment.id
+                    )
+
+                # Save
+                return redirect(
+                    'courses:view-question',
+                    idcourse=course.id,
+                    idsection=section.id,
+                    idassessment=assessment.id
+                )
 
         else:
-            messages.error(request, "There are errors. Please check your input.")
+            messages.error(
+                request,
+                "There are errors in the form. Please check your input."
+            )
 
     # ==================== CONTEXT ====================
+
     context = {
         'course': course,
         'section': section,
@@ -5752,7 +5775,12 @@ def create_question_view(request, idcourse, idsection, idassessment):
         'user_role': getattr(team_member, 'role', None),
     }
 
-    return render(request, 'courses/create_question.html', context)
+    return render(
+        request,
+        'courses/create_question.html',
+        context
+    )
+
 
 
 

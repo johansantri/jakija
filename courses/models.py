@@ -1070,6 +1070,7 @@ class AssessmentSession(models.Model):
 class Question(models.Model):
     assessment = models.ForeignKey(Assessment, related_name="questions", on_delete=models.CASCADE)
     text = models.TextField(blank=True, null=True)
+    explanation = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -519,16 +519,24 @@ class AssessmentForm(forms.ModelForm):
         return duration
 
 class QuestionForm(forms.ModelForm):
-    text = forms.CharField(required=True, widget=forms.Textarea)  # Default widget sementara
+    text = forms.CharField(required=True, widget=forms.Textarea)
+    explanation = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full px-4 py-2 text-base border-2 border-gray-300 rounded-xl focus:border-green-600 focus:outline-none transition-shadow focus:ring-4 focus:ring-green-100',
+            'placeholder': 'Brief explanation of the correct answer',
+        })
+    )
 
     class Meta:
         model = Question
-        fields = ['text']
+        fields = ['text', 'explanation']
 
     def __init__(self, *args, **kwargs):
         assessment = kwargs.pop('assessment', None)
         super().__init__(*args, **kwargs)
 
+        # === SOAL ===
         if assessment and getattr(assessment, 'flag', False):
             self.fields['text'].widget = CKEditor5Widget(config_name="extends")
         else:
