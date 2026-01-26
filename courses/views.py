@@ -7478,6 +7478,9 @@ def course_team(request, course_id):
         return redirect("/login/?next=%s" % request.path)
 
     course = get_object_or_404(Course, id=course_id)
+    if course.instructor is None:
+        messages.error(request, "This course has no instructor assigned.")
+        return redirect('courses:studio', id=str(course.id))
 
     if request.user != course.instructor.user:
         messages.error(request, "You are not authorized to add team members to this course, instructor only.")

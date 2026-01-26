@@ -237,15 +237,12 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = [
-            'username','first_name', 'last_name', 'email', 'phone', 'gender', 'birth',
+            'first_name', 'last_name', 'email', 'phone', 'gender', 'birth',
             'country', 'photo', 'address', 'hobby', 'education', 'university',
             'tiktok', 'youtube', 'facebook', 'instagram', 'linkedin', 'interests', 'twitter'
         ]
         widgets = {
-            'username': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
-                'required': True
-            }),
+            
             'first_name': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition',
                 'required': True
@@ -321,7 +318,7 @@ class UserProfileForm(forms.ModelForm):
             }),
         }
         labels = {
-            'username': 'Username',
+            
             'first_name': 'First Name',
             'last_name': 'Last Name',
             'email': 'Email',
@@ -353,14 +350,7 @@ class UserProfileForm(forms.ModelForm):
             raise forms.ValidationError("Email ini sudah digunakan.")
         return email
     
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
-        if not username:
-            return username
-
-        if CustomUser.objects.filter(username__iexact=username).exclude(pk=self.instance.pk).exists():
-            raise forms.ValidationError("Username ini sudah digunakan.")
-        return username
+    
 
 
     def clean_phone(self):
