@@ -21,7 +21,7 @@ class SectionReportAdmin(admin.ModelAdmin):
 
     list_filter = (
         'status',
-        'section',
+        
         'created_at',
     )
 
