@@ -90,7 +90,7 @@ from .utils import user_has_passed_course, check_for_blacklisted_keywords, is_su
 from .models import (
     LTIExternalTool1, LastAccessCourse, UserActivityLog, MicroClaim, CourseViewIP,
     CourseViewLog, UserMicroCredential, MicroCredentialComment, MicroCredentialReview,
-    UserMicroProgress, SearchHistory, Certificate,  Course, CourseRating,
+    UserMicroProgress, SearchHistory, Certificate,  Course, CourseRating,SectionReport,
     Like, SosPost, Hashtag, UserProfile, MicroCredentialEnrollment, MicroCredential,
     AskOra, PeerReview, AssessmentScore, Submission, CourseStatus, AssessmentSession,
     CourseComment, Comment, Choice, Score, CoursePrice, AssessmentRead, QuestionAnswer,
@@ -118,6 +118,69 @@ from datetime import datetime
 from django.forms import modelformset_factory
 
 from django.utils import timezone
+
+@login_required
+def section_reports_dashboard(request, course_id):
+    user = request.user
+    course = get_object_or_404(Course, id=course_id)
+
+    team_member = None
+
+    if user.is_superuser or user.is_curation:
+        pass
+    elif user.is_partner:
+        if not course.org_partner or course.org_partner.user_id != user.id:
+            return redirect('/courses')
+    elif user.is_instructor:
+        if not course.instructor or course.instructor.user_id != user.id:
+            return redirect('/courses')
+    else:
+        team_member = CourseTeam.objects.filter(course=course, user=user).first()
+        if not team_member:
+            return redirect('/courses')
+
+    # 🔥 Ambil semua section di course
+    sections = course.sections.all()  # asumsi Course punya related_name='sections'
+
+    # 🔥 Ambil semua report untuk sections ini
+    reports = SectionReport.objects.filter(
+        section__in=sections
+    ).select_related(
+        'user', 'material', 'assessment',
+        'assessment__section',
+        'assessment__section__courses'  # gunakan 'courses' bukan 'course'
+    ).order_by('-created_at')
+
+
+    # 🔥 Buat dict untuk cek apakah section punya report
+    section_has_report = {sec.id: False for sec in sections}
+    for rep in reports:
+        section_has_report[rep.section_id] = True
+
+    return render(request, 'courses/section_reports_dashboard.html', {
+        'sections': sections,
+        'reports': reports,
+        'course': course,
+        'user_role': team_member.role if team_member else None,
+        'section_has_report': section_has_report  # dikirim ke template
+    })
+
+
+@login_required
+def resolve_report(request, report_id):
+    report = get_object_or_404(SectionReport, id=report_id)
+    if request.method == "POST":
+        report.status = SectionReport.STATUS_RESOLVED
+        report.save()
+    return redirect(request.META.get('HTTP_REFERER', '/'))
+
+@login_required
+def review_report(request, report_id):
+    report = get_object_or_404(SectionReport, id=report_id)
+    if request.method == "POST":
+        report.status = SectionReport.STATUS_REVIEWED
+        report.save()
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
 def edit_instructor_profile(request):
     # cek apakah user adalah instructor

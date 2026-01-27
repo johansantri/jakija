@@ -24,6 +24,8 @@ urlpatterns = [
     path('instructor-profile/<slug:username>/', views.instructor_profile, name='instructor_profile'),
     path('instructor/edit/', views.edit_instructor_profile, name='edit_instructor_profile'),
     path("studio/<str:id>", views.studio, name= "studio"),
+    path('report/<int:report_id>/resolve/', views.resolve_report, name='resolve_report'),
+    path('report/<int:report_id>/review/', views.review_report, name='review_report'),
     path('reorder-section/', views.reorder_section, name='reorder_section'),
     path("partner-all/", views.partnerView, name= "partner_view"),
     path('partner/<int:partner_id>/', views.partner_detail, name='partner_detail'),
@@ -155,6 +157,11 @@ urlpatterns = [
     path('sosial/search/', views.search_posts, name='search_posts'),  # Rute baru
    #menuju home category
     path('category/<slug:slug>/', views.category_course_list, name='category_list'),
+    path(
+        'course/<int:course_id>/reports/',
+        views.section_reports_dashboard,
+        name='section_reports_dashboard'
+    )
 
  
     

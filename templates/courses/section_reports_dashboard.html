@@ -1,0 +1,91 @@
+{% extends 'home/tes.html' %}
+
+{% block content %}
+{% include "courses/course_set.html" %}
+<section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
+
+    <h2 class="text-xl font-semibold mb-4">Reports for Section: {{ section.name }}</h2>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">User</th>
+                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Material</th>
+                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Assessment</th>
+                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Status</th>
+                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Created At</th>
+                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for r in reports %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2 text-sm text-gray-800">{{ r.user.username }}</td>
+                    <td class="px-4 py-2 text-sm text-gray-800">
+                        {% if r.material %}
+                            {{ r.material.title }}
+                        {% else %}
+                            <span class="text-gray-400">-</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-4 py-2 text-sm text-gray-800">
+                    {% if r.assessment and r.assessment.section and r.assessment.section.courses %}
+                        <a href="{% url 'courses:view-question' r.assessment.section.courses.id r.assessment.section.id r.assessment.id %}" class="text-blue-600 hover:underline" title="View Assessment">
+                            {{ r.assessment.name }}
+                        </a>
+                    {% else %}
+                        <span class="text-gray-400">-</span>
+                    {% endif %}
+
+
+
+
+                    </td>
+                    <td class="px-4 py-2 text-sm">
+                        {% if r.status == 'pending' %}
+                            <span class="inline-flex px-2 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
+                                Pending
+                            </span>
+                        {% elif r.status == 'reviewed' %}
+                            <span class="inline-flex px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                                Reviewed
+                            </span>
+                        {% elif r.status == 'resolved' %}
+                            <span class="inline-flex px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                                Resolved
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td class="px-4 py-2 text-sm text-gray-500">{{ r.created_at|date:"Y-m-d H:i" }}</td>
+                    <td class="px-4 py-2 text-sm flex space-x-2">
+                        {% if r.status != 'resolved' %}
+                        <form method="post" action="{% url 'courses:resolve_report' r.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700 transition">
+                                Mark Resolved
+                            </button>
+                        </form>
+                        {% endif %}
+
+                        <form method="post" action="{% url 'courses:review_report' r.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition">
+                                Mark Reviewed
+                            </button>
+                        </form>
+
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="px-4 py-4 text-center text-gray-500">No reports yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+{% endblock %}
