@@ -7,6 +7,12 @@ from django.core.files.base import ContentFile
 from django.template.loader import render_to_string
 from weasyprint import HTML
 from django.db.models.signals import pre_save
+from .utils import update_course_checklist_db
+from django.dispatch import receiver
+
+@receiver(post_save, sender=Course)
+def auto_update_course_checklist(sender, instance, **kwargs):
+    update_course_checklist_db(instance)
 
 @receiver(pre_save, sender=Course)
 def issue_instructor_certificate_when_archived(sender, instance, **kwargs):

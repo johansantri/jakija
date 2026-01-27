@@ -369,7 +369,7 @@ class Course(models.Model):
         blank=True,
         related_name='courses_with_payment_model'
     )
-
+    readiness_percentage = models.IntegerField(default=0)  # otomatis di-update
     
 
     view_count = models.PositiveIntegerField(default=0)  # total view
@@ -630,7 +630,13 @@ class Course(models.Model):
     def has_been_rated_by(self, user):
         return self.ratings.filter(user=user).exists()
 
+class CourseChecklistItem(models.Model):
+    course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='checklist_items')
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.course.course_name} - {self.message}"
 
 class CourseTeam(models.Model):
     ROLE_CHOICES = [
@@ -1054,6 +1060,8 @@ class Assessment(models.Model):
         
         super().save(*args, **kwargs)
 
+
+#report from learner about section, material, assessment
 class SectionReport(models.Model):
 
     STATUS_PENDING = 'pending'

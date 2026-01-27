@@ -25,6 +25,7 @@ from django.urls import reverse
 import os
 import uuid  # ✅ Tambahkan ini
 import logging
+from .utils import generate_course_checklist
 from io import BytesIO
 from django.conf import settings
 import qrcode
@@ -435,88 +436,125 @@ def superuser_publish_course(request, course_id):
 
 @login_required
 def studios(request, id):
-       # Ambil kursus berdasarkan id
-    course = get_object_or_404(Course.objects.select_related('status_course', 'org_partner', 'instructor', 'author', 'author__university'), id=id)
+    # ===============================
+    # Ambil course
+    # ===============================
+    course = get_object_or_404(
+        Course.objects.select_related(
+            'status_course', 'org_partner', 'instructor', 'author', 'author__university'
+        ),
+        id=id
+    )
 
-    # Ambil riwayat status kursus
+    # Riwayat status
     status_history = course.status_history.all()
 
-    # Ambil materi dan assessment terkait kursus
+    # Konten course
     sections = Section.objects.filter(courses=course).prefetch_related('materials', 'assessments')
     materials = Material.objects.filter(section__courses=course)
     assessments = Assessment.objects.filter(section__courses=course)
 
-    # Tentukan peran pengguna
+    # Role user
     user = request.user
     is_instructor = user.is_instructor and course.instructor and course.instructor.user == user
     is_partner = user.is_partner and course.org_partner.user == user
     is_superuser = user.is_superuser
 
-    # Logika untuk proses kurasi
+    # ===============================
+    # AUTO CHECKLIST (REAL-TIME)
+    # ===============================
+    checklist_data = generate_course_checklist(course)
+    checklist = checklist_data["checklist"]
+    readiness = checklist_data["readiness_percentage"]
+
+    is_course_ready = len(checklist) == 0
+
+    # ===============================
+    # POST ACTION
+    # ===============================
     if request.method == "POST":
-        action = request.POST.get('action')
-        message = request.POST.get('message')
+        action = request.POST.get("action")
+        message = request.POST.get("message")
 
-        # Instructor: Mengajukan kurasi (draft -> curation)
-        if action == 'submit_curation' and is_instructor:
-            if course.status_course.status != 'draft':
-                messages.error(request, "Course can only be submitted for curation from 'Draft' status.")
-            elif not materials.exists() or not assessments.exists():
-                messages.error(request, "Course must have materials and assessments before submitting for curation.")
+        # ========== Instructor submit ==========
+        if action == "submit_curation" and is_instructor:
+            if course.status_course.status != "draft":
+                messages.error(request, "Course hanya bisa diajukan dari status Draft.")
+            elif not is_course_ready:
+                messages.error(
+                    request,
+                    "Course belum siap dikurasi. Lengkapi checklist terlebih dahulu."
+                )
             elif not message:
-                messages.error(request, "Please provide a message for your submission.")
+                messages.error(request, "Pesan wajib diisi.")
             else:
-                course.change_status('curation', user, message=message)
-                messages.success(request, "Course has been submitted for curation.")
-            return redirect('courses:studio', id=course.id)
+                course.change_status("curation", user, message=message)
+                messages.success(request, "Course berhasil diajukan ke kurasi.")
+            return redirect("courses:studio", id=course.id)
 
-        # Partner: Meninjau kurasi (accept -> curation, reject -> draft)
-        elif action in ['partner_accept', 'partner_reject'] and is_partner:
-            if course.status_course.status != 'curation':
-                messages.error(request, "Course can only be reviewed in 'Curation' status.")
+        # ========== Partner review ==========
+        elif action in ["partner_accept", "partner_reject"] and is_partner:
+            if course.status_course.status != "curation":
+                messages.error(request, "Course hanya bisa direview saat status Curation.")
             elif not message:
-                messages.error(request, "Please provide a message for your review.")
+                messages.error(request, "Pesan wajib diisi.")
             else:
-                if action == 'partner_accept':
-                    course.change_status('curation', user, message=message)
-                    messages.success(request, "Course has been accepted and submitted for Superuser review.")
-                elif action == 'partner_reject':
-                    course.change_status('draft', user, message=message)
-                    messages.success(request, "Course has been rejected and returned to Instructor for revisions.")
-            return redirect('courses:studio', id=course.id)
+                if action == "partner_accept":
+                    course.change_status("curation", user, message=message)
+                    messages.success(request, "Course diteruskan ke Superuser.")
+                else:
+                    course.change_status("draft", user, message=message)
+                    messages.success(request, "Course dikembalikan ke Instructor.")
+            return redirect("courses:studio", id=course.id)
 
-        # Superuser: Mempublikasikan atau menolak (publish -> published, reject -> curation)
-        elif action in ['superuser_publish', 'superuser_reject'] and is_superuser:
-            if course.status_course.status != 'curation':
-                messages.error(request, "Course can only be published from 'Curation' status.")
-            elif action == 'superuser_reject' and not message:
-                messages.error(request, "Please provide a message for your rejection.")
+        # ========== Superuser ==========
+        elif action in ["superuser_publish", "superuser_reject"] and is_superuser:
+            if course.status_course.status != "curation":
+                messages.error(request, "Course hanya bisa dipublish dari Curation.")
+            elif action == "superuser_publish" and not is_course_ready:
+                messages.error(
+                    request,
+                    "Course belum memenuhi checklist, tidak bisa dipublish."
+                )
+            elif action == "superuser_reject" and not message:
+                messages.error(request, "Pesan wajib diisi.")
             else:
-                if action == 'superuser_publish':
-                    course.change_status('published', user, message=message or "Published by Superuser.")
-                    messages.success(request, "Course has been published to the catalog.")
-                elif action == 'superuser_reject':
-                    course.change_status('curation', user, message=message)
-                    messages.success(request, "Course has been rejected and returned to Partner for revisions.")
-            return redirect('courses:studio', id=course.id)
+                if action == "superuser_publish":
+                    course.change_status(
+                        "published", user, message=message or "Published by Superuser."
+                    )
+                    messages.success(request, "Course berhasil dipublish.")
+                else:
+                    course.change_status("curation", user, message=message)
+                    messages.success(request, "Course dikembalikan ke Partner.")
+            return redirect("courses:studio", id=course.id)
 
-    # Siapkan konteks untuk template
+    # ===============================
+    # CONTEXT
+    # ===============================
     context = {
-        'course': course,
-        'status_history': status_history,
-        'materials': materials,
-        'assessments': assessments,
-        'is_instructor': is_instructor,
-        'is_partner': is_partner,
-        'is_superuser': is_superuser,
-        # Informasi author untuk laporan
-        'author_full_name': course.author.username,
-        'author_email': course.author.email,
-        'author_university': course.author.university.name if course.author.university else 'N/A',
-        'author_gender': course.author.gender or 'N/A',
+        "course": course,
+        "status_history": status_history,
+        "sections": sections,
+        "materials": materials,
+        "assessments": assessments,
+        "is_instructor": is_instructor,
+        "is_partner": is_partner,
+        "is_superuser": is_superuser,
+
+        # Author info
+        "author_full_name": course.author.username,
+        "author_email": course.author.email,
+        "author_university": course.author.university.name if course.author.university else "N/A",
+        "author_gender": course.author.gender or "N/A",
+
+        # Checklist
+        "checklist": checklist,
+        "readiness": readiness,
+        "is_course_ready": is_course_ready,
     }
 
-    return render(request, 'instructor/studio.html', context)
+    return render(request, "instructor/studio.html", context)
 
 def export_learning_report_csv(report_data):
     response = HttpResponse(content_type='text/csv')
