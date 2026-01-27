@@ -840,6 +840,7 @@ class Section(models.Model):
         return ' -> '.join(full_path[::-1])  
 
 
+
 class Material(models.Model):
 
     section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name='materials')
@@ -1052,6 +1053,63 @@ class Assessment(models.Model):
         #     raise ValueError("Total bobot untuk penilaian dalam section ini tidak boleh melebihi 100")
         
         super().save(*args, **kwargs)
+
+class SectionReport(models.Model):
+
+    STATUS_PENDING = 'pending'
+    STATUS_REVIEWED = 'reviewed'
+    STATUS_RESOLVED = 'resolved'
+
+    STATUS_CHOICES = (
+        (STATUS_PENDING, 'Pending'),
+        (STATUS_REVIEWED, 'Reviewed'),
+        (STATUS_RESOLVED, 'Resolved'),
+    )
+
+    section = models.ForeignKey(
+        Section,
+        on_delete=models.CASCADE,
+        related_name='reports',
+        db_index=True
+    )
+
+    material = models.ForeignKey(
+        Material,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        db_index=True
+    )
+
+    assessment = models.ForeignKey(
+        Assessment,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        db_index=True
+    )
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        db_index=True
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,   # ✅ FIX DI SINI
+        default=STATUS_PENDING,
+        db_index=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        db_index=True
+    )
+
+    def __str__(self):
+        return f"{self.section} - {self.status}"
+
 
 class AssessmentSession(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

@@ -48,7 +48,9 @@ from courses.models import (
     AskOra, Choice, Comment, Course, CourseProgress, CourseStatusHistory,
     Enrollment, GradeRange, Instructor, LTIExternalTool1, Material,
     MaterialRead, Payment, PeerReview, Question, QuestionAnswer,LTIResult,
-    Score, Section, Submission, UserActivityLog,Certificate, CommentReaction, AttemptedQuestion,LastAccessCourse,CourseSessionLog,QuizResult,Video,Quiz
+    Score, Section, Submission, UserActivityLog,Certificate, CommentReaction, 
+    AttemptedQuestion,LastAccessCourse,CourseSessionLog,QuizResult,Video,Quiz,
+    SectionReport
 )
 from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
@@ -69,6 +71,53 @@ logger = logging.getLogger(__name__)
 
 
 
+
+@login_required
+def submit_report(request, username, course_id, section_id):
+    if request.user.username != username:
+        return HttpResponse(status=403)
+
+    user = request.user
+    section = get_object_or_404(Section, id=section_id)
+
+    material_id = request.GET.get('material_id')
+    assessment_id = request.GET.get('assessment_id')
+
+    material = Material.objects.filter(id=material_id).first() if material_id else None
+    assessment = Assessment.objects.filter(id=assessment_id).first() if assessment_id else None
+
+    if request.method == 'POST':
+        # ✅ Cek apakah user sudah pernah report
+        exists = SectionReport.objects.filter(
+            section=section,
+            material=material,
+            assessment=assessment,
+            user=user
+        ).exists()
+
+        if exists:
+            # Jika sudah ada, kembalikan pesan HTMX
+            if request.headers.get('HX-Request') == 'true':
+                return HttpResponse('<span class="text-warning">You have already reported this!</span>')
+            else:
+                messages.warning(request, "You have already reported this!")
+                return redirect('learner:my_course', username=username, id=course_id, slug=section.courses.slug)
+
+        # Jika belum ada, buat report baru
+        SectionReport.objects.create(
+            section=section,
+            material=material,
+            assessment=assessment,
+            user=user,
+            status=SectionReport.STATUS_PENDING
+        )
+        if request.headers.get('HX-Request') == 'true':
+            return HttpResponse('<span class="text-success">Report submitted successfully!</span>')
+        else:
+            messages.success(request, "Report submitted successfully!")
+            return redirect('learner:my_course', username=username, id=course_id, slug=section.courses.slug)
+
+    return HttpResponseBadRequest("Invalid request")
 
 
 

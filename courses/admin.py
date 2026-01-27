@@ -1,12 +1,47 @@
 from django.contrib import admin
 from . import models 
-from .models import  Option,Video,Quiz, QuizResult,CourseTeam,UserActivityLog,CourseSessionLog,InstructorCertificate,LTIResult,LastAccessCourse,LTIExternalTool1,MicroClaim,UserMicroProgress,MicroCredentialComment,Certificate,Submission,CourseRating,UserProfile,Hashtag,SosPost,AskOra,BlacklistedKeyword, PeerReview,MicroCredential, AssessmentScore,Partner,Comment,CourseComment,AssessmentRead,Choice,AssessmentSession,QuestionAnswer,CourseStatusHistory,CourseStatus,CourseProgress,MaterialRead,CalculateAdminPrice,Universiti,GradeRange,Enrollment,PricingType,CoursePrice, Instructor, Category, Course, TeamMember, Section, Material,Question, Choice, Score, AttemptedQuestion,Assessment
+from .models import  SectionReport,Option,Video,Quiz, QuizResult,CourseTeam,UserActivityLog,CourseSessionLog,InstructorCertificate,LTIResult,LastAccessCourse,LTIExternalTool1,MicroClaim,UserMicroProgress,MicroCredentialComment,Certificate,Submission,CourseRating,UserProfile,Hashtag,SosPost,AskOra,BlacklistedKeyword, PeerReview,MicroCredential, AssessmentScore,Partner,Comment,CourseComment,AssessmentRead,Choice,AssessmentSession,QuestionAnswer,CourseStatusHistory,CourseStatus,CourseProgress,MaterialRead,CalculateAdminPrice,Universiti,GradeRange,Enrollment,PricingType,CoursePrice, Instructor, Category, Course, TeamMember, Section, Material,Question, Choice, Score, AttemptedQuestion,Assessment
 from import_export.admin import ImportExportModelAdmin
 from django.utils.html import format_html
 from django.utils.text import slugify
 
 from django.utils import timezone
 
+@admin.register(SectionReport)
+class SectionReportAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'section',
+        'material',
+        'assessment',
+        'user',
+        'status',
+        'created_at',
+    )
+
+    list_filter = (
+        'status',
+        'section',
+        'created_at',
+    )
+
+    search_fields = (
+        'section__title',
+        'material__title',
+        'assessment__name',
+        'user__username',
+        'message',
+    )
+
+    readonly_fields = (
+        'user',
+        'section',
+        'material',
+        'assessment',
+        'created_at',
+    )
+
+    ordering = ('-created_at',)
 
 class OptionInline(admin.TabularInline):
     model = Option

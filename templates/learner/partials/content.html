@@ -66,6 +66,24 @@
                         {{ section }} &raquo;
                         
                     </li>
+                    <div class="material-report-wrapper">
+                        <a 
+                            href="#"
+                            class="btn btn-sm btn-warning"
+                            hx-post="{% url 'learner:submit_report' username=username course_id=course.id section_id=material.section.id %}?material_id={{ material.id }}"
+                            hx-trigger="click"
+                            hx-target="#report-message-{{ material.id }}"
+                            hx-swap="innerHTML"
+                            title="Report this material">
+                            🚩
+                        </a>
+
+                        <span id="report-message-{{ material.id }}"></span>
+                    </div>
+
+
+                    
+
 
                     
                 </ol>
@@ -298,6 +316,21 @@
                                             {{ section }} &raquo;
                                            
                                         </li>
+                                        <div class="assessment-report-wrapper">
+                                            <a 
+                                                href="#"
+                                                class="btn btn-sm btn-warning"
+                                                hx-post="{% url 'learner:submit_report' username=username course_id=course.id section_id=assessment.section.id %}?assessment_id={{ assessment.id }}"
+                                                hx-trigger="click"
+                                                hx-target="#report-message-assessment-{{ assessment.id }}"
+                                                hx-swap="innerHTML"
+                                                title="Report this assessment">
+                                                🚩
+                                            </a>
+
+                                            <span id="report-message-assessment-{{ assessment.id }}"></span>
+                                        </div>
+
 
                                         
                                     </ol>
@@ -540,7 +573,22 @@
                                         
                                     </li>
 
-                                    
+                                    <div class="assessment-report-wrapper">
+                                        <a 
+                                            href="#"
+                                            class="btn btn-sm btn-warning"
+                                            hx-post="{% url 'learner:submit_report' username=username course_id=course.id section_id=assessment.section.id %}?assessment_id={{ assessment.id }}"
+                                            hx-trigger="click"
+                                            hx-target="#report-message-assessment-{{ assessment.id }}"
+                                            hx-swap="innerHTML"
+                                            title="Report this assessment">
+                                            🚩
+                                        </a>
+
+                                        <span id="report-message-assessment-{{ assessment.id }}"></span>
+                                    </div>
+
+
                                 </ol>
                             </nav>
 
@@ -818,6 +866,21 @@
                                             {{ section }} &raquo;
                                            
                                         </li>
+                                        <div class="assessment-report-wrapper">
+                                            <a 
+                                                href="#"
+                                                class="btn btn-sm btn-warning"
+                                                hx-post="{% url 'learner:submit_report' username=username course_id=course.id section_id=assessment.section.id %}?assessment_id={{ assessment.id }}"
+                                                hx-trigger="click"
+                                                hx-target="#report-message-assessment-{{ assessment.id }}"
+                                                hx-swap="innerHTML"
+                                                title="Report this assessment">
+                                                🚩
+                                            </a>
+
+                                            <span id="report-message-assessment-{{ assessment.id }}"></span>
+                                        </div>
+
 
                                         
                                     </ol>
@@ -987,6 +1050,21 @@
                                         {{ section }} &raquo;
                                     
                                     </li>
+                                    <div class="assessment-report-wrapper">
+                                        <a 
+                                            href="#"
+                                            class="btn btn-sm btn-warning"
+                                            hx-post="{% url 'learner:submit_report' username=username course_id=course.id section_id=assessment.section.id %}?assessment_id={{ assessment.id }}"
+                                            hx-trigger="click"
+                                            hx-target="#report-message-assessment-{{ assessment.id }}"
+                                            hx-swap="innerHTML"
+                                            title="Report this assessment">
+                                            🚩
+                                        </a>
+
+                                        <span id="report-message-assessment-{{ assessment.id }}"></span>
+                                    </div>
+
 
                                     
                                 </ol>
