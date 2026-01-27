@@ -91,36 +91,55 @@
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ course.instructor_email }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ course.org_partner_name }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <span class="
-                    {% if course.status_course.status == 'published' %}
-                        text-green-600
-                    {% elif course.status_course.status == 'draft' %}
-                        text-yellow-600
-                    {% elif course.status_course.status == 'archived' %}
-                        text-red-600
-                    {% elif course.status_course.status == 'curation' %}
-                        text-blue-600
-                    {% else %}
-                        text-blue-600
-                    {% endif %}
-                ">
-                    {% if request.user.is_instructor and course.instructor.user == request.user and course.status_course.status not in 'published archived' %}
-                        <a href="{% url 'instructor:instructor_submit_curation' course_id=course.id %}" class="hover:underline" title="Submit for Curation">
+                <div class="flex items-center justify-between space-x-2">
+                    <!-- Status course -->
+                    <span class="
+                        {% if course.status_course.status == 'published' %}
+                            text-green-600
+                        {% elif course.status_course.status == 'draft' %}
+                            text-yellow-600
+                        {% elif course.status_course.status == 'archived' %}
+                            text-red-600
+                        {% elif course.status_course.status == 'curation' %}
+                            text-blue-600
+                        {% else %}
+                            text-gray-600
+                        {% endif %}
+                    ">
+                        {% if request.user.is_instructor and course.instructor.user == request.user and course.status_course.status not in 'published archived' %}
+                            <a href="{% url 'instructor:instructor_submit_curation' course_id=course.id %}" class="hover:underline" title="Submit for Curation">
+                                {{ course.status_course.get_status_display }}
+                            </a>
+                        {% elif request.user.is_partner and course.org_partner.user == request.user %}
+                            <a href="{% url 'instructor:partner_review_curation' course_id=course.id %}" class="hover:underline" title="Review Curation">
+                                {{ course.status_course.get_status_display }}
+                            </a>
+                        {% elif request.user.is_superuser or request.user.is_curation %}
+                            <a href="{% url 'instructor:superuser_publish_course' course_id=course.id %}" class="hover:underline" title="Publish Course">
+                                {{ course.status_course.get_status_display }}
+                            </a>
+                        {% else %}
                             {{ course.status_course.get_status_display }}
-                        </a>
-                    {% elif request.user.is_partner and course.org_partner.user == request.user %}
-                        <a href="{% url 'instructor:partner_review_curation' course_id=course.id %}" class="hover:underline" title="Review Curation">
-                            {{ course.status_course.get_status_display }}
-                        </a>
-                    {% elif request.user.is_superuser or request.user.is_curation %}
-                        <a href="{% url 'instructor:superuser_publish_course' course_id=course.id %}" class="hover:underline" title="Publish Course">
-                            {{ course.status_course.get_status_display }}
-                        </a>
-                    {% else %}
-                        {{ course.status_course.get_status_display }}
-                    {% endif %}
-                </span>
+                        {% endif %}
+                    </span>
+
+                    <!-- Readiness % -->
+                    {% with readiness=checklist_dict|dict_get:course.id %}
+                        {% if readiness %}
+                            <span class="text-gray-700 font-medium">{{ readiness.readiness_percentage }}%</span>
+                        {% else %}
+                            <span class="text-gray-500 text-sm">N/A</span>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+
+                <!-- Ready for curation message (optional, bisa di bawah baris ini) -->
+                {% if readiness and readiness.checklist|length == 0 %}
+                    <p class="text-green-600 font-medium mt-1">✅ Course is ready for curation!</p>
+                {% endif %}
             </td>
+
+
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ course.course_run }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 {% if course.status_course.status == 'archived' %}

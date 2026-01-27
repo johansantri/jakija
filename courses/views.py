@@ -48,6 +48,7 @@ from django.db.models import (
     Q, F, Sum, Count, Avg,
     OuterRef, Subquery, IntegerField, Prefetch,When, Case,Prefetch, DecimalField, IntegerField,Value
 )
+from instructor.utils import generate_course_checklist
 from django.core.mail import EmailMessage
 from celery import shared_task
 from django.db.models.functions import Coalesce, Cast
@@ -6664,6 +6665,10 @@ def courseView(request):
         enrolment_count=Count('enrollments')  # Adjust based on your model
     )
 
+
+    
+
+
     # Paginate the courses
     paginator = Paginator(courses, 10)  # 10 courses per page
     page_number = request.GET.get('page', 1)
@@ -6673,7 +6678,10 @@ def courseView(request):
         page_obj = paginator.page(1)
     except EmptyPage:
         page_obj = paginator.page(paginator.num_pages)
-
+    checklist_dict = {}
+    for course in page_obj:
+        checklist_data = generate_course_checklist(course)
+        checklist_dict[course.id] = checklist_data
     # Fetch CourseStatus for counts
     try:
         draft_status = CourseStatus.objects.get(status='draft')
@@ -6704,7 +6712,8 @@ def courseView(request):
         'draft_count': draft_count,
         'published_count': published_count,
         'archive_count': archive_count,
-        'curation_count': curation_count
+        'curation_count': curation_count,
+        'checklist_dict': checklist_dict
     })
 
 
