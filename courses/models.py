@@ -1660,7 +1660,7 @@ class Quiz(models.Model):
         ('MC', 'Multiple Choice'),
         ('TF', 'True/False'),
         ('FB', 'Fill in Blank'),
-        ('ES', 'Essay'),
+        
         ('DD', 'Drag & Drop')
     ]
 

@@ -3030,7 +3030,7 @@ def add_ivq(request, idcourse, idsection, idassessment):
 #edit ivq
 def edit_ivq(request, idcourse, idsection, idassessment, idvideo):
     if not request.user.is_authenticated:
-        return redirect("/login/?next=%s" % request.path)
+        return redirect(f"/login/?next={request.path}")
 
     user = request.user
     course = None
@@ -3066,10 +3066,18 @@ def edit_ivq(request, idcourse, idsection, idassessment, idvideo):
             messages.error(request, "Title cannot be empty.")
             return redirect(request.path)
 
+        # Update title
         video.title = video_title
 
-        # Kalau user upload file baru → replace
+        # Kalau user upload file baru → hapus file lama dan ganti
         if video_file:
+            # Hapus file lama jika ada
+            if video.file and os.path.isfile(video.file.path):
+                try:
+                    os.remove(video.file.path)
+                except Exception as e:
+                    messages.warning(request, f"Failed to delete old file: {e}")
+
             video.file = video_file
 
         video.save()
@@ -3090,6 +3098,7 @@ def edit_ivq(request, idcourse, idsection, idassessment, idvideo):
         "assessment": assessment,
         "video": video,
     })
+
 
 #delete ivq
 @require_POST
