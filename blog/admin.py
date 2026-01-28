@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Tag, BlogPost, BlogComment
+from .models import Tag, BlogPost, BlogComment,BlogPostRead
 from django.utils.html import format_html
 from django.urls import reverse
 from courses.models import Course
-
+from django.db.models import Avg
 
 
 
@@ -20,17 +20,43 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'category', 'status', 'views', 'date_posted', 'comment_count', 'related_courses_list')
+    list_display = (
+        'title',
+        'author',
+        'category',
+        'status',
+        'views',
+        'total_reads',
+        'completed_reads',
+        'avg_read_time',
+        'date_posted',
+        'comment_count',
+        'related_courses_list',
+    )
     list_filter = ('status', 'category', 'tags', 'date_posted')
     search_fields = ('title', 'content', 'author__username')
     prepopulated_fields = {'slug': ('title',)}
     filter_horizontal = ('tags', 'related_courses')
     date_hierarchy = 'date_posted'
     actions = ['mark_as_published', 'mark_as_draft']
-    
+
     def comment_count(self, obj):
         return obj.number_of_comments
     comment_count.short_description = 'Comments'
+
+    # 🔹 ANALYTICS
+    def total_reads(self, obj):
+        return obj.reads.count()
+    total_reads.short_description = 'Reads'
+
+    def completed_reads(self, obj):
+        return obj.reads.filter(is_completed=True).count()
+    completed_reads.short_description = 'Completed'
+
+    def avg_read_time(self, obj):
+        avg = obj.reads.aggregate(a=Avg('duration'))['a']
+        return f"{int(avg)}s" if avg else "0s"
+    avg_read_time.short_description = 'Avg Read Time'
 
     def related_courses_list(self, obj):
         courses = obj.related_courses.all()
@@ -69,3 +95,19 @@ class BlogCommentAdmin(admin.ModelAdmin):
     def content_preview(self, obj):
         return obj.content[:50] + ('...' if len(obj.content) > 50 else '')
     content_preview.short_description = 'Content'
+
+
+@admin.register(BlogPostRead)
+class BlogPostReadAdmin(admin.ModelAdmin):
+    list_display = (
+        'blogpost',
+        'user',
+        'session_key',
+        'duration',
+        'is_completed',
+        'read_at',
+    )
+    list_filter = ('is_completed', 'read_at')
+    search_fields = ('blogpost__title', 'session_key', 'user__email')
+
+

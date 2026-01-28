@@ -414,6 +414,47 @@ function showReplyForm(commentId) {
     }
 }
 </script>
+
+<script>
+let startTime = Date.now();
+let hasSent = false;
+
+function sendRead(isCompleted=false) {
+    if (hasSent) return;
+    hasSent = true;
+
+    const duration = Math.floor((Date.now() - startTime) / 1000);
+
+    fetch("{% url 'blog:mark-blog-read' %}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: JSON.stringify({
+            post_id: {{ post_id }},
+            duration: duration,
+            is_completed: isCompleted
+        })
+    });
+}
+
+// 1️⃣ user stay ≥ 60 detik
+setTimeout(() => {
+    sendRead(false);
+}, 60000);
+
+// 2️⃣ user scroll ≥ 80%
+window.addEventListener("scroll", () => {
+    const scrollPercent =
+        (window.scrollY + window.innerHeight) / document.body.scrollHeight;
+
+    if (scrollPercent > 0.8) {
+        sendRead(true);
+    }
+});
+</script>
+
 {% endblock %}
 
 {% block extra_css %}

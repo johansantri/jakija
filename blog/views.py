@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render,get_object_or_404, redirect
-from .models import BlogPost, Tag, BlogComment,Notification
+from .models import BlogPost, Tag, BlogComment,Notification,BlogPostRead
 from .forms import NewCommentForm,BlogPostForm
 from courses.models import Course, Category as CourseCategory
 from django.urls import reverse
@@ -18,8 +18,16 @@ from datetime import timedelta
 from django.db.models import Q
 from django.core.cache import cache
 from django.core.paginator import Paginator
-from django.db.models import Count, Q, F
+from django.db.models import Count, Avg, Q, F
 from django.views import View
+
+import json
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+
+from blog import models
 # View baru untuk CRUD
 class BlogPostCreateView(LoginRequiredMixin, CreateView):
     model = BlogPost
@@ -353,41 +361,76 @@ class BlogDetailView(DetailView):
     def get_queryset(self):
         return BlogPost.objects.filter(status='published')
 
-    def get_object(self, queryset=None):
-        obj = super().get_object(queryset)
-        obj.views += 1
-        obj.save()
-        return obj
+    # ===============================
+    # FIX VIEW LOGIC (ANTI DOUBLE)
+    # ===============================
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
 
+        # pastikan session ada (guest aman)
+        if not request.session.session_key:
+            request.session.create()
+
+        viewed_posts = request.session.get('viewed_posts', [])
+
+        # 1 session = 1 view
+        if self.object.id not in viewed_posts:
+            self.object.views += 1
+            self.object.save(update_fields=['views'])
+
+            viewed_posts.append(self.object.id)
+            request.session['viewed_posts'] = viewed_posts
+
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
+
+    # ===============================
+    # CONTEXT DATA (ASLI PUNYAMU)
+    # ===============================
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
+
         # Fetch related posts (same category, exclude current post)
         related_posts = BlogPost.objects.filter(
-            category=self.object.category, status='published'
-        ).exclude(id=self.object.id).order_by('-date_posted')[:5]
-        
+            category=self.object.category,
+            status='published'
+        ).exclude(
+            id=self.object.id
+        ).order_by('-date_posted')[:5]
+
         # If not enough related posts, try matching by tags
         if len(related_posts) < 3 and self.object.tags.exists():
             tag_related = BlogPost.objects.filter(
-                tags__in=self.object.tags.all(), status='published'
-            ).exclude(id=self.object.id).order_by('-date_posted')[:5 - len(related_posts)]
+                tags__in=self.object.tags.all(),
+                status='published'
+            ).exclude(
+                id=self.object.id
+            ).order_by('-date_posted')[:5 - len(related_posts)]
+
             related_posts = list(related_posts) + list(tag_related)
-        
-        # Remove duplicates using set() and ensure uniqueness
-        context['related_posts'] = list({post.id: post for post in related_posts}.values())[:5]
-        
-        # Paginasi komentar
-        comments = self.object.comments.filter(parent__isnull=True).order_by('-date_posted')
-        paginator = Paginator(comments, 10)  # 10 komentar per halaman
+
+        # Remove duplicates
+        context['related_posts'] = list(
+            {post.id: post for post in related_posts}.values()
+        )[:5]
+
+        # Pagination comments
+        comments = self.object.comments.filter(
+            parent__isnull=True
+        ).order_by('-date_posted')
+
+        paginator = Paginator(comments, 10)
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context['comments'] = page_obj
-        
+
         context['comment_form'] = NewCommentForm()
 
-        # Fetching and processing categories and tags
-        categories = CourseCategory.objects.filter(blogpost__status='published').distinct()
+        # Categories
+        categories = CourseCategory.objects.filter(
+            blogpost__status='published'
+        ).distinct()
+
         context['categories'] = [
             {
                 'category': cat,
@@ -396,69 +439,107 @@ class BlogDetailView(DetailView):
             }
             for cat in categories
         ]
-        
-        tags = Tag.objects.filter(blogpost__status='published').distinct()
+
+        # Tags
+        tags = Tag.objects.filter(
+            blogpost__status='published'
+        ).distinct()
+
         context['tags'] = [
-            {'tag': tag, 'post_count': tag.blogpost_set.filter(status='published').count()}
+            {
+                'tag': tag,
+                'post_count': tag.blogpost_set.filter(status='published').count()
+            }
             for tag in tags
         ]
-        
+
+        # Related courses
         courses = self.object.related_courses.filter(
-            status_course__status='published',  # <- tambahkan filter ini
+            status_course__status='published',
             id__isnull=False,
             slug__isnull=False
-        ).exclude(slug='').order_by('-id')  # agar versi terbaru muncul lebih dulu
+        ).exclude(
+            slug=''
+        ).order_by('-id')
 
-            
-        # Gunakan slug untuk menghindari kursus duplikat (ID yang berbeda, slug yang sama)
         unique_courses = {course.slug: course for course in courses}.values()
         context['related_courses'] = list(unique_courses)
-        
+
+        # kirim post_id (untuk read tracking nanti)
+        context['post_id'] = self.object.id
+
         return context
 
+    # ===============================
+    # POST COMMENT (ASLI PUNYAMU)
+    # ===============================
     def post(self, request, *args, **kwargs):
-        # Ensure the object is fetched
-        self.object = self.get_object()  # Set self.object explicitly
+        self.object = self.get_object()
         form = NewCommentForm(request.POST)
 
         if form.is_valid():
             if not request.user.is_authenticated:
-                # Redirect to login with 'next' parameter to return to this page
-                next_url = reverse('blog:blog-detail', kwargs={'slug': self.object.slug})
-                return redirect(next_url)  # Redirect to login page
-            
-            # Check the time of the user's last comment
-            last_comment = self.object.comments.filter(author=request.user).order_by('-date_posted').first()
+                next_url = reverse(
+                    'blog:blog-detail',
+                    kwargs={'slug': self.object.slug}
+                )
+                return redirect(next_url)
+
+            last_comment = self.object.comments.filter(
+                author=request.user
+            ).order_by('-date_posted').first()
+
             if last_comment and last_comment.date_posted > timezone.now() - timedelta(seconds=60):
-                # If last comment was made less than 60 seconds ago, show error
-                form.add_error(None, "You are posting too quickly. Please wait a few seconds before commenting again.")
+                form.add_error(
+                    None,
+                    "You are posting too quickly. Please wait a few seconds before commenting again."
+                )
                 context = self.get_context_data()
                 context['comment_form'] = form
                 return render(request, self.template_name, context)
 
-            # Save the comment for authenticated users
             comment = form.save(commit=False)
             comment.blogpost_connected = self.object
-            comment.author = request.user  # Set the authenticated user as the author
-            
-            # Validate parent_id safely for threaded comments
+            comment.author = request.user
+
             parent_id = request.POST.get('parent_id')
             if parent_id:
                 try:
-                    parent = get_object_or_404(BlogComment, id=int(parent_id), blogpost_connected=self.object)
+                    parent = get_object_or_404(
+                        BlogComment,
+                        id=int(parent_id),
+                        blogpost_connected=self.object
+                    )
                     comment.parent = parent
                 except (ValueError, BlogComment.DoesNotExist):
-                    # If parent comment doesn't exist or invalid, we skip assigning parent
                     pass
-            
+
             comment.save()
             return redirect('blog:blog-detail', slug=self.object.slug)
-        
-        # If form is invalid, render the template with the form and context
+
         context = self.get_context_data()
         context['comment_form'] = form
         return render(request, self.template_name, context)
 
+
+@require_POST
+def mark_blog_read(request):
+    if not request.session.session_key:
+        request.session.create()
+
+    data = json.loads(request.body)
+
+    BlogPostRead.objects.get_or_create(
+        session_key=request.session.session_key,
+        blogpost_id=data['post_id'],
+        defaults={
+            'user': request.user if request.user.is_authenticated else None,
+            'duration': data.get('duration', 0),
+            'is_completed': data.get('is_completed', False),
+        }
+    )
+
+    return JsonResponse({'status': 'ok'})
 
 class CategoryPostListView(ListView):
     model = BlogPost
@@ -557,3 +638,39 @@ def add_comment(request, post_id, parent_id=None):
         form = NewCommentForm()
 
     return render(request, 'blog/add_comment.html', {'form': form, 'post': post})
+
+
+
+
+@login_required
+def blog_analytics_dashboard(request):
+    user = request.user
+
+    # Cek akses
+    if not user.is_superuser and not BlogPost.objects.filter(author=user).exists():
+        messages.error(request, "You don't have access to the analytics dashboard.")
+        return redirect('blog:blog-list-admin')
+
+    # Ambil queryset sesuai hak akses
+    if user.is_superuser:
+        qs = BlogPost.objects.all()
+    else:
+        qs = BlogPost.objects.filter(author=user)
+
+    # Optimasi annotate: filter dulu, ambil field yang perlu
+    qs = qs.only('id', 'title', 'views').annotate(
+        total_reads=Count('reads'),
+        completed_reads=Count('reads', filter=Q(reads__is_completed=True)),
+        avg_read_time=Avg('reads__duration'),
+        total_comments=Count('comments'),
+    ).order_by('-total_reads')
+
+    # Pagination supaya tidak load semua artikel sekaligus
+    paginator = Paginator(qs, 20)  # 20 artikel per halaman
+    page_number = request.GET.get('page')
+    posts = paginator.get_page(page_number)
+
+    context = {
+        'posts': posts,
+    }
+    return render(request, 'blog/analytics.html', context)

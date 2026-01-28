@@ -1,0 +1,82 @@
+<!-- blog/templates/blog/analytics.html -->
+
+{% extends 'home/tes.html' %}
+{% load humanize %}
+
+{% block content %}
+<section class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
+    <h1 class="text-3xl font-bold mb-6">Dashboard Analytics Blog</h1>
+
+    <p class="mb-4 text-gray-700">
+        Halo, <span class="font-semibold">{{ request.user.get_full_name|default:request.user.username }}</span>!
+    </p>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-4 py-2 border-b text-left">No.</th>
+                    <th class="px-4 py-2 border-b text-left">Title</th>
+                    <th class="px-4 py-2 border-b text-right">Views</th>
+                    <th class="px-4 py-2 border-b text-right">Total Reads</th>
+                    <th class="px-4 py-2 border-b text-right">Completed Reads</th>
+                    <th class="px-4 py-2 border-b text-right">Avg Read Time</th>
+                    <th class="px-4 py-2 border-b text-right">Comments</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for post in posts %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2 border-b">{{ forloop.counter0|add:posts.start_index }}</td>
+                    <td class="px-4 py-2 border-b" title="{{ post.title }}">{{ post.title|truncatechars:50 }}</td>
+                    <td class="px-4 py-2 border-b text-right">{{ post.views|intcomma }}</td>
+                    <td class="px-4 py-2 border-b text-right {% if post.total_reads > 1000 %}text-green-600{% elif post.total_reads < 100 %}text-red-600{% endif %}">
+                        {{ post.total_reads|intcomma }}
+                    </td>
+                    <td class="px-4 py-2 border-b text-right">{{ post.completed_reads|intcomma }}</td>
+                    <td class="px-4 py-2 border-b text-right">
+                        {% if post.avg_read_time %}
+                            {{ post.avg_read_time|floatformat:0 }} detik
+                        {% else %}
+                            0 detik
+                        {% endif %}
+                    </td>
+                    <td class="px-4 py-2 border-b text-right">{{ post.total_comments|intcomma }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td class="px-4 py-2 border-b text-center" colspan="7">
+                        Tidak ada artikel untuk dianalisis.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if posts.has_other_pages %}
+    <div class="mt-4 flex justify-between items-center">
+        <span class="text-gray-600">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+
+        <div class="space-x-2">
+            {% if posts.has_previous %}
+                <a href="?page={{ posts.previous_page_number }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Previous</a>
+            {% endif %}
+            {% for num in posts.paginator.page_range %}
+                {% if num == posts.number %}
+                    <span class="px-3 py-1 bg-blue-500 text-white rounded">{{ num }}</span>
+                {% elif num > posts.number|add:-3 and num < posts.number|add:3 %}
+                    <a href="?page={{ num }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+</section>
+{% endblock %}

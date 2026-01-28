@@ -61,3 +61,25 @@ class Notification(models.Model):
     link = models.CharField(max_length=255, blank=True)
     read = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
+
+
+
+class BlogPostRead(models.Model):
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    session_key = models.CharField(max_length=40, db_index=True)
+    blogpost = models.ForeignKey(
+        BlogPost,
+        on_delete=models.CASCADE,
+        related_name='reads'
+    )
+    read_at = models.DateTimeField(auto_now_add=True)
+    duration = models.PositiveIntegerField(help_text="Seconds spent reading")
+    is_completed = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('session_key', 'blogpost')

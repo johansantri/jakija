@@ -18,7 +18,8 @@ urlpatterns = [
     path('admin/comment/<int:comment_id>/reply/', views.BlogCommentReplyView.as_view(), name='comment-reply'),
 
     # URL hapus komentar
-    path('admin/comment/<int:comment_id>/delete/', views.BlogCommentDeleteView.as_view(), name='comment-delete')
-    
+    path('admin/comment/<int:comment_id>/delete/', views.BlogCommentDeleteView.as_view(), name='comment-delete'),
+    path('mark-read/', views.mark_blog_read, name='mark-blog-read'),
+    path('blog/admin/analytics/', views.blog_analytics_dashboard, name='blog-analytics')
    
 ]
