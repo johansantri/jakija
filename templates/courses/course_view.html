@@ -51,6 +51,7 @@
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Number</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Enroll</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Count</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Instructor</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Partner</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -88,6 +89,7 @@
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                 <a href="{% url 'courses:course_list_enroll' id=course.id %}" class="text-blue-600 hover:text-blue-800" title="View Enrollments">{{ course.enrolment_count }}</a>
             </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ course.view_count }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ course.instructor_email }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ course.org_partner_name }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
