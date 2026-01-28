@@ -3237,13 +3237,7 @@ def edit_ivq_question(request, idcourse, idsection, idassessment, idvideo, idqui
     section = get_object_or_404(Section, id=idsection, courses=course)
     assessment = get_object_or_404(Assessment, id=idassessment, section=section)
     video = get_object_or_404(Video, id=idvideo)
-
-    quiz = get_object_or_404(
-        Quiz,
-        id=idquiz,
-        assessment=assessment,
-        video=video
-    )
+    quiz = get_object_or_404(Quiz, id=idquiz, assessment=assessment, video=video)
 
     if request.method == "POST":
         quiz.question = request.POST.get("question")
@@ -3251,34 +3245,64 @@ def edit_ivq_question(request, idcourse, idsection, idassessment, idvideo, idqui
         quiz.time_in_video = float(request.POST.get("time_in_video"))
         quiz.question_type = request.POST.get("question_type")
         quiz.correct_answer_text = request.POST.get("correct_answer_text")
-
         quiz.save()
 
-        # RESET OPTIONS
-        options = quiz.options.all()
-
+        # ================= MULTIPLE CHOICE =================
         if quiz.question_type == "MC":
-            options = request.POST.getlist("option_text")
+            option_ids = request.POST.getlist("option_id")
+            option_texts = request.POST.getlist("option_text")
             correct_index = request.POST.get("correct_option")
 
-            for idx, opt_text in enumerate(options):
-                Option.objects.create(
-                    quiz=quiz,
-                    text=opt_text,
-                    is_correct=str(idx) == correct_index
-                )
+            kept_ids = []
 
+            for idx, text in enumerate(option_texts):
+                opt_id = option_ids[idx] if idx < len(option_ids) else None
+
+                if opt_id:
+                    option = Option.objects.get(id=opt_id, quiz=quiz)
+                    option.text = text
+                    option.is_correct = (str(idx) == correct_index)
+                    option.save()
+                else:
+                    option = Option.objects.create(
+                        quiz=quiz,
+                        text=text,
+                        is_correct=(str(idx) == correct_index)
+                    )
+
+                kept_ids.append(option.id)
+
+            # hapus option yang dihapus di form
+            quiz.options.exclude(id__in=kept_ids).delete()
+
+        # ================= DRAG & DROP =================
         elif quiz.question_type == "DD":
-            dd_options = [v for k, v in request.POST.items() if k.startswith("dd_option_")]
-            for opt in dd_options:
-                Option.objects.create(
-                    quiz=quiz,
-                    text=opt,
-                    is_correct=(opt == quiz.correct_answer_text)
-                )
+            option_ids = request.POST.getlist("dd_option_id")
+            option_texts = request.POST.getlist("dd_option_text")
+            correct_answer = request.POST.get("correct_answer_text")
+
+            kept_ids = []
+
+            for idx, text in enumerate(option_texts):
+                opt_id = option_ids[idx] if idx < len(option_ids) else None
+
+                if opt_id:
+                    option = Option.objects.get(id=opt_id, quiz=quiz)
+                    option.text = text
+                    option.is_correct = (text == correct_answer)
+                    option.save()
+                else:
+                    option = Option.objects.create(
+                        quiz=quiz,
+                        text=text,
+                        is_correct=(text == correct_answer)
+                    )
+
+                kept_ids.append(option.id)
+
+            quiz.options.exclude(id__in=kept_ids).delete()
 
         messages.success(request, "Question updated successfully.")
-        
         return redirect(
             "courses:create_ivq_question",
             idcourse=idcourse,
@@ -3286,16 +3310,15 @@ def edit_ivq_question(request, idcourse, idsection, idassessment, idvideo, idqui
             idassessment=idassessment,
             idvideo=idvideo,
         )
-    options = quiz.options.all()
+
     return render(request, "courses/edit_ivq_question.html", {
         "course": course,
         "section": section,
         "assessment": assessment,
         "video": video,
         "quiz": quiz,
-        "options": options,
+        "options": quiz.options.all(),
     })
-
 
 #delete ivq question
 @require_POST

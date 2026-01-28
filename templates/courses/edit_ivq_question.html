@@ -64,24 +64,44 @@
   </select>
 
   {# ================= MULTIPLE CHOICE ================= #}
-  {% if quiz.question_type == "MC" %}
+    {% if quiz.question_type == "MC" %}
     <label class="block mt-4">Options</label>
 
     {% for option in options %}
       <div class="flex items-center gap-2 mt-2">
-        <input type="radio"
-               name="correct_option"
-               value="{{ forloop.counter0 }}"
-               {% if option.is_correct %}checked{% endif %}>
+        <!-- OPTION ID -->
+        <input type="hidden" name="option_id" value="{{ option.id }}">
 
+        <!-- RADIO -->
+        <input type="radio"
+              name="correct_option"
+              value="{{ forloop.counter0 }}"
+              {% if option.is_correct %}checked{% endif %}>
+
+        <!-- TEXT -->
         <input type="text"
-               name="option_text"
-               value="{{ option.text }}"
-               class="flex-1 border rounded p-2"
-               required>
+              name="option_text"
+              value="{{ option.text }}"
+              class="flex-1 border rounded p-2"
+              required>
+
+        <!-- DELETE (frontend only) -->
+        <button type="button"
+                onclick="this.parentElement.remove()"
+                class="text-red-500 text-sm">
+          ✕
+        </button>
       </div>
     {% endfor %}
+
+    <!-- ADD OPTION -->
+    <button type="button"
+            onclick="addOption()"
+            class="mt-3 text-blue-600 text-sm">
+      + Add option
+    </button>
   {% endif %}
+
 
   {# ================= TRUE / FALSE ================= #}
   {% if quiz.question_type == "TF" %}
@@ -105,24 +125,41 @@
 
 
   {# ================= DRAG & DROP ================= #}
-  {% if quiz.question_type == "DD" %}
+      {% if quiz.question_type == "DD" %}
     <label class="block mt-4">Drag Options</label>
 
-    {% for option in options %}
-      <input type="text"
-             name="dd_option_{{ forloop.counter }}"
-             value="{{ option.text }}"
-             class="w-full border rounded p-2 mt-2"
-             required>
-    {% endfor %}
+    <div id="dd-options">
+      {% for option in options %}
+        <div class="flex items-center gap-2 mt-2">
+          <input type="hidden" name="dd_option_id" value="{{ option.id }}">
+
+          <input type="text"
+                name="dd_option_text"
+                value="{{ option.text }}"
+                class="flex-1 border rounded p-2"
+                required>
+
+          <button type="button"
+                  onclick="this.parentElement.remove()"
+                  class="text-red-500 text-sm">✕</button>
+        </div>
+      {% endfor %}
+    </div>
+
+    <button type="button"
+            onclick="addDDOption()"
+            class="mt-3 text-blue-600 text-sm">
+      + Add option
+    </button>
 
     <label class="block mt-4">Correct Answer</label>
     <input type="text"
-           name="correct_answer_text"
-           value="{{ quiz.correct_answer_text }}"
-           class="w-full border rounded p-2"
-           required>
-  {% endif %}
+          name="correct_answer_text"
+          value="{{ quiz.correct_answer_text }}"
+          class="w-full border rounded p-2"
+          required>
+    {% endif %}
+
 
   <!-- SUBMIT -->
   <button type="submit"
@@ -132,4 +169,36 @@
 </form>
 
 </section>
+
+<script>
+function addMCOption() {
+    const container = document.getElementById("mc-options")
+    const index = container.children.length
+
+    const div = document.createElement("div")
+    div.className = "flex items-center gap-2 mt-2"
+    div.innerHTML = `
+        <input type="hidden" name="option_id" value="">
+        <input type="radio" name="correct_option" value="${index}">
+        <input type="text" name="option_text" class="flex-1 border rounded p-2" required>
+        <button type="button" onclick="this.parentElement.remove()" class="text-red-500 text-sm">✕</button>
+    `
+    container.appendChild(div)
+}
+
+function addDDOption() {
+    const container = document.getElementById("dd-options")
+
+    const div = document.createElement("div")
+    div.className = "flex items-center gap-2 mt-2"
+    div.innerHTML = `
+        <input type="hidden" name="dd_option_id" value="">
+        <input type="text" name="dd_option_text" class="flex-1 border rounded p-2" required>
+        <button type="button" onclick="this.parentElement.remove()" class="text-red-500 text-sm">✕</button>
+    `
+    container.appendChild(div)
+}
+</script>
+
+
 {% endblock %}
