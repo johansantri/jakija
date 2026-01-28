@@ -42,6 +42,10 @@
   <label class="block mb-2">Question</label>
   <textarea name="question" class="w-full border rounded p-2" required>{{ quiz.question }}</textarea>
 
+  <!-- EXPLANATION -->
+  <label class="block mt-4 mb-2">Explanation <span class="text-gray-400">(optional)</span></label>
+  <textarea name="explanation" class="w-full border rounded p-2" rows="4">{{ quiz.explanation }}</textarea>
+
   <!-- TIME -->
   <label class="block mt-4">Time in Video (seconds)</label>
   <input type="number" step="0.1" name="time_in_video"
@@ -55,7 +59,7 @@
     <option value="MC" {% if quiz.question_type == "MC" %}selected{% endif %}>Multiple Choice</option>
     <option value="TF" {% if quiz.question_type == "TF" %}selected{% endif %}>True / False</option>
     <option value="FB" {% if quiz.question_type == "FB" %}selected{% endif %}>Fill in Blank</option>
-    <option value="ES" {% if quiz.question_type == "ES" %}selected{% endif %}>Essay</option>
+   
     <option value="DD" {% if quiz.question_type == "DD" %}selected{% endif %}>Drag & Drop</option>
   </select>
 
@@ -98,13 +102,7 @@
            required>
   {% endif %}
 
-  {# ================= ESSAY ================= #}
-  {% if quiz.question_type == "ES" %}
-    <label class="block mt-4">Answer Key / Rubric</label>
-    <textarea name="correct_answer_text"
-              class="w-full border rounded p-2"
-              rows="4">{{ quiz.correct_answer_text }}</textarea>
-  {% endif %}
+
 
   {# ================= DRAG & DROP ================= #}
   {% if quiz.question_type == "DD" %}

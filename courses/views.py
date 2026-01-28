@@ -3165,6 +3165,8 @@ def create_ivq_question(request, idcourse, idsection, idassessment, idvideo):
         time_in_video = request.POST.get("time_in_video")
         qtype = request.POST.get("question_type")
         correct_text = request.POST.get("correct_answer_text")
+        explanation = request.POST.get("explanation")
+
 
         # Validasi sederhana
         if not question or not time_in_video or not qtype:
@@ -3179,6 +3181,7 @@ def create_ivq_question(request, idcourse, idsection, idassessment, idvideo):
             question_type=qtype,
             question=question,
             correct_answer_text=correct_text if qtype != "MC" else None,
+            explanation=explanation, 
         )
 
         # 2️⃣ Jika pertanyaan MC → buat options
@@ -3244,6 +3247,7 @@ def edit_ivq_question(request, idcourse, idsection, idassessment, idvideo, idqui
 
     if request.method == "POST":
         quiz.question = request.POST.get("question")
+        quiz.explanation = request.POST.get("explanation")
         quiz.time_in_video = float(request.POST.get("time_in_video"))
         quiz.question_type = request.POST.get("question_type")
         quiz.correct_answer_text = request.POST.get("correct_answer_text")
