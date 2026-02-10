@@ -89444,3 +89444,14 @@ django.core.exceptions.FieldError: Invalid field name(s) given in select_related
 [INFO] 2026-01-28 14:17:24,931 [django.utils.autoreload] /home/x/jakija/courses/views.py changed, reloading.
 [INFO] 2026-01-28 14:17:26,028 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
 [INFO] 2026-01-28 14:17:26,059 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2026-02-10 14:50:05,583 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2026-02-10 14:50:06,444 [axes.apps] AXES: BEGIN version 8.0.0, blocking by username or ip_address
+[INFO] 2026-02-10 14:50:06,476 [django.utils.autoreload] Watching for file changes with StatReloader
+[DEBUG] 2026-02-10 14:50:23,972 [axes.helpers] Using request.META.get('REMOTE_ADDR', None) fallback method to get client IP address
+[DEBUG] 2026-02-10 14:50:23,973 [axes.helpers] Using parameter credentials to get username with key settings.AXES_USERNAME_FORM_FIELD
+[DEBUG] 2026-02-10 14:50:23,973 [axes.handlers.database] AXES: Getting access attempts that are newer than 2026-02-10 06:50:23.972598+00:00
+[INFO] 2026-02-10 14:50:24,572 [axes.handlers.database] AXES: Successful login by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:147.0) Gecko/20100101 Firefox/147.0", path_info: "/login/"}.
+[INFO] 2026-02-10 14:50:24,573 [axes.handlers.database] AXES: Cleaned up 0 expired access attempts from database that were older than 2026-02-10 06:50:23.972598+00:00
+[DEBUG] 2026-02-10 14:50:24,578 [urllib3.connectionpool] Starting new HTTPS connection (1): ipinfo.io:443
+[DEBUG] 2026-02-10 14:50:24,834 [urllib3.connectionpool] https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+[WARNING] 2026-02-10 14:50:25,068 [django.request] Not Found: /favicon.ico
