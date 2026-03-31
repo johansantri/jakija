@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Revision Required</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color:#f4f4f4; padding:20px;">
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="center">
+                <table width="600" style="background:white; padding:30px; border-radius:8px;">
+                    <tr>
+                        <td>
+                            <h2 style="color:#f59e0b;">Revision Required</h2>
+
+                            <p>Dear {{ user.username }},</p>
+
+                            <p>Your partner request requires revision before it can be approved.</p>
+
+                            {% if note %}
+                            <div style="background:#fef3c7; padding:15px; border-radius:5px;">
+                                <strong>Revision Notes:</strong><br>
+                                {{ note }}
+                            </div>
+                            {% endif %}
+
+                            <br>
+
+                            <p>Please log in to your account and update the required information.</p>
+
+                            <p>Thank you,<br>
+                            The Team</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

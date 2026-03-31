@@ -12,15 +12,9 @@
                 <div class="relative overflow-hidden">
                     <img src="{{ course.course_image }}" 
                         alt="{{ course.course_name }}"
-                        class="w-full aspect-[4/3] object-cover transition-transform duration-300 hover:scale-105">
+                        class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
 
-                    {% if course.is_free %}
-                        <span class="absolute top-2 left-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">FREE</span>
-                    {% else %}
-                        <span class="absolute top-2 left-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">
-                            IDR {{ course.price|intcomma }}
-                        </span>
-                    {% endif %}
+                  
                 </div>
 
                 <!-- Body -->
@@ -31,11 +25,25 @@
                     </h2>
 
                     <!-- Category & Level -->
-                    <p class="text-xs text-gray-500 mb-2 truncate">{{ course.category }} | {{ course.level }}</p>
+                    <p class="text-xs text-gray-500 mb-2 truncate">{{ course.category }} | {{ course.level }} | {{ course.language }}</p>
 
                     <!-- Rating & Enrollments -->
                     <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
                         <div class="flex items-center space-x-1">
+                            {% if course.is_free %}
+                         <span class=" bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">FREE</span>
+                        {% else %}
+                           <span class=" bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow"> IDR {{ course.price|intcomma }} </span>
+                         {% endif %}
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M4 21v-2a4 4 0 0 1 3-3.87"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span>{{ course.num_enrollments }}</span>
+
                             {% for i in course.full_star_range %}
                                 <svg class="h-4 w-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M10 15l-5.878 3.09L5.49 12.18 1 7.91l6.061-.545L10 2.5l2.939 4.865 6.061.545-4.49 4.27 1.368 5.91z"></path>
@@ -48,25 +56,9 @@
                             {% endif %}
                             <span>({{ course.review_count }})</span>
                         </div>
-                        <div class="flex items-center space-x-1">
-                            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path d="M20 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M4 21v-2a4 4 0 0 1 3-3.87"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                            <span>{{ course.num_enrollments }}</span>
-                        </div>
                     </div>
 
-                    <!-- Language -->
-                    <p class="text-xs text-gray-400 mb-4 truncate flex items-center space-x-1">
-                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                        </svg>
-                        <span>{{ course.language }}</span>
-                    </p>
+                   
 
                     <!-- Footer: Instructor & Partner -->
                     <div class="flex items-center mt-auto pt-3 border-t border-gray-100">

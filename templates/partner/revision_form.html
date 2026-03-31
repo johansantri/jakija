@@ -27,6 +27,7 @@
 
   <form method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded-lg p-6 space-y-6">
     {% csrf_token %}
+    {{ form.media }}
     {{ form.as_p }}
     <div class="text-right">
       <button type="submit"

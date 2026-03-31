@@ -750,7 +750,7 @@
                                 {% if course.link_video %}
                                     <a href="{{ course.link_video }}" class="block" data-fancybox="video-gallery">
                                         {% if course.image %}
-                                            <img src="{{ course.image.url }}" alt="{{ course.name }} Image" class="w-full h-50 object-cover rounded-xl hover:scale-105 transition-transform">
+                                            <img src="{{ course.image.url }}" alt="{{ course.name }} Image" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
                                         {% else %}
                                             <img src="{% static 'assets/img/user/logo.5272a797c07c.png' %}" alt="Default Image" class="w-full h-52 object-cover rounded-xl hover:scale-105 transition-transform">
                                         {% endif %}
@@ -774,7 +774,7 @@
                                     {% for price_type_name, price_obj in course_prices.items %}
                                     <li>
                                         <!-- Harga atau label Free -->
-                                        <p class="bg-red-50 text-red-800 px-3 py-1 rounded-lg text-3xl text-center">
+                                        <p class="bg-gradient-to-t from-yellow-200 to-transparent px-1">
                                         {% if price_obj.portal_price|floatformat:2 == "0.00" %}
                                             {{ price_type_name }}
                                         {% else %}
@@ -840,13 +840,21 @@
                                             {% endif %}
 
                                         {% else %}
-                                            {# ✅ USER BELUM TERDAFTAR — cek apakah enrollment masih dibuka dan tampilkan Enroll Now/Add to Cart #}
-                                            {% if course.end_enrol and course.end_enrol|date:"Y-m-d" < today %}
-                                                <button class="block w-full bg-gray-400 text-white px-4 py-2 rounded-lg cursor-not-allowed" disabled>
-                                                    Enrollment Closed
-                                                </button>
-                                            {% elif course.start_enrol and course.end_enrol and course.start_enrol|date:"Y-m-d" <= today and course.end_enrol|date:"Y-m-d" >= today %}
-                                            {# tombol enroll/add to cart #}
+                                              {# ✅ USER BELUM TERDAFTAR — cek akses dan payment #}
+
+                                                {# 🔒 Invite Only → tombol disabled #}
+                                                {% if course.access_type == 'invite_only' %}
+                                                    <button class="block w-full bg-gray-400 text-white px-4 py-2 rounded-lg cursor-not-allowed" disabled>
+                                                        🔒 Invite Only
+                                                    </button>
+
+                                                {% elif course.end_enrol and course.end_enrol|date:"Y-m-d" < today %}
+                                                    <button class="block w-full bg-gray-400 text-white px-4 py-2 rounded-lg cursor-not-allowed" disabled>
+                                                        Enrollment Closed
+                                                    </button>
+
+                                                {% elif course.start_enrol and course.end_enrol and course.start_enrol|date:"Y-m-d" <= today and course.end_enrol|date:"Y-m-d" >= today %}
+
                                            
                                             
                                                 {% with course_prices=course.get_course_price %}
@@ -884,7 +892,7 @@
 
                                     {% else %}
                                         {# ✅ USER BELUM LOGIN — tampilkan tombol Join Now #}
-                                        <a href="{% url 'authentication:register' %}?next={% url 'courses:course_lms_detail' id=course.id slug=course.slug %}" 
+                                        <a href="{% url 'authentication:login' %}?next={% url 'courses:course_lms_detail' id=course.id slug=course.slug %}" 
                                         class="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-center">
                                             Join Now
                                         </a>
@@ -936,6 +944,12 @@
                                     <span class="font-medium text-gray-900">Level:</span>
                                     <span class="text-gray-600">{{ course.level }}</span>
                                 </li>
+
+                               
+
+
+                             
+
                             </ul>
                             <h4 class="text-xl font-bold text-gray-900 mb-3">Category</h4>
                             <a href="{% url 'courses:category_list' course.category.slug %}" class="inline-block">

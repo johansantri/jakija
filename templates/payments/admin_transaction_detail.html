@@ -2,107 +2,208 @@
 {% load humanize %}
 
 {% block content %}
-<div class=" mt-4">
-    <h2>Transaction Details (Admin)</h2>
-    <hr>
+<div class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
 
-    <!-- User Information -->
-    <h4>User Information</h4>
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle">
-            <tr>
-                <th>Name</th>
-                <td>{{ transaction.user.get_full_name }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ transaction.user.email }}</td>
-            </tr>
-            <tr>
-                <th>Phone</th>
-                <td>{{ transaction.user.phone }}</td>
-            </tr>
-        </table>
+    <!-- INVOICE CARD -->
+    <div class="bg-white shadow-xl rounded-xl p-8">
+
+        <!-- HEADER -->
+        <div class="flex flex-col md:flex-row md:justify-between md:items-center border-b pb-6 mb-6">
+            
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">
+                    Invoice
+                </h1>
+                <p class="text-sm text-gray-500">
+                    INV{{ transaction.created_at|date:"Ymd" }}{{ transaction.id }}
+                </p>
+            </div>
+
+            <div class="text-sm text-gray-600 mt-4 md:mt-0">
+                <p><span class="font-medium">Date:</span> {{ transaction.created_at|date:"d M Y H:i" }}</p>
+                <p><span class="font-medium">Status:</span>
+                    <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
+                        {{ transaction.status|title }}
+                    </span>
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- USER INFO -->
+        <div class="grid md:grid-cols-2 gap-8 mb-8">
+
+            <div>
+                <h3 class="text-sm font-semibold text-gray-500 mb-2 uppercase">
+                    Billed To
+                </h3>
+
+                <p class="text-gray-800 font-medium">
+                    {{ transaction.user.get_full_name }}
+                </p>
+
+                <p class="text-gray-600 text-sm">
+                    {{ transaction.user.email }}
+                </p>
+
+                <p class="text-gray-600 text-sm">
+                    {{ transaction.user.phone }}
+                </p>
+            </div>
+
+
+            <div class="md:text-right">
+                <h3 class="text-sm font-semibold text-gray-500 mb-2 uppercase">
+                    Payment Summary
+                </h3>
+
+                <p class="text-sm text-gray-600">
+                    Courses Total :
+                    <span class="font-medium">
+                        IDR {{ course_total|floatformat:2|intcomma }}
+                    </span>
+                </p>
+
+                <p class="text-sm text-gray-600">
+                    Platform Fee :
+                    <span class="font-medium">
+                        IDR {{ transaction.platform_fee|floatformat:2|intcomma }}
+                    </span>
+                </p>
+
+                <p class="text-lg font-bold text-gray-900 mt-2">
+                    Total Paid :
+                    IDR {{ total_paid|floatformat:2|intcomma }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PAYMENT TABLE -->
+        <div class="overflow-x-auto">
+
+            <table class="min-w-full text-sm border border-gray-200">
+
+                <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+                    <tr>
+                        <th class="px-4 py-3 text-left">No</th>
+                        <th class="px-4 py-3 text-left">Course</th>
+                        <th class="px-4 py-3 text-left">Partner</th>
+                        <th class="px-4 py-3 text-right">Price</th>
+                        <th class="px-4 py-3 text-right">Discount</th>
+                        <th class="px-4 py-3 text-right">Admin Fee</th>
+                        <th class="px-4 py-3 text-right">VAT</th>
+                        <th class="px-4 py-3 text-right">Total</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y">
+
+                    {% for payment in transaction.payments.all %}
+                    <tr>
+
+                        <td class="px-4 py-3">
+                            {{ forloop.counter }}
+                        </td>
+
+                        <td class="px-4 py-3 font-medium text-gray-800">
+                            {{ payment.course.course_name }}
+                        </td>
+
+                        <td class="px-4 py-3 text-gray-600">
+                            {{ payment.course.org_partner.name|default:"-" }}
+                        </td>
+
+                        <td class="px-4 py-3 text-right">
+                            IDR {{ payment.snapshot_price|floatformat:2|intcomma }}
+                        </td>
+
+                        <td class="px-4 py-3 text-right text-red-600">
+                            - IDR {{ payment.snapshot_discount|floatformat:2|intcomma }}
+                        </td>
+
+                        <td class="px-4 py-3 text-right text-blue-600">
+                            + IDR {{ payment.snapshot_ice_earning|floatformat:2|intcomma }}
+                        </td>
+
+                        <td class="px-4 py-3 text-right text-purple-600">
+                            + IDR {{ payment.snapshot_ppn|floatformat:2|intcomma }}
+                        </td>
+
+                        <td class="px-4 py-3 text-right font-semibold">
+                            IDR {{ payment.amount|floatformat:2|intcomma }}
+                        </td>
+
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center py-6 text-gray-400">
+                            No payment records found.
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- TOTAL FOOTER -->
+        <div class="flex justify-end mt-8">
+
+            <div class="w-full md:w-80 text-sm">
+
+                <div class="flex justify-between py-2">
+                    <span class="text-gray-600">Courses Total</span>
+                    <span>IDR {{ course_total|floatformat:2|intcomma }}</span>
+                </div>
+
+                <div class="flex justify-between py-2">
+                    <span class="text-gray-600">Platform Fee</span>
+                    <span>IDR {{ transaction.platform_fee|floatformat:2|intcomma }}</span>
+                </div>
+
+                <div class="border-t mt-2 pt-3 flex justify-between font-bold text-lg">
+                    <span>Total Paid</span>
+                    <span>IDR {{ total_paid|floatformat:2|intcomma }}</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ACTION -->
+        <div class="mt-8 flex flex-wrap gap-3">
+
+            {% if transaction.status == 'completed' %}
+            <a href="?download=pdf"
+               class="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Download Invoice PDF
+            </a>
+            {% else %}
+            <p class="text-yellow-600 text-sm">
+                Invoice is only available for completed transactions.
+            </p>
+            {% endif %}
+
+            <a href="{% url 'payments:partner_commission' %}"
+               class="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                Back to Transaction List
+            </a>
+
+        </div>
+
+
     </div>
 
-    <!-- Transaction Information -->
-    <h4>Transaction Information</h4>
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle">
-            <tr>
-                <th>Invoice Number</th>
-                <td>INV{{ transaction.created_at|date:"Ymd" }}{{ transaction.id }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ transaction.status|title }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ transaction.created_at|date:"d M Y H:i" }}</td>
-            </tr>
-            <tr>
-                <th>Courses Total</th>
-                <td>IDR {{ course_total|floatformat:2|intcomma }}</td>
-            </tr>
-            <tr>
-                <th>Platform Fee</th>
-                <td>IDR {{ transaction.platform_fee|floatformat:2|intcomma }}</td>
-            </tr>
-            <tr class="table-info">
-                <th><strong>Total Paid (Grand Total)</strong></th>
-                <td><strong>IDR {{ total_paid|floatformat:2|intcomma }}</strong></td>
-            </tr>
-
-           
-        </table>
-    </div>
-
-    <!-- Payment Details -->
-    <h4>Payment Details</h4>
-    <div class="table-responsive">
-        <table class="table table-striped table-hover align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>No</th>
-                    <th>Course</th>
-                    <th>Partner</th>
-                    <th>Original Price</th>
-                    <th>Discount</th>
-                    <th>Admin Fee</th>
-                    <th>VAT</th>
-                    <th>Total Paid</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for payment in transaction.payments.all %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ payment.course.course_name }}</td>
-                    <td>{{ payment.course.org_partner.name|default:"-" }}</td>
-                    <td>IDR {{ payment.snapshot_price|floatformat:2|intcomma }}</td>
-                    <td>- IDR {{ payment.snapshot_discount|floatformat:2|intcomma }}</td>
-                    <td>+ IDR {{ payment.snapshot_ice_earning|floatformat:2|intcomma }}</td>
-                    <td>+ IDR {{ payment.snapshot_ppn|floatformat:2|intcomma }}</td>
-                    <td><strong>IDR {{ payment.amount|floatformat:2|intcomma }}</strong></td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="8" class="text-center text-muted">No payment records found.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Actions -->
-    <div class="mt-4 d-flex flex-wrap gap-2">
-        {% if transaction.status == 'completed' %}
-        <a href="?download=pdf" class="btn btn-primary">Download Invoice PDF</a>
-        {% else %}
-        <p class="text-warning mb-0">Invoice is only available for completed transactions.</p>
-        {% endif %}
-        <a href="{% url 'payments:partner_commission' %}" class="btn btn-secondary">Back to Transaction List</a>
-    </div>
 </div>
 {% endblock %}

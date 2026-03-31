@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    
+    <!-- Blok meta untuk ditimpa oleh template anak -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block meta %}
+    {% endblock %}
+   
+    <link rel="icon" href="{% static 'assets/img/icon/certificate.svg' %}" sizes="any" type="image/svg+xml">
+    
+    
+
+<link rel="stylesheet" href="{% static 'css/output.css' %}">
+<link rel="stylesheet" href="{% static 'css/ckeditor5.css' %}" type="text/css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/2.0.4/htmx.min.js" integrity="sha512-2kIcAizYXhIn8TzUvqzEDZNuDZ+aW7yE/+f1HJHXFjQcGNfv1kqzJSTBRBSlOgp6B/KZsz1K0a3ZTqP9dnxioQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   
+   
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* style.css */
+      #id_captcha_1 {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #d1d5db; /* gray-300 */
+        border-radius: 0.375rem; /* rounded-md */
+        font-size: 0.875rem; /* sm */
+        outline: none;
+        transition: all 0.2s;
+      }
+
+      #id_captcha_1:focus {
+        border-color: #ef4444; /* red-500 */
+        box-shadow: 0 0 0 1px #ef4444;
+      }
+
+      #id_email {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #d1d5db; /* gray-300 */
+        border-radius: 0.375rem; /* rounded-md */
+        font-size: 0.875rem; /* sm */
+        outline: none;
+        transition: all 0.2s;
+      }
+
+      #id_email:focus {
+        border-color: #ef4444; /* red-500 */
+        box-shadow: 0 0 0 1px #ef4444;
+      }
+
+      /* Default number */
+      .ck-content ol {
+          list-style-type: decimal;
+          padding-left: 1.5rem;
+      }
+
+      /* Default bullet */
+      .ck-content ul {
+          list-style-type: disc;
+          padding-left: 1.5rem;
+      }
+
+      /* Support huruf kecil */
+      .ck-content ol.lower-alpha {
+          list-style-type: lower-alpha;
+      }
+
+      /* Support huruf besar */
+      .ck-content ol.upper-alpha {
+          list-style-type: upper-alpha;
+      }
+
+      /* Support roman kecil */
+      .ck-content ol.lower-roman {
+          list-style-type: lower-roman;
+      }
+
+      /* Support roman besar */
+      .ck-content ol.upper-roman {
+          list-style-type: upper-roman;
+      }
+
+      
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+
+    
+
+    <div class="lg:hidden overlay fixed inset-0 bg-black opacity-0 z-40" id="overlay"></div>
+    </nav>
+    <main class="pt-16">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    
+  
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+    <!-- Dependencies -->
+   
+
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="{% static 'js/main.js' %}?v=1"></script>
+    
+</body>
+</html>

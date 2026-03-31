@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Partner Approved</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color:#f4f4f4; padding:20px;">
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="center">
+                <table width="600" style="background:white; padding:30px; border-radius:8px;">
+                    <tr>
+                        <td>
+                            <h2 style="color:#16a34a;">🎉 Congratulations!</h2>
+
+                            <p>Dear {{ user.username }},</p>
+
+                            <p>Your partner request has been <strong>approved</strong>.</p>
+
+                            <p>You can now access your partner dashboard and manage your activities.</p>
+
+                            <p><strong>Partner Name:</strong> {{ partner.name }}</p>
+
+                            <br>
+
+                            <a href="{{ request.scheme }}://{{ request.get_host }}/dashboard/"
+                               style="display:inline-block; padding:10px 20px; background:#16a34a; color:white; text-decoration:none; border-radius:5px;">
+                                Go to Dashboard
+                            </a>
+
+                            <br><br>
+
+                            <p>Thank you,<br>
+                            The Team</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

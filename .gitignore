@@ -8,7 +8,16 @@ venv/
 env/
 
 # Django settings (sensitif)
-mysite/settings.py
+#mysite/settings.py
+
+
+
+# Build / static files
+staticfiles/
+
+# Socket / temp
+*.sock.lock
+
 
 # Python cache
 __pycache__/

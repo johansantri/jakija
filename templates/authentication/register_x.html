@@ -59,8 +59,35 @@
         <a href="{% url 'authentication:home' %}" class="text-sm text-gray-500 hover:text-gray-700 underline">← Back to Home</a>
       </div>
 
-      
-     
+      <h1 class="text-xl font-semibold text-center text-gray-700 mb-6">Register to Your Account</h1>
+
+      <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        <!-- Render all fields -->
+        <div class="space-y-4">
+          {{ form }}
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200">
+            Sign Up
+          </button>
+        </div>
+      </form>
+
+      <!-- Footer Links -->
+      <div class="text-center mt-6 space-y-2 text-sm text-gray-600">
+        <p>
+          Already have an account?
+          <a href="{% url 'authentication:login' %}" class="text-blue-600 hover:underline">Login</a>
+        </p>
+        <p>
+          Forgot Password?
+          <a href="{% url 'authentication:password_reset' %}" class="text-blue-600 hover:underline">Reset Password</a>
+        </p>
+      </div>
     </div>
   </div>
 </div>

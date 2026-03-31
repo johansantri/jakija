@@ -16,27 +16,39 @@
 </div>
 
 <!-- Search Bar and New Button -->
-<div class="mb-4 flex justify-between items-center">
+<div class="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+
     <!-- Search Bar -->
-    <div class="flex w-auto">
-        <form method="GET" action="" class="flex w-full">
-            <input class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
-                   type="text" 
-                   name="search" 
-                   placeholder="Search courses..." 
-                   value="{{ request.GET.search }}">
-            <button class="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition text-sm" 
-                    type="submit">Search</button>
+    <div class="w-full sm:w-auto">
+        <form method="GET" action="" class="flex flex-col sm:flex-row gap-2 w-full">
+            <input 
+                class="w-full px-3 py-2 border border-gray-300 rounded-md 
+                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                type="text" 
+                name="search" 
+                placeholder="Search courses..." 
+                value="{{ request.GET.search }}">
+
+            <button 
+                class="bg-red-400 text-white px-4 py-2 rounded-lg 
+                       hover:bg-red-500 transition text-sm">
+                Search
+            </button>
         </form>
     </div>
 
-<!-- New Button (Visible for superuser, partner, instructor) -->
-<div class="flex items-center ml-2">
+    <!-- New Button -->
     {% if user.is_superuser or user.is_partner or user.is_instructor or user.is_curation %}
-        <a href="{% url 'courses:course_create_view' %}" 
-           class="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition text-sm" title="Create New Course">New Course</a>
+        <div class="w-full sm:w-auto">
+            <a href="{% url 'courses:course_create_view' %}" 
+               class="block text-center bg-red-400 text-white px-4 py-2 rounded-lg 
+                      hover:bg-red-500 transition text-sm">
+                New Course
+            </a>
+        </div>
     {% endif %}
-</div></div>
+
+</div>
 
 <!-- Search Results Count -->
 <div class="mb-4">

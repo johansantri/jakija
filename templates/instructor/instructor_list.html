@@ -5,42 +5,50 @@
     
 
     <!-- Form Pencarian -->
-    <form method="GET" action="" class="mb-4 flex flex-col sm:flex-row items-center gap-2">
-        <!-- Search -->
-        <input type="text"
-            name="q"
-            class="w-full sm:w-1/4 p-3 border rounded-lg"
-            placeholder="Search by name or email"
-            value="{{ search_query }}">
+    <div class="mb-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
 
-        <!-- Gender Filter -->
-        <select name="gender"
-                class="p-3 border rounded-lg">
-            <option value="">All Gender</option>
-            <option value="male" {% if request.GET.gender == "male" %}selected{% endif %}>Male</option>
-            <option value="female" {% if request.GET.gender == "female" %}selected{% endif %}>Female</option>
-        </select>
+        <form method="GET" action="" class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 w-full">
+            
+            <!-- Search -->
+            <input type="text"
+                name="q"
+                class="w-full sm:w-auto flex-1 p-3 border rounded-lg"
+                placeholder="Search by name or email"
+                value="{{ search_query }}">
 
-        <!-- Status Filter -->
-        <select name="status"
-                class="p-3 border rounded-lg">
-            <option value="">All Status</option>
-            <option value="Pending" {% if request.GET.status == "Pending" %}selected{% endif %}>Pending</option>
-            <option value="Approved" {% if request.GET.status == "Approved" %}selected{% endif %}>Approved</option>
-            <option value="Rejected" {% if request.GET.status == "Rejected" %}selected{% endif %}>Rejected</option>
-        </select>
+            <!-- Gender Filter -->
+            <select name="gender"
+                class="w-full sm:w-auto p-3 border rounded-lg">
+                <option value="">All Gender</option>
+                <option value="male" {% if request.GET.gender == "male" %}selected{% endif %}>Male</option>
+                <option value="female" {% if request.GET.gender == "female" %}selected{% endif %}>Female</option>
+            </select>
 
-        <button type="submit"
-                class="bg-gray-800 text-white px-4 py-2 rounded-lg">
-            Filter
-        </button>
-    </form>
-    {% if partner %}
-    <a href="{% url 'courses:bulk_add_instructors' partner.id %}" 
-    class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">
-        Invite Instructors
-    </a>
-    {% endif %}
+            <!-- Status Filter -->
+            <select name="status"
+                class="w-full sm:w-auto p-3 border rounded-lg">
+                <option value="">All Status</option>
+                <option value="Pending" {% if request.GET.status == "Pending" %}selected{% endif %}>Pending</option>
+                <option value="Approved" {% if request.GET.status == "Approved" %}selected{% endif %}>Approved</option>
+                <option value="Rejected" {% if request.GET.status == "Rejected" %}selected{% endif %}>Rejected</option>
+            </select>
+
+            <!-- Button -->
+            <button type="submit"
+                class="w-full sm:w-auto bg-gray-800 text-white px-4 py-3 rounded-lg">
+                Filter
+            </button>
+
+        </form>
+
+        {% if partner %}
+        <a href="{% url 'courses:bulk_add_instructors' partner.id %}" 
+            class="w-full sm:w-auto text-center bg-indigo-600 text-white px-4 py-3 rounded-md hover:bg-indigo-700 transition">
+            Invite 
+        </a>
+        {% endif %}
+
+    </div>
     <!-- End Form Pencarian -->
 
     <!-- Daftar Instructor -->

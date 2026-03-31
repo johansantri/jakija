@@ -1,6 +1,6 @@
 {% extends 'home/base.html' %}
 {% load static %}
-
+{% load humanize %}
 {% block title %}
     {{ partner.name }} - Courses and Details
 {% endblock %}
@@ -212,11 +212,11 @@
                         <a href="{% url 'courses:course_lms_detail' course.course_id course.course_slug %}" 
                            class="block bg-white rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300" 
                            aria-label="View details for {{ course.course_name }}">
-                            <div class="relative overflow-hidden h-48 rounded-t-2xl">
+                            <div class="relative overflow-hidden">
                                 {% if course.course_image %}
                                     <img src="{{ course.course_image }}"
                                          alt="Thumbnail for {{ course.course_name }}"
-                                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                                         class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
                                 {% else %}
                                     <img src="https://via.placeholder.com/300x180"
                                          alt="Default thumbnail for {{ course.course_name }}"
@@ -268,7 +268,11 @@
                                         ({{ course.average_rating }} / {{ course.review_count }})
                                     </span>
                                 </div>
-                                <p class="text-gray-800 font-bold text-sm mb-0">Free</p>
+                                <p class="text-gray-800 font-bold text-sm mb-0">{% if course.price == 0.0 %}
+                                   <span class="text-indigo-700 font-semibold"> FREE </span>
+                                {% else %}
+                                   <span class="text-indigo-700 font-semibold"> IDR {{ course.price|intcomma }}</span>
+                                {% endif %}</p>
                             </div>
                         </a>
                     </article>

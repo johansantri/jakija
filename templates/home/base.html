@@ -91,6 +91,16 @@
 
       
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-48R279GRJX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-48R279GRJX');
+    </script>
+
 </head>
 <body class="bg-gray-100">
     <!-- Navbar -->
@@ -130,17 +140,18 @@
                          {% csrf_token %}
                         <input class="w-full px-3 py-2 border border-gray-300 rounded-l-md text-sm" type="search" name="q" id="search-input" placeholder="Search..." aria-label="Search" autocomplete="off">
                        <button 
-                        class="border border-red-500 text-red-500 bg-white
-                              px-4 py-2 rounded-r-xl 
-                              hover:bg-red-500 hover:text-white 
-                              transition-all duration-300
-                              min-w-[44px] min-h-[44px]
-                              flex items-center justify-center"
-                        type="submit">
+                          class="border border-red-500 text-red-500 bg-red
+                                px-4 py-2 rounded-r-xl 
+                                hover:bg-red-500 hover:text-white 
+                                transition-all duration-300
+                                min-w-[44px] min-h-[44px]
+                                flex items-center justify-center"
+                          aria-label="Search"
+                          title="Search"
+                          type="submit">
 
-                        <i class="fa-solid fa-magnifying-glass"></i>
-
-                    </button>
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
                     </form>
                     {% if request.user.is_authenticated %}
                     <a href="{% url 'payments:view_cart' %}" class="relative w-10 h-10 flex items-center justify-center border border-red-600 rounded-md text-red-600 hover:bg-red-600 hover:text-white transition" style="width:40px; height:40px; padding:0;">
@@ -434,9 +445,9 @@
     <!-- Dependencies -->
    
 
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <script src="{% static 'js/main.js' %}?v=1"></script>
+    <script src="{% static 'js/main.js' %}?v=1" defer></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
     const toggleButton = document.getElementById('navbarToggle');

@@ -113,7 +113,7 @@
                     <th class="px-4 py-3">Gender</th>
                     <th class="px-4 py-3">Organization</th>
                     <th class="px-4 py-3">Enrolled</th>
-                    <th class="px-4 py-3">Joined & Last Login</th>
+                    <th class="px-4 py-3">Joined & Last</th>
                     <th class="px-4 py-3">Roles</th>
                     <th class="px-4 py-3">Status</th>
                 </tr>
@@ -148,11 +148,11 @@
 
                     <!-- JOINED & LAST LOGIN -->
                     <td class="px-4 py-2 text-left">
-                        <div class="text-gray-800">
-                            Joined: {{ user.date_joined|date:"Y-m-d" }}
+                        <div class="text-xs text-gray-800">
+                             {{ user.date_joined|date:"Y-m-d" }}
                         </div>
                         <div class="text-xs text-gray-500">
-                            Last login: {{ user.last_login|date:"Y-m-d H:i"|default:"-" }}
+                             {{ user.last_login|date:"Y-m-d H:i"|default:"-" }}
                         </div>
                     </td>
 

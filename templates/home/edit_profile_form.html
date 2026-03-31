@@ -3,239 +3,270 @@
 
 {% block content %}
 
- <section class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
-      <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-4">
-        <h3 class="text-lg font-semibold text-gray-800 border-l-4 border-red-300 pl-2">Complete Your Profile</h3>
-        
+<section class="bg-white border border-gray-200 p-6 md:p-10 rounded-xl shadow-lg max-w-4xl mx-auto my-8">
+
+  <!-- Judul -->
+  <div class="text-center mb-8">
+    <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Complete Your Profile</h2>
+    <p class="text-gray-500 mt-2">Fill in your information step by step so it feels easier and not rushed 😊</p>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="mb-10">
+    <div class="flex justify-between text-xs md:text-sm font-medium text-gray-500 mb-3">
+        <span class="step-label" :class="{ 'text-red-600 font-bold': currentStep === 1 }">1. Basic Information</span>
+        <span class="step-label" :class="{ 'text-red-600 font-bold': currentStep === 2 }">2. Photo & Location</span>
+        <span class="step-label" :class="{ 'text-red-600 font-bold': currentStep === 3 }">3. Education</span>
+        <span class="step-label" :class="{ 'text-red-600 font-bold': currentStep === 4 }">4. Social Media & Interests</span>
+    </div>
+    <div class="w-full bg-gray-200 rounded-full h-2.5">
+      <div class="bg-red-600 h-2.5 rounded-full transition-all duration-500 ease-out"
+           :style="{ width: progress + '%' }"></div>
+    </div>
+  </div>
+
+  <!-- FORM UTAMA -->
+  <form method="POST" enctype="multipart/form-data" novalidate x-data="profileWizard()" @submit="handleSubmit">
+    {% csrf_token %}
+
+    <!-- STEP 1: Data Dasar -->
+    <div x-show="currentStep === 1" x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 translate-x-10"
+         x-transition:enter-end="opacity-100 translate-x-0"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 translate-x-0"
+         x-transition:leave-end="opacity-0 -translate-x-10"
+         class="space-y-6">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">{{ form.first_name.label }} <span class="text-red-600">*</span></label>
+          {{ form.first_name }}
+          {{ form.first_name.errors }}
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">{{ form.last_name.label }} <span class="text-red-600">*</span></label>
+          {{ form.last_name }}
+          {{ form.last_name.errors }}
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">{{ form.email.label }} <span class="text-red-600">*</span></label>
+          {{ form.email }}
+          {{ form.email.errors }}
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">{{ form.phone.label }} <span class="text-red-600">*</span></label>
+          {{ form.phone }}
+          {{ form.phone.errors }}
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">{{ form.gender.label }} <span class="text-red-600">*</span></label>
+          {{ form.gender }}
+          {{ form.gender.errors }}
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">{{ form.birth.label }} <span class="text-red-600">*</span></label>
+          {{ form.birth }}
+          {{ form.birth.errors }}
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Foto & Lokasi -->
+    <div x-show="currentStep === 2" x-transition class="space-y-6">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+        {{ form.photo.label }}
+        </label>
+
+        <p class="text-sm text-gray-500 mb-2">
+        Leave this empty if you don't want to change your photo.
+        </p>
+        <div class="flex items-center gap-4">
+          {{ form.photo }}
+          {% if user.photo %}
+            <img src="{{ user.photo.url }}" alt="Current Photo" class="w-20 h-20 rounded-full object-cover border-2 border-gray-300">
+          {% endif %}
+        </div>
+        {{ form.photo.errors }}
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{ form.country.label }}</label>
+        {{ form.country }}
+        {{ form.country.errors }}
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{ form.address.label }}</label>
+        {{ form.address }}
+        {{ form.address.errors }}
+      </div>
+    </div>
+
+    <!-- STEP 3: Pendidikan & Hobi -->
+    <div x-show="currentStep === 3" x-transition class="space-y-6">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{ form.education.label }}</label>
+        {{ form.education }}
+        {{ form.education.errors }}
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{ form.university.label }}</label>
+        {{ form.university }}
+        {{ form.university.errors }}
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{ form.hobby.label }}</label>
+        {{ form.hobby }}
+        {{ form.hobby.errors }}
+      </div>
+    </div>
+
+    <!-- STEP 4: Sosial Media & Interests -->
+    <div x-show="currentStep === 4" x-transition class="space-y-8">
+      <!-- Social Media -->
+      <div>
+        <h5 class="text-lg font-bold text-blue-700 mb-4 pb-2 border-b-2 border-blue-700 inline-block">
+        Social Media Links
+        </h5>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>{{ form.tiktok }}{{ form.tiktok.errors }}</div>
+          <div>{{ form.youtube }}{{ form.youtube.errors }}</div>
+          <div>{{ form.facebook }}{{ form.facebook.errors }}</div>
+          <div>{{ form.instagram }}{{ form.instagram.errors }}</div>
+          <div>{{ form.linkedin }}{{ form.linkedin.errors }}</div>
+          <div>{{ form.twitter }}{{ form.twitter.errors }}</div>
+        </div>
       </div>
 
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 md:p-10">
-
-        <!-- Header -->
-        <div class="text-center mb-8">
-            
-            <p class="text-gray-500 mt-2">Please complete your personal data to proceed to the dashboard.</p>
+      <!-- Interests -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">{{ form.interests.label }}</label>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="interests-container">
+          {% for checkbox in form.interests %}
+            <div class="{% if forloop.counter > 6 %}hidden extra-category{% endif %}">
+              <label class="inline-flex items-center bg-gray-100 px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-200 transition">
+                {{ checkbox.tag }}
+                <span class="ml-2 text-gray-700 text-sm">{{ checkbox.choice_label }}</span>
+              </label>
+            </div>
+          {% endfor %}
         </div>
-
-        
-
-        <!-- Form -->
-        <form method="POST" enctype="multipart/form-data" novalidate class="space-y-8">
-            {% csrf_token %}
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                <!-- Left Column -->
-                <div class="space-y-5">
-
-                    <div>
-                        <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                            {{ form.first_name.label }} <span class="text-red-600">*</span>
-                        </label>
-                        {{ form.first_name }}
-                        {% if form.first_name.errors %}
-                            <p class="mt-1 text-sm text-red-600">{{ form.first_name.errors|join:", " }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <label for="{{ form.last_name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                            {{ form.last_name.label }} <span class="text-red-600">*</span>
-                        </label>
-                        {{ form.last_name }}
-                        {% if form.last_name.errors %}
-                            <p class="mt-1 text-sm text-red-600">{{ form.last_name.errors|join:", " }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                            {{ form.email.label }} <span class="text-red-600">*</span>
-                        </label>
-                        {{ form.email }}
-                        {% if form.email.errors %}
-                            <p class="mt-1 text-sm text-red-600">{{ form.email.errors|join:", " }}</p>
-                        {% endif %}
-                    </div>
-
-                    
-
-                    <div>
-                        <label for="{{ form.phone.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                            {{ form.phone.label }} <span class="text-red-600">*</span>
-                        </label>
-                        {{ form.phone }}
-                        {% if form.phone.errors %}
-                            <p class="mt-1 text-sm text-red-600">{{ form.phone.errors|join:", " }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <label for="{{ form.gender.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                            {{ form.gender.label }} <span class="text-red-600">*</span>
-                        </label>
-                        {{ form.gender }}
-                        {% if form.gender.errors %}
-                            <p class="mt-1 text-sm text-red-600">{{ form.gender.errors|join:", " }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <label for="{{ form.birth.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                            {{ form.birth.label }} <span class="text-red-600">*</span>
-                        </label>
-                        {{ form.birth }}
-                        {% if form.birth.errors %}
-                            <p class="mt-1 text-sm text-red-600">{{ form.birth.errors|join:", " }}</p>
-                        {% endif %}
-                    </div>
-
-                </div>
-
-                <!-- Right Column -->
-                <div class="space-y-5">
-
-                    <div>
-                        <label for="{{ form.country.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                            {{ form.country.label }}
-                        </label>
-                        {{ form.country }}
-                        {% if form.country.errors %}
-                            <p class="mt-1 text-sm text-red-600">{{ form.country.errors|join:", " }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <label for="{{ form.photo.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                            {{ form.photo.label }}
-                        </label>
-                        <div class="flex items-center gap-3">
-                            {{ form.photo }}
-                            {% if user.photo %}
-                                <img src="{{ user.photo.url }}" alt="Profile Photo" 
-                                     class="w-12 h-12 rounded-full object-cover border-2 border-gray-300">
-                            {% endif %}
-                        </div>
-                        {% if form.photo.errors %}
-                            <p class="mt-1 text-sm text-red-600">{{ form.photo.errors|join:", " }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <label for="{{ form.address.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                            {{ form.address.label }}
-                        </label>
-                        {{ form.address }}
-                        {% if form.address.errors %}
-                            <p class="mt-1 text-sm text-red-600">{{ form.address.errors|join:", " }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <label for="{{ form.hobby.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                            {{ form.hobby.label }}
-                        </label>
-                        {{ form.hobby }}
-                        {% if form.hobby.errors %}
-                            <p class="mt-1 text-sm text-red-600">{{ form.hobby.errors|join:", " }}</p>
-                        {% endif %}
-                    </div>
-
-                    
-
-                    <div>
-                        <label for="{{ form.education.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                            {{ form.education.label }}
-                        </label>
-                        {{ form.education }}
-                        {% if form.education.errors %}
-                            <p class="mt-1 text-sm text-red-600">{{ form.education.errors|join:", " }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <label for="{{ form.university.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                            {{ form.university.label }}
-                        </label>
-                        {{ form.university }}
-                        {% if form.university.errors %}
-                            <p class="mt-1 text-sm text-red-600">{{ form.university.errors|join:", " }}</p>
-                        {% endif %}
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Social Media -->
-            <div class="mt-8">
-                <h5 class="text-lg font-bold text-blue-700 mb-4 pb-2 border-b-2 border-blue-700 inline-block">
-                    Social Media Links
-                </h5>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div>{{ form.tiktok }} {% if form.tiktok.errors %}<p class="mt-1 text-sm text-red-600">{{ form.tiktok.errors|join:", " }}</p>{% endif %}</div>
-                    <div>{{ form.youtube }} {% if form.youtube.errors %}<p class="mt-1 text-sm text-red-600">{{ form.youtube.errors|join:", " }}</p>{% endif %}</div>
-                    <div>{{ form.facebook }} {% if form.facebook.errors %}<p class="mt-1 text-sm text-red-600">{{ form.facebook.errors|join:", " }}</p>{% endif %}</div>
-                    <div>{{ form.instagram }} {% if form.instagram.errors %}<p class="mt-1 text-sm text-red-600">{{ form.instagram.errors|join:", " }}</p>{% endif %}</div>
-                    <div>{{ form.linkedin }} {% if form.linkedin.errors %}<p class="mt-1 text-sm text-red-600">{{ form.linkedin.errors|join:", " }}</p>{% endif %}</div>
-                    <div>{{ form.twitter }} {% if form.twitter.errors %}<p class="mt-1 text-sm text-red-600">{{ form.twitter.errors|join:", " }}</p>{% endif %}</div>
-                </div>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">{{ form.interests.label }}</label>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-2" id="interests-container">
-                    {% for checkbox in form.interests %}
-                        <div class="{% if forloop.counter > 6 %}hidden extra-category{% endif %}">
-                            <label class="inline-flex items-center bg-gray-100 px-3 py-1 rounded cursor-pointer hover:bg-gray-200">
-                                {{ checkbox.tag }}
-                                <span class="ml-2 text-gray-700">{{ checkbox.choice_label }}</span>
-                            </label>
-                        </div>
-                    {% endfor %}
-                </div>
-                <button type="button" id="show-more-btn" class="mt-2 text-indigo-600 hover:underline">Show more</button>
-
-                {% if form.interests.errors %}
-                    <p class="mt-1 text-sm text-red-600">{{ form.interests.errors|join:", " }}</p>
-                {% endif %}
-            </div>
-
-            <script>
-            document.getElementById('show-more-btn').addEventListener('click', function() {
-                document.querySelectorAll('.extra-category').forEach(el => el.classList.toggle('hidden'));
-                this.textContent = this.textContent === 'Show more' ? 'Show less' : 'Show more';
-            });
-
-            // Batasi max 5 checkbox
-            const maxInterests = 5;
-            const container = document.getElementById('interests-container');
-            const checkboxes = container.querySelectorAll('input[type="checkbox"]');
-
-            checkboxes.forEach(cb => {
-                cb.addEventListener('change', () => {
-                    const checked = container.querySelectorAll('input[type="checkbox"]:checked');
-                    if (checked.length >= maxInterests) {
-                        checkboxes.forEach(box => {
-                            if (!box.checked) box.disabled = true;
-                        });
-                    } else {
-                        checkboxes.forEach(box => box.disabled = false);
-                    }
-                });
-            });
-            </script>
-
-            <!-- Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-                <button type="submit" class="px-8 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition shadow-md">
-                    Save
-                </button>
-                <a href="{% url 'authentication:mycourse' %}" class="px-8 py-3 bg-white border-2 border-gray-300 text-gray-700 font-bold rounded-xl hover:bg-gray-50 transition shadow-md text-center">
-                    Cancel
-                </a>
-            </div>
-
-        </form>
+        <button type="button" id="show-more-btn" class="mt-3 text-indigo-600 hover:underline text-sm">
+          Show more
+        </button>
+        {{ form.interests.errors }}
+      </div>
     </div>
+
+    <!-- Tombol Navigasi -->
+    <div class="flex flex-col sm:flex-row justify-between gap-4 mt-12">
+      <template x-if="currentStep > 1">
+        <button type="button" @click="prevStep" class="px-8 py-3 bg-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-300 transition">
+          Back
+        </button>
+      </template>
+
+      <template x-if="currentStep < 4">
+        <button type="button" @click="nextStep" class="px-10 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition shadow-md ml-auto">
+          Next
+        </button>
+      </template>
+
+      <template x-if="currentStep === 4">
+        <button type="submit" class="px-10 py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition shadow-md ml-auto">
+          Save Profil
+        </button>
+      </template>
+    </div>
+
+    <!-- Tampilkan semua error server-side di bawah kalau submit gagal -->
+    {% if form.non_field_errors %}
+      <div class="mt-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+        {{ form.non_field_errors }}
+      </div>
+    {% endif %}
+  </form>
 </section>
+
+<!-- Alpine.js CDN (bisa diganti dengan local kalau mau) -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<script>
+  function profileWizard() {
+    return {
+      currentStep: 1,
+      progress: 25,  // 100 / 4 steps
+
+      init() {
+        // Progress bar update
+        this.$watch('currentStep', value => {
+          this.progress = (value / 4) * 100;
+        });
+
+        // Show more interests
+        document.getElementById('show-more-btn')?.addEventListener('click', function() {
+          document.querySelectorAll('.extra-category').forEach(el => {
+            el.classList.toggle('hidden');
+          });
+          this.textContent = this.textContent.includes('more') ? 'Show less' : 'Show more';
+        });
+
+        // Limit 5 interests (client-side)
+        const max = 5;
+        const container = document.getElementById('interests-container');
+        if (container) {
+          const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+          checkboxes.forEach(cb => {
+            cb.addEventListener('change', () => {
+              const checked = Array.from(checkboxes).filter(box => box.checked).length;
+              checkboxes.forEach(box => {
+                if (!box.checked) box.disabled = checked >= max;
+              });
+            });
+          });
+        }
+      },
+
+      nextStep() {
+        // Validasi sederhana client-side (opsional, bisa dihapus kalau mau full server-side)
+        let valid = true;
+        const currentFields = document.querySelectorAll(`[x-show="currentStep === ${this.currentStep}"] input[required], [x-show="currentStep === ${this.currentStep}"] select[required]`);
+
+        currentFields.forEach(field => {
+          if (!field.value.trim()) {
+            valid = false;
+            field.classList.add('border-red-500');
+          } else {
+            field.classList.remove('border-red-500');
+          }
+        });
+
+        if (valid) {
+          if (this.currentStep < 4) this.currentStep++;
+        } else {
+          alert('Please complete the required fields in this step..');
+        }
+      },
+
+      prevStep() {
+        if (this.currentStep > 1) this.currentStep--;
+      },
+
+      handleSubmit(e) {
+        // Bisa tambah loading state kalau mau
+        // e.target.querySelector('button[type="submit"]').innerHTML = 'Menyimpan...';
+      }
+    }
+  }
+</script>
+
+<style>
+  input, select, textarea {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500;
+  }
+  .border-red-500 {
+    border-color: #dc2626 !important;
+  }
+</style>
 
 {% endblock %}

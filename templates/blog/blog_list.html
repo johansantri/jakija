@@ -85,13 +85,13 @@
                   srcset="{{ post.image.url|default:'/static/images/blog-150.webp' }} 150w, {{ post.image.url|default:'/static/images/blog-300.webp' }} 300w" 
                   sizes="(max-width: 640px) 100vw, 300px" 
                   alt="{{ post.title }}" 
-                  class="w-full h-48 sm:h-56 md:h-64 object-cover transform hover:scale-105 transition-transform duration-300" 
+                  class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" 
                   loading="lazy">
               {% else %}
                 <img 
                   src="/static/images/blog-300.webp" 
                   alt="Default Blog Thumbnail" 
-                  class="w-full h-48 sm:h-56 md:h-64 object-cover">
+                  class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
               {% endif %}
             </a>
 

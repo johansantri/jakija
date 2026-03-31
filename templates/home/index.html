@@ -70,95 +70,996 @@
 
 {% block content %}
 
-&nbsp;
-
-<section class="relative bg-white py-20 overflow-hidden" aria-labelledby="hero-heading">
-  <!-- Background -->
-  <div class="absolute inset-0 bg-gradient-to-b from-red-50 to-white"></div>
-  <br>
-  <div class="relative z-10 mx-auto px-6 md:px-8 max-w-7xl text-center">
-    <!-- Main Heading -->
-   <h1 id="hero-heading" class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-snug mb-6">
-    Unlock. Grind. Win.  
-    <br>
-    <span class="text-red-600" id="typed-text"></span>
-    <span class="text-red-600 animate-pulse">|</span>
-  </h1>
 
 
-    <!-- Subtitle -->
-    <p class="text-base sm:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-      Dive into flexible, expert-led online courses on JakIja.  
-      Stack real-world skills, grab legit certs, and level up your career — no cap.
-    </p>
+<style>
+ /* ===============================
+   GLOBAL VARIABLES
+================================ */
+:root{
+  --green-deep:#1a3c34;
+  --green-mid:#256d63;
+  --green-accent:#4ecdc4;
+  --teal:#4ecdc4;
+  --orange:#e05a2b;
+}
 
-    <!-- CTA Buttons -->
-    <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <a href="{% url 'authentication:course_list' %}"
-         class="inline-block bg-red-600 text-white font-semibold px-8 py-3 rounded-lg shadow hover:bg-red-700 hover:shadow-lg transition-all duration-300 focus:ring-4 focus:ring-red-300 focus:ring-offset-2"
-         aria-label="Browse courses on JakIja">
-        Explore Courses
-      </a>
-      <a href="{% url 'authentication:about' %}"
-         class="inline-block border border-red-600 text-red-600 font-semibold px-8 py-3 rounded-lg hover:bg-red-50 transition-all duration-300 focus:ring-4 focus:ring-red-200 focus:ring-offset-2"
-         aria-label="Learn more about JakIja platform">
-        Learn More
-      </a>
+/* ===============================
+   HERO SLIDER
+================================ */
+.hero-slider{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+}
+
+/* slide */
+.slide{
+  position:absolute;
+  inset:0;
+  width:100%;
+  min-height:500px;
+  display:flex;
+  align-items:center;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(30px);
+  transition:all .7s cubic-bezier(.4,0,.2,1);
+  background:linear-gradient(
+      135deg,
+      var(--green-deep) 0%,
+      var(--green-mid) 60%,
+      var(--green-accent) 100%
+  );
+}
+
+.slide.active{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+  position:relative;
+  z-index:2;
+}
+
+/* decorative shapes */
+.slide::before{
+  content:'';
+  position:absolute;
+  top:-80px;
+  right:-80px;
+  width:380px;
+  height:380px;
+  background:rgba(255,255,255,.04);
+  border-radius:50%;
+}
+
+.slide::after{
+  content:'';
+  position:absolute;
+  bottom:-90px;
+  right:120px;
+  width:260px;
+  height:260px;
+  background:rgba(255,255,255,.05);
+  transform:rotate(45deg);
+}
+
+.slide-shape-extra{
+  position:absolute;
+  top:40px;
+  right:280px;
+  width:140px;
+  height:140px;
+  background:rgba(78,205,196,.08);
+  border-radius:30px;
+  transform:rotate(20deg);
+}
+
+/* ===============================
+   SLIDE CONTENT ANIMATION
+================================ */
+
+.slide-content{
+  animation:fadeUp .8s ease forwards;
+  will-change:transform,opacity;
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(25px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* ===============================
+   BADGE
+================================ */
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border:1.5px solid rgba(78,205,196,.6);
+  color:var(--teal);
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.03em;
+  background:rgba(78,205,196,.08);
+}
+
+/* ===============================
+   CTA BUTTON
+================================ */
+
+.btn-primary{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:var(--orange);
+  color:#fff;
+  padding:14px 30px;
+  border-radius:999px;
+  font-weight:600;
+  font-size:14px;
+  letter-spacing:.02em;
+  border:none;
+  cursor:pointer;
+  text-decoration:none;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+}
+
+.btn-primary:hover{
+  transform:translateY(-3px);
+  background:#c94e22;
+  box-shadow:0 12px 28px rgba(224,90,43,.35);
+}
+
+/* ===============================
+   QUOTE CARD
+================================ */
+
+.quote-card{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;
+  padding:28px 32px;
+  backdrop-filter:blur(6px);
+  position:relative;
+}
+
+.quote-mark{
+  font-family:'Playfair Display',serif;
+  font-size:56px;
+  color:var(--teal);
+  position:absolute;
+  top:-10px;
+  left:22px;
+  opacity:.6;
+}
+
+/* ===============================
+   SLIDER DOTS
+================================ */
+
+.dots-container{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  padding:20px 0 28px;
+}
+
+.dot{
+  width:10px;
+  height:10px;
+  background:rgba(255,255,255,.35);
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+  transition:all .3s ease;
+}
+
+.dot.active{
+  width:28px;
+  background:var(--orange);
+  border-radius:999px;
+}
+
+.dot:hover{
+  background:rgba(255,255,255,.6);
+}
+
+/* ===============================
+   NAVIGATION ARROWS
+================================ */
+
+.nav-arrow{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.1);
+  border:1.5px solid rgba(255,255,255,.25);
+  color:#fff;
+  cursor:pointer;
+  font-size:16px;
+  transition:all .25s ease;
+}
+
+.nav-arrow:hover{
+  background:rgba(255,255,255,.25);
+  transform:scale(1.08);
+}
+
+/* ===============================
+   PARTNER STRIP
+================================ */
+
+.partner-strip{
+  background:#fff;
+  border-top:1px solid #e8e4de;
+  overflow:hidden;
+  position:relative;
+}
+
+.partner-track-wrapper{
+  overflow:hidden;
+  width:100%;
+}
+
+.partner-track{
+  display:flex;
+  align-items:center;
+  width:max-content;
+}
+
+/* scrolling animation */
+
+@keyframes scrollLeft{
+  from{
+    transform:translateX(0);
+  }
+  to{
+    transform:translateX(-50%);
+  }
+}
+
+.partner-track.animating{
+  animation:scrollLeft 38s linear infinite;
+}
+
+.partner-track.animating:hover{
+  animation-play-state:paused;
+}
+
+/* partner logos */
+
+.partner-logo{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:80px;
+  padding:0 40px;
+  border-right:1px solid #f0ece6;
+  flex-shrink:0;
+  opacity:.6;
+  transition:all .3s ease;
+  filter:grayscale(100%);
+}
+
+.partner-logo:hover{
+  opacity:1;
+  filter:grayscale(0);
+}
+
+.partner-logo img{
+  max-height:36px;
+  max-width:130px;
+  object-fit:contain;
+}
+
+/* edge fade */
+
+.partner-strip::before,
+.partner-strip::after{
+  content:'';
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:90px;
+  pointer-events:none;
+  z-index:2;
+}
+
+.partner-strip::before{
+  left:0;
+  background:linear-gradient(to right,#fff,transparent);
+}
+
+.partner-strip::after{
+  right:0;
+  background:linear-gradient(to left,#fff,transparent);
+}
+
+/* ===============================
+   FEATURE CARDS
+================================ */
+
+.feature-card{
+  background:#fff;
+  border:1px solid #e8e4de;
+  border-radius:20px;
+  padding:28px 24px;
+  transition:all .35s cubic-bezier(.4,0,.2,1);
+}
+
+.feature-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 45px rgba(26,60,52,.12);
+  border-color:var(--teal);
+}
+
+/* icon */
+
+.icon-box{
+  width:54px;
+  height:54px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  margin-bottom:16px;
+  background:linear-gradient(
+      135deg,
+      var(--green-deep),
+      var(--green-accent)
+  );
+}
+
+/* ===============================
+   STATS SECTION
+================================ */
+
+.stat-card{
+  text-align:center;
+  padding:32px 20px;
+}
+
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:46px;
+  font-weight:700;
+  color:var(--green-deep);
+  line-height:1;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width:1024px){
+
+.slide{
+  min-height:460px;
+}
+
+.partner-logo{
+  padding:0 28px;
+}
+
+}
+
+@media (max-width:768px){
+
+.slide{
+  min-height:420px;
+}
+
+.feature-card{
+  padding:22px;
+}
+
+.stat-num{
+  font-size:36px;
+}
+
+}
+
+@media (max-width:480px){
+
+.slide{
+  min-height:380px;
+}
+
+.btn-primary{
+  padding:12px 22px;
+}
+
+.partner-logo{
+  padding:0 22px;
+}
+
+
+
+}
+
+/* ===============================
+   STATS SECTION
+================================ */
+
+.stats-section{
+  background:#ffffff;
+  border-top:1px solid #e8e4de;
+  padding:70px 0;
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:30px;
+  max-width:1200px;
+  margin:auto;
+}
+
+.stat-card{
+  text-align:center;
+  padding:36px 24px;
+  border-radius:18px;
+  background:#ffffff;
+  border:1px solid #ece8e2;
+  transition:all .35s cubic-bezier(.4,0,.2,1);
+}
+
+.stat-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 45px rgba(26,60,52,.08);
+  border-color:var(--teal);
+}
+
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:48px;
+  font-weight:700;
+  color:var(--green-deep);
+  line-height:1;
+}
+
+.stat-label{
+  margin-top:8px;
+  font-size:14px;
+  color:#6b6b6b;
+  letter-spacing:.02em;
+}
+
+/* small icon above number */
+
+.stat-icon{
+  width:56px;
+  height:56px;
+  margin:auto;
+  margin-bottom:14px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(
+      135deg,
+      var(--green-deep),
+      var(--green-accent)
+  );
+  color:white;
+  font-size:22px;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width:1024px){
+
+.stats-grid{
+  grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media (max-width:600px){
+
+.stats-grid{
+  grid-template-columns:1fr;
+}
+
+.stat-num{
+  font-size:38px;
+}
+
+}
+</style>
+
+<!-- ═══════════════════════════════════════
+     HERO SLIDER
+══════════════════════════════════════════ -->
+<section class="hero-slider" style="margin-top: 10px;">
+
+  <!-- SLIDE 1 -->
+  <div class="slide active items-center" id="slide-0" style="background: linear-gradient(135deg, #4a0f3d 0%, #501a60 60%, #701e70 100%);">
+    <div class="slide-shape-extra"></div>
+    <div class="slide-content max-w-7xl mx-auto w-full px-6 py-16 flex flex-col md:flex-row items-center gap-12">
+      <!-- Left -->
+      <div class="flex-1">
+        <div class="flex gap-2 mb-6">
+          <span class="badge">✦ Best Value</span>
+          <span class="badge">📅 2–12 Months</span>
+        </div>
+        <h1 class="text-white mb-5"
+            style="font-family:'Playfair Display',serif; font-size: clamp(36px,5vw,64px); font-style:italic; font-weight:700; line-height:1.1;">
+          Become an<br/>expert
+        </h1>
+        <p class="text-white/75 mb-8 max-w-md leading-relaxed text-base">
+          <strong class="text-white">Programs</strong> combine multiple courses for a deeper learning
+          experience to help you grow your skills.
+        </p>
+        <a href="#" class="btn-primary" style="background:#ffc864; color:#1a1a1a;">Browse all programs</a>
+      </div>
+
+      <!-- Right – Quote -->
+      <div class="flex-1 max-w-md quote-col">
+        <div class="quote-card">
+          <span class="quote-mark">"</span>
+          <p class="text-white font-semibold text-lg leading-snug pt-6">
+            The program had passionate, knowledgeable instructors.
+            The training materials were high-quality and the difficulty
+            was just right.
+          </p>
+          <p class="text-white/55 mt-3 text-sm">— JakIja online learner</p>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Tagline -->
-    <p class="mt-10 text-sm text-gray-500 tracking-wide">
-      Trusted by learners & creators across Indonesia 🇮🇩
-    </p>
+  <!-- SLIDE 2 -->
+  <div class="slide items-center" id="slide-1"
+       style="background: linear-gradient(135deg, #0f2d4a 0%, #1a4060 60%, #1e5470 100%);">
+    <div class="slide-shape-extra"></div>
+    <div class="slide-content max-w-7xl mx-auto w-full px-6 py-16 flex flex-col md:flex-row items-center gap-12">
+      <div class="flex-1">
+        <div class="flex gap-2 mb-6">
+          <span class="badge" style="border-color: rgba(255,200,100,0.5); color: #ffc864; background: rgba(255,200,100,0.08);">🎓 Certified</span>
+          <span class="badge" style="border-color: rgba(255,200,100,0.5); color: #ffc864; background: rgba(255,200,100,0.08);">⚡ Self-paced</span>
+        </div>
+        <h1 class="text-white mb-5"
+            style="font-family:'Playfair Display',serif; font-size: clamp(36px,5vw,64px); font-style:italic; font-weight:700; line-height:1.1;">
+          Learn from<br/>the best
+        </h1>
+        <p class="text-white/75 mb-8 max-w-md leading-relaxed">
+          <strong class="text-white">Certificates</strong> from world-class universities give you
+          the credential employers are looking for.
+        </p>
+        <a href="#" class="btn-primary" style="background:#ffc864; color:#1a1a1a;">Explore certificates</a>
+      </div>
+      <div class="flex-1 max-w-md quote-col">
+        <div class="quote-card">
+          <span class="quote-mark" style="color: #ffc864;">"</span>
+          <p class="text-white font-semibold text-lg leading-snug pt-6">
+            I got a promotion just three months after completing the
+            course. The skills I learned were immediately applicable.
+          </p>
+          <p class="text-white/55 mt-3 text-sm">— Data Science graduate</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Hidden SEO text -->
-    <p class="sr-only">
-      JakIja drops online courses, expert-curated content, and microcredentials for Indonesian learners to build career-ready skills and earn certs anytime, anywhere.
-    </p>
+  <!-- SLIDE 3 -->
+  <div class="slide items-center" id="slide-2"
+       style="background: linear-gradient(135deg, #2d1a3e 0%, #3d2255 60%, #4a2e68 100%);">
+    <div class="slide-shape-extra"></div>
+    <div class="slide-content max-w-7xl mx-auto w-full px-6 py-16 flex flex-col md:flex-row items-center gap-12">
+      <div class="flex-1">
+        <div class="flex gap-2 mb-6">
+          <span class="badge" style="border-color: rgba(200,160,255,0.5); color: #c8a0ff; background: rgba(200,160,255,0.08);">🚀 Bootcamp</span>
+          <span class="badge" style="border-color: rgba(200,160,255,0.5); color: #c8a0ff; background: rgba(200,160,255,0.08);">👥 Cohort-based</span>
+        </div>
+        <h1 class="text-white mb-5"
+            style="font-family:'Playfair Display',serif; font-size: clamp(36px,5vw,64px); font-style:italic; font-weight:700; line-height:1.1;">
+          Launch your<br/>career
+        </h1>
+        <p class="text-white/75 mb-8 max-w-md leading-relaxed">
+          <strong class="text-white">Bootcamps</strong> are intensive, immersive programs designed
+          to get you job-ready in weeks, not years.
+        </p>
+        <a href="#" class="btn-primary" style="background: #c8a0ff; color: #2d1a3e;">View bootcamps</a>
+      </div>
+      <div class="flex-1 max-w-md quote-col">
+        <div class="quote-card">
+          <span class="quote-mark" style="color: #c8a0ff;">"</span>
+          <p class="text-white font-semibold text-lg leading-snug pt-6">
+            In just 12 weeks, I went from zero coding experience
+            to landing a full-stack developer role at a startup.
+          </p>
+          <p class="text-white/55 mt-3 text-sm">— Full-stack bootcamp grad</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide items-center" id="slide-3"
+       style="background: linear-gradient(135deg, #1a2a1a 0%, #1f3820 60%, #254225 100%);">
+    <div class="slide-shape-extra"></div>
+    <div class="slide-content max-w-7xl mx-auto w-full px-6 py-16 flex flex-col md:flex-row items-center gap-12">
+      <div class="flex-1">
+        <div class="flex gap-2 mb-6">
+          <span class="badge" style="border-color: rgba(160,230,180,0.5); color: #a0e6b4; background: rgba(160,230,180,0.08);">🌱 Beginner Friendly</span>
+          <span class="badge" style="border-color: rgba(160,230,180,0.5); color: #a0e6b4; background: rgba(160,230,180,0.08);">🆓 Free Trial</span>
+        </div>
+        <h1 class="text-white mb-5"
+            style="font-family:'Playfair Display',serif; font-size: clamp(36px,5vw,64px); font-style:italic; font-weight:700; line-height:1.1;">
+          Start learning<br/>today
+        </h1>
+        <p class="text-white/75 mb-8 max-w-md leading-relaxed">
+          <strong class="text-white">Free courses</strong> let you try before you buy —
+          explore thousands of topics with no commitment.
+        </p>
+        <a href="#" class="btn-primary" style="background: #a0e6b4; color: #1a2a1a;">Start for free</a>
+      </div>
+      <div class="flex-1 max-w-md quote-col">
+        <div class="quote-card">
+          <span class="quote-mark" style="color: #a0e6b4;">"</span>
+          <p class="text-white font-semibold text-lg leading-snug pt-6">
+            I started with a free course, then upgraded. Best
+            investment I've made in myself this year.
+          </p>
+          <p class="text-white/55 mt-3 text-sm">— Lifelong learner</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide items-center" id="slide-4"
+       style="background: linear-gradient(135deg, #3a1e10 0%, #4d2c18 60%, #5e3820 100%);">
+    <div class="slide-shape-extra"></div>
+    <div class="slide-content max-w-7xl mx-auto w-full px-6 py-16 flex flex-col md:flex-row items-center gap-12">
+      <div class="flex-1">
+        <div class="flex gap-2 mb-6">
+          <span class="badge" style="border-color: rgba(255,180,100,0.5); color: #ffb464; background: rgba(255,180,100,0.08);">🏢 Enterprise</span>
+          <span class="badge" style="border-color: rgba(255,180,100,0.5); color: #ffb464; background: rgba(255,180,100,0.08);">📊 Analytics</span>
+        </div>
+        <h1 class="text-white mb-5"
+            style="font-family:'Playfair Display',serif; font-size: clamp(36px,5vw,64px); font-style:italic; font-weight:700; line-height:1.1;">
+          Upskill your<br/>team
+        </h1>
+        <p class="text-white/75 mb-8 max-w-md leading-relaxed">
+          <strong class="text-white">Business plans</strong> give your entire organization
+          access to world-class content and progress analytics.
+        </p>
+        <a href="#" class="btn-primary" style="background: #ffb464; color: #3a1e10;">Learn more</a>
+      </div>
+      <div class="flex-1 max-w-md quote-col">
+        <div class="quote-card">
+          <span class="quote-mark" style="color: #ffb464;">"</span>
+          <p class="text-white font-semibold text-lg leading-snug pt-6">
+            We rolled out EduPro to 500 employees and saw
+            measurable productivity gains within 60 days.
+          </p>
+          <p class="text-white/55 mt-3 text-sm">— Head of L&D, TechCorp</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dots Navigation -->
+  <nav 
+      class="dots-container flex items-center justify-center gap-2 py-3"
+      style="background: rgba(0,0,0,0.15);"
+      aria-label="Hero slider navigation">
+
+      <!-- Previous -->
+      <button
+          type="button"
+          class="nav-arrow px-3 py-2 rounded-lg bg-white/80 hover:bg-white transition"
+          onclick="changeSlide(-1)"
+          aria-label="Previous slide">
+          &#8592;
+      </button>
+
+      <!-- Dots -->
+      <button
+          type="button"
+          class="dot active w-3 h-3 rounded-full bg-white"
+          onclick="goToSlide(0)"
+          aria-label="Go to slide 1"
+          aria-current="true">
+      </button>
+
+      <button
+          type="button"
+          class="dot w-3 h-3 rounded-full bg-white/60 hover:bg-white"
+          onclick="goToSlide(1)"
+          aria-label="Go to slide 2">
+      </button>
+
+      <button
+          type="button"
+          class="dot w-3 h-3 rounded-full bg-white/60 hover:bg-white"
+          onclick="goToSlide(2)"
+          aria-label="Go to slide 3">
+      </button>
+
+      <button
+          type="button"
+          class="dot w-3 h-3 rounded-full bg-white/60 hover:bg-white"
+          onclick="goToSlide(3)"
+          aria-label="Go to slide 4">
+      </button>
+
+      <button
+          type="button"
+          class="dot w-3 h-3 rounded-full bg-white/60 hover:bg-white"
+          onclick="goToSlide(4)"
+          aria-label="Go to slide 5">
+      </button>
+
+      <!-- Next -->
+      <button
+          type="button"
+          class="nav-arrow px-3 py-2 rounded-lg bg-white/80 hover:bg-white transition"
+          onclick="changeSlide(1)"
+          aria-label="Next slide">
+          &#8594;
+      </button>
+
+  </nav>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     PARTNER STRIP (auto-scroll)
+══════════════════════════════════════════ -->
+<section class="partner-strip">
+  <div class="partner-track-wrapper">
+    <div class="partner-track animating" id="partnerTrack">
+      <!-- Set 1 -->
+      <div class="partner-logo" title="University of Texas">
+        <svg width="120" height="36" viewBox="0 0 120 36" fill="none">
+          <rect width="26" height="26" x="0" y="5" rx="4" fill="#bf5700"/>
+          <text x="13" y="23" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="serif">UT</text>
+          <text x="36" y="16" fill="#bf5700" font-size="11" font-weight="bold" font-family="serif">TEXAS</text>
+          <text x="36" y="28" fill="#888" font-size="7.5" font-family="sans-serif">The University of Texas</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="London School of Economics">
+        <svg width="110" height="36" viewBox="0 0 110 36" fill="none">
+          <rect width="32" height="26" x="0" y="5" rx="3" fill="#c41230"/>
+          <text x="16" y="23" text-anchor="middle" fill="white" font-size="13" font-weight="bold" font-family="serif">LSE</text>
+          <text x="40" y="14" fill="#333" font-size="7" font-family="sans-serif">THE LONDON SCHOOL</text>
+          <text x="40" y="23" fill="#333" font-size="7" font-family="sans-serif">OF ECONOMICS AND</text>
+          <text x="40" y="32" fill="#333" font-size="7" font-family="sans-serif">POLITICAL SCIENCE</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="TU Delft">
+        <svg width="100" height="36" viewBox="0 0 100 36" fill="none">
+          <text x="0" y="26" fill="#00a6d6" font-size="26" font-weight="bold" font-family="sans-serif">TU</text>
+          <text x="38" y="26" fill="#1a1a1a" font-size="26" font-weight="bold" font-family="sans-serif">Delft</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="Amazon Web Services">
+        <svg width="80" height="36" viewBox="0 0 80 36" fill="none">
+          <text x="0" y="22" fill="#232f3e" font-size="22" font-weight="bold" font-family="sans-serif">aws</text>
+          <path d="M2 27 Q40 35 78 27" stroke="#ff9900" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="partner-logo" title="Tsinghua University">
+        <svg width="120" height="36" viewBox="0 0 120 36" fill="none">
+          <circle cx="18" cy="18" r="16" fill="none" stroke="#660874" stroke-width="1.5"/>
+          <circle cx="18" cy="18" r="10" fill="none" stroke="#660874" stroke-width="1"/>
+          <text x="40" y="14" fill="#660874" font-size="9" font-family="sans-serif" font-weight="bold">清华大学</text>
+          <text x="40" y="26" fill="#888" font-size="7.5" font-family="sans-serif">Tsinghua University</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="University of Queensland">
+        <svg width="130" height="36" viewBox="0 0 130 36" fill="none">
+          <rect width="26" height="26" x="0" y="5" rx="3" fill="#51247a"/>
+          <text x="13" y="23" text-anchor="middle" fill="white" font-size="10" font-weight="bold" font-family="serif">UQ</text>
+          <text x="34" y="14" fill="#51247a" font-size="9" font-family="sans-serif" font-weight="bold">THE UNIVERSITY</text>
+          <text x="34" y="24" fill="#51247a" font-size="9" font-family="sans-serif" font-weight="bold">OF QUEENSLAND</text>
+          <text x="34" y="33" fill="#888" font-size="7" font-family="sans-serif">AUSTRALIA</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="MIT">
+        <svg width="90" height="36" viewBox="0 0 90 36" fill="none">
+          <text x="0" y="26" fill="#8b0000" font-size="26" font-weight="bold" font-family="serif" letter-spacing="3">MIT</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="Harvard University">
+        <svg width="110" height="36" viewBox="0 0 110 36" fill="none">
+          <circle cx="18" cy="18" r="16" fill="#a51c30"/>
+          <text x="18" y="23" text-anchor="middle" fill="white" font-size="11" font-weight="bold" font-family="serif">H</text>
+          <text x="42" y="16" fill="#a51c30" font-size="11" font-weight="bold" font-family="serif">HARVARD</text>
+          <text x="42" y="29" fill="#888" font-size="9" font-family="sans-serif">UNIVERSITY</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="Google">
+        <svg width="90" height="36" viewBox="0 0 90 36" fill="none">
+          <text x="0" y="26" font-size="26" font-weight="bold" font-family="sans-serif">
+            <tspan fill="#4285F4">G</tspan><tspan fill="#EA4335">o</tspan><tspan fill="#FBBC05">o</tspan><tspan fill="#4285F4">g</tspan><tspan fill="#34A853">l</tspan><tspan fill="#EA4335">e</tspan>
+          </text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="IBM">
+        <svg width="70" height="36" viewBox="0 0 70 36" fill="none">
+          <text x="0" y="27" fill="#006699" font-size="30" font-weight="bold" font-family="sans-serif" letter-spacing="2">IBM</text>
+        </svg>
+      </div>
+      <!-- Set 2 (duplicate for infinite scroll) -->
+      <div class="partner-logo" title="University of Texas">
+        <svg width="120" height="36" viewBox="0 0 120 36" fill="none">
+          <rect width="26" height="26" x="0" y="5" rx="4" fill="#bf5700"/>
+          <text x="13" y="23" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="serif">UT</text>
+          <text x="36" y="16" fill="#bf5700" font-size="11" font-weight="bold" font-family="serif">TEXAS</text>
+          <text x="36" y="28" fill="#888" font-size="7.5" font-family="sans-serif">The University of Texas</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="London School of Economics">
+        <svg width="110" height="36" viewBox="0 0 110 36" fill="none">
+          <rect width="32" height="26" x="0" y="5" rx="3" fill="#c41230"/>
+          <text x="16" y="23" text-anchor="middle" fill="white" font-size="13" font-weight="bold" font-family="serif">LSE</text>
+          <text x="40" y="14" fill="#333" font-size="7" font-family="sans-serif">THE LONDON SCHOOL</text>
+          <text x="40" y="23" fill="#333" font-size="7" font-family="sans-serif">OF ECONOMICS AND</text>
+          <text x="40" y="32" fill="#333" font-size="7" font-family="sans-serif">POLITICAL SCIENCE</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="TU Delft">
+        <svg width="100" height="36" viewBox="0 0 100 36" fill="none">
+          <text x="0" y="26" fill="#00a6d6" font-size="26" font-weight="bold" font-family="sans-serif">TU</text>
+          <text x="38" y="26" fill="#1a1a1a" font-size="26" font-weight="bold" font-family="sans-serif">Delft</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="Amazon Web Services">
+        <svg width="80" height="36" viewBox="0 0 80 36" fill="none">
+          <text x="0" y="22" fill="#232f3e" font-size="22" font-weight="bold" font-family="sans-serif">aws</text>
+          <path d="M2 27 Q40 35 78 27" stroke="#ff9900" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="partner-logo" title="Tsinghua University">
+        <svg width="120" height="36" viewBox="0 0 120 36" fill="none">
+          <circle cx="18" cy="18" r="16" fill="none" stroke="#660874" stroke-width="1.5"/>
+          <circle cx="18" cy="18" r="10" fill="none" stroke="#660874" stroke-width="1"/>
+          <text x="40" y="14" fill="#660874" font-size="9" font-family="sans-serif" font-weight="bold">清华大学</text>
+          <text x="40" y="26" fill="#888" font-size="7.5" font-family="sans-serif">Tsinghua University</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="University of Queensland">
+        <svg width="130" height="36" viewBox="0 0 130 36" fill="none">
+          <rect width="26" height="26" x="0" y="5" rx="3" fill="#51247a"/>
+          <text x="13" y="23" text-anchor="middle" fill="white" font-size="10" font-weight="bold" font-family="serif">UQ</text>
+          <text x="34" y="14" fill="#51247a" font-size="9" font-family="sans-serif" font-weight="bold">THE UNIVERSITY</text>
+          <text x="34" y="24" fill="#51247a" font-size="9" font-family="sans-serif" font-weight="bold">OF QUEENSLAND</text>
+          <text x="34" y="33" fill="#888" font-size="7" font-family="sans-serif">AUSTRALIA</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="MIT">
+        <svg width="90" height="36" viewBox="0 0 90 36" fill="none">
+          <text x="0" y="26" fill="#8b0000" font-size="26" font-weight="bold" font-family="serif" letter-spacing="3">MIT</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="Harvard University">
+        <svg width="110" height="36" viewBox="0 0 110 36" fill="none">
+          <circle cx="18" cy="18" r="16" fill="#a51c30"/>
+          <text x="18" y="23" text-anchor="middle" fill="white" font-size="11" font-weight="bold" font-family="serif">H</text>
+          <text x="42" y="16" fill="#a51c30" font-size="11" font-weight="bold" font-family="serif">HARVARD</text>
+          <text x="42" y="29" fill="#888" font-size="9" font-family="sans-serif">UNIVERSITY</text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="Google">
+        <svg width="90" height="36" viewBox="0 0 90 36" fill="none">
+          <text x="0" y="26" font-size="26" font-weight="bold" font-family="sans-serif">
+            <tspan fill="#4285F4">G</tspan><tspan fill="#EA4335">o</tspan><tspan fill="#FBBC05">o</tspan><tspan fill="#4285F4">g</tspan><tspan fill="#34A853">l</tspan><tspan fill="#EA4335">e</tspan>
+          </text>
+        </svg>
+      </div>
+      <div class="partner-logo" title="IBM">
+        <svg width="70" height="36" viewBox="0 0 70 36" fill="none">
+          <text x="0" y="27" fill="#006699" font-size="30" font-weight="bold" font-family="sans-serif" letter-spacing="2">IBM</text>
+        </svg>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- Typewriter Script -->
+
+<!-- ═══════════════════════════════════════
+     STATS SECTION
+══════════════════════════════════════════ -->
+<section style="background: var(--green-deep);">
+  <div class="max-w-7xl mx-auto px-6 py-16">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-white/10">
+      <div class="stat-card">
+        <div class="stat-num text-white">{{ total_courses }}<span style="color: var(--teal);">+</span></div>
+        <div class="text-white/60 mt-2 text-sm">Courses available</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num text-white">{{ total_users }}<span style="color: var(--teal);">+</span></div>
+        <div class="text-white/60 mt-2 text-sm">Learners worldwide</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num text-white">{{ total_instructors }}<span style="color: var(--teal);">+</span></div>
+        <div class="text-white/60 mt-2 text-sm">Partner institutions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num text-white">{{ total_certificates }}<span style="color: var(--teal);">%</span></div>
+        <div class="text-white/60 mt-2 text-sm">Learner satisfaction</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const element = document.getElementById('typed-text');
-    const phrases = [
-      "Level Up Your Future with JakIja.",
-      "Skill Up Anytime, Anywhere.",
-      "Learn from the GOATs.",
-      "Build Skills That Actually Slap."
-    ];
-    let phraseIndex = 0;
-    let letterIndex = 0;
-    let currentPhrase = '';
-    let isDeleting = false;
-    const typingSpeed = 100; // kecepatan ketik
-    const deletingSpeed = 50; // kecepatan hapus
-    const delayBetween = 1500; // jeda antar kalimat
+  let currentSlide = 0;
+  const totalSlides = 5;
+  let autoSlideInterval;
 
-    function typeEffect() {
-      currentPhrase = phrases[phraseIndex];
-      if (isDeleting) {
-        element.textContent = currentPhrase.substring(0, letterIndex--);
-      } else {
-        element.textContent = currentPhrase.substring(0, letterIndex++);
-      }
+  function updateSlider() {
+    document.querySelectorAll('.slide').forEach((s, i) => {
+      s.classList.toggle('active', i === currentSlide);
+    });
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === currentSlide);
+    });
+  }
 
-      if (!isDeleting && letterIndex === currentPhrase.length) {
-        isDeleting = true;
-        setTimeout(typeEffect, delayBetween);
-      } else if (isDeleting && letterIndex === 0) {
-        isDeleting = false;
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-        setTimeout(typeEffect, 300);
-      } else {
-        setTimeout(typeEffect, isDeleting ? deletingSpeed : typingSpeed);
-      }
-    }
+  function goToSlide(n) {
+    currentSlide = n;
+    updateSlider();
+    resetAutoSlide();
+  }
 
-    typeEffect();
+  function changeSlide(dir) {
+    currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
+    updateSlider();
+    resetAutoSlide();
+  }
+
+  function resetAutoSlide() {
+    clearInterval(autoSlideInterval);
+    autoSlideInterval = setInterval(() => changeSlide(1), 5500);
+  }
+
+  // Start auto-slide
+  autoSlideInterval = setInterval(() => changeSlide(1), 5500);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  changeSlide(-1);
+    if (e.key === 'ArrowRight') changeSlide(1);
+  });
+
+  // Touch / swipe support
+  let touchStartX = 0;
+  document.querySelector('.hero-slider').addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+  });
+  document.querySelector('.hero-slider').addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) changeSlide(diff > 0 ? 1 : -1);
   });
 </script>
+
+
 
 <!-- MICRO CREDENTIALS SECTION -->
 <section class="py-16 lg:py-24 bg-gradient-to-br from-red-50 via-white to-gray-50 relative overflow-hidden" aria-labelledby="micro-courses-heading">
@@ -224,57 +1125,6 @@
 
 
 
-<!-- WHY JAKIJA SECTION -->
-<section class="py-16 sm:py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    <!-- Section Header -->
-    <h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-12 sm:mb-16">
-      Why Grind on <span class="text-red-600">JakIja</span>?
-    </h2>
-
-    <!-- Features Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-      
-      <!-- Feature 1 -->
-      <div class="text-center group">
-        <div class="bg-gradient-to-br from-red-100 to-red-50 p-6 sm:p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
-          <i class="fas fa-book text-4xl sm:text-5xl text-red-600 mb-3 sm:mb-4" aria-hidden="true"></i>
-          <p class="text-3xl sm:text-4xl font-black text-gray-900">{{ total_courses }}+</p>
-          <p class="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Fire Courses</p>
-        </div>
-      </div>
-
-      <!-- Feature 2 -->
-      <div class="text-center group">
-        <div class="bg-gradient-to-br from-red-100 to-red-50 p-6 sm:p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
-          <i class="fas fa-users text-4xl sm:text-5xl text-red-600 mb-3 sm:mb-4" aria-hidden="true"></i>
-          <p class="text-3xl sm:text-4xl font-black text-gray-900">{{ total_users }}+</p>
-          <p class="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Global Learners</p>
-        </div>
-      </div>
-
-      <!-- Feature 3 -->
-      <div class="text-center group">
-        <div class="bg-gradient-to-br from-red-100 to-red-50 p-6 sm:p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
-          <i class="fas fa-chalkboard-teacher text-4xl sm:text-5xl text-red-600 mb-3 sm:mb-4" aria-hidden="true"></i>
-          <p class="text-3xl sm:text-4xl font-black text-gray-900">{{ total_instructors }}+</p>
-          <p class="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Elite Instructors</p>
-        </div>
-      </div>
-
-      <!-- Feature 4 -->
-      <div class="text-center group">
-        <div class="bg-gradient-to-br from-red-100 to-red-50 p-6 sm:p-8 rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
-          <i class="fas fa-certificate text-4xl sm:text-5xl text-red-600 mb-3 sm:mb-4" aria-hidden="true"></i>
-          <p class="text-3xl sm:text-4xl font-black text-gray-900">{{ total_certificates }}+</p>
-          <p class="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Certs Dropped</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
 
 
 <!-- POPULAR CATEGORIES -->
@@ -345,39 +1195,7 @@
 </section>
 
 
-<!-- PARTNERS / TRUST -->
-<section class="py-20 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <!-- Header -->
-    <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6">
-      <span class="text-red-600">JakIja</span> Trusted by Global Brands & Institutions
-    </h2>
-    <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-16">
-      Thousands of learners from 40+ countries trust JakIja for personal & team growth.
-    </p>
 
-    <!-- Partners Grid -->
-    <div class="flex flex-wrap justify-center items-center gap-8">
-      {% for partner in partners|slice:":14" %}
-        {% if partner.name %}
-          <div class="group transition-transform duration-500 hover:scale-110 hover:opacity-100">
-            
-            {% if partner.icon_class %}
-              <i class="{{ partner.icon_class }} text-4xl lg:text-6xl text-gray-500 group-hover:text-red-600 transition-colors duration-300"
-                 aria-hidden="true"></i>
-              <span class="sr-only">{{ partner.name }}</span>
-            {% else %}
-              <img src="{% if partner.logo %}{{ partner.logo.url }}{% else %}/static/images/partner-100.webp{% endif %}"
-                   alt="{{ partner.name }}"
-                   class="h-12 lg:h-16 object-contain grayscale group-hover:grayscale-0 transition-all duration-500">
-            {% endif %}
-
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-</section>
 
 
 <!-- BLOG SECTION -->
@@ -395,7 +1213,7 @@
         <article class="bg-white rounded-2xl shadow-md hover:shadow-2xl overflow-hidden transition-all duration-500 group">
           <a href="{% url 'blog:blog-detail' slug=article.slug %}" class="block">
             {% if article.image %}
-              <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500">
+              <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
             {% endif %}
             <div class="p-6">
               <h3 class="text-xl font-bold text-gray-900 group-hover:text-red-600 transition line-clamp-2">

@@ -2,211 +2,329 @@
 {% load humanize %}
 
 {% block content %}
-<div class="py-5">
-  {% if payment %}
-    <div class="card shadow-sm border-0">
-      <!-- Card Header -->
-      <div class="card-header bg-white border-bottom">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
-          <div>
-            <h4 class="fw-bold mb-0">Transaction Invoice</h4>
-            <small class="text-muted">Transaction ID: 
-              <code>{{ payment.linked_transaction.id|default:"-" }}</code>
-            </small>
-          </div>
-          <div>
-            <span class="badge 
-              {% if payment.status == 'completed' %} bg-success
-              {% elif payment.status == 'pending' %} bg-warning text-dark
-              {% else %} bg-danger {% endif %}">
-              {{ payment.get_status_display }}
-            </span>
-          </div>
-        </div>
-      </div>
+<div class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
 
-      <div class="card-body">
-        <div class="row gy-4">
-          <!-- User Info -->
-          <div class="col-md-6">
-            <h6 class="fw-semibold mb-3">User Information</h6>
-            <ul class="list-unstyled small mb-0">
-              <li><strong>Name:</strong> {{ payment.user.get_full_name|default:payment.user.username }}</li>
-              <li><strong>Email:</strong> {{ payment.user.email }}</li>
-              <li><strong>IP Address:</strong> {{ payment.ip_address|default:"-" }}</li>
-              <li><strong>User Agent:</strong><br><span class="text-muted">{{ payment.user_agent|default:"-" }}</span></li>
-              <li><strong>Location:</strong> {{ payment.location|default:"-" }}</li>
-              <li><strong>ISP:</strong> {{ payment.isp|default:"-" }}</li>
-            </ul>
-          </div>
+{% if payment %}
 
-          <!-- Course / Transaction Info -->
-          <div class="col-md-6">
-            <h6 class="fw-semibold mb-3">Transaction Information</h6>
-            <ul class="list-unstyled small mb-0">
-              
+<div class="bg-white shadow-xl rounded-xl overflow-hidden">
 
-              {% if transaction %}
-              <li><strong>Transaction ID:</strong> {{ transaction.transaction_id }}</li>
-              <li><strong>Merchant Reference:</strong> {{ transaction.merchant_ref }}</li>
-              <li><strong>Status:</strong> {{ transaction.status|title }}</li>
-              <li><strong>Payment Method:</strong> {{ transaction.payment_method|default:"-" }}</li>
-              <li><strong>Bank / VA:</strong> {{ transaction.bank_name|default:"-" }} ({{ transaction.va_number|default:"-" }})</li>
-              <li><strong>Expiration:</strong> {{ transaction.expired_at|date:"d M Y H:i"|default:"-" }}</li>
-              {% endif %}
-            </ul>
-          </div>
-        </div>
+<!-- HEADER -->
+<div class="border-b px-6 py-5 flex flex-col md:flex-row md:justify-between md:items-center gap-3">
 
-        <hr class="my-4">
+<div>
+<h2 class="text-xl font-bold text-gray-800">Transaction Invoice</h2>
+<p class="text-sm text-gray-500">
+Transaction ID :
+<code class="bg-gray-100 px-2 py-1 rounded">
+{{ payment.linked_transaction.id|default:"-" }}
+</code>
+</p>
+</div>
 
-        <!-- Courses Table -->
-        <h4>Courses in this Transaction</h4>
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped">
-            <thead class="thead-light">
-              <tr>
-                <th>No</th>
-                <th>Course Name</th>
-                <th>Partner</th>
-                <th>Payment Model</th>
-                  <th>Amount </th>
-               
-              </tr>
-            </thead>
-            <tbody>
-              {% for p in transaction.payments.all %}
-                <tr>
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{ p.course.course_name }}</td>
-                  <td>{{ p.course.org_partner.name.name }}</td>
-                  <td>{{ p.get_payment_model_display }}</td>
-                  <td>{{ p.amount|intcomma }}</td>
-                 
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+<div>
+<span class="px-3 py-1 text-xs rounded-full
+{% if payment.status == 'completed' %}
+bg-green-100 text-green-700
+{% elif payment.status == 'pending' %}
+bg-yellow-100 text-yellow-800
+{% else %}
+bg-red-100 text-red-700
+{% endif %}
+">
+{{ payment.get_status_display }}
+</span>
+</div>
 
-        <!-- Transaction Time and Total -->
-        <div class="row gy-3 mt-4">
-          <div class="col-md-6">
-            <h6 class="fw-semibold mb-3">Transaction Time</h6>
-            <ul class="list-unstyled small mb-0">
-              <li><strong>Created At:</strong> {{ payment.created_at|date:"Y-m-d H:i" }}</li>
-              <li><strong>Last Updated:</strong> {{ payment.updated_at|date:"Y-m-d H:i" }}</li>
-            </ul>
-          </div>
-          <div class="col-md-6">
-            <h6 class="fw-semibold mb-3">Total Amount</h6>
-            <div class="small text-muted mb-2">
-              <p class="mb-1">Courses Total: Rp {{ total_course_amount|intcomma }}</p>
-              <p class="mb-1">Platform Fee: Rp {{ transaction.platform_fee|default:0|intcomma }}</p>
-              {% if transaction.voucher and transaction.voucher > 0 %}
-                <p class="mb-1 text-success">Voucher: -Rp {{ transaction.voucher|intcomma }}</p>
-              {% endif %}
-            </div>
-            <p class="fs-4 fw-bold text-success mb-0">Rp {{ total_amount|intcomma }}</p>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- Price Snapshot -->
-      <div class="card-body bg-light border-top">
-        <h6 class="fw-semibold mb-3">Price Details at the Time of Transaction</h6>
-
-        {% if transaction and transaction.payments.all.count > 1 %}
-        <!-- 🔹 Jika 1 transaksi berisi beberapa course -->
-        <div class="table-responsive small">
-          <table class="table table-sm table-bordered align-middle">
-            <thead class="table-light">
-              <tr>
-                <th>#</th>
-                <th>Course</th>
-                <th>Normal Price</th>
-                <th>Discount</th>
-                <th>VAT</th>
-                <th>Total Paid</th>
-                <th>Partner</th>
-                <th>LMSKu</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for p in transaction.payments.all %}
-              <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ p.course.course_name }}</td>
-                <td>Rp {{ p.snapshot_price|intcomma }}</td>
-                <td>Rp {{ p.snapshot_discount|intcomma }}</td>
-                <td>Rp {{ p.snapshot_ppn|intcomma }}</td>
-                <td class="fw-semibold text-success">Rp {{ p.snapshot_user_payment|intcomma }}</td>
-                <td>Rp {{ p.snapshot_partner_earning|intcomma }}</td>
-                <td>Rp {{ p.snapshot_ice_earning|intcomma }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        {% else %}
-        <!-- 🔹 Jika hanya 1 course -->
-        <div class="row small gy-3">
-          <div class="col-md-4">
-            <ul class="list-unstyled mb-0">
-              <li><strong>Normal Price:</strong> Rp {{ payment.snapshot_price|intcomma }}</li>
-              <li><strong>Discount:</strong> Rp {{ payment.snapshot_discount|intcomma }}</li>
-              <li><strong>Tax (%):</strong> {{ payment.snapshot_tax }}</li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <ul class="list-unstyled mb-0">
-              <li><strong>VAT:</strong> Rp {{ payment.snapshot_ppn|intcomma }}</li>
-              <li><strong>Total Paid:</strong> <span class="fw-bold text-success">Rp {{ payment.snapshot_user_payment|intcomma }}</span></li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <ul class="list-unstyled mb-0">
-              <li><strong>To Partner:</strong> Rp {{ payment.snapshot_partner_earning|intcomma }}</li>
-              <li><strong>To ICE:</strong> Rp {{ payment.snapshot_ice_earning|intcomma }}</li>
-            </ul>
-          </div>
-        </div>
-        {% endif %}
-      </div>
+</div>
 
 
-      <!-- Proof of Payment -->
-      {% if payment.proof_of_payment %}
-      <div class="card-body border-top">
-        <h6 class="fw-semibold mb-3">Proof of Payment</h6>
-        <div class="text-center">
-          <a href="{{ payment.proof_of_payment.url }}" target="_blank">
-            <img src="{{ payment.proof_of_payment.url }}" alt="Payment Proof" class="img-fluid img-thumbnail" style="max-width: 400px;">
-          </a>
-        </div>
-      </div>
-      {% endif %}
+<!-- USER + TRANSACTION INFO -->
+<div class="grid md:grid-cols-2 gap-8 px-6 py-6">
 
-      <!-- Notes -->
-      {% if payment.notes %}
-      <div class="card-body border-top bg-white">
-        <h6 class="fw-semibold mb-2">Notes</h6>
-        <p class="text-muted small mb-0">{{ payment.notes }}</p>
-      </div>
-      {% endif %}
+<!-- USER -->
+<div>
+<h3 class="font-semibold text-gray-700 mb-3">
+User Information
+</h3>
 
-      <!-- Back Button -->
-      <div class="card-footer bg-white text-end">
-        <a href="{% url 'payments:invoice_receipt' %}" class="btn btn-outline-secondary btn-sm">← Back to Report</a>
-        
+<ul class="text-sm text-gray-600 space-y-2">
 
-      </div>
-    </div>
-  {% else %}
-    <div class="alert alert-warning text-center" role="alert">
-      Transaction not found.
-    </div>
-  {% endif %}
+<li><strong>Name :</strong>
+{{ payment.user.get_full_name|default:payment.user.username }}
+</li>
+
+<li><strong>Email :</strong>
+{{ payment.user.email }}
+</li>
+
+<li><strong>IP Address :</strong>
+{{ payment.ip_address|default:"-" }}
+</li>
+
+<li>
+<strong>User Agent :</strong>
+<p class="text-xs text-gray-500 break-all">
+{{ payment.user_agent|default:"-" }}
+</p>
+</li>
+
+<li><strong>Location :</strong>
+{{ payment.location|default:"-" }}
+</li>
+
+<li><strong>ISP :</strong>
+{{ payment.isp|default:"-" }}
+</li>
+
+</ul>
+</div>
+
+
+<!-- TRANSACTION -->
+<div>
+
+<h3 class="font-semibold text-gray-700 mb-3">
+Transaction Information
+</h3>
+
+<ul class="text-sm text-gray-600 space-y-2">
+
+{% if transaction %}
+
+<li><strong>Transaction ID :</strong> {{ transaction.transaction_id }}</li>
+
+<li><strong>Merchant Reference :</strong>
+{{ transaction.merchant_ref }}
+</li>
+
+<li><strong>Status :</strong>
+{{ transaction.status|title }}
+</li>
+
+<li><strong>Payment Method :</strong>
+{{ transaction.payment_method|default:"-" }}
+</li>
+
+<li>
+<strong>Bank / VA :</strong>
+{{ transaction.bank_name|default:"-" }}
+({{ transaction.va_number|default:"-" }})
+</li>
+
+<li>
+<strong>Expiration :</strong>
+{{ transaction.expired_at|date:"d M Y H:i"|default:"-" }}
+</li>
+
+{% endif %}
+
+</ul>
+
+</div>
+
+</div>
+
+
+<!-- COURSES -->
+<div class="px-6 pb-6">
+
+<h3 class="font-semibold text-gray-700 mb-4">
+Courses in this Transaction
+</h3>
+
+<div class="overflow-x-auto">
+
+<table class="min-w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
+
+<thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+
+<tr>
+<th class="px-4 py-3 text-left">No</th>
+<th class="px-4 py-3 text-left">Course</th>
+<th class="px-4 py-3 text-left">Partner</th>
+<th class="px-4 py-3 text-left">Payment Model</th>
+<th class="px-4 py-3 text-right">Amount</th>
+</tr>
+
+</thead>
+
+<tbody class="divide-y">
+
+{% for p in transaction.payments.all %}
+
+<tr class="hover:bg-gray-50">
+
+<td class="px-4 py-3">
+{{ forloop.counter }}
+</td>
+
+<td class="px-4 py-3 font-medium text-gray-800">
+{{ p.course.course_name }}
+</td>
+
+<td class="px-4 py-3">
+{{ p.course.org_partner.name.name }}
+</td>
+
+<td class="px-4 py-3">
+{{ p.get_payment_model_display }}
+</td>
+
+<td class="px-4 py-3 text-right font-medium">
+Rp {{ p.amount|intcomma }}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- TIME + TOTAL -->
+<div class="grid md:grid-cols-2 gap-8 border-t px-6 py-6">
+
+<div>
+
+<h3 class="font-semibold text-gray-700 mb-3">
+Transaction Time
+</h3>
+
+<ul class="text-sm text-gray-600 space-y-2">
+
+<li>
+<strong>Created At :</strong>
+{{ payment.created_at|date:"Y-m-d H:i" }}
+</li>
+
+<li>
+<strong>Last Updated :</strong>
+{{ payment.updated_at|date:"Y-m-d H:i" }}
+</li>
+
+</ul>
+
+</div>
+
+
+<div>
+
+<h3 class="font-semibold text-gray-700 mb-3">
+Total Amount
+</h3>
+
+<div class="text-sm text-gray-600 space-y-1">
+
+<p>
+Courses Total :
+<span class="float-right">
+Rp {{ total_course_amount|intcomma }}
+</span>
+</p>
+
+<p>
+Platform Fee :
+<span class="float-right">
+Rp {{ transaction.platform_fee|default:0|intcomma }}
+</span>
+</p>
+
+{% if transaction.voucher and transaction.voucher > 0 %}
+<p class="text-green-600">
+Voucher :
+<span class="float-right">
+- Rp {{ transaction.voucher|intcomma }}
+</span>
+</p>
+{% endif %}
+
+</div>
+
+<p class="text-xl font-bold text-green-600 mt-3">
+Rp {{ total_amount|intcomma }}
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- PROOF -->
+{% if payment.proof_of_payment %}
+
+<div class="border-t px-6 py-6">
+
+<h3 class="font-semibold text-gray-700 mb-4">
+Proof of Payment
+</h3>
+
+<div class="flex justify-center">
+
+<a href="{{ payment.proof_of_payment.url }}" target="_blank">
+
+<img
+src="{{ payment.proof_of_payment.url }}"
+class="max-w-sm rounded-lg shadow border"
+/>
+
+</a>
+
+</div>
+
+</div>
+
+{% endif %}
+
+
+
+<!-- NOTES -->
+{% if payment.notes %}
+
+<div class="border-t px-6 py-6 bg-gray-50">
+
+<h3 class="font-semibold text-gray-700 mb-2">
+Notes
+</h3>
+
+<p class="text-sm text-gray-600">
+{{ payment.notes }}
+</p>
+
+</div>
+
+{% endif %}
+
+
+
+<!-- FOOTER -->
+<div class="border-t px-6 py-4 flex justify-end">
+
+<a
+href="{% url 'payments:invoice_receipt' %}"
+class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm"
+>
+← Back to Report
+</a>
+
+</div>
+
+</div>
+
+
+{% else %}
+
+<div class="bg-yellow-100 text-yellow-800 px-4 py-3 rounded text-center">
+Transaction not found.
+</div>
+
+{% endif %}
+
 </div>
 {% endblock %}

@@ -135,52 +135,60 @@
       <div class="lg:col-span-8">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">Courses by {{ instructor.user.first_name }}</h2>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {% for course in courses %}
-          <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow hover:shadow-md transition-transform duration-200 hover:scale-105">
-            <div class="relative">
-              <img loading="lazy"
-                   width="400"
-                   height="180"
-                   src="{{ course.image|default:'https://via.placeholder.com/400x180' }}"
-                   alt="{{ course.course_name }}"
-                   class="w-full h-40 object-cover">
-              {% if course.is_free %}
-                <span class="absolute top-2 left-2 sm:top-3 sm:left-3 bg-green-600 text-white text-sm font-semibold px-3 py-1.5 rounded-md shadow-sm">
-                  FREE
-                </span>
-              {% else %}
-                <span class="absolute top-2 left-2 sm:top-3 sm:left-3 bg-green-600 text-white text-sm font-semibold px-3 py-1.5 rounded-md shadow-sm hover:bg-green-700 transition-colors duration-200 truncate max-w-[90%]">
-                  IDR {{ course.price|intcomma }}
-                  {% if course.discount_amount > 0 %}
-                    <span class="line-through text-gray-200 text-xs ml-2">IDR {{ course.normal_price|intcomma }}</span>
-                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-full">
-                      Save {{ course.discount_percent }}%
-                    </span>
-                  {% endif %}
-                </span>
-              {% endif %}
-            </div>
-            <div class="p-4">
-              <h3 class="font-semibold text-gray-800 text-base truncate">{{ course.course_name }}</h3>
-              <p class="text-sm text-gray-500">Ends: {{ course.end_date|default:"N/A" }}</p>
-              <p class="text-sm text-gray-500">Enrolled: {{ course.total_enrollments|default:"0" }}</p>
-              <div class="flex items-center mt-2">
-                {% for _ in course.full_star_range %}
-                  <i class="fas fa-star text-yellow-400" aria-hidden="true"></i>
-                {% endfor %}
-                {% if course.half_star %}
-                  <i class="fas fa-star-half-alt text-yellow-400" aria-hidden="true"></i>
-                {% endif %}
-                {% for _ in course.empty_star_range %}
-                  <i class="far fa-star text-gray-400" aria-hidden="true"></i>
-                {% endfor %}
-                <span class="text-sm text-gray-500 ml-1">({{ course.review_count }})</span>
+         {% for course in courses %}
+            <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 mb-6">
+              <div class="relative">
+                <!-- Gambar Course -->
+                <img loading="lazy"
+                    width="400"
+                    height="180"
+                    src="{{ course.image|default:'https://via.placeholder.com/400x180' }}"
+                    alt="{{ course.course_name }}"
+                    class="w-full h-[180px] object-cover transition-all duration-300 ease-in-out hover:scale-110">
+                
+               
               </div>
-              <a href="{% url 'courses:course_lms_detail' course.id course.slug %}" class="text-sm text-blue-500 hover:underline mt-2 inline-block">View Course</a>
+
+              <a href="{% url 'courses:course_lms_detail' course.id course.slug %}" class="block p-4">
+                <!-- Nama Kursus -->
+                <h3 class="font-semibold text-gray-800 text-lg sm:text-xl truncate">{{ course.course_name }}</h3>
+                
+                <!-- Tanggal Berakhir -->
+                <p class="text-sm text-gray-500 mt-1">Ends: {{ course.end_date|default:"N/A" }}</p>
+
+                <!-- Enrolled and Rating (Sejajar) -->
+                <div class="flex items-center justify-between mt-3">
+                  <p class="text-sm text-gray-500">Enrolled: {{ course.total_enrollments|default:"0" }}</p>
+                  <div class="flex items-center">
+                    {% for _ in course.full_star_range %}
+                      <i class="fas fa-star text-yellow-400 text-xs sm:text-sm" aria-hidden="true"></i>
+                    {% endfor %}
+                    {% if course.half_star %}
+                      <i class="fas fa-star-half-alt text-yellow-400 text-xs sm:text-sm" aria-hidden="true"></i>
+                    {% endif %}
+                    {% for _ in course.empty_star_range %}
+                      <i class="far fa-star text-gray-400 text-xs sm:text-sm" aria-hidden="true"></i>
+                    {% endfor %}
+                    <span class="text-sm text-gray-500 ml-2">({{ course.review_count }})</span>
+                  </div>
+                </div>
+
+                <!-- Harga (pindahkan ke bawah) -->
+                <div class="mt-4">
+                  {% if course.is_free %}
+                    <p class="text-green-600 font-semibold text-sm">FREE</p>
+                  {% else %}
+                    <p class="text-gray-800 font-semibold text-sm">IDR {{ course.price|intcomma }}</p>
+                    {% if course.discount_amount > 0 %}
+                      <p class="text-xs text-gray-500 line-through">IDR {{ course.normal_price|intcomma }}</p>
+                      <span class="text-xs text-red-500">Save {{ course.discount_percent }}%</span>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </a>
             </div>
-          </div>
           {% empty %}
-          <p class="text-gray-500 col-span-full">No courses available.</p>
+            <p class="text-gray-500 col-span-full text-center">No courses available.</p>
           {% endfor %}
         </div>
 
