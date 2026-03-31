@@ -10,7 +10,8 @@ env/
 # Django settings (sensitif)
 mysite/settings.py
 
-
+mysite/settings.py.bak
+__pycache__/
 
 # Build / static files
 staticfiles/
