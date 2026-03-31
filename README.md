@@ -303,6 +303,7 @@ Our vision: to create a digital learning system that is not only comprehensive, 
 2. cd jakija  
 3. python3 -m venv .venv  
 4. source .venv/bin/activate  
+rename this file `mysite/settings.py.example` to  `mysite/settings.py`
 5. pip install -r requirements.txt  
 6. python manage.py migrate  
 7. python manage.py createsuperuser  
