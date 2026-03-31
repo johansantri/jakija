@@ -9,20 +9,18 @@ env/
 
 # Django settings (sensitif)
 mysite/settings.py
-
 mysite/settings.py.bak
-__pycache__/
-
-# Build / static files
-staticfiles/
-
-# Socket / temp
-*.sock.lock
-
 
 # Python cache
 __pycache__/
 *.py[cod]
+
+# Build / static files
+staticfiles/
+media/
+
+# Socket / temp
+*.sock.lock
 
 # Database
 db.sqlite3
@@ -30,10 +28,6 @@ db.sqlite3
 
 # Logs
 *.log
-
-# Static & Media (kalau generate di server)
-staticfiles/
-media/
 
 # OS
 .DS_Store
