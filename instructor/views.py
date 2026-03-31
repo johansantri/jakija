@@ -11,6 +11,7 @@ from decimal import Decimal
 from django.contrib import messages
 from courses.models import Partner,Quiz,QuizResult,LTIResult,InstructorCertificate,Course,CoursePrice,PricingType, Enrollment,Section,GradeRange,CourseStatusHistory,QuestionAnswer, CourseProgress, PeerReview,MaterialRead, AssessmentRead, AssessmentScore,Material,Assessment, Submission, CustomUser, Instructor
 from authentication.models import CustomUser, Universiti
+from notification.models import Notification
 # Create your views here.
 from django.template.loader import render_to_string
 from weasyprint import HTML
@@ -313,7 +314,6 @@ def superuser_publish_course(request, course_id):
     if not (request.user.is_superuser or getattr(request.user, 'is_curation', False)):
         raise PermissionDenied("You do not have permission to publish this course.")
 
-
     # Ambil harga kursus terbaru dengan price_type yang valid
     course_price = CoursePrice.objects.filter(course=course, price_type__isnull=False).order_by('-id').first()
 
@@ -352,32 +352,95 @@ def superuser_publish_course(request, course_id):
             return redirect('instructor:superuser_publish_course', course_id=course.id)
 
         if action == 'superuser_publish':
+
             if course.status_course.status != 'curation':
                 messages.error(request, "Course can only be published from 'Curation' status.")
                 return redirect('instructor:superuser_publish_course', course_id=course.id)
+
             if not course_price:
                 messages.error(request, "Cannot publish course without a set price.")
                 return redirect('instructor:superuser_publish_course', course_id=course.id)
+
             course.change_status('published', request.user, message=message or "Published by Superuser.")
             messages.success(request, "Course has been published to the catalog.")
 
+            # NOTIFICATION
+            if course.instructor:
+                Notification.objects.create(
+                    user=course.instructor.user,
+                    actor=request.user,
+                    notif_type='course_published',
+                    priority='high',
+                    title="Course Published",
+                    message=f"Your course '{course.course_name}' has been published to the catalog.",
+                    link=f"/studio/{course.id}"
+                )
+
+            if course.org_partner:
+                Notification.objects.create(
+                    user=course.org_partner.user,
+                    actor=request.user,
+                    notif_type='course_published',
+                    priority='high',
+                    title="Course Published",
+                    message=f"Course '{course.course_name}' has been published by Superuser.",
+                    link=f"/studio/{course.id}"
+                )
+
         elif action == 'superuser_reject':
+
             if course.status_course.status != 'curation':
                 messages.error(request, "Course can only be rejected to Partner from 'Curation' status.")
                 return redirect('instructor:superuser_publish_course', course_id=course.id)
+
             course.change_status('curation', request.user, message=message)
             messages.success(request, "Course has been rejected and returned to Partner for revisions.")
 
+            # NOTIFICATION
+            partner = course.org_partner
+            if partner:
+                Notification.objects.create(
+                    user=partner.user,
+                    actor=request.user,
+                    notif_type='course_rejected',
+                    priority='high',
+                    title="Course Rejected",
+                    message=f"Course '{course.course_name}' was rejected during curation. Reason: {message}",
+                    link=f"/studio/{course.id}"
+                )
+
         elif action == 'superuser_archive':
+
             if course.status_course.status == 'archived':
                 messages.error(request, "Course is already archived.")
                 return redirect('instructor:superuser_publish_course', course_id=course.id)
+
             course.change_status('archived', request.user, message=message)
             messages.success(request, "Course has been archived.")
 
+            # NOTIFICATION
+            targets = []
+            if course.instructor:
+                targets.append(course.instructor.user)
+            if course.org_partner:
+                targets.append(course.org_partner.user)
+
+            for user in targets:
+                Notification.objects.create(
+                    user=user,
+                    actor=request.user,
+                    notif_type='course_archived',
+                    priority='high',
+                    title="Course Archived",
+                    message=f"Course '{course.course_name}' has been archived. Reason: {message}",
+                    link=f"/studio/{course.id}"
+                )
+
+            # EMAIL
             instructor_email = course.instructor.user.email if course.instructor else None
             partner_email = course.org_partner.user.email if course.org_partner else None
             recipient_list = [email for email in [instructor_email, partner_email] if email]
+
             if recipient_list:
                 email_message = (
                     f"The course '{course.course_name}' has been archived by Superuser.\n"
@@ -386,6 +449,7 @@ def superuser_publish_course(request, course_id):
                     f"Discount: {price_info['discount_percent']}%\n"
                     f"Reason: {message}"
                 )
+
                 send_mail(
                     subject=f"Course Archived: {course.course_name}",
                     message=email_message,
@@ -395,15 +459,32 @@ def superuser_publish_course(request, course_id):
                 )
 
         elif action == 'superuser_reject_to_draft':
+
             if course.status_course.status == 'draft':
                 messages.error(request, "Course is already in 'Draft' status.")
                 return redirect('instructor:superuser_publish_course', course_id=course.id)
+
             course.change_status('draft', request.user, message=message)
             messages.success(request, "Course has been rejected and returned to Instructor as Draft.")
 
+            # NOTIFICATION
+            instructor = course.instructor
+            if instructor:
+                Notification.objects.create(
+                    user=instructor.user,
+                    actor=request.user,
+                    notif_type='course_rejected_draft',
+                    priority='high',
+                    title="Course Returned to Draft",
+                    message=f"Your course '{course.course_name}' was returned to Draft. Reason: {message}",
+                    link=f"/studio/{course.id}"
+                )
+
+            # EMAIL
             instructor_email = course.instructor.user.email if course.instructor else None
             partner_email = course.org_partner.user.email if course.org_partner else None
             recipient_list = [email for email in [instructor_email, partner_email] if email]
+
             if recipient_list:
                 email_message = (
                     f"The course '{course.course_name}' has been rejected by Superuser and returned to Draft status.\n"
@@ -412,6 +493,7 @@ def superuser_publish_course(request, course_id):
                     f"Discount: {price_info['discount_percent']}%\n"
                     f"Reason: {message}"
                 )
+
                 send_mail(
                     subject=f"Course Rejected to Draft: {course.course_name}",
                     message=email_message,
@@ -436,6 +518,7 @@ def superuser_publish_course(request, course_id):
 
 @login_required
 def studios(request, id):
+
     # ===============================
     # Ambil course
     # ===============================
@@ -473,60 +556,159 @@ def studios(request, id):
     # POST ACTION
     # ===============================
     if request.method == "POST":
+
         action = request.POST.get("action")
         message = request.POST.get("message")
 
-        # ========== Instructor submit ==========
+        # ===============================
+        # Instructor submit
+        # ===============================
         if action == "submit_curation" and is_instructor:
+
             if course.status_course.status != "draft":
                 messages.error(request, "Course hanya bisa diajukan dari status Draft.")
+
             elif not is_course_ready:
                 messages.error(
                     request,
                     "Course belum siap dikurasi. Lengkapi checklist terlebih dahulu."
                 )
+
             elif not message:
                 messages.error(request, "Pesan wajib diisi.")
+
             else:
                 course.change_status("curation", user, message=message)
+
+                partner = course.org_partner
+                if partner:
+                    Notification.objects.create(
+                        user=partner.user,
+                        actor=request.user,
+                        notif_type='course_submitted',
+                        priority='medium',
+                        title="Course submitted for review",
+                        message=f"Instructor submitted course '{course.course_name}' for curation.",
+                        link=f"/studio/{course.id}"
+                    )
+
                 messages.success(request, "Course berhasil diajukan ke kurasi.")
+
             return redirect("courses:studio", id=course.id)
 
-        # ========== Partner review ==========
+        # ===============================
+        # Partner review
+        # ===============================
         elif action in ["partner_accept", "partner_reject"] and is_partner:
+
             if course.status_course.status != "curation":
                 messages.error(request, "Course hanya bisa direview saat status Curation.")
+
             elif not message:
                 messages.error(request, "Pesan wajib diisi.")
+
             else:
+
+                # Partner accept
                 if action == "partner_accept":
+
                     course.change_status("curation", user, message=message)
+
+                    superusers = CustomUser.objects.filter(is_superuser=True)
+
+                    for admin in superusers:
+                        Notification.objects.create(
+                            user=admin,
+                            actor=request.user,
+                            notif_type='course_ready_publish',
+                            priority='high',
+                            title="Course ready for publish",
+                            message=f"Course '{course.course_name}' has passed partner review.",
+                            link=f"/studio/{course.id}"
+                        )
+
                     messages.success(request, "Course diteruskan ke Superuser.")
+
+                # Partner reject
                 else:
+
                     course.change_status("draft", user, message=message)
+
+                    instructor = course.instructor
+                    if instructor:
+                        Notification.objects.create(
+                            user=instructor.user,
+                            actor=request.user,
+                            notif_type='course_rejected_partner',
+                            priority='high',
+                            title="Course rejected by partner",
+                            message=f"Your course '{course.course_name}' was returned for revision.",
+                            link=f"/studio/{course.id}"
+                        )
+
                     messages.success(request, "Course dikembalikan ke Instructor.")
+
             return redirect("courses:studio", id=course.id)
 
-        # ========== Superuser ==========
+        # ===============================
+        # Superuser action
+        # ===============================
         elif action in ["superuser_publish", "superuser_reject"] and is_superuser:
+
             if course.status_course.status != "curation":
                 messages.error(request, "Course hanya bisa dipublish dari Curation.")
+
             elif action == "superuser_publish" and not is_course_ready:
                 messages.error(
                     request,
                     "Course belum memenuhi checklist, tidak bisa dipublish."
                 )
+
             elif action == "superuser_reject" and not message:
                 messages.error(request, "Pesan wajib diisi.")
+
             else:
+
+                # Publish
                 if action == "superuser_publish":
+
                     course.change_status(
                         "published", user, message=message or "Published by Superuser."
                     )
+
+                    instructor = course.instructor
+                    if instructor:
+                        Notification.objects.create(
+                            user=instructor.user,
+                            actor=request.user,
+                            notif_type='course_published',
+                            priority='high',
+                            title="Course Published 🎉",
+                            message=f"Your course '{course.course_name}' has been published.",
+                            link=f"/studio/{course.id}"
+                        )
+
                     messages.success(request, "Course berhasil dipublish.")
+
+                # Reject
                 else:
+
                     course.change_status("curation", user, message=message)
+
+                    partner = course.org_partner
+                    if partner:
+                        Notification.objects.create(
+                            user=partner.user,
+                            actor=request.user,
+                            notif_type='course_rejected_superuser',
+                            priority='high',
+                            title="Course rejected by superuser",
+                            message=f"Course '{course.course_name}' needs revision.",
+                            link=f"/studio/{course.id}"
+                        )
+
                     messages.success(request, "Course dikembalikan ke Partner.")
+
             return redirect("courses:studio", id=course.id)
 
     # ===============================
@@ -542,13 +724,11 @@ def studios(request, id):
         "is_partner": is_partner,
         "is_superuser": is_superuser,
 
-        # Author info
         "author_full_name": course.author.username,
         "author_email": course.author.email,
         "author_university": course.author.university.name if course.author.university else "N/A",
         "author_gender": course.author.gender or "N/A",
 
-        # Checklist
         "checklist": checklist,
         "readiness": readiness,
         "is_course_ready": is_course_ready,

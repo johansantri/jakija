@@ -27,6 +27,10 @@ from dal import autocomplete
 from decimal import Decimal
 from django.utils.safestring import mark_safe
 from datetime import date, timedelta
+from PIL import Image
+from io import BytesIO
+from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import InMemoryUploadedFile
 logger = logging.getLogger(__name__)
 
 
@@ -242,46 +246,100 @@ class MicroCredentialForm(forms.ModelForm):
     class Meta:
         model = MicroCredential
         fields = [
-            'title', 'slug', 'description', 'required_courses', 
-            'status', 'start_date', 'end_date', 'image', 'category', 
+            'title', 'slug', 'description', 'required_courses',
+            'status', 'start_date', 'end_date', 'image', 'category',
             'min_total_score'
         ]
+
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'w-full text-lg px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 outline-none',
                 'oninput': 'listingslug(value)',
             }),
+
             'slug': forms.HiddenInput(attrs={'maxlength': '200'}),
+
             'description': forms.Textarea(attrs={
                 'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 outline-none',
                 'rows': 4
             }),
+
             'start_date': forms.DateInput(attrs={
                 'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 outline-none',
                 'type': 'date'
             }),
+
             'end_date': forms.DateInput(attrs={
                 'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 outline-none',
                 'type': 'date'
             }),
+
             'status': forms.Select(attrs={
                 'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none'
             }),
+
             'required_courses': autocomplete.ModelSelect2Multiple(
                 url='courses:course-autocomplete',
-                attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none'}
+                attrs={
+                    'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none'
+                }
             ),
+
             'category': forms.Select(attrs={
                 'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none'
             }),
+
             'min_total_score': forms.NumberInput(attrs={
                 'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none',
                 'step': '0.1'
             }),
+
             'image': forms.ClearableFileInput(attrs={
                 'class': 'w-full text-sm text-gray-700 border border-gray-300 rounded-md cursor-pointer focus:outline-none'
             }),
         }
+
+    # ---------------------------
+    # IMAGE VALIDATION + OPTIMIZE
+    # ---------------------------
+    def clean_image(self):
+        image = self.cleaned_data.get("image")
+
+        if not image:
+            return image
+
+        # Validasi ukuran file (max 5MB)
+        if image.size > 5 * 1024 * 1024:
+            raise ValidationError("Image size must be under 5MB.")
+
+        img = Image.open(image)
+
+        # Validasi format gambar
+        valid_formats = ["JPEG", "JPG", "PNG", "WEBP"]
+        if img.format not in valid_formats:
+            raise ValidationError("Unsupported image format. Use JPG, PNG, or WEBP.")
+
+        # Convert RGBA → RGB
+        if img.mode in ("RGBA", "P"):
+            img = img.convert("RGB")
+
+        # Resize maksimal
+        max_size = (1200, 1200)
+        img.thumbnail(max_size)
+
+        # Convert ke WEBP
+        buffer = BytesIO()
+        img.save(buffer, format="WEBP", quality=85)
+        buffer.seek(0)
+
+        return InMemoryUploadedFile(
+            buffer,
+            "ImageField",
+            image.name.split('.')[0] + ".webp",
+            "image/webp",
+            buffer.getbuffer().nbytes,
+            None
+        )
 
 class AskOraForm(forms.ModelForm):
     class Meta:
@@ -622,127 +680,112 @@ class MatrialForm(forms.ModelForm):
         }
 
 class ProfilForm(forms.ModelForm):
+
     class Meta:
         model = Course
-        fields = ['sort_description', 'description', 'image', 'link_video', 'hour', 'language', 'level', 'start_date', 'end_date', 'start_enrol', 'end_enrol']
+        fields = [
+            'sort_description','description','image','link_video',
+            'hour','language','level',
+            'start_date','end_date','start_enrol','end_enrol'
+        ]
 
         widgets = {
             'sort_description': forms.TextInput(attrs={
-                'placeholder': 'Enter short description here',
-                'class': 'mt-2 block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
+                'placeholder':'Enter short description here',
+                'class':'mt-2 block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
             }),
-            'description': CKEditor5Widget(attrs={
-                'class': 'django_ckeditor_5 mt-2 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
-            }, config_name="extends"),
+
+            'description': CKEditor5Widget(
+                attrs={'class':'django_ckeditor_5 mt-2 block w-full rounded-lg border border-gray-300'},
+                config_name="extends"
+            ),
+
             'image': forms.ClearableFileInput(attrs={
-                'class': 'mt-2 block w-full text-gray-600 file:border file:border-gray-300 file:rounded-lg file:px-4 file:py-2 file:text-sm file:font-medium file:bg-blue-50 hover:file:bg-blue-100'
+                'class':'mt-2 block w-full text-gray-600 file:border file:border-gray-300 file:rounded-lg file:px-4 file:py-2'
             }),
+
             'link_video': forms.URLInput(attrs={
-                'placeholder': 'Enter video URL here',
-                'class': 'mt-2 block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
+                'placeholder':'Enter video URL here',
+                'class':'mt-2 block w-full rounded-lg border border-gray-300 py-2 px-3'
             }),
+
             'hour': forms.NumberInput(attrs={
-                'placeholder': 'Hours',
-                'class': 'mt-2 block w-1/4 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
+                'placeholder':'Hours',
+                'class':'mt-2 block w-1/4 rounded-lg border border-gray-300 py-2 px-3'
             }),
+
             'language': forms.Select(attrs={
-                'class': 'mt-2 block w-1/3 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
+                'class':'mt-2 block w-1/3 rounded-lg border border-gray-300 py-2 px-3'
             }),
-            'level': forms.Select(choices=[
-                ('beginner', 'Beginner'),
-                ('intermediate', 'Intermediate'),
-                ('advanced', 'Advanced')
-            ], attrs={
-                'class': 'mt-2 block w-1/3 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
-            }),
-            'start_date': forms.DateInput(attrs={
-                'type': 'date',
-                'class': 'mt-2 block w-1/4 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
-            }),
-            'end_date': forms.DateInput(attrs={
-                'type': 'date',
-                'class': 'mt-2 block w-1/4 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
-            }),
-            'start_enrol': forms.DateInput(attrs={
-                'type': 'date',
-                'class': 'mt-2 block w-1/4 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
-            }),
-            'end_enrol': forms.DateInput(attrs={
-                'type': 'date',
-                'class': 'mt-2 block w-1/4 rounded-lg border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200'
-            }),
+
+            'level': forms.Select(
+                choices=[
+                    ('beginner','Beginner'),
+                    ('intermediate','Intermediate'),
+                    ('advanced','Advanced')
+                ],
+                attrs={'class':'mt-2 block w-1/3 rounded-lg border border-gray-300 py-2 px-3'}
+            ),
+
+            'start_date': forms.DateInput(attrs={'type':'date','class':'mt-2 block w-1/4 rounded-lg border border-gray-300 py-2 px-3'}),
+            'end_date': forms.DateInput(attrs={'type':'date','class':'mt-2 block w-1/4 rounded-lg border border-gray-300 py-2 px-3'}),
+            'start_enrol': forms.DateInput(attrs={'type':'date','class':'mt-2 block w-1/4 rounded-lg border border-gray-300 py-2 px-3'}),
+            'end_enrol': forms.DateInput(attrs={'type':'date','class':'mt-2 block w-1/4 rounded-lg border border-gray-300 py-2 px-3'}),
         }
 
     def clean(self):
         cleaned_data = super().clean()
+
         start_date = cleaned_data.get('start_date')
         end_date = cleaned_data.get('end_date')
         start_enrol = cleaned_data.get('start_enrol')
         end_enrol = cleaned_data.get('end_enrol')
+
         today = date.today()
 
-        # 1️⃣ start_date minimal hari ini
         if start_date and start_date < today:
-            self.add_error('start_date', "Start date cannot be earlier than today.")
+            self.add_error('start_date',"Start date cannot be earlier than today.")
 
-        # 2️⃣ start_enrol minimal 3 hari setelah start_date
         if start_enrol and start_date:
             min_start_enrol = start_date + timedelta(days=3)
             if start_enrol < min_start_enrol:
-                self.add_error('start_enrol', f"Enrollment start date must be at least 3 days after course start date ({min_start_enrol}).")
+                self.add_error(
+                    'start_enrol',
+                    f"Enrollment start must be at least 3 days after start date ({min_start_enrol})"
+                )
 
-        # 3️⃣ end_enrol tidak boleh lebih dari end_date
         if end_enrol and end_date:
             if end_enrol > end_date:
-                self.add_error('end_enrol', "Enrollment end date cannot be after course end date.")
+                self.add_error('end_enrol',"Enrollment end cannot be after course end date.")
 
         return cleaned_data
 
-    def __init__(self, *args, **kwargs):
-        super(ProfilForm, self).__init__(*args, **kwargs)
+    def save(self, commit=True):
+        course = super().save(commit=False)
 
-    
-def save(self, commit=True):
-    course = super(ProfilForm, self).save(commit=False)
+        if self.cleaned_data.get("image"):
 
-    if self.cleaned_data.get('image') and course.pk:
-        old_course = Course.objects.get(pk=course.pk)
-        old_image_path = old_course.image.name  # Simpan path lama
-        if old_course.image != self.cleaned_data['image']:
-            old_course.delete_old_image()
-    else:
-        old_image_path = None
+            image_file = self.cleaned_data["image"]
+            image = PILImage.open(image_file)
 
-    if self.cleaned_data.get('image'):
-        image_file = self.cleaned_data['image']
-        image = PILImage.open(image_file)
+            image = image.resize((1200,628), PILImage.Resampling.LANCZOS)
 
-        image = image.resize((1200, 628), PILImage.Resampling.LANCZOS)
-        image_io = io.BytesIO()
-        image.save(image_io, format='WEBP', quality=100)
-        image_io.seek(0)
+            buffer = io.BytesIO()
+            image.save(buffer, format="WEBP", quality=85)
+            buffer.seek(0)
 
-        while image_io.tell() > 100 * 1024:
-            image_io.seek(0)
-            image.save(image_io, format='WEBP', quality=90)
-            image_io.seek(0)
+            new_name = image_file.name.split('.')[0] + ".webp"
 
-        # Gunakan nama dan path lama jika ada
-        if old_image_path:
-            base_dir = os.path.dirname(old_image_path)  # direktori lama
-            new_image_name = os.path.splitext(os.path.basename(old_image_path))[0] + '.webp'
-            final_path = os.path.join(base_dir, new_image_name)
-        else:
-            new_image_name = image_file.name.rsplit('.', 1)[0] + '.webp'
-            final_path = new_image_name  # akan disimpan di path default
+            course.image.save(
+                new_name,
+                ContentFile(buffer.read()),
+                save=False
+            )
 
-        webp_image_file = ContentFile(image_io.read(), name=final_path)
-        course.image.save(webp_image_file.name, webp_image_file, save=False)
+        if commit:
+            course.save()
 
-    if commit:
-        course.save()
-
-    return course
+        return course
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
@@ -975,6 +1018,44 @@ class PartnerForm(forms.ModelForm):
             )
 
         return name_value
+
+    def clean_logo(self):
+        logo = self.cleaned_data.get("logo")
+
+        if not logo:
+            return logo
+
+        # Validasi ukuran maksimal 3MB
+        if logo.size > 3 * 1024 * 1024:
+            raise ValidationError("Logo must be under 3MB.")
+
+        img = Image.open(logo)
+
+        # Validasi format
+        if img.format not in ["JPEG", "JPG", "PNG", "WEBP"]:
+            raise ValidationError("Unsupported image format.")
+
+        # Convert RGBA ke RGB
+        if img.mode in ("RGBA", "P"):
+            img = img.convert("RGB")
+
+        # Resize maksimal
+        max_size = (600, 600)
+        img.thumbnail(max_size)
+
+        # Convert ke WEBP
+        buffer = BytesIO()
+        img.save(buffer, format="WEBP", quality=85)
+        buffer.seek(0)
+
+        return InMemoryUploadedFile(
+            buffer,
+            "ImageField",
+            logo.name.split('.')[0] + ".webp",
+            "image/webp",
+            buffer.getbuffer().nbytes,
+            None
+        )
 
     def save(self, commit=True):
         partner = super().save(commit=False)

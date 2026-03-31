@@ -3,6 +3,11 @@ from django.core.exceptions import ValidationError
 from courses.models import Partner, Universiti
 from authentication.models import Universiti
 from django_ckeditor_5.widgets import CKEditor5Widget
+from PIL import Image
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.exceptions import ValidationError
+
 class PartnerRequestForm(forms.ModelForm):
 
     description = forms.CharField(
@@ -92,6 +97,44 @@ class PartnerRequestForm(forms.ModelForm):
                 "You must agree to the contract terms and applicable rules to proceed."
             )
         return agreed
+
+    def clean_logo(self):
+        logo = self.cleaned_data.get("logo")
+
+        if not logo:
+            return logo
+
+        # Validasi ukuran maksimal 3MB
+        if logo.size > 3 * 1024 * 1024:
+            raise ValidationError("Logo must be under 3MB.")
+
+        img = Image.open(logo)
+
+        # Validasi format
+        if img.format not in ["JPEG", "JPG", "PNG", "WEBP"]:
+            raise ValidationError("Unsupported image format.")
+
+        # Convert RGBA ke RGB
+        if img.mode in ("RGBA", "P"):
+            img = img.convert("RGB")
+
+        # Resize maksimal
+        max_size = (600, 600)
+        img.thumbnail(max_size)
+
+        # Convert ke WEBP
+        buffer = BytesIO()
+        img.save(buffer, format="WEBP", quality=85)
+        buffer.seek(0)
+
+        return InMemoryUploadedFile(
+            buffer,
+            "ImageField",
+            logo.name.split('.')[0] + ".webp",
+            "image/webp",
+            buffer.getbuffer().nbytes,
+            None
+        )
 
     def save(self, commit=True):
         partner = super().save(commit=False)

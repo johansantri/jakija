@@ -23,6 +23,20 @@ class Notification(models.Model):
         ('new_review', 'Review Baru pada Course-mu'),
         ('submission_received', 'Submission Reviewed'),
         ('new_course_comment', 'New Course Comment'),
+        # 🔵 Partner Workflow
+        ('partner_request_submitted', 'Partner Request Submitted'),
+        ('partner_request_resubmitted', 'Partner Request Resubmitted'),
+        ('partner_approved', 'Partner Approved'),
+        ('partner_rejected', 'Partner Rejected'),
+        ('partner_revision', 'Partner Revision Required'),
+
+        #course curation
+        ('assigned_course_instructor', 'Assigned Course Instructor'),
+        ('course_submitted', 'Course Submitted'),
+        ('course_ready_publish', 'Course Ready for Publish'),
+        ('course_rejected_partner', 'Course Rejected by Partner'),
+        ('course_rejected_superuser', 'Course Rejected by Superuser'),
+        ('course_published', 'Course Published'),
         
     )
 

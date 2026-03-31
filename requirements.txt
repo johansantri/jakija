@@ -58,6 +58,7 @@ frozenlist==1.7.0
 geoip2==5.1.0
 git-filter-repo==2.47.0
 gunicorn==23.0.0
+h11==0.16.0
 httplib2==0.22.0
 hyperlink==21.0.0
 idna==3.10
@@ -106,6 +107,7 @@ requests-oauthlib==2.0.0
 rich==14.0.0
 rsa==4.9.1
 service-identity==24.2.0
+setuptools==82.0.0
 six==1.17.0
 sqlparse==0.5.3
 tablib==3.8.0
@@ -124,10 +126,12 @@ ua-parser-builtins==0.18.0.post1
 upgrade-requirements==1.7.0
 urllib3==2.3.0
 user-agents==2.2.0
+uvicorn==0.41.0
 vine==5.1.0
 wcwidth==0.2.13
 weasyprint==64.1
 webencodings==0.5.1
+websockets==16.0
 whitenoise==6.12.0
 yarl==1.20.1
 zope.interface==8.2

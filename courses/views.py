@@ -4760,6 +4760,10 @@ def instructor_profile(request, username):
     except CourseStatus.DoesNotExist:
         logger.error("Published status not found")
         return HttpResponseNotFound("Status 'published' not found.")
+    except Http404:
+        # biarkan Django menampilkan halaman 404 normal
+        raise
+        
     except Exception as e:
         logger.exception(f"Unexpected error in instructor_profile: {str(e)}")
         return HttpResponseServerError("An unexpected error occurred.")
@@ -5090,6 +5094,13 @@ def course_lms_detail(request, id, slug):
         for cp in qs:
             course_prices[cp.price_type.name] = cp
 
+    else:
+        # Jika user tidak login, tampilkan harga default (misalnya 'regular' atau harga pertama yang ditemukan)
+        qs = CoursePrice.objects.filter(course=course).select_related('price_type')
+        # Masukkan harga ke dalam dictionary
+        for cp in qs:
+            course_prices[cp.price_type.name] = cp
+
     return render(request, 'home/course_detail.html', {
         'course': course,
         'is_enrolled': is_enrolled,
@@ -5128,8 +5139,10 @@ def course_instructor(request, id):
 
     if user.is_superuser:
         course = get_object_or_404(Course, id=id)
+
     elif user.is_partner:
         course = get_object_or_404(Course, id=id, org_partner__user_id=user.id)
+
     elif user.is_instructor:
         messages.error(request, "You do not have permission to manage this course.")
         return redirect('/courses')
@@ -5140,14 +5153,33 @@ def course_instructor(request, id):
 
     if request.method == 'POST':
         form = CourseInstructorForm(request.POST, instance=course, request=request)
+
         if form.is_valid():
-            form.save()
+            course = form.save()
+
+            instructor = course.instructor  # ambil instructor dari course
+
+            if instructor:
+                Notification.objects.create(
+                    user=instructor.user,
+                    actor=request.user,
+                    notif_type='assigned_course_instructor',
+                    priority='medium',
+                    title="You have been assigned to a course",
+                    message=f"You have been added as an instructor to the course '{course.course_name}'.",
+                    link=f"/studio/{course.id}/"
+                )
+
             messages.success(request, "Instructor has been successfully added to the course.")
             return redirect('courses:course_instructor', id=course.id)
+
     else:
         form = CourseInstructorForm(instance=course, request=request)
 
-    return render(request, 'instructor/course_instructor.html', {'course': course, 'form': form})
+    return render(request, 'instructor/course_instructor.html', {
+        'course': course,
+        'form': form
+    })
 
 # Fungsi untuk pencarian instruktur menggunakan Select2 (AJAX)
 
@@ -5893,31 +5925,39 @@ def instructor_check(request, instructor_id):
     # Check if the user is authenticated
     if not request.user.is_authenticated:
         return redirect("/login/?next=%s" % request.path)
-    # Fetch the instructor object
+
+    # Fetch instructor
     instructor = get_object_or_404(Instructor, id=instructor_id)
-    
-    # Check if the user has permission to approve (e.g., the user must be the provider)
+
+    # Check permission (partner yang dituju saja yang boleh approve)
     if request.user.is_partner and instructor.provider.user == request.user:
-        # Update instructor status to "Approved"
+
+        # update status instructor
         instructor.status = 'Approved'
-        instructor.save()  # Save the status change
+        instructor.save()
 
-        # Now update the user's `is_partner` field to True
-        user = instructor.user  # Get the related User object
-        
-        # Set is_partner to True
+        # update role user
+        user = instructor.user
         user.is_instructor = True
-        user.save()  # Save the user after the update
+        user.save()
 
-        # Success message
+        # 🔔 Notifikasi ke user (yang apply)
+        Notification.objects.create(
+            user=user,
+            actor=request.user,  # partner yang approve
+            notif_type='instructor_approved',
+            priority='high',
+            title="Instructor Application Approved",
+            message="Congratulations! Your instructor application has been approved.",
+            link="/dasbord/"
+        )
+
         messages.success(request, "Instructor has been approved.")
-        
+
     else:
-        # Error message if the user doesn't have permission
         messages.error(request, "You do not have permission to approve this instructor.")
 
-    # Redirect to the instructor list or another page after approval
-    return redirect('courses:instructor_view')  # Change this URL to your desired location
+    return redirect('courses:instructor_view')
 
 
 #instructor detail
@@ -6176,14 +6216,11 @@ def partner_autocomplete(request):
 #intructor form for new request
 #@login_required
 def become_instructor(request):
-    # Check if the user is authenticated
     if not request.user.is_authenticated:
         return redirect("/login/?next=%s" % request.path)
-    # Check if the user is already an instructor
 
     user = request.user
 
-    # Validasi data diri wajib
     required_fields = {
         'first_name': 'First Name',
         'last_name': 'Last Name',
@@ -6205,24 +6242,57 @@ def become_instructor(request):
             f"Please complete your profile before accessing microcredentials: {', '.join(missing_fields)}"
         )
         return redirect('authentication:edit-profile', pk=user.pk)
-    
+
     try:
         application = Instructor.objects.get(user=request.user)
+
         if application.status == "Pending":
-            
             messages.info(request, "Your application is under review.")
+
         elif application.status == "Approved":
             messages.success(request, "You are already an instructor!")
+
         return redirect('authentication:dasbord')
+
     except Instructor.DoesNotExist:
+
         if request.method == "POST":
             form = InstructorForm(request.POST)
+
             if form.is_valid():
                 application = form.save(commit=False)
                 application.user = request.user
                 application.save()
+
+                # ambil partner yang dipilih
+                partner = application.provider
+                partner_user = partner.user  # user pemilik partner
+
+                # 🔔 notif ke partner
+                Notification.objects.create(
+                    user=partner_user,
+                    actor=request.user,
+                    notif_type='new_instructor_application',
+                    priority='high',
+                    title="New Instructor Application",
+                    message=f"{request.user.first_name} {request.user.last_name} applied to become an instructor.",
+                    link="/instructor-all/"
+                )
+
+                # 🔔 notif ke user
+                Notification.objects.create(
+                    user=user,
+                    actor=partner_user,
+                    notif_type='instructor_application_submitted',
+                    priority='medium',
+                    title="Instructor Application Submitted",
+                    message=f"Your application has been sent to {partner}. It is now under review.",
+                    link="/dasbord/"
+                )
+
                 messages.success(request, "Your application has been submitted!")
                 return redirect('authentication:dasbord')
+
         else:
             form = InstructorForm()
 
@@ -7410,6 +7480,7 @@ def org_partner(request, slug):
             'category': course.category.name if course.category else None,
             'language': course.language,
             'average_rating': average_rating,
+            'price': course.prices.first().portal_price if course.prices.exists() else 0.0,  # Akses harga pertama dari prices
             'review_count': review_count,
             'full_star_range': range(full_stars),
             'half_star': half_star,

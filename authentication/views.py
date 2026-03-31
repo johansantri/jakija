@@ -1383,6 +1383,8 @@ def popular_courses(request):
             'id': course.id,
             'course_name': course.course_name,
             'slug': course.slug,
+            'category':course.category.name if course.category else '',
+            'level':course.level,
             'image': course.image.url if course.image else '',
             'instructor_name': f"{course.instructor.user.first_name} {course.instructor.user.last_name}".strip(),
             'instructor_photo': course.instructor.user.photo.url if course.instructor.user.photo else '',
@@ -1398,6 +1400,7 @@ def popular_courses(request):
             'empty_stars': empty_stars,
             'language': language_label,
             'user_payment': portal_price,
+
         })
 
     return JsonResponse({'courses': courses_list})

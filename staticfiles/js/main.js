@@ -55,101 +55,109 @@ document.addEventListener('DOMContentLoaded', function () {
         ].join('');
 
         const courseHtml = `
-                <article 
-                        class="course-fade bg-white rounded-xl shadow-md hover:shadow-lg transition p-4 sm:p-5 flex flex-col h-full"
-                        itemscope 
-                        itemtype="https://schema.org/Course"
-                      >
-                        <a 
-                          href="${courseUrl}" 
-                          title="View course: ${course.course_name}" 
-                          class="block no-underline flex-grow flex flex-col"
-                          itemprop="url"
-                        >
+          
+            <article 
+              class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 focus-within:shadow-xl focus-within:-translate-y-0.5 overflow-hidden flex flex-col h-full"
+              itemscope 
+              itemtype="https://schema.org/Course"
+            >
+              <a 
+                href="${courseUrl}" 
+                title="Lihat kursus: ${course.course_name || 'Untitled Course'}" 
+                class="block flex-grow flex flex-col focus:outline-none"
+                itemprop="url"
+                aria-label="Detail kursus ${course.course_name || 'tanpa judul'}"
+              >
 
-                          <!-- Thumbnail -->
-                          <div class="relative rounded-md overflow-hidden mb-4">
-                            <img 
-                              src="${course.image || '/static/images/placeholder-300.webp'}"
-                              srcset="
-                                ${course.image || '/static/images/placeholder-150.webp'} 150w,
-                                ${course.image || '/static/images/placeholder-300.webp'} 300w,
-                                ${course.image || '/static/images/placeholder-600.webp'} 600w"
-                              sizes="(max-width: 640px) 100vw, 300px"
-                              alt="${course.course_name || 'Course Image'}"
-                              class="w-full aspect-[4/3] object-cover transition-transform duration-300 hover:scale-105 rounded-md"
-                              loading="lazy"
-                              decoding="async"
-                              itemprop="image"
-                            >
-                            ${isFree ? `<span class="absolute top-2 left-2 bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded shadow">FREE</span>` : ''}
-                          </div>
+                <!-- 1. Thumbnail -->
+                <div class="relative overflow-hidden">
+                  <img 
+                    src="${course.image || '/static/images/placeholder-300.webp'}"
+                    srcset="
+                      ${course.image || '/static/images/placeholder-150.webp'} 150w,
+                      ${course.image || '/static/images/placeholder-300.webp'} 300w,
+                      ${course.image || '/static/images/placeholder-600.webp'} 600w"
+                    sizes="(max-width: 640px) 100vw, 300px"
+                    alt="${course.course_name || 'Gambar kursus'}"
+                    class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                    itemprop="image"
+                  >
+                </div>
 
-                          <!-- Title -->
-                          <h2 
-                            class="text-base font-semibold text-gray-900 line-clamp-2 mb-2 hover:text-green-700 transition-colors duration-200"
-                            itemprop="name"
-                          >
-                            ${course.course_name || 'Untitled Course'}
-                          </h2>
+                <!-- Body -->
+                <div class="p-4 sm:p-5 flex flex-col flex-grow">
 
-                          <!-- Pricing -->
-                          ${!isFree ? `
-                            <div class="flex flex-wrap items-center gap-2 mb-3">
-                              <span class="text-green-700 font-semibold text-base whitespace-nowrap">
-                                IDR ${typeof course.user_payment === 'number' ? course.user_payment.toLocaleString() : 'N/A'}
-                              </span>
-                            </div>
-                          ` : ''}
+                  <!-- 2. Title -->
+                  <h3 
+                    class="text-base sm:text-lg font-semibold text-gray-900 line-clamp-2 mb-2 group-hover:text-emerald-700 transition-colors"
+                    itemprop="name"
+                  >
+                    ${course.course_name || 'Untitled Course'}
+                  </h3>
 
-                          <!-- Rating & Enrollments -->
-                          <div class="flex flex-wrap items-center justify-between text-sm mb-4 gap-2">
-                            <!-- Rating -->
-                            <div class="flex items-center ${course.num_ratings === 0 ? 'text-gray-300' : 'text-yellow-400'}">
-                              ${ratingStars}
-                              <span class="ml-2 text-gray-600 text-xs">(${course.num_ratings || 0})</span>
-                            </div>
+                  <!-- 3. Category | Level | Language -->
+                  <p class="text-xs sm:text-sm text-gray-600 mb-3 truncate">
+                    ${course.category || 'Kategori'} | ${course.level || 'Level'} | ${course.language ? course.language.charAt(0).toUpperCase() + course.language.slice(1) : 'Bahasa'}
+                  </p>
 
-                            <!-- Enrollments -->
-                            <div class="flex items-center text-gray-500 text-xs space-x-1">
-                              <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
-                                <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
-                                <circle cx="12" cy="7" r="4" />
-                              </svg>
-                              <span>${course.num_enrollments || 0}</span>
-                            </div>
-                          </div>
+                  <!-- 4. Price / Free + Rating & Enrollments -->
+                  <div class="flex items-center justify-between mb-4 text-sm">
 
-                          <!-- Language -->
-                          <p class="flex items-center text-xs text-gray-500 mb-4 space-x-1 truncate">
-                            <svg class="h-4 w-4 flex-shrink-0 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                              <circle cx="12" cy="12" r="10" />
-                              <line x1="2" y1="12" x2="22" y2="12" />
-                              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                            </svg>
-                            <span>&nbsp; ${course.language ? course.language.charAt(0).toUpperCase() + course.language.slice(1) : 'N/A'}</span>
-                          </p>
+                    <!-- Price / Free -->
+                    <div>
+                      ${isFree 
+                        ? `<span class="text-indigo-700 font-semibold">FREE</span>`
+                        : `<span class="text-indigo-700 font-semibold">
+                            IDR ${typeof course.user_payment === 'number' ? course.user_payment.toLocaleString('id-ID') : 'N/A'}
+                          </span>`
+                      }
+                    </div>
 
-                          <!-- Footer: Instructor & Partner -->
-                          <div class="flex items-center mt-auto pt-3 border-t border-gray-200">
-                            <img 
-                              src="${org_logo}" 
-                              alt="${course.org_name || 'Partner'}" 
-                              class="w-6 h-6 rounded-full mr-3 object-cover border border-gray-200"
-                              itemprop="provider logo"
-                            >
-                            <div class="flex flex-col text-xs leading-tight truncate">
-                              <p class="text-gray-700 font-semibold truncate" itemprop="provider" itemscope itemtype="https://schema.org/Organization">
-                                <span itemprop="name">${course.org_name || 'Unknown Partner'}</span>
-                              </p>
-                              <p class="text-gray-600 truncate">${course.instructor_name || 'N/A'}</p>
-                            </div>
-                          </div>
+                    <!-- Rating & Enrollments -->
+                    <div class="flex items-center gap-4">
+                      <!-- Rating -->
+                      <div class="flex items-center">
+                        <div class="${course.num_ratings === 0 ? 'text-gray-300' : 'text-amber-400'} flex items-center gap-0.5">
+                          ${ratingStars || '<span class="text-gray-400">—</span>'}
+                        </div>
+                        <span class="ml-1.5 text-gray-500">(${course.num_ratings || 0})</span>
+                      </div>
 
-                        </a>
-                      </article>
-              `;
+                      <!-- Enrollments -->
+                      <div class="flex items-center gap-1.5 text-gray-600">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                        <span>${course.num_enrollments?.toLocaleString('id-ID') || 0}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 5. Footer: Instructor & Partner -->
+                  <div class="mt-auto flex items-center pt-3 border-t border-gray-100">
+                    <img 
+                      src="${org_logo || '/static/images/placeholder-org.webp'}" 
+                      alt="${course.org_name || 'Partner'}" 
+                      class="w-8 h-8 sm:w-10 sm:h-10 rounded-full mr-3 object-cover ring-1 ring-gray-200 flex-shrink-0"
+                      loading="lazy"
+                      itemprop="provider" itemscope itemtype="https://schema.org/Organization"
+                    >
+                    <div class="flex flex-col text-xs sm:text-sm leading-tight truncate flex-1">
+                      <p class="text-gray-700 font-semibold truncate" itemprop="name">
+                        ${course.org_name || 'Unknown Partner'}
+                      </p>
+                      <p class="text-gray-500 truncate">
+                        ${course.instructor_name || 'N/A'}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+              </a>
+            </article>
+          `;
 
         coursesList.insertAdjacentHTML('beforeend', courseHtml);
       });

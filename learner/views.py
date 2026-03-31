@@ -76,6 +76,8 @@ import smtplib
 from django.core.mail import send_mail, BadHeaderError
 from django.db.models import F, Value
 logger = logging.getLogger(__name__)
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 
 
@@ -134,55 +136,68 @@ def submit_report(request, username, course_id, section_id):
 def invite_learner(request, course_id):
     course = get_object_or_404(Course, id=course_id)
 
-    if request.method == "POST":
-        emails_raw = request.POST.get("emails", "").strip()
-        if not emails_raw:
-            messages.error(request, "Please provide at least one email.")
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+    if request.method != "POST":
+        return redirect('courses:detail', course_id=course.id)
 
-        emails = [e.strip() for e in emails_raw.replace(',', ' ').split() if e.strip()]
-        if not emails:
-            messages.error(request, "No valid emails found.")
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+    emails_raw = request.POST.get("emails", "").strip()
 
-        # Cek pengaturan email
-        try:
-            send_mail(
-                "Test Email",
-                "This is a test email to check if the email settings are configured properly.",
-                settings.DEFAULT_FROM_EMAIL,
-                [settings.DEFAULT_FROM_EMAIL],
-                fail_silently=False
-            )
-        except Exception:
-            messages.error(request, "Email settings are not configured correctly. Please check your email settings.")
-            return redirect(request.META.get('HTTP_REFERER', '/'))
-
-        for email in emails:
-            # Validasi email sederhana
-            if "@" not in email or "." not in email:
-                messages.warning(request, f"{email} is not a valid email. Skipped.")
-                continue
-
-            user = CustomUser.objects.filter(email=email).first()
-            if not user:
-                messages.warning(request, f"{email} not registered. Skipped.")
-                continue
-
-            # Buat enrollment jika belum ada
-            enrollment, created = Enrollment.objects.get_or_create(user=user, course=course)
-
-            if not created:
-                messages.info(request, f"{user.username} is already enrolled. Skipped.")
-                continue
-
-            # Kirim email pakai Celery (async)
-            send_invite_email.delay(email, user.username, course.course_name)
-            messages.success(request, f"{user.username} enrolled. Email will be sent in background.")
-
+    if not emails_raw:
+        messages.error(request, "Please provide at least one email.")
         return redirect(request.META.get('HTTP_REFERER', '/'))
 
-    return redirect('courses:detail', course_id=course.id)
+    # Support comma, space, newline
+    emails = [e.strip() for e in emails_raw.replace(",", " ").split() if e.strip()]
+
+    if not emails:
+        messages.error(request, "No valid emails found.")
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+
+    success_count = 0
+    skipped_count = 0
+
+    for email in emails:
+
+        # Validasi email Django
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.warning(request, f"{email} is not a valid email. Skipped.")
+            skipped_count += 1
+            continue
+
+        user = CustomUser.objects.filter(email=email).first()
+
+        if not user:
+            messages.warning(request, f"{email} is not registered. Skipped.")
+            skipped_count += 1
+            continue
+
+        enrollment, created = Enrollment.objects.get_or_create(
+            user=user,
+            course=course
+        )
+
+        if not created:
+            messages.info(request, f"{user.username} is already enrolled.")
+            skipped_count += 1
+            continue
+
+        # Kirim email async (Celery)
+        try:
+            send_invite_email.delay(email, user.username, course.course_name)
+        except Exception as e:
+            messages.error(request, f"Failed to queue email for {email}: {str(e)}")
+            continue
+
+        success_count += 1
+
+    if success_count:
+        messages.success(request, f"{success_count} learner(s) successfully invited.")
+
+    if skipped_count:
+        messages.info(request, f"{skipped_count} email(s) skipped.")
+
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
 
 @login_required

@@ -387,7 +387,7 @@ class UserProfileForm(forms.ModelForm):
         self.fields['photo'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Upload your photo',
-            'required': True
+            'required': False
         })
         # ✅ simpan foto lama untuk pengecekan
         self.old_photo = self.instance.photo

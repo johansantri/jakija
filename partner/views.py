@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from django.http import HttpResponseForbidden
 from courses.models import Course, Material,CourseStatus,GradeRange,MaterialRead,Question,AssessmentRead,Submission,QuestionAnswer,AssessmentScore,Section,Assessment, Enrollment,CourseRating,CourseComment,CourseViewLog,UserActivityLog,CourseSessionLog,Certificate
+from notification.models import Notification
 from payments.models import Payment
 from authentication.models import CustomUser
 from django.db.models import Avg, Count, Subquery, OuterRef, FloatField
@@ -25,6 +26,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Count, Sum
 from .utils import get_geo_from_ip
 from audit.models import AuditLog
+from django.urls import reverse
 from django.db.models.functions import TruncMonth
 from collections import defaultdict
 from decimal import Decimal
@@ -57,16 +59,88 @@ def verify_partner_list(request):
 @user_passes_test(lambda u: u.is_staff)
 def verify_partner_detail(request, pk):
     partner = get_object_or_404(Partner, pk=pk)
-    
+
     if request.method == "POST":
         action = request.POST.get('action')
         note = request.POST.get('note', '')
+
+        # link bisa diarahkan ke dashboard atau halaman status partner
+        dashboard_link = reverse('authentication:dasbord')
+        status_link = reverse('partner:request_partner')
+
         if action == 'approve':
             partner.approve(request.user)
+
+            # Email
+            send_partner_email_html(
+                partner.user,
+                'Your Partner Account Has Been Approved',
+                'email/partner_approved.html',
+                {
+                    'user': partner.user,
+                    'partner': partner
+                }
+            )
+
+            # Notification
+            Notification.objects.create(
+                user=partner.user,
+                actor=request.user,
+                notif_type='partner_approved',
+                priority='high',
+                title="Partner Request Approved 🎉",
+                message="Congratulations! Your partner account has been approved.",
+                link=dashboard_link
+            )
+
         elif action == 'reject':
             partner.reject(note, request.user)
+
+            send_partner_email_html(
+                partner.user,
+                'Your Partner Request Was Rejected',
+                'email/partner_rejected.html',
+                {
+                    'user': partner.user,
+                    'partner': partner,
+                    'note': note
+                }
+            )
+
+            Notification.objects.create(
+                user=partner.user,
+                actor=request.user,
+                notif_type='partner_rejected',
+                priority='high',
+                title="Partner Request Rejected",
+                message=f"Your partner request was rejected. Reason: {note}",
+                link=status_link
+            )
+
         elif action == 'revision':
             partner.request_revision(note, request.user)
+
+            send_partner_email_html(
+                partner.user,
+                'Revision Required for Partner Request',
+                'email/partner_revision.html',
+                {
+                    'user': partner.user,
+                    'partner': partner,
+                    'note': note
+                }
+            )
+
+            Notification.objects.create(
+                user=partner.user,
+                actor=request.user,
+                notif_type='partner_revision',
+                priority='medium',
+                title="Revision Required",
+                message=f"Your partner request needs revision. Note: {note}",
+                link=status_link
+            )
+
         return redirect('partner:verify_partner_list')
 
     return render(request, 'partner/verify_detail.html', {'partner': partner})
@@ -126,7 +200,19 @@ def request_partner(request):
                     updated_partner.updated_ad = timezone.now()
                     updated_partner.save()
                     logger.info(f"Partner revision resubmitted: {updated_partner.id}")
+                    link = reverse('partner:verify_partner_detail', args=[updated_partner.id])
+                    superusers = User.objects.filter(is_superuser=True)
 
+                    for admin in superusers:
+                        Notification.objects.create(
+                            user=admin,
+                            actor=request.user,
+                            notif_type='partner_request_resubmitted',
+                            priority='high',
+                            title="Partner Request Resubmitted",
+                            message=f"{request.user.username} has resubmitted their partner request.",
+                            link=link
+                        )
                     # Kirim email notifikasi revisi
                     send_partner_email_html(
                         request.user,
@@ -161,7 +247,22 @@ def request_partner(request):
             new_partner.status = 'pending'
             new_partner.save()
             logger.info(f"New partner request submitted: {new_partner.id}")
+            # Generate link ke halaman verifikasi
+            link = reverse('partner:verify_partner_detail', args=[new_partner.id])
 
+            # Ambil semua superuser
+            superusers = User.objects.filter(is_superuser=True)
+
+            for admin in superusers:
+                Notification.objects.create(
+                    user=admin,
+                    actor=request.user,
+                    notif_type='partner_request_submitted',
+                    priority='high',
+                    title="New Partner Request Submitted",
+                    message=f"{request.user.username} has submitted a new partner request.",
+                    link=link
+                )
             # Kirim email notifikasi submit
             send_partner_email_html(
                 request.user,

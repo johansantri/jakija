@@ -7,6 +7,9 @@ venv/
 .venv6/
 env/
 
+# Django settings (sensitif)
+mysite/settings.py
+
 # Python cache
 __pycache__/
 *.py[cod]

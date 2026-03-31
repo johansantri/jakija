@@ -155,22 +155,38 @@ class Partner(models.Model):
                     os.remove(old_logo_path)
      # === Tambahkan di bawah method save() ===
     def approve(self, admin_user=None):
-        """Set partner sebagai approved"""
+        if self.status == 'approved':
+            return False
+
         self.status = 'approved'
         self.is_verified = True
         self.verified_at = timezone.now()
         self.updated_by = admin_user
         self.save()
+
+        if self.user and not self.user.is_partner:
+            self.user.is_partner = True
+            self.user.save(update_fields=['is_partner'])
+
         logger.info(f"Partner '{self}' approved by {admin_user}")
         return True
 
     def reject(self, note, admin_user=None):
-        """Tolak partner dan simpan catatan"""
         self.status = 'rejected'
         self.admin_note = note
         self.is_verified = False
         self.updated_by = admin_user
-        self.save()
+        self.save(update_fields=[
+            'status',
+            'admin_note',
+            'is_verified',
+            'updated_by'
+        ])
+
+        if self.user:
+            self.user.is_partner = False
+            self.user.save(update_fields=['is_partner'])
+
         logger.info(f"Partner '{self}' rejected by {admin_user} with note: {note}")
         return True
 
@@ -178,8 +194,19 @@ class Partner(models.Model):
         """Minta revisi dari partner"""
         self.status = 'revision'
         self.admin_note = note
+        self.is_verified = False
         self.updated_by = admin_user
-        self.save()
+        self.save(update_fields=[
+            'status',
+            'admin_note',
+            'is_verified',
+            'updated_by'
+        ])
+
+        if self.user:
+            self.user.is_partner = False
+            self.user.save(update_fields=['is_partner'])
+
         logger.info(f"Partner '{self}' marked for revision by {admin_user} with note: {note}")
         return True
     
@@ -368,6 +395,14 @@ class Course(models.Model):
         null=True,
         blank=True,
         related_name='courses_with_payment_model'
+    )
+    access_type = models.CharField(
+        max_length=20,
+        choices=[
+            ('public', 'Public'),
+            ('invite_only', 'Invite Only'),
+        ],
+        default='public'
     )
     readiness_percentage = models.IntegerField(default=0)  # otomatis di-update
     
