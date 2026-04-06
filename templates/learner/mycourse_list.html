@@ -21,207 +21,233 @@
     </form>
   </div>
 
-  {% if page_obj %}
+  {% if page_obj.object_list %}
 
-  <!-- ================= MOBILE ================= -->
-  <div class="space-y-4 md:hidden">
-    {% for data in page_obj %}
-    {% with enrollment=data.enrollment %}
+    <!-- ================= MOBILE ================= -->
+    <div class="space-y-4 md:hidden">
+      {% for data in page_obj %}
+      {% with enrollment=data.enrollment %}
 
-    <div class="bg-white rounded-xl p-4 shadow space-y-3">
+      <div class="bg-white rounded-xl p-4 shadow space-y-3">
 
-      <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
-         class="font-semibold text-gray-800">
-        {{ enrollment.course.course_name }}
-      </a>
+        <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
+          class="font-semibold text-gray-800">
+          {{ enrollment.course.course_name }}
+        </a>
 
-      <p class="text-xs text-gray-500">
-        Enrolled: {{ enrollment.enrolled_at|date:"d M Y" }}
-      </p>
+        <p class="text-xs text-gray-500">
+          Enrolled: {{ enrollment.enrolled_at|date:"d M Y" }}
+        </p>
 
-      <div>
-        <div class="w-full bg-gray-200 h-2 rounded">
-          <div class="bg-blue-500 h-2 rounded" style="width:{{ data.progress }}%"></div>
+        <div>
+          <div class="w-full bg-gray-200 h-2 rounded">
+            <div class="bg-blue-500 h-2 rounded" style="width:{{ data.progress }}%"></div>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">{{ data.progress|floatformat:0 }}%</p>
         </div>
-        <p class="text-xs text-gray-500 mt-1">{{ data.progress|floatformat:0 }}%</p>
-      </div>
 
-      <p class="text-sm">
-        Score: <span class="font-semibold">{{ data.overall_percentage|floatformat:0 }}%</span>
-      </p>
+        <p class="text-sm">
+          Score: <span class="font-semibold">{{ data.overall_percentage|floatformat:0 }}%</span>
+        </p>
 
-      <div>
-        {% if data.certificate_issued %}
-          <span class="text-xs px-2 py-1 bg-green-100 text-green-600 rounded">Issued</span>
-        {% elif data.certificate_eligible %}
-          <span class="text-xs px-2 py-1 bg-yellow-100 text-yellow-600 rounded">Eligible</span>
-        {% else %}
-          <span class="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">Not Eligible</span>
-        {% endif %}
-      </div>
-
-      <div class="flex flex-wrap gap-2">
-
-        {% with last_access=last_access_map|get_item:enrollment.course.id %}
-
-          {% if data.progress == 100 %}
-            <span class="px-3 py-1 bg-green-500 text-white text-xs rounded">Completed</span>
-
-          {% elif data.progress > 0 or last_access %}
-            <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
-               class="px-3 py-1 bg-yellow-400 text-white text-xs rounded">
-               Resume
-            </a>
-
+        <div>
+          {% if data.certificate_issued %}
+            <span class="text-xs px-2 py-1 bg-green-100 text-green-600 rounded">Issued</span>
+          {% elif data.certificate_eligible %}
+            <span class="text-xs px-2 py-1 bg-yellow-100 text-yellow-600 rounded">Eligible</span>
           {% else %}
-            <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
-               class="px-3 py-1 bg-blue-500 text-white text-xs rounded">
-               Start
-            </a>
+            <span class="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">Not Eligible</span>
           {% endif %}
+        </div>
 
-          {% if data.certificate_eligible %}
-            <a href="{% url 'courses:generate_certificate' enrollment.course.id %}"
-               class="px-3 py-1 bg-green-500 text-white text-xs rounded">
-               Certificate
-            </a>
-          {% endif %}
+        <div class="flex flex-wrap gap-2">
 
-        {% endwith %}
+          {% with last_access=last_access_map|get_item:enrollment.course.id %}
+
+            {% if data.progress == 100 %}
+              <span class="px-3 py-1 bg-green-500 text-white text-xs rounded">Completed</span>
+
+            {% elif data.progress > 0 or last_access %}
+              <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
+                class="px-3 py-1 bg-yellow-400 text-white text-xs rounded">
+                Resume
+              </a>
+
+            {% else %}
+              <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
+                class="px-3 py-1 bg-blue-500 text-white text-xs rounded">
+                Start
+              </a>
+            {% endif %}
+
+            {% if data.certificate_eligible %}
+              <a href="{% url 'courses:generate_certificate' enrollment.course.id %}"
+                class="px-3 py-1 bg-green-500 text-white text-xs rounded">
+                Certificate
+              </a>
+            {% endif %}
+
+          {% endwith %}
+        </div>
+
       </div>
 
+      {% endwith %}
+      {% endfor %}
     </div>
 
-    {% endwith %}
-    {% endfor %}
-  </div>
+    <!-- ================= DESKTOP ================= -->
+    <div class="hidden md:block bg-white rounded-xl shadow overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-gray-50 text-gray-600">
+          <tr>
+            <th class="p-3 text-left">Course</th>
+            <th class="p-3">Enrolled</th>
+            <th class="p-3">Progress</th>
+            <th class="p-3">Score</th>
+            <th class="p-3">Certificate</th>
+            <th class="p-3">Actions</th>
+          </tr>
+        </thead>
 
-  <!-- ================= DESKTOP ================= -->
-  <div class="hidden md:block bg-white rounded-xl shadow overflow-hidden">
-    <table class="w-full text-sm">
-      <thead class="bg-gray-50 text-gray-600">
-        <tr>
-          <th class="p-3 text-left">Course</th>
-          <th class="p-3">Enrolled</th>
-          <th class="p-3">Progress</th>
-          <th class="p-3">Score</th>
-          <th class="p-3">Certificate</th>
-          <th class="p-3">Actions</th>
-        </tr>
-      </thead>
+        <tbody>
+          {% for data in page_obj %}
+          {% with enrollment=data.enrollment %}
+          <tr class="border-t hover:bg-gray-50 transition">
 
-      <tbody>
-        {% for data in page_obj %}
-        {% with enrollment=data.enrollment %}
-        <tr class="border-t hover:bg-gray-50 transition">
+            <td class="p-3">
+              <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
+                class="font-medium text-gray-800">
+                {{ enrollment.course.course_name }}
+              </a>
 
-          <td class="p-3">
-            <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
-               class="font-medium text-gray-800">
-              {{ enrollment.course.course_name }}
-            </a>
+              <div class="text-xs text-gray-500 mt-1 space-x-2">
+                <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}" class="hover:text-blue-500">Detail</a>
+                <a href="{% url 'learner:score_summary' username=request.user.username course_id=enrollment.course.id %}" class="hover:text-blue-500">Score</a>
+              </div>
+            </td>
 
-            <div class="text-xs text-gray-500 mt-1 space-x-2">
-              <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}" class="hover:text-blue-500">Detail</a>
-              <a href="{% url 'learner:score_summary' username=request.user.username course_id=enrollment.course.id %}" class="hover:text-blue-500">Score</a>
-            </div>
-          </td>
+            <td class="p-3 text-center text-gray-500">
+              {{ enrollment.enrolled_at|date:"d M Y" }}
+            </td>
 
-          <td class="p-3 text-center text-gray-500">
-            {{ enrollment.enrolled_at|date:"d M Y" }}
-          </td>
+            <td class="p-3 text-center">
+              <div class="w-28 bg-gray-200 h-2 rounded mx-auto">
+                <div class="bg-blue-500 h-2 rounded" style="width:{{ data.progress }}%"></div>
+              </div>
+              <span class="text-xs text-gray-500">{{ data.progress|floatformat:0 }}%</span>
+            </td>
 
-          <td class="p-3 text-center">
-            <div class="w-28 bg-gray-200 h-2 rounded mx-auto">
-              <div class="bg-blue-500 h-2 rounded" style="width:{{ data.progress }}%"></div>
-            </div>
-            <span class="text-xs text-gray-500">{{ data.progress|floatformat:0 }}%</span>
-          </td>
+            <td class="p-3 text-center">
+              <span class="font-semibold">{{ data.overall_percentage|floatformat:0 }}%</span>
+              <div class="text-xs text-gray-400">
+                Pass: {{ data.passing_threshold|floatformat:0 }}%
+              </div>
+            </td>
 
-          <td class="p-3 text-center">
-            <span class="font-semibold">{{ data.overall_percentage|floatformat:0 }}%</span>
-            <div class="text-xs text-gray-400">
-              Pass: {{ data.passing_threshold|floatformat:0 }}%
-            </div>
-          </td>
+            <td class="p-3 text-center">
+              {% if data.certificate_issued %}
+                <span class="px-2 py-1 bg-green-100 text-green-600 text-xs rounded">Issued</span>
+              {% elif data.certificate_eligible %}
+                <span class="px-2 py-1 bg-yellow-100 text-yellow-600 text-xs rounded">Eligible</span>
+              {% else %}
+                <span class="px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded">Not Eligible</span>
+              {% endif %}
+            </td>
 
-          <td class="p-3 text-center">
-            {% if data.certificate_issued %}
-              <span class="px-2 py-1 bg-green-100 text-green-600 text-xs rounded">Issued</span>
-            {% elif data.certificate_eligible %}
-              <span class="px-2 py-1 bg-yellow-100 text-yellow-600 text-xs rounded">Eligible</span>
-            {% else %}
-              <span class="px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded">Not Eligible</span>
-            {% endif %}
-          </td>
+            <td class="p-3">
+              <div class="flex flex-wrap gap-2 justify-center">
 
-          <td class="p-3">
-            <div class="flex flex-wrap gap-2 justify-center">
+                {% with last_access=last_access_map|get_item:enrollment.course.id %}
 
-              {% with last_access=last_access_map|get_item:enrollment.course.id %}
+                  {% if data.progress == 100 %}
+                    <span class="px-3 py-1 bg-green-500 text-white text-xs rounded">Completed</span>
 
-                {% if data.progress == 100 %}
-                  <span class="px-3 py-1 bg-green-500 text-white text-xs rounded">Completed</span>
-
-                {% elif data.progress > 0 or last_access %}
-                  <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
-                     class="px-3 py-1 bg-yellow-400 text-white text-xs rounded">
-                     Resume
-                  </a>
-
-                {% else %}
-                  <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
-                     class="px-3 py-1 bg-blue-500 text-white text-xs rounded">
-                     Start
-                  </a>
-                {% endif %}
-
-                {% if data.certificate_eligible %}
-                  <a href="{% url 'courses:generate_certificate' enrollment.course.id %}"
-                     class="px-3 py-1 bg-green-500 text-white text-xs rounded">
-                     Certificate
-                  </a>
-                {% endif %}
-
-                {% if data.certificate_eligible %}
-                  {% if data.has_reviewed %}
-                    <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}"
-                       class="px-3 py-1 bg-teal-500 text-white text-xs rounded">
-                       Review
+                  {% elif data.progress > 0 or last_access %}
+                    <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
+                      class="px-3 py-1 bg-yellow-400 text-white text-xs rounded">
+                      Resume
                     </a>
+
                   {% else %}
-                    <a href="{% url 'courses:submit_rating' enrollment.course.id enrollment.course.slug %}"
-                       class="px-3 py-1 bg-yellow-500 text-white text-xs rounded">
-                       Rate
+                    <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
+                      class="px-3 py-1 bg-blue-500 text-white text-xs rounded">
+                      Start
                     </a>
                   {% endif %}
-                {% endif %}
 
-              {% endwith %}
-            </div>
-          </td>
+                  {% if data.certificate_eligible %}
+                    <a href="{% url 'courses:generate_certificate' enrollment.course.id %}"
+                      class="px-3 py-1 bg-green-500 text-white text-xs rounded">
+                      Certificate
+                    </a>
+                  {% endif %}
 
-        </tr>
-        {% endwith %}
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+                  {% if data.certificate_eligible %}
+                    {% if data.has_reviewed %}
+                      <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}"
+                        class="px-3 py-1 bg-teal-500 text-white text-xs rounded">
+                        Review
+                      </a>
+                    {% else %}
+                      <a href="{% url 'courses:submit_rating' enrollment.course.id enrollment.course.slug %}"
+                        class="px-3 py-1 bg-yellow-500 text-white text-xs rounded">
+                        Rate
+                      </a>
+                    {% endif %}
+                  {% endif %}
 
-  <!-- PAGINATION -->
-  <div class="flex justify-center flex-wrap gap-2 pt-4">
-    {% for num in page_obj.paginator.page_range %}
-      {% if num == page_obj.number %}
-        <span class="px-3 py-1 bg-blue-500 text-white rounded text-sm">{{ num }}</span>
-      {% else %}
-        <a href="?enrollments_page={{ num }}&search={{ search_query }}"
-           class="px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm hover:bg-gray-200">
-          {{ num }}
+                {% endwith %}
+              </div>
+            </td>
+
+          </tr>
+          {% endwith %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="flex justify-center flex-wrap gap-2 pt-4">
+      {% for num in page_obj.paginator.page_range %}
+        {% if num == page_obj.number %}
+          <span class="px-3 py-1 bg-blue-500 text-white rounded text-sm">{{ num }}</span>
+        {% else %}
+          <a href="?enrollments_page={{ num }}&search={{ search_query }}"
+            class="px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm hover:bg-gray-200">
+            {{ num }}
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  {% else %}
+    <!-- ================= EMPTY STATE ================= -->
+    <div class="flex flex-col items-center justify-center text-center py-16">
+
+        <!-- Icon -->
+        <div class="w-20 h-20 flex items-center justify-center rounded-full bg-gray-100 mb-4">
+            <i class="fas fa-book-open text-3xl text-gray-400"></i>
+        </div>
+
+        <!-- Text -->
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">
+            No courses yet
+        </h2>
+        <p class="text-sm text-gray-500 mb-6">
+            Start learning by exploring available courses.
+        </p>
+
+        <!-- Button -->
+        <a href="{% url 'authentication:course_list' %}"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition shadow">
+            
+            <i class="fas fa-compass"></i>
+            Explore Courses
         </a>
-      {% endif %}
-    {% endfor %}
-  </div>
 
+    </div>
   {% endif %}
 
   <!-- ================= RECOMMENDATION ================= -->
