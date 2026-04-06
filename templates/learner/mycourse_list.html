@@ -4,592 +4,285 @@
 
 {% block content %}
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+<div class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
 
-  .mc-root {
-    font-family: 'DM Sans', sans-serif;
-    background: #f5f6fa;
-    min-height: 100vh;
-    padding: 1.5rem;
-  }
-
-  /* ── Top bar ── */
-  .mc-topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .mc-topbar h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #1a1d2e;
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
-
-  .mc-topbar p {
-    font-size: 0.82rem;
-    color: #6b7280;
-    margin: 0.15rem 0 0;
-  }
-
-  /* ── Search ── */
-  .mc-search {
-    display: flex;
-    border: 1.5px solid #e5e7eb;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 0 1px 4px rgba(0,0,0,.06);
-    min-width: 240px;
-  }
-  .mc-search input {
-    flex: 1;
-    border: none;
-    outline: none;
-    padding: 0.45rem 0.8rem;
-    font-size: 0.83rem;
-    color: #1a1d2e;
-    background: transparent;
-    font-family: inherit;
-  }
-  .mc-search button {
-    background: #dc2626;
-    color: #fff;
-    border: none;
-    padding: 0 0.9rem;
-    cursor: pointer;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    transition: background .18s;
-    font-family: inherit;
-  }
-  .mc-search button:hover { background: #b91c1c; }
-
-  /* ── Compact stats strip ── */
-  .mc-stats {
-    display: flex;
-    gap: 0.6rem;
-    margin-bottom: 1.25rem;
-    flex-wrap: wrap;
-  }
-  .mc-stat {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    background: #fff;
-    border: 1.5px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 0.45rem 0.85rem;
-    font-size: 0.82rem;
-    color: #374151;
-    font-weight: 500;
-    box-shadow: 0 1px 3px rgba(0,0,0,.05);
-    flex: 1;
-    min-width: 140px;
-  }
-  .mc-stat .mc-stat-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .mc-stat .mc-stat-num {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #1a1d2e;
-    font-family: 'DM Mono', monospace;
-    margin-left: auto;
-  }
-
-  /* ── Card wrapper ── */
-  .mc-card {
-    background: #fff;
-    border: 1.5px solid #e5e7eb;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.05);
-    overflow: hidden;
-    margin-bottom: 1.5rem;
-  }
-
-  /* ── Table ── */
-  .mc-table { width: 100%; border-collapse: collapse; }
-  .mc-table thead th {
-    background: #f9fafb;
-    padding: 0.65rem 1rem;
-    text-align: left;
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #6b7280;
-    border-bottom: 1.5px solid #e5e7eb;
-    white-space: nowrap;
-  }
-  .mc-table thead th:last-child { text-align: right; }
-
-  .mc-table tbody tr {
-    border-bottom: 1px solid #f0f0f5;
-    transition: background .12s;
-  }
-  .mc-table tbody tr:last-child { border-bottom: none; }
-  .mc-table tbody tr:hover { background: #fafafa; }
-
-  .mc-table td {
-    padding: 0.7rem 1rem;
-    vertical-align: middle;
-    font-size: 0.82rem;
-    color: #374151;
-  }
-
-  /* course name cell */
-  .mc-course-name {
-    font-weight: 600;
-    font-size: 0.85rem;
-    color: #2563eb;
-    text-decoration: none;
-    display: block;
-    line-height: 1.3;
-    margin-bottom: 0.25rem;
-  }
-  .mc-course-name:hover { color: #1d4ed8; text-decoration: underline; }
-
-  .mc-links { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .mc-link {
-    font-size: 0.73rem;
-    color: #9ca3af;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.2rem;
-    transition: color .15s;
-  }
-  .mc-link:hover { color: #4b5563; }
-
-  /* progress bar */
-  .mc-progress-wrap { width: 90px; }
-  .mc-progress-bar {
-    height: 5px;
-    border-radius: 99px;
-    background: #e5e7eb;
-    overflow: hidden;
-    margin-bottom: 0.2rem;
-  }
-  .mc-progress-fill {
-    height: 100%;
-    border-radius: 99px;
-    background: linear-gradient(90deg, #3b82f6, #60a5fa);
-    transition: width .5s ease;
-  }
-  .mc-progress-label { font-size: 0.7rem; color: #9ca3af; font-family: 'DM Mono', monospace; }
-
-  /* score */
-  .mc-score { font-weight: 600; color: #1a1d2e; font-family: 'DM Mono', monospace; font-size: 0.82rem; }
-  .mc-score small { font-weight: 400; color: #9ca3af; font-size: 0.7rem; display: block; font-family: 'DM Sans', sans-serif; }
-
-  /* badges */
-  .mc-badge {
-    display: inline-block;
-    padding: 0.18rem 0.55rem;
-    border-radius: 99px;
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    white-space: nowrap;
-  }
-  .mc-badge-green   { background: #d1fae5; color: #065f46; }
-  .mc-badge-yellow  { background: #fef3c7; color: #92400e; }
-  .mc-badge-gray    { background: #f3f4f6; color: #6b7280; }
-
-  /* action buttons */
-  .mc-actions { display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: flex-end; }
-  .mc-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.3rem 0.65rem;
-    border-radius: 6px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: filter .15s, transform .1s;
-    font-family: inherit;
-    cursor: pointer;
-  }
-  .mc-btn:hover { filter: brightness(0.92); transform: translateY(-1px); }
-  .mc-btn-blue    { background: #2563eb; color: #fff; }
-  .mc-btn-yellow  { background: #f59e0b; color: #fff; }
-  .mc-btn-green   { background: #059669; color: #fff; }
-  .mc-btn-teal    { background: #0d9488; color: #fff; }
-  .mc-btn-done    { background: #dcfce7; color: #166534; cursor: default; }
-  .mc-btn-done:hover { filter: none; transform: none; }
-
-  /* date link */
-  .mc-date-link { font-size: 0.78rem; color: #6b7280; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; white-space: nowrap; }
-  .mc-date-link:hover { color: #374151; }
-
-  /* ── Pagination ── */
-  .mc-pagination { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.3rem; padding: 1rem; border-top: 1.5px solid #f0f0f5; }
-  .mc-page-btn {
-    padding: 0.3rem 0.65rem;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-decoration: none;
-    border: 1.5px solid #e5e7eb;
-    color: #374151;
-    background: #fff;
-    transition: background .12s, border-color .12s;
-    font-family: 'DM Mono', monospace;
-  }
-  .mc-page-btn:hover { background: #f3f4f6; border-color: #d1d5db; }
-  .mc-page-btn.active { background: #2563eb; border-color: #2563eb; color: #fff; font-weight: 700; }
-  .mc-page-btn.disabled { background: #f9fafb; color: #d1d5db; border-color: #f0f0f5; pointer-events: none; }
-
-  /* ── Empty state ── */
-  .mc-empty {
-    text-align: center;
-    padding: 3.5rem 1rem;
-    color: #9ca3af;
-  }
-  .mc-empty i { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
-  .mc-empty h4 { font-size: 1rem; font-weight: 600; color: #4b5563; margin-bottom: 0.4rem; }
-  .mc-empty p { font-size: 0.82rem; margin-bottom: 1rem; }
-
-  /* ── Recommended ── */
-  .mc-rec-header {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    margin-top: 2rem;
-  }
-  .mc-rec-header h2 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #1a1d2e;
-    letter-spacing: -0.01em;
-    margin: 0;
-  }
-  .mc-rec-header span {
-    font-size: 0.72rem;
-    color: #9ca3af;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
-  .mc-rec-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 0.85rem;
-  }
-
-  .mc-rec-card {
-    background: #fff;
-    border: 1.5px solid #e5e7eb;
-    border-radius: 10px;
-    padding: 1rem;
-    position: relative;
-    transition: box-shadow .18s, transform .18s;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .mc-rec-card:hover {
-    box-shadow: 0 6px 20px rgba(0,0,0,.1);
-    transform: translateY(-2px);
-  }
-
-  .mc-rec-badge-new {
-    position: absolute;
-    top: 0.65rem; right: 0.65rem;
-    background: #10b981;
-    color: #fff;
-    font-size: 0.6rem;
-    font-weight: 700;
-    padding: 0.15rem 0.45rem;
-    border-radius: 99px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  .mc-rec-card h3 {
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: #1a1d2e;
-    margin: 0;
-    padding-right: 2.5rem;
-    line-height: 1.35;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .mc-rec-card p {
-    font-size: 0.75rem;
-    color: #6b7280;
-    line-height: 1.45;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    flex: 1;
-  }
-
-  .mc-rec-meta {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.68rem;
-    color: #9ca3af;
-    font-family: 'DM Mono', monospace;
-    border-top: 1px solid #f3f4f6;
-    padding-top: 0.5rem;
-    margin-top: 0.15rem;
-  }
-
-  .mc-rec-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 0.1rem;
-  }
-
-  .mc-rec-cat {
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: #a5b4fc;
-  }
-</style>
-
-<div class="mc-root">
-
-  <!-- ── Top Bar ── -->
-  <div class="mc-topbar">
+  <!-- HEADER -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
     <div>
-      <h1>My Courses</h1>
-      <p>Track your learning progress and achievements</p>
+      <h1 class="text-2xl font-bold text-gray-800">My Courses</h1>
+      <p class="text-sm text-gray-500">Track your learning progress</p>
     </div>
-    <form method="get" action="{% url 'authentication:mycourse' %}" class="mc-search">
-      <input type="text" name="search" value="{{ search_query }}" placeholder="Search courses…" />
-      <button type="submit"><i class="fas fa-search"></i> Search</button>
+
+    <form method="get" action="{% url 'authentication:mycourse' %}" class="flex w-full md:w-auto">
+      <input type="text" name="search" value="{{ search_query }}"
+             placeholder="Search courses..."
+             class="w-full md:w-72 px-4 py-2 border rounded-l-xl focus:ring-2 focus:ring-blue-400 text-sm">
+      <button class="px-4 bg-red-500 text-white rounded-r-xl">🔍</button>
     </form>
   </div>
 
-  <!-- ── Compact Stats Strip ── -->
-  <div class="mc-stats">
-    <div class="mc-stat">
-      <span class="mc-stat-dot" style="background:#3b82f6;"></span>
-      <span>Total Enrollments</span>
-      <span class="mc-stat-num">{{ total_enrollments }}</span>
-    </div>
-    <div class="mc-stat">
-      <span class="mc-stat-dot" style="background:#10b981;"></span>
-      <span>Active Courses</span>
-      <span class="mc-stat-num">{{ active_courses.count }}</span>
-    </div>
-    <div class="mc-stat">
-      <span class="mc-stat-dot" style="background:#14b8a6;"></span>
-      <span>Completed</span>
-      <span class="mc-stat-num">{{ completed_courses.count }}</span>
-    </div>
-  </div>
+  {% if page_obj %}
 
-  <!-- ── Courses Table ── -->
-  <div class="mc-card">
-    {% if page_obj %}
-      <div style="overflow-x:auto;">
-        <table class="mc-table">
-          <thead>
-            <tr>
-              <th>Course Name</th>
-              <th>Enrolled</th>
-              <th>Progress</th>
-              <th>Score</th>
-              <th>Certificate</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for data in page_obj %}
-            {% with enrollment=data.enrollment %}
-            <tr>
-              <!-- Course Name -->
-              <td style="min-width:200px;">
-                <a href="{% url 'learner:course_learn' data.enrollment.user.username data.enrollment.course.id data.enrollment.course.slug %}"
-                   class="mc-course-name">{{ data.enrollment.course.course_name }}</a>
-                <div class="mc-links">
-                  <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}" class="mc-link">
-                    <i class="fas fa-info-circle"></i> Detail
-                  </a>
-                  <a href="{% url 'learner:score_summary' username=request.user.username course_id=enrollment.course.id %}" class="mc-link">
-                    <i class="fas fa-poll"></i> Score
-                  </a>
-                </div>
-              </td>
+  <!-- ================= MOBILE ================= -->
+  <div class="space-y-4 md:hidden">
+    {% for data in page_obj %}
+    {% with enrollment=data.enrollment %}
 
-              <!-- Enrolled Date -->
-              <td>
-                <a href="{% url 'courses:user_course_timeline' data.enrollment.course.id %}" class="mc-date-link">
-                  <i class="fas fa-clock"></i>
-                  {{ enrollment.enrolled_at|date:"d M Y" }}
-                </a>
-              </td>
+    <div class="bg-white rounded-xl p-4 shadow space-y-3">
 
-              <!-- Progress -->
-              <td style="min-width:100px;">
-                <div class="mc-progress-wrap">
-                  <div class="mc-progress-bar">
-                    <div class="mc-progress-fill" style="width:{{ data.progress }}%"></div>
-                  </div>
-                  <div class="mc-progress-label">{{ data.progress|floatformat:2 }}%</div>
-                </div>
-              </td>
+      <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
+         class="font-semibold text-gray-800">
+        {{ enrollment.course.course_name }}
+      </a>
 
-              <!-- Score -->
-              <td>
-                <div class="mc-score">
-                  {{ data.overall_percentage|floatformat:2 }}%
-                  <small>Pass: {{ data.passing_threshold|floatformat:2 }}%</small>
-                </div>
-              </td>
+      <p class="text-xs text-gray-500">
+        Enrolled: {{ enrollment.enrolled_at|date:"d M Y" }}
+      </p>
 
-              <!-- Certificate -->
-              <td>
-                {% if data.certificate_issued %}
-                  <span class="mc-badge mc-badge-green">Issued</span>
-                {% elif data.certificate_eligible %}
-                  <span class="mc-badge mc-badge-yellow">Eligible</span>
-                {% else %}
-                  <span class="mc-badge mc-badge-gray">Not Eligible</span>
-                {% endif %}
-              </td>
-
-              <!-- Actions -->
-              <td>
-                <div class="mc-actions">
-                  {% with last_access=last_access_map|get_item:enrollment.course.id %}
-                    {% if data.progress == 100 %}
-                      <span class="mc-btn mc-btn-done"><i class="fas fa-check-circle"></i> Completed</span>
-                    {% elif data.progress > 0 or last_access %}
-                      {% if last_access and last_access.material %}
-                        <a href="{% url 'learner:load_content' enrollment.user.username enrollment.course.id enrollment.course.slug 'material' last_access.material.id %}"
-                           class="mc-btn mc-btn-yellow"><i class="fas fa-play-circle"></i> Resume</a>
-                      {% elif last_access and last_access.assessment %}
-                        <a href="{% url 'learner:load_content' enrollment.user.username enrollment.course.id enrollment.course.slug 'assessment' last_access.assessment.id %}"
-                           class="mc-btn mc-btn-yellow"><i class="fas fa-play-circle"></i> Resume</a>
-                      {% else %}
-                        <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
-                           class="mc-btn mc-btn-yellow"><i class="fas fa-play-circle"></i> Resume</a>
-                      {% endif %}
-                    {% else %}
-                      <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
-                         class="mc-btn mc-btn-blue"><i class="fas fa-rocket"></i> Get Started</a>
-                    {% endif %}
-
-                    {% if data.certificate_eligible %}
-                      <a href="{% url 'courses:generate_certificate' enrollment.course.id %}"
-                         class="mc-btn mc-btn-green" title="Download Certificate"><i class="fas fa-download"></i> Claim</a>
-                    {% endif %}
-
-                    {% if data.certificate_eligible %}
-                      {% if data.has_reviewed %}
-                        <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}"
-                           class="mc-btn mc-btn-teal"><i class="fas fa-eye"></i> Review</a>
-                      {% else %}
-                        <a href="{% url 'courses:submit_rating' enrollment.course.id enrollment.course.slug %}"
-                           class="mc-btn mc-btn-yellow"><i class="fas fa-star"></i> Rate</a>
-                      {% endif %}
-                    {% endif %}
-                  {% endwith %}
-                </div>
-              </td>
-            </tr>
-            {% endwith %}
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Pagination -->
-      <div class="mc-pagination">
-        {% if page_obj.has_previous %}
-          <a href="?enrollments_page=1&search={{ search_query }}" class="mc-page-btn">«</a>
-          <a href="?enrollments_page={{ page_obj.previous_page_number }}&search={{ search_query }}" class="mc-page-btn">‹</a>
-        {% else %}
-          <span class="mc-page-btn disabled">«</span>
-          <span class="mc-page-btn disabled">‹</span>
-        {% endif %}
-
-        {% for num in page_obj.paginator.page_range %}
-          {% if num == page_obj.number %}
-            <span class="mc-page-btn active">{{ num }}</span>
-          {% else %}
-            <a href="?enrollments_page={{ num }}&search={{ search_query }}" class="mc-page-btn">{{ num }}</a>
-          {% endif %}
-        {% endfor %}
-
-        {% if page_obj.has_next %}
-          <a href="?enrollments_page={{ page_obj.next_page_number }}&search={{ search_query }}" class="mc-page-btn">›</a>
-          <a href="?enrollments_page={{ page_obj.paginator.num_pages }}&search={{ search_query }}" class="mc-page-btn">»</a>
-        {% else %}
-          <span class="mc-page-btn disabled">›</span>
-          <span class="mc-page-btn disabled">»</span>
-        {% endif %}
-      </div>
-
-    {% else %}
-      <div class="mc-empty">
-        <i class="fas fa-book-open"></i>
-        <h4>No Courses Enrolled</h4>
-        <p>You haven't enrolled in any courses yet. Start exploring now!</p>
-        <a href="{% url 'authentication:course_list' %}" class="mc-btn mc-btn-blue">Browse Courses</a>
-      </div>
-    {% endif %}
-  </div>
-
-  <!-- ── Recommended Courses ── -->
-  {% if request.user.interests.exists %}
-    {% if recommended_courses %}
-      <div class="mc-rec-header">
-        <h2>Recommended for You</h2>
-        <span>Based on your interests</span>
-      </div>
-      <div class="mc-rec-grid">
-        {% for course in recommended_courses %}
-        <div class="mc-rec-card">
-          {% if course.created_at|timeuntil:now < '7 days' %}
-            <span class="mc-rec-badge-new">New</span>
-          {% endif %}
-
-          <h3>{{ course.course_name }}</h3>
-          <p>{{ course.description|striptags|truncatechars:120 }}</p>
-
-          <div class="mc-rec-meta">
-            <span>Start {{ course.start_enrol|date:"M d, Y" }}</span>
-            <span>End {{ course.end_enrol|date:"M d, Y" }}</span>
-          </div>
-
-          <div class="mc-rec-footer">
-            <a href="{% url 'courses:course_lms_detail' course.id course.slug %}"
-               class="mc-btn mc-btn-blue" style="font-size:0.72rem;">View Course</a>
-            <span class="mc-rec-cat">{{ course.category.name }}</span>
-          </div>
+      <div>
+        <div class="w-full bg-gray-200 h-2 rounded">
+          <div class="bg-blue-500 h-2 rounded" style="width:{{ data.progress }}%"></div>
         </div>
-        {% endfor %}
+        <p class="text-xs text-gray-500 mt-1">{{ data.progress|floatformat:0 }}%</p>
       </div>
-    {% endif %}
+
+      <p class="text-sm">
+        Score: <span class="font-semibold">{{ data.overall_percentage|floatformat:0 }}%</span>
+      </p>
+
+      <div>
+        {% if data.certificate_issued %}
+          <span class="text-xs px-2 py-1 bg-green-100 text-green-600 rounded">Issued</span>
+        {% elif data.certificate_eligible %}
+          <span class="text-xs px-2 py-1 bg-yellow-100 text-yellow-600 rounded">Eligible</span>
+        {% else %}
+          <span class="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">Not Eligible</span>
+        {% endif %}
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+
+        {% with last_access=last_access_map|get_item:enrollment.course.id %}
+
+          {% if data.progress == 100 %}
+            <span class="px-3 py-1 bg-green-500 text-white text-xs rounded">Completed</span>
+
+          {% elif data.progress > 0 or last_access %}
+            <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
+               class="px-3 py-1 bg-yellow-400 text-white text-xs rounded">
+               Resume
+            </a>
+
+          {% else %}
+            <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
+               class="px-3 py-1 bg-blue-500 text-white text-xs rounded">
+               Start
+            </a>
+          {% endif %}
+
+          {% if data.certificate_eligible %}
+            <a href="{% url 'courses:generate_certificate' enrollment.course.id %}"
+               class="px-3 py-1 bg-green-500 text-white text-xs rounded">
+               Certificate
+            </a>
+          {% endif %}
+
+        {% endwith %}
+      </div>
+
+    </div>
+
+    {% endwith %}
+    {% endfor %}
+  </div>
+
+  <!-- ================= DESKTOP ================= -->
+  <div class="hidden md:block bg-white rounded-xl shadow overflow-hidden">
+    <table class="w-full text-sm">
+      <thead class="bg-gray-50 text-gray-600">
+        <tr>
+          <th class="p-3 text-left">Course</th>
+          <th class="p-3">Enrolled</th>
+          <th class="p-3">Progress</th>
+          <th class="p-3">Score</th>
+          <th class="p-3">Certificate</th>
+          <th class="p-3">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for data in page_obj %}
+        {% with enrollment=data.enrollment %}
+        <tr class="border-t hover:bg-gray-50 transition">
+
+          <td class="p-3">
+            <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
+               class="font-medium text-gray-800">
+              {{ enrollment.course.course_name }}
+            </a>
+
+            <div class="text-xs text-gray-500 mt-1 space-x-2">
+              <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}" class="hover:text-blue-500">Detail</a>
+              <a href="{% url 'learner:score_summary' username=request.user.username course_id=enrollment.course.id %}" class="hover:text-blue-500">Score</a>
+            </div>
+          </td>
+
+          <td class="p-3 text-center text-gray-500">
+            {{ enrollment.enrolled_at|date:"d M Y" }}
+          </td>
+
+          <td class="p-3 text-center">
+            <div class="w-28 bg-gray-200 h-2 rounded mx-auto">
+              <div class="bg-blue-500 h-2 rounded" style="width:{{ data.progress }}%"></div>
+            </div>
+            <span class="text-xs text-gray-500">{{ data.progress|floatformat:0 }}%</span>
+          </td>
+
+          <td class="p-3 text-center">
+            <span class="font-semibold">{{ data.overall_percentage|floatformat:0 }}%</span>
+            <div class="text-xs text-gray-400">
+              Pass: {{ data.passing_threshold|floatformat:0 }}%
+            </div>
+          </td>
+
+          <td class="p-3 text-center">
+            {% if data.certificate_issued %}
+              <span class="px-2 py-1 bg-green-100 text-green-600 text-xs rounded">Issued</span>
+            {% elif data.certificate_eligible %}
+              <span class="px-2 py-1 bg-yellow-100 text-yellow-600 text-xs rounded">Eligible</span>
+            {% else %}
+              <span class="px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded">Not Eligible</span>
+            {% endif %}
+          </td>
+
+          <td class="p-3">
+            <div class="flex flex-wrap gap-2 justify-center">
+
+              {% with last_access=last_access_map|get_item:enrollment.course.id %}
+
+                {% if data.progress == 100 %}
+                  <span class="px-3 py-1 bg-green-500 text-white text-xs rounded">Completed</span>
+
+                {% elif data.progress > 0 or last_access %}
+                  <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
+                     class="px-3 py-1 bg-yellow-400 text-white text-xs rounded">
+                     Resume
+                  </a>
+
+                {% else %}
+                  <a href="{% url 'learner:course_learn' enrollment.user.username enrollment.course.id enrollment.course.slug %}"
+                     class="px-3 py-1 bg-blue-500 text-white text-xs rounded">
+                     Start
+                  </a>
+                {% endif %}
+
+                {% if data.certificate_eligible %}
+                  <a href="{% url 'courses:generate_certificate' enrollment.course.id %}"
+                     class="px-3 py-1 bg-green-500 text-white text-xs rounded">
+                     Certificate
+                  </a>
+                {% endif %}
+
+                {% if data.certificate_eligible %}
+                  {% if data.has_reviewed %}
+                    <a href="{% url 'courses:course_lms_detail' enrollment.course.id enrollment.course.slug %}"
+                       class="px-3 py-1 bg-teal-500 text-white text-xs rounded">
+                       Review
+                    </a>
+                  {% else %}
+                    <a href="{% url 'courses:submit_rating' enrollment.course.id enrollment.course.slug %}"
+                       class="px-3 py-1 bg-yellow-500 text-white text-xs rounded">
+                       Rate
+                    </a>
+                  {% endif %}
+                {% endif %}
+
+              {% endwith %}
+            </div>
+          </td>
+
+        </tr>
+        {% endwith %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PAGINATION -->
+  <div class="flex justify-center flex-wrap gap-2 pt-4">
+    {% for num in page_obj.paginator.page_range %}
+      {% if num == page_obj.number %}
+        <span class="px-3 py-1 bg-blue-500 text-white rounded text-sm">{{ num }}</span>
+      {% else %}
+        <a href="?enrollments_page={{ num }}&search={{ search_query }}"
+           class="px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm hover:bg-gray-200">
+          {{ num }}
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% endif %}
+
+  <!-- ================= RECOMMENDATION ================= -->
+  {% if request.user.interests.exists and recommended_courses %}
+  <div class="pt-6">
+
+    <div class="mb-4">
+      <h2 class="text-lg font-semibold text-gray-800">Recommended for You</h2>
+      <p class="text-xs text-gray-500">Based on your interests</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      {% for course in recommended_courses %}
+      <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
+
+        <div class="h-32 bg-gradient-to-r from-indigo-500 to-blue-500 relative flex items-center justify-center text-white text-sm font-semibold">
+          {{ course.category.name }}
+
+          {% if course.created_at|timeuntil:now < '7 days' %}
+          <span class="absolute top-2 left-2 text-[10px] px-2 py-0.5 bg-yellow-400 text-white rounded">
+            NEW
+          </span>
+          {% endif %}
+        </div>
+
+        <div class="p-4 flex flex-col flex-1">
+
+          <h3 class="font-semibold text-gray-800 line-clamp-2">
+            {{ course.course_name }}
+          </h3>
+
+          <p class="text-xs text-gray-500 mt-1 line-clamp-2">
+            {{ course.description|striptags|truncatechars:100 }}
+          </p>
+
+          <div class="mt-3 text-[11px] text-gray-400">
+            {{ course.start_enrol|date:"M d, Y" }} - {{ course.end_enrol|date:"M d, Y" }}
+          </div>
+
+          <div class="mt-auto pt-4 flex justify-between items-center">
+
+           
+
+            <a href="{% url 'courses:course_lms_detail' course.id course.slug %}"
+               class="px-3 py-1.5 bg-blue-500 text-white text-xs rounded-lg hover:bg-blue-600">
+               View
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+      {% endfor %}
+
+    </div>
+
+  </div>
   {% endif %}
 
 </div>
+
 {% endblock %}

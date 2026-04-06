@@ -61,13 +61,24 @@
 
     <header class="fixed w-full top-0 bg-gray-50 shadow-md z-50 border-b border-red-100">
     <div class="relative flex items-center justify-between px-6 py-4">
-
+        
         <!-- Logo / Admin Panel -->
         <div class="flex items-center space-x-3 group">
 
-            <label for="sidebar-toggle" class="cursor-pointer md:hidden text-red-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/>
+            <label 
+                for="sidebar-toggle" 
+                class="cursor-pointer md:hidden flex items-center justify-center 
+                    w-10 h-10 rounded-lg bg-red-50 hover:bg-red-100 
+                    text-red-500 transition"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                    class="h-6 w-6" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor" 
+                    stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" 
+                        d="M4 6h16M4 12h16m-7 6h7"/>
                 </svg>
             </label>
 
@@ -229,7 +240,7 @@
 <!-- ===========================
      SIDEBAR UNIT COLLAPSIBLE
 =========================== -->
-<div id="sidebar" class="space-y-2">
+<div id="sidebar-content" class="space-y-2">
 
     {% for section in sections %}
         {% for sub in section.children.all %}
@@ -286,7 +297,7 @@
                                    {% endif %}"
                             data-read-status="{% if is_assessment_read %}true{% else %}false{% endif %}">
 
-                            <i class="fas fa-clipboard-check w-5"></i>
+                            <i class="fas fa-clipboard-list w-5 text-blue-500"></i>
                             <i class="fas fa-check-circle check-icon text-green-600 hidden w-5"></i>
                             <span>{{ assessment.name }}</span>
                         </a>
@@ -303,6 +314,16 @@
 <!-- ===========================
      JS TOGGLE UNIT
 =========================== -->
+<script>
+    document.addEventListener("click", function (e) {
+        const sidebarToggle = document.getElementById("sidebar-toggle");
+        const item = e.target.closest(".sidebar-item");
+
+        if (item && window.innerWidth < 768) {
+            sidebarToggle.checked = false;
+        }
+    });
+</script>
 <script>
 // ===========================
 // JS TOGGLE UNIT + INIT SIDEBAR

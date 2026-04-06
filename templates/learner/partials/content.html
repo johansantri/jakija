@@ -56,18 +56,12 @@
     {% if current_content.0 == 'material' %}
         {% with material=current_content.1 section=current_content.2 %}
         <!-- material -->
-        <article class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-2 sm:mx-0">
+        <article class="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-xl shadow-sm mt-6 mx-0 sm:mx-0">
             
-             <nav class="text-sm text-gray-500 mb-1">
-                <ol class="flex space-x-2">
-                    <li><a href="{% url 'authentication:mycourse' %}" class="hover:text-blue-600">Home</a></li>
-                    <li>/</li>
-                    <li class="text-gray-600">
-                        {{ section }} &raquo;
-                        
-                    </li>
-                    <div class="material-report-wrapper">
-                        <a 
+             
+
+                            <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">
+                                {{ material.title }} <a 
                             href="#"
                             class="btn btn-sm btn-warning"
                             hx-post="{% url 'learner:submit_report' username=username course_id=course.id section_id=material.section.id %}?material_id={{ material.id }}"
@@ -77,22 +71,9 @@
                             title="Report this material">
                             🚩
                         </a>
-
                         <span id="report-message-{{ material.id }}"></span>
-                    </div>
-
-
-                    
-
-
-                    
-                </ol>
-            </nav>
-
-                            <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">
-                                {{ material.title }}
                             </h2>
-
+        <hr class="my-6 border-t border-gray-200">
 
 
 
@@ -140,34 +121,22 @@
                         {% if ask_oras %}
                         <!-- ==================== BAGIAN OPEN RESPONSE ASSESSMENT ==================== -->
                             
-                                <nav class="text-sm text-gray-500 mb-1">
-                                    <ol class="flex space-x-2">
-                                        <li><a href="{% url 'authentication:mycourse' %}" class="hover:text-blue-600">Home</a></li>
-                                        <li>/</li>
-                                        <li class="text-gray-600">
-                                            {{ section }} &raquo;
-                                           
-                                        </li>
-                                        <div class="assessment-report-wrapper">
-                                            <a 
-                                                href="#"
-                                                class="btn btn-sm btn-warning"
-                                                hx-post="{% url 'learner:submit_report' username=username course_id=course.id section_id=assessment.section.id %}?assessment_id={{ assessment.id }}"
-                                                hx-trigger="click"
-                                                hx-target="#report-message-assessment-{{ assessment.id }}"
-                                                hx-swap="innerHTML"
-                                                title="Report this assessment">
-                                                🚩
-                                            </a>
+                               
+                                <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ assessment.name }}
+                                <a 
+                                    href="#"
+                                    class="btn btn-sm btn-warning"
+                                    hx-post="{% url 'learner:submit_report' username=username course_id=course.id section_id=assessment.section.id %}?assessment_id={{ assessment.id }}"
+                                    hx-trigger="click"
+                                    hx-target="#report-message-assessment-{{ assessment.id }}"
+                                    hx-swap="innerHTML"
+                                    title="Report this assessment">
+                                    🚩
+                                </a>
 
-                                            <span id="report-message-assessment-{{ assessment.id }}"></span>
-                                        </div>
-
-
-                                        
-                                    </ol>
-                                </nav>
-                                <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ assessment.name }}</h2>
+                                <span id="report-message-assessment-{{ assessment.id }}"></span>
+                                </h2>
+                                <hr class="my-6 border-t border-gray-200">
                                 <p class="text-lg text-gray-600 mb-10">Work on the task below and wait for a peer review from your classmates.</p>
 
                                 {% for ask_ora in ask_oras %}
@@ -410,37 +379,23 @@
 
                         <!-- IN-VIDEO QUIZ: VERSI ULTIMATE (Video.js + GSAP + Sound + Score + Super Cantik) -->
                         {% if is_video_quiz and video %}
-                            <nav class="text-sm text-gray-500 mb-1">
-                                <ol class="flex space-x-2">
-                                    <li><a href="{% url 'authentication:mycourse' %}" class="hover:text-blue-600">Home</a></li>
-                                    <li>/</li>
-                                    <li class="text-gray-600">
-                                        {{ section }} &raquo;
-                                        
-                                    </li>
-
-                                    <div class="assessment-report-wrapper">
-                                        <a 
-                                            href="#"
-                                            class="btn btn-sm btn-warning"
-                                            hx-post="{% url 'learner:submit_report' username=username course_id=course.id section_id=assessment.section.id %}?assessment_id={{ assessment.id }}"
-                                            hx-trigger="click"
-                                            hx-target="#report-message-assessment-{{ assessment.id }}"
-                                            hx-swap="innerHTML"
-                                            title="Report this assessment">
-                                            🚩
-                                        </a>
-
-                                        <span id="report-message-assessment-{{ assessment.id }}"></span>
-                                    </div>
-
-
-                                </ol>
-                            </nav>
+                            
 
                             <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">
                                 {{ video.title }}
-                            </h2>
+                                 <a 
+                                    href="#"
+                                    class="btn btn-sm btn-warning"
+                                    hx-post="{% url 'learner:submit_report' username=username course_id=course.id section_id=assessment.section.id %}?assessment_id={{ assessment.id }}"
+                                    hx-trigger="click"
+                                    hx-target="#report-message-assessment-{{ assessment.id }}"
+                                    hx-swap="innerHTML"
+                                    title="Report this assessment">
+                                    🚩
+                                </a>
+
+                                <span id="report-message-assessment-{{ assessment.id }}"></span>
+                            <hr class="my-6 border-t border-gray-200">
 
                             
                                 <style>
@@ -704,16 +659,9 @@
 
 
                                 {% else %}
-                                    <nav class="text-sm text-gray-500 mb-1">
-                                    <ol class="flex space-x-2">
-                                        <li><a href="{% url 'authentication:mycourse' %}" class="hover:text-blue-600">Home</a></li>
-                                        <li>/</li>
-                                        <li class="text-gray-600">
-                                            {{ section }} &raquo;
-                                           
-                                        </li>
-                                        <div class="assessment-report-wrapper">
-                                            <a 
+                                    
+                                <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ assessment.name }}
+                                 <a 
                                                 href="#"
                                                 class="btn btn-sm btn-warning"
                                                 hx-post="{% url 'learner:submit_report' username=username course_id=course.id section_id=assessment.section.id %}?assessment_id={{ assessment.id }}"
@@ -725,13 +673,8 @@
                                             </a>
 
                                             <span id="report-message-assessment-{{ assessment.id }}"></span>
-                                        </div>
-
-
-                                        
-                                    </ol>
-                                </nav>
-                                <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">{{ assessment.name }}</h2>
+                                </h2>
+                                <hr class="my-6 border-t border-gray-200">
                                 <br>
                                     <!-- TIMER SECTION -->
                                     <div class="sticky top-0 bg-white shadow-xl z-40 p-4 mb-6 rounded-2xl border border-gray-200">
@@ -946,8 +889,22 @@
    
 
 {% else %}
-    <div class="text-center py-32 lg:py-48">
-        <p class="text-2xl lg:text-3xl text-gray-500">Please select a material or assessment from the sidebar.</p>
+    <div class="text-center py-24 lg:py-48 px-4">
+        <p class="text-xl lg:text-3xl text-gray-500 mb-6">
+            Choose a material or assessment from the left sidebar to get started.
+        </p>
+
+        <!-- tombol trigger sidebar -->
+        <label 
+            for="sidebar-toggle"
+            class="lg:hidden inline-flex items-center gap-2 px-5 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg shadow cursor-pointer transition"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            Open Menu
+        </label>
     </div>
 {% endif %}
 
