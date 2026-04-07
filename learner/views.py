@@ -2536,89 +2536,94 @@ def submit_answer_askora_new(request, ask_ora_id):
 @login_required
 def submit_peer_review_new(request, submission_id):
     """
-    Menyimpan peer review untuk submisi tertentu dan merender ulang halaman assessment.
-    
-    Args:
-        request: Objek HTTP request.
-        submission_id: ID submisi yang akan direview.
-    
-    Returns:
-        HttpResponse: Render ulang template content.html atau pesan error.
+    Menyimpan peer review untuk submisi tertentu dan merender ulang halaman assessment
+    menggunakan pola yang sama seperti submit_answer_askora_new agar tombol Next tetap aktif.
     """
+    if request.method != 'POST':
+        return HttpResponseBadRequest("Invalid request")
+
     submission = get_object_or_404(Submission, id=submission_id)
     assessment = submission.askora.assessment
-    course = assessment.section.courses  # Gunakan courses relasi
+    course = assessment.section.courses
     user = request.user
 
-    if request.method != 'POST':
-        logger.warning(f"Metode tidak valid untuk submit_peer_review_new oleh {user.username}")
-        return HttpResponse('<div class="alert alert-danger">Metode request tidak valid.</div>', status=400)
-
-    logger.debug(f"POST data untuk review submission {submission_id}: {request.POST}")
-
-    # Batasi jumlah review per user
-    if PeerReview.objects.filter(reviewer=user).count() >= 5:
-        logger.warning(f"Pengguna {user.username} telah mencapai batas maksimum 5 review")
-        messages.warning(request, "Anda telah memberikan jumlah review maksimal yang diperbolehkan.")
-        return render_content(request, assessment, course)
-
     # Cek apakah user sudah review submission ini
-    if PeerReview.objects.filter(submission=submission, reviewer=user).exists():
-        logger.warning(f"Pengguna {user.username} mencoba mereview ulang submission {submission_id}")
-        messages.warning(request, "Anda sudah mereview submisi ini.")
-        return render_content(request, assessment, course)
+    already_reviewed = PeerReview.objects.filter(submission=submission, reviewer=user).exists()
 
-    try:
-        # Ambil score dan validasi
+    hx_message = ""
+    if already_reviewed:
+        hx_message = '<span class="text-warning">Anda sudah mereview submisi ini!</span>'
+    else:
         score_raw = request.POST.get('score')
-        if not score_raw:
-            raise ValueError("Score tidak boleh kosong")
-        score = int(score_raw)
-        if not 1 <= score <= 5:
-            raise ValueError("Nilai harus antara 1 hingga 5")
-
         comment = request.POST.get('comment', '').strip()
+        try:
+            if not score_raw:
+                raise ValueError("Score tidak boleh kosong")
+            score = int(score_raw)
+            if not 1 <= score <= 5:
+                raise ValueError("Nilai harus antara 1 hingga 5")
 
-        # Buat objek PeerReview
-        peer_review = PeerReview.objects.create(
-            submission=submission,
-            reviewer=user,
-            score=score,
-            comment=comment or None
-        )
-        logger.info(f"Peer review berhasil dibuat untuk submission {submission_id} oleh {user.username}")
-
-        # Kirim notifikasi ke owner submission
-        owner_user = submission.user
-        if owner_user != user:
-            Notification.objects.create(
-                user=owner_user,
-                actor=user,  # reviewer
-                notif_type='submission_received',  # pastikan ada di Notification.NOTIF_TYPES
-                priority='medium',
-                title=f"Your submission received a review",
-                message=f"{user.username} reviewed your submission for '{assessment.name}' in {course.course_name}.",
-                link=f'/courses/{course.id}/assessments/{assessment.id}/submissions/{submission.id}/',
-                content_type=ContentType.objects.get_for_model(peer_review),
-                object_id=peer_review.id
+            PeerReview.objects.create(
+                submission=submission,
+                reviewer=user,
+                score=score,
+                comment=comment or None
             )
-            logger.debug(f"Notification dikirim ke {owner_user.username} untuk submission {submission_id}")
+            hx_message = '<span class="text-success">Review berhasil dikirim!</span>'
 
-        # Hitung skor final submission
-        assessment_score, _ = AssessmentScore.objects.get_or_create(submission=submission)
-        assessment_score.calculate_final_score()
-        logger.debug(f"Skor final dihitung untuk submission {submission_id}")
+            # Kirim notifikasi ke owner submission
+            owner_user = submission.user
+            if owner_user != user:
+                Notification.objects.create(
+                    user=owner_user,
+                    actor=user,
+                    notif_type='submission_received',
+                    priority='medium',
+                    title=f"Your submission received a review",
+                    message=f"{user.username} reviewed your submission for '{assessment.name}' in {course.course_name}.",
+                    link=f'/courses/{course.id}/assessments/{assessment.id}/submissions/{submission.id}/',
+                    content_type=ContentType.objects.get_for_model(PeerReview),
+                    object_id=PeerReview.objects.last().id
+                )
 
-        # Berikan feedback sukses ke reviewer
-        messages.success(request, "Review berhasil dikirim!")
+            # Hitung skor final submission
+            assessment_score, _ = AssessmentScore.objects.get_or_create(submission=submission)
+            assessment_score.calculate_final_score()
 
-        # Render ulang halaman assessment
-        return render_content(request, assessment, course)
+        except Exception as e:
+            hx_message = f'<span class="text-danger">Error: {str(e)}</span>'
 
-    except Exception as e:
-        logger.exception(f"Gagal menyimpan review untuk submission {submission_id} oleh {user.username}: {str(e)}")
-        messages.error(request, f"Error: {str(e)}")
-        return render_content(request, assessment, course)
+    # ===============================
+    # Build context menggunakan helper existing
+    # ===============================
+    sections = Section.objects.filter(courses=course).prefetch_related(
+        'children', 'materials', 'assessments'
+    ).order_by('order')
+
+    combined_content = _build_combined_content(sections)
+
+    current_index = next(
+        (i for i, c in enumerate(combined_content) if c[0] == 'assessment' and c[1].id == assessment.id),
+        0
+    )
+
+    assessment_context = _build_assessment_context(assessment, user)
+    previous_url, next_url = _get_navigation_urls(user.username, course.id, course.slug, combined_content, current_index)
+
+    context = {
+        'course': course,
+        'sections': sections,
+        'assessment': assessment,
+        'current_content': ('assessment', assessment, assessment.section),
+        'username': request.user.username,
+        'previous_url': previous_url,
+        'next_url': next_url,
+        'disable_next': False,  # pastikan tombol Next tetap aktif
+        'hx_message': hx_message,  # feedback HTMX
+        **assessment_context
+    }
+
+    return render(request, 'learner/partials/content.html', context)
 
 
 
