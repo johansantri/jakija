@@ -2581,7 +2581,7 @@ def submit_peer_review_new(request, submission_id):
                     priority='medium',
                     title=f"Your submission received a review",
                     message=f"{user.username} reviewed your submission for '{assessment.name}' in {course.course_name}.",
-                    link=f'/courses/{course.id}/assessments/{assessment.id}/submissions/{submission.id}/',
+                    link=f'/{owner_user.username}/{course.id}/{course.slug}/assessment/{assessment.id}/',
                     content_type=ContentType.objects.get_for_model(PeerReview),
                     object_id=PeerReview.objects.last().id
                 )
