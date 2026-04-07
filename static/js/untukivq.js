@@ -254,30 +254,88 @@ function renderFreshQuiz(q, index) {
         input.addEventListener('keydown', e => e.key === 'Enter' && submit.click());
         quizState.optionsContainer.appendChild(input);
         quizState.optionsContainer.appendChild(submit);
-    } else if (q.type === "drag-and-drop") {
+        }  else if (q.type === "drag-and-drop") {
+
+        let draggedEl = null;
+
         const dropZone = document.createElement('div');
         dropZone.className = "border-4 border-dashed border-indigo-400 rounded-2xl h-40 mb-6 flex items-center justify-center text-xl font-bold bg-indigo-50 transition";
-        dropZone.textContent = "Drop your answer here";
-        dropZone.ondragover = e => e.preventDefault();
-        dropZone.ondrop = e => {
-            e.preventDefault();
-            const text = e.dataTransfer.getData("text");
-            handleAnswer(text === q.correct, dropZone, text);
-            dropZone.textContent = text;
-            dropZone.classList.add("bg-indigo-200", "border-indigo-600");
-        };
+        dropZone.textContent = "Drop here";
         quizState.optionsContainer.appendChild(dropZone);
 
         const items = document.createElement('div');
         items.className = "grid grid-cols-2 gap-5";
+
         q.items.forEach(item => {
             const el = document.createElement('div');
-            el.className = "bg-indigo-500 text-white p-6 rounded-2xl text-center cursor-move select-none text-lg font-bold min-h-[64px] shadow-lg transition transform hover:scale-105";
+            el.className = "bg-indigo-500 text-white p-6 rounded-2xl text-center select-none text-lg font-bold min-h-[64px] shadow-lg";
             el.textContent = item;
+
+            // =========================
+            // DESKTOP (tetap ada)
+            // =========================
             el.draggable = true;
-            el.ondragstart = e => e.dataTransfer.setData("text", item);
+            el.ondragstart = e => {
+                e.dataTransfer.setData("text", item);
+            };
+
+            dropZone.ondragover = e => e.preventDefault();
+            dropZone.ondrop = e => {
+                e.preventDefault();
+                const text = e.dataTransfer.getData("text");
+                handleAnswer(text === q.correct, dropZone, text);
+                dropZone.textContent = text;
+            };
+
+            // =========================
+            // MOBILE TOUCH DRAG
+            // =========================
+            el.addEventListener("touchstart", (e) => {
+                draggedEl = el;
+                el.style.position = "fixed";
+                el.style.zIndex = "9999";
+                el.style.pointerEvents = "none";
+            });
+
+            el.addEventListener("touchmove", (e) => {
+                if (!draggedEl) return;
+
+                const touch = e.touches[0];
+                el.style.left = touch.clientX - 50 + "px";
+                el.style.top = touch.clientY - 30 + "px";
+            });
+
+            el.addEventListener("touchend", (e) => {
+                if (!draggedEl) return;
+
+                const rect = dropZone.getBoundingClientRect();
+                const touch = e.changedTouches[0];
+
+                const isInside =
+                    touch.clientX >= rect.left &&
+                    touch.clientX <= rect.right &&
+                    touch.clientY >= rect.top &&
+                    touch.clientY <= rect.bottom;
+
+                if (isInside) {
+                    handleAnswer(item === q.correct, dropZone, item);
+                    dropZone.textContent = item;
+                    dropZone.classList.add("bg-indigo-200", "border-indigo-600");
+                }
+
+                // reset posisi
+                el.style.position = "";
+                el.style.left = "";
+                el.style.top = "";
+                el.style.zIndex = "";
+                el.style.pointerEvents = "";
+
+                draggedEl = null;
+            });
+
             items.appendChild(el);
         });
+
         quizState.optionsContainer.appendChild(items);
     }
 }

@@ -378,132 +378,194 @@
                         {% endif %}
 
                         <!-- IN-VIDEO QUIZ: VERSI ULTIMATE (Video.js + GSAP + Sound + Score + Super Cantik) -->
+                        <!-- IN-VIDEO QUIZ: VERSI ULTIMATE RESPONSIVE -->
                         {% if is_video_quiz and video %}
-                            
 
-                            <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">
-                                {{ video.title }}
-                                 <a 
-                                    href="#"
-                                    class="btn btn-sm btn-warning"
-                                    hx-post="{% url 'learner:submit_report' username=username course_id=course.id section_id=assessment.section.id %}?assessment_id={{ assessment.id }}"
-                                    hx-trigger="click"
-                                    hx-target="#report-message-assessment-{{ assessment.id }}"
-                                    hx-swap="innerHTML"
-                                    title="Report this assessment">
-                                    🚩
-                                </a>
+                        <h2 class="text-lg md:text-3xl font-semibold text-gray-800 border-l-4 border-red-300 pl-2">
+                            {{ video.title }}
+                            <a 
+                                href="#"
+                                class="btn btn-sm btn-warning"
+                                hx-post="{% url 'learner:submit_report' username=username course_id=course.id section_id=assessment.section.id %}?assessment_id={{ assessment.id }}"
+                                hx-trigger="click"
+                                hx-target="#report-message-assessment-{{ assessment.id }}"
+                                hx-swap="innerHTML"
+                                title="Report this assessment">
+                                🚩
+                            </a>
 
-                                <span id="report-message-assessment-{{ assessment.id }}"></span>
-                            <hr class="my-6 border-t border-gray-200">
+                            <span id="report-message-assessment-{{ assessment.id }}"></span>
+                        </h2>
 
-                            
-                                <style>
-                                    .quiz-overlay{
-                                        position:fixed; inset:0;
-                                        background:rgba(0,0,0,0.85);
-                                        backdrop-filter:blur(15px);
-                                        opacity:0; pointer-events:none;
-                                        transition:opacity .35s ease;
-                                        z-index:50;
-                                        display:flex; align-items:center; justify-content:center;
-                                        padding:1.5rem; overflow-y:auto;
-                                    }
-                                    .quiz-overlay.active{
-                                        opacity:1; pointer-events:all;
-                                    }
+                        <hr class="my-6 border-t border-gray-200">
 
-                                    .quiz-card{
-                                        background:rgba(255,255,255,0.96);
-                                        border-radius:1.75rem;
-                                        padding:2rem;
-                                        width:100%; max-width:480px;
-                                        box-shadow:0 25px 60px -12px rgba(0,0,0,0.45);
-                                        transform:scale(.9); opacity:0;
-                                    }
+                        <style>
+                        /* =========================
+                        OVERLAY (RESPONSIVE)
+                        ========================= */
+                        .quiz-overlay{
+                            position:fixed;
+                            inset:0;
+                            background:rgba(0,0,0,0.85);
+                            backdrop-filter:blur(15px);
+                            opacity:0;
+                            pointer-events:none;
+                            transition:opacity .35s ease;
+                            z-index:50;
 
-                                    /* Buttons */
-                                    .quiz-option{
-                                        @apply w-full p-4 text-left rounded-xl font-medium transition-all cursor-pointer;
-                                        background:#f8fafc;
-                                        border:2px solid transparent;
-                                    }
-                                    .quiz-option:hover{
-                                        background:#eef2ff;
-                                        border-color:#c7d2fe;
-                                        transform:translateY(-2px);
-                                        box-shadow:0 6px 16px rgba(0,0,0,0.15);
-                                    }
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
 
-                                    .quiz-btn-true{
-                                        @apply w-full p-5 text-2xl font-bold rounded-xl text-white transition;
-                                        background:#10b981;
-                                    }
-                                    .quiz-btn-true:hover{ background:#059669; }
+                            padding:1rem;
+                            overflow-y:auto;
+                        }
 
-                                    .quiz-btn-false{
-                                        @apply w-full p-5 text-2xl font-bold rounded-xl text-white transition;
-                                        background:#ef4444;
-                                    }
-                                    .quiz-btn-false:hover{ background:#dc2626; }
+                        .quiz-overlay.active{
+                            opacity:1;
+                            pointer-events:all;
+                        }
 
-                                    .finish-card-icon{
-                                        filter: drop-shadow(0px 8px 12px rgba(255,200,0,0.7));
-                                    }
-                                </style>
-                            
-                                <div class="relative w-full max-w-10xl shadow-2xl rounded-2xl overflow-hidden bg-black">
-                                    <video id="myVideo"
-                                        data-id="{{ video.id }}"
-                                        data-assessment="{{ assessment.id }}"
-                                        data-quizzes="{{ quizzes_json }}"
-                                        data-result-json="{{ result_json|default:'null' }}"
-                                        class="w-full" controls preload="auto">
-                                        <source src="{{ video.file.url }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
+                        /* =========================
+                        CARD
+                        ========================= */
+                        .quiz-card{
+                            background:rgba(255,255,255,0.96);
+                            border-radius:1.25rem;
+                            padding:1.25rem;
+                            width:100%;
+                            max-width:500px;
+                            max-height:90vh;
+                            overflow-y:auto;
 
-                                    <div class="absolute top-4 left-4 
-                                                bg-gradient-to-r from-black/90 to-black/70
-                                                backdrop-blur-md
-                                                border border-white/20
-                                                px-5 py-3 rounded-full flex items-center gap-3
-                                                shadow-2xl z-50">
-                                        
-                                        <i class="fas fa-trophy 
-                                                text-yellow-400 text-xl
-                                                drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"></i>
-                                                
-                                        <span id="scoreDisplay" 
-                                            class="font-extrabold text-xl text-white
-                                                    drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
-                                            0 / 0
-                                        </span>
+                            box-shadow:0 25px 60px -12px rgba(0,0,0,0.45);
+                            transform:scale(.9);
+                            opacity:0;
+                        }
+
+                        /* Desktop */
+                        @media(min-width:768px){
+                            .quiz-card{
+                                padding:2rem;
+                                border-radius:1.75rem;
+                            }
+                        }
+
+                        /* =========================
+                        OPTIONS
+                        ========================= */
+                        .quiz-option{
+                            @apply w-full p-3 md:p-4 text-sm md:text-base text-left rounded-xl font-medium transition-all cursor-pointer;
+                            background:#f8fafc;
+                            border:2px solid transparent;
+                        }
+
+                        .quiz-option:hover{
+                            background:#eef2ff;
+                            border-color:#c7d2fe;
+                            transform:translateY(-2px);
+                            box-shadow:0 6px 16px rgba(0,0,0,0.15);
+                        }
+
+                        /* =========================
+                        TRUE / FALSE BUTTON
+                        ========================= */
+                        .quiz-btn-true{
+                            @apply w-full py-3 md:py-5 text-lg md:text-2xl font-bold rounded-xl text-white transition;
+                            background:#10b981;
+                        }
+                        .quiz-btn-true:hover{ background:#059669; }
+
+                        .quiz-btn-false{
+                            @apply w-full py-3 md:py-5 text-lg md:text-2xl font-bold rounded-xl text-white transition;
+                            background:#ef4444;
+                        }
+                        .quiz-btn-false:hover{ background:#dc2626; }
+
+                        /* =========================
+                        FINISH ICON
+                        ========================= */
+                        .finish-card-icon{
+                            filter: drop-shadow(0px 8px 12px rgba(255,200,0,0.7));
+                        }
+                        .quiz-option, .draggable-item {
+                            touch-action: manipulation;
+                        }
+                        </style>
+
+                        <!-- =========================
+                            VIDEO CONTAINER
+                        ========================= -->
+                        <div class="relative w-full max-w-5xl mx-auto shadow-2xl rounded-2xl overflow-hidden bg-black">
+
+                            <video id="myVideo"
+                                data-id="{{ video.id }}"
+                                data-assessment="{{ assessment.id }}"
+                                data-quizzes="{{ quizzes_json }}"
+                                data-result-json="{{ result_json|default:'null' }}"
+                                class="w-full h-auto"
+                                controls
+                                preload="auto">
+                                <source src="{{ video.file.url }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+
+                            <!-- SCORE BADGE -->
+                            <div class="absolute top-3 left-3 
+                                        md:top-4 md:left-4
+                                        bg-gradient-to-r from-black/90 to-black/70
+                                        backdrop-blur-md
+                                        border border-white/20
+                                        px-3 py-2 md:px-5 md:py-3
+                                        rounded-full flex items-center gap-2 md:gap-3
+                                        shadow-2xl z-50">
+                                
+                                <i class="fas fa-trophy text-yellow-400 text-sm md:text-xl"></i>
+                                    
+                                <span id="scoreDisplay" 
+                                    class="font-extrabold text-sm md:text-xl text-white">
+                                    0 / 0
+                                </span>
+                            </div>
+
+                            <!-- =========================
+                                QUIZ OVERLAY
+                            ========================= -->
+                            <div id="quizOverlay" class="quiz-overlay">
+                                <div class="quiz-card">
+
+                                    <h2 id="questionText"
+                                        class="text-lg md:text-2xl font-bold text-center mb-6 leading-relaxed">
+                                    </h2>
+
+                                    <div id="optionsContainer" class="space-y-3 md:space-y-4 mb-6"></div>
+
+                                    <div id="explanation"
+                                        class="p-3 md:p-4 bg-green-100 rounded-xl text-green-800 font-medium hidden">
                                     </div>
 
+                                    <button id="nextButton"
+                                        class="w-full mt-6 bg-red-500 hover:bg-red-600 text-white font-bold 
+                                            py-3 md:py-5 rounded-full text-base md:text-lg 
+                                            shadow-lg transition transform hover:scale-105">
+                                        Continue Video
+                                    </button>
 
-
-
-                                    <div id="quizOverlay" class="quiz-overlay">
-                                        <div class="quiz-card">
-                                            <h2 id="questionText" class="text-xl md:text-2xl font-bold text-center mb-6 leading-relaxed"></h2>
-                                            <div id="optionsContainer" class="space-y-4 mb-6"></div>
-                                            <div id="explanation" class="p-4 bg-green-100 rounded-xl text-green-800 font-medium hidden"></div>
-                                            <button id="nextButton" class="w-full mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-5 rounded-full text-lg shadow-lg transition transform hover:scale-105">
-                                                Continue Video
-                                            </button>
-                                        </div>
-                                    </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <audio id="correctSound">
-                                <source src="{% static 'sounds/correct-156911.mp3' %}" type="audio/mp3">
-                                </audio>
-                                <audio id="wrongSound">
-                                <source src="{% static 'sounds/error-mistake-sound-effect-incorrect-answer-437420.mp3' %}" type="audio/mp3">
-                                </audio>
-                    
-                            
+                        <!-- =========================
+                            AUDIO
+                        ========================= -->
+                        <audio id="correctSound">
+                            <source src="{% static 'sounds/correct-156911.mp3' %}" type="audio/mp3">
+                        </audio>
+
+                        <audio id="wrongSound">
+                            <source src="{% static 'sounds/error-mistake-sound-effect-incorrect-answer-437420.mp3' %}" type="audio/mp3">
+                        </audio>
+
                         {% endif %}
 
 
