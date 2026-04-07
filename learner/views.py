@@ -2469,28 +2469,68 @@ def calculate_course_progress(user, course):
 
 @login_required
 def submit_answer_askora_new(request, ask_ora_id):
-
     if request.method != 'POST':
-        return HttpResponse(status=400)
+        return HttpResponseBadRequest("Invalid request")
 
     ask_ora = get_object_or_404(AskOra, id=ask_ora_id)
     assessment = ask_ora.assessment
     course = assessment.section.courses
+    user = request.user
 
-    if Submission.objects.filter(askora=ask_ora, user=request.user).exists():
-        messages.warning(request, "Anda sudah mengirimkan jawaban.")
-        return render_content(request, assessment, course)
+    # Cek apakah user sudah submit
+    already_submitted = Submission.objects.filter(askora=ask_ora, user=user).exists()
 
-    Submission.objects.create(
-        askora=ask_ora,
-        user=request.user,
-        answer_text=request.POST.get('answer_text'),
-        answer_file=request.FILES.get('answer_file')
+    if not already_submitted:
+        Submission.objects.create(
+            askora=ask_ora,
+            user=user,
+            answer_text=request.POST.get('answer_text'),
+            answer_file=request.FILES.get('answer_file')
+        )
+
+    # Feedback HTMX
+    message_html = (
+        '<span class="text-success">Jawaban berhasil dikirim!</span>'
+        if not already_submitted else
+        '<span class="text-warning">Anda sudah mengirimkan jawaban!</span>'
     )
 
-    messages.success(request, "Jawaban berhasil dikirim!")
+    # ===============================
+    # Build context menggunakan helper existing
+    # ===============================
+    sections = Section.objects.filter(courses=course).prefetch_related(
+        'children', 'materials', 'assessments'
+    ).order_by('order')
 
-    return render_content(request, assessment, course)
+    combined_content = _build_combined_content(sections)
+
+    # Tentukan index konten saat ini
+    current_index = next(
+        (i for i, c in enumerate(combined_content) if c[0] == 'assessment' and c[1].id == assessment.id),
+        0
+    )
+
+    # Ambil context assessment
+    assessment_context = _build_assessment_context(assessment, user)
+
+    # Ambil URL navigasi
+    previous_url, next_url = _get_navigation_urls(user.username, course.id, course.slug, combined_content, current_index)
+
+    # Gabungkan semua context
+    context = {
+        'course': course,
+        'sections': sections,
+        'assessment': assessment,
+        'current_content': ('assessment', assessment, assessment.section),
+        'username': request.user.username,
+        'previous_url': previous_url,
+        'next_url': next_url,
+        'disable_next': False,  # pastikan tombol Next tetap aktif
+        'hx_message': message_html,  # feedback HTMX
+        **assessment_context
+    }
+
+    return render(request, 'learner/partials/content.html', context)
 
 
 @login_required
@@ -2557,7 +2597,7 @@ def submit_peer_review_new(request, submission_id):
                 notif_type='submission_received',  # pastikan ada di Notification.NOTIF_TYPES
                 priority='medium',
                 title=f"Your submission received a review",
-                message=f"{user.username} reviewed your submission for '{assessment.title}' in {course.course_name}.",
+                message=f"{user.username} reviewed your submission for '{assessment.name}' in {course.course_name}.",
                 link=f'/courses/{course.id}/assessments/{assessment.id}/submissions/{submission.id}/',
                 content_type=ContentType.objects.get_for_model(peer_review),
                 object_id=peer_review.id

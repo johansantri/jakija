@@ -319,6 +319,10 @@
                     {% if request.resolver_match.url_name == 'partner_commission' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}" title="Commission">
                     <i class="fas fa-coins w-5"></i><span>Commission</span>
                 </a>
+                <a href="{% url 'authentication:mycourse' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
+                    {% if request.resolver_match.url_name == 'mycourse' %}bg-red-50 text-red-400{% else %}text-gray-700 hover:bg-red-50 hover:text-red-400{% endif %}" title="My Courses">
+                    <i class="fas fa-home w-5"></i><span>My Course</span>
+                </a>
 
             {% elif user.is_subscription %}
                 <a href="{% url 'licensing:licens_dashboard' %}" class="flex items-center space-x-3 px-4 py-2 rounded-lg transition
