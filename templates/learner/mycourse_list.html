@@ -261,48 +261,45 @@
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-      {% for course in recommended_courses %}
-      <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
+        {% for course in recommended_courses %}
+          <a href="{% url 'courses:course_lms_detail' course.id course.slug %}" class="block">
+            <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <div class="h-32 bg-gradient-to-r from-indigo-500 to-blue-500 relative flex items-center justify-center text-white text-sm font-semibold">
-          {{ course.category.name }}
+              <div class="h-32 bg-gradient-to-r from-indigo-500 to-blue-500 relative flex items-center justify-center text-white text-sm font-semibold">
+                {{ course.category.name }}
 
-          {% if course.created_at|timeuntil:now < '7 days' %}
-          <span class="absolute top-2 left-2 text-[10px] px-2 py-0.5 bg-yellow-400 text-white rounded">
-            NEW
-          </span>
-          {% endif %}
-        </div>
+                {% if course.created_at|timeuntil:now < '7 days' %}
+                <span class="absolute top-2 left-2 text-[10px] px-2 py-0.5 bg-yellow-400 text-white rounded">
+                  NEW
+                </span>
+                {% endif %}
+              </div>
 
-        <div class="p-4 flex flex-col flex-1">
+              <div class="p-4 flex flex-col flex-1">
 
-          <h3 class="font-semibold text-gray-800 line-clamp-2">
-            {{ course.course_name }}
-          </h3>
+                <h3 class="font-semibold text-gray-800 line-clamp-2">
+                  {{ course.course_name }}
+                </h3>
 
-          <p class="text-xs text-gray-500 mt-1 line-clamp-2">
-            {{ course.description|striptags|truncatechars:100 }}
-          </p>
+                <p class="text-xs text-gray-500 mt-1 line-clamp-2">
+                  {{ course.description|striptags|truncatechars:100 }}
+                </p>
 
-          <div class="mt-3 text-[11px] text-gray-400">
-            {{ course.start_enrol|date:"M d, Y" }} - {{ course.end_enrol|date:"M d, Y" }}
-          </div>
+                <div class="mt-3 text-[11px] text-gray-400">
+                  {{ course.start_enrol|date:"M d, Y" }} - {{ course.end_enrol|date:"M d, Y" }}
+                </div>
 
-          <div class="mt-auto pt-4 flex justify-between items-center">
+                <div class="mt-auto pt-4 flex justify-between items-center">
 
-           
+                  
 
-            <a href="{% url 'courses:course_lms_detail' course.id course.slug %}"
-               class="px-3 py-1.5 bg-blue-500 text-white text-xs rounded-lg hover:bg-blue-600">
-               View
-            </a>
+                </div>
 
-          </div>
+              </div>
 
-        </div>
-
-      </div>
-      {% endfor %}
+            </div>
+          </a>
+          {% endfor %}
 
     </div>
 
