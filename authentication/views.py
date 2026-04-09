@@ -462,6 +462,11 @@ def validate_level(level):
         return level
     raise ValidationError(f"Invalid level: {level}")
 
+@ratelimit(key='ip', rate='20/s', block=True)
+@ratelimit(key='ip', rate='200/m', block=True)
+@ratelimit(key='ip', rate='2000/h', block=True)
+@ratelimit(key='user', rate='4000/h', block=True)
+@cache_page(60)  # cache 1 menit
 def course_list(request):
     """
     View untuk menampilkan list course dengan filter dan pagination.
@@ -604,6 +609,9 @@ def course_list(request):
         return render(request, "home/course_list_partial.html", context)
 
     return render(request, "home/course_list.html", context)
+
+
+
 
 @custom_ratelimit
 @login_required
@@ -1405,8 +1413,11 @@ def popular_courses(request):
 
     return JsonResponse({'courses': courses_list})
 
-@custom_ratelimit
-@ratelimit(key='ip', rate='1000/h', block=True)
+@cache_page(60 * 5)  # cache 5 menit
+@ratelimit(key='ip', rate='20/s', block=True)
+@ratelimit(key='ip', rate='200/m', block=True)
+@ratelimit(key='ip', rate='2000/h', block=True)
+@ratelimit(key='user', rate='4000/h', block=True)
 @require_GET
 def home(request):
     if request.method != 'GET':

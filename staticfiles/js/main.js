@@ -108,8 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     <!-- Price / Free -->
                     <div>
                       ${isFree 
-                        ? `<span class="text-indigo-700 font-semibold">FREE</span>`
-                        : `<span class="text-indigo-700 font-semibold">
+                        ? `<span class="bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">FREE</span>`
+                        : `<span class=" bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">
                             IDR ${typeof course.user_payment === 'number' ? course.user_payment.toLocaleString('id-ID') : 'N/A'}
                           </span>`
                       }
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <img 
                       src="${org_logo || '/static/images/placeholder-org.webp'}" 
                       alt="${course.org_name || 'Partner'}" 
-                      class="w-8 h-8 sm:w-10 sm:h-10 rounded-full mr-3 object-cover ring-1 ring-gray-200 flex-shrink-0"
+                      class="w-6 h-6 rounded-full mr-3 object-cover border border-gray-200"
                       loading="lazy"
                       itemprop="provider" itemscope itemtype="https://schema.org/Organization"
                     >
