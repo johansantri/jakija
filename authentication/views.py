@@ -1413,11 +1413,11 @@ def popular_courses(request):
 
     return JsonResponse({'courses': courses_list})
 
-@cache_page(60 * 5)  # cache 5 menit
 @ratelimit(key='ip', rate='20/s', block=True)
 @ratelimit(key='ip', rate='200/m', block=True)
 @ratelimit(key='ip', rate='2000/h', block=True)
 @ratelimit(key='user', rate='4000/h', block=True)
+
 @require_GET
 def home(request):
     if request.method != 'GET':
