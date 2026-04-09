@@ -8,13 +8,14 @@
     {% block meta %}
     {% endblock %}
    
-    <link rel="icon" href="{% static 'assets/img/icon/certificate.svg' %}" sizes="any" type="image/svg+xml">
+    <link rel="icon" href="{% static 'assets/img/icon/icons8-certificate-32.png' %}" sizes="any" type="image/svg+xml">
     
     
 
 <link rel="stylesheet" href="{% static 'css/output.css' %}">
+{% if user.is_authenticated %}
 <link rel="stylesheet" href="{% static 'css/ckeditor5.css' %}" type="text/css">
-
+{% endif %}
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
