@@ -1061,11 +1061,10 @@
 
 
 
-<!-- MICRO CREDENTIALS SECTION -->
-<section class="py-16 lg:py-24 bg-gradient-to-br from-red-50 via-white to-gray-50 relative overflow-hidden" aria-labelledby="micro-courses-heading">
-  <div class="absolute inset-0 bg-gradient-to-br from-red-100/30 to-transparent"></div>
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<!-- MICRO CREDENTIALS SECTION - Bootstrap Style Horizontal Card -->
+<section class="py-16 lg:py-24 bg-gradient-to-br from-red-50 via-white to-gray-50" aria-labelledby="micro-courses-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
     <div class="text-center mb-12 lg:mb-16">
       <h2 id="micro-courses-heading" class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight">
         Master Skills with <span class="text-red-600">Microcredentials</span>
@@ -1075,54 +1074,61 @@
       </p>
     </div>
 
-    <div class="grid gap-8 lg:gap-12">
+    <div class="space-y-6">
       {% for microcredential in popular_microcredentials|slice:":3" %}
         <a href="{% url 'courses:micro_detail' microcredential.id microcredential.slug %}"
-           class="group flex flex-col md:flex-row items-center bg-white rounded-2xl shadow-md hover:shadow-2xl border border-gray-100 hover:border-red-200 transition-all duration-500 overflow-hidden">
+           class="group block bg-white rounded-2xl shadow-md hover:shadow-xl border border-gray-100 hover:border-red-200 overflow-hidden transition-all duration-300">
           
-          <!-- IMAGE -->
-          <div class="p-6 md:p-8 flex-shrink-0">
-            <div class="w-48 h-48 rounded-2xl overflow-hidden flex items-center justify-center bg-gradient-to-tr from-red-50 via-white to-gray-50">
-              <img src="{{ microcredential.image.url|default:'/static/images/micro-200.webp' }}"
-                   alt="{{ microcredential.title }}"
-                   class="w-full h-full object-contain"
-                   loading="lazy">
+          <div class="flex flex-col md:flex-row">
+            
+            <!-- IMAGE - Kiri (mirip col-md-4) -->
+            <div class="md:w-5/12 lg:w-4/12 flex-shrink-0">
+              <div class="relative h-64 md:h-full">
+                <img src="{{ microcredential.image.url|default:'/static/images/micro-200.webp' }}"
+                     alt="{{ microcredential.title }}"
+                     class="w-full h-full object-cover md:rounded-l-2xl group-hover:scale-105 transition-transform duration-500"
+                     loading="lazy">
+              </div>
             </div>
-          </div>
 
-          <!-- CONTENT -->
-          <div class="p-6 md:p-8 flex-1">
-            <h3 class="text-2xl font-bold text-gray-900 group-hover:text-red-600 transition-colors duration-300 line-clamp-2">
-              {{ microcredential.title|truncatechars_safe:60 }}
-            </h3>
-            <p class="mt-4 text-gray-600 leading-relaxed line-clamp-3">
-              {{ microcredential.description|safe|truncatechars_safe:180 }}
-            </p>
-            <div class="mt-6 flex items-center gap-3">
-              <span class="px-4 py-2 bg-red-100 text-red-700 text-sm font-semibold rounded-full">
+            <!-- CONTENT - Kanan (mirip col-md-8) -->
+            <div class="md:w-7/12 lg:w-8/12 p-6 lg:p-8 flex flex-col justify-center">
+              <span class="inline-block px-4 py-2 bg-red-100 text-red-700 text-sm font-semibold rounded-full w-fit mb-4">
                 {{ microcredential.category|default:"Microcredential" }}
               </span>
-              <span class="text-sm text-gray-500">→ Check It Out</span>
+              
+              <h3 class="text-2xl font-bold text-gray-900 group-hover:text-red-600 transition-colors line-clamp-2">
+                {{ microcredential.title|truncatechars_safe:70 }}
+              </h3>
+              
+              <p class="mt-4 text-gray-600 leading-relaxed line-clamp-4">
+                {{ microcredential.description|safe|truncatechars_safe:200 }}
+              </p>
+              
+              
             </div>
+            
           </div>
         </a>
       {% empty %}
-        <p class="text-center text-gray-500 py-12 text-lg">No microcredentials yet — stay tuned!</p>
+        <p class="text-center text-gray-500 py-12">No microcredentials yet — stay tuned!</p>
       {% endfor %}
     </div>
 
     {% if popular_microcredentials|length > 3 %}
       <div class="text-center mt-12">
         <a href="{% url 'courses:micro_list' %}"
-           class="inline-flex items-center gap-3 bg-red-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-red-700 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+           class="inline-flex items-center gap-3 bg-red-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-red-700 transition-all">
           Explore All Microcredentials
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
+          </svg>
         </a>
       </div>
     {% endif %}
+
   </div>
 </section>
-
 
 
 
