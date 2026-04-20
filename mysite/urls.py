@@ -18,6 +18,10 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponseForbidden
+
+def blocked(request):
+    return HttpResponseForbidden("Not allowed")
 
 urlpatterns = [
     path('', include('authentication.urls')),
@@ -32,6 +36,12 @@ urlpatterns = [
     path('', include("lti_consumer.urls", namespace="lti_consumer")),
     path('kuruk/', admin.site.urls),
     path('captcha/', include('captcha.urls')),
+
+    #block
+    path('accounts/login/', blocked),
+    path('accounts/signup/', blocked),
+    path('accounts/password/reset/', blocked),
+    
     path('accounts/',include("allauth.urls")),
     path('select2/', include('django_select2.urls')),  # <- tambahkan ini
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
