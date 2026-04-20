@@ -1,6 +1,6 @@
 from django.contrib import admin
 from . import models 
-from .models import  AssessmentResult,SectionReport,Option,Video,Quiz, QuizResult,CourseTeam,UserActivityLog,CourseSessionLog,InstructorCertificate,LTIResult,LastAccessCourse,LTIExternalTool1,MicroClaim,UserMicroProgress,MicroCredentialComment,Certificate,Submission,CourseRating,UserProfile,Hashtag,SosPost,AskOra,BlacklistedKeyword, PeerReview,MicroCredential, AssessmentScore,Partner,Comment,CourseComment,AssessmentRead,Choice,AssessmentSession,QuestionAnswer,CourseStatusHistory,CourseStatus,CourseProgress,MaterialRead,CalculateAdminPrice,Universiti,GradeRange,Enrollment,PricingType,CoursePrice, Instructor, Category, Course, TeamMember, Section, Material,Question, Choice, Score, AttemptedQuestion,Assessment
+from .models import  MicroCredentialEnrollment,AssessmentResult,SectionReport,Option,Video,Quiz, QuizResult,CourseTeam,UserActivityLog,CourseSessionLog,InstructorCertificate,LTIResult,LastAccessCourse,LTIExternalTool1,MicroClaim,UserMicroProgress,MicroCredentialComment,Certificate,Submission,CourseRating,UserProfile,Hashtag,SosPost,AskOra,BlacklistedKeyword, PeerReview,MicroCredential, AssessmentScore,Partner,Comment,CourseComment,AssessmentRead,Choice,AssessmentSession,QuestionAnswer,CourseStatusHistory,CourseStatus,CourseProgress,MaterialRead,CalculateAdminPrice,Universiti,GradeRange,Enrollment,PricingType,CoursePrice, Instructor, Category, Course, TeamMember, Section, Material,Question, Choice, Score, AttemptedQuestion,Assessment
 from import_export.admin import ImportExportModelAdmin
 from django.utils.html import format_html
 from django.utils.text import slugify
@@ -266,7 +266,13 @@ admin.site.register(MicroCredentialComment, MicroCredentialCommentAdmin)
 
 
 
-
+@admin.register(MicroCredentialEnrollment)
+class MicroCredentialEnrollmentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'microcredential', 'enrolled_at')
+    list_filter = ('microcredential', 'enrolled_at')
+    search_fields = ('user__username', 'microcredential__title')
+    autocomplete_fields = ('user', 'microcredential')
+    ordering = ('-enrolled_at',)
 
 
 @admin.register(CourseRating)

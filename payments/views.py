@@ -2,6 +2,7 @@
 
 import requests
 from django.conf import settings
+from types import SimpleNamespace
 from django.shortcuts import render
 from django.db.models import Sum, Count
 from django.contrib.auth.decorators import login_required
@@ -280,7 +281,11 @@ def tripay_webhook(request):
             payment.save()
     
     return JsonResponse({'success': True})
+
+@login_required
 def payment_return(request):
+    
+
     return render(request, 'payments/return.html')
 
 
@@ -766,235 +771,177 @@ def view_cart(request):
 
 @login_required
 def checkout(request):
-    # ✅ Cek pending transaction terbaru (dalam 1 jam) untuk resume
     expire_limit = timezone.now() - timezone.timedelta(hours=1)
+
     pending_tx = Transaction.objects.filter(
         user=request.user,
         status='pending',
         created_at__gte=expire_limit
-    ).prefetch_related('payments__course', 'courses').order_by('-created_at').first()
+    ).prefetch_related('courses').order_by('-created_at').first()
 
+    # =========================
+    # ✅ RESUME FLOW
+    # =========================
     if pending_tx:
-        # Resume: Tampilkan info VA dari pending tx
-        va_number = pending_tx.va_number
-        bank_name = pending_tx.bank_name
-        payment_url = pending_tx.payment_url
-        merchant_ref = pending_tx.merchant_ref
-        selected_payment_method = pending_tx.payment_method
-        instructions = pending_tx.instructions  # Via getter, load dari instructions_json
-        total_price = pending_tx.total_amount
-        expired_at = pending_tx.expired_at
-        # Reconstruct cart_items dari tx.courses (dummy object untuk template tabel)
         cart_items = []
+        total_course_price = Decimal('0.00')
+
         for course in pending_tx.courses.all():
-            dummy_item = type('DummyCartItem', (object,), {
-                'course': course,
-                'get_course_price': lambda c=course: c.get_course_price()  # bind c agar lambda tidak late binding
-            })()
-            cart_items.append(dummy_item)
-        total_course_price = sum(course.get_course_price().portal_price for course in pending_tx.courses.all() if course.get_course_price())
-        platform_fee = pending_tx.platform_fee
-        voucher = pending_tx.voucher
-        voucher_code = ''  # Tidak perlu untuk resume
-        is_resume = True
-        messages.info(request, "Anda memiliki transaksi pending. Lanjutkan pembayaran di bawah.")
-    else:
-        # Normal flow: Checkout baru
-        is_resume = False
-        cart_items = CartItem.objects.select_related('course').filter(user=request.user)
-        if not cart_items.exists():
-            messages.info(request, "Keranjang kamu kosong.")
-            return redirect('payments:view_cart')
+            price = course.get_course_price()
+            if not price:
+                continue
 
-        PLATFORM_FEE = Decimal('5000.00')
-        total_course_price = sum(item.course.get_course_price().portal_price for item in cart_items if item.course.get_course_price())
+            cart_items.append(SimpleNamespace(
+                course=course,
+                price=price
+            ))
 
-        voucher_code = request.GET.get('voucher') or request.POST.get('voucher')
-        voucher_amount = Decimal('0.00')
-        voucher_obj = None
+            total_course_price += price.portal_price
 
-        if voucher_code:
-            voucher_obj, error_msg = validate_voucher(voucher_code, request.user)
-            if error_msg:
-                messages.warning(request, error_msg)
+        context = {
+            'cart_items': cart_items,
+            'total_course_price': total_course_price,
+            'platform_fee': pending_tx.platform_fee,
+            'voucher': pending_tx.voucher,
+            'voucher_code': '',
+            'total_price': pending_tx.total_amount,
+            'payment_channels': get_tripay_payment_channels(),
+            'bank_name': pending_tx.bank_name,
+            'va_number': pending_tx.va_number,
+            'payment_url': pending_tx.payment_url,
+            'selected_payment_method': pending_tx.payment_method,
+            'merchant_ref': pending_tx.merchant_ref,
+            'instructions': pending_tx.instructions,
+            'expired_at': pending_tx.expired_at,
+            'is_resume': True,
+        }
+
+        messages.info(request, "Anda memiliki transaksi pending.")
+        return render(request, 'payments/checkout.html', context)
+
+    # =========================
+    # ✅ NORMAL FLOW
+    # =========================
+    cart_items_qs = CartItem.objects.select_related('course').filter(user=request.user)
+
+    if not cart_items_qs.exists():
+        messages.info(request, "Keranjang kamu kosong.")
+        return redirect('payments:view_cart')
+
+    cart_items = []
+    total_course_price = Decimal('0.00')
+
+    for item in cart_items_qs:
+        price = item.course.get_course_price()
+        if not price:
+            continue
+
+        cart_items.append(SimpleNamespace(
+            course=item.course,
+            price=price
+        ))
+
+        total_course_price += price.portal_price
+
+    PLATFORM_FEE = Decimal('5000.00')
+
+    voucher_code = request.GET.get('voucher') or request.POST.get('voucher')
+    voucher_amount = Decimal('0.00')
+    voucher_obj = None
+
+    if voucher_code:
+        voucher_obj, error_msg = validate_voucher(voucher_code, request.user)
+        if error_msg:
+            messages.warning(request, error_msg)
+            return redirect('payments:checkout')
+
+        if VoucherUsage.objects.filter(user=request.user, voucher=voucher_obj).exists():
+            messages.warning(request, "Voucher sudah pernah digunakan.")
+            return redirect('payments:checkout')
+
+        voucher_amount = min(voucher_obj.amount, total_course_price + PLATFORM_FEE)
+
+    total_price = max(total_course_price + PLATFORM_FEE - voucher_amount, Decimal('0.00'))
+
+    if request.method == 'POST' and 'checkout' in request.POST:
+        payment_method = request.POST.get('payment_method')
+
+        if not payment_method:
+            messages.error(request, "Pilih metode pembayaran.")
+            return redirect('payments:checkout')
+
+        with db_transaction.atomic():
+            merchant_ref = f"user-{request.user.id}-{int(time.time())}"
+
+            transaction = Transaction.objects.create(
+                user=request.user,
+                total_amount=total_price,
+                status='pending',
+                platform_fee=PLATFORM_FEE,
+                voucher=voucher_amount,
+                merchant_ref=merchant_ref
+            )
+
+            for item in cart_items:
+                price = item.price
+
+                Payment.objects.create(
+                    user=request.user,
+                    course=item.course,
+                    amount=price.portal_price,
+                    linked_transaction=transaction,
+                    status='pending',
+                )
+
+                transaction.courses.add(item.course)
+
+            if voucher_obj:
+                VoucherUsage.objects.create(user=request.user, voucher=voucher_obj)
+
+            cart_items_qs.delete()
+
+            try:
+                va_number, bank_name, payment_url, trx_id, instructions, exp_time = create_tripay_transaction(
+                    transaction, payment_method, request.user
+                )
+
+                transaction.va_number = va_number
+                transaction.bank_name = bank_name
+                transaction.payment_url = payment_url
+                transaction.transaction_id = trx_id
+                transaction.instructions = instructions
+                transaction.expired_at = datetime.fromtimestamp(exp_time).replace(tzinfo=dt_timezone.utc)
+
+                transaction.save()
+
+                return redirect('payments:transaction_detail', merchant_ref=merchant_ref)
+
+            except Exception as e:
+                transaction.status = 'failed'
+                transaction.save()
+
+                messages.error(request, str(e))
                 return redirect('payments:checkout')
-            else:
-                # Cek voucher sudah dipakai oleh user?
-                if VoucherUsage.objects.filter(user=request.user, voucher=voucher_obj).exists():
-                    messages.warning(request, "Voucher sudah pernah digunakan.")
-                    return redirect('payments:checkout')
-
-                voucher_amount = voucher_obj.amount
-                max_discount = total_course_price + PLATFORM_FEE
-                if voucher_amount > max_discount:
-                    voucher_amount = max_discount
-
-        total_price = total_course_price + PLATFORM_FEE - voucher_amount
-        if total_price < 0:
-            total_price = Decimal('0.00')
-
-        va_number = ''
-        payment_url = ''
-        merchant_ref = ''
-        selected_payment_method = ''
-        bank_name = ''
-        instructions = []
-        platform_fee = PLATFORM_FEE
-        expired_at = None
-        voucher = voucher_amount
-
-        if request.method == 'POST':
-            if 'apply_voucher' in request.POST:
-                voucher_code = request.POST.get('voucher')
-                return redirect(f"{request.path}?voucher={voucher_code}")
-
-            elif 'checkout' in request.POST:
-                payment_method = request.POST.get('payment_method')
-                if not payment_method:
-                    messages.error(request, "Pilih metode pembayaran terlebih dahulu.")
-                    return redirect('payments:checkout')
-
-                # Ambil voucher_code dari hidden input di form checkout
-                voucher_code = request.POST.get('voucher_code', '')
-                if voucher_code:
-                    voucher_obj, error_msg = validate_voucher(voucher_code, request.user)
-                    if error_msg:
-                        messages.warning(request, error_msg)
-                        return redirect('payments:checkout')
-                    # Cek voucher sudah dipakai lagi sebelum buat transaksi
-                    if VoucherUsage.objects.filter(user=request.user, voucher=voucher_obj).exists():
-                        messages.warning(request, "Voucher sudah pernah digunakan.")
-                        return redirect('payments:checkout')
-                    voucher_amount = voucher_obj.amount
-                    max_discount = total_course_price + PLATFORM_FEE
-                    if voucher_amount > max_discount:
-                        voucher_amount = max_discount
-                    total_price = total_course_price + PLATFORM_FEE - voucher_amount
-                    if total_price < 0:
-                        total_price = Decimal('0.00')
-                else:
-                    voucher_obj = None
-                    voucher_amount = Decimal('0.00')
-                    total_price = total_course_price + PLATFORM_FEE
-
-                # Validasi jumlah pembayaran sesuai
-                total_payment_amount = sum(item.course.get_course_price().portal_price for item in cart_items if item.course.get_course_price())
-                if (total_payment_amount + PLATFORM_FEE - voucher_amount) != total_price:
-                    messages.error(request, "Total pembayaran tidak sesuai. Silakan coba lagi.")
-                    return redirect('payments:checkout')
-
-                ip = get_client_ip(request)
-                geo = get_geo_from_ip(ip)
-                user_agent = request.META.get('HTTP_USER_AGENT', '')
-
-                with db_transaction.atomic():
-                    merchant_ref = f"user-{request.user.id}-{int(time.time())}"
-
-                    transaction = Transaction.objects.create(
-                        user=request.user,
-                        total_amount=total_price,
-                        status='pending',
-                        description='Course purchase',
-                        platform_fee=PLATFORM_FEE,
-                        voucher=voucher_amount,
-                        merchant_ref=merchant_ref
-                    )
-
-                    for item in cart_items:
-                        course = item.course
-                        course_price = course.get_course_price()
-                        if not course_price:
-                            raise ValueError(f"Harga course {course.course_name} tidak tersedia")
-
-                        Payment.objects.create(
-                            user=request.user,
-                            course=course,
-                            payment_model=course.payment_model,
-                            snapshot_price=course_price.normal_price,
-                            snapshot_discount=course_price.discount_amount,
-                            snapshot_tax=course.org_partner.tax if course.org_partner.is_pkp else Decimal('0.00'),
-                            snapshot_ppn=course_price.ppn,
-                            snapshot_user_payment=course_price.portal_price,
-                            snapshot_partner_earning=course_price.partner_price,
-                            snapshot_ice_earning=course_price.admin_fee,
-                            snapshot_platform_fee=PLATFORM_FEE,
-                            snapshot_voucher=voucher_amount,
-                            ip_address=ip,
-                            user_agent=user_agent,
-                            location=f"{geo.get('city', '')}, {geo.get('country', '')}" if geo else None,
-                            isp=geo.get('isp') if geo else None,
-                            latitude=geo.get('lat') if geo else None,
-                            longitude=geo.get('lon') if geo else None,
-                            course_price={
-                                "normal_price": str(course_price.normal_price),
-                                "discount_amount": str(course_price.discount_amount),
-                                "ppn": str(course_price.ppn),
-                                "portal_price": str(course_price.portal_price),
-                                "partner_price": str(course_price.partner_price),
-                                "admin_fee": str(course_price.admin_fee),
-                            },
-                            linked_transaction=transaction,
-                            amount=course_price.portal_price,
-                            status='pending',
-                        )
-
-                        transaction.courses.add(course)
-
-                    # Simpan voucher usage setelah berhasil buat transaksi dan payment
-                    if voucher_obj:
-                        VoucherUsage.objects.create(user=request.user, voucher=voucher_obj)
-                        voucher_obj.used_count += 1
-                        voucher_obj.save(update_fields=['used_count'])
-
-                    cart_items.delete()
-
-                    try:
-                        va_number, bank_name, payment_url, tripay_transaction_id, instructions, tripay_expired_time = create_tripay_transaction(transaction, payment_method, request.user)
-
-                        transaction.expired_at = datetime.fromtimestamp(tripay_expired_time).replace(tzinfo=dt_timezone.utc)
-                        transaction.va_number = va_number
-                        transaction.bank_name = bank_name
-                        transaction.payment_url = payment_url
-                        transaction.payment_method = payment_method
-                        transaction.transaction_id = tripay_transaction_id
-                        # ✅ FIX: Assign via property (setter dump ke instructions_json)
-                        transaction.instructions = instructions
-                        # ✅ Update: Include 'instructions_json' bukan 'instructions'
-                        transaction.save(update_fields=['va_number', 'bank_name', 'payment_url', 'payment_method', 'transaction_id', 'instructions_json', 'expired_at'])
-
-                        selected_payment_method = payment_method
-                        logger.info(f"Checkout sukses untuk {merchant_ref}: VA {va_number}, Expired {transaction.expired_at}")
-                        send_checkout_email(request.user, transaction)
-
-                        return redirect('payments:transaction_detail', merchant_ref=merchant_ref)
-                    except Exception as e:
-                        logger.error(f"Tripay error di checkout: {e}")
-                        messages.error(request, f"Gagal membuat VA: {str(e)}")
-                        transaction.status = 'failed'
-                        transaction.save()
-                        return redirect('payments:checkout')
-
-    payment_channels = get_tripay_payment_channels()
 
     context = {
         'cart_items': cart_items,
         'total_course_price': total_course_price,
-        'platform_fee': platform_fee,
-        'voucher': voucher,
+        'platform_fee': PLATFORM_FEE,
+        'voucher': voucher_amount,
         'voucher_code': voucher_code,
         'total_price': total_price,
-        'payment_channels': payment_channels,
-        'bank_name': bank_name,
-        'va_number': va_number,
-        'payment_url': payment_url,
-        'selected_payment_method': selected_payment_method,
-        'merchant_ref': merchant_ref,
-        'instructions': instructions,
-        'expired_at': expired_at,
-        'is_resume': is_resume,
+        'payment_channels': get_tripay_payment_channels(),
+        'bank_name': '',
+        'va_number': '',
+        'payment_url': '',
+        'selected_payment_method': '',
+        'merchant_ref': '',
+        'instructions': [],
+        'expired_at': None,
+        'is_resume': False,
     }
-    return render(request, 'payments/checkout.html', context)
 
+    return render(request, 'payments/checkout.html', context)
 
 @login_required
 

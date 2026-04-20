@@ -31,7 +31,7 @@
         {% for item in cart_items %}
           <tr>
             <td class="border border-gray-300 p-2">{{ item.course.course_name }}</td>
-            <td class="border border-gray-300 p-2 text-right">{{ item.course.get_course_price.portal_price|intcomma }}</td>
+            <td class="border border-gray-300 p-2 text-right">{{ item.price.portal_price|intcomma }}</td>
           </tr>
         {% endfor %}
       </tbody>

@@ -58,9 +58,40 @@
               </h5>
               <p class="text-gray-500 text-sm">IDR {{ tx.total_amount|intcomma }} • {{ tx.created_at|date:"d M Y, H:i" }}</p>
             </div>
-            <span class="px-3 py-1 rounded-full text-sm font-semibold {% if tx.status == 'completed' %}bg-green-600 text-white{% elif tx.status == 'pending' %}bg-yellow-400 text-gray-800{% elif tx.status == 'cancelled' %}bg-gray-400 text-white{% else %}bg-red-600 text-white{% endif %}">
-              {{ tx.status|title }}
-            </span>
+            {% if tx.status == 'pending' %}
+              <a href="{% url 'payments:transaction_detail' merchant_ref=tx.merchant_ref %}" 
+                class="px-3 py-1 rounded-full text-sm font-semibold bg-yellow-400 text-gray-800 hover:opacity-80 transition">
+                  {{ tx.status|title }}
+              </a>
+
+            {% elif tx.status == 'completed' %}
+              <a href="{% url 'payments:transaction_invoice_detail' pk=tx.id %}"
+                class="px-3 py-1 rounded-full text-sm font-semibold bg-green-600 text-white hover:opacity-80 transition">
+                  {{ tx.status|title }}
+              </a>
+
+            {% elif tx.status == 'cancelled' %}
+              <span class="px-3 py-1 rounded-full text-sm font-semibold bg-gray-400 text-white cursor-not-allowed">
+                  {{ tx.status|title }}
+              </span>
+
+            {% else %}
+              <span class="px-3 py-1 rounded-full text-sm font-semibold bg-red-600 text-white">
+                  {{ tx.status|title }}
+              </span>
+            {% endif %}
+
+            <!-- COMPLETED SECTION -->
+            {% if tx.status == 'completed' %}
+              <a href="{% url 'payments:transaction_invoice_detail' pk=tx.id %}"
+                class="block mt-2 w-full text-center bg-green-600 text-white rounded-lg py-2 font-semibold hover:bg-green-700 transition">
+                  <i class="bi bi-file-earmark-text me-1"></i> View Invoice
+              </a>
+
+              <p class="text-gray-500 text-sm mt-1">
+                  Completed on: {{ tx.updated_at|date:"d M Y, H:i" }}
+              </p>
+            {% endif %}
           </button>
           <div id="collapse-{{ tx.id }}" class="collapse mt-3">
             {% if tx.description %}

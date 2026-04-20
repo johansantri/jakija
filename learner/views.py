@@ -1575,7 +1575,7 @@ def load_content(request, username, id, slug, content_type, content_id):
 
             already_notified = Notification.objects.filter(
                 user=request.user,
-                notif_type='course_completed',
+                notif_type='progress_milestone',
                 link=f'/courses/{course.id}/'
             ).exists()
 
@@ -1584,11 +1584,11 @@ def load_content(request, username, id, slug, content_type, content_id):
                 notif = Notification.objects.create(
                     user=request.user,
                     actor=request.user,
-                    notif_type='course_completed',
+                    notif_type='progress_milestone',
                     priority='high',
                     title=f"You completed {course.course_name} 🎉",
-                    message=f"Congratulations! You have successfully completed {course.course_name}.",
-                    link=f'/courses/{course.id}/'
+                    message=f"Congratulations! You have successfully completed progress {course.course_name}.",
+                    link = f'/learner/{request.user.username}/{course.id}/score-summary/'
                 )
 
                 channel_layer = get_channel_layer()
@@ -1601,7 +1601,7 @@ def load_content(request, username, id, slug, content_type, content_id):
                         "title": notif.title,
                         "message": notif.message,
                         "link": notif.link,
-                        "created_at": notif.created_at,
+                        "created_at": notif.created_at.isoformat(),  # FIX INI
                         "actor_username": request.user.username,
                     }
                 )
