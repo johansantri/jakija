@@ -466,7 +466,7 @@ def validate_level(level):
 @ratelimit(key='ip', rate='200/m', block=True)
 @ratelimit(key='ip', rate='2000/h', block=True)
 @ratelimit(key='user', rate='4000/h', block=True)
-@cache_page(60)  # cache 1 menit
+#@cache_page(60)  # cache 1 menit
 def course_list(request):
     """
     View untuk menampilkan list course dengan filter dan pagination.
