@@ -108,8 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     <!-- Price / Free -->
                     <div>
                       ${isFree 
-                        ? `<span class="bg-green-700 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">FREE</span>`
-                        : `<span class=" bg-blue-700 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">
+                        ? `<span class="bg-gradient-to-r from-red-600 to-red-700 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm ring-1 ring-red-800/20 inline-flex items-center gap-1">FREE</span>`
+                        : `<span class="bg-gradient-to-r from-red-600 to-red-700 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm ring-1 ring-red-800/20 inline-flex items-center gap-1">
                             IDR ${typeof course.user_payment === 'number' ? course.user_payment.toLocaleString('id-ID') : 'N/A'}
                           </span>`
                       }

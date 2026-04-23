@@ -160,9 +160,8 @@
 ================================ */
 
 .slide-content{
-  opacity: 1;
-  transform: none;
-  animation: none !important;
+  will-change: transform, opacity;
+  animation: fadeUp .6s ease forwards;
 }
 
 @keyframes fadeUp{
@@ -821,11 +820,29 @@
   </nav>
 </section>
 <script>
-  window.addEventListener("load", () => {
-  document.querySelectorAll('.slide-content').forEach(el => {
-    el.classList.add('animate');
-  });
-});
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+
+function showSlide(index){
+  slides.forEach(s => s.classList.remove('active'));
+  dots.forEach(d => d.classList.remove('active'));
+
+  slides[index].classList.add('active');
+  dots[index].classList.add('active');
+  current = index;
+}
+
+function goToSlide(i){
+  showSlide(i);
+}
+
+function changeSlide(dir){
+  let next = current + dir;
+  if(next < 0) next = slides.length - 1;
+  if(next >= slides.length) next = 0;
+  showSlide(next);
+}
 </script>
 
 <!-- ═══════════════════════════════════════

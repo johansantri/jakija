@@ -167,7 +167,12 @@
                             <!-- org -->
                             {% if course.org_partner and course.org_partner.name %}
                                 <div class="flex items-center space-x-2">
-                                    <i class="fas fa-building text-red-500"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 384 512"
+                                        fill="currentColor"
+                                        class="w-4 h-4 mr-1">
+                                        <path d="M336 0H48C21.49 0 0 21.49 0 48v416c0 26.51 21.49 48 48 48h288c26.51 0 48-21.49 48-48V48c0-26.51-21.49-48-48-48zM64 464V48h256v416H64zm64-368h64v64h-64V96zm0 128h64v64h-64v-64zm0 128h64v64h-64v-64zm128-256h64v64h-64V96zm0 128h64v64h-64v-64zm0 128h64v64h-64v-64z"/>
+                                    </svg>
                                     <a href="{% url 'courses:org_partner' slug=course.org_partner.name.slug %}" class="text-red-500 hover:underline">
                                         {{ course.org_partner.name.name }}
                                     </a>
@@ -176,19 +181,34 @@
 
                             <!-- Lessons -->
                             <div class="flex items-center space-x-2">
-                                <i class="fas fa-book text-red-500"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 448 512"
+                                    fill="currentColor"
+                                    class="w-4 h-4 mr-1">
+                                    <path d="M448 358.4V48c0-26.5-21.5-48-48-48H96C43 0 0 43 0 96v320c0 53 43 96 96 96h320c17.7 0 32-14.3 32-32v-16c0-8.8-7.2-16-16-16H96c-17.7 0-32-14.3-32-32s14.3-32 32-32h352c8.8 0 16-7.2 16-16zM96 64h304v256H96c-11.4 0-22.4 1.9-32 5.4V96c0-17.7 14.3-32 32-32z"/>
+                                </svg>
                                 <span class="font-medium text-gray-700 text-sm sm:text-base">{{ total_sections }} Lessons</span>
                             </div>
 
                             <!-- Effort Hours -->
                             <div class="flex items-center space-x-2">
-                                <i class="fas fa-clock text-red-500"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512"
+                                    fill="currentColor"
+                                    class="w-4 h-4 mr-1">
+                                    <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm96-224h-80V112c0-13.3-10.7-24-24-24s-24 10.7-24 24v136c0 13.3 10.7 24 24 24h104c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/>
+                                </svg>
                                 <span class="font-medium text-gray-700 text-sm sm:text-base">{{ total_effort_hours }} hr</span>
                             </div>
 
                             <!-- Students -->
                             <div class="flex items-center space-x-2">
-                                <i class="fas fa-users text-red-500"></i>
+                                 <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 640 512"
+                                    fill="currentColor"
+                                    class="w-4 h-4 mr-1">
+                                    <path d="M96 224a64 64 0 1 0 0-128 64 64 0 1 0 0 128zm448 0a64 64 0 1 0 0-128 64 64 0 1 0 0 128zM96 256c-53 0-96 43-96 96v64c0 17.7 14.3 32 32 32h128c17.7 0 32-14.3 32-32v-64c0-53-43-96-96-96zm448 0c-53 0-96 43-96 96v64c0 17.7 14.3 32 32 32h128c17.7 0 32-14.3 32-32v-64c0-53-43-96-96-96zM320 256c-70.7 0-128 57.3-128 128v64c0 17.7 14.3 32 32 32h192c17.7 0 32-14.3 32-32v-64c0-70.7-57.3-128-128-128z"/>
+                                </svg>
                                 <span class="font-medium text-gray-700 text-sm sm:text-base">{{ total_students }} Students</span>
                             </div>
 
@@ -209,13 +229,30 @@
                             <div class="flex items-center space-x-2">
                                 <div class="flex items-center">
                                     {% for i in full_star_range %}
-                                        <i class="fas fa-star text-yellow-400"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 576 512"
+                                        fill="currentColor"
+                                        class="w-4 h-4 text-yellow-400 inline-block">
+                                    <path d="M316.9 17.8L374 150.2l142.7 12.9c26.2 2.4 36.7 34.1 17 50.7L428.5 327.6l38.6 141.4c7.2 26.4-22.7 47.7-46.4 33.7L288 439.6 155.3 502.7c-23.7 14-53.6-7.3-46.4-33.7l38.6-141.4L41.3 213.8c-19.7-16.6-9.2-48.3 17-50.7L201 150.2 258.1 17.8C268.4-5.9 307.6-5.9 316.9 17.8z"/>
+                                    </svg>
                                     {% endfor %}
+
                                     {% if half_star %}
-                                        <i class="fas fa-star-half-alt text-yellow-400"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 576 512"
+                                        fill="currentColor"
+                                        class="w-4 h-4 text-yellow-400 inline-block">
+                                    <path d="M288 0c11.4 0 22.2 6.7 26.8 17.8l57.1 132.4 142.7 12.9c26.2 2.4 36.7 34.1 17 50.7L428.5 327.6l38.6 141.4c7.2 26.4-22.7 47.7-46.4 33.7L288 439.6V0z"/>
+                                    </svg>
                                     {% endif %}
+
                                     {% for i in empty_star_range %}
-                                        <i class="far fa-star text-gray-400"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 576 512"
+                                        fill="currentColor"
+                                        class="w-4 h-4 text-gray-400 inline-block">
+                                    <path d="M287.9 17.8L345 150.2l142.7 12.9c26.2 2.4 36.7 34.1 17 50.7L428.5 327.6l38.6 141.4c7.2 26.4-22.7 47.7-46.4 33.7L288 439.6 155.3 502.7c-23.7 14-53.6-7.3-46.4-33.7l38.6-141.4L41.3 213.8c-19.7-16.6-9.2-48.3 17-50.7L201 150.2 258.1 17.8C268.4-5.9 307.6-5.9 287.9 17.8z"/>
+                                    </svg>
                                     {% endfor %}
                                 </div>
                                 <span class="font-medium text-gray-700 ml-2 text-sm sm:text-base">{{ average_rating }} Rating</span>
@@ -434,37 +471,84 @@
                         </div>
                        <div class="ml-auto flex items-center">
                             <div class="flex">
+                                
                                 {% for i in full_star_range %}
-                                    <i class="fas fa-star text-yellow-400"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 576 512"
+                                    fill="currentColor"
+                                    class="w-4 h-4 text-yellow-400 inline-block align-middle">
+                                <path d="M316.9 17.8L374 150.2l142.7 12.9c26.2 2.4 36.7 34.1 17 50.7L428.5 327.6l38.6 141.4c7.2 26.4-22.7 47.7-46.4 33.7L288 439.6 155.3 502.7c-23.7 14-53.6-7.3-46.4-33.7l38.6-141.4L41.3 213.8c-19.7-16.6-9.2-48.3 17-50.7L201 150.2 258.1 17.8C268.4-5.9 307.6-5.9 316.9 17.8z"/>
+                                </svg>
                                 {% endfor %}
+
                                 {% if half_star %}
-                                    <i class="fas fa-star-half-alt text-yellow-400"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 576 512"
+                                    fill="currentColor"
+                                    class="w-4 h-4 text-yellow-400 inline-block align-middle">
+                                <path d="M288 0c11.4 0 22.2 6.7 26.8 17.8l57.1 132.4 142.7 12.9c26.2 2.4 36.7 34.1 17 50.7L428.5 327.6l38.6 141.4c7.2 26.4-22.7 47.7-46.4 33.7L288 439.6V0z"/>
+                                </svg>
                                 {% endif %}
+
                                 {% for i in empty_star_range %}
-                                    <i class="far fa-star text-gray-400"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 576 512"
+                                    fill="currentColor"
+                                    class="w-4 h-4 text-gray-400 inline-block align-middle">
+                                <path d="M287.9 17.8L345 150.2l142.7 12.9c26.2 2.4 36.7 34.1 17 50.7L428.5 327.6l38.6 141.4c7.2 26.4-22.7 47.7-46.4 33.7L288 439.6 155.3 502.7c-23.7 14-53.6-7.3-46.4-33.7l38.6-141.4L41.3 213.8c-19.7-16.6-9.2-48.3 17-50.7L201 150.2 258.1 17.8C268.4-5.9 307.6-5.9 287.9 17.8z"/>
+                                </svg>
                                 {% endfor %}
                             </div>
                             <span class="font-bold ml-1">{{ average_rating|floatformat:1 }} ({{ total_reviews }} Reviews)</span>
                         </div>
                     </div>
                     <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm mb-4 flex flex-wrap gap-4">
-                        <div class="flex items-center">
-                            <i class="fas fa-play-circle text-red-500 mr-2"></i>
-                            <span class="font-medium">{{ instructor_total_courses }} Courses</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-book text-red-500 mr-2"></i>
-                            <span class="font-medium">{{ instructor_total_sections }} Sections </span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-clock text-red-500 mr-2"></i>
-                            <span class="font-medium">{{ instructor_total_effort_hours }} Hours</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-users text-red-500 mr-2"></i>
-                            <span class="font-medium">{{ instructor_total_students }} Students</span>
-                        </div>
+
+                    <!-- Courses -->
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                            fill="currentColor"
+                            class="w-4 h-4 text-red-500 mr-2">
+                            <path d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM128 176v160l144-80-144-80z"/>
+                        </svg>
+                        <span class="font-medium">{{ instructor_total_courses }} Courses</span>
                     </div>
+
+                    <!-- Sections -->
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 448 512"
+                            fill="currentColor"
+                            class="w-4 h-4 text-red-500 mr-2">
+                            <path d="M448 358.4V48c0-26.5-21.5-48-48-48H96C43 0 0 43 0 96v320c0 53 43 96 96 96h320c17.7 0 32-14.3 32-32v-16c0-8.8-7.2-16-16-16H96c-17.7 0-32-14.3-32-32s14.3-32 32-32h352c8.8 0 16-7.2 16-16z"/>
+                        </svg>
+                        <span class="font-medium">{{ instructor_total_sections }} Sections</span>
+                    </div>
+
+                    <!-- Hours -->
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                            fill="currentColor"
+                            class="w-4 h-4 text-red-500 mr-2">
+                            <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm96 272h-80V136c0-13.3-10.7-24-24-24s-24 10.7-24 24v160c0 13.3 10.7 24 24 24h104c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/>
+                        </svg>
+                        <span class="font-medium">{{ instructor_total_effort_hours }} Hours</span>
+                    </div>
+
+                    <!-- Students -->
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 640 512"
+                            fill="currentColor"
+                            class="w-4 h-4 text-red-500 mr-2">
+                            <path d="M96 224a64 64 0 1 0 0-128 64 64 0 1 0 0 128zm448 0a64 64 0 1 0 0-128 64 64 0 1 0 0 128zM320 256c-70.7 0-128 57.3-128 128v64c0 17.7 14.3 32 32 32h192c17.7 0 32-14.3 32-32v-64c0-70.7-57.3-128-128-128z"/>
+                        </svg>
+                        <span class="font-medium">{{ instructor_total_students }} Students</span>
+                    </div>
+
+                </div>
                     <p class="text-gray-600">{{ course.instructor.bio }}</p>
                 </div>
 
@@ -503,9 +587,13 @@
                                 <div class="ml-auto flex items-center">
                                     {% for i in "12345"|make_list %}
                                         {% if forloop.counter <= review.rating %}
-                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M2.866 14.85c-.078.444.36.791.746.593l3.39-1.817 3.39 1.817c.386.198.824-.149.746-.592l-.648-3.735 2.713-2.64c.33-.32.16-.888-.283-.95l-3.747-.544-1.674-3.393a.513.513 0 0 0-.92 0L5.354 6.656l-3.747.544c-.443.062-.613.63-.283.95l2.713 2.64-.648 3.735z"/>
+  </svg>
                                         {% else %}
-                                            <i class="far fa-star text-gray-400"></i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16">
+    <path d="M2.866 14.85c-.078.444.36.791.746.593l3.39-1.817 3.39 1.817c.386.198.824-.149.746-.592l-.648-3.735 2.713-2.64c.33-.32.16-.888-.283-.95l-3.747-.544-1.674-3.393a.513.513 0 0 0-.92 0L5.354 6.656l-3.747.544c-.443.062-.613.63-.283.95l2.713 2.64-.648 3.735z"/>
+  </svg>
                                         {% endif %}
                                     {% endfor %}
                                     <span class="font-bold ml-1">{{ review.rating }}</span>
@@ -521,47 +609,145 @@
                     {% endfor %}
                     <ul class="flex justify-center gap-2 mt-4">
                         {% if reviews.has_previous %}
-                            <li>
-                                <a class="px-3 py-1 rounded-md shadow-sm text-red-500 border border-gray-200 hover:bg-red-500 hover:text-white transition-colors" href="?page=1" aria-label="First">
-                                    <i class="fas fa-angle-double-left"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="px-3 py-1 rounded-md shadow-sm text-red-500 border border-gray-200 hover:bg-red-500 hover:text-white transition-colors" href="?page={{ reviews.previous_page_number }}" aria-label="Previous">
-                                    <i class="fas fa-angle-left"></i>
-                                </a>
-                            </li>
+
+                        <li>
+                        <a href="?page=1"
+                            aria-label="First"
+                            class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-gray-200 text-red-500 hover:bg-red-500 hover:text-white transition">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 16 16"
+                                fill="currentColor"
+                                class="w-3.5 h-3.5">
+                            <path fill-rule="evenodd"
+                                    d="M5.854 4.646a.5.5 0 0 1 0 .708L3.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm4 0a.5.5 0 0 1 0 .708L7.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+
+                        </a>
+                        </li>
+
+                        <li>
+                        <a href="?page={{ reviews.previous_page_number }}"
+                            aria-label="Previous"
+                            class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-gray-200 text-red-500 hover:bg-red-500 hover:text-white transition">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 16 16"
+                                fill="currentColor"
+                                class="w-3.5 h-3.5">
+                            <path fill-rule="evenodd"
+                                    d="M9.854 4.646a.5.5 0 0 1 0 .708L7.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+
+                        </a>
+                        </li>
+
                         {% else %}
-                            <li class="opacity-50">
-                                <span class="px-3 py-1 rounded-md shadow-sm text-gray-400 border border-gray-200"><i class="fas fa-angle-double-left"></i></span>
-                            </li>
-                            <li class="opacity-50">
-                                <span class="px-3 py-1 rounded-md shadow-sm text-gray-400 border border-gray-200"><i class="fas fa-angle-left"></i></span>
-                            </li>
+
+                        <li>
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-gray-200 text-gray-300 opacity-50">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 16 16"
+                                fill="currentColor"
+                                class="w-3.5 h-3.5">
+                            <path fill-rule="evenodd"
+                                    d="M5.854 4.646a.5.5 0 0 1 0 .708L3.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm4 0a.5.5 0 0 1 0 .708L7.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+
+                        </span>
+                        </li>
+
+                        <li>
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-gray-200 text-gray-300 opacity-50">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 16 16"
+                                fill="currentColor"
+                                class="w-3.5 h-3.5">
+                            <path fill-rule="evenodd"
+                                    d="M9.854 4.646a.5.5 0 0 1 0 .708L7.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+
+                        </span>
+                        </li>
+
                         {% endif %}
                         <li>
                             <span class="bg-red-500 text-white px-4 py-1 rounded-md shadow-sm">
                                 {{ reviews.number }} of {{ reviews.paginator.num_pages }}
                             </span>
                         </li>
+                        
+                        
                         {% if reviews.has_next %}
-                            <li>
-                                <a class="px-3 py-1 rounded-md shadow-sm text-red-500 border border-gray-200 hover:bg-red-500 hover:text-white transition-colors" href="?page={{ reviews.next_page_number }}" aria-label="Next">
-                                    <i class="fas fa-angle-right"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="px-3 py-1 rounded-md shadow-sm text-red-500 border border-gray-200 hover:bg-red-500 hover:text-white transition-colors" href="?page={{ reviews.paginator.num_pages }}" aria-label="Last">
-                                    <i class="fas fa-angle-double-right"></i>
-                                </a>
-                            </li>
+
+                        <!-- NEXT -->
+                        <li>
+                        <a href="?page={{ reviews.next_page_number }}"
+                            aria-label="Next"
+                            class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-gray-200 text-gray-600 hover:bg-red-500 hover:text-white transition">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 16 16"
+                                fill="currentColor"
+                                class="w-3.5 h-3.5">
+                            <path fill-rule="evenodd"
+                                    d="M6.146 4.646a.5.5 0 0 1 .708 0L10 8l-3.146 3.354a.5.5 0 0 1-.708-.708L8.793 8 6.146 4.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+
+                        </a>
+                        </li>
+
+                        <!-- LAST -->
+                        <li>
+                        <a href="?page={{ reviews.paginator.num_pages }}"
+                            aria-label="Last"
+                            class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-gray-200 text-gray-600 hover:bg-red-500 hover:text-white transition">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 16 16"
+                                fill="currentColor"
+                                class="w-3.5 h-3.5">
+                            <path fill-rule="evenodd"
+                                    d="M4.146 4.646a.5.5 0 0 1 .708 0L8 8l-3.854 3.354a.5.5 0 0 1-.708-.708L7.293 8 4.146 4.354a.5.5 0 0 1 0-.708zm4 0a.5.5 0 0 1 .708 0L12 8l-3.854 3.354a.5.5 0 0 1-.708-.708L11.293 8 8.146 4.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+
+                        </a>
+                        </li>
+
                         {% else %}
-                            <li class="opacity-50">
-                                <span class="px-3 py-1 rounded-md shadow-sm text-gray-400 border border-gray-200"><i class="fas fa-angle-right"></i></span>
-                            </li>
-                            <li class="opacity-50">
-                                <span class="px-3 py-1 rounded-md shadow-sm text-gray-400 border border-gray-200"><i class="fas fa-angle-double-right"></i></span>
-                            </li>
+
+                        <!-- NEXT DISABLED -->
+                        <li>
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-gray-200 text-gray-300 opacity-50">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 16 16"
+                                fill="currentColor"
+                                class="w-3.5 h-3.5">
+                            <path fill-rule="evenodd"
+                                    d="M6.146 4.646a.5.5 0 0 1 .708 0L10 8l-3.146 3.354a.5.5 0 0 1-.708-.708L8.793 8 6.146 4.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+
+                        </span>
+                        </li>
+
+                        <!-- LAST DISABLED -->
+                        <li>
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-gray-200 text-gray-300 opacity-50">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 16 16"
+                                fill="currentColor"
+                                class="w-3.5 h-3.5">
+                            <path fill-rule="evenodd"
+                                    d="M4.146 4.646a.5.5 0 0 1 .708 0L8 8l-3.854 3.354a.5.5 0 0 1-.708-.708L7.293 8 4.146 4.354a.5.5 0 0 1 0-.708zm4 0a.5.5 0 0 1 .708 0L12 8l-3.854 3.354a.5.5 0 0 1-.708-.708L11.293 8 8.146 4.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+
+                        </span>
+                        </li>
+
                         {% endif %}
                     </ul>
                 </div>
@@ -603,7 +789,9 @@
                                     <!-- Reply Button -->
                                     <button class="text-red-500 hover:text-red-600 font-medium text-sm flex items-center gap-1 self-end transition-colors"
                                             onclick="toggleReplyForm('comment-reply-form-{{ comment.id }}')">
-                                        <i class="bi bi-reply-fill"></i>Reply
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M6.598 5.013a.144.144 0 0 1 .202.134v2.324a.146.146 0 0 0 .3.01c.053-.797.4-1.538 1.03-2.01.623-.466 1.527-.627 2.46-.627.935 0 1.837.161 2.46.627.63.472.977 1.213 1.03 2.01a.146.146 0 0 0 .3-.01V5.147a.144.144 0 0 1 .202-.134c.78.416 1.32 1.22 1.32 2.12 0 .903-.54 1.707-1.32 2.123a.144.144 0 0 1-.202-.134V7.98a.146.146 0 0 0-.3-.01c-.053.797-.4 1.538-1.03 2.01-.623.466-1.525.627-2.46.627-.933 0-1.837-.161-2.46-.627-.63-.472-.977-1.213-1.03-2.01a.146.146 0 0 0-.3.01v1.122a.144.144 0 0 1-.202.134C5.818 9.54 5.278 8.737 5.278 7.833c0-.9.54-1.704 1.32-2.12z"/>
+                                        </svg>Reply
                                     </button>
 
                                     <!-- Form Balasan -->
@@ -639,7 +827,9 @@
                                                         <!-- Sub-Reply Button -->
                                                         <button class="text-red-500 hover:text-red-600 font-medium text-xs sm:text-sm flex items-center gap-1 self-end transition-colors"
                                                                 onclick="toggleReplyForm('reply-form-{{ reply.id }}')">
-                                                            <i class="bi bi-reply-fill"></i>Reply
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                                <path d="M6.598 5.013a.144.144 0 0 1 .202.134v2.324a.146.146 0 0 0 .3.01c.053-.797.4-1.538 1.03-2.01.623-.466 1.527-.627 2.46-.627.935 0 1.837.161 2.46.627.63.472.977 1.213 1.03 2.01a.146.146 0 0 0 .3-.01V5.147a.144.144 0 0 1 .202-.134c.78.416 1.32 1.22 1.32 2.12 0 .903-.54 1.707-1.32 2.123a.144.144 0 0 1-.202-.134V7.98a.146.146 0 0 0-.3-.01c-.053.797-.4 1.538-1.03 2.01-.623.466-1.525.627-2.46.627-.933 0-1.837-.161-2.46-.627-.63-.472-.977-1.213-1.03-2.01a.146.146 0 0 0-.3.01v1.122a.144.144 0 0 1-.202.134C5.818 9.54 5.278 8.737 5.278 7.833c0-.9.54-1.704 1.32-2.12z"/>
+                                                            </svg>Reply
                                                         </button>
 
                                                         <!-- Form Balas Sub-Reply -->
@@ -680,7 +870,9 @@
                                                                             <!-- Sub-Sub-Reply Button -->
                                                                             <button class="text-red-500 hover:text-red-600 font-medium text-xs flex items-center gap-1 self-end transition-colors"
                                                                                     onclick="toggleReplyForm('sub-reply-form-{{ sub_reply.id }}')">
-                                                                                <i class="bi bi-reply-fill"></i>Reply
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                                                    <path d="M6.598 5.013a.144.144 0 0 1 .202.134v2.324a.146.146 0 0 0 .3.01c.053-.797.4-1.538 1.03-2.01.623-.466 1.527-.627 2.46-.627.935 0 1.837.161 2.46.627.63.472.977 1.213 1.03 2.01a.146.146 0 0 0 .3-.01V5.147a.144.144 0 0 1 .202-.134c.78.416 1.32 1.22 1.32 2.12 0 .903-.54 1.707-1.32 2.123a.144.144 0 0 1-.202-.134V7.98a.146.146 0 0 0-.3-.01c-.053.797-.4 1.538-1.03 2.01-.623.466-1.525.627-2.46.627-.933 0-1.837-.161-2.46-.627-.63-.472-.977-1.213-1.03-2.01a.146.146 0 0 0-.3.01v1.122a.144.144 0 0 1-.202.134C5.818 9.54 5.278 8.737 5.278 7.833c0-.9.54-1.704 1.32-2.12z"/>
+                                                                                </svg>Reply
                                                                             </button>
 
                                                                             <!-- Form Sub-Sub-Reply -->
@@ -755,14 +947,18 @@
                                             <img src="{% static 'assets/img/user/logo.5272a797c07c.png' %}" alt="Default Image" class="w-full h-52 object-cover rounded-xl hover:scale-105 transition-transform">
                                         {% endif %}
                                         <div class="absolute inset-0 flex items-center justify-center bg-red-500 bg-opacity-20 rounded-full w-10 h-10 transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
-                                            <i class="fas fa-play text-white text-2xl"></i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M10.804 8.697 6.333 11.5A.5.5 0 0 1 5.5 11V5a.5.5 0 0 1 .833-.39l4.471 2.803a.5.5 0 0 1 0 .784z"/>
+  </svg>
                                         </div>
                                     </a>
                                 {% else %}
                                     <a href="https://www.youtube.com/watch?v=UXxBFmejhe8" class="block" data-fancybox="video-gallery">
                                         <img src="{% static 'assets/img/user/logo.5272a797c07c.png' %}" alt="Default Image" class="w-full h-52 object-cover rounded-xl hover:scale-105 transition-transform">
                                         <div class="absolute inset-0 flex items-center justify-center bg-red-500 bg-opacity-20 rounded-full w-10 h-10 transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
-                                            <i class="fas fa-play text-white text-2xl"></i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M10.804 8.697 6.333 11.5A.5.5 0 0 1 5.5 11V5a.5.5 0 0 1 .833-.39l4.471 2.803a.5.5 0 0 1 0 .784z"/>
+  </svg>
                                         </div>
                                     </a>
                                 {% endif %}
@@ -817,12 +1013,13 @@
                                         {% if is_enrolled %}
                                             {# ✅ USER SUDAH TERDAFTAR — tampilkan tombol Resume/Get Started/Completed #}
                                             {% if course_status == 'completed' %}
-                                                <button onclick="window.location.href='{% url 'courses:generate_certificate' course_id=course.id %}'" 
-                                                        class="block w-full border border-green-500 text-green-600 px-4 py-2 rounded-lg 
-                                                            hover:bg-green-100 transition-colors text-center"
-                                                        aria-label="Download certificate for completed course">
+                                                <a href="{% url 'courses:generate_certificate' course_id=course.id %}"
+                                                target="_blank"
+                                                class="block w-full border border-green-500 text-green-600 px-4 py-2 rounded-lg 
+                                                        hover:bg-green-100 transition-colors text-center"
+                                                aria-label="Download certificate for completed course">
                                                     ✅ Completed
-                                                </button>
+                                                </a>
 
 
                                             {% elif course_status == 'resume' %}
@@ -966,7 +1163,13 @@
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label="Share on WhatsApp">
-                                        <i class="fab fa-whatsapp text-green-500 text-sm sm:text-base mr-1"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 32 32"
+                                            fill="currentColor"
+                                            class="w-4 h-4 sm:w-5 sm:h-5 mr-1">
+                                            <path d="M19.11 17.53c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.14-.42-2.18-1.34-.81-.72-1.35-1.6-1.51-1.87-.16-.27-.02-.42.12-.56.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.02-.22-.53-.45-.46-.61-.47h-.52c-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.26 0 1.33.97 2.62 1.11 2.8.14.18 1.92 2.93 4.65 4.11.65.28 1.16.45 1.56.58.66.21 1.26.18 1.73.11.53-.08 1.6-.65 1.83-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.32z"/>
+                                            <path d="M16 3C9.38 3 4 8.38 4 15c0 2.11.55 4.09 1.5 5.81L4 29l8.39-1.47A12 12 0 1016 3zm0 22c-1.89 0-3.64-.53-5.14-1.44l-.37-.22-4.98.87.88-4.85-.24-.39A9.94 9.94 0 016 15c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10z"/>
+                                        </svg>
                                         <span class="text-xs sm:text-sm"></span>
                                     </a>
                                     <!-- Facebook Share -->
@@ -975,7 +1178,12 @@
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label="Share on Facebook">
-                                        <i class="fab fa-facebook-f text-blue-600 text-sm sm:text-base mr-1"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 320 512"
+                                            fill="currentColor"
+                                            class="w-4 h-4 sm:w-5 sm:h-5 mr-1">
+                                            <path d="M279.14 288l14.22-92.66h-88.91V127.9c0-25.35 12.42-50.06 52.24-50.06H297V6.26S259.4 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/>
+                                        </svg>
                                         <span class="text-xs sm:text-sm"></span>
                                     </a>
                                     <!-- LinkedIn Share -->
@@ -984,7 +1192,12 @@
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label="Share on LinkedIn">
-                                        <i class="fab fa-linkedin-in text-blue-700 text-sm sm:text-base mr-1"></i>
+                                         <svg xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 448 512"
+                                            fill="currentColor"
+                                            class="w-4 h-4 sm:w-5 sm:h-5 mr-1">
+                                            <path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.4V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/>
+                                        </svg>
                                         <span class="text-xs sm:text-sm"></span>
                                     </a>
                                     <!-- X Share -->
@@ -993,14 +1206,24 @@
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label="Share on X">
-                                        <i class="fab fa-x-twitter text-black text-sm sm:text-base mr-1"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                            class="w-4 h-4 sm:w-5 sm:h-5 mr-1">
+                                            <path d="M18.244 2H21.5l-7.51 8.57L22 22h-6.8l-5.3-6.92L3.85 22H.5l8.04-9.19L2 2h6.9l4.82 6.32L18.244 2zm-1.2 18h1.88L7.36 3.9H5.38L17.044 20z"/>
+                                        </svg>
                                         <span class="text-xs sm:text-sm"></span>
                                     </a>
                                     <!-- Instagram Share -->
                                     <button onclick="copyToClipboard('{{ request.build_absolute_uri }}')"
                                             class="flex items-center justify-center border border-gray-300 text-gray-700 px-2 py-2 sm:px-3 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors"
                                             aria-label="Copy link for your share">
-                                        <i class="fas fa-share-alt text-gray-600 text-sm sm:text-base mr-1"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                            class="w-4 h-4 sm:w-5 sm:h-5 mr-1">
+                                            <path d="M18 16a3 3 0 00-2.65 1.6l-6.9-3.45a3.1 3.1 0 000-2.3l6.9-3.45A3 3 0 1015 6a3 3 0 00.05.52l-6.9 3.45a3 3 0 100 4.56l6.9 3.45A3 3 0 1018 16z"/>
+                                        </svg>
                                         <span class="text-xs sm:text-sm"></span>
                                     </button>
 

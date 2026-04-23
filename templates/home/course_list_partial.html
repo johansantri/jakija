@@ -31,9 +31,9 @@
                     <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
                         <div class="flex items-center space-x-1">
                             {% if course.is_free %}
-                         <span class=" bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">FREE</span>
+                         <span class=" bg-gradient-to-r from-red-600 to-red-700 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm ring-1 ring-red-800/20 inline-flex items-center gap-1">FREE</span>
                         {% else %}
-                           <span class=" bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow"> IDR {{ course.price|intcomma }} </span>
+                           <span class="bg-gradient-to-r from-red-600 to-red-700 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm ring-1 ring-red-800/20 inline-flex items-center gap-1"> IDR {{ course.price|intcomma }} </span>
                          {% endif %}
                         </div>
                         <div class="flex items-center space-x-1">
