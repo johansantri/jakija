@@ -108,8 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     <!-- Price / Free -->
                     <div>
                       ${isFree 
-                        ? `<span class="bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">FREE</span>`
-                        : `<span class=" bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">
+                        ? `<span class="bg-green-700 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">FREE</span>`
+                        : `<span class=" bg-blue-700 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">
                             IDR ${typeof course.user_payment === 'number' ? course.user_payment.toLocaleString('id-ID') : 'N/A'}
                           </span>`
                       }
