@@ -317,6 +317,11 @@ rename this file `mysite/settings.py.example` to  `mysite/settings.py`
 `daphne -v 2 mysite.asgi:application`
 
 
+## For active form login change template 
+jakija/templates/authentication/`login.html`
+to
+jakija/templates/authentication/`login_x.html`
+
 ## Demo / Video
  
 [![jakija demo](https://img.youtube.com/vi/UXxBFmejhe8/maxresdefault.jpg)](https://www.youtube.com/watch?v=UXxBFmejhe8)
