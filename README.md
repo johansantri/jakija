@@ -309,7 +309,9 @@ rename this file `mysite/settings.py.example` to  `mysite/settings.py`
 7. python manage.py createsuperuser  
 8. python manage.py runserver  
 
-
+## Check Radis Server if problem runserver
+`sudo apt update`
+`sudo apt install redis-server -y`
 
 ## Run with Daphne (for real-time notifications)
 `daphne -v 2 mysite.asgi:application`
