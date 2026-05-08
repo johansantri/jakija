@@ -342,14 +342,7 @@ The official site must display this attribution in the footer (example: `templat
 ## Contact
 Repository: https://github.com/johansantri/jakija
 
-## Demo accounts
-- Superuser: admin@admin.com | admin  
-- Partner: partner@partner.com | partner  
-- Instructor: instructor@instructor.com | instructor  
-- Learner: learn@learn.com | learn  
-- Subscription: sub@sub.com | sub  
-- Curation: curation@curation.com | curation  
-- Finances: fin@fin.com | fin
+
 
 ## Cert
 - Every participant who completes a course will receive an automatic certificate, serving as proof of the skills and competencies they have acquired, and it can be verified instantly via QR code. 
