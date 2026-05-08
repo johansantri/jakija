@@ -299,15 +299,15 @@ Our vision: to create a digital learning system that is not only comprehensive, 
 
 ## Quick Install (Linux)
 
-1. git clone https://github.com/johansantri/jakija.git  
-2. cd jakija  
-3. python3 -m venv .venv  
-4. source .venv/bin/activate  
+1. `git clone https://github.com/johansantri/jakija.git`  
+2. `cd jakija`  
+3. `python3 -m venv .venv`  
+4. `source .venv/bin/activate`  
 rename this file `mysite/settings.py.example` to  `mysite/settings.py`
-5. pip install -r requirements.txt  
-6. python manage.py migrate  
-7. python manage.py createsuperuser  
-8. python manage.py runserver  
+5. `pip install -r requirements.txt`  
+6. `python manage.py migrate`  
+7. `python manage.py createsuperuser`  
+8. `python manage.py runserver`  
 
 ## Check Radis Server if problem runserver
 `sudo apt update`
@@ -319,7 +319,7 @@ rename this file `mysite/settings.py.example` to  `mysite/settings.py`
 
 ## For active form login change template 
 jakija/templates/authentication/`login.html`
-to
+from to code
 jakija/templates/authentication/`login_x.html`
 
 ## Demo / Video
